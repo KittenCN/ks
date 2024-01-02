@@ -5,4 +5,4 @@
     -   [CalculusOne_part2](ap/calculus/CalculusOne_part2.md)
     -   [Thomas Calculus](math/Thomas_Calculus/Thomas_Calculus.md)
     -   [partial_derivative](math/partial_derivative/partial_derivative.md)
--   [partial derivative](math/partial_derivative/partial_derivative.md)
+-   [probability theory](math/probability_theory.md)
