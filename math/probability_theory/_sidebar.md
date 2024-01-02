@@ -1,6 +1,4 @@
 -   [calculus](math/calculus.md)
--   [partial derivative](math/partial_derivative/partial_derivative.md)
--   [Thomas Calculus](math/Thomas_Calculus/Thomas_Calculus.md)
 -   [probability theory](math/probability_theory.md)
     -   [概率论](math/probability_theory/ch01.md)
     -   [离散机率分布](math/probability_theory/ch02.md)

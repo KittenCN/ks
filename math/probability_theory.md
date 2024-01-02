@@ -1,6 +1,8 @@
 * **probability_theory**
-    * [calculus review](ap/calculus/calculus_review.md)
-    * [CalculusOne](ap/calculus/CalculusOne.md)
-    * [CalculusOne2](ap/calculus/CalculusOne2.md)
-    * [CalculusOne_part2](ap/calculus/CalculusOne_part2.md)
-    * [partial_derivative](math/partial_derivative/ch01.md)
+    * [概率论](math/probability_theory/ch01.md)
+    * [离散机率分布](math/probability_theory/ch02.md)
+    * [连续机率分布](math/probability_theory/ch03.md)
+    * [期望值 条件概率 失忆性](math/probability_theory/ch04.md)
+    * [联合概率 边际概率 双变数期望值](math/probability_theory/ch05.md)
+    * [多个随机变量之和的概率分布](math/probability_theory/ch06.md)
+    * [随机数](math/probability_theory/ch07.md)
