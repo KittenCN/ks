@@ -20,6 +20,10 @@
 -   [Vue](web/vue.md)
 -   [Webpack](web/webpack.md)
 
+-   [Java](coding/java.md)
+-   [C++](coding/c++.md)
+-   [Python](coding/python.md)
+
 -   [浏览器](tool/browser.md)
 -   [Chrome](tool/chrome.md)
 -   [Git](tool/git.md)
