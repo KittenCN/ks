@@ -1,3 +1,4 @@
+-   [csa](ap/csa.md)
 -   [calculus](ap/calculus.md)
     -   [calculus review](ap/calculus/calculus_review.md)
     -   [CalculusOne](ap/calculus/CalculusOne.md)
