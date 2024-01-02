@@ -12,7 +12,6 @@
 [工具集合](/tool/)
 [js 知识](/tool/)
 [进阶知识](/tool/)
-[GitHub](https://github.com/Silence520/doc)
  -->
 <!-- 背景色 -->
 <!-- ![color](#f0f0f0) -->
