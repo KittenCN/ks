@@ -3,5 +3,3 @@
 -   [工具集合](/tool/)
 -   [进阶知识](/advance/)
 -   [友情链接](/about/)
--   [eTest](https://alltheblue.github.io/docs/#/)
--   [GitHub](https://github.com/xflihaibo/docs)
