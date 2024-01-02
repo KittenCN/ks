@@ -1,3 +1,3 @@
--   [calculus](ap/calculus.md)
+-   [calculus](math/calculus.md)
 -   [partial derivative](math/partial_derivative/partial_derivative.md)
 -   [Thomas Calculus](math/Thomas_Calculus/Thomas_Calculus.md)
