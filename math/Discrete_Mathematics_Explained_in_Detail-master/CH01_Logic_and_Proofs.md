@@ -1,5 +1,5 @@
 * **CH01_Logic_and_Proofs**
     * [CH01_01_Proposition_Logic_and_Propositional_Equivalences](math/Discrete_Mathematics_Explained_in_Detail-master/CH01_Logic_and_Proofs/CH01_01_Proposition_Logic_and_Propositional_Equivalences.md)
     * [CH01_02_Predicate_Logic_and_Nested_Quantifiers](math/Discrete_Mathematics_Explained_in_Detail-master/CH01_Logic_and_Proofs/CH01_02_Predicate_Logic_and_Nested_Quantifiers.md)
-    * [CH01_03_Normal_Forms_for_Propositional_Logic](math/Discrete_Mathematics_Explained_in_Detail-master/CH01_Logic_and_Proofs/CH01_03_Normal_Forms_for_Propositional_Logic.md)
+    * [CH01_03_Normal_Form](math/Discrete_Mathematics_Explained_in_Detail-master/CH01_Logic_and_Proofs/CH01_03_Normal_Form.md)
     * [CH01_04_Rules_of_Inference_and_Proofs](math/Discrete_Mathematics_Explained_in_Detail-master/CH01_Logic_and_Proofs/CH01_04_Rules_of_Inference_and_Proofs.md)
