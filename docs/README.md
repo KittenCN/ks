@@ -1,6 +1,8 @@
 # 资源下载
   
--   [资料下载](docs/coding-download.md)
+-   [编程资料](docs/coding-download.md)
+-   [学习资料](docs/student-download.md)
+-   [杂学资料](docs/other-download.md)
 
 <br />
 <img  src='./img/bjkb.PNG' width="600" alt="logo">
