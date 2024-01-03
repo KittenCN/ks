@@ -594,9 +594,9 @@ $\lim\_{x \to a}\ln f(x) = L \Rightarrow \lim\_{x \to a}\ln f(x) = \lim\_{x \to 
 推论：两个非零向量u和v的夹角是$\theta = \cos^{-1}\frac{u\cdot v}{|u||v|}$.  
 向量u和v正交，当且仅当$u\cdot v=0$  
 数$|u|\cos \theta$称为u在v方向上的数值分量。小结如下：  
-1. u在v上的向量投影 $proj_vu=\frav{u\cdot v}{|v|^2}v$  
-2. u在v上的数值分量 $|u|\cos \theta = \frav{u\cdot v}{|v|} = u\cdot \frac{v}{|v|}$  
-把一个向量写成正交向量的和：$u=proj_vu+(u-proj_vu)=\frav{u\cdot v}{|v|^2}v+(u-\frav{u\cdot v}{|v|^2}v)$  
+1. u在v上的向量投影 $proj_vu=\frac{u\cdot v}{|v|^2}v$  
+2. u在v上的数值分量 $|u|\cos \theta = \frac{u\cdot v}{|v|} = u\cdot \frac{v}{|v|}$  
+把一个向量写成正交向量的和：$u=proj_vu+(u-proj_vu)=\frac{u\cdot v}{|v|^2}v+(u-\frac{u\cdot v}{|v|^2}v)$  
   
 ## 向量-值函数
 利用向量计算研究平面上一个运动物体的路径，速度和加速度.  
