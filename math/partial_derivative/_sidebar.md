@@ -6,4 +6,4 @@
     -   [Thomas Calculus](math/Thomas_Calculus/Thomas_Calculus.md)
     -   [partial_derivative](math/partial_derivative/partial_derivative.md)
 -   [probability theory](math/probability_theory.md)
--   [Discrete_Mathematics_Explained_in_Detail](math/Discrete_Mathematics_Explained_in_Detail.md)
+-   [Discrete_Mathematics_Explained_in_Detail-master](math/Discrete_Mathematics_Explained_in_Detail-master.md)

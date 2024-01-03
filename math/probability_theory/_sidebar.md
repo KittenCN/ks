@@ -7,4 +7,4 @@
     -   [联合概率 边际概率 双变数期望值](math/probability_theory/ch05.md)
     -   [多个随机变量之和的概率分布](math/probability_theory/ch06.md)
     -   [随机数](math/probability_theory/ch07.md)
--   [Discrete_Mathematics_Explained_in_Detail](math/Discrete_Mathematics_Explained_in_Detail.md)
+-   [Discrete_Mathematics_Explained_in_Detail-master](math/Discrete_Mathematics_Explained_in_Detail-master.md)

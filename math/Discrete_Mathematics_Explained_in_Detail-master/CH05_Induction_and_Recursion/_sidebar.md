@@ -1,6 +1,6 @@
 -   [calculus](math/calculus.md)
 -   [probability theory](math/probability_theory.md)
--   [Discrete_Mathematics_Explained_in_Detail](math/Discrete_Mathematics_Explained_in_Detail.md)
+-   [Discrete_Mathematics_Explained_in_Detail-master](math/Discrete_Mathematics_Explained_in_Detail-master.md)
     -   [CH01_Logic_and_Proofs](math/Discrete_Mathematics_Explained_in_Detail-master/CH01_Logic_and_Proofs.md)
     -   [CH02_Basic_Structures](math/Discrete_Mathematics_Explained_in_Detail-master/CH02_Basic_Structures.md)
     -   [CH03_Algorithms](math/Discrete_Mathematics_Explained_in_Detail-master/CH03_Algorithms.md)
