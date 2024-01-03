@@ -1,4 +1,6 @@
 # 资源下载
+  
+-   [资料下载](docs/download.md)
 
 <br />
 <img  src='./img/bjkb.PNG' width="600" alt="logo">
