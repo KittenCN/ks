@@ -1,7 +1,7 @@
 # 1\. AP计算机示例考题：多项选择  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 for (int k = 0; k < 20; k = k + 2){  
   if (k % 3 == 1)  
   {  
@@ -14,25 +14,25 @@ What is printed as a result of executing the code segment?
   
   
   
-```Plain Text  
+```java  
 4 16  
 ```  
-```Plain Text  
+```java  
 4 10 16  
 ```  
-```Plain Text  
+```java  
 0 6 12 18  
 ```  
-```Plain Text  
+```java  
 1 4 7 10 13 16 19  
 ```  
-```Plain Text  
+```java  
 0 2 4 6 8 10 12 14 16 18  
 ```  
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 List animals = new ArrayList();  
   
 animals.add("dog");  
@@ -47,19 +47,19 @@ What is printed as a result of executing the code segment?
   
   
   
-```Plain Text  
+```java  
 [dog, fish, cat]  
 ```  
-```Plain Text  
+```java  
 [dog, fish, lizard]  
 ```  
-```Plain Text  
+```java  
 [dog, lizard, fish]  
 ```  
-```Plain Text  
+```java  
 [fish, dog, cat]  
 ```  
-```Plain Text  
+```java  
 The code throws an ArrayIndexOutOfBoundsException exception.  
 ```  
   
@@ -82,19 +82,19 @@ What will `values` contain as a result of executing `mystery(values)`?
   
   
   
-```Plain Text  
+```java  
 [0, 0, 4, 2, 5, 0, 3, 0]  
 ```  
-```Plain Text  
+```java  
 [4, 2, 5, 3]  
 ```  
-```Plain Text  
+```java  
 [0, 0, 0, 0, 4, 2, 5, 3]  
 ```  
-```Plain Text  
+```java  
 [0, 4, 2, 5, 3]  
 ```  
-```Plain Text  
+```java  
  The code throws an ArrayIndexOutOfBoundsException exception.  
 ```  
   
@@ -112,7 +112,7 @@ At a certain high school students receive letter grades based on the following s
 Which of the following code segments will assign the correct string to `grade` for a given integer `score`?  
 I.  
   
-```Plain Text  
+```java  
 if (score >= 93) grade = "A";  
 if (score >= 84 && score <= 92) grade = "B";  
 if (score >= 75 && score <= 83) grade = "C";  
@@ -120,7 +120,7 @@ if (score < 75) grade = "F";
 ```  
 II.  
   
-```Plain Text  
+```java  
 if (score >= 93) grade = "A";  
 if (84 <= score <= 92) grade = "B";  
 if (75 <= score <= 83) grade = "C";  
@@ -128,7 +128,7 @@ if (score < 75) grade = "F";
 ```  
 III.  
   
-```Plain Text  
+```java  
 if (score >= 93) grade = "A";  
 else if (score >= 84) grade = "B";  
 else if (score >= 75) grade = "C";  
@@ -159,7 +159,7 @@ Which of the following code segments will produce this output?
   
   
   
-```Plain Text  
+```java  
 for (int j = 1; j <= 5; j++) {  
  for (int k = 1; k <= 5; k++) {  
   System.out.print(j + "  ");  
@@ -167,7 +167,7 @@ for (int j = 1; j <= 5; j++) {
  System.out.println();  
 }  
 ```  
-```Plain Text  
+```java  
 for (int j = 1; j <= 5; j++) {  
  for (int k = 1; k <= j; k++) {  
   System.out.print(j + "  ");  
@@ -175,7 +175,7 @@ for (int j = 1; j <= 5; j++) {
  System.out.println();  
 }  
 ```  
-```Plain Text  
+```java  
 for (int j = 1; j <= 5; j++) {  
  for (int k = 5; k >= 1; k--) {  
   System.out.print(j + "  ");  
@@ -183,7 +183,7 @@ for (int j = 1; j <= 5; j++) {
  System.out.println();  
 }  
 ```  
-```Plain Text  
+```java  
 for (int j = 1; j <= 5; j++) {  
  for (int k = 5; k >= j; k--) {  
   System.out.print(j + "  ");  
@@ -191,7 +191,7 @@ for (int j = 1; j <= 5; j++) {
  System.out.println();  
 }  
 ```  
-```Plain Text  
+```java  
 for (int j = 1; j <= 5; j++) {  
  for (int k = j; k <= 5; k++) {  
   System.out.print(k + "  ");  
@@ -215,7 +215,7 @@ A car dealership needs a program to store information about the cars for sale. F
 ---  
 Consider the following declarations.  
   
-```Plain Text  
+```java  
 public interface Shape {  
  int isLargerThan(Shape other);  
  // Other methods not shown  
@@ -240,7 +240,7 @@ III. `public boolean isLargerThan(Object other)`
  I, II, and III  
   
 ---  
-```Plain Text  
+```java  
 public class TimeRecord {  
  private int hours;  
  private int minutes; // 0 < minutes < 60  
@@ -277,21 +277,21 @@ Which of the following can be used to replace /\* missing code \*/ so that `adv
   
   
   
-```Plain Text  
+```java  
 minutes = minutes % 60;  
 ```  
-```Plain Text  
+```java  
 minutes = minutes + hours % 60;  
 ```  
-```Plain Text  
+```java  
 hours = hours + minutes / 60;  
 minutes = minutes % 60;  
 ```  
-```Plain Text  
+```java  
 hours = hours + minutes % 60;  
 minutes = minutes / 60;  
 ```  
-```Plain Text  
+```java  
 hours = hours + minutes / 60;  
 ```  
 ---  
@@ -299,7 +299,7 @@ Consider the following declaration that appears in a class other than `TimeReco
 `TimeRecord[] timeCards = new TimeRecord[100];`  
 Assume that `timeCards` has been initialized with `TimeRecord` objects. Consider the following code segment that is intended to compute the total of all the times stored in `timeCards`.  
   
-```Plain Text  
+```java  
 TimeRecord total = new TimeRecord(0,0);  
 for (int k = 0; k < timeCards.length; k++)  
 {  
@@ -310,26 +310,26 @@ Which of the following can be used to replace /\* missing expression \*/ so that
   
   
   
-```Plain Text  
+```java  
 timeCards[k].advance()  
 ```  
-```Plain Text  
+```java  
 total += timeCards[k].advance()  
 ```  
-```Plain Text  
+```java  
 total.advance(timeCards[k].hours, timeCards[k].minutes)  
 ```  
-```Plain Text  
+```java  
 total.advance(timeCards[k].getHours(), timeCards[k].getMinutes())  
 ```  
-```Plain Text  
+```java  
 timeCards[k].advance(timeCards[k].getHours(), timeCards[k].getMinutes())  
 ```  
 ---  
 Consider the following instance variable and method.  
 `private int[] arr;`  
   
-```Plain Text  
+```java  
 /** Precondition: arr contains no duplicates;  
  *             the elements in arr are in ascending order.  
  *  @param low an int value such that 0 <= low <= arr.length  
@@ -422,7 +422,7 @@ Which of the following changes should be made so that method `findLongest` wil
 ---  
 Consider the following instance variable and method.  
   
-```Plain Text  
+```java  
 private int[] numbers;  
   
 /**    Precondition: numbers contains int values in no particular order.  
@@ -452,7 +452,7 @@ Which of the following best describes the contents of `numbers` after the foll
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 /** @param x an int value such that x >= 0  
  */  
 public void mystery(int x) {  
@@ -467,16 +467,16 @@ Which of the following is printed as a result of the call `mystery(1234)`?
   
   
   
-```Plain Text  
+```java  
 1234  
 ```  
-```Plain Text  
+```java  
 4321  
 ```  
-```Plain Text  
+```java  
 12344321  
 ```  
-```Plain Text  
+```java  
 43211234  
 ```  
  Many digits are printed due to infinite recursion.  
@@ -484,7 +484,7 @@ Which of the following is printed as a result of the call `mystery(1234)`?
 ---  
 Consider the following two classes.  
   
-```Plain Text  
+```java  
 public class Dog {  
  public void act() {  
   System.out.print("run ");  
@@ -511,16 +511,16 @@ What is printed as a result of the call `fido.act()`?
   
   
   
-```Plain Text  
+```java  
 run eat  
 ```  
-```Plain Text  
+```java  
 run eat sleep  
 ```  
-```Plain Text  
+```java  
 run eat sleep bark  
 ```  
-```Plain Text  
+```java  
 run eat bark sleep  
 ```  
  Many digits are printed due to infinite recursion.  
@@ -528,7 +528,7 @@ run eat bark sleep
 ---  
 Consider the following recursive method.  
   
-```Plain Text  
+```java  
 public static int mystery(int n) {  
  if (n <= 1) {  
   return 0;  
@@ -552,7 +552,7 @@ Assuming that k is a nonnegative integer and m=2^k, what value is returned as a 
 ---  
 Consider the following instance variable and method.  
   
-```Plain Text  
+```java  
 private int[] array;  
   
 /** Precondition: array.length > 0  
@@ -582,7 +582,7 @@ Which of the following is the best postcondition for `checkArray`?
 ---  
 Consider the following methods.  
   
-```Plain Text  
+```java  
 public void changer(String x, int y) {  
  x = x + "peace";  
  y = y * 2;  
@@ -610,7 +610,7 @@ When the call `test()` is executed, what are the values of `s` and `n` at 
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int[][] mat = new int[3][4];  
 for (int row = 0; row < mat.length; row++) {  
  for (int col = 0; col < mat[0].length; col++) {  
@@ -628,25 +628,25 @@ What are the contents of `mat` after the code segment has been executed?
   
   
   
-```Plain Text  
+```java  
 {{2, 1, 1}, {3, 2, 1}, {3, 3, 2}, {3, 3, 3}}  
 ```  
-```Plain Text  
+```java  
 {{2, 3, 3}, {1, 2, 3}, {1, 1, 2}, {1, 1, 1}}  
 ```  
-```Plain Text  
+```java  
 {{2, 3, 3, 3}, {1, 2, 3, 3}, {1, 1, 2, 3}}  
 ```  
-```Plain Text  
+```java  
 {{2, 1, 1, 1}, {3, 2, 1, 1}, {3, 3, 2, 1}}  
 ```  
-```Plain Text  
+```java  
 {{1, 1, 1, 1}, {2, 2, 2, 2}, {3, 3, 3, 3}}  
 ```  
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 /** Precondition: arr contains only positive values.  
  */  
 public static void doSome(int[] arr, int lim) {  
@@ -681,7 +681,7 @@ Assume that `doSome` is called and executes without error. Which of the follow
 ---  
 Consider the following instance variable, `arr`, and incomplete method, `partialSum`. The method is intended to return an integer array `sum` such that for all `k`, `sum[k]` is equal to `arr[0] + arr[1] + ... + arr[k]`. For instance, if `arr` contains the values `{ 1, 4, 1, 3 }`, the array `sum` will contain the values `{ 1, 5, 6, 9 }`.  
   
-```Plain Text  
+```java  
 private int[] arr;  
 public int[] partialSum() {  
  int[] sum = new int[arr.length];  
@@ -695,14 +695,14 @@ public int[] partialSum() {
 The following two implementations of /\* missing code \*/ are proposed so that `partialSumwill` work as intended.  
 Implementation 1  
   
-```Plain Text  
+```java  
 for (int j = 0; j < arr.length; j++) {  
  sum[j] = sum[j - 1] + arr[j];  
 }  
 ```  
 Implementation 2  
   
-```Plain Text  
+```java  
 for (int j = 0; j < arr.length; j++) {  
  for (int k = 0; k <= j; k++) {  
   sum[j] = sum[j] + arr[k];  
@@ -724,7 +724,7 @@ Which of the following statements is true?
 ---  
 Consider the following declaration for a class that will be used to represent points in the xy-coordinate plane.  
   
-```Plain Text  
+```java  
 public class Point {  
  private int x; // x-coordinate of the point  
  private int y; // y-coordinate of the point  
@@ -740,7 +740,7 @@ public class Point {
 ```  
 The following incomplete class declaration is intended to extend the above class so that points can be named.  
   
-```Plain Text  
+```java  
 public class NamedPoint extends Point {  
  private String name; // name of point  
  // Constructors go here  
@@ -750,14 +750,14 @@ public class NamedPoint extends Point {
 Consider the following proposed constructors for this class.  
 I.  
   
-```Plain Text  
+```java  
 public NamedPoint() {  
  name = "";  
 }  
 ```  
 II.  
   
-```Plain Text  
+```java  
 public NamedPoint(int d1, int d2, String pointName) {  
  x = d1;  
  y = d2;  
@@ -766,7 +766,7 @@ public NamedPoint(int d1, int d2, String pointName) {
 ```  
 III.  
   
-```Plain Text  
+```java  
 public NamedPoint(int d1, int d2, String pointName) {  
  super(d1, d2);  
  name = pointName;  
@@ -792,7 +792,7 @@ Consider a `shuffle` method that is intended to return a new array that contai
   
 The following implementation of the `shuffle` method does not work as intended.  
   
-```Plain Text  
+```java  
 public static int[] shuffle(int[] nums) {  
  int n = nums.length;  
  int[] result = new int[n];  
@@ -818,7 +818,7 @@ Which of the following best describes the problem with the given implementation 
 ---  
 Consider the following `Util` class, which contains two methods. The completed `sum1D` method returns the sum of all the elements of the 1-dimensional array `a`.The incomplete `sum2D` method is intended to return the sum of all the elements of the 2-dimensional array `m`.  
   
-```Plain Text  
+```java  
 public class Util {  
  /** Returns the sum of the elements of the 1-dimensional array a */  
  public static int sum1D(int[] a) {  
@@ -838,21 +838,21 @@ public class Util {
 Assume that `sum1D` works correctly. Which of the following can replace /*missing code*/ so that the `sum2D` method works correctly?  
 I.  
   
-```Plain Text  
+```java  
 for (int k = 0; k < m.length; k++) {  
  sum += sum1D(m[k]);  
 }  
 ```  
 II.  
   
-```Plain Text  
+```java  
 for (int[] row: m) {  
  sum += sum1D(row);  
 }  
 ```  
 III.  
   
-```Plain Text  
+```java  
 for (int[] row: m) {  
  for (int v: row) {  
   sum += v;  
@@ -872,7 +872,7 @@ for (int[] row: m) {
 ---  
 The following `sort` method correctly sorts the integers in `elements` into ascending order.  
   
-```Plain Text  
+```java  
 public static void sort(int[] elements)  
 {  
  for (int j = 0; j < elements.length - 1; j++)  
@@ -896,24 +896,24 @@ public static void sort(int[] elements)
 Which of the following changes to the `sort` method would correctly sort the integers in `elements` into **descending** order?  
 I. Replace line 9 with:  
   
-```Plain Text  
+```java  
 if (elements[k] > elements[index])  
 ```  
 II. Replace lines 15-17 with:  
   
-```Plain Text  
+```java  
 int temp = elements[index];  
 elements[index] = elements[j];  
 elements[j] = temp;  
 ```  
 III. Replace line 3 with:  
   
-```Plain Text  
+```java  
 for (int j = elements.length - 1; j > 0; j--)  
 ```  
 and replace line 7 with:  
   
-```Plain Text  
+```java  
 for (int k = 0; k < j; k++)  
 ```  
  I only  

@@ -1,7 +1,7 @@
 # 2\. AP计算机2015年考试：多项选择  
 Consider the following incomplete method, which is intended to return the number of integers that evenly divide the integer `inputVal`. Assume that `inputVal` is greater than 0.  
   
-```Plain Text  
+```java  
 public static int numDivisors(int inputVal)  
 {  
     int count = 0;  
@@ -20,25 +20,25 @@ Which of the following can be used to replace /\* condition \*/ so that `numDiv
   
   
   
-```Plain Text  
+```java  
 inputVal % k == 0  
 ```  
-```Plain Text  
+```java  
 k % inputVal == 0  
 ```  
-```Plain Text  
+```java  
 inputVal % k != 0  
 ```  
-```Plain Text  
+```java  
 inputVal / k == 0  
 ```  
-```Plain Text  
+```java  
 k / inputVal > 0  
 ```  
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 for (int r = 3; r > 0; r--)  
 {  
     int c;  
@@ -80,7 +80,7 @@ What is printed as a result of executing the code segment?
 ---  
 Consider the following two classes.  
   
-```Plain Text  
+```java  
 public class A  
 {  
     public void show()  
@@ -99,21 +99,21 @@ public class B extends A
 ```  
 What is printed as a result of executing the following code segment?  
   
-```Plain Text  
+```java  
 A obj = new B();  
 obj.show();  
   
 ```  
-```Plain Text  
+```java  
 A  
 ```  
-```Plain Text  
+```java  
 B  
 ```  
-```Plain Text  
+```java  
 AB  
 ```  
-```Plain Text  
+```java  
 BA  
 ```  
  The code results in a runtime error.  
@@ -121,7 +121,7 @@ BA
 ---  
 Consider the following instance variable and method.  
   
-```Plain Text  
+```java  
 private int[] arr;  
   
 /** Precondition: arr.length > 0  
@@ -158,32 +158,32 @@ Method `findMax` is intended to return the largest value in the array `arr`. 
 ---  
 Assume that `x` and `y` are `boolean` variables and have been properly initialized.  
   
-```Plain Text  
+```java  
 (x || y) && x  
 ```  
 Which of the following always evaluates to the same value as the expression above?    
   
   
   
-```Plain Text  
+```java  
 x  
 ```  
-```Plain Text  
+```java  
 y  
 ```  
-```Plain Text  
+```java  
 x && y  
 ```  
-```Plain Text  
+```java  
 x || y  
 ```  
-```Plain Text  
+```java  
 x != y  
 ```  
 ---  
 Consider the following method, which is intended to return `true` if at least one of the three strings `s1`, `s2`, or `s3` contains the substring `art`. Otherwise, the method should return `false`.  
   
-```Plain Text  
+```java  
 public static boolean containsArt(String s1, String s2, String s3)  
 {  
     String all = s1 + s2 + s3;  
@@ -196,25 +196,25 @@ Which of the following method calls demonstrates that the method does **not** 
   
   
   
-```Plain Text  
+```java  
 containsArt("rattrap", "similar", "today")  
 ```  
-```Plain Text  
+```java  
 containsArt("start", "article", "Bart")  
 ```  
-```Plain Text  
+```java  
 containsArt("harm", "chortle", "crowbar")  
 ```  
-```Plain Text  
+```java  
 containsArt("matriculate", "carat", "arbitrary")  
 ```  
-```Plain Text  
+```java  
 containsArt("darkroom", "cartoon", "articulate")  
 ```  
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 for (int outer = 1; outer <= 6; outer ++)  
 {  
     for (int inner = outer; inner <=6; inner ++)  
@@ -265,7 +265,7 @@ What will be printed as a result of executing the code segment?
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public static int[] operation(int[][] matrix, int r, int c)  
 {  
     int[] result = new int[matrix.length];  
@@ -280,7 +280,7 @@ public static int[] operation(int[][] matrix, int r, int c)
 ```  
 The following code segment appears in another method in the same class.  
   
-```Plain Text  
+```java  
 int[][] mat = {{3, 2, 1, 4},  
                 {1, 2, 3, 4},  
                 {2, 2, 1, 3},  
@@ -293,50 +293,50 @@ Which of the following represents the contents of `arr` as a result of executi
   
   
   
-```Plain Text  
+```java  
 {6, 4, 2, 4}  
 ```  
-```Plain Text  
+```java  
 {1, 6, 3, 4}  
 ```  
-```Plain Text  
+```java  
 {4, 3, 6, 1}  
 ```  
-```Plain Text  
+```java  
 {4, 4, 2, 2}  
 ```  
-```Plain Text  
+```java  
 {2, 2, 4, 4}  
 ```  
 ---  
 A pair of number cubes is used in a game of chance. Each number cube has six sides, numbered from 1 to 6, inclusive, and there is an equal probability for each of the numbers to appear on the top side (indicating the cube’s value) when the number cube is rolled. The following incomplete statement appears in a program that computes the sum of the values produced by rolling two number cubes.  
   
-```Plain Text  
+```java  
 int sum = /* missing code */;  
 ```  
 Which of the following replacements for /\* missing code \*/ would best simulate the value produced as a result of rolling two number cubes?    
   
   
   
-```Plain Text  
+```java  
 2 * (int) (Math.random() * 6)  
 ```  
-```Plain Text  
+```java  
 2 * (int) (Math.random() * 7)  
 ```  
-```Plain Text  
+```java  
 (int) (Math.random() * 6) + (int) (Math.random() * 6)  
 ```  
-```Plain Text  
+```java  
 (int) (Math.random() * 13)  
 ```  
-```Plain Text  
+```java  
 2 + (int) (Math.random() * 6) + (int) (Math.random() * 6)  
 ```  
 ---  
 Consider the following interface and class declarations.  
   
-```Plain Text  
+```java  
 public interface Student  
 { /* implementation not shown */ }  
   
@@ -351,25 +351,25 @@ Assume that each class has a zero-parameter constructor. Which of the following 
   
   
   
-```Plain Text  
+```java  
 Student a = new TennisPlayer()  
 ```  
-```Plain Text  
+```java  
 TennisPlayer b = new TennisPlayer()  
 ```  
-```Plain Text  
+```java  
 Athlete c = new TennisPlayer()  
 ```  
-```Plain Text  
+```java  
 Student d = new Athlete();  
 ```  
-```Plain Text  
+```java  
 Athlete e = new Athlete();  
 ```  
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public static boolean mystery(String str)  
 {  
     String temp = "";  
@@ -387,25 +387,25 @@ Which of the following calls to `mystery` will return `true`?
   
   
   
-```Plain Text  
+```java  
 mystery("no")  
 ```  
-```Plain Text  
+```java  
 mystery("on")  
 ```  
-```Plain Text  
+```java  
 mystery("nnoo")  
 ```  
-```Plain Text  
+```java  
 mystery("nono")  
 ```  
-```Plain Text  
+```java  
 mystery("noon")  
 ```  
 ---  
 Assume that `x` and `y` are `boolean` variables and have been properly initialized.  
   
-```Plain Text  
+```java  
 (x && y) && !(x || y)  
 ```  
 Which of the following best describes the result of evaluating the expression above?  
@@ -423,7 +423,7 @@ Which of the following best describes the result of evaluating the expression ab
 ---  
 Consider the following instance variable and method.  
   
-```Plain Text  
+```java  
 private int[] numbers;  
   
 public void mystery(int x)  
@@ -437,32 +437,32 @@ public void mystery(int x)
 ```  
 Assume that `numbers` has been initialized with the following values.  
   
-```Plain Text  
+```java  
 {17, 34, 21, 42, 15, 69, 48, 25, 39}  
 ```  
 Which of the following represents the order of the values in `numbers` as a result of the call `mystery(3)`?  
   
   
   
-```Plain Text  
+```java  
 {17, 20, 21, 42, 45, 69, 48, 51, 39}  
 ```  
-```Plain Text  
+```java  
 {17, 20, 23, 26, 29, 32, 35, 38, 41}  
 ```  
-```Plain Text  
+```java  
 {17, 37, 21, 42, 18, 69, 48, 28, 39}  
 ```  
-```Plain Text  
+```java  
 {20, 23, 21, 42, 45, 69, 51, 54, 39}  
 ```  
-```Plain Text  
+```java  
 {20, 34, 21, 45, 15, 69, 51, 25, 39}  
 ```  
 ---  
 Consider the following method, `biggest`, which is intended to return the greatest of three integers. It does not always work as intended.  
   
-```Plain Text  
+```java  
 public static int biggest(int a, int b, int c)  
 {  
     if ((a > b) && （a > c))  
@@ -495,7 +495,7 @@ Which of the following best describes the error in the method?
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public static void showMe(int arg)  
 {  
     if (arg < 10)  
@@ -513,25 +513,25 @@ What will be printed as a result of the call `showMe(0)`?
   
   
   
-```Plain Text  
+```java  
 10  
 ```  
-```Plain Text  
+```java  
 11  
 ```  
-```Plain Text  
+```java  
 0 1 2 3 4 5 6 7 8 9  
 ```  
-```Plain Text  
+```java  
 9 8 7 6 5 4 3 2 1 0  
 ```  
-```Plain Text  
+```java  
 0 1 2 3 4 5 6 7 8 9 10  
 ```  
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 /** Precondition: values has at least one row */  
 public static int calculate(int [][] values)  
 {  
@@ -567,7 +567,7 @@ Which of the following best describes what is returned by the `calculate` meth
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 /** Precondition: num > 0 */  
 public static int doWhat(int num)  
 {  
@@ -585,7 +585,7 @@ Which of the following best describes the value returned from a call to `doWhat
   
   
   
-```Plain Text  
+```java  
 num  
 ```  
  The sum of all integers between `1` and `num`, inclusive  
@@ -599,28 +599,28 @@ num
 ---  
 What is printed as a result of executing the following statement?  
   
-```Plain Text  
+```java  
 System.out.println(404 / 10 * 10 + 1);  
 ```  
-```Plain Text  
+```java  
 4  
 ```  
-```Plain Text  
+```java  
 5  
 ```  
-```Plain Text  
+```java  
 41  
 ```  
-```Plain Text  
+```java  
 401  
 ```  
-```Plain Text  
+```java  
 405  
 ```  
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int x = 1;  
 while ( /* condition */ )  
 {  
@@ -653,7 +653,7 @@ For which of the conditions will nothing be printed?
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 /** Precondition: arr.length > 0 */  
 public static int mystery(int[] arr)  
 {  
@@ -698,7 +698,7 @@ Assume that `nums` has been declared and initialized as an array of integer va
 ---  
 Consider the following recursive method.  
   
-```Plain Text  
+```java  
 public static void whatsItDo(String str)  
 {  
     int len = str.length();  
@@ -715,10 +715,10 @@ What is printed as a result of the call `whatsItDo("WATCH")`?
   
   
   
-```Plain Text  
+```java  
 H  
 ```  
-```Plain Text  
+```java  
 WATC  
 ```  
 ```java  
@@ -742,7 +742,7 @@ WA
 ---  
 Consider the following definition.  
   
-```Plain Text  
+```java  
 int[][] numbers = {{1, 2, 3},  
                     {4, 5, 6}};  
   
@@ -751,7 +751,7 @@ Which of the following code segments produces the output `123456`?
   
   
   
-```Plain Text  
+```java  
 for (int[] row : numbers)  
 {  
     for (int n : row)  
@@ -760,7 +760,7 @@ for (int[] row : numbers)
     }  
 }  
 ```  
-```Plain Text  
+```java  
 for (int[] row : numbers)  
 {  
     for (int n : row)  
@@ -769,13 +769,13 @@ for (int[] row : numbers)
     }  
 }  
 ```  
-```Plain Text  
+```java  
 for (int rc = 0; rc < numbers.length; rc++)  
 {  
     System.out.print(numbers[rc]);  
 }  
 ```  
-```Plain Text  
+```java  
 for (int r = 0; r < numbers[0].length; r++)  
 {  
     for (int c = 0; c < numbers.length; c++)  
@@ -784,7 +784,7 @@ for (int r = 0; r < numbers[0].length; r++)
     }  
 }  
 ```  
-```Plain Text  
+```java  
 for (int c = 0; r < numbers[0].length; r++)  
 {  
     for (int r = 0; c < numbers.length; c++)  
@@ -796,7 +796,7 @@ for (int c = 0; r < numbers[0].length; r++)
 ---  
 Consider the following code segment from an insertion sort program.  
   
-```Plain Text  
+```java  
 for (int j = 1; j < arr.length; j++)  
 {  
     int insertItem = arr[j];   
@@ -817,25 +817,25 @@ Assume that array `arr` has been defined and initialized with the values `{5,
   
   
   
-```Plain Text  
+```java  
 {2, 3, 4, 5, 1}  
 ```  
-```Plain Text  
+```java  
 {3, 2, 1, 4, 5}  
 ```  
-```Plain Text  
+```java  
 {3, 4, 5, 2, 1}  
 ```  
-```Plain Text  
+```java  
 {3, 5, 2, 3, 1}  
 ```  
-```Plain Text  
+```java  
 {5, 3, 4, 2, 1}  
 ```  
 ---  
 Consider the following class.  
   
-```Plain Text  
+```java  
 public class SomeMethods  
 {  
     public void one(int first)  
@@ -868,7 +868,7 @@ III. `public void one(int first, int second, int thrid)`
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int count = 0;  
   
 for (int x = 0; x < 4; x++)  
@@ -885,25 +885,25 @@ What is printed as a result of executing the code segment.
   
   
   
-```Plain Text  
+```java  
 4  
 ```  
-```Plain Text  
+```java  
 8  
 ```  
-```Plain Text  
+```java  
 10  
 ```  
-```Plain Text  
+```java  
 16  
 ```  
-```Plain Text  
+```java  
 20  
 ```  
 ---  
 Consider the following two methods, which appear within a single class.  
   
-```Plain Text  
+```java  
 public static void changeIt(int[] arr, int val, String word)  
 {  
     arr = new int[5];  
@@ -938,25 +938,25 @@ What is printed as a result of the call `start()`?
   
   
   
-```Plain Text  
+```java  
 0 0 0 0 0 0 black  
 ```  
-```Plain Text  
+```java  
 0 0 0 0 0 6 blackboard  
 ```  
-```Plain Text  
+```java  
 1 2 3 4 5 6 black  
 ```  
-```Plain Text  
+```java  
 1 2 3 4 5 0 black  
 ```  
-```Plain Text  
+```java  
 1 2 3 4 5 6 blackboard  
 ```  
 ---  
 Consider the following `sort` method. This method correctly sorts the elements of array `data` into increasing order.  
   
-```Plain Text  
+```java  
 public static void sort(int[] data)  
 {  
     for (int j = 0; j < data.length - 1; j++)  
@@ -982,19 +982,19 @@ Assume that `sort` is called with the array `{6 ,3, 2, 5, 4, 1}`. What will t
   
   
   
-```Plain Text  
+```java  
 {1, 2, 3, 4, 5, 6}  
 ```  
-```Plain Text  
+```java  
 {1, 2, 3, 5, 4, 6}  
 ```  
-```Plain Text  
+```java  
 {1, 2, 3, 6, 5, 4}  
 ```  
-```Plain Text  
+```java  
 {1, 3, 2, 4, 5, 6}  
 ```  
-```Plain Text  
+```java  
 {1, 3, 2, 5, 4, 6}  
 ```  
 ---  
@@ -1013,7 +1013,7 @@ Assume that `sort` is called with the array `{1, 2, 3, 4, 5, 6}`. How many ti
 ---  
 Consider the following recursive method.  
   
-```Plain Text  
+```java  
 /** Precondition: num>=0 */  
 public static int what(int num)  
 {  
@@ -1051,7 +1051,7 @@ The price per box of ink pens advertised in an office supply catalog is based on
   
 The following incomplete method is intended to return the total cost of an order based on the value of the parameter `numBoxes`.  
   
-```Plain Text  
+```java  
 /** Precondition: numBoxes>0 */  
 public static double getCost(int numBoxes)  
 {  
@@ -1067,7 +1067,7 @@ Which of the following code segments can be used to replace /\* missing code \*/
   
 I.  
   
-```Plain Text  
+```java  
 if (numBoxes >= 10)  
 {  
     totalCost = numBoxes * 1.50;  
@@ -1084,7 +1084,7 @@ if (numBoxes > 0)
 ```  
 II.  
   
-```Plain Text  
+```java  
 if (numBoxes >= 10)  
 {  
     totalCost = numBoxes * 1.50;  
@@ -1101,7 +1101,7 @@ else
 ```  
 III.  
   
-```Plain Text  
+```java  
 if (numBoxes > 0)  
 {  
     totalCost = numBoxes * 5.00;  
@@ -1129,7 +1129,7 @@ else if (numBoxes >= 10)
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 String[][] board = new String[5][5];  
 for (int row = 0; raw < 5; row++)  
 {  
@@ -1172,7 +1172,7 @@ Which of the following represents `board` after this code segment is executed?
 ---  
 Consider the following class declaration.  
   
-```Plain Text  
+```java  
 public class StudentInfo  
 {  
     private String major;  
@@ -1190,7 +1190,7 @@ public class StudentInfo
 ```  
 The following instance variable and method appear in another class.  
   
-```Plain Text  
+```java  
 private List students;  
   
 /** @return the average age of students with the given major;  
@@ -1220,35 +1220,35 @@ Which of the following could be used to replace /\* missing code \*/ so that `a
   
   
   
-```Plain Text  
+```java  
 if (theMajor.equals(k.major))  
 {  
     sum += k.age;  
     count++  
 }  
 ```  
-```Plain Text  
+```java  
 if (theMajor.equals(k.getMajor()))  
 {  
     sum += k.getAge();  
     count++  
 }  
 ```  
-```Plain Text  
+```java  
 if (theMajor.equals(k.major))  
 {  
     sum += k.getAge();  
     count++  
 }  
 ```  
-```Plain Text  
+```java  
 if (theMajor.equals(students[k].getMajor()))  
 {  
     sum += students[k].getAge();  
     count++  
 }  
 ```  
-```Plain Text  
+```java  
 if (theMajor.equals(getMajor(k)))  
 {  
     sum += getAge(k);  
@@ -1273,7 +1273,7 @@ Consider the problem of finding the maximum value in an array of integers. The f
   
 I.  
   
-```Plain Text  
+```java  
 int max = Integer.MIN_VALUE;  
 for (int value : arr)  
 {  
@@ -1285,7 +1285,7 @@ for (int value : arr)
 ```  
 II.  
   
-```Plain Text  
+```java  
 int max = 0;  
 boolean first = true;  
 for (int value : arr)  
@@ -1303,7 +1303,7 @@ for (int value : arr)
 ```  
 III.  
   
-```Plain Text  
+```java  
 int max = arr[0];  
 for (int k = 1; k <  arr.length; k++)  
 {  
@@ -1328,7 +1328,7 @@ Which of the code segments will always correctly assign the maximum element of t
 ---  
 Consider the following instance variable and method. Method `wordsWithCommas` is intended to return a string containing all the words in `listOfWords` contains `["one", "two", "three"]`, the string returned by the call `wordsWithCommas()` should be `"{one, two, three}"`.  
   
-```Plain Text  
+```java  
 private List listOfWords;  
   
 public String wordsWithCommas()  
@@ -1367,7 +1367,7 @@ Which of the following can be used to replace /\* expression \*/ and /\* conditi
 ---  
 Consider the following `binarySearch` method. The method correctly performs a binary search.  
   
-```Plain Text  
+```java  
 /** Precondition: data is sorted in increasing order. */  
 public static int binarySearch(int[] data, int target)  
 {  
@@ -1398,19 +1398,19 @@ What value is returned by the call `binarySearch(values, target)`?
   
   
   
-```Plain Text  
+```java  
 -1  
 ```  
-```Plain Text  
+```java  
 3  
 ```  
-```Plain Text  
+```java  
 5  
 ```  
-```Plain Text  
+```java  
 6  
 ```  
-```Plain Text  
+```java  
 8  
 ```  
 ---  
@@ -1429,7 +1429,7 @@ Suppose the `binarySearch` method is called with an array containing 2,000 ele
 ---  
 Consider the following incomplete method that is intended to return a string formed by concatenating elements from the parameter `words`. The elements to be concatenated start with `startIndex` and continue through the last element of `words` and should appear in reverse order in the resulting string.  
   
-```Plain Text  
+```java  
 /** Precondition: words. length > 0;  
  *        startIndex >= 0  
  */  
@@ -1454,7 +1454,7 @@ The following three code segments have been proposed as replacements for /\* mis
   
 I.  
   
-```Plain Text  
+```java  
 for (int k = startIndex; k < words.length; k++)  
 {  
     result += words[k] + words[words.length - k - 1];  
@@ -1463,7 +1463,7 @@ for (int k = startIndex; k < words.length; k++)
 ```  
 II.  
   
-```Plain Text  
+```java  
 int k = words.length - 1;  
 while (k >= startIndex)  
 {  
@@ -1474,7 +1474,7 @@ while (k >= startIndex)
 ```  
 III.  
   
-```Plain Text  
+```java  
 String[] temp = new String[words.length];  
 for (int k = 0; k <= words.length / 2; k++)  
 {  
@@ -1503,7 +1503,7 @@ Which of these code segments can be used to replace /\* missing code \*/ so that
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 /** Precondition: 0 < numVals <= nums.length */  
 public static int mystery(int[] nums, int v, int numVals)  
 {  
@@ -1540,7 +1540,7 @@ Which of the following best describes what the call `mystery(numbers, val, numb
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 List students = new ArrayList();  
   
 students.add("Alex");  

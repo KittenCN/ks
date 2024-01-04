@@ -1,7 +1,7 @@
 # 3\. AP计算机2009年考试：多项选择  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int value = 15;  
 while (value < 28)  
 {  
@@ -29,21 +29,21 @@ Which of the following code segments will properly update the variable `grade`�
   
 I.  
   
-```Plain Text  
+```java  
 if (bonusOne && bonusTwo && bonusThree)  
     grade += 5;  
   
 ```  
 II.  
   
-```Plain Text  
+```java  
 if (bonusOne || bonusTwo || bonusThree)  
     grade += 5;  
   
 ```  
 III.  
   
-```Plain Text  
+```java  
 if (bonusOne)  
     grade += 5;  
 if (bonusTwo)  
@@ -65,7 +65,7 @@ if (bonusThree)
 ---  
 Assume that an array of integer values has been declared as follows and has been initialized.  
   
-```Plain Text  
+```java  
 int[] arr = new int[10];  
 ```  
 Which of the following code segments correctly interchanges the value of `arr[0]` and `arr[5]`?    
@@ -101,7 +101,7 @@ Which of the following code segments correctly interchanges the value of `arr[0
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 ArrayList items = new ArrayList();  
 items.add("A");  
 items.add("B");  
@@ -115,19 +115,19 @@ What is printed as a result of executing the code segment?
   
   
   
-```Plain Text  
+```java  
 [A, B, C, E]  
 ```  
-```Plain Text  
+```java  
 [A, B, D, E]  
 ```  
-```Plain Text  
+```java  
 [E, D, A, B]  
 ```  
-```Plain Text  
+```java  
 [E, D, A, C]  
 ```  
-```Plain Text  
+```java  
 [E, D, C, B]  
 ```  
 ---  
@@ -144,7 +144,7 @@ When designing a class hierarchy, which of the following should be true of a sup
  A superclass should contain the most specific details of the class hierarchy.  
   
 ---  
-```Plain Text  
+```java  
 int k = a random number such that 1 <= k <= n;  
   
 for (int p = 2; p <= k; p++)  
@@ -156,19 +156,19 @@ What is the minimum number of times that `Hello` will be printed?
   
   
   
-```Plain Text  
+```java  
 0  
 ```  
-```Plain Text  
+```java  
 1  
 ```  
-```Plain Text  
+```java  
 2  
 ```  
-```Plain Text  
+```java  
 n-1  
 ```  
-```Plain Text  
+```java  
 n-2  
 ```  
 ---  
@@ -176,25 +176,25 @@ What is the maximum number of times that `Hello` will be printed?
   
   
   
-```Plain Text  
+```java  
 2  
 ```  
-```Plain Text  
+```java  
 n - 1  
 ```  
-```Plain Text  
+```java  
 n - 2  
 ```  
-```Plain Text  
+```java  
 (n - 1) * (n - 1)  
 ```  
-```Plain Text  
+```java  
 n * n  
 ```  
 ---  
 Consider the following instance variable and incomplete method. The method `calcTotal` is intended to return the sum of all values in `vals`.  
   
-```Plain Text  
+```java  
 private int[] vals;  
   
 public int calcTotal()  
@@ -211,7 +211,7 @@ Which of the code segments shown below can be used to replace /\* missing code \
   
 I.  
   
-```Plain Text  
+```java  
 for (int pos = 0; pos < vals.length; pos++)  
 {  
     total += vals[pos];  
@@ -220,7 +220,7 @@ for (int pos = 0; pos < vals.length; pos++)
 ```  
 II.  
   
-```Plain Text  
+```java  
 for (int pos = vals.length; pos > 0; pos--)  
 {  
     total += vals[pos];  
@@ -229,7 +229,7 @@ for (int pos = vals.length; pos > 0; pos--)
 ```  
 III.  
   
-```Plain Text  
+```java  
 int pos = 0;  
 while (pos < vals.length)  
 {  
@@ -251,7 +251,7 @@ while (pos < vals.length)
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 String str = "abcdef";  
 for (int rep = 0; rep < str.length() - 1; rep++)  
 {  
@@ -263,16 +263,16 @@ What is printed as a result of executing this code segment?
   
   
   
-```Plain Text  
+```java  
 abcdef  
 ```  
-```Plain Text  
+```java  
 aabbccddeeff  
 ```  
-```Plain Text  
+```java  
 abbccddeef  
 ```  
-```Plain Text  
+```java  
 abcbcdcdedef  
 ```  
  Nothing is printed because an `IndexOutOfBoundsException` is thrown.  
@@ -280,7 +280,7 @@ abcbcdcdedef
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public void numberCheck(int maxNum)  
 {  
     int typeA = 0;  
@@ -316,7 +316,7 @@ What is printed as a result of the call `numberCheck(50)`?
 ---  
 Consider the following method that is intended to modify its parameter `nameList` by replacing all occurrences of `name` with `newValue`.  
   
-```Plain Text  
+```java  
 public void replace(ArrayList nameList,  
                 String name, String newValue)  
 {  
@@ -334,25 +334,25 @@ Which of the following can be used to replace /\* expression \*/ so that `repla
   
   
   
-```Plain Text  
+```java  
 nameList.get(j).equals(name)  
 ```  
-```Plain Text  
+```java  
 nameList.get(j) == name  
 ```  
-```Plain Text  
+```java  
 nameList.remove(j)  
 ```  
-```Plain Text  
+```java  
 nameList[j] == name  
 ```  
-```Plain Text  
+```java  
 nameList[j].equals(name)  
 ```  
 ---  
 Consider the following incomplete method.  
   
-```Plain Text  
+```java  
 public int someProcess(int n)  
 {  
     /* body of someProcess */  
@@ -377,7 +377,7 @@ Which of the following code segments could be used to replace /\* body of somePr
   
 I.  
   
-```Plain Text  
+```java  
 if ((n % 3 == 0) && (n % 4 == 0))  
     return n * 10;  
 else  
@@ -386,7 +386,7 @@ else
 ```  
 II.  
   
-```Plain Text  
+```java  
 if ((n % 3 == 0) || (n % 4 == 0))  
     return n * 10;  
   
@@ -395,7 +395,7 @@ return n;
 ```  
 III.  
   
-```Plain Text  
+```java  
 if (n % 3 == 0)  
     if (n % 4 == 0)  
         return n * 10;  
@@ -416,7 +416,7 @@ return n;
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 // precondition: x >= 0  
 public void mystery(int x)  
 {  
@@ -433,16 +433,16 @@ Which of the following is printed as a result of the call `mystery(123456)`?
   
   
   
-```Plain Text  
+```java  
 16  
 ```  
-```Plain Text  
+```java  
 56  
 ```  
-```Plain Text  
+```java  
 123456  
 ```  
-```Plain Text  
+```java  
 654321  
 ```  
  Many digits are printed due to infinite recursion  
@@ -450,7 +450,7 @@ Which of the following is printed as a result of the call `mystery(123456)`?
 ---  
 Consider the following instance variables and incomplete method that are part of a class that represents an item. The variables `years` and `months` are used to represent the age of the item, and the value for `months` is always between `0` and `11`, inclusive. Method `updateAge` is used to update these variables based on the parameter `extraMonths` that represents the number of months to be added to the age.  
   
-```Plain Text  
+```java  
 private int years;  
 private int months; // 0 <= months <= 11  
   
@@ -465,7 +465,7 @@ Which of the following code segments could be used to replace /\* body of update
   
 I.  
   
-```Plain Text  
+```java  
 int yrs = extraMonths % 12;  
 int mos = extraMonths / 12;  
   
@@ -475,7 +475,7 @@ month = months + mos;
 ```  
 II.  
   
-```Plain Text  
+```java  
 int totalMonths = years * 12 + months + extraMonths;  
 years = totalMonths / 12;  
 months = totalMonths % 12;  
@@ -483,7 +483,7 @@ months = totalMonths % 12;
 ```  
 III.  
   
-```Plain Text  
+```java  
 int totalMonths = months + extraMonths;  
 years = years + totalMonths / 12;  
 months = totalMonths % 12;  
@@ -502,7 +502,7 @@ months = totalMonths % 12;
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public String inRangeMessage(int value)  
 {  
     if (value < 0 || value > 100)  
@@ -516,7 +516,7 @@ Consider the following code segments that could be used to replace the body of 
   
 I.  
   
-```Plain Text  
+```java  
 if (value < 0)  
 {  
     if (value > 100)  
@@ -530,7 +530,7 @@ else
 ```  
 II.  
   
-```Plain Text  
+```java  
 if (value < 0)  
     return "Not in range";  
 else if (value > 100)  
@@ -541,7 +541,7 @@ else
 ```  
 III.  
   
-```Plain Text  
+```java  
 if (value >= 0)  
     return "In range";  
 else if (value <= 100)  
@@ -565,7 +565,7 @@ Which of the replacements will have the same behavior as the original version of
 ---  
 Consider the following class declaration.  
   
-```Plain Text  
+```java  
 public class SomeClass  
 {  
     private int num;  
@@ -589,7 +589,7 @@ public class SomeClass
 ```  
 The following code segment appears in another class.  
   
-```Plain Text  
+```java  
 SomeClass one = new SomeClass(100);  
 SomeClass two = new SomeClass(100);  
 SomeClass three = one;  
@@ -604,25 +604,25 @@ What is printed as a result of executing the code segment?
   
   
   
-```Plain Text  
+```java  
 100 100 100  
 ```  
-```Plain Text  
+```java  
 300 100 100  
 ```  
-```Plain Text  
+```java  
 300 100 300  
 ```  
-```Plain Text  
+```java  
 300 300 100  
 ```  
-```Plain Text  
+```java  
 300 300 300  
 ```  
 ---  
 The following incomplete method is intended to sort its array parameter `arr` in increasing order.  
   
-```Plain Text  
+```java  
 // postcondition: arr is sorted in increasing order  
 public static void sortArray(int[] arr)  
 {  
@@ -648,25 +648,25 @@ Assume that `swap(arr, j, pos)` exchange the values of `arr[j]` and `arr[po
   
   
   
-```Plain Text  
+```java  
 k = j - 1; k > 0; k--  
 ```  
-```Plain Text  
+```java  
 k = j - 1; k >= 0; k--  
 ```  
-```Plain Text  
+```java  
 k = 1; k < arr.length; k++  
 ```  
-```Plain Text  
+```java  
 k = 1; k > arr.length; k++  
 ```  
-```Plain Text  
+```java  
 k = 0; k <= arr.length; k++  
 ```  
 ---  
 Assume that `x` and `y` are boolean variables and have been properly initialized.  
   
-```Plain Text  
+```java  
 (x && y) || !(x && y)  
 ```  
 The result of evaluating the expression above is best described as  
@@ -691,25 +691,25 @@ Which of the following assigns a value to `r` from the uniform distribution ov
   
   
   
-```Plain Text  
+```java  
 r = d + 0.5;  
 ```  
-```Plain Text  
+```java  
 r = d + 0.5 * 5.0;  
 ```  
-```Plain Text  
+```java  
 r = d * 5.0;  
 ```  
-```Plain Text  
+```java  
 r = d * 5.0 + 0.5;  
 ```  
-```Plain Text  
+```java  
 r = d * 5.5;  
 ```  
 ---  
 Consider the following instance variables and method that appear in a class representing student information.  
   
-```Plain Text  
+```java  
 private int assignmentsCompleted;  
 private double testAverage;  
   
@@ -726,7 +726,7 @@ Consider the following proposed implementations of the `isPassing` method.
   
 I.  
   
-```Plain Text  
+```java  
 if (testAverage >= 90)  
     return true;  
 if (testAverage >= 75 && assignmentsCompleted >= 4)  
@@ -736,7 +736,7 @@ return false;
 ```  
 II.  
   
-```Plain Text  
+```java  
 boolean pass = false;  
 if (testAverage >= 90)  
     pass = true;  
@@ -747,7 +747,7 @@ return pass;
 ```  
 III.  
   
-```Plain Text  
+```java  
 return (testAverage >= 90) ||  
         (testAverage >= 75 && assignmentsCompleted >= 4);  
   
@@ -769,7 +769,7 @@ Which of the implementations will correctly implement method `isPassing`?
   
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int k = 0;  
 while (k < 10)  
 {  
@@ -785,25 +785,25 @@ What is printed as a result of executing the code segment?
   
   
   
-```Plain Text  
+```java  
 0 2 1 0 2  
 ```  
-```Plain Text  
+```java  
 0 2 0 2 0 2  
 ```  
-```Plain Text  
+```java  
 0 2 1 0 2 1 0  
 ```  
-```Plain Text  
+```java  
 0 2 0 2 0 2 0  
 ```  
-```Plain Text  
+```java  
 0 1 2 1 2 1 2  
 ```  
 ---  
 Consider the following method. Method `allEven` is intended to return `true` if all elements in array `arr` are even numbers; otherwise, it should return `false`.  
   
-```Plain Text  
+```java  
 public boolean allEven(int[] arr)  
 {  
     boolean isEven = /* expression */;  
@@ -832,7 +832,7 @@ Which of the following replacements for /\* expression \*/ and /\* loop body \*/
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int x = /* some integer value */;  
 int y = /* some integer value */;  
   
@@ -856,7 +856,7 @@ Which of the following best describes the conditions under which the value of `
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 for (int outer = 0; outer < n; outer++)  
 {  
     for (int inner = 0; inner <= outer; inner++)  
@@ -870,25 +870,25 @@ if `n` has been declared as an integer with the value 4, what is printed as a 
   
   
   
-```Plain Text  
+```java  
 0 1 2 3  
 ```  
-```Plain Text  
+```java  
 0 0 1 0 1 2  
 ```  
-```Plain Text  
+```java  
 0 1 2 2 3 3 3  
 ```  
-```Plain Text  
+```java  
 0 1 1 2 2 2 3 3 3 3  
 ```  
-```Plain Text  
+```java  
 0 0 1 0 1 2 0 1 2 3  
 ```  
 ---  
 Consider the following class declarations.  
   
-```Plain Text  
+```java  
 public class Base  
 {  
     private int myVal;  
@@ -911,50 +911,50 @@ Which of the following statements will NOT compile?
   
   
   
-```Plain Text  
+```java  
 Base b1 = new Base();  
 ```  
-```Plain Text  
+```java  
 Base b2 = new Base(5);  
 ```  
-```Plain Text  
+```java  
 Base s1 = new Sub();  
 ```  
-```Plain Text  
+```java  
 Sub s2 = new Sub();  
 ```  
-```Plain Text  
+```java  
 Sub s3 = new Sub(5);  
 ```  
 ---  
 Assume that `a` and `b` are variables of type `int`. The expression  
   
-```Plain Text  
+```java  
 !(a < b) && !(a > b)  
 ```  
 is equivalent to which of the following?  
   
   
   
-```Plain Text  
+```java  
 true  
 ```  
-```Plain Text  
+```java  
 false  
 ```  
-```Plain Text  
+```java  
 a == b  
 ```  
-```Plain Text  
+```java  
 a != b  
 ```  
-```Plain Text  
+```java  
 !(a < b) && (a > b)  
 ```  
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int a = 24;  
 int b = 30;  
 while (b != 0)  
@@ -971,25 +971,25 @@ What is printed as a result of executing the code segment?
   
   
   
-```Plain Text  
+```java  
 0  
 ```  
-```Plain Text  
+```java  
 6  
 ```  
-```Plain Text  
+```java  
 12  
 ```  
-```Plain Text  
+```java  
 24  
 ```  
-```Plain Text  
+```java  
 30  
 ```  
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public int sol(int lim)  
 {  
     int s = 0;  
@@ -1010,25 +1010,25 @@ What values is returned as a result of the call `sol(10)`?
   
   
   
-```Plain Text  
+```java  
 20  
 ```  
-```Plain Text  
+```java  
 45  
 ```  
-```Plain Text  
+```java  
 55  
 ```  
-```Plain Text  
+```java  
 100  
 ```  
-```Plain Text  
+```java  
 385  
 ```  
 ---  
 Consider the following incomplete method. Method `findNext` is intended to return the index of the first occurrence of the value `val` beyond the position `start` in array `arr`.  
   
-```Plain Text  
+```java  
 // returns index of first occurrence of val in arr  
 // after position start;  
 // returns arr.length if val is not found  
@@ -1054,19 +1054,19 @@ Which of the following expressions could be used to replace /\* condition \*/ so
   
   
   
-```Plain Text  
+```java  
 (pos < arr.length) && (arr[pos] != val)  
 ```  
-```Plain Text  
+```java  
 (arr[pos] != val) && (pos < arr.length)  
 ```  
-```Plain Text  
+```java  
 (pos < arr.length) || (arr[pos] != val)  
 ```  
-```Plain Text  
+```java  
 (arr[pos] == val) && (pos < arr.length)  
 ```  
-```Plain Text  
+```java  
 (pos < arr.length) || (arr[pos] == val)  
 ```  
 ---  
@@ -1074,7 +1074,7 @@ Consider the following code segments.
   
 I.  
   
-```Plain Text  
+```java  
 int k = 1;  
 while (k < 20)  
 {  
@@ -1087,7 +1087,7 @@ while (k < 20)
 ```  
 II.  
   
-```Plain Text  
+```java  
 for (int k = 1; k < 20; k++)  
 {  
     if (k % 3 == 1)  
@@ -1097,7 +1097,7 @@ for (int k = 1; k < 20; k++)
 ```  
 III.  
   
-```Plain Text  
+```java  
 for (int k = 1; k < 20; k = k + 3)  
 {  
     System.out.print(k + " ");  
@@ -1120,7 +1120,7 @@ Which of the code segments above will produce the following output?
 ---  
 Consider the following two methods that appear within a single class.  
   
-```Plain Text  
+```java  
 public void changeIt(int[] list, int num)  
 {  
     list = new int[5];  
@@ -1148,16 +1148,16 @@ What is printed as a result of the call `start()`?
   
   
   
-```Plain Text  
+```java  
 0 0 0 0 0 0  
 ```  
-```Plain Text  
+```java  
 0 0 0 0 0 6  
 ```  
-```Plain Text  
+```java  
 1 2 3 4 5 6  
 ```  
-```Plain Text  
+```java  
 1 2 3 4 5 0  
 ```  
  “changeIt“ will throw an exception.  
@@ -1165,7 +1165,7 @@ What is printed as a result of the call `start()`?
 ---  
 Consider the following declaration of the class `NumSequence`, which has a constructor that is intended to initialize the instance variable `seq` to an `ArrayList` of `numberOfValues` random floating-point values in the range \[0.0, 1.0).  
   
-```Plain Text  
+```java  
 public class NumSequence  
 {  
     private ArrayList seq;  
@@ -1185,7 +1185,7 @@ Which of the following code segments could be used to replace /\* missing code \
   
 I.  
   
-```Plain Text  
+```java  
 ArrayList seq = new ArrayList();  
 for (int k = 0; k < numberOfValues; k++)  
     seq.add(new Double(Math.random()));  
@@ -1193,7 +1193,7 @@ for (int k = 0; k < numberOfValues; k++)
 ```  
 II.  
   
-```Plain Text  
+```java  
 seq = new ArrayList();  
 for (int k = 0; k < numberOfValues; k++)  
     seq.add(new Double(Math.random()));  
@@ -1201,7 +1201,7 @@ for (int k = 0; k < numberOfValues; k++)
 ```  
 III.  
   
-```Plain Text  
+```java  
 ArrayList temp = new ArrayList();  
 for (int k = 0; k < numberOfValues; k++)  
     seq.add(new Double(Math.random()));  
@@ -1222,7 +1222,7 @@ seq = temp;
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 double a = 1.1;  
 double b = 1.2;  
   
@@ -1247,7 +1247,7 @@ Which of the following best describes why the phrase `"Mathematical error!"` wou
 ---  
 Consider the following recursive method.  
   
-```Plain Text  
+```java  
 public static String recur(int val)  
 {  
     String dig = " " + (val % 3);  
@@ -1264,25 +1264,25 @@ What is printed as a result of executing the following statement?
   
   
   
-```Plain Text  
+```java  
 20  
 ```  
-```Plain Text  
+```java  
 102  
 ```  
-```Plain Text  
+```java  
 210  
 ```  
-```Plain Text  
+```java  
 1020  
 ```  
-```Plain Text  
+```java  
 2101  
 ```  
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public String goAgain(String str, int index)  
 {  
     if (index >= str.length())  
@@ -1297,18 +1297,18 @@ What is printed as a result of executing the following statement?
   
   
   
-```Plain Text  
+```java  
 today  
 ```  
-```Plain Text  
+```java  
 todayto  
 ```  
-```Plain Text  
+```java  
 todayoday  
 ```  
-```Plain Text  
+```java  
 todayodayay  
 ```  
-```Plain Text  
+```java  
 todayodaydayayy  
 ```  

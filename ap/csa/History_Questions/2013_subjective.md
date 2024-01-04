@@ -1,7 +1,7 @@
 # 12\. AP计算机2013年考试：主观题  
 I. A music Web site keeps track of downloaded music. For each download, the site uses a `DownloadInfo` object to store a song’s title and the number of times it has been downloaded. A partial declaration for the `DownloadInfo` class is shown below.  
   
-```Plain Text  
+```java  
 public class DownloadInfo  
 {  
     /** Creates a new instance with the given unique title and sets the  
@@ -24,7 +24,7 @@ public class DownloadInfo
 ```  
 The list of downloaded information is stored in a `MusicDownloads` object. A partial declaration for the `MusicDownloads` class is shown below.  
   
-```Plain Text  
+```java  
 public class MusicDownloads  
 {  
     /** The list of downloaded information.  
@@ -83,7 +83,7 @@ The call `webMusicA.getDownloadInfo("Happy Birthday")` returns `null` becaus
   
 Complete method `getDownloadInfo` below.  
   
-```Plain Text  
+```java  
 /** Returns a reference to the DownloadInfo object with the requested title if it exists.  
  * @param title the requested title  
  * @return a reference to the DownloadInfo object with the  
@@ -102,7 +102,7 @@ For example, suppose variable `webMusicB` refers to an instance of `MusicDown
   
 Assume that the variable `List<String> songTitles` has been defined and contains the following entries.  
   
-```Plain Text  
+```java  
 {"Lights", "Aqualung", "Soul Sister", "Go Now", "Lights", "Soul Sister"}  
 ```  
 The call `webMusicB.updateDownloads(songTitles)` results in the following `downloadList` with incremented download counts for the objects with titles of “Soul Sister” and “Aqualung”. It also has a new `DownloadInfo` object with a title of “Lights” and a download count of 2, and another `DownloadInfo` object with a title of “Go Now” and a download count of 1. Ther order of the already existing entries remains unchanged.  
@@ -115,7 +115,7 @@ In writing your solution, you must use the `getDownloadInfo` method. Assume th
   
 Complete method `updateDownloads` below.  
   
-```Plain Text  
+```java  
 /** Updates downloadList with information from titles.  
  * @param titles a list of song titles  
  * Postcondition:  
@@ -151,7 +151,7 @@ The Token Pass game board is represented by an array of integers. The indexes of
   
 The Token Pass game is represented by the `TokenPass` class.  
   
-```Plain Text  
+```java  
 public class TokenPass  
 {  
     private int[] board;  
@@ -182,7 +182,7 @@ public class TokenPass
   
 Complete the `TokenPass` constructor below.  
   
-```Plain Text  
+```java  
 /** Creates the board array to be of size playerCount and fills it with  
  * random integer values from 1 to 10, inclusive. Initializes currentPlayer to a  
  * random integer value in the range between 0 and playerCount-1, inclusive.  
@@ -198,7 +198,7 @@ The tokens are collected and removed from the game board at the current player�
   
 Complete method `distributeCurrentPlayerTokens` below.  
   
-```Plain Text  
+```java  
 /** Distributes the tokens from the current player's position one at a time to each player in  
  * the game. Distribution begins with the next position and continues until all the tokens  
  * have been distributed. If there are still tokens to distribute when the player at the  
@@ -216,7 +216,7 @@ IV. A telescope scans a rectangular area of the night sky and collects the data 
   
 The telescope records the data in telescope order into a 1-dimensional array of `double` values. This 1-dimensional array of information received from a single scan will be transferred into a 2-dimensional array, which reconstructs the original view of the rectangular area of the sky. This 2-dimensional array is part of the `SkyView` class, shown below. In this question you will write a constructor and a method for this class.  
   
-```Plain Text  
+```java  
 public class SkyView  
 {  
     /** A rectangular array that holds the data representing a rectangular area of the sky. */  
@@ -272,7 +272,7 @@ A `SkyView` object created with `new SkyView(3, 2, values)`, would have `vie
   
 Complete the `SkyView` constructor below.  
   
-```Plain Text  
+```java  
 /** Constructs a SkyView object from a 1-dimensional array of scan data.  
  * @param numRows the number of rows represented in the view  
  * Precondition: numRows > 0  
@@ -297,7 +297,7 @@ For example, if `nightSky` is a `SkyView` object where `view` contains the
   
 Complete method `getAverage` below.  
   
-```Plain Text  
+```java  
 /** Returns the average of the values in a rectangular section of view.  
  * @param startRow the first row index of the section  
  * @param endRow the last row index of the section  

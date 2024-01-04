@@ -5,7 +5,7 @@ I. This question involves the implementation and extension of a `RandomStringCh
   
 The following code segment shows an example of the behavior of `RandomStringChooser`.  
   
-```Plain Text  
+```java  
 String[] wordArray = {"wheels", "on", "the", "bus"};  
 RandomStringChooser sChooser = new RandomStringChooser(wordArray);  
 for (int k = 0; k < 6; k++)  
@@ -15,14 +15,14 @@ for (int k = 0; k < 6; k++)
 ```  
 One possible output is shown below. Because `sChooser` has only four strings, the string `"NONE"` is printed twice.  
   
-```Plain Text  
+```java  
 bus the wheels on NONE NONE  
 ```  
 Write the entire `RandomStringChooser` class. Your implementation must include an appropriate constructor and any necessary methods. Any instance variables must be `private`. The code segment in the example above should have the indicated behavior (that is, it must compile and produce a result like the possible output shown). Neither the constructor nor any of the methods should alter the parameter passed to the constructor, but your implementation may copy the contents of the array.  
   
 (b) The following partially completed `RandomLetterChooser` class is a subclass of the `RandomStringChooser` class. You will write the constructor for the `RandomLetterChooser` class.  
   
-```Plain Text  
+```java  
 public class RandomLetterChooser extends RandomStringChooser  
 {  
     /** Constructs a random letter chooser using the given string str.  
@@ -43,7 +43,7 @@ public class RandomLetterChooser extends RandomStringChooser
 ```  
 The following code segment shows an example of using `RandomLetterChooser`.  
   
-```Plain Text  
+```java  
 RandomLetterChooser letterChooser = new RandomLetterChooser("cat");  
 for (int k = 0; k < 4; k++)  
 {  
@@ -52,14 +52,14 @@ for (int k = 0; k < 4; k++)
 ```  
 The code segment will print the three letters in `"cat"` in one of the possible orders. Because there are only three letters in the original string, the code segment prints `"NONE"` the fourth time through the loop. One possible output is shown below.  
   
-```Plain Text  
+```java  
 actNONE  
 ```  
 Assume that the `RandomStringChooser` class that you wrote in part (a) has been implemented correctly and that `getSingleLetters` works as specified. You must use `getSingleLetters` appropriately to receive the full credit.  
   
 Complete the `RandomLetterChooser` constructor below.  
   
-```Plain Text  
+```java  
 /** Consturcts a random letter chooser using the given string str.  
  * Precondition: str contains only letters.  
  */  
@@ -67,7 +67,7 @@ public RandomLetterChooser(String str)
 ```  
 II. This question involves two classes that are used to process log messages. A list of sample log messages is given below.  
   
-```Plain Text  
+```java  
 CLIENT3:security alert - repeated login failures  
 Webserver:disk offline  
 SERVER1:file not found  
@@ -80,7 +80,7 @@ Log messages have the format *machineId:description*, where *machineId* ident
   
 The following `LogMessage` class is used to represent a log message.  
   
-```Plain Text  
+```java  
 public class LogMessage  
 {  
     private String machineId;  
@@ -109,7 +109,7 @@ public class LogMessage
   
 Complete the `LogMessage` constructor below.  
   
-```Plain Text  
+```java  
 /** Precondition: message is a valid log message. */  
 public LogMessage(String message)  
 ```  
@@ -129,7 +129,7 @@ Assume that the `LogMessage` constructor works as specified, regardless of wha
   
 Complete method `containsWord` below.  
   
-```Plain Text  
+```java  
 /** Returns true if the description in this log message properly contains keyword;  
  * false otherwise.  
  */  
@@ -137,7 +137,7 @@ public boolean containsWord(String keyword)
 ```  
 (c) The `SystemLog` class represents a list of `LogMessage` objects and provides a method that removes and returns a list of all log messages (if any) that properly contain a given keyword. The messages in the returned list appear in the same order in which they originally appeared in the system log. If no message properly contains the keyword, an empty list is returned. The declaration of the `SystemLog` class is shown below.  
   
-```Plain Text  
+```java  
 public class SystemLog  
 {  
     /** Contains all the entries in this system log.  
@@ -162,7 +162,7 @@ public class SystemLog
 ```  
 Write the `SystemLog` method `removeMessages`, which removes from the system log all entries whose descripotions properly contain `keyword` and returns a list of the removed entries in their original order. For example, assume that `theLog` is a `SystemLog` object initially containing six `LogMessage` objects representing the following list of log messages.  
   
-```Plain Text  
+```java  
 CLIENT3:security alert - repeated login failures  
 Webserver:disk offline  
 SERVER1:file not found  
@@ -172,7 +172,7 @@ Webserver:error on /dev/disk
 ```  
 The class `theLog.removeMessages("disk")` would return a list containing the `LogMessage` objects representing the following log messages.  
   
-```Plain Text  
+```java  
 Webserver:disk offline  
 SERVER2:read error on disk DSK1  
 SERVER1:write error on disk DSK2  
@@ -180,7 +180,7 @@ SERVER1:write error on disk DSK2
 ```  
 After the call, `theLog` would contain the following log messages.  
   
-```Plain Text  
+```java  
 CLIENT3:security alert - repeated login failures  
 SERVER1:file not found  
 Webserver:error on /dev/disk   
@@ -189,7 +189,7 @@ Assume that the `LogMessage` class works as specified, regardless of what you 
   
 Complete method `removeMessages` below.  
   
-```Plain Text  
+```java  
 /** Removes from the system log all entries whose descriptions properly contain keyword,  
  * and returns a list (possibly empty) containing the removed entries.  
  * Postcondition:  
@@ -218,7 +218,7 @@ The following diagram shows a crossword puzzle grid and the labeling of the squa
   
 This question uses two classes, a `Square` class that represents an individual square in the puzzle and a `Crossword` clas that represents a crossword puzzle grid. A partial declaration of the `Square` clas is shown below.  
   
-```Plain Text  
+```java  
 public class Square  
 {  
     /** Constructs one square of a crossword puzzle grid.  
@@ -234,7 +234,7 @@ public class Square
 ```  
 A partial declaration of the `Crossword` class is shown below. You will implement one method and the constructor in the `Crossword` class.  
   
-```Plain Text  
+```java  
 public class Crossword  
 {  
     /** Each element is a Square object with a color (black or white) and a number.  
@@ -271,7 +271,7 @@ public class Crossword
   
 Complete the method `toBeLabeled` below.  
   
-```Plain Text  
+```java  
 /** Returns true if the square at row r, column c should be labeled with a positive number;  
  * false otherwise.  
  * The square at row r, column c is black if and only if blackSquares[r][c] is true.  
@@ -287,7 +287,7 @@ Assume that `toBeLabeled` works as specified, regardless of what you wrote in 
   
 Complete the `Crossword` constructor below.  
   
-```Plain Text  
+```java  
 /** Constructs a crossword puzzle grid.  
  * Precondition: There is at least one row in blackSquares.  
  * Postcondition:  
@@ -312,7 +312,7 @@ You will implement three `static` methods in a class named `StringFormatter`�
   
 Complete method `totalLetters` below.  
   
-```Plain Text  
+```java  
 /** Returns the total number of letters in wordList.  
  * Precondition: wordList contains at least two words, consisting of letters only.  
  */  
@@ -326,7 +326,7 @@ Assume that `totalLetters` works as specified regardless of what you wrote in 
   
 Complete method `basicGapWidth` below.  
   
-```Plain Text  
+```java  
 /** Returns the basic gap width when wordList is used to produce  
  * a formatted string of formattedLen characters.  
  * Precondition: wordList contains at least two words, consisting of letters only.  
@@ -336,7 +336,7 @@ public static int basicGapWidth(List<String> wordList, int formattedLen)
 ```  
 (c) Write the `StringFormatter` method `format`, which returns the formatted string as defined earlier. The `StringFormatter` class also contains a method called `leftoverSpaces`, which has already been implemented. This method returns the number of leftover spaces as defined earlier and is shown below.  
   
-```Plain Text  
+```java  
 /** Returns the number of leftover spaces when wordList is used to produce  
  * a formatted string of formattedLen characters.  
  * Precondition: wordList contains at least two words, consisting of letters only.  
@@ -351,7 +351,7 @@ Assume that `basicGapWidth` works as specified, regardless of what you wrote i
   
 Complete method `format` below.  
   
-```Plain Text  
+```java  
 /** Returns a formatted string consisting of the words in wordList separated by spaces.  
  * Precondition: The wordList contains at least two words, consisting of letters only.  
  * formattedLen is large enough for all the words and gaps.  

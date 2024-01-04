@@ -1,7 +1,7 @@
 # 8\. AP计算机2017年考试：主观题  
 I. This question involves identifying and processing the digits of a non-negative integer. The declaration of the `Digits` class is shown below. You will write the constructor and one method for the `Digits` class.  
   
-```Plain Text  
+```java  
 public class Digits  
 {  
     /** The list of digits from the number used to construct this object.  
@@ -32,7 +32,7 @@ public class Digits
   
 Complete the `Digits` constructor below.  
   
-```Plain Text  
+```java  
 /** Constructs a Digits object that represents num.  
  * Precondition: num >= 0  
  */  
@@ -46,7 +46,7 @@ The following table shows the results of several calls to `isStrictlyIncreasing
   
 Complete method `isStrictlyIncreasing` below.  
   
-```Plain Text  
+```java  
 /** Returns true if the digits in this Digits object are in strictly increasing order;  
  * false otherwise.  
  */  
@@ -54,7 +54,7 @@ public boolean isStrictlyIncreasing()
 ```  
 II. This question involves the design of a class that will be used to produce practice problems. The following `StudyPractice` interface represents practice problems that can be used to study some subject.  
   
-```Plain Text  
+```java  
 public interface StudyPractice  
 {  
     /** Returns the current practice problem. */  
@@ -80,7 +80,7 @@ Write the complete `MultPractice` class. Your implementation must be consisten
   
 III. This question involves analyzing and modifying a string. The following `Phrase` class maintains a phrase in an instance variable and has methods that access and make changes to the phrase. You will write two methods of the `Phrase` class.  
   
-```Plain Text  
+```java  
 public class Phrase  
 {  
     private String currentPhrase;  
@@ -129,7 +129,7 @@ The `Phrase` class includes the method `findNthOccurrence`, which returns the
   
 Complete method `replaceNthOccurrence` below.  
   
-```Plain Text  
+```java  
 /** Modifies the current phrase by replacing the nth occurrence of str with repl.  
  * If the nth occurrences does not exist, the current phrase is unchanged.  
  * Precondition: str.length() > 0 and n > 0  
@@ -138,7 +138,7 @@ public void replaceNthOccurrence(String str, int n, String repl)
 ```  
 (b) Write the `Phrase` method `findLastOccurrence`. This method finds and returns the index of the last occurrence of a given string in `currentPhrase`. If the given string is not found, `-1` is returned. The following tables show several examples of the beheavior of the method `findLastOccurrence`.  
   
-```Plain Text  
+```java  
 Phrase phrase1 = new Phrase("A cat ate late.");  
 ```  
 ![image](images/-UMDqkxuw0DmjcbnNwAbRsfv8iWbc7sWXh5gUGoEwkE.png)  
@@ -153,7 +153,7 @@ You must use `findNthOccurrence` appropriately to receive full credit.
   
 Complete method `findLastOccurrence` below.  
   
-```Plain Text  
+```java  
 /** Returns the index of the last occurrence of str in the current phrase;  
  * returns -1 if str is not found.  
  * Precondition: str.length() > 0  
@@ -167,7 +167,7 @@ IV. This question involves reasoning about a two-dimensional (2D) array of integ
   
 The following `Position` class is used to represent positions in the integer array. The notation `(r, c)` will be used to refer a `Position` object with row `r` and column `c`.  
   
-```Plain Text  
+```java  
 public class Position  
 {  
     /** Constructs a Position object with row r and column c. */  
@@ -186,7 +186,7 @@ For example, assume that array `arr` is the 2D integer array shown at the begi
   
 Complete method `findPosition` below.  
   
-```Plain Text  
+```java  
 /** Returns the position of num in intArr;  
  * returns null if no such element exists in intArr.  
  * Precondition: intArr contains at least one row.  
@@ -207,7 +207,7 @@ Assume that `findPosition` works as specified, regardless of what you wrote in
   
 Complete method `getSuccessorArray` below.  
   
-```Plain Text  
+```java  
 /** Returns a 2D successor array as described in part (b) constructed from intArr.  
  * Precondition: intArr contains at least one row and contains consecutive values.  
  * Each of these integers may be in any position in the 2D array.  

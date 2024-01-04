@@ -3,7 +3,7 @@ I. A travel agency maintains a list of information about airline flights. Flight
   
 The declaration for the `Time` class is shown below. It includes a method `minutesUntil`, which returns the difference (in minutes) between the current `Time` object and another `Time` object.  
   
-```Plain Text  
+```java  
 public class Time {  
  /** @return difference, in minutes, between this time and other;  
   *          difference is negative if other is earlier than this time  
@@ -18,7 +18,7 @@ For example, assume that `t1` and `t2` are `Time` objects where `t1` rep
   
 The declaration for the `Flight` class is shown below. It has methods to access the departure time and the arrival time of a flight. You may assume that the departure time of a flight is earlier than its arrival time.  
   
-```Plain Text  
+```java  
 public class Flight {  
  /** @return time at which the flight departs  
   */  
@@ -32,7 +32,7 @@ public class Flight {
 ```  
 A trip consists of a sequence of flights and is represented by the `Trip` class. The `Trip` class contains a `List` of `Flight` objects that are stored in chronological order. You may assume that for each flight after the first flight in the list, the departure time of the flight is later than the arrival time of the preceding flight in the list. A partial declaration of the `Trip` class is shown below. You will write two methods for the `Trip` class.  
   
-```Plain Text  
+```java  
 public class Trip {  
  /** The list of flights (if any) that make up this trip, stored in chronological  order  
   */  
@@ -58,7 +58,7 @@ public class Trip {
 ```  
 (a) Complete method `getDuration` below.  
   
-```Plain Text  
+```java  
 /**  @return the number of minutes from the departure of the first  
  *   flight to the arrival of the last flight if there are one or  
  *   more flights in the trip;  
@@ -77,7 +77,7 @@ The call `vacation.getShortestLayover()` should return `15`.
   
 Complete method `getShortestLayover` below.  
   
-```Plain Text  
+```java  
 /** Precondition: the departure time for each flight is later than the arrival  
  *             time of its preceding flight  
  *  @return the smallest number of minutes between the arrival of a  
@@ -88,7 +88,7 @@ public int getShortestLayover()
 ```  
 II. Consider the following incomplete `StringUtil` class declaration. You will write implementations for the two methods listed in this class. Information about the `Person` class used in the `replaceNameNickname` method will be presented in part (b).  
   
-```Plain Text  
+```java  
 public class StringUtil {  
  /** @param str a String with length> 0  
   *  @param oldstr a String  
@@ -120,7 +120,7 @@ The following table shows several examples of the result of calling `StringUtil
   
 Complete method `apcsReplaceAll` below.  
   
-```Plain Text  
+```java  
 /** @param str a String with length> 0  
  *  @param oldstr a String  
  *  @param newstr a String  
@@ -133,7 +133,7 @@ public static String apcsReplaceAll(String str,
 ```  
 (b) The following `Person` class contains information that includes a first (given) name and a nickname for the person.  
   
-```Plain Text  
+```java  
 public class Person {  
  /** @return the first name of this Person */  
  public String getFirstName() { /* implementation not shown */ }  
@@ -152,19 +152,19 @@ For example, assume the following table represents the data contained in the lis
   
 Assume also that `String str` represents the following string.  
   
-```Plain Text  
+```java  
 "After Henry drove Elizabeth to dinner in Johnson City, Henry paid for an appetizer and Elizabeth paid for dessert."  
 ```  
 The call `StringUtil.replaceNameNickname(str, people)` should return the following string:  
   
-```Plain Text  
+```java  
 "After Hank drove Liz to dinner in Jackson City, Hank paid for an appetizer and Liz paid for dessert."  
 ```  
 In writing your solution, you must use the method `apcsReplaceAll` specified in the `StringUtil` class. Assume that `apcsReplaceAll` works as specified, regardless of what you wrote in part (a).  
   
 Complete method `replaceNameNickname` below.  
   
-```Plain Text  
+```java  
 /** @param str a String  
  *  @param people a list of references to Person objects  
  *  @return a copy of str modified so that each occurrence of a first  
@@ -181,7 +181,7 @@ Note that a `Cat`“is-a”`Pet`, a Dog“is-a”`Pet`, and a `LoudDog`“is-a
   
 The class `Pet` is specified as an abstract class as shown in the following declaration. Each `Pet` has a name that is specified when it is constructed.  
   
-```Plain Text  
+```java  
 public abstract class Pet {  
  private String name;  
   
@@ -198,7 +198,7 @@ public abstract class Pet {
 ```  
 The subclass `Dog` has the partial class declaration shown below.  
   
-```Plain Text  
+```java  
 public class Dog extends Pet {  
  public Dog(String petName)  
  { /* implementation not shown */ }  
@@ -215,7 +215,7 @@ Given the class hierarchy shown previously, write a complete class declaration f
   
 (c) Consider the following partial declaration of class `Kennel`.  
   
-```Plain Text  
+```java  
 public class Kennel {  
  private List < Pet > petList;  
   
@@ -233,7 +233,7 @@ In writing `allSpeak`, you may use any of the methods defined for any of the cl
   
 Complete method `allSpeak` below.  
   
-```Plain Text  
+```java  
 /** For each Pet in the kennel, prints the name followed by  
  *  the result of a call to its speak method, one line per Pet.  
  */  
@@ -243,7 +243,7 @@ IV. This question involves manipulation of one-dimensional and two-dimensional a
   
 (a) Consider the following incomplete `ArrayUtil` class, which contains a `static shiftArray` method.  
   
-```Plain Text  
+```java  
 public class ArrayUtil {  
  /** Shifts each array element to the next higher index, discarding the  
   *  original last element,and inserts the new number at the front.  
@@ -269,7 +269,7 @@ For example, if `arr` is the array `{11, 12, 13, 14, 15}` and `num` is `2
   
 Complete method `shiftArray` below.  
   
-```Plain Text  
+```java  
 /** Shifts each array element to the next higher index, discarding the  
  *  original last element, and inserts the new number at the front.  
  *  @param arr the array to manipulate  
@@ -284,7 +284,7 @@ public static void shiftArray(int[] arr, int num)
 ```  
 (b) Consider the following incomplete `NumberMatrix` class, which represents a two-dimensional matrix of integers. Assume that the matrix contains at least one integer.  
   
-```Plain Text  
+```java  
 public class NumberMatrix {  
  private int[][] matrix;  
  /** Constructs a number matrix. */  
@@ -323,7 +323,7 @@ In writing `shiftMatrix`, you must call the`shiftArray` method in part (a). As
   
 Complete method `shiftMatrix` below.  
   
-```Plain Text  
+```java  
 /** Shifts each matrix element to the next position in row-major order  
  *  and inserts the new number at the front. The last element in the last  
  *  row is discarded.  
@@ -341,7 +341,7 @@ In writing `rotateMatrix`, you must call the `shiftMatrix` method in part (b)
   
 Complete method `rotateMatrix` below.  
   
-```Plain Text  
+```java  
 /** Rotates each matrix element to the next higher position in row-major  
  *  order.  
  *  Postcondition:The original elements of matrix have been shifted to  

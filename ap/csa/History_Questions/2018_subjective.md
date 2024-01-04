@@ -1,7 +1,7 @@
 # 7\. AP计算机2018年考试：主观题  
 I. This question involves reasoning about a simulation of a frog hopping in a straight line. The frog attempts to hop to a goal within a specified number of hops. The simulation is encapsulated in the following `FrogSimulation` class. You will write two of the methods in the class.  
   
-```Plain Text  
+```java  
 public class FrogSimulation  
 {  
     /** Distance, in inches, from the starting position to the goal. */  
@@ -52,7 +52,7 @@ The frog hops until one of the following conditions becomes true:
   
 The following example shows a declaration of a `FrogSimulation` object for which the goal distance is 24 inches and the maximum number of hops is 5. The table shows some possible outcomes of calling the `simulate` method.  
   
-```Plain Text  
+```java  
 FrogSimulation sim = new FrogSimulation(24, 5);  
 ```  
 ![image](images/CUG3PSImitG_vk8OVKGP0VGbrYTjWwAABx9AETxUJ9Q.png)  
@@ -61,7 +61,7 @@ FrogSimulation sim = new FrogSimulation(24, 5);
   
 Complete the method `simulate` below. You must use `hopDistance` appropriately to receive full credit.  
   
-```Plain Text  
+```java  
 /** Simulates a frog attempting to reach the goal as described in part (a).  
  * Returns true if the frog successfully reached or passed the goal during the simulation;  
  * false otherwise.  
@@ -72,7 +72,7 @@ public boolean simulate()
   
 Complete method `runSimulations` below. Assume that `simulate` works as specified, regardless of what you wrote in part (a). You must use `simulate` appropriately to receive full credit.  
   
-```Plain Text  
+```java  
 /** Runs num simulations and returns the proportion of simulations in which the frog  
  * successfully reached or passed the goal.  
  * Precondition: num > 0  
@@ -81,7 +81,7 @@ public double runSimulations(int num)
 ```  
 II. This question involves reasoning about pairs of words that are represented by the following `WordPair` class.  
   
-```Plain Text  
+```java  
 public class WordPair  
 {  
     /** Constructs a WordPair object. */  
@@ -99,7 +99,7 @@ public class WordPair
 ```  
 You will implement the constructor and another method for the following `WordPairList` class.  
   
-```Plain Text  
+```java  
 public class WordPairList  
 {  
     /** The list of word pairs, initialized by the constructor. */  
@@ -130,7 +130,7 @@ Example 1
   
 After the code segment has executed, the `allPairs` instance variable of `exampleOne` will contain the following `WordPair` objects in some order.  
   
-```Plain Text  
+```java  
 {"one", "two"}, {"one", "three"}, {"two", "three"}  
 ```  
 Example 2  
@@ -147,7 +147,7 @@ After the code segment has executed, the `allPairs` instance variable of `exa
   
 Complete the `WordPairList` constructor below.  
   
-```Plain Text  
+```java  
 /** Constructs a WordPairList object as described in part (a).  
  * Precondition: words.length >= 2  
  */  
@@ -170,14 +170,14 @@ The call `exampleThree.numMatches()` should return `2`.
   
 Complete method `numMatches` below.  
   
-```Plain Text  
+```java  
 /** Returns the number of matches as described in part (b)  
  */  
 public int numMatches()  
 ```  
 III. The `StringChecker` interface describes classes that check if strings are valid, according to some criterion.  
   
-```Plain Text  
+```java  
 public interface Stringchecker  
 {  
     /** Returns true if str is valid. */  
@@ -190,7 +190,7 @@ The following examples illustrate the behavior of `CodeWordChecker` objects.
   
 Example 1  
   
-```Plain Text  
+```java  
 StringChecker sc1 = new CodeWordChecker(5, 8, "$");  
 ```  
 Valid code words have 5 to 8 characters and must not include the string `"$"`.  
@@ -199,7 +199,7 @@ Valid code words have 5 to 8 characters and must not include the string `"$"`.
   
 Example 2  
   
-```Plain Text  
+```java  
 StringChecker sc2 = new CodeWordChecker("pass");  
 ```  
 Valid code words must not include the string `"pass"`. Because the bounds are not specified, the length bounds are `6` and `20`, inclusive.  
@@ -210,7 +210,7 @@ Write the complete `CodeWordChecker` class. Your implementation must meet all 
   
 IV. This question involves reasoning about arrays of integers. You will write two static methods, both of which are in a class named `ArrayTester`.  
   
-```Plain Text  
+```java  
 public class ArrayTester  
 {  
     /** Returns an array containing the elements of column c of arr2D in the same order as  
@@ -252,12 +252,12 @@ The following code segment initializes an array and calls the `getColumn` meth
   
 When the code segment has completed execution, the variable `result` will have the following contents.  
   
-```Plain Text  
+```java  
 result: {1, 4, 7, 5}  
 ```  
 Complete method `getColumn` below.  
   
-```Plain Text  
+```java  
 /** Returns an array containing the elements of column c of arr2D in the same order as they  
  * appear in arr2D.  
  * Precondition: c is a valid column index in arr2D.  
@@ -281,7 +281,7 @@ The `ArrayTester` class provides two helper methods: `containsDuplicates` an
   
 Complete method `isLatin` below. Assume that `getColumn` works as specified, regardless of what you wrote in part (a). You must use `getColumn`, `hasAllValues`, and `containsDuplicates` appropriately to receive full credit.  
   
-```Plain Text  
+```java  
 /** Returns true if sqaure is a Latin sqaure as described in part (b);  
  * false otherwise.  
  * Precondition: sqaure has an equal number of rows and columns.  

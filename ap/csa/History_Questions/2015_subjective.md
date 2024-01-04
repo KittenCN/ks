@@ -7,7 +7,7 @@ I. This question involves reasoning about one-dimensional and two-dimensional ar
   
 Completed method `arraySum` below.  
   
-```Plain Text  
+```java  
 /** Returns the sum of the entries in the one-dimensional array arr.  
  */  
 public static int arraySum(int[] arr)  
@@ -24,7 +24,7 @@ Assume that `arraySum` works as specified, regardless of what you wrote in par
   
 Complete method `rowSums` below.  
   
-```Plain Text  
+```java  
 /** Returns a one-dimensional array in which the entry at index k is the sum of  
  * the entries of row k of the two-dimensional array arr2D.  
  */  
@@ -42,7 +42,7 @@ Assume that `arraySum` and `rowSums` work as specified, regardless of what y
   
 Complete method `isDiverse` below.  
   
-```Plain Text  
+```java  
 /** Returns true if all rows in arr2D have different row sums;  
  * false otherwise.  
  */  
@@ -58,7 +58,7 @@ The `HiddenWord` class will be used to represent the hidden word in the game. 
   
 For example, suppose the variable `puzzle` is declared as follows.  
   
-```Plain Text  
+```java  
 HiddenWord puzzle = new HiddenWord("HARPS");  
 ```  
 The following table shows several guesses and the hints that would be produced.  
@@ -69,7 +69,7 @@ Write the complete `HiddenWord` class, including any necessary instance variab
   
 III. A two-dimensional array of integers in which most elements are zero is called a *sparse array*. Because most elements have a value of zero, memory can be saved by storing only the non-zero values along with their row and column indexes. The following complete `SparseArrayEntry` class is used to represent non-zero elements in a sparse array. A `SparseArrayEntry` object cannot be modified after it has been constructed.  
   
-```Plain Text  
+```java  
 public class SparseArrayEntry  
 {  
     /** The row index and column index for this entry in the sparse array */  
@@ -104,7 +104,7 @@ public class SparseArrayEntry
 ```  
 The `SparseArray` class represents a sparse array. It contains a list of `SparseArrayEntry` objects, each of which represents one of the non-zero elements in the array. The entries representing the non-zero elements are stored in the list in no particular order. Each non-zero element is represented by exactly one entry in the list.  
   
-```Plain Text  
+```java  
 public class SparseArray  
 {  
     /** The number of rows and columns in the sparse array. */  
@@ -158,7 +158,7 @@ In the example above, the call `sparse.getValueAt(3, 1)` would return `-9`, a
   
 Complete method `getValueAt` below.  
   
-```Plain Text  
+```java  
 /** Returns the value of the element at row index row and column index col in the sparse array.  
  * Precondition: 0 <= row < getNumRows()  
  * 0 <= col < getNumCols()  
@@ -187,7 +187,7 @@ When `sparse` has the state shown above, the call `sparse.removeColumn(1)` c
   
 Complete method `removeColumn` below.  
   
-```Plain Text  
+```java  
 /** Removes the column col from the sparse array.  
  * Precondition: 0 <= col < getNumCols()  
  */  
@@ -205,7 +205,7 @@ Write the complete `NumberGroup` interface. It must have exactly one method.
   
 Write the `Range` class, which is a `NumberGroup`. The `Range` class represents the group of `int` values that range from a given minimum value up through a given maximum value, inclusive. For example, the declaration  
   
-```Plain Text  
+```java  
 NumberGroup range1 =  new Range(-3, 2);  
   
 ```  
@@ -215,7 +215,7 @@ Write the complete `Range` class. Include all necessary instance variables and
   
 (c) The `MultipleGroups` class (not shown) represents a collection of `NumberGroup` objects and is a `NumberGroup`. The `MultipleGroups` class stores the number groups in the instance variable `groupList` (shown below), which is initialized in the constructor.  
   
-```Plain Text  
+```java  
 private List<NumberGroup> groupList;   
 ```  
 Write the `MultipleGroups` method `contains`. The method takes an integer and returns `true` if and only if the integer is contained in one or more of the number groups in `groupList`.  
@@ -226,7 +226,7 @@ For example, suppose `multiple1` has been declared as an instance of `Multipl
   
 Complete method `contains` below.  
   
-```Plain Text  
+```java  
 /** Returns true if at least one of the number groups in this multiple group contains num;  
  * false otherwise.  
  */  

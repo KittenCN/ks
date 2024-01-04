@@ -1,7 +1,7 @@
 # 4\. AP计算机2008年练习卷：多项选择  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public static int mystery(int[] arr)  
 {  
     int x = 0;  
@@ -14,7 +14,7 @@ public static int mystery(int[] arr)
 ```  
 Assume that the array nums has been declared and initialized as follows.  
   
-```Plain Text  
+```java  
 int[] nums = {3, 6, 1, 0, 1, 4, 2};  
   
 ```  
@@ -22,25 +22,25 @@ What value will be returned as a result of the call `mystery(nums)`?
   
   
   
-```Plain Text  
+```java  
 5  
 ```  
-```Plain Text  
+```java  
 6  
 ```  
-```Plain Text  
+```java  
 7  
 ```  
-```Plain Text  
+```java  
 10  
 ```  
-```Plain Text  
+```java  
 17  
 ```  
 ---  
 Consider the following partial Class declaration.  
   
-```Plain Text  
+```java  
 public class SomeClass  
 {  
     private int myA;  
@@ -58,31 +58,31 @@ public class SomeClass
 ```  
 The following declaration appears in another Class.  
   
-```Plain Text  
+```java  
 SomeClass obj = new SomeClass();  
 ```  
 Which of the following code segments will compile without error?  
   
   
   
-```Plain Text  
+```java  
 int x = obj.getA();  
   
 ```  
-```Plain Text  
+```java  
 int x;  
 obj.getA(x);  
   
 ```  
-```Plain Text  
+```java  
 int x = obj.myA;  
   
 ```  
-```Plain Text  
+```java  
 int x = SomeClass.getA();  
   
 ```  
-```Plain Text  
+```java  
 int x getA;(obj)  
 ```  
 ---  
@@ -105,7 +105,7 @@ Which of the following Changes to `SomeClass` will allow other Classes to acce
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int x = 7;  
 int y = 3;  
   
@@ -118,29 +118,29 @@ What is printed as a result of executing the code segment?
   
   
   
-```Plain Text  
+```java  
 Value is: 21  
   
 ```  
-```Plain Text  
+```java  
 Value is: 2.3333333  
   
 ```  
-```Plain Text  
+```java  
 Value is: 2  
   
 ```  
-```Plain Text  
+```java  
 Value is: 0  
   
 ```  
-```Plain Text  
+```java  
 Value is: 1  
 ```  
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public ArrayList<Integer> mystery(int n)  
 {  
     ArrayList<Integer> seq = new ArrayList<Integer>();  
@@ -153,32 +153,32 @@ public ArrayList<Integer> mystery(int n)
 ```  
 Which of the following is printed as a result of executing the following statement?  
   
-```Plain Text  
+```java  
 System.out.println(mystery(6));  
 ```  
-```Plain Text  
+```java  
 [3, 4, 7, 12, 19, 28]  
   
 ```  
-```Plain Text  
+```java  
 [3, 4, 7, 12, 19, 28, 39]  
   
 ```  
-```Plain Text  
+```java  
 [4, 7, 12, 19, 28, 39]  
   
 ```  
-```Plain Text  
+```java  
 [39, 28, 19, 12, 7, 4]  
   
 ```  
-```Plain Text  
+```java  
 [39, 28, 19, 12, 7, 4, 3]  
 ```  
 ---  
 Consider the following method that is intended to determine if the `double` values `d1` and `d2` are close enough to be considered equal. For example, given a `tolerance` of `0.001`, the values `54.32271` and `54.32294` would be considered equal.  
   
-```Plain Text  
+```java  
 /** @return true if d1 and d2 are within the specified tolerance,  
 * false otherwise  
 */  
@@ -193,29 +193,29 @@ Which of the following should replace `/* missing code */` so that `almostEqu
   
   
   
-```Plain Text  
+```java  
 return (d1 - d2) <= tolerance;  
   
 ```  
-```Plain Text  
+```java  
 return ((dl + d2) / 2) <= tolerance;  
   
 ```  
-```Plain Text  
+```java  
 return (d1 - d2) >= tolerance;  
   
 ```  
-```Plain Text  
+```java  
 return ((dl + d2) / 2) >= tolerance;  
   
 ```  
-```Plain Text  
+```java  
 return Math.abs(dl - d2) <= tolerance;  
 ```  
 ---  
 Consider the following class declaration.  
   
-```Plain Text  
+```java  
 public class Person  
 {  
     private String myName;  
@@ -239,7 +239,7 @@ public class Person
 ```  
 Assume that the following declaration has been made.  
   
-```Plain Text  
+```java  
 Person student = new Person("Thomas", 1995);  
   
 ```  
@@ -247,29 +247,29 @@ Which of the following statements is the most appropriate for changing the name 
   
   
   
-```Plain Text  
+```java  
 student = new Person("Tom", 1995);  
   
 ```  
-```Plain Text  
+```java  
 student.myName = "Tom";  
   
 ```  
-```Plain Text  
+```java  
 student.getName("Tom");  
   
 ```  
-```Plain Text  
+```java  
 student.setName("Tom");  
   
 ```  
-```Plain Text  
+```java  
 Person.setName("Tom");  
 ```  
 ---  
 Consider the following class declaration.  
   
-```Plain Text  
+```java  
 public class Student  
 {  
     private String myName;  
@@ -303,7 +303,7 @@ III. `Student c = new Student("Juan", "15");`
 ---  
 Consider the following method that is intended to return the sum of the elements in the array `key`.  
   
-```Plain Text  
+```java  
 public static int sumArray(int[] key)  
 {  
     int sum = O;  
@@ -318,29 +318,29 @@ Which of the following statements should be used to replace `/* missing code */
   
   
   
-```Plain Text  
+```java  
 sum = key[i];  
   
 ```  
-```Plain Text  
+```java  
 sum += key[i - 1];  
   
 ```  
-```Plain Text  
+```java  
 sum += key[i];  
   
 ```  
-```Plain Text  
+```java  
 sum += sum + key[i - 1];  
   
 ```  
-```Plain Text  
+```java  
 sum += sum + key[i];  
 ```  
 ---  
 Consider the following instance variable and methods. You may assume that `data` has been initialized with length > 0. The methods are intended to return the index of an array element equal to `target`, or `-1` if no such element exists.  
   
-```Plain Text  
+```java  
 private int[] data;  
 public int seqSearchRec(int target)  
 {  
@@ -378,29 +378,29 @@ Which of the following should be used to replace `// Line 1` in `seqSearchRec
   
   
   
-```Plain Text  
+```java  
 if (last <= 0)return -1;  
   
 ```  
-```Plain Text  
+```java  
 if (last < 0)return -1;  
   
 ```  
-```Plain Text  
+```java  
 if (last < data.length)return -1;  
   
 ```  
-```Plain Text  
+```java  
 while (last < data.length)  
   
 ```  
-```Plain Text  
+```java  
 while (last >= 0)  
 ```  
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public String mystery(String input)  
 {  
     String output = "";  
@@ -417,16 +417,16 @@ What is returned as a result of the call `mystery("computer")`?
   
   
   
-```Plain Text  
+```java  
 "computer"  
 ```  
-```Plain Text  
+```java  
 "cmue"  
 ```  
-```Plain Text  
+```java  
 "optr"  
 ```  
-```Plain Text  
+```java  
 "ompute"  
 ```  
  Nothing is returned because an `IndexOutOfBoundsException` is thrown.  
@@ -434,7 +434,7 @@ What is returned as a result of the call `mystery("computer")`?
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int[] arr = {7, 2, 5, 3, 0, 10};  
 for (int k = 0, k < arr.length - 1; k++)  
 {  
@@ -446,29 +446,29 @@ What will be printed as a result of executing the code segment?
   
   
   
-```Plain Text  
+```java  
 0 2 2 3 3 0  
   
 ```  
-```Plain Text  
+```java  
 0 7 2 5 3 3  
   
 ```  
-```Plain Text  
+```java  
 0 7 2 5 5 10  
   
 ```  
-```Plain Text  
+```java  
 1 7 3 5 4 3  
   
 ```  
-```Plain Text  
+```java  
 7 2 5 3 3 0  
 ```  
 ---  
 Consider the following interface and class declarations.  
   
-```Plain Text  
+```java  
 public interface Vehicle  
 {  
     /** @return the mileage traveled by this Vehicle  
@@ -501,29 +501,29 @@ Which of the following can be used to replace `/* expression */` so that `get
   
   
   
-```Plain Text  
+```java  
 getMileage(v)  
   
 ```  
-```Plain Text  
+```java  
 myVehicles[v].getMileage()  
   
 ```  
-```Plain Text  
+```java  
 Vehicle.get(v).getMileage()  
   
 ```  
-```Plain Text  
+```java  
 myVehicles.get(v).getMileage()  
   
 ```  
-```Plain Text  
+```java  
 v.getMileage()  
 ```  
 ---  
 Consider the following method, `isSorted`, which is intended to return `true` if an array of integers is sorted in nondecreasing order and to return `false` otherwise.  
   
-```Plain Text  
+```java  
 /** @param data an array of integers  
 * @return true if the values in the array appear in sorted (nondecreasing) order  
 */  
@@ -536,7 +536,7 @@ Which of the following can be used to replace `/* missing code */` so that isS
   
 I.  
   
-```Plain Text  
+```java  
 for (int k = 1; k < data.length; k++)  
 {  
     if (data[k - 1] > data[k])  
@@ -546,7 +546,7 @@ return true;
 ```  
 II.  
   
-```Plain Text  
+```java  
 for (int k = 0; k < data.length; k++)  
 {  
     if (data[k] > data[k + 1])  
@@ -556,7 +556,7 @@ return true;
 ```  
 III.  
   
-```Plain Text  
+```java  
 for (int k = 0; k < data.length - 1; k++)  
 {  
     if (data[k] > data[k + 1])  
@@ -579,7 +579,7 @@ return true;
 ---  
 Consider the following incomplete method that is intended to return an array that contains the contents of its first array parameter followed by the contents of its second array parameter.  
   
-```Plain Text  
+```java  
 public static int[] append(int[] a1, int[] a2)  
 {  
     int[] result = new int[a1.length + a2.length];  
@@ -596,25 +596,25 @@ Which of the following expressions can be used to replace `/* index */` so tha
   
   
   
-```Plain Text  
+```java  
 j  
 ```  
-```Plain Text  
+```java  
 k  
 ```  
-```Plain Text  
+```java  
 k + a1.length - 1  
 ```  
-```Plain Text  
+```java  
 k + a1.length  
 ```  
-```Plain Text  
+```java  
 k + a1.length + 1  
 ```  
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int[] arr = {1, 2, 3, 4, 5, 6, 7};  
   
 for (int k = 3; k < arr.length - 1; k++)  
@@ -624,19 +624,19 @@ Which of the following represents the contents of `arr` as a result of executi
   
   
   
-```Plain Text  
+```java  
 {1, 2, 3, 4, 5, 6, 7}  
 ```  
-```Plain Text  
+```java  
 {1, 2, 3, 5, 6, 7}  
 ```  
-```Plain Text  
+```java  
 {1, 2, 3, 5, 6, 7, 7}  
 ```  
-```Plain Text  
+```java  
 {1, 2, 3, 5, 6, 7, 8}  
 ```  
-```Plain Text  
+```java  
 {2, 3, 4, 5, 6, 7, 7}  
 ```  
 ---  
@@ -644,25 +644,25 @@ Assume that `myList` is an `ArrayList` that has been correctly constructed a
   
   
   
-```Plain Text  
+```java  
 (int)(Math.random() * myList.size()) - 1  
 ```  
-```Plain Text  
+```java  
 (int)(Math.random() * myList.size())  
 ```  
-```Plain Text  
+```java  
 (int)(Math.random() * myList.size()) + 1  
 ```  
-```Plain Text  
+```java  
 (int)(Math.random() * (myList.size() + 1))  
 ```  
-```Plain Text  
+```java  
 Math.random(myList.size())  
 ```  
 ---  
 Assume that `a` and `b` have been defined and initialized as `int` values. The expression  
   
-```Plain Text  
+```java  
 !(!(a != b) && (b > 7))  
   
 ```  
@@ -670,25 +670,25 @@ is equivalent to which of the following?
   
   
   
-```Plain Text  
+```java  
 (a != b) || (b < 7)  
 ```  
-```Plain Text  
+```java  
 (a != b) || (b <= 7)  
 ```  
-```Plain Text  
+```java  
 (a == b) || (b <= 7)  
 ```  
-```Plain Text  
+```java  
 (a != b) && (b <= 7)  
 ```  
-```Plain Text  
+```java  
 (a == b) && (b > 7)  
 ```  
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public static void arrayMethod(int nums[])  
 {  
     int j = 0;  
@@ -721,7 +721,7 @@ Which of the following describes what the method `arrayMethod()` does to the a
   
 Assume that the array `arr` has been defined and initialized as follows.  
   
-```Plain Text  
+```java  
 int[] arr = /* initial values for the array */ ;  
   
 ```  
@@ -738,7 +738,7 @@ Which of the following will correctly print all of the odd integers contained in
  `for (int x : arr)if (arr[x] % 2 == 1)System.out.println(arr[x]);`    
   
 ---  
-```Plain Text  
+```java  
 public static int mystery(int n)  
 {  
     int x = 1;  
@@ -765,19 +765,19 @@ What value is returned as a result of the call `mystery(6)`?
   
   
   
-```Plain Text  
+```java  
 1  
 ```  
-```Plain Text  
+```java  
 5  
 ```  
-```Plain Text  
+```java  
 6  
 ```  
-```Plain Text  
+```java  
 8  
 ```  
-```Plain Text  
+```java  
 13  
 ```  
 ---  
@@ -796,7 +796,7 @@ Which of the following is true of method `mystery`?
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 for (int k = 1; k <= 100; k++)  
     if ((k % 4) == 0)  
         System.out.println(k);  
@@ -816,7 +816,7 @@ Which of the following code segments will produce the same output as the code se
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public static String scramble(String word, int howFar)  
 {  
     return word.substring(howFar + 1, word.length()) +  
@@ -827,16 +827,16 @@ What value is returned as a result of the call `scramble("compiler", 3)`?
   
   
   
-```Plain Text  
+```java  
 "compiler"  
 ```  
-```Plain Text  
+```java  
 "pilercom"  
 ```  
-```Plain Text  
+```java  
 "ilercom"  
 ```  
-```Plain Text  
+```java  
 "ilercomp"  
 ```  
  No value is returned because an `IndexOutOfBoundsException` will be thrown.  
@@ -844,7 +844,7 @@ What value is returned as a result of the call `scramble("compiler", 3)`?
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public void mystery(int[] data)  
 {  
     for (int k = 0; k < data.length - 1; k++)  
@@ -853,7 +853,7 @@ public void mystery(int[] data)
 ```  
 The following code segment appears in another method in the same class.  
   
-```Plain Text  
+```java  
 int[] values = {5, 2, 1, 3, 8};  
 mystery(values);  
 for (int v : values)  
@@ -864,16 +864,16 @@ What is printed as a result of executing the code segment?
   
   
   
-```Plain Text  
+```java  
 5 2 1 3 8  
 ```  
-```Plain Text  
+```java  
 5 7 3 4 11  
 ```  
-```Plain Text  
+```java  
 5 7 8 11 19  
 ```  
-```Plain Text  
+```java  
 7 3 4 11 8  
 ```  
  Nothing is printed because an `ArrayIndexOutOfBoundsException` is thrown during the execution of method `mystery`.  
@@ -881,7 +881,7 @@ What is printed as a result of executing the code segment?
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public int compute(int n, int k)  
 {  
     int answer = 1;  
@@ -907,7 +907,7 @@ Which of the following represents the value returned as a result of the call `c
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int sum = 0;  
 int k = 1;  
 while (sum < 12 || k < 4)  
@@ -919,16 +919,16 @@ What is printed as a result of executing the code segment?
   
   
   
-```Plain Text  
+```java  
 6  
 ```  
-```Plain Text  
+```java  
 10  
 ```  
-```Plain Text  
+```java  
 12  
 ```  
-```Plain Text  
+```java  
 15  
 ```  
  Nothing is printed due to an infinite loop.  
@@ -936,7 +936,7 @@ What is printed as a result of executing the code segment?
 ---  
 Consider the following class declarations.  
   
-```Plain Text  
+```java  
 public class Point  
 {  
     private double x; // x-coordinate  
@@ -974,21 +974,21 @@ Which of the following replacements for `/* missing code */` will correctly im
   
 I.  
   
-```Plain Text  
+```java  
 center = new Point();  
 radius = r;  
   
 ```  
 II.  
   
-```Plain Text  
+```java  
 center = new Point(a, b);  
 radius = r;  
   
 ```  
 III.  
   
-```Plain Text  
+```java  
 center = new Point();  
 center.x = a;  
 center.y = b;  
@@ -1007,7 +1007,7 @@ radius = r;
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int num = 2574;  
 int result = 0;  
   
@@ -1022,25 +1022,25 @@ What is printed as a result of executing the code segment?
   
   
   
-```Plain Text  
+```java  
 2  
 ```  
-```Plain Text  
+```java  
 4  
 ```  
-```Plain Text  
+```java  
 18  
 ```  
-```Plain Text  
+```java  
 2574  
 ```  
-```Plain Text  
+```java  
 4752  
 ```  
 ---  
 Consider the following method.  
   
-```Plain Text  
+```java  
 public void test(int x)  
 {  
     int y;  
@@ -1070,7 +1070,7 @@ Which of the following test data sets would test each possible output for the me
 ---  
 Consider the following code segment.  
   
-```Plain Text  
+```java  
 int x = 1;  
 while ( /* missing code */ )  
 {  
@@ -1099,7 +1099,7 @@ Which of the proposed replacements for `/* missing code */` will cause the cod
 ---  
 Assume that `x` and `y` have been declared and initialized with `int` values. Consider the following Java expression.  
   
-```Plain Text  
+```java  
 (y > 10000) || (x > 1000 && x < 1500)  
 ```  
 Which of the following is equivalent to the expression given above?  
@@ -1114,13 +1114,13 @@ Which of the following is equivalent to the expression given above?
   
   
   
-```Plain Text  
+```java  
 (y > 10000 || x > 1000) && (y > 10000 && x < 1500)  
 ```  
 ---  
 Consider the following recursive method.  
   
-```Plain Text  
+```java  
 public int recur(int n)  
 {  
     if (n <= 10)  
@@ -1133,25 +1133,25 @@ What value is returned as a result of the call `recur(27)`?
   
   
   
-```Plain Text  
+```java  
 8  
 ```  
-```Plain Text  
+```java  
 9  
 ```  
-```Plain Text  
+```java  
 12  
 ```  
-```Plain Text  
+```java  
 16  
 ```  
-```Plain Text  
+```java  
 18  
 ```  
 ---  
 Consider the following recursive method.  
   
-```Plain Text  
+```java  
 public static void whatsItDo(String str)  
 {  
     int len = str.length();  

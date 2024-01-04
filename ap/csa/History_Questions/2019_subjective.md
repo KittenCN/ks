@@ -1,7 +1,7 @@
 # 6\. AP计算机2019年考试：主观题  
 I. The `APCalendar` class contains methods used to calculate information about a calendar. You will write two methods of the class.  
   
-```Plain Text  
+```java  
 public class APCalendar  
 {  
     /** Returns true if year is a leap year and false otherwise. */  
@@ -46,7 +46,7 @@ In order to calculate this value, a helper method is provided for you.
   
 Complete method `numberOfLeapYears` below. You must use `isLeapYear` appropriately to receive full credit.  
   
-```Plain Text  
+```java  
 /** Returns the number of leap years between year1 and year2, inclusive.  
  * Precondition: 0 <= year1 <= year2  
  */  
@@ -65,7 +65,7 @@ In order to calculate this value, two helper methods are provided for you.
   
 Complete method `dayOfWeek` below. You must use `firstDayOfYear` and `dayOfYear` appropriately to receive full credit.  
   
-```Plain Text  
+```java  
 /** Returns the value representing the day of the week for the given date  
  * (month, day, year), where 0 denotes Sunday, 1 denotes Monday, ...,  
  * and 6 denotes Saturday.  
@@ -103,7 +103,7 @@ HTML uses `<B>` and `</B>` as delimiters. For each open delimiter `<B>`, th
   
 In this question, you will write two methods in the following `Delimiters` class.  
   
-```Plain Text  
+```java  
 public class Delimiters  
 {  
   
@@ -150,7 +150,7 @@ Example 2
   
 Complete method `getDelimitersList` below.  
   
-```Plain Text  
+```java  
 /** Returns an ArrayList of delimiters from the array tokens, as described in part (a). */  
 public ArrayList<String> getDelimitersList(String[] tokens)   
 ```  
@@ -189,7 +189,7 @@ The following example shows an `ArrayList` for which `isBalanced` returns `
   
 Complete method `isBalanced` below.  
   
-```Plain Text  
+```java  
 /** Returns true if the delimiters are balanced and false otherwise, as described in part (b).  
  * Precondition: delimiters contains only valid open and close delimiters.  
  */  
@@ -197,7 +197,7 @@ public boolean isBalanced(ArrayList<String> delimiters)
 ```  
 IV. The `LightBoard` class models a two-dimensional display of lights, where each light is either on or off, as represented by a Boolean value. You will implement a constructor to initialize the display and a method to evaluate a light.  
   
-```Plain Text  
+```java  
 public class LightBoard  
 {  
     /** The lights on the board, where true represents on and false represents off.  
@@ -225,7 +225,7 @@ public class LightBoard
   
 Complete the `LightBoard` constructor below.  
   
-```Plain Text  
+```java  
 /** Constructs a LightBoard object having numRows rows and numCols columns.  
  * Precondition: numRows > 0, numCols > 0  
  * Postcondition: each light has a 40% probability of being set to on.  
@@ -240,7 +240,7 @@ public LightBoard(int numRows, int numCols)
   
 For example, suppose that `LightBoard sim = new LightBoard(7, 5)` creates a light board with the initial state shown below, where `true` represents a light that is on and `false` represents a light that is off. Lights that are off are shaded.  
   
-```Plain Text  
+```java  
 lights  
 ```  
 ![image](images/pnCJbOmGOT8v6bLuscHcxla90TrE-N7zWIZVzRbYbQ8.png)  
@@ -253,7 +253,7 @@ Sample calls to `evaluateLight` are shown below.
   
 Complete the `evaluateLight` method below.  
   
-```Plain Text  
+```java  
 /** Evaluates a light in row index row and column index col and returns a status  
  * as described in part (b).  
  * Precondition: row and col are valid indexes in lights.  

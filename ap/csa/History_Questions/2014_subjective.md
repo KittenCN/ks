@@ -13,7 +13,7 @@ The following table shows several examples of words and their scrambled versions
   
 Complete method `scrambleWord` below.  
   
-```Plain Text  
+```java  
  /** Scrambles a given word.  
   * @param word the word to be scrambled  
   * @return the scrambled word (possibly equal to word)  
@@ -41,7 +41,7 @@ Assume that `scrambleWord` is in the same class as `scrambleOrRemove` and wo
   
 Complete method `scrambleOrRemove` below.  
   
-```Plain Text  
+```java  
  /** Modifies wordList by replacing each word with its scrambled  
  * version, removing any words that are unchanged as a result of scrambling.  
  * @param wordList the list of words  
@@ -58,7 +58,7 @@ public static void scrambleOrRemove(List<String> wordList)
   
 III. A student in a school is represented by the following class.  
   
-```Plain Text  
+```java  
 public class Student  
 {  
     /** Returns the name of this Student. */  
@@ -74,7 +74,7 @@ public class Student
 ```  
 The class `SeatingChart`, shown below, uses a two-dimensional array to represent the seating arrangement of students in a classroom. The seats in the classroom are in a rectangular arrangement of rows and columns.  
   
-```Plain Text  
+```java  
 public class SeatingChart  
 {  
     /** seats[r][c] represents the Student in row r and column c in the classroom. */  
@@ -124,7 +124,7 @@ A `SeatingChart` object created with the call `new SeatingChart(roster, 3, 4)
   
 Complete the `SeatingChart` constructor below.  
   
-```Plain Text  
+```java  
 /** Creates a seating chart with the given number of rows and columns from the students in  
  * studentList. Empty seats in the seating chart are represented by null.  
  * @param rows the number of rows of seats in the classroom  
@@ -152,7 +152,7 @@ After the call `introCS.removeAbsentStudents(4)` has executed, the array `sea
   
 Complete method `removeAbsentStudents` below.  
   
-```Plain Text  
+```java  
 /** Removes students who have more than a given number of absences from the  
  * seating chart, replacing those entries in the seating chart with null  
  * and returns the number of students removed.  
@@ -169,7 +169,7 @@ IV. The menu at a lunch counter includes a variety of sandwiches, salads, and dr
   
 Each menu item has a name and a price. The four types of menu items are represented by the four classes `Sandwich`, `Salad`, `Drink`, and `Trio`. All four classes implement the following `MenuItem` inerface.  
   
-```Plain Text  
+```java  
 public interface MenuItem  
 {  
     /** @return the name of the menu item */  
@@ -193,7 +193,7 @@ A trio consisting of a cheeseburger, spinach salad, and an organe soda would hav
   
 Write the `Trio` class that implements the `MenuItem` interface. Your implementation must include a constructor that takes three parameters representing a sandwich, salad, and drink. The following code segment should have the indicated behavior.  
   
-```Plain Text  
+```java  
 Sandwich sandwich;  
 Salad salad;  
 Drink drink;  
