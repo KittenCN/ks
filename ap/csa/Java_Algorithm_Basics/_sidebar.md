@@ -7,3 +7,5 @@
         -   [csa Chapter2](ap/csa/Java_Algorithm_Basics/ch02.md)
         -   [csa Chapter3](ap/csa/Java_Algorithm_Basics/ch03.md)
     -   [csa Java_Object_oriented_Programming](ap/csa/Java_Object_oriented_Programming.md)
+    -   [csa Other](ap/csa/other.md)
+    -   [csa History Questions](ap/csa/History_Questions.md)
