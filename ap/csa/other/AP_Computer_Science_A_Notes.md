@@ -1,4 +1,4 @@
-# 3\. AP Computer Science A 学习笔记  
+# AP Computer Science A 学习笔记  
 ## Java 语法  
 (1) 布尔值叫 `boolean`，只能是 `true` 或 `false`，没有非 `0` 即 `true` 的概念。`boolean` 不能强转 `int`，实在要转可以用三目运算符。`if (...)` 里面只能是布尔值。  
   
@@ -12,7 +12,7 @@ x = (int)d; // 可以。强转：丢弃小数部分
 ```  
 (3) `int` 型的范围是$[-2^{31}, 2^{31} - 1]​$ 。可以用 `Integer.MIN_VALUE`$-2^{31}​$ 和 `Integer.MAX_VALUE`$2^{31} - 1​$ 来查看。  
   
-(4) 常量叫 `final`，类似于 C++C++ 的 `const`。  
+(4) 常量叫 `final`，类似于 C++的 `const`。  
   
 (5) 可以小数模小数。如：`4.2 % 1.5` 结果是 `1.2`。  
   
@@ -84,7 +84,6 @@ public class Tire extends Circle {
 Student s = new Student();     // 正确  
 Student g = new GradStudent(); // 正确  
 Student u = new UnderGrad();   // 正确  
-  
 GradStudent g = new Student(); // 错误  
   
 ```  
@@ -96,7 +95,6 @@ GradStudent g = new Student(); // 错误
 Student s = null;  
 Student u = new UnderGrad(...);  
 Student g = new GradStudent(...);  
-  
 String str = ...; // read user input  
 if (str.equals("G")) {  
     s = g;  
@@ -277,7 +275,7 @@ boolean b4 = (A.intValue() == C.intValue()); // true，手动 unboxing
 boolean b5 = (A < D); // true，auto unboxing  
   
 ```  
-(4) 在 JavaJava​ 里 `int` 可以自动被转成 `double`。如 `int x = 1; double y = x;` 是可以通过编译的。同时，`double` 可以自动被转成 `Double`，也就是所谓的 autoboxing，例如 `Double x = 23.33;`。但是，`int` 不能被自动转成 `Double`。如 `Double x = 1;` 就会编译错误，必须改成 `Double x = 1.0;`。  
+(4) 在 Java 里 `int` 可以自动被转成 `double`。如 `int x = 1; double y = x;` 是可以通过编译的。同时，`double` 可以自动被转成 `Double`，也就是所谓的 autoboxing，例如 `Double x = 23.33;`。但是，`int` 不能被自动转成 `Double`。如 `Double x = 1;` 就会编译错误，必须改成 `Double x = 1.0;`。  
   
 ### `Math` 类  
 (1) `static int abs(int x)` 和 `static double abs(double x)`：绝对值。  
@@ -353,7 +351,7 @@ for (int i = a.length - 1; i > 0; --i) {
 }  
   
 ```  
-(2) AP 里的选择排序，是不额外开一个答案数组的，而是**直接在原数组上 ****swap****。所以它是不稳定的（例如你考虑数组 ****{2, 2, 1}****）。AP 不考察排序算法的稳定性，但是要理解后面元素的顺序是会被打乱的，考试时问你第 k�​ 轮以后的序列，最好手动模拟一下。另外，AP 里每轮一般是先找好最小的位置再最后 ****swap**** 一次**，而不是每找到一个更小的元素就 `swap` 一下。  
+(2) AP 里的选择排序，是不额外开一个答案数组的，而是**直接在原数组上 ****swap****。所以它是不稳定的（例如你考虑数组 ****{2, 2, 1}****）。AP 不考察排序算法的稳定性，但是要理解后面元素的顺序是会被打乱的，考试时问你第 k​ 轮以后的序列，最好手动模拟一下。另外，AP 里每轮一般是先找好最小的位置再最后 ****swap**** 一次**，而不是每找到一个更小的元素就 `swap` 一下。  
   
 (3) AP 里的插入排序也是不额外开数组的，通过把当前元素向前依次交换来实现（有点像冒泡）。当然，归并排序还是必须额外开数组的。  
   
