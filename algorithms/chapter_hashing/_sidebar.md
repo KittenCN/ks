@@ -8,7 +8,7 @@
     -   [哈希表](algorithms/chapter_hashing/hash_map.md)
     -   [哈希冲突](algorithms/chapter_hashing/hash_collision.md)
     -   [哈希算法](algorithms/chapter_hashing/hash_algorithm.md)
-    -   [小结](algorithms/chapter_hashing/hash_summary.md)
+    -   [小结](algorithms/chapter_hashing/summary.md)
 -   [树](algorithms/chapter_tree/index.md)
 -   [堆](algorithms/chapter_heap/index.md)
 -   [图](algorithms/chapter_graph/index.md)
