@@ -15,3 +15,5 @@
 -   [动态规划](algorithms/chapter_dynamic_programming/index.md)
 -   [贪心](algorithms/chapter_greedy/index.md)
 -   [附录](algorithms/chapter_appendix/index.md)
+    -   [编程环境安装](algorithms/chapter_appendix/installation.md)
+    -   [术语表](algorithms/chapter_appendix/terminology.md)

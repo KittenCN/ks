@@ -1,5 +1,8 @@
 -   [前言](algorithms/chapter_preface/index.md)
 -   [初识算法](algorithms/chapter_introduction/index.md)
+    -   [算法无处不在](algorithms/chapter_introduction/algorithms_are_everywhere.md)
+    -   [算法是什么](algorithms/chapter_introduction/what_is_dsa.md)
+    -   [小结](algorithms/chapter_introduction/summary.md)
 -   [复杂度分析](algorithms/chapter_computational_complexity/index.md)
 -   [数据结构](algorithms/chapter_data_structure/index.md)
 -   [数组与链表](algorithms/chapter_array_and_linkedlist/index.md)
