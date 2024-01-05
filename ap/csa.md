@@ -5,5 +5,5 @@
     * [CSA Java_Array_and_ArrayList](ap/csa/Java_Array_and_ArrayList.md)
     * [CSA Java_Algorithm_Basics](ap/csa/Java_Algorithm_Basics.md)
     * [CSA Java_Object_oriented_Programming](ap/csa/Java_Object_oriented_Programming.md)
-    * [CSA Other](ap/csa/other.md)
-    * [CSA History Questions](ap/csa/History_Questions.md)
+    * [CSA 历史真题](ap/csa/History_Questions.md)
+    * [AP 微积分 calculus](ap/calculus.md)

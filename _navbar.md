@@ -2,6 +2,7 @@
 -   [开发规范](/standard/)
 -   [前端汇总](/web/)
 -   [后端汇总](/coding/)
+-   [算法汇总](/algorithms/)    
 -   [AP课程](/ap/)
 -   [数学知识](/math/)
 -   [工具集合](/tool/)
