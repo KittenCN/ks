@@ -1,5 +1,5 @@
 -   [前言](algorithms/chapter_preface/index.md)
-    -   [关于本书](algorithms/chapter_preface/about_this_book.md)
+    -   [关于本书](algorithms/chapter_preface/about_the_book.md)
     -   [如何使用本书](algorithms/chapter_preface/suggestions.md)
     -   [小结](algorithms/chapter_preface/summary.md)
 -   [初识算法](algorithms/chapter_introduction/index.md)
