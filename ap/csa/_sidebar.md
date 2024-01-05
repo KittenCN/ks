@@ -7,4 +7,4 @@
     -   [CSA Java_Object_oriented_Programming](ap/csa/Java_Object_oriented_Programming.md)
     -   [CSA 杂项](ap/csa/other.md)
     -   [CSA 历史真题](ap/csa/History_Questions.md)
--   [calculus](ap/calculus.md)
+-   [AP 微积分 calculus](ap/calculus.md)
