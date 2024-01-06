@@ -1,4 +1,4 @@
-*借用了[xflihaibo](xflihaibo.github.io/docs/)的模板及基础数据，感谢！*  
+*本项目借用了[xflihaibo](https://xflihaibo.github.io/docs/)的模板及基础数据，感谢！*  
 
 ## 项目简介  
 这里是[CoderFAN](https://www.coderfan.com)的资料库, 主要用于编程学习资料的收集和分享。如需要进一步学习编程知识，可以访问[OJ学习平台](https://www.coderfan.com)。  
