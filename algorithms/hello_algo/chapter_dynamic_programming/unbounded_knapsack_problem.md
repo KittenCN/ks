@@ -37,16 +37,16 @@ $$
 def unbounded_knapsack_dp(wgt: list[int], val: list[int], cap: int) -> int:
     """完全背包：动态规划"""
     n = len(wgt)
-    # 初始化 dp 表
+   // 初始化 dp 表
     dp = [[0] * (cap + 1) for _ in range(n + 1)]
-    # 状态转移
+   // 状态转移
     for i in range(1, n + 1):
         for c in range(1, cap + 1):
             if wgt[i - 1] > c:
-                # 若超过背包容量，则不选物品 i
+               // 若超过背包容量，则不选物品 i
                 dp[i][c] = dp[i - 1][c]
             else:
-                # 不选和选物品 i 这两种方案的较大值
+               // 不选和选物品 i 这两种方案的较大值
                 dp[i][c] = max(dp[i - 1][c], dp[i][c - wgt[i - 1]] + val[i - 1])
     return dp[n][cap]
 ```  
@@ -128,17 +128,17 @@ int unboundedKnapsackDP(int[] wgt, int[] val, int cap) {
 def unbounded_knapsack_dp_comp(wgt: list[int], val: list[int], cap: int) -> int:
     """完全背包：空间优化后的动态规划"""
     n = len(wgt)
-    # 初始化 dp 表
+   // 初始化 dp 表
     dp = [0] * (cap + 1)
-    # 状态转移
+   // 状态转移
     for i in range(1, n + 1):
-        # 正序遍历
+       // 正序遍历
         for c in range(1, cap + 1):
             if wgt[i - 1] > c:
-                # 若超过背包容量，则不选物品 i
+               // 若超过背包容量，则不选物品 i
                 dp[c] = dp[c]
             else:
-                # 不选和选物品 i 这两种方案的较大值
+               // 不选和选物品 i 这两种方案的较大值
                 dp[c] = max(dp[c], dp[c - wgt[i - 1]] + val[i - 1])
     return dp[cap]
 ```  
@@ -242,19 +242,19 @@ def coin_change_dp(coins: list[int], amt: int) -> int:
     """零钱兑换：动态规划"""
     n = len(coins)
     MAX = amt + 1
-    # 初始化 dp 表
+   // 初始化 dp 表
     dp = [[0] * (amt + 1) for _ in range(n + 1)]
-    # 状态转移：首行首列
+   // 状态转移：首行首列
     for a in range(1, amt + 1):
         dp[0][a] = MAX
-    # 状态转移：其余行和列
+   // 状态转移：其余行和列
     for i in range(1, n + 1):
         for a in range(1, amt + 1):
             if coins[i - 1] > a:
-                # 若超过目标金额，则不选硬币 i
+               // 若超过目标金额，则不选硬币 i
                 dp[i][a] = dp[i - 1][a]
             else:
-                # 不选和选硬币 i 这两种方案的较小值
+               // 不选和选硬币 i 这两种方案的较小值
                 dp[i][a] = min(dp[i - 1][a], dp[i][a - coins[i - 1]] + 1)
     return dp[n][amt] if dp[n][amt] != MAX else -1
 ```  
@@ -372,18 +372,18 @@ def coin_change_dp_comp(coins: list[int], amt: int) -> int:
     """零钱兑换：空间优化后的动态规划"""
     n = len(coins)
     MAX = amt + 1
-    # 初始化 dp 表
+   // 初始化 dp 表
     dp = [MAX] * (amt + 1)
     dp[0] = 0
-    # 状态转移
+   // 状态转移
     for i in range(1, n + 1):
-        # 正序遍历
+       // 正序遍历
         for a in range(1, amt + 1):
             if coins[i - 1] > a:
-                # 若超过目标金额，则不选硬币 i
+               // 若超过目标金额，则不选硬币 i
                 dp[a] = dp[a]
             else:
-                # 不选和选硬币 i 这两种方案的较小值
+               // 不选和选硬币 i 这两种方案的较小值
                 dp[a] = min(dp[a], dp[a - coins[i - 1]] + 1)
     return dp[amt] if dp[amt] != MAX else -1
 ```  
@@ -467,19 +467,19 @@ $$
 def coin_change_ii_dp(coins: list[int], amt: int) -> int:
     """零钱兑换 II：动态规划"""
     n = len(coins)
-    # 初始化 dp 表
+   // 初始化 dp 表
     dp = [[0] * (amt + 1) for _ in range(n + 1)]
-    # 初始化首列
+   // 初始化首列
     for i in range(n + 1):
         dp[i][0] = 1
-    # 状态转移
+   // 状态转移
     for i in range(1, n + 1):
         for a in range(1, amt + 1):
             if coins[i - 1] > a:
-                # 若超过目标金额，则不选硬币 i
+               // 若超过目标金额，则不选硬币 i
                 dp[i][a] = dp[i - 1][a]
             else:
-                # 不选和选硬币 i 这两种方案之和
+               // 不选和选硬币 i 这两种方案之和
                 dp[i][a] = dp[i - 1][a] + dp[i][a - coins[i - 1]]
     return dp[n][amt]
 ```  
@@ -547,18 +547,18 @@ int coinChangeIIDP(int[] coins, int amt) {
 def coin_change_ii_dp_comp(coins: list[int], amt: int) -> int:
     """零钱兑换 II：空间优化后的动态规划"""
     n = len(coins)
-    # 初始化 dp 表
+   // 初始化 dp 表
     dp = [0] * (amt + 1)
     dp[0] = 1
-    # 状态转移
+   // 状态转移
     for i in range(1, n + 1):
-        # 正序遍历
+       // 正序遍历
         for a in range(1, amt + 1):
             if coins[i - 1] > a:
-                # 若超过目标金额，则不选硬币 i
+               // 若超过目标金额，则不选硬币 i
                 dp[a] = dp[a]
             else:
-                # 不选和选硬币 i 这两种方案之和
+               // 不选和选硬币 i 这两种方案之和
                 dp[a] = dp[a] + dp[a - coins[i - 1]]
     return dp[amt]
 ```  

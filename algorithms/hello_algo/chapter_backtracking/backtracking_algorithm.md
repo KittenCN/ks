@@ -17,7 +17,7 @@ def pre_order(root: TreeNode):
     if root is None:
         return
     if root.val == 7:
-        # 记录解
+       // 记录解
         res.append(root)
     pre_order(root.left)
     pre_order(root.right)
@@ -77,14 +77,14 @@ def pre_order(root: TreeNode):
     """前序遍历：例题二"""
     if root is None:
         return
-    # 尝试
+   // 尝试
     path.append(root)
     if root.val == 7:
-        # 记录解
+       // 记录解
         res.append(list(path))
     pre_order(root.left)
     pre_order(root.right)
-    # 回退
+   // 回退
     path.pop()
 ```  
 
@@ -179,17 +179,17 @@ void preOrder(TreeNode root) {
 ```python title=""
 def pre_order(root: TreeNode):
     """前序遍历：例题三"""
-    # 剪枝
+   // 剪枝
     if root is None or root.val == 3:
         return
-    # 尝试
+   // 尝试
     path.append(root)
     if root.val == 7:
-        # 记录解
+       // 记录解
         res.append(list(path))
     pre_order(root.left)
     pre_order(root.right)
-    # 回退
+   // 回退
     path.pop()
 ```  
 
@@ -250,20 +250,20 @@ void preOrder(TreeNode root) {
     ```python title=""
     def backtrack(state: State, choices: list[choice], res: list[state]):
         """回溯算法框架"""
-        # 判断是否为解
+       // 判断是否为解
         if is_solution(state):
-            # 记录解
+           // 记录解
             record_solution(state, res)
-            # 不再继续搜索
+           // 不再继续搜索
             return
-        # 遍历所有选择
+       // 遍历所有选择
         for choice in choices:
-            # 剪枝：判断选择是否合法
+           // 剪枝：判断选择是否合法
             if is_valid(state, choice):
-                # 尝试：做出选择，更新状态
+               // 尝试：做出选择，更新状态
                 make_choice(state, choice)
                 backtrack(state, choices, res)
-                # 回退：撤销选择，恢复到之前的状态
+               // 回退：撤销选择，恢复到之前的状态
                 undo_choice(state, choice)
     ```
 
@@ -561,19 +561,19 @@ def backtrack(
     state: list[TreeNode], choices: list[TreeNode], res: list[list[TreeNode]]
 ):
     """回溯算法：例题三"""
-    # 检查是否为解
+   // 检查是否为解
     if is_solution(state):
-        # 记录解
+       // 记录解
         record_solution(state, res)
-    # 遍历所有选择
+   // 遍历所有选择
     for choice in choices:
-        # 剪枝：检查选择是否合法
+       // 剪枝：检查选择是否合法
         if is_valid(state, choice):
-            # 尝试：做出选择，更新状态
+           // 尝试：做出选择，更新状态
             make_choice(state, choice)
-            # 进行下一轮选择
+           // 进行下一轮选择
             backtrack(state, [choice.left, choice.right], res)
-            # 回退：撤销选择，恢复到之前的状态
+           // 回退：撤销选择，恢复到之前的状态
             undo_choice(state, choice)
 ```  
 

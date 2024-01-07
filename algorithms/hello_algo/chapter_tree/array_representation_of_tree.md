@@ -27,8 +27,8 @@
 - "Python"
 
     ```python title=""
-    # 二叉树的数组表示
-    # 使用 None 来表示空位
+   // 二叉树的数组表示
+   // 使用 None 来表示空位
     tree = [1, 2, 3, 4, None, 6, 7, 8, 9, None, None, 12, None, None, 15]
     ```
 
@@ -146,7 +146,7 @@ class ArrayBinaryTree:
 
     def val(self, i: int) -> int:
         """获取索引为 i 节点的值"""
-        # 若索引越界，则返回 None ，代表空位
+       // 若索引越界，则返回 None ，代表空位
         if i < 0 or i >= self.size():
             return None
         return self._tree[i]
@@ -166,7 +166,7 @@ class ArrayBinaryTree:
     def level_order(self) -> list[int]:
         """层序遍历"""
         self.res = []
-        # 直接遍历数组
+       // 直接遍历数组
         for i in range(self.size()):
             if self.val(i) is not None:
                 self.res.append(self.val(i))
@@ -176,15 +176,15 @@ class ArrayBinaryTree:
         """深度优先遍历"""
         if self.val(i) is None:
             return
-        # 前序遍历
+       // 前序遍历
         if order == "pre":
             self.res.append(self.val(i))
         self.dfs(self.left(i), order)
-        # 中序遍历
+       // 中序遍历
         if order == "in":
             self.res.append(self.val(i))
         self.dfs(self.right(i), order)
-        # 后序遍历
+       // 后序遍历
         if order == "post":
             self.res.append(self.val(i))
 

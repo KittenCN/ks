@@ -29,23 +29,23 @@
 - "Python"
 
     ```python title="hash_map.py"
-    # 初始化哈希表
+   // 初始化哈希表
     hmap: dict = {}
     
-    # 添加操作
-    # 在哈希表中添加键值对 (key, value)
+   // 添加操作
+   // 在哈希表中添加键值对 (key, value)
     hmap[12836] = "小哈"
     hmap[15937] = "小啰"
     hmap[16750] = "小算"
     hmap[13276] = "小法"
     hmap[10583] = "小鸭"
     
-    # 查询操作
-    # 向哈希表中输入键 key ，得到值 value
+   // 查询操作
+   // 向哈希表中输入键 key ，得到值 value
     name: str = hmap[15937]
     
-    # 删除操作
-    # 在哈希表中删除键值对 (key, value)
+   // 删除操作
+   // 在哈希表中删除键值对 (key, value)
     hmap.pop(10583)
     ```
 
@@ -278,14 +278,14 @@
 - "Python"
 
     ```python title="hash_map.py"
-    # 遍历哈希表
-    # 遍历键值对 key->value
+   // 遍历哈希表
+   // 遍历键值对 key->value
     for key, value in hmap.items():
         print(key, "->", value)
-    # 单独遍历键 key
+   // 单独遍历键 key
     for key in hmap.keys():
         print(key)
-    # 单独遍历值 value
+   // 单独遍历值 value
     for value in hmap.values():
         print(value)
     ```
@@ -501,7 +501,7 @@ class ArrayHashMap:
 
     def __init__(self):
         """构造方法"""
-        # 初始化数组，包含 100 个桶
+       // 初始化数组，包含 100 个桶
         self.buckets: list[Pair | None] = [None] * 100
 
     def hash_func(self, key: int) -> int:
@@ -526,7 +526,7 @@ class ArrayHashMap:
     def remove(self, key: int):
         """删除操作"""
         index: int = self.hash_func(key)
-        # 置为 None ，代表删除
+       // 置为 None ，代表删除
         self.buckets[index] = None
 
     def entry_set(self) -> list[Pair]:

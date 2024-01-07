@@ -38,40 +38,40 @@
 - "Python"
 
     ```python title="heap.py"
-    # 初始化小顶堆
+   // 初始化小顶堆
     min_heap, flag = [], 1
-    # 初始化大顶堆
+   // 初始化大顶堆
     max_heap, flag = [], -1
 
-    # Python 的 heapq 模块默认实现小顶堆
-    # 考虑将“元素取负”后再入堆，这样就可以将大小关系颠倒，从而实现大顶堆
-    # 在本示例中，flag = 1 时对应小顶堆，flag = -1 时对应大顶堆
+   // Python 的 heapq 模块默认实现小顶堆
+   // 考虑将“元素取负”后再入堆，这样就可以将大小关系颠倒，从而实现大顶堆
+   // 在本示例中，flag = 1 时对应小顶堆，flag = -1 时对应大顶堆
 
-    # 元素入堆
+   // 元素入堆
     heapq.heappush(max_heap, flag * 1)
     heapq.heappush(max_heap, flag * 3)
     heapq.heappush(max_heap, flag * 2)
     heapq.heappush(max_heap, flag * 5)
     heapq.heappush(max_heap, flag * 4)
 
-    # 获取堆顶元素
-    peek: int = flag * max_heap[0] # 5
+   // 获取堆顶元素
+    peek: int = flag * max_heap[0]// 5
 
-    # 堆顶元素出堆
-    # 出堆元素会形成一个从大到小的序列
-    val = flag * heapq.heappop(max_heap) # 5
-    val = flag * heapq.heappop(max_heap) # 4
-    val = flag * heapq.heappop(max_heap) # 3
-    val = flag * heapq.heappop(max_heap) # 2
-    val = flag * heapq.heappop(max_heap) # 1
+   // 堆顶元素出堆
+   // 出堆元素会形成一个从大到小的序列
+    val = flag * heapq.heappop(max_heap)// 5
+    val = flag * heapq.heappop(max_heap)// 4
+    val = flag * heapq.heappop(max_heap)// 3
+    val = flag * heapq.heappop(max_heap)// 2
+    val = flag * heapq.heappop(max_heap)// 1
 
-    # 获取堆大小
+   // 获取堆大小
     size: int = len(max_heap)
 
-    # 判断堆是否为空
+   // 判断堆是否为空
     is_empty: bool = not max_heap
 
-    # 输入列表并建堆
+   // 输入列表并建堆
     min_heap: list[int] = [1, 3, 2, 5, 4]
     heapq.heapify(min_heap)
     ```
@@ -371,7 +371,7 @@ def right(self, i: int) -> int:
 
 def parent(self, i: int) -> int:
     """获取父节点的索引"""
-    return (i - 1) // 2  # 向下整除
+    return (i - 1) // 2 // 向下整除
 ```  
 
 - "C++"
@@ -476,22 +476,22 @@ int peek() {
 ```python
 def push(self, val: int):
     """元素入堆"""
-    # 添加节点
+   // 添加节点
     self.max_heap.append(val)
-    # 从底至顶堆化
+   // 从底至顶堆化
     self.sift_up(self.size() - 1)
 
 def sift_up(self, i: int):
     """从节点 i 开始，从底至顶堆化"""
     while True:
-        # 获取节点 i 的父节点
+       // 获取节点 i 的父节点
         p = self.parent(i)
-        # 当“越过根节点”或“节点无须修复”时，结束堆化
+       // 当“越过根节点”或“节点无须修复”时，结束堆化
         if p < 0 or self.max_heap[i] <= self.max_heap[p]:
             break
-        # 交换两节点
+       // 交换两节点
         self.swap(i, p)
-        # 循环向上堆化
+       // 循环向上堆化
         i = p
 ```  
 
@@ -593,33 +593,33 @@ void siftUp(int i) {
 ```python
 def pop(self) -> int:
     """元素出堆"""
-    # 判空处理
+   // 判空处理
     if self.is_empty():
         raise IndexError("堆为空")
-    # 交换根节点与最右叶节点（交换首元素与尾元素）
+   // 交换根节点与最右叶节点（交换首元素与尾元素）
     self.swap(0, self.size() - 1)
-    # 删除节点
+   // 删除节点
     val = self.max_heap.pop()
-    # 从顶至底堆化
+   // 从顶至底堆化
     self.sift_down(0)
-    # 返回堆顶元素
+   // 返回堆顶元素
     return val
 
 def sift_down(self, i: int):
     """从节点 i 开始，从顶至底堆化"""
     while True:
-        # 判断节点 i, l, r 中值最大的节点，记为 ma
+       // 判断节点 i, l, r 中值最大的节点，记为 ma
         l, r, ma = self.left(i), self.right(i), i
         if l < self.size() and self.max_heap[l] > self.max_heap[ma]:
             ma = l
         if r < self.size() and self.max_heap[r] > self.max_heap[ma]:
             ma = r
-        # 若节点 i 最大或索引 l, r 越界，则无须继续堆化，跳出
+       // 若节点 i 最大或索引 l, r 越界，则无须继续堆化，跳出
         if ma == i:
             break
-        # 交换两节点
+       // 交换两节点
         self.swap(i, ma)
-        # 循环向下堆化
+       // 循环向下堆化
         i = ma
 ```  
 

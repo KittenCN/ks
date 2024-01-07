@@ -22,8 +22,8 @@
     class ListNode:
         """链表节点类"""
         def __init__(self, val: int):
-            self.val: int = val               # 节点值
-            self.next: ListNode | None = None # 指向下一节点的引用
+            self.val: int = val              // 节点值
+            self.next: ListNode | None = None// 指向下一节点的引用
     ```
 
 - "C++"
@@ -188,14 +188,14 @@
 - "Python"
 
     ```python title="linked_list.py"
-    # 初始化链表 1 -> 3 -> 2 -> 5 -> 4
-    # 初始化各个节点
+   // 初始化链表 1 -> 3 -> 2 -> 5 -> 4
+   // 初始化各个节点
     n0 = ListNode(1)
     n1 = ListNode(3)
     n2 = ListNode(2)
     n3 = ListNode(5)
     n4 = ListNode(4)
-    # 构建节点之间的引用
+   // 构建节点之间的引用
     n0.next = n1
     n1.next = n2
     n2.next = n3
@@ -443,7 +443,7 @@ def remove(n0: ListNode):
     """删除链表的节点 n0 之后的首个节点"""
     if not n0.next:
         return
-    # n0 -> P -> n1
+    // n0 -> P -> n1
     P = n0.next
     n1 = P.next
     n0.next = n1
@@ -594,9 +594,9 @@ int find(ListNode head, int target) {
     class ListNode:
         """双向链表节点类"""
         def __init__(self, val: int):
-            self.val: int = val                # 节点值
-            self.next: ListNode | None = None  # 指向后继节点的引用
-            self.prev: ListNode | None = None  # 指向前驱节点的引用
+            self.val: int = val                // 节点值
+            self.next: ListNode | None = None  // 指向后继节点的引用
+            self.prev: ListNode | None = None  // 指向前驱节点的引用
     ```
 
 - "C++"

@@ -26,28 +26,28 @@
     ```python title="deque.py"
     from collections import deque
 
-    # 初始化双向队列
+   // 初始化双向队列
     deque: deque[int] = deque()
     
-    # 元素入队
-    deque.append(2)      # 添加至队尾
+   // 元素入队
+    deque.append(2)     // 添加至队尾
     deque.append(5)
     deque.append(4)
-    deque.appendleft(3)  # 添加至队首
+    deque.appendleft(3) // 添加至队首
     deque.appendleft(1)
     
-    # 访问元素
-    front: int = deque[0]  # 队首元素
-    rear: int = deque[-1]  # 队尾元素
+   // 访问元素
+    front: int = deque[0] // 队首元素
+    rear: int = deque[-1] // 队尾元素
     
-    # 元素出队
-    pop_front: int = deque.popleft()  # 队首元素出队
-    pop_rear: int = deque.pop()       # 队尾元素出队
+   // 元素出队
+    pop_front: int = deque.popleft() // 队首元素出队
+    pop_rear: int = deque.pop()      // 队尾元素出队
     
-    # 获取双向队列的长度
+   // 获取双向队列的长度
     size: int = len(deque)
     
-    # 判断双向队列是否为空
+   // 判断双向队列是否为空
     is_empty: bool = len(deque) == 0
     ```
 
@@ -381,17 +381,17 @@ class ListNode:
     def __init__(self, val: int):
         """构造方法"""
         self.val: int = val
-        self.next: ListNode | None = None  # 后继节点引用
-        self.prev: ListNode | None = None  # 前驱节点引用
+        self.next: ListNode | None = None // 后继节点引用
+        self.prev: ListNode | None = None // 前驱节点引用
 
 class LinkedListDeque:
     """基于双向链表实现的双向队列"""
 
     def __init__(self):
         """构造方法"""
-        self._front: ListNode | None = None  # 头节点 front
-        self._rear: ListNode | None = None  # 尾节点 rear
-        self._size: int = 0  # 双向队列的长度
+        self._front: ListNode | None = None // 头节点 front
+        self._rear: ListNode | None = None // 尾节点 rear
+        self._size: int = 0 // 双向队列的长度
 
     def size(self) -> int:
         """获取双向队列的长度"""
@@ -404,22 +404,22 @@ class LinkedListDeque:
     def push(self, num: int, is_front: bool):
         """入队操作"""
         node = ListNode(num)
-        # 若链表为空，则令 front 和 rear 都指向 node
+       // 若链表为空，则令 front 和 rear 都指向 node
         if self.is_empty():
             self._front = self._rear = node
-        # 队首入队操作
+       // 队首入队操作
         elif is_front:
-            # 将 node 添加至链表头部
+           // 将 node 添加至链表头部
             self._front.prev = node
             node.next = self._front
-            self._front = node  # 更新头节点
-        # 队尾入队操作
+            self._front = node // 更新头节点
+       // 队尾入队操作
         else:
-            # 将 node 添加至链表尾部
+           // 将 node 添加至链表尾部
             self._rear.next = node
             node.prev = self._rear
-            self._rear = node  # 更新尾节点
-        self._size += 1  # 更新队列长度
+            self._rear = node // 更新尾节点
+        self._size += 1 // 更新队列长度
 
     def push_first(self, num: int):
         """队首入队"""
@@ -433,25 +433,25 @@ class LinkedListDeque:
         """出队操作"""
         if self.is_empty():
             raise IndexError("双向队列为空")
-        # 队首出队操作
+       // 队首出队操作
         if is_front:
-            val: int = self._front.val  # 暂存头节点值
-            # 删除头节点
+            val: int = self._front.val // 暂存头节点值
+           // 删除头节点
             fnext: ListNode | None = self._front.next
             if fnext != None:
                 fnext.prev = None
                 self._front.next = None
-            self._front = fnext  # 更新头节点
-        # 队尾出队操作
+            self._front = fnext // 更新头节点
+       // 队尾出队操作
         else:
-            val: int = self._rear.val  # 暂存尾节点值
-            # 删除尾节点
+            val: int = self._rear.val // 暂存尾节点值
+           // 删除尾节点
             rprev: ListNode | None = self._rear.prev
             if rprev != None:
                 rprev.next = None
                 self._rear.prev = None
-            self._rear = rprev  # 更新尾节点
-        self._size -= 1  # 更新队列长度
+            self._rear = rprev // 更新尾节点
+        self._size -= 1 // 更新队列长度
         return val
 
     def pop_first(self) -> int:
@@ -806,9 +806,9 @@ class ArrayDeque:
 
     def index(self, i: int) -> int:
         """计算环形数组索引"""
-        # 通过取余操作实现数组首尾相连
-        # 当 i 越过数组尾部后，回到头部
-        # 当 i 越过数组头部后，回到尾部
+       // 通过取余操作实现数组首尾相连
+       // 当 i 越过数组尾部后，回到头部
+       // 当 i 越过数组头部后，回到尾部
         return (i + self.capacity()) % self.capacity()
 
     def push_first(self, num: int):
@@ -816,10 +816,10 @@ class ArrayDeque:
         if self._size == self.capacity():
             print("双向队列已满")
             return
-        # 队首指针向左移动一位
-        # 通过取余操作实现 front 越过数组头部后回到尾部
+       // 队首指针向左移动一位
+       // 通过取余操作实现 front 越过数组头部后回到尾部
         self._front = self.index(self._front - 1)
-        # 将 num 添加至队首
+       // 将 num 添加至队首
         self._nums[self._front] = num
         self._size += 1
 
@@ -828,16 +828,16 @@ class ArrayDeque:
         if self._size == self.capacity():
             print("双向队列已满")
             return
-        # 计算队尾指针，指向队尾索引 + 1
+       // 计算队尾指针，指向队尾索引 + 1
         rear = self.index(self._front + self._size)
-        # 将 num 添加至队尾
+       // 将 num 添加至队尾
         self._nums[rear] = num
         self._size += 1
 
     def pop_first(self) -> int:
         """队首出队"""
         num = self.peek_first()
-        # 队首指针向后移动一位
+       // 队首指针向后移动一位
         self._front = self.index(self._front + 1)
         self._size -= 1
         return num
@@ -858,13 +858,13 @@ class ArrayDeque:
         """访问队尾元素"""
         if self.is_empty():
             raise IndexError("双向队列为空")
-        # 计算尾元素索引
+       // 计算尾元素索引
         last = self.index(self._front + self._size - 1)
         return self._nums[last]
 
     def to_array(self) -> list[int]:
         """返回数组用于打印"""
-        # 仅转换有效长度范围内的列表元素
+       // 仅转换有效长度范围内的列表元素
         res = []
         for i in range(self._size):
             res.append(self._nums[self.index(self._front + i)])

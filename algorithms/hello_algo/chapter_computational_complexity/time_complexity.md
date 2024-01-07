@@ -11,14 +11,14 @@
 === "Python"
 
     ```python title=""
-    # 在某运行平台下
+   // 在某运行平台下
     def algorithm(n: int):
-        a = 2      # 1 ns
-        a = a + 1  # 1 ns
-        a = a * 2  # 10 ns
-        # 循环 n 次
-        for _ in range(n):  # 1 ns
-            print(0)        # 5 ns
+        a = 2     // 1 ns
+        a = a + 1 // 1 ns
+        a = a * 2 // 10 ns
+       // 循环 n 次
+        for _ in range(n): // 1 ns
+            print(0)       // 5 ns
     ```
 
 === "C++"
@@ -203,14 +203,14 @@ $$
 === "Python"
 
     ```python title=""
-    # 算法 A 的时间复杂度：常数阶
+   // 算法 A 的时间复杂度：常数阶
     def algorithm_A(n: int):
         print(0)
-    # 算法 B 的时间复杂度：线性阶
+   // 算法 B 的时间复杂度：线性阶
     def algorithm_B(n: int):
         for _ in range(n):
             print(0)
-    # 算法 C 的时间复杂度：常数阶
+   // 算法 C 的时间复杂度：常数阶
     def algorithm_C(n: int):
         for _ in range(1000000):
             print(0)
@@ -474,12 +474,12 @@ $$
 
     ```python title=""
     def algorithm(n: int):
-        a = 1      # +1
-        a = a + 1  # +1
-        a = a * 2  # +1
-        # 循环 n 次
-        for i in range(n):  # +1
-            print(0)        # +1
+        a = 1     // +1
+        a = a + 1 // +1
+        a = a * 2 // +1
+       // 循环 n 次
+        for i in range(n): // +1
+            print(0)       // +1
     ```
 
 === "C++"
@@ -677,12 +677,12 @@ $T(n)$ 是一次函数，说明其运行时间的增长趋势是线性的，因�
 
     ```python title=""
     def algorithm(n: int):
-        a = 1      # +0（技巧 1）
-        a = a + n  # +0（技巧 1）
-        # +n（技巧 2）
+        a = 1     // +0（技巧 1）
+        a = a + n // +0（技巧 1）
+       // +n（技巧 2）
         for i in range(5 * n + 1):
             print(0)
-        # +n*n（技巧 3）
+       // +n*n（技巧 3）
         for i in range(2 * n):
             for j in range(n + 1):
                 print(0)

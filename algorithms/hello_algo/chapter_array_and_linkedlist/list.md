@@ -20,10 +20,10 @@
 - "Python"
 
     ```python title="list.py"
-    # 初始化列表
-    # 无初始值
+   // 初始化列表
+   // 无初始值
     nums1: list[int] = []
-    # 有初始值
+   // 有初始值
     nums: list[int] = [1, 3, 2, 5, 4]
     ```
 
@@ -142,11 +142,11 @@
 - "Python"
 
     ```python title="list.py"
-    # 访问元素
-    num: int = nums[1]  # 访问索引 1 处的元素
+   // 访问元素
+    num: int = nums[1] // 访问索引 1 处的元素
 
-    # 更新元素
-    nums[1] = 0    # 将索引 1 处的元素更新为 0
+   // 更新元素
+    nums[1] = 0   // 将索引 1 处的元素更新为 0
     ```
 
 - "C++"
@@ -261,21 +261,21 @@
 - "Python"
 
     ```python title="list.py"
-    # 清空列表
+   // 清空列表
     nums.clear()
 
-    # 在尾部添加元素
+   // 在尾部添加元素
     nums.append(1)
     nums.append(3)
     nums.append(2)
     nums.append(5)
     nums.append(4)
 
-    # 在中间插入元素
-    nums.insert(3, 6)  # 在索引 3 处插入数字 6
+   // 在中间插入元素
+    nums.insert(3, 6) // 在索引 3 处插入数字 6
 
-    # 删除元素
-    nums.pop(3)        # 删除索引 3 处的元素
+   // 删除元素
+    nums.pop(3)       // 删除索引 3 处的元素
     ```
 
 - "C++"
@@ -491,12 +491,12 @@
 - "Python"
 
     ```python title="list.py"
-    # 通过索引遍历列表
+   // 通过索引遍历列表
     count = 0
     for i in range(len(nums)):
         count += nums[i]
 
-    # 直接遍历列表元素
+   // 直接遍历列表元素
     for num in nums:
         count += num
     ```
@@ -674,9 +674,9 @@
 - "Python"
 
     ```python title="list.py"
-    # 拼接两个列表
+   // 拼接两个列表
     nums1: list[int] = [6, 8, 7, 10, 9]
-    nums += nums1  # 将列表 nums1 拼接到 nums 之后
+    nums += nums1 // 将列表 nums1 拼接到 nums 之后
     ```
 
 - "C++"
@@ -775,8 +775,8 @@
 - "Python"
 
     ```python title="list.py"
-    # 排序列表
-    nums.sort()  # 排序后，列表元素从小到大排列
+   // 排序列表
+    nums.sort() // 排序后，列表元素从小到大排列
     ```
 
 - "C++"
@@ -872,10 +872,10 @@ class MyList:
 
     def __init__(self):
         """构造方法"""
-        self._capacity: int = 10  # 列表容量
-        self._arr: list[int] = [0] * self._capacity  # 数组（存储列表元素）
-        self._size: int = 0  # 列表长度（当前元素数量）
-        self._extend_ratio: int = 2  # 每次列表扩容的倍数
+        self._capacity: int = 10 // 列表容量
+        self._arr: list[int] = [0] * self._capacity // 数组（存储列表元素）
+        self._size: int = 0 // 列表长度（当前元素数量）
+        self._extend_ratio: int = 2 // 每次列表扩容的倍数
 
     def size(self) -> int:
         """获取列表长度（当前元素数量）"""
@@ -887,7 +887,7 @@ class MyList:
 
     def get(self, index: int) -> int:
         """访问元素"""
-        # 索引如果越界，则抛出异常，下同
+       // 索引如果越界，则抛出异常，下同
         if index < 0 or index >= self._size:
             raise IndexError("索引越界")
         return self._arr[index]
@@ -900,7 +900,7 @@ class MyList:
 
     def add(self, num: int):
         """在尾部添加元素"""
-        # 元素数量超出容量时，触发扩容机制
+       // 元素数量超出容量时，触发扩容机制
         if self.size() == self.capacity():
             self.extend_capacity()
         self._arr[self._size] = num
@@ -910,14 +910,14 @@ class MyList:
         """在中间插入元素"""
         if index < 0 or index >= self._size:
             raise IndexError("索引越界")
-        # 元素数量超出容量时，触发扩容机制
+       // 元素数量超出容量时，触发扩容机制
         if self._size == self.capacity():
             self.extend_capacity()
-        # 将索引 index 以及之后的元素都向后移动一位
+       // 将索引 index 以及之后的元素都向后移动一位
         for j in range(self._size - 1, index - 1, -1):
             self._arr[j + 1] = self._arr[j]
         self._arr[index] = num
-        # 更新元素数量
+       // 更新元素数量
         self._size += 1
 
     def remove(self, index: int) -> int:
@@ -925,19 +925,19 @@ class MyList:
         if index < 0 or index >= self._size:
             raise IndexError("索引越界")
         num = self._arr[index]
-        # 将索引 index 之后的元素都向前移动一位
+       // 将索引 index 之后的元素都向前移动一位
         for j in range(index, self._size - 1):
             self._arr[j] = self._arr[j + 1]
-        # 更新元素数量
+       // 更新元素数量
         self._size -= 1
-        # 返回被删除的元素
+       // 返回被删除的元素
         return num
 
     def extend_capacity(self):
         """列表扩容"""
-        # 新建一个长度为原数组 _extend_ratio 倍的新数组，并将原数组复制到新数组
+       // 新建一个长度为原数组 _extend_ratio 倍的新数组，并将原数组复制到新数组
         self._arr = self._arr + [0] * self.capacity() * (self._extend_ratio - 1)
-        # 更新列表容量
+       // 更新列表容量
         self._capacity = len(self._arr)
 
     def to_array(self) -> list[int]:
