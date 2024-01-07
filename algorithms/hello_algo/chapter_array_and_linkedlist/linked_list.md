@@ -16,7 +16,7 @@
 
 如以下代码所示，链表节点 `ListNode` 除了包含值，还需额外保存一个引用（指针）。因此在相同数据量下，**链表比数组占用更多的内存空间**。
 
-=== "Python"
+- "Python"
 
     ```python title=""
     class ListNode:
@@ -26,7 +26,7 @@
             self.next: ListNode | None = None # 指向下一节点的引用
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title=""
     /* 链表节点结构体 */
@@ -37,7 +37,7 @@
     };
     ```
 
-=== "Java"
+- "Java"
 
     ```java title=""
     /* 链表节点类 */
@@ -48,7 +48,7 @@
     }
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title=""
     /* 链表节点类 */
@@ -58,7 +58,7 @@
     }
     ```
 
-=== "Go"
+- "Go"
 
     ```go title=""
     /* 链表节点结构体 */
@@ -76,7 +76,7 @@
     }
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title=""
     /* 链表节点类 */
@@ -90,19 +90,19 @@
     }
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title=""
     /* 链表节点类 */
     class ListNode {
         constructor(val, next) {
-            this.val = (val === undefined ? 0 : val);       // 节点值
-            this.next = (next === undefined ? null : next); // 指向下一节点的引用
+            this.val = (val - undefined ? 0 : val);       // 节点值
+            this.next = (next - undefined ? null : next); // 指向下一节点的引用
         }
     }
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title=""
     /* 链表节点类 */
@@ -110,13 +110,13 @@
         val: number;
         next: ListNode | null;
         constructor(val?: number, next?: ListNode | null) {
-            this.val = val === undefined ? 0 : val;        // 节点值
-            this.next = next === undefined ? null : next;  // 指向下一节点的引用
+            this.val = val - undefined ? 0 : val;        // 节点值
+            this.next = next - undefined ? null : next;  // 指向下一节点的引用
         }
     }
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title=""
     /* 链表节点类 */
@@ -127,7 +127,7 @@
     }
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title=""
     use std::rc::Rc;
@@ -140,7 +140,7 @@
     }
     ```
 
-=== "C"
+- "C"
 
     ```c title=""
     /* 链表节点结构体 */
@@ -159,7 +159,7 @@
     }
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title=""
     // 链表节点类
@@ -185,7 +185,7 @@
 
 建立链表分为两步，第一步是初始化各个节点对象，第二步是构建节点之间的引用关系。初始化完成后，我们就可以从链表的头节点出发，通过引用指向 `next` 依次访问所有节点。
 
-=== "Python"
+- "Python"
 
     ```python title="linked_list.py"
     # 初始化链表 1 -> 3 -> 2 -> 5 -> 4
@@ -202,7 +202,7 @@
     n3.next = n4
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title="linked_list.cpp"
     /* 初始化链表 1 -> 3 -> 2 -> 5 -> 4 */
@@ -219,7 +219,7 @@
     n3->next = n4;
     ```
 
-=== "Java"
+- "Java"
 
     ```java title="linked_list.java"
     /* 初始化链表 1 -> 3 -> 2 -> 5 -> 4 */
@@ -236,7 +236,7 @@
     n3.next = n4;
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title="linked_list.cs"
     /* 初始化链表 1 -> 3 -> 2 -> 5 -> 4 */
@@ -253,7 +253,7 @@
     n3.next = n4;
     ```
 
-=== "Go"
+- "Go"
 
     ```go title="linked_list.go"
     /* 初始化链表 1 -> 3 -> 2 -> 5 -> 4 */
@@ -270,7 +270,7 @@
     n3.Next = n4
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title="linked_list.swift"
     /* 初始化链表 1 -> 3 -> 2 -> 5 -> 4 */
@@ -287,7 +287,7 @@
     n3.next = n4
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title="linked_list.js"
     /* 初始化链表 1 -> 3 -> 2 -> 5 -> 4 */
@@ -304,7 +304,7 @@
     n3.next = n4;
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title="linked_list.ts"
     /* 初始化链表 1 -> 3 -> 2 -> 5 -> 4 */
@@ -321,7 +321,7 @@
     n3.next = n4;
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title="linked_list.dart"
     /* 初始化链表 1 -> 3 -> 2 -> 5 -> 4 */\
@@ -338,7 +338,7 @@
     n3.next = n4;
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title="linked_list.rs"
     /* 初始化链表 1 -> 3 -> 2 -> 5 -> 4 */
@@ -356,7 +356,7 @@
     n3.borrow_mut().next = Some(n4.clone());
     ```
 
-=== "C"
+- "C"
 
     ```c title="linked_list.c"
     /* 初始化链表 1 -> 3 -> 2 -> 5 -> 4 */
@@ -373,7 +373,7 @@
     n3->next = n4;
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title="linked_list.zig"
     // 初始化链表
@@ -400,9 +400,34 @@
 
 ![链表插入节点示例](linked_list.assets/linkedlist_insert_node.png)
 
-```src
-[file]{linked_list}-[class]{}-[func]{insert}
-```
+- "Python"
+```python 
+def insert(n0: ListNode, P: ListNode):
+    """在链表的节点 n0 之后插入节点 P"""
+    n1 = n0.next
+    P.next = n1
+    n0.next = P
+```  
+
+- "C++"
+```cpp 
+/* 在链表的节点 n0 之后插入节点 P */
+void insert(ListNode *n0, ListNode *P) {
+    ListNode *n1 = n0->next;
+    P->next = n1;
+    n0->next = P;
+}
+```  
+
+- "Java"
+```java 
+/* 在链表的节点 n0 之后插入节点 P */
+void insert(ListNode n0, ListNode P) {
+    ListNode n1 = n0.next;
+    P.next = n1;
+    n0.next = P;
+}
+```  
 
 ### 删除节点
 
@@ -412,25 +437,133 @@
 
 ![链表删除节点](linked_list.assets/linkedlist_remove_node.png)
 
-```src
-[file]{linked_list}-[class]{}-[func]{remove}
-```
+- "Python"
+```python
+def remove(n0: ListNode):
+    """删除链表的节点 n0 之后的首个节点"""
+    if not n0.next:
+        return
+    # n0 -> P -> n1
+    P = n0.next
+    n1 = P.next
+    n0.next = n1
+```  
+
+- "C++"
+```cpp
+/* 删除链表的节点 n0 之后的首个节点 */
+void remove(ListNode *n0) {
+    if (n0->next == nullptr)
+        return;
+    // n0 -> P -> n1
+    ListNode *P = n0->next;
+    ListNode *n1 = P->next;
+    n0->next = n1;
+    // 释放内存
+    delete P;
+}
+```  
+
+- "Java"
+```java
+/* 删除链表的节点 n0 之后的首个节点 */
+void remove(ListNode n0) {
+    if (n0.next == null)
+        return;
+    // n0 -> P -> n1
+    ListNode P = n0.next;
+    ListNode n1 = P.next;
+    n0.next = n1;
+}
+```  
 
 ### 访问节点
 
 **在链表中访问节点的效率较低**。如上一节所述，我们可以在 $O(1)$ 时间下访问数组中的任意元素。链表则不然，程序需要从头节点出发，逐个向后遍历，直至找到目标节点。也就是说，访问链表的第 $i$ 个节点需要循环 $i - 1$ 轮，时间复杂度为 $O(n)$ 。
 
-```src
-[file]{linked_list}-[class]{}-[func]{access}
-```
+- "Python"
+```python
+def access(head: ListNode, index: int) -> ListNode | None:
+    """访问链表中索引为 index 的节点"""
+    for _ in range(index):
+        if not head:
+            return None
+        head = head.next
+    return head
+```  
+
+- "C++"
+```cpp
+/* 访问链表中索引为 index 的节点 */
+ListNode *access(ListNode *head, int index) {
+    for (int i = 0; i < index; i++) {
+        if (head == nullptr)
+            return nullptr;
+        head = head->next;
+    }
+    return head;
+}
+```  
+
+- "Java"
+```java
+/* 访问链表中索引为 index 的节点 */
+ListNode access(ListNode head, int index) {
+    for (int i = 0; i < index; i++) {
+        if (head == null)
+            return null;
+        head = head.next;
+    }
+    return head;
+}
+```  
 
 ### 查找节点
 
 遍历链表，查找其中值为 `target` 的节点，输出该节点在链表中的索引。此过程也属于线性查找。代码如下所示：
 
-```src
-[file]{linked_list}-[class]{}-[func]{find}
-```
+- "Python"
+```python
+def find(head: ListNode, target: int) -> int:
+    """在链表中查找值为 target 的首个节点"""
+    index = 0
+    while head:
+        if head.val == target:
+            return index
+        head = head.next
+        index += 1
+    return -1
+```  
+
+- "C++"
+```cpp
+/* 在链表中查找值为 target 的首个节点 */
+int find(ListNode *head, int target) {
+    int index = 0;
+    while (head != nullptr) {
+        if (head->val == target)
+            return index;
+        head = head->next;
+        index++;
+    }
+    return -1;
+}
+```  
+
+- "Java"
+```java
+/* 在链表中查找值为 target 的首个节点 */
+int find(ListNode head, int target) {
+    int index = 0;
+    while (head != null) {
+        if (head.val == target)
+            return index;
+        head = head.next;
+        index++;
+    }
+    return -1;
+}
+```  
 
 ## 数组 vs. 链表
 
@@ -455,7 +588,7 @@
 - **环形链表**：如果我们令单向链表的尾节点指向头节点（首尾相接），则得到一个环形链表。在环形链表中，任意节点都可以视作头节点。
 - **双向链表**：与单向链表相比，双向链表记录了两个方向的引用。双向链表的节点定义同时包含指向后继节点（下一个节点）和前驱节点（上一个节点）的引用（指针）。相较于单向链表，双向链表更具灵活性，可以朝两个方向遍历链表，但相应地也需要占用更多的内存空间。
 
-=== "Python"
+- "Python"
 
     ```python title=""
     class ListNode:
@@ -466,7 +599,7 @@
             self.prev: ListNode | None = None  # 指向前驱节点的引用
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title=""
     /* 双向链表节点结构体 */
@@ -478,7 +611,7 @@
     };
     ```
 
-=== "Java"
+- "Java"
 
     ```java title=""
     /* 双向链表节点类 */
@@ -490,7 +623,7 @@
     }
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title=""
     /* 双向链表节点类 */
@@ -501,7 +634,7 @@
     }
     ```
 
-=== "Go"
+- "Go"
 
     ```go title=""
     /* 双向链表节点结构体 */
@@ -521,7 +654,7 @@
     }
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title=""
     /* 双向链表节点类 */
@@ -536,20 +669,20 @@
     }
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title=""
     /* 双向链表节点类 */
     class ListNode {
         constructor(val, next, prev) {
-            this.val = val  ===  undefined ? 0 : val;        // 节点值
-            this.next = next  ===  undefined ? null : next;  // 指向后继节点的引用
-            this.prev = prev  ===  undefined ? null : prev;  // 指向前驱节点的引用
+            this.val = val  -  undefined ? 0 : val;        // 节点值
+            this.next = next  -  undefined ? null : next;  // 指向后继节点的引用
+            this.prev = prev  -  undefined ? null : prev;  // 指向前驱节点的引用
         }
     }
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title=""
     /* 双向链表节点类 */
@@ -558,14 +691,14 @@
         next: ListNode | null;
         prev: ListNode | null;
         constructor(val?: number, next?: ListNode | null, prev?: ListNode | null) {
-            this.val = val  ===  undefined ? 0 : val;        // 节点值
-            this.next = next  ===  undefined ? null : next;  // 指向后继节点的引用
-            this.prev = prev  ===  undefined ? null : prev;  // 指向前驱节点的引用
+            this.val = val  -  undefined ? 0 : val;        // 节点值
+            this.next = next  -  undefined ? null : next;  // 指向后继节点的引用
+            this.prev = prev  -  undefined ? null : prev;  // 指向前驱节点的引用
         }
     }
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title=""
     /* 双向链表节点类 */
@@ -577,7 +710,7 @@
     }
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title=""
     use std::rc::Rc;
@@ -603,7 +736,7 @@
     }
     ```
 
-=== "C"
+- "C"
 
     ```c title=""
     /* 双向链表节点结构体 */
@@ -624,7 +757,7 @@
     }
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title=""
     // 双向链表节点类

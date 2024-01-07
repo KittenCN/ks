@@ -24,7 +24,7 @@
 
 相关代码如下：
 
-=== "Python"
+- "Python"
 
     ```python title=""
     class Node:
@@ -46,7 +46,7 @@
         return A + b + c      # 输出数据
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title=""
     /* 结构体 */
@@ -71,7 +71,7 @@
     }
     ```
 
-=== "Java"
+- "Java"
 
     ```java title=""
     /* 类 */
@@ -96,7 +96,7 @@
     }
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title=""
     /* 类 */
@@ -120,7 +120,7 @@
     }
     ```
 
-=== "Go"
+- "Go"
 
     ```go title=""
     /* 结构体 */
@@ -149,7 +149,7 @@
     }
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title=""
     /* 类 */
@@ -177,7 +177,7 @@
     }
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title=""
     /* 类 */
@@ -185,7 +185,7 @@
         val;
         next;
         constructor(val) {
-            this.val = val === undefined ? 0 : val; // 节点值
+            this.val = val - undefined ? 0 : val; // 节点值
             this.next = null;                       // 指向下一节点的引用
         }
     }
@@ -205,7 +205,7 @@
     }
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title=""
     /* 类 */
@@ -213,7 +213,7 @@
         val: number;
         next: Node | null;
         constructor(val?: number) {
-            this.val = val === undefined ? 0 : val; // 节点值
+            this.val = val - undefined ? 0 : val; // 节点值
             this.next = null;                       // 指向下一节点的引用
         }
     }
@@ -233,7 +233,7 @@
     }
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title=""
     /* 类 */
@@ -258,7 +258,7 @@
     }
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title=""
     use std::rc::Rc;
@@ -292,7 +292,7 @@
     }
     ```
 
-=== "C"
+- "C"
 
     ```c title=""
     /* 函数 */
@@ -309,7 +309,7 @@
     }
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title=""
 
@@ -326,7 +326,7 @@
 1. **以最差输入数据为准**：当 $n < 10$ 时，空间复杂度为 $O(1)$ ；但当 $n > 10$ 时，初始化的数组 `nums` 占用 $O(n)$ 空间，因此最差空间复杂度为 $O(n)$ 。
 2. **以算法运行中的峰值内存为准**：例如，程序在执行最后一行之前，占用 $O(1)$ 空间；当初始化数组 `nums` 时，程序占用 $O(n)$ 空间，因此最差空间复杂度为 $O(n)$ 。
 
-=== "Python"
+- "Python"
 
     ```python title=""
     def algorithm(n: int):
@@ -336,7 +336,7 @@
             nums = [0] * n  # O(n)
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title=""
     void algorithm(int n) {
@@ -347,7 +347,7 @@
     }
     ```
 
-=== "Java"
+- "Java"
 
     ```java title=""
     void algorithm(int n) {
@@ -358,7 +358,7 @@
     }
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title=""
     void Algorithm(int n) {
@@ -370,7 +370,7 @@
     }
     ```
 
-=== "Go"
+- "Go"
 
     ```go title=""
     func algorithm(n int) {
@@ -384,7 +384,7 @@
     }
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title=""
     func algorithm(n: Int) {
@@ -396,7 +396,7 @@
     }
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title=""
     function algorithm(n) {
@@ -408,7 +408,7 @@
     }
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title=""
     function algorithm(n: number): void {
@@ -420,7 +420,7 @@
     }
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title=""
     void algorithm(int n) {
@@ -432,7 +432,7 @@
     }
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title=""
     fn algorithm(n: i32) {
@@ -444,7 +444,7 @@
     }
     ```
 
-=== "C"
+- "C"
 
     ```c title=""
     void algorithm(int n) {
@@ -455,7 +455,7 @@
     }
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title=""
 
@@ -463,7 +463,7 @@
 
 **在递归函数中，需要注意统计栈帧空间**。观察以下代码：
 
-=== "Python"
+- "Python"
 
     ```python title=""
     def function() -> int:
@@ -481,7 +481,7 @@
         return recur(n - 1)
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title=""
     int func() {
@@ -501,7 +501,7 @@
     }
     ```
 
-=== "Java"
+- "Java"
 
     ```java title=""
     int function() {
@@ -521,7 +521,7 @@
     }
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title=""
     int Function() {
@@ -541,7 +541,7 @@
     }
     ```
 
-=== "Go"
+- "Go"
 
     ```go title=""
     func function() int {
@@ -565,7 +565,7 @@
     }
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title=""
     @discardableResult
@@ -590,7 +590,7 @@
     }
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title=""
     function constFunc() {
@@ -605,12 +605,12 @@
     }
     /* 递归 O(n) */
     function recur(n) {
-        if (n === 1) return;
+        if (n - 1) return;
         return recur(n - 1);
     }
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title=""
     function constFunc(): number {
@@ -625,12 +625,12 @@
     }
     /* 递归 O(n) */
     function recur(n: number): void {
-        if (n === 1) return;
+        if (n - 1) return;
         return recur(n - 1);
     }
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title=""
     int function() {
@@ -650,7 +650,7 @@
     }
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title=""
     fn function() -> i32 {
@@ -672,7 +672,7 @@
     }
     ```
 
-=== "C"
+- "C"
 
     ```c title=""
     int func() {
@@ -692,7 +692,7 @@
     }
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title=""
 
@@ -722,23 +722,166 @@ $$
 
 需要注意的是，在循环中初始化变量或调用函数而占用的内存，在进入下一循环后就会被释放，因此不会累积占用空间，空间复杂度仍为 $O(1)$ ：
 
-```src
-[file]{space_complexity}-[class]{}-[func]{constant}
-```
+- "Python"
+```python
+def function() -> int:
+    """函数"""
+    # 执行某些操作
+    return 0
+
+def constant(n: int):
+    """常数阶"""
+    # 常量、变量、对象占用 O(1) 空间
+    a = 0
+    nums = [0] * 10000
+    node = ListNode(0)
+    # 循环中的变量占用 O(1) 空间
+    for _ in range(n):
+        c = 0
+    # 循环中的函数占用 O(1) 空间
+    for _ in range(n):
+        function()
+```  
+
+- "C++"
+```cpp
+/* 函数 */
+int func() {
+    // 执行某些操作
+    return 0;
+}
+
+/* 常数阶 */
+void constant(int n) {
+    // 常量、变量、对象占用 O(1) 空间
+    const int a = 0;
+    int b = 0;
+    vector<int> nums(10000);
+    ListNode node(0);
+    // 循环中的变量占用 O(1) 空间
+    for (int i = 0; i < n; i++) {
+        int c = 0;
+    }
+    // 循环中的函数占用 O(1) 空间
+    for (int i = 0; i < n; i++) {
+        func();
+    }
+}
+```  
+
+- "Java"
+```java
+/* 函数 */
+int function() {
+    // 执行某些操作
+    return 0;
+}
+
+/* 常数阶 */
+void constant(int n) {
+    // 常量、变量、对象占用 O(1) 空间
+    final int a = 0;
+    int b = 0;
+    int[] nums = new int[10000];
+    ListNode node = new ListNode(0);
+    // 循环中的变量占用 O(1) 空间
+    for (int i = 0; i < n; i++) {
+        int c = 0;
+    }
+    // 循环中的函数占用 O(1) 空间
+    for (int i = 0; i < n; i++) {
+        function();
+    }
+}
+```  
 
 ### 线性阶 $O(n)$
 
 线性阶常见于元素数量与 $n$ 成正比的数组、链表、栈、队列等：
 
-```src
-[file]{space_complexity}-[class]{}-[func]{linear}
-```
+- "Python"
+```python
+def linear(n: int):
+    """线性阶"""
+    # 长度为 n 的列表占用 O(n) 空间
+    nums = [0] * n
+    # 长度为 n 的哈希表占用 O(n) 空间
+    hmap = dict[int, str]()
+    for i in range(n):
+        hmap[i] = str(i)
+```  
+
+- "C++"
+```cpp
+/* 线性阶 */
+void linear(int n) {
+    // 长度为 n 的数组占用 O(n) 空间
+    vector<int> nums(n);
+    // 长度为 n 的列表占用 O(n) 空间
+    vector<ListNode> nodes;
+    for (int i = 0; i < n; i++) {
+        nodes.push_back(ListNode(i));
+    }
+    // 长度为 n 的哈希表占用 O(n) 空间
+    unordered_map<int, string> map;
+    for (int i = 0; i < n; i++) {
+        map[i] = to_string(i);
+    }
+}
+```  
+
+- "Java"
+```java
+/* 线性阶 */
+void linear(int n) {
+    // 长度为 n 的数组占用 O(n) 空间
+    int[] nums = new int[n];
+    // 长度为 n 的列表占用 O(n) 空间
+    List<ListNode> nodes = new ArrayList<>();
+    for (int i = 0; i < n; i++) {
+        nodes.add(new ListNode(i));
+    }
+    // 长度为 n 的哈希表占用 O(n) 空间
+    Map<Integer, String> map = new HashMap<>();
+    for (int i = 0; i < n; i++) {
+        map.put(i, String.valueOf(i));
+    }
+}
+```  
 
 如下图所示，此函数的递归深度为 $n$ ，即同时存在 $n$ 个未返回的 `linear_recur()` 函数，使用 $O(n)$ 大小的栈帧空间：
 
-```src
-[file]{space_complexity}-[class]{}-[func]{linear_recur}
-```
+- "Python"
+```python
+def linear_recur(n: int):
+    """线性阶（递归实现）"""
+    print("递归 n =", n)
+    if n == 1:
+        return
+    linear_recur(n - 1)
+```  
+
+- "C++"
+```cpp
+/* 线性阶（递归实现） */
+void linearRecur(int n) {
+    cout << "递归 n = " << n << endl;
+    if (n == 1)
+        return;
+    linearRecur(n - 1);
+}
+```  
+
+- "Java"
+```java
+/* 线性阶（递归实现） */
+void linearRecur(int n) {
+    System.out.println("递归 n = " + n);
+    if (n == 1)
+        return;
+    linearRecur(n - 1);
+}
+```  
 
 ![递归函数产生的线性阶空间复杂度](space_complexity.assets/space_complexity_recursive_linear.png)
 
@@ -746,14 +889,84 @@ $$
 
 平方阶常见于矩阵和图，元素数量与 $n$ 成平方关系：
 
-```src
-[file]{space_complexity}-[class]{}-[func]{quadratic}
-```
+- "Python"
+```python
+def quadratic(n: int):
+    """平方阶"""
+    # 二维列表占用 O(n^2) 空间
+    num_matrix = [[0] * n for _ in range(n)]
+```  
+
+- "C++"
+```cpp
+/* 平方阶 */
+void quadratic(int n) {
+    // 二维列表占用 O(n^2) 空间
+    vector<vector<int>> numMatrix;
+    for (int i = 0; i < n; i++) {
+        vector<int> tmp;
+        for (int j = 0; j < n; j++) {
+            tmp.push_back(0);
+        }
+        numMatrix.push_back(tmp);
+    }
+}
+```  
+
+- "Java"
+```java
+/* 平方阶 */
+void quadratic(int n) {
+    // 矩阵占用 O(n^2) 空间
+    int[][] numMatrix = new int[n][n];
+    // 二维列表占用 O(n^2) 空间
+    List<List<Integer>> numList = new ArrayList<>();
+    for (int i = 0; i < n; i++) {
+        List<Integer> tmp = new ArrayList<>();
+        for (int j = 0; j < n; j++) {
+            tmp.add(0);
+        }
+        numList.add(tmp);
+    }
+}
+```  
 
 如下图所示，该函数的递归深度为 $n$ ，在每个递归函数中都初始化了一个数组，长度分别为 $n$、$n-1$、$\dots$、$2$、$1$ ，平均长度为 $n / 2$ ，因此总体占用 $O(n^2)$ 空间：
 
-```src
-[file]{space_complexity}-[class]{}-[func]{quadratic_recur}
+- "Python"
+```python
+def quadratic_recur(n: int) -> int:
+    """平方阶（递归实现）"""
+    if n <= 0:
+        return 0
+    # 数组 nums 长度为 n, n-1, ..., 2, 1
+    nums = [0] * n
+    return quadratic_recur(n - 1)
+```  
+
+- "C++"
+```cpp
+/* 平方阶（递归实现） */
+int quadraticRecur(int n) {
+    if (n <= 0)
+        return 0;
+    vector<int> nums(n);
+    cout << "递归 n = " << n << " 中的 nums 长度 = " << nums.size() << endl;
+    return quadraticRecur(n - 1);
+}
+```  
+
+- "Java"
+```java
+/* 平方阶（递归实现） */
+int quadraticRecur(int n) {
+    if (n <= 0)
+        return 0;
+    // 数组 nums 长度为 n, n-1, ..., 2, 1
+    int[] nums = new int[n];
+    System.out.println("递归 n = " + n + " 中的 nums 长度 = " + nums.length);
+    return quadraticRecur(n - 1);
+}
 ```
 
 ![递归函数产生的平方阶空间复杂度](space_complexity.assets/space_complexity_recursive_quadratic.png)
@@ -762,9 +975,43 @@ $$
 
 指数阶常见于二叉树。观察下图，层数为 $n$ 的“满二叉树”的节点数量为 $2^n - 1$ ，占用 $O(2^n)$ 空间：
 
-```src
-[file]{space_complexity}-[class]{}-[func]{build_tree}
-```
+- "Python"
+```python
+def build_tree(n: int) -> TreeNode | None:
+    """指数阶（建立满二叉树）"""
+    if n == 0:
+        return None
+    root = TreeNode(0)
+    root.left = build_tree(n - 1)
+    root.right = build_tree(n - 1)
+    return root
+```  
+
+- "C++"
+```cpp
+/* 指数阶（建立满二叉树） */
+TreeNode *buildTree(int n) {
+    if (n == 0)
+        return nullptr;
+    TreeNode *root = new TreeNode(0);
+    root->left = buildTree(n - 1);
+    root->right = buildTree(n - 1);
+    return root;
+}
+```  
+
+- "Java"
+```java
+/* 指数阶（建立满二叉树） */
+TreeNode buildTree(int n) {
+    if (n == 0)
+        return null;
+    TreeNode root = new TreeNode(0);
+    root.left = buildTree(n - 1);
+    root.right = buildTree(n - 1);
+    return root;
+}
+```  
 
 ![满二叉树产生的指数阶空间复杂度](space_complexity.assets/space_complexity_exponential.png)
 

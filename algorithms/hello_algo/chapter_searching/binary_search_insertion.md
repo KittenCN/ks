@@ -22,9 +22,62 @@
 
 因此二分结束时一定有：$i$ 指向首个大于 `target` 的元素，$j$ 指向首个小于 `target` 的元素。**易得当数组不包含 `target` 时，插入索引为 $i$** 。代码如下所示：
 
-```src
-[file]{binary_search_insertion}-[class]{}-[func]{binary_search_insertion_simple}
-```
+- "Python"
+```python
+def binary_search_insertion_simple(nums: list[int], target: int) -> int:
+    """二分查找插入点（无重复元素）"""
+    i, j = 0, len(nums) - 1  # 初始化双闭区间 [0, n-1]
+    while i <= j:
+        m = (i + j) // 2  # 计算中点索引 m
+        if nums[m] < target:
+            i = m + 1  # target 在区间 [m+1, j] 中
+        elif nums[m] > target:
+            j = m - 1  # target 在区间 [i, m-1] 中
+        else:
+            return m  # 找到 target ，返回插入点 m
+    # 未找到 target ，返回插入点 i
+    return i
+```  
+
+- "C++"
+```cpp
+/* 二分查找插入点（无重复元素） */
+int binarySearchInsertionSimple(vector<int> &nums, int target) {
+    int i = 0, j = nums.size() - 1; // 初始化双闭区间 [0, n-1]
+    while (i <= j) {
+        int m = i + (j - i) / 2; // 计算中点索引 m
+        if (nums[m] < target) {
+            i = m + 1; // target 在区间 [m+1, j] 中
+        } else if (nums[m] > target) {
+            j = m - 1; // target 在区间 [i, m-1] 中
+        } else {
+            return m; // 找到 target ，返回插入点 m
+        }
+    }
+    // 未找到 target ，返回插入点 i
+    return i;
+}
+```  
+
+- "Java"
+```java
+/* 二分查找插入点（无重复元素） */
+int binarySearchInsertionSimple(int[] nums, int target) {
+    int i = 0, j = nums.length - 1; // 初始化双闭区间 [0, n-1]
+    while (i <= j) {
+        int m = i + (j - i) / 2; // 计算中点索引 m
+        if (nums[m] < target) {
+            i = m + 1; // target 在区间 [m+1, j] 中
+        } else if (nums[m] > target) {
+            j = m - 1; // target 在区间 [i, m-1] 中
+        } else {
+            return m; // 找到 target ，返回插入点 m
+        }
+    }
+    // 未找到 target ，返回插入点 i
+    return i;
+}
+```  
 
 ## 存在重复元素的情况
 
@@ -50,37 +103,90 @@
 
 循环完成后，$i$ 指向最左边的 `target` ，$j$ 指向首个小于 `target` 的元素，**因此索引 $i$ 就是插入点**。
 
-=== "<1>"
+- "<1>"
     ![二分查找重复元素的插入点的步骤](binary_search_insertion.assets/binary_search_insertion_step1.png)
 
-=== "<2>"
+- "<2>"
     ![binary_search_insertion_step2](binary_search_insertion.assets/binary_search_insertion_step2.png)
 
-=== "<3>"
+- "<3>"
     ![binary_search_insertion_step3](binary_search_insertion.assets/binary_search_insertion_step3.png)
 
-=== "<4>"
+- "<4>"
     ![binary_search_insertion_step4](binary_search_insertion.assets/binary_search_insertion_step4.png)
 
-=== "<5>"
+- "<5>"
     ![binary_search_insertion_step5](binary_search_insertion.assets/binary_search_insertion_step5.png)
 
-=== "<6>"
+- "<6>"
     ![binary_search_insertion_step6](binary_search_insertion.assets/binary_search_insertion_step6.png)
 
-=== "<7>"
+- "<7>"
     ![binary_search_insertion_step7](binary_search_insertion.assets/binary_search_insertion_step7.png)
 
-=== "<8>"
+- "<8>"
     ![binary_search_insertion_step8](binary_search_insertion.assets/binary_search_insertion_step8.png)
 
 观察以下代码，判断分支 `nums[m] > target` 和 `nums[m] == target` 的操作相同，因此两者可以合并。
 
 即便如此，我们仍然可以将判断条件保持展开，因为其逻辑更加清晰、可读性更好。
 
-```src
-[file]{binary_search_insertion}-[class]{}-[func]{binary_search_insertion}
-```
+- "Python"
+```python
+def binary_search_insertion(nums: list[int], target: int) -> int:
+    """二分查找插入点（存在重复元素）"""
+    i, j = 0, len(nums) - 1  # 初始化双闭区间 [0, n-1]
+    while i <= j:
+        m = (i + j) // 2  # 计算中点索引 m
+        if nums[m] < target:
+            i = m + 1  # target 在区间 [m+1, j] 中
+        elif nums[m] > target:
+            j = m - 1  # target 在区间 [i, m-1] 中
+        else:
+            j = m - 1  # 首个小于 target 的元素在区间 [i, m-1] 中
+    # 返回插入点 i
+    return i
+```  
+
+- "C++"
+```cpp
+/* 二分查找插入点（存在重复元素） */
+int binarySearchInsertion(vector<int> &nums, int target) {
+    int i = 0, j = nums.size() - 1; // 初始化双闭区间 [0, n-1]
+    while (i <= j) {
+        int m = i + (j - i) / 2; // 计算中点索引 m
+        if (nums[m] < target) {
+            i = m + 1; // target 在区间 [m+1, j] 中
+        } else if (nums[m] > target) {
+            j = m - 1; // target 在区间 [i, m-1] 中
+        } else {
+            j = m - 1; // 首个小于 target 的元素在区间 [i, m-1] 中
+        }
+    }
+    // 返回插入点 i
+    return i;
+}
+```  
+
+- "Java"
+```java
+/* 二分查找插入点（存在重复元素） */
+int binarySearchInsertion(int[] nums, int target) {
+    int i = 0, j = nums.length - 1; // 初始化双闭区间 [0, n-1]
+    while (i <= j) {
+        int m = i + (j - i) / 2; // 计算中点索引 m
+        if (nums[m] < target) {
+            i = m + 1; // target 在区间 [m+1, j] 中
+        } else if (nums[m] > target) {
+            j = m - 1; // target 在区间 [i, m-1] 中
+        } else {
+            j = m - 1; // 首个小于 target 的元素在区间 [i, m-1] 中
+        }
+    }
+    // 返回插入点 i
+    return i;
+}
+```  
 
 !!! tip
 

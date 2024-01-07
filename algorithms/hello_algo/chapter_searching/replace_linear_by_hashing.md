@@ -14,9 +14,49 @@
 
 代码如下所示：
 
-```src
-[file]{two_sum}-[class]{}-[func]{two_sum_brute_force}
-```
+- "Python"
+```python
+def two_sum_brute_force(nums: list[int], target: int) -> list[int]:
+    """方法一：暴力枚举"""
+    # 两层循环，时间复杂度为 O(n^2)
+    for i in range(len(nums) - 1):
+        for j in range(i + 1, len(nums)):
+            if nums[i] + nums[j] == target:
+                return [i, j]
+    return []
+```  
+
+- "C++"
+```cpp
+/* 方法一：暴力枚举 */
+vector<int> twoSumBruteForce(vector<int> &nums, int target) {
+    int size = nums.size();
+    // 两层循环，时间复杂度为 O(n^2)
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (nums[i] + nums[j] == target)
+                return {i, j};
+        }
+    }
+    return {};
+}
+```  
+
+- "Java"
+```java
+/* 方法一：暴力枚举 */
+int[] twoSumBruteForce(int[] nums, int target) {
+    int size = nums.length;
+    // 两层循环，时间复杂度为 O(n^2)
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (nums[i] + nums[j] == target)
+                return new int[] { i, j };
+        }
+    }
+    return new int[0];
+}
+```  
 
 此方法的时间复杂度为 $O(n^2)$ ，空间复杂度为 $O(1)$ ，在大数据量下非常耗时。
 
@@ -27,20 +67,66 @@
 1. 判断数字 `target - nums[i]` 是否在哈希表中，若是，则直接返回这两个元素的索引。
 2. 将键值对 `nums[i]` 和索引 `i` 添加进哈希表。
 
-=== "<1>"
+- "<1>"
     ![辅助哈希表求解两数之和](replace_linear_by_hashing.assets/two_sum_hashtable_step1.png)
 
-=== "<2>"
+- "<2>"
     ![two_sum_hashtable_step2](replace_linear_by_hashing.assets/two_sum_hashtable_step2.png)
 
-=== "<3>"
+- "<3>"
     ![two_sum_hashtable_step3](replace_linear_by_hashing.assets/two_sum_hashtable_step3.png)
 
 实现代码如下所示，仅需单层循环即可：
 
-```src
-[file]{two_sum}-[class]{}-[func]{two_sum_hash_table}
-```
+- "Python"
+```python
+def two_sum_hash_table(nums: list[int], target: int) -> list[int]:
+    """方法二：辅助哈希表"""
+    # 辅助哈希表，空间复杂度为 O(n)
+    dic = {}
+    # 单层循环，时间复杂度为 O(n)
+    for i in range(len(nums)):
+        if target - nums[i] in dic:
+            return [dic[target - nums[i]], i]
+        dic[nums[i]] = i
+    return []
+```  
+
+- "C++"
+```cpp
+/* 方法二：辅助哈希表 */
+vector<int> twoSumHashTable(vector<int> &nums, int target) {
+    int size = nums.size();
+    // 辅助哈希表，空间复杂度为 O(n)
+    unordered_map<int, int> dic;
+    // 单层循环，时间复杂度为 O(n)
+    for (int i = 0; i < size; i++) {
+        if (dic.find(target - nums[i]) != dic.end()) {
+            return {dic[target - nums[i]], i};
+        }
+        dic.emplace(nums[i], i);
+    }
+    return {};
+}
+```  
+
+- "Java"
+```java
+/* 方法二：辅助哈希表 */
+int[] twoSumHashTable(int[] nums, int target) {
+    int size = nums.length;
+    // 辅助哈希表，空间复杂度为 O(n)
+    Map<Integer, Integer> dic = new HashMap<>();
+    // 单层循环，时间复杂度为 O(n)
+    for (int i = 0; i < size; i++) {
+        if (dic.containsKey(target - nums[i])) {
+            return new int[] { dic.get(target - nums[i]), i };
+        }
+        dic.put(nums[i], i);
+    }
+    return new int[0];
+}
+```  
 
 此方法通过哈希查找将时间复杂度从 $O(n^2)$ 降至 $O(n)$ ，大幅提升运行效率。
 

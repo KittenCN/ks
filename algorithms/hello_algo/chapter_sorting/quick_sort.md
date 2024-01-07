@@ -8,31 +8,31 @@
 2. 设置一个循环，在每轮中使用 `i`（`j`）分别寻找第一个比基准数大（小）的元素，然后交换这两个元素。
 3. 循环执行步骤 `2.` ，直到 `i` 和 `j` 相遇时停止，最后将基准数交换至两个子数组的分界线。
 
-=== "<1>"
+- "<1>"
     ![哨兵划分步骤](quick_sort.assets/pivot_division_step1.png)
 
-=== "<2>"
+- "<2>"
     ![pivot_division_step2](quick_sort.assets/pivot_division_step2.png)
 
-=== "<3>"
+- "<3>"
     ![pivot_division_step3](quick_sort.assets/pivot_division_step3.png)
 
-=== "<4>"
+- "<4>"
     ![pivot_division_step4](quick_sort.assets/pivot_division_step4.png)
 
-=== "<5>"
+- "<5>"
     ![pivot_division_step5](quick_sort.assets/pivot_division_step5.png)
 
-=== "<6>"
+- "<6>"
     ![pivot_division_step6](quick_sort.assets/pivot_division_step6.png)
 
-=== "<7>"
+- "<7>"
     ![pivot_division_step7](quick_sort.assets/pivot_division_step7.png)
 
-=== "<8>"
+- "<8>"
     ![pivot_division_step8](quick_sort.assets/pivot_division_step8.png)
 
-=== "<9>"
+- "<9>"
     ![pivot_division_step9](quick_sort.assets/pivot_division_step9.png)
 
 哨兵划分完成后，原数组被划分成三部分：左子数组、基准数、右子数组，且满足“左子数组任意元素 $\leq$ 基准数 $\leq$ 右子数组任意元素”。因此，我们接下来只需对这两个子数组进行排序。
@@ -41,9 +41,73 @@
 
     哨兵划分的实质是将一个较长数组的排序问题简化为两个较短数组的排序问题。
 
-```src
-[file]{quick_sort}-[class]{quick_sort}-[func]{partition}
-```
+- "Python"
+```python
+def partition(self, nums: list[int], left: int, right: int) -> int:
+    """哨兵划分"""
+    # 以 nums[left] 为基准数
+    i, j = left, right
+    while i < j:
+        while i < j and nums[j] >= nums[left]:
+            j -= 1  # 从右向左找首个小于基准数的元素
+        while i < j and nums[i] <= nums[left]:
+            i += 1  # 从左向右找首个大于基准数的元素
+        # 元素交换
+        nums[i], nums[j] = nums[j], nums[i]
+    # 将基准数交换至两子数组的分界线
+    nums[i], nums[left] = nums[left], nums[i]
+    return i  # 返回基准数的索引
+```  
+
+- "C++"
+```cpp
+/* 元素交换 */
+void swap(vector<int> &nums, int i, int j) {
+    int tmp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = tmp;
+}
+
+/* 哨兵划分 */
+int partition(vector<int> &nums, int left, int right) {
+    // 以 nums[left] 为基准数
+    int i = left, j = right;
+    while (i < j) {
+        while (i < j && nums[j] >= nums[left])
+            j--; // 从右向左找首个小于基准数的元素
+        while (i < j && nums[i] <= nums[left])
+            i++;          // 从左向右找首个大于基准数的元素
+        swap(nums, i, j); // 交换这两个元素
+    }
+    swap(nums, i, left); // 将基准数交换至两子数组的分界线
+    return i;            // 返回基准数的索引
+}
+```  
+
+- "Java"
+```java
+/* 元素交换 */
+void swap(int[] nums, int i, int j) {
+    int tmp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = tmp;
+}
+
+/* 哨兵划分 */
+int partition(int[] nums, int left, int right) {
+    // 以 nums[left] 为基准数
+    int i = left, j = right;
+    while (i < j) {
+        while (i < j && nums[j] >= nums[left])
+            j--;          // 从右向左找首个小于基准数的元素
+        while (i < j && nums[i] <= nums[left])
+            i++;          // 从左向右找首个大于基准数的元素
+        swap(nums, i, j); // 交换这两个元素
+    }
+    swap(nums, i, left);  // 将基准数交换至两子数组的分界线
+    return i;             // 返回基准数的索引
+}
+```  
 
 ## 算法流程
 
@@ -55,9 +119,49 @@
 
 ![快速排序流程](quick_sort.assets/quick_sort_overview.png)
 
-```src
-[file]{quick_sort}-[class]{quick_sort}-[func]{quick_sort}
-```
+- "Python"
+```python
+def quick_sort(self, nums: list[int], left: int, right: int):
+    """快速排序"""
+    # 子数组长度为 1 时终止递归
+    if left >= right:
+        return
+    # 哨兵划分
+    pivot = self.partition(nums, left, right)
+    # 递归左子数组、右子数组
+    self.quick_sort(nums, left, pivot - 1)
+    self.quick_sort(nums, pivot + 1, right)
+```  
+
+- "C++"
+```cpp
+/* 快速排序 */
+void quickSort(vector<int> &nums, int left, int right) {
+    // 子数组长度为 1 时终止递归
+    if (left >= right)
+        return;
+    // 哨兵划分
+    int pivot = partition(nums, left, right);
+    // 递归左子数组、右子数组
+    quickSort(nums, left, pivot - 1);
+    quickSort(nums, pivot + 1, right);
+}
+```  
+
+- "Java"
+```java
+/* 快速排序 */
+void quickSort(int[] nums, int left, int right) {
+    // 子数组长度为 1 时终止递归
+    if (left >= right)
+        return;
+    // 哨兵划分
+    int pivot = partition(nums, left, right);
+    // 递归左子数组、右子数组
+    quickSort(nums, left, pivot - 1);
+    quickSort(nums, pivot + 1, right);
+}
+```  
 
 ## 算法特性
 
@@ -85,9 +189,105 @@
 
 示例代码如下：
 
-```src
-[file]{quick_sort}-[class]{quick_sort_median}-[func]{partition}
-```
+- "Python"
+```python
+def median_three(self, nums: list[int], left: int, mid: int, right: int) -> int:
+    """选取三个候选元素的中位数"""
+    # 此处使用异或运算来简化代码
+    # 异或规则为 0 ^ 0 = 1 ^ 1 = 0, 0 ^ 1 = 1 ^ 0 = 1
+    if (nums[left] < nums[mid]) ^ (nums[left] < nums[right]):
+        return left
+    elif (nums[mid] < nums[left]) ^ (nums[mid] < nums[right]):
+        return mid
+    return right
+
+def partition(self, nums: list[int], left: int, right: int) -> int:
+    """哨兵划分（三数取中值）"""
+    # 以 nums[left] 为基准数
+    med = self.median_three(nums, left, (left + right) // 2, right)
+    # 将中位数交换至数组最左端
+    nums[left], nums[med] = nums[med], nums[left]
+    # 以 nums[left] 为基准数
+    i, j = left, right
+    while i < j:
+        while i < j and nums[j] >= nums[left]:
+            j -= 1  # 从右向左找首个小于基准数的元素
+        while i < j and nums[i] <= nums[left]:
+            i += 1  # 从左向右找首个大于基准数的元素
+        # 元素交换
+        nums[i], nums[j] = nums[j], nums[i]
+    # 将基准数交换至两子数组的分界线
+    nums[i], nums[left] = nums[left], nums[i]
+    return i  # 返回基准数的索引
+```  
+
+- "C++"
+```cpp
+/* 选取三个候选元素的中位数 */
+int medianThree(vector<int> &nums, int left, int mid, int right) {
+    // 此处使用异或运算来简化代码
+    // 异或规则为 0 ^ 0 = 1 ^ 1 = 0, 0 ^ 1 = 1 ^ 0 = 1
+    if ((nums[left] < nums[mid]) ^ (nums[left] < nums[right]))
+        return left;
+    else if ((nums[mid] < nums[left]) ^ (nums[mid] < nums[right]))
+        return mid;
+    else
+        return right;
+}
+
+/* 哨兵划分（三数取中值） */
+int partition(vector<int> &nums, int left, int right) {
+    // 选取三个候选元素的中位数
+    int med = medianThree(nums, left, (left + right) / 2, right);
+    // 将中位数交换至数组最左端
+    swap(nums, left, med);
+    // 以 nums[left] 为基准数
+    int i = left, j = right;
+    while (i < j) {
+        while (i < j && nums[j] >= nums[left])
+            j--; // 从右向左找首个小于基准数的元素
+        while (i < j && nums[i] <= nums[left])
+            i++;          // 从左向右找首个大于基准数的元素
+        swap(nums, i, j); // 交换这两个元素
+    }
+    swap(nums, i, left); // 将基准数交换至两子数组的分界线
+    return i;            // 返回基准数的索引
+}
+```  
+
+- "Java"
+```java
+/* 选取三个候选元素的中位数 */
+int medianThree(int[] nums, int left, int mid, int right) {
+    // 此处使用异或运算来简化代码
+    // 异或规则为 0 ^ 0 = 1 ^ 1 = 0, 0 ^ 1 = 1 ^ 0 = 1
+    if ((nums[left] < nums[mid]) ^ (nums[left] < nums[right]))
+        return left;
+    else if ((nums[mid] < nums[left]) ^ (nums[mid] < nums[right]))
+        return mid;
+    else
+        return right;
+}
+
+/* 哨兵划分（三数取中值） */
+int partition(int[] nums, int left, int right) {
+    // 选取三个候选元素的中位数
+    int med = medianThree(nums, left, (left + right) / 2, right);
+    // 将中位数交换至数组最左端
+    swap(nums, left, med);
+    // 以 nums[left] 为基准数
+    int i = left, j = right;
+    while (i < j) {
+        while (i < j && nums[j] >= nums[left])
+            j--;          // 从右向左找首个小于基准数的元素
+        while (i < j && nums[i] <= nums[left])
+            i++;          // 从左向右找首个大于基准数的元素
+        swap(nums, i, j); // 交换这两个元素
+    }
+    swap(nums, i, left);  // 将基准数交换至两子数组的分界线
+    return i;             // 返回基准数的索引
+}
+```  
 
 ## 尾递归优化
 
@@ -95,6 +295,59 @@
 
 为了防止栈帧空间的累积，我们可以在每轮哨兵排序完成后，比较两个子数组的长度，**仅对较短的子数组进行递归**。由于较短子数组的长度不会超过 $n / 2$ ，因此这种方法能确保递归深度不超过 $\log n$ ，从而将最差空间复杂度优化至 $O(\log n)$ 。代码如下所示：
 
-```src
-[file]{quick_sort}-[class]{quick_sort_tail_call}-[func]{quick_sort}
-```
+- "Python"
+```python
+def quick_sort(self, nums: list[int], left: int, right: int):
+    """快速排序（尾递归优化）"""
+    # 子数组长度为 1 时终止
+    while left < right:
+        # 哨兵划分操作
+        pivot = self.partition(nums, left, right)
+        # 对两个子数组中较短的那个执行快速排序
+        if pivot - left < right - pivot:
+            self.quick_sort(nums, left, pivot - 1)  # 递归排序左子数组
+            left = pivot + 1  # 剩余未排序区间为 [pivot + 1, right]
+        else:
+            self.quick_sort(nums, pivot + 1, right)  # 递归排序右子数组
+            right = pivot - 1  # 剩余未排序区间为 [left, pivot - 1]
+```  
+
+- "C++"
+```cpp
+/* 快速排序（尾递归优化） */
+void quickSort(vector<int> &nums, int left, int right) {
+    // 子数组长度为 1 时终止
+    while (left < right) {
+        // 哨兵划分操作
+        int pivot = partition(nums, left, right);
+        // 对两个子数组中较短的那个执行快速排序
+        if (pivot - left < right - pivot) {
+            quickSort(nums, left, pivot - 1); // 递归排序左子数组
+            left = pivot + 1;                 // 剩余未排序区间为 [pivot + 1, right]
+        } else {
+            quickSort(nums, pivot + 1, right); // 递归排序右子数组
+            right = pivot - 1;                 // 剩余未排序区间为 [left, pivot - 1]
+        }
+    }
+}
+```  
+
+- "Java"
+```java
+/* 快速排序（尾递归优化） */
+void quickSort(int[] nums, int left, int right) {
+    // 子数组长度为 1 时终止
+    while (left < right) {
+        // 哨兵划分操作
+        int pivot = partition(nums, left, right);
+        // 对两个子数组中较短的那个执行快速排序
+        if (pivot - left < right - pivot) {
+            quickSort(nums, left, pivot - 1); // 递归排序左子数组
+            left = pivot + 1; // 剩余未排序区间为 [pivot + 1, right]
+        } else {
+            quickSort(nums, pivot + 1, right); // 递归排序右子数组
+            right = pivot - 1; // 剩余未排序区间为 [left, pivot - 1]
+        }
+    }
+}
+```  

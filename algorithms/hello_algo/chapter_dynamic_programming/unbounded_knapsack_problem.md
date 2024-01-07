@@ -32,9 +32,70 @@ $$
 
 对比两道题目的代码，状态转移中有一处从 $i-1$ 变为 $i$ ，其余完全一致：
 
-```src
-[file]{unbounded_knapsack}-[class]{}-[func]{unbounded_knapsack_dp}
-```
+- "Python"
+```python
+def unbounded_knapsack_dp(wgt: list[int], val: list[int], cap: int) -> int:
+    """完全背包：动态规划"""
+    n = len(wgt)
+    # 初始化 dp 表
+    dp = [[0] * (cap + 1) for _ in range(n + 1)]
+    # 状态转移
+    for i in range(1, n + 1):
+        for c in range(1, cap + 1):
+            if wgt[i - 1] > c:
+                # 若超过背包容量，则不选物品 i
+                dp[i][c] = dp[i - 1][c]
+            else:
+                # 不选和选物品 i 这两种方案的较大值
+                dp[i][c] = max(dp[i - 1][c], dp[i][c - wgt[i - 1]] + val[i - 1])
+    return dp[n][cap]
+```  
+
+- "C++"
+```cpp
+/* 完全背包：动态规划 */
+int unboundedKnapsackDP(vector<int> &wgt, vector<int> &val, int cap) {
+    int n = wgt.size();
+    // 初始化 dp 表
+    vector<vector<int>> dp(n + 1, vector<int>(cap + 1, 0));
+    // 状态转移
+    for (int i = 1; i <= n; i++) {
+        for (int c = 1; c <= cap; c++) {
+            if (wgt[i - 1] > c) {
+                // 若超过背包容量，则不选物品 i
+                dp[i][c] = dp[i - 1][c];
+            } else {
+                // 不选和选物品 i 这两种方案的较大值
+                dp[i][c] = max(dp[i - 1][c], dp[i][c - wgt[i - 1]] + val[i - 1]);
+            }
+        }
+    }
+    return dp[n][cap];
+}
+```  
+
+- "Java"
+```java
+/* 完全背包：动态规划 */
+int unboundedKnapsackDP(int[] wgt, int[] val, int cap) {
+    int n = wgt.length;
+    // 初始化 dp 表
+    int[][] dp = new int[n + 1][cap + 1];
+    // 状态转移
+    for (int i = 1; i <= n; i++) {
+        for (int c = 1; c <= cap; c++) {
+            if (wgt[i - 1] > c) {
+                // 若超过背包容量，则不选物品 i
+                dp[i][c] = dp[i - 1][c];
+            } else {
+                // 不选和选物品 i 这两种方案的较大值
+                dp[i][c] = Math.max(dp[i - 1][c], dp[i][c - wgt[i - 1]] + val[i - 1]);
+            }
+        }
+    }
+    return dp[n][cap];
+}
+```  
 
 ### 空间优化
 
@@ -42,29 +103,91 @@ $$
 
 这个遍历顺序与 0-1 背包正好相反。请借助下图来理解两者的区别。
 
-=== "<1>"
+- "<1>"
     ![完全背包问题在空间优化后的动态规划过程](unbounded_knapsack_problem.assets/unbounded_knapsack_dp_comp_step1.png)
 
-=== "<2>"
+- "<2>"
     ![unbounded_knapsack_dp_comp_step2](unbounded_knapsack_problem.assets/unbounded_knapsack_dp_comp_step2.png)
 
-=== "<3>"
+- "<3>"
     ![unbounded_knapsack_dp_comp_step3](unbounded_knapsack_problem.assets/unbounded_knapsack_dp_comp_step3.png)
 
-=== "<4>"
+- "<4>"
     ![unbounded_knapsack_dp_comp_step4](unbounded_knapsack_problem.assets/unbounded_knapsack_dp_comp_step4.png)
 
-=== "<5>"
+- "<5>"
     ![unbounded_knapsack_dp_comp_step5](unbounded_knapsack_problem.assets/unbounded_knapsack_dp_comp_step5.png)
 
-=== "<6>"
+- "<6>"
     ![unbounded_knapsack_dp_comp_step6](unbounded_knapsack_problem.assets/unbounded_knapsack_dp_comp_step6.png)
 
 代码实现比较简单，仅需将数组 `dp` 的第一维删除：
 
-```src
-[file]{unbounded_knapsack}-[class]{}-[func]{unbounded_knapsack_dp_comp}
-```
+- "Python"
+```python
+def unbounded_knapsack_dp_comp(wgt: list[int], val: list[int], cap: int) -> int:
+    """完全背包：空间优化后的动态规划"""
+    n = len(wgt)
+    # 初始化 dp 表
+    dp = [0] * (cap + 1)
+    # 状态转移
+    for i in range(1, n + 1):
+        # 正序遍历
+        for c in range(1, cap + 1):
+            if wgt[i - 1] > c:
+                # 若超过背包容量，则不选物品 i
+                dp[c] = dp[c]
+            else:
+                # 不选和选物品 i 这两种方案的较大值
+                dp[c] = max(dp[c], dp[c - wgt[i - 1]] + val[i - 1])
+    return dp[cap]
+```  
+
+- "C++"
+```cpp
+/* 完全背包：空间优化后的动态规划 */
+int unboundedKnapsackDPComp(vector<int> &wgt, vector<int> &val, int cap) {
+    int n = wgt.size();
+    // 初始化 dp 表
+    vector<int> dp(cap + 1, 0);
+    // 状态转移
+    for (int i = 1; i <= n; i++) {
+        for (int c = 1; c <= cap; c++) {
+            if (wgt[i - 1] > c) {
+                // 若超过背包容量，则不选物品 i
+                dp[c] = dp[c];
+            } else {
+                // 不选和选物品 i 这两种方案的较大值
+                dp[c] = max(dp[c], dp[c - wgt[i - 1]] + val[i - 1]);
+            }
+        }
+    }
+    return dp[cap];
+}
+```  
+
+- "Java"
+```java
+/* 完全背包：空间优化后的动态规划 */
+int unboundedKnapsackDPComp(int[] wgt, int[] val, int cap) {
+    int n = wgt.length;
+    // 初始化 dp 表
+    int[] dp = new int[cap + 1];
+    // 状态转移
+    for (int i = 1; i <= n; i++) {
+        for (int c = 1; c <= cap; c++) {
+            if (wgt[i - 1] > c) {
+                // 若超过背包容量，则不选物品 i
+                dp[c] = dp[c];
+            } else {
+                // 不选和选物品 i 这两种方案的较大值
+                dp[c] = Math.max(dp[c], dp[c - wgt[i - 1]] + val[i - 1]);
+            }
+        }
+    }
+    return dp[cap];
+}
+```  
 
 ## 零钱兑换问题
 
@@ -113,64 +236,209 @@ $$
 
 为此，我们采用数字 $amt + 1$ 来表示无效解，因为凑出 $amt$ 的硬币数量最多为 $amt$ 。最后返回前，判断 $dp[n, amt]$ 是否等于 $amt + 1$ ，若是则返回 $-1$ ，代表无法凑出目标金额。代码如下所示：
 
-```src
-[file]{coin_change}-[class]{}-[func]{coin_change_dp}
-```
+- "Python"
+```python
+def coin_change_dp(coins: list[int], amt: int) -> int:
+    """零钱兑换：动态规划"""
+    n = len(coins)
+    MAX = amt + 1
+    # 初始化 dp 表
+    dp = [[0] * (amt + 1) for _ in range(n + 1)]
+    # 状态转移：首行首列
+    for a in range(1, amt + 1):
+        dp[0][a] = MAX
+    # 状态转移：其余行和列
+    for i in range(1, n + 1):
+        for a in range(1, amt + 1):
+            if coins[i - 1] > a:
+                # 若超过目标金额，则不选硬币 i
+                dp[i][a] = dp[i - 1][a]
+            else:
+                # 不选和选硬币 i 这两种方案的较小值
+                dp[i][a] = min(dp[i - 1][a], dp[i][a - coins[i - 1]] + 1)
+    return dp[n][amt] if dp[n][amt] != MAX else -1
+```  
+
+- "C++"
+```cpp
+/* 零钱兑换：动态规划 */
+int coinChangeDP(vector<int> &coins, int amt) {
+    int n = coins.size();
+    int MAX = amt + 1;
+    // 初始化 dp 表
+    vector<vector<int>> dp(n + 1, vector<int>(amt + 1, 0));
+    // 状态转移：首行首列
+    for (int a = 1; a <= amt; a++) {
+        dp[0][a] = MAX;
+    }
+    // 状态转移：其余行和列
+    for (int i = 1; i <= n; i++) {
+        for (int a = 1; a <= amt; a++) {
+            if (coins[i - 1] > a) {
+                // 若超过目标金额，则不选硬币 i
+                dp[i][a] = dp[i - 1][a];
+            } else {
+                // 不选和选硬币 i 这两种方案的较小值
+                dp[i][a] = min(dp[i - 1][a], dp[i][a - coins[i - 1]] + 1);
+            }
+        }
+    }
+    return dp[n][amt] != MAX ? dp[n][amt] : -1;
+}
+```  
+
+- "Java"
+```java
+/* 零钱兑换：动态规划 */
+int coinChangeDP(int[] coins, int amt) {
+    int n = coins.length;
+    int MAX = amt + 1;
+    // 初始化 dp 表
+    int[][] dp = new int[n + 1][amt + 1];
+    // 状态转移：首行首列
+    for (int a = 1; a <= amt; a++) {
+        dp[0][a] = MAX;
+    }
+    // 状态转移：其余行和列
+    for (int i = 1; i <= n; i++) {
+        for (int a = 1; a <= amt; a++) {
+            if (coins[i - 1] > a) {
+                // 若超过目标金额，则不选硬币 i
+                dp[i][a] = dp[i - 1][a];
+            } else {
+                // 不选和选硬币 i 这两种方案的较小值
+                dp[i][a] = Math.min(dp[i - 1][a], dp[i][a - coins[i - 1]] + 1);
+            }
+        }
+    }
+    return dp[n][amt] != MAX ? dp[n][amt] : -1;
+}
+```  
 
 下图展示了零钱兑换的动态规划过程，和完全背包问题非常相似。
 
-=== "<1>"
+- "<1>"
     ![零钱兑换问题的动态规划过程](unbounded_knapsack_problem.assets/coin_change_dp_step1.png)
 
-=== "<2>"
+- "<2>"
     ![coin_change_dp_step2](unbounded_knapsack_problem.assets/coin_change_dp_step2.png)
 
-=== "<3>"
+- "<3>"
     ![coin_change_dp_step3](unbounded_knapsack_problem.assets/coin_change_dp_step3.png)
 
-=== "<4>"
+- "<4>"
     ![coin_change_dp_step4](unbounded_knapsack_problem.assets/coin_change_dp_step4.png)
 
-=== "<5>"
+- "<5>"
     ![coin_change_dp_step5](unbounded_knapsack_problem.assets/coin_change_dp_step5.png)
 
-=== "<6>"
+- "<6>"
     ![coin_change_dp_step6](unbounded_knapsack_problem.assets/coin_change_dp_step6.png)
 
-=== "<7>"
+- "<7>"
     ![coin_change_dp_step7](unbounded_knapsack_problem.assets/coin_change_dp_step7.png)
 
-=== "<8>"
+- "<8>"
     ![coin_change_dp_step8](unbounded_knapsack_problem.assets/coin_change_dp_step8.png)
 
-=== "<9>"
+- "<9>"
     ![coin_change_dp_step9](unbounded_knapsack_problem.assets/coin_change_dp_step9.png)
 
-=== "<10>"
+- "<10>"
     ![coin_change_dp_step10](unbounded_knapsack_problem.assets/coin_change_dp_step10.png)
 
-=== "<11>"
+- "<11>"
     ![coin_change_dp_step11](unbounded_knapsack_problem.assets/coin_change_dp_step11.png)
 
-=== "<12>"
+- "<12>"
     ![coin_change_dp_step12](unbounded_knapsack_problem.assets/coin_change_dp_step12.png)
 
-=== "<13>"
+- "<13>"
     ![coin_change_dp_step13](unbounded_knapsack_problem.assets/coin_change_dp_step13.png)
 
-=== "<14>"
+- "<14>"
     ![coin_change_dp_step14](unbounded_knapsack_problem.assets/coin_change_dp_step14.png)
 
-=== "<15>"
+- "<15>"
     ![coin_change_dp_step15](unbounded_knapsack_problem.assets/coin_change_dp_step15.png)
 
 ### 空间优化
 
 零钱兑换的空间优化的处理方式和完全背包问题一致：
 
-```src
-[file]{coin_change}-[class]{}-[func]{coin_change_dp_comp}
-```
+- "Python"
+```python
+def coin_change_dp_comp(coins: list[int], amt: int) -> int:
+    """零钱兑换：空间优化后的动态规划"""
+    n = len(coins)
+    MAX = amt + 1
+    # 初始化 dp 表
+    dp = [MAX] * (amt + 1)
+    dp[0] = 0
+    # 状态转移
+    for i in range(1, n + 1):
+        # 正序遍历
+        for a in range(1, amt + 1):
+            if coins[i - 1] > a:
+                # 若超过目标金额，则不选硬币 i
+                dp[a] = dp[a]
+            else:
+                # 不选和选硬币 i 这两种方案的较小值
+                dp[a] = min(dp[a], dp[a - coins[i - 1]] + 1)
+    return dp[amt] if dp[amt] != MAX else -1
+```  
+
+- "C++"
+```cpp
+/* 零钱兑换：空间优化后的动态规划 */
+int coinChangeDPComp(vector<int> &coins, int amt) {
+    int n = coins.size();
+    int MAX = amt + 1;
+    // 初始化 dp 表
+    vector<int> dp(amt + 1, MAX);
+    dp[0] = 0;
+    // 状态转移
+    for (int i = 1; i <= n; i++) {
+        for (int a = 1; a <= amt; a++) {
+            if (coins[i - 1] > a) {
+                // 若超过目标金额，则不选硬币 i
+                dp[a] = dp[a];
+            } else {
+                // 不选和选硬币 i 这两种方案的较小值
+                dp[a] = min(dp[a], dp[a - coins[i - 1]] + 1);
+            }
+        }
+    }
+    return dp[amt] != MAX ? dp[amt] : -1;
+}
+```  
+
+- "Java"
+```java
+/* 零钱兑换：空间优化后的动态规划 */
+int coinChangeDPComp(int[] coins, int amt) {
+    int n = coins.length;
+    int MAX = amt + 1;
+    // 初始化 dp 表
+    int[] dp = new int[amt + 1];
+    Arrays.fill(dp, MAX);
+    dp[0] = 0;
+    // 状态转移
+    for (int i = 1; i <= n; i++) {
+        for (int a = 1; a <= amt; a++) {
+            if (coins[i - 1] > a) {
+                // 若超过目标金额，则不选硬币 i
+                dp[a] = dp[a];
+            } else {
+                // 不选和选硬币 i 这两种方案的较小值
+                dp[a] = Math.min(dp[a], dp[a - coins[i - 1]] + 1);
+            }
+        }
+    }
+    return dp[amt] != MAX ? dp[amt] : -1;
+}
+```  
+
 
 ## 零钱兑换问题 II
 
@@ -194,14 +462,151 @@ $$
 
 ### 代码实现
 
-```src
-[file]{coin_change_ii}-[class]{}-[func]{coin_change_ii_dp}
-```
+- "Python"
+```python
+def coin_change_ii_dp(coins: list[int], amt: int) -> int:
+    """零钱兑换 II：动态规划"""
+    n = len(coins)
+    # 初始化 dp 表
+    dp = [[0] * (amt + 1) for _ in range(n + 1)]
+    # 初始化首列
+    for i in range(n + 1):
+        dp[i][0] = 1
+    # 状态转移
+    for i in range(1, n + 1):
+        for a in range(1, amt + 1):
+            if coins[i - 1] > a:
+                # 若超过目标金额，则不选硬币 i
+                dp[i][a] = dp[i - 1][a]
+            else:
+                # 不选和选硬币 i 这两种方案之和
+                dp[i][a] = dp[i - 1][a] + dp[i][a - coins[i - 1]]
+    return dp[n][amt]
+```  
+
+- "C++"
+```cpp
+/* 零钱兑换 II：动态规划 */
+int coinChangeIIDP(vector<int> &coins, int amt) {
+    int n = coins.size();
+    // 初始化 dp 表
+    vector<vector<int>> dp(n + 1, vector<int>(amt + 1, 0));
+    // 初始化首列
+    for (int i = 0; i <= n; i++) {
+        dp[i][0] = 1;
+    }
+    // 状态转移
+    for (int i = 1; i <= n; i++) {
+        for (int a = 1; a <= amt; a++) {
+            if (coins[i - 1] > a) {
+                // 若超过目标金额，则不选硬币 i
+                dp[i][a] = dp[i - 1][a];
+            } else {
+                // 不选和选硬币 i 这两种方案之和
+                dp[i][a] = dp[i - 1][a] + dp[i][a - coins[i - 1]];
+            }
+        }
+    }
+    return dp[n][amt];
+}
+```  
+
+- "Java"
+```java
+/* 零钱兑换 II：动态规划 */
+int coinChangeIIDP(int[] coins, int amt) {
+    int n = coins.length;
+    // 初始化 dp 表
+    int[][] dp = new int[n + 1][amt + 1];
+    // 初始化首列
+    for (int i = 0; i <= n; i++) {
+        dp[i][0] = 1;
+    }
+    // 状态转移
+    for (int i = 1; i <= n; i++) {
+        for (int a = 1; a <= amt; a++) {
+            if (coins[i - 1] > a) {
+                // 若超过目标金额，则不选硬币 i
+                dp[i][a] = dp[i - 1][a];
+            } else {
+                // 不选和选硬币 i 这两种方案之和
+                dp[i][a] = dp[i - 1][a] + dp[i][a - coins[i - 1]];
+            }
+        }
+    }
+    return dp[n][amt];
+}
+```  
 
 ### 空间优化
 
 空间优化处理方式相同，删除硬币维度即可：
 
-```src
-[file]{coin_change_ii}-[class]{}-[func]{coin_change_ii_dp_comp}
-```
+- "Python"
+```python
+def coin_change_ii_dp_comp(coins: list[int], amt: int) -> int:
+    """零钱兑换 II：空间优化后的动态规划"""
+    n = len(coins)
+    # 初始化 dp 表
+    dp = [0] * (amt + 1)
+    dp[0] = 1
+    # 状态转移
+    for i in range(1, n + 1):
+        # 正序遍历
+        for a in range(1, amt + 1):
+            if coins[i - 1] > a:
+                # 若超过目标金额，则不选硬币 i
+                dp[a] = dp[a]
+            else:
+                # 不选和选硬币 i 这两种方案之和
+                dp[a] = dp[a] + dp[a - coins[i - 1]]
+    return dp[amt]
+```  
+
+- "C++"
+```cpp
+/* 零钱兑换 II：空间优化后的动态规划 */
+int coinChangeIIDPComp(vector<int> &coins, int amt) {
+    int n = coins.size();
+    // 初始化 dp 表
+    vector<int> dp(amt + 1, 0);
+    dp[0] = 1;
+    // 状态转移
+    for (int i = 1; i <= n; i++) {
+        for (int a = 1; a <= amt; a++) {
+            if (coins[i - 1] > a) {
+                // 若超过目标金额，则不选硬币 i
+                dp[a] = dp[a];
+            } else {
+                // 不选和选硬币 i 这两种方案之和
+                dp[a] = dp[a] + dp[a - coins[i - 1]];
+            }
+        }
+    }
+    return dp[amt];
+}
+```  
+
+- "Java"
+```java
+/* 零钱兑换 II：空间优化后的动态规划 */
+int coinChangeIIDPComp(int[] coins, int amt) {
+    int n = coins.length;
+    // 初始化 dp 表
+    int[] dp = new int[amt + 1];
+    dp[0] = 1;
+    // 状态转移
+    for (int i = 1; i <= n; i++) {
+        for (int a = 1; a <= amt; a++) {
+            if (coins[i - 1] > a) {
+                // 若超过目标金额，则不选硬币 i
+                dp[a] = dp[a];
+            } else {
+                // 不选和选硬币 i 这两种方案之和
+                dp[a] = dp[a] + dp[a - coins[i - 1]];
+            }
+        }
+    }
+    return dp[amt];
+}
+```  

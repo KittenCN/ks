@@ -45,31 +45,31 @@ $$
 3. 比较板 $i$ 和 板 $j$ 的高度，并将短板向内移动一格。
 4. 循环执行第 `2.` 步和第 `3.` 步，直至 $i$ 和 $j$ 相遇时结束。
 
-=== "<1>"
+- "<1>"
     ![最大容量问题的贪心过程](max_capacity_problem.assets/max_capacity_greedy_step1.png)
 
-=== "<2>"
+- "<2>"
     ![max_capacity_greedy_step2](max_capacity_problem.assets/max_capacity_greedy_step2.png)
 
-=== "<3>"
+- "<3>"
     ![max_capacity_greedy_step3](max_capacity_problem.assets/max_capacity_greedy_step3.png)
 
-=== "<4>"
+- "<4>"
     ![max_capacity_greedy_step4](max_capacity_problem.assets/max_capacity_greedy_step4.png)
 
-=== "<5>"
+- "<5>"
     ![max_capacity_greedy_step5](max_capacity_problem.assets/max_capacity_greedy_step5.png)
 
-=== "<6>"
+- "<6>"
     ![max_capacity_greedy_step6](max_capacity_problem.assets/max_capacity_greedy_step6.png)
 
-=== "<7>"
+- "<7>"
     ![max_capacity_greedy_step7](max_capacity_problem.assets/max_capacity_greedy_step7.png)
 
-=== "<8>"
+- "<8>"
     ![max_capacity_greedy_step8](max_capacity_problem.assets/max_capacity_greedy_step8.png)
 
-=== "<9>"
+- "<9>"
     ![max_capacity_greedy_step9](max_capacity_problem.assets/max_capacity_greedy_step9.png)
 
 ### 代码实现
@@ -78,9 +78,74 @@ $$
 
 变量 $i$、$j$、$res$ 使用常数大小的额外空间，**因此空间复杂度为 $O(1)$** 。
 
-```src
-[file]{max_capacity}-[class]{}-[func]{max_capacity}
-```
+- Python
+```python
+def max_capacity(ht: list[int]) -> int:
+    """最大容量：贪心"""
+    # 初始化 i, j，使其分列数组两端
+    i, j = 0, len(ht) - 1
+    # 初始最大容量为 0
+    res = 0
+    # 循环贪心选择，直至两板相遇
+    while i < j:
+        # 更新最大容量
+        cap = min(ht[i], ht[j]) * (j - i)
+        res = max(res, cap)
+        # 向内移动短板
+        if ht[i] < ht[j]:
+            i += 1
+        else:
+            j -= 1
+    return res
+```  
+
+- C++
+```cpp
+/* 最大容量：贪心 */
+int maxCapacity(vector<int> &ht) {
+    // 初始化 i, j，使其分列数组两端
+    int i = 0, j = ht.size() - 1;
+    // 初始最大容量为 0
+    int res = 0;
+    // 循环贪心选择，直至两板相遇
+    while (i < j) {
+        // 更新最大容量
+        int cap = min(ht[i], ht[j]) * (j - i);
+        res = max(res, cap);
+        // 向内移动短板
+        if (ht[i] < ht[j]) {
+            i++;
+        } else {
+            j--;
+        }
+    }
+    return res;
+}
+```  
+
+- Java
+```java
+/* 最大容量：贪心 */
+int maxCapacity(int[] ht) {
+    // 初始化 i, j，使其分列数组两端
+    int i = 0, j = ht.length - 1;
+    // 初始最大容量为 0
+    int res = 0;
+    // 循环贪心选择，直至两板相遇
+    while (i < j) {
+        // 更新最大容量
+        int cap = Math.min(ht[i], ht[j]) * (j - i);
+        res = Math.max(res, cap);
+        // 向内移动短板
+        if (ht[i] < ht[j]) {
+            i++;
+        } else {
+            j--;
+        }
+    }
+    return res;
+}
+```  
 
 ### 正确性证明
 

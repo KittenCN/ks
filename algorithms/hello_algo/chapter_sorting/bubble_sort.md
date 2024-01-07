@@ -4,25 +4,25 @@
 
 如下图所示，冒泡过程可以利用元素交换操作来模拟：从数组最左端开始向右遍历，依次比较相邻元素大小，如果“左元素 > 右元素”就交换二者。遍历完成后，最大的元素会被移动到数组的最右端。
 
-=== "<1>"
+- "<1>"
     ![利用元素交换操作模拟冒泡](bubble_sort.assets/bubble_operation_step1.png)
 
-=== "<2>"
+- "<2>"
     ![bubble_operation_step2](bubble_sort.assets/bubble_operation_step2.png)
 
-=== "<3>"
+- "<3>"
     ![bubble_operation_step3](bubble_sort.assets/bubble_operation_step3.png)
 
-=== "<4>"
+- "<4>"
     ![bubble_operation_step4](bubble_sort.assets/bubble_operation_step4.png)
 
-=== "<5>"
+- "<5>"
     ![bubble_operation_step5](bubble_sort.assets/bubble_operation_step5.png)
 
-=== "<6>"
+- "<6>"
     ![bubble_operation_step6](bubble_sort.assets/bubble_operation_step6.png)
 
-=== "<7>"
+- "<7>"
     ![bubble_operation_step7](bubble_sort.assets/bubble_operation_step7.png)
 
 ## 算法流程
@@ -38,9 +38,56 @@
 
 示例代码如下：
 
-```src
-[file]{bubble_sort}-[class]{}-[func]{bubble_sort}
-```
+- "Python"
+```python
+def bubble_sort(nums: list[int]):
+    """冒泡排序"""
+    n = len(nums)
+    # 外循环：未排序区间为 [0, i]
+    for i in range(n - 1, 0, -1):
+        # 内循环：将未排序区间 [0, i] 中的最大元素交换至该区间的最右端
+        for j in range(i):
+            if nums[j] > nums[j + 1]:
+                # 交换 nums[j] 与 nums[j + 1]
+                nums[j], nums[j + 1] = nums[j + 1], nums[j]
+```  
+
+- "C++"
+```cpp
+/* 冒泡排序 */
+void bubbleSort(vector<int> &nums) {
+    // 外循环：未排序区间为 [0, i]
+    for (int i = nums.size() - 1; i > 0; i--) {
+        // 内循环：将未排序区间 [0, i] 中的最大元素交换至该区间的最右端
+        for (int j = 0; j < i; j++) {
+            if (nums[j] > nums[j + 1]) {
+                // 交换 nums[j] 与 nums[j + 1]
+                // 这里使用了 std::swap() 函数
+                swap(nums[j], nums[j + 1]);
+            }
+        }
+    }
+}
+```  
+
+- "Java"
+```java
+/* 冒泡排序 */
+void bubbleSort(int[] nums) {
+    // 外循环：未排序区间为 [0, i]
+    for (int i = nums.length - 1; i > 0; i--) {
+        // 内循环：将未排序区间 [0, i] 中的最大元素交换至该区间的最右端
+        for (int j = 0; j < i; j++) {
+            if (nums[j] > nums[j + 1]) {
+                // 交换 nums[j] 与 nums[j + 1]
+                int tmp = nums[j];
+                nums[j] = nums[j + 1];
+                nums[j + 1] = tmp;
+            }
+        }
+    }
+}
+```  
 
 ## 效率优化
 
@@ -48,9 +95,68 @@
 
 经过优化，冒泡排序的最差时间复杂度和平均时间复杂度仍为 $O(n^2)$ ；但当输入数组完全有序时，可达到最佳时间复杂度 $O(n)$ 。
 
-```src
-[file]{bubble_sort}-[class]{}-[func]{bubble_sort_with_flag}
-```
+- "Python"
+```python
+def bubble_sort_with_flag(nums: list[int]):
+    """冒泡排序（标志优化）"""
+    n = len(nums)
+    # 外循环：未排序区间为 [0, i]
+    for i in range(n - 1, 0, -1):
+        flag = False  # 初始化标志位
+        # 内循环：将未排序区间 [0, i] 中的最大元素交换至该区间的最右端
+        for j in range(i):
+            if nums[j] > nums[j + 1]:
+                # 交换 nums[j] 与 nums[j + 1]
+                nums[j], nums[j + 1] = nums[j + 1], nums[j]
+                flag = True  # 记录交换元素
+        if not flag:
+            break  # 此轮“冒泡”未交换任何元素，直接跳出
+```  
+
+- "C++"
+```cpp
+/* 冒泡排序（标志优化）*/
+void bubbleSortWithFlag(vector<int> &nums) {
+    // 外循环：未排序区间为 [0, i]
+    for (int i = nums.size() - 1; i > 0; i--) {
+        bool flag = false; // 初始化标志位
+        // 内循环：将未排序区间 [0, i] 中的最大元素交换至该区间的最右端
+        for (int j = 0; j < i; j++) {
+            if (nums[j] > nums[j + 1]) {
+                // 交换 nums[j] 与 nums[j + 1]
+                // 这里使用了 std::swap() 函数
+                swap(nums[j], nums[j + 1]);
+                flag = true; // 记录交换元素
+            }
+        }
+        if (!flag)
+            break; // 此轮“冒泡”未交换任何元素，直接跳出
+    }
+}
+```  
+
+- "Java"
+```java
+/* 冒泡排序（标志优化） */
+void bubbleSortWithFlag(int[] nums) {
+    // 外循环：未排序区间为 [0, i]
+    for (int i = nums.length - 1; i > 0; i--) {
+        boolean flag = false; // 初始化标志位
+        // 内循环：将未排序区间 [0, i] 中的最大元素交换至该区间的最右端
+        for (int j = 0; j < i; j++) {
+            if (nums[j] > nums[j + 1]) {
+                // 交换 nums[j] 与 nums[j + 1]
+                int tmp = nums[j];
+                nums[j] = nums[j + 1];
+                nums[j + 1] = tmp;
+                flag = true; // 记录交换元素
+            }
+        }
+        if (!flag)
+            break; // 此轮“冒泡”未交换任何元素，直接跳出
+    }
+}
+```  
 
 ## 算法特性
 

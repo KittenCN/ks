@@ -10,19 +10,19 @@
 2. 由于在拼音字母表中 $r$ 位于 $m$ 之后，所以排除字典前半部分，查找范围缩小到后半部分。
 3. 不断重复步骤 `1.` 和 步骤 `2.` ，直至找到拼音首字母为 $r$ 的页码为止。
 
-=== "<1>"
+- "<1>"
     ![查字典步骤](algorithms_are_everywhere.assets/binary_search_dictionary_step1.png)
 
-=== "<2>"
+- "<2>"
     ![binary_search_dictionary_step2](algorithms_are_everywhere.assets/binary_search_dictionary_step2.png)
 
-=== "<3>"
+- "<3>"
     ![binary_search_dictionary_step3](algorithms_are_everywhere.assets/binary_search_dictionary_step3.png)
 
-=== "<4>"
+- "<4>"
     ![binary_search_dictionary_step4](algorithms_are_everywhere.assets/binary_search_dictionary_step4.png)
 
-=== "<5>"
+- "<5>"
     ![binary_search_dictionary_step5](algorithms_are_everywhere.assets/binary_search_dictionary_step5.png)
 
 查字典这个小学生必备技能，实际上就是著名的“二分查找”算法。从数据结构的角度，我们可以把字典视为一个已排序的“数组”；从算法的角度，我们可以将上述查字典的一系列操作看作“二分查找”。

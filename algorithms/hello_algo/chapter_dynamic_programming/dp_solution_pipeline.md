@@ -100,9 +100,62 @@ $$
 
 实现代码如下：
 
-```src
-[file]{min_path_sum}-[class]{}-[func]{min_path_sum_dfs}
-```
+- "Python"
+```python
+def min_path_sum_dfs(grid: list[list[int]], i: int, j: int) -> int:
+    """最小路径和：暴力搜索"""
+    # 若为左上角单元格，则终止搜索
+    if i == 0 and j == 0:
+        return grid[0][0]
+    # 若行列索引越界，则返回 +∞ 代价
+    if i < 0 or j < 0:
+        return inf
+    # 计算从左上角到 (i-1, j) 和 (i, j-1) 的最小路径代价
+    up = min_path_sum_dfs(grid, i - 1, j)
+    left = min_path_sum_dfs(grid, i, j - 1)
+    # 返回从左上角到 (i, j) 的最小路径代价
+    return min(left, up) + grid[i][j]
+```  
+
+- "C++"
+```cpp
+/* 最小路径和：暴力搜索 */
+int minPathSumDFS(vector<vector<int>> &grid, int i, int j) {
+    // 若为左上角单元格，则终止搜索
+    if (i == 0 && j == 0) {
+        return grid[0][0];
+    }
+    // 若行列索引越界，则返回 +∞ 代价
+    if (i < 0 || j < 0) {
+        return INT_MAX;
+    }
+    // 计算从左上角到 (i-1, j) 和 (i, j-1) 的最小路径代价
+    int up = minPathSumDFS(grid, i - 1, j);
+    int left = minPathSumDFS(grid, i, j - 1);
+    // 返回从左上角到 (i, j) 的最小路径代价
+    return min(left, up) != INT_MAX ? min(left, up) + grid[i][j] : INT_MAX;
+}
+```  
+
+- "Java"
+```java
+/* 最小路径和：暴力搜索 */
+int minPathSumDFS(int[][] grid, int i, int j) {
+    // 若为左上角单元格，则终止搜索
+    if (i == 0 && j == 0) {
+        return grid[0][0];
+    }
+    // 若行列索引越界，则返回 +∞ 代价
+    if (i < 0 || j < 0) {
+        return Integer.MAX_VALUE;
+    }
+    // 计算从左上角到 (i-1, j) 和 (i, j-1) 的最小路径代价
+    int up = minPathSumDFS(grid, i - 1, j);
+    int left = minPathSumDFS(grid, i, j - 1);
+    // 返回从左上角到 (i, j) 的最小路径代价
+    return Math.min(left, up) + grid[i][j];
+}
+```  
 
 下图给出了以 $dp[2, 1]$ 为根节点的递归树，其中包含一些重叠子问题，其数量会随着网格 `grid` 的尺寸变大而急剧增多。
 
@@ -116,9 +169,78 @@ $$
 
 我们引入一个和网格 `grid` 相同尺寸的记忆列表 `mem` ，用于记录各个子问题的解，并将重叠子问题进行剪枝：
 
-```src
-[file]{min_path_sum}-[class]{}-[func]{min_path_sum_dfs_mem}
-```
+- "Python"
+```python
+def min_path_sum_dfs_mem(
+    grid: list[list[int]], mem: list[list[int]], i: int, j: int
+) -> int:
+    """最小路径和：记忆化搜索"""
+    # 若为左上角单元格，则终止搜索
+    if i == 0 and j == 0:
+        return grid[0][0]
+    # 若行列索引越界，则返回 +∞ 代价
+    if i < 0 or j < 0:
+        return inf
+    # 若已有记录，则直接返回
+    if mem[i][j] != -1:
+        return mem[i][j]
+    # 左边和上边单元格的最小路径代价
+    up = min_path_sum_dfs_mem(grid, mem, i - 1, j)
+    left = min_path_sum_dfs_mem(grid, mem, i, j - 1)
+    # 记录并返回左上角到 (i, j) 的最小路径代价
+    mem[i][j] = min(left, up) + grid[i][j]
+    return mem[i][j]
+```  
+
+- "C++"
+```cpp
+/* 最小路径和：记忆化搜索 */
+int minPathSumDFSMem(vector<vector<int>> &grid, vector<vector<int>> &mem, int i, int j) {
+    // 若为左上角单元格，则终止搜索
+    if (i == 0 && j == 0) {
+        return grid[0][0];
+    }
+    // 若行列索引越界，则返回 +∞ 代价
+    if (i < 0 || j < 0) {
+        return INT_MAX;
+    }
+    // 若已有记录，则直接返回
+    if (mem[i][j] != -1) {
+        return mem[i][j];
+    }
+    // 左边和上边单元格的最小路径代价
+    int up = minPathSumDFSMem(grid, mem, i - 1, j);
+    int left = minPathSumDFSMem(grid, mem, i, j - 1);
+    // 记录并返回左上角到 (i, j) 的最小路径代价
+    mem[i][j] = min(left, up) != INT_MAX ? min(left, up) + grid[i][j] : INT_MAX;
+    return mem[i][j];
+}
+```  
+
+- "Java"
+```java
+/* 最小路径和：记忆化搜索 */
+int minPathSumDFSMem(int[][] grid, int[][] mem, int i, int j) {
+    // 若为左上角单元格，则终止搜索
+    if (i == 0 && j == 0) {
+        return grid[0][0];
+    }
+    // 若行列索引越界，则返回 +∞ 代价
+    if (i < 0 || j < 0) {
+        return Integer.MAX_VALUE;
+    }
+    // 若已有记录，则直接返回
+    if (mem[i][j] != -1) {
+        return mem[i][j];
+    }
+    // 左边和上边单元格的最小路径代价
+    int up = minPathSumDFSMem(grid, mem, i - 1, j);
+    int left = minPathSumDFSMem(grid, mem, i, j - 1);
+    // 记录并返回左上角到 (i, j) 的最小路径代价
+    mem[i][j] = Math.min(left, up) + grid[i][j];
+    return mem[i][j];
+}
+```  
 
 如下图所示，在引入记忆化后，所有子问题的解只需计算一次，因此时间复杂度取决于状态总数，即网格尺寸 $O(nm)$ 。
 
@@ -128,48 +250,117 @@ $$
 
 基于迭代实现动态规划解法，代码如下所示：
 
-```src
-[file]{min_path_sum}-[class]{}-[func]{min_path_sum_dp}
-```
+- "Python"
+```python
+def min_path_sum_dp(grid: list[list[int]]) -> int:
+    """最小路径和：动态规划"""
+    n, m = len(grid), len(grid[0])
+    # 初始化 dp 表
+    dp = [[0] * m for _ in range(n)]
+    dp[0][0] = grid[0][0]
+    # 状态转移：首行
+    for j in range(1, m):
+        dp[0][j] = dp[0][j - 1] + grid[0][j]
+    # 状态转移：首列
+    for i in range(1, n):
+        dp[i][0] = dp[i - 1][0] + grid[i][0]
+    # 状态转移：其余行和列
+    for i in range(1, n):
+        for j in range(1, m):
+            dp[i][j] = min(dp[i][j - 1], dp[i - 1][j]) + grid[i][j]
+    return dp[n - 1][m - 1]
+```  
+
+- "C++"
+```cpp
+/* 最小路径和：动态规划 */
+int minPathSumDP(vector<vector<int>> &grid) {
+    int n = grid.size(), m = grid[0].size();
+    // 初始化 dp 表
+    vector<vector<int>> dp(n, vector<int>(m));
+    dp[0][0] = grid[0][0];
+    // 状态转移：首行
+    for (int j = 1; j < m; j++) {
+        dp[0][j] = dp[0][j - 1] + grid[0][j];
+    }
+    // 状态转移：首列
+    for (int i = 1; i < n; i++) {
+        dp[i][0] = dp[i - 1][0] + grid[i][0];
+    }
+    // 状态转移：其余行和列
+    for (int i = 1; i < n; i++) {
+        for (int j = 1; j < m; j++) {
+            dp[i][j] = min(dp[i][j - 1], dp[i - 1][j]) + grid[i][j];
+        }
+    }
+    return dp[n - 1][m - 1];
+}
+```  
+
+- "Java"
+```java
+/* 最小路径和：动态规划 */
+int minPathSumDP(int[][] grid) {
+    int n = grid.length, m = grid[0].length;
+    // 初始化 dp 表
+    int[][] dp = new int[n][m];
+    dp[0][0] = grid[0][0];
+    // 状态转移：首行
+    for (int j = 1; j < m; j++) {
+        dp[0][j] = dp[0][j - 1] + grid[0][j];
+    }
+    // 状态转移：首列
+    for (int i = 1; i < n; i++) {
+        dp[i][0] = dp[i - 1][0] + grid[i][0];
+    }
+    // 状态转移：其余行和列
+    for (int i = 1; i < n; i++) {
+        for (int j = 1; j < m; j++) {
+            dp[i][j] = Math.min(dp[i][j - 1], dp[i - 1][j]) + grid[i][j];
+        }
+    }
+    return dp[n - 1][m - 1];
+}
+```  
 
 下图展示了最小路径和的状态转移过程，其遍历了整个网格，**因此时间复杂度为 $O(nm)$** 。
 
 数组 `dp` 大小为 $n \times m$ ，**因此空间复杂度为 $O(nm)$** 。
 
-=== "<1>"
+- "<1>"
     ![最小路径和的动态规划过程](dp_solution_pipeline.assets/min_path_sum_dp_step1.png)
 
-=== "<2>"
+- "<2>"
     ![min_path_sum_dp_step2](dp_solution_pipeline.assets/min_path_sum_dp_step2.png)
 
-=== "<3>"
+- "<3>"
     ![min_path_sum_dp_step3](dp_solution_pipeline.assets/min_path_sum_dp_step3.png)
 
-=== "<4>"
+- "<4>"
     ![min_path_sum_dp_step4](dp_solution_pipeline.assets/min_path_sum_dp_step4.png)
 
-=== "<5>"
+- "<5>"
     ![min_path_sum_dp_step5](dp_solution_pipeline.assets/min_path_sum_dp_step5.png)
 
-=== "<6>"
+- "<6>"
     ![min_path_sum_dp_step6](dp_solution_pipeline.assets/min_path_sum_dp_step6.png)
 
-=== "<7>"
+- "<7>"
     ![min_path_sum_dp_step7](dp_solution_pipeline.assets/min_path_sum_dp_step7.png)
 
-=== "<8>"
+- "<8>"
     ![min_path_sum_dp_step8](dp_solution_pipeline.assets/min_path_sum_dp_step8.png)
 
-=== "<9>"
+- "<9>"
     ![min_path_sum_dp_step9](dp_solution_pipeline.assets/min_path_sum_dp_step9.png)
 
-=== "<10>"
+- "<10>"
     ![min_path_sum_dp_step10](dp_solution_pipeline.assets/min_path_sum_dp_step10.png)
 
-=== "<11>"
+- "<11>"
     ![min_path_sum_dp_step11](dp_solution_pipeline.assets/min_path_sum_dp_step11.png)
 
-=== "<12>"
+- "<12>"
     ![min_path_sum_dp_step12](dp_solution_pipeline.assets/min_path_sum_dp_step12.png)
 
 ### 空间优化
@@ -178,6 +369,73 @@ $$
 
 请注意，因为数组 `dp` 只能表示一行的状态，所以我们无法提前初始化首列状态，而是在遍历每行时更新它：
 
-```src
-[file]{min_path_sum}-[class]{}-[func]{min_path_sum_dp_comp}
-```
+- "Python"
+```python
+def min_path_sum_dp_comp(grid: list[list[int]]) -> int:
+    """最小路径和：空间优化后的动态规划"""
+    n, m = len(grid), len(grid[0])
+    # 初始化 dp 表
+    dp = [0] * m
+    # 状态转移：首行
+    dp[0] = grid[0][0]
+    for j in range(1, m):
+        dp[j] = dp[j - 1] + grid[0][j]
+    # 状态转移：其余行
+    for i in range(1, n):
+        # 状态转移：首列
+        dp[0] = dp[0] + grid[i][0]
+        # 状态转移：其余列
+        for j in range(1, m):
+            dp[j] = min(dp[j - 1], dp[j]) + grid[i][j]
+    return dp[m - 1]
+```  
+
+- "C++"
+```cpp
+/* 最小路径和：空间优化后的动态规划 */
+int minPathSumDPComp(vector<vector<int>> &grid) {
+    int n = grid.size(), m = grid[0].size();
+    // 初始化 dp 表
+    vector<int> dp(m);
+    // 状态转移：首行
+    dp[0] = grid[0][0];
+    for (int j = 1; j < m; j++) {
+        dp[j] = dp[j - 1] + grid[0][j];
+    }
+    // 状态转移：其余行
+    for (int i = 1; i < n; i++) {
+        // 状态转移：首列
+        dp[0] = dp[0] + grid[i][0];
+        // 状态转移：其余列
+        for (int j = 1; j < m; j++) {
+            dp[j] = min(dp[j - 1], dp[j]) + grid[i][j];
+        }
+    }
+    return dp[m - 1];
+}
+```  
+
+- "Java"
+```java
+/* 最小路径和：空间优化后的动态规划 */
+int minPathSumDPComp(int[][] grid) {
+    int n = grid.length, m = grid[0].length;
+    // 初始化 dp 表
+    int[] dp = new int[m];
+    // 状态转移：首行
+    dp[0] = grid[0][0];
+    for (int j = 1; j < m; j++) {
+        dp[j] = dp[j - 1] + grid[0][j];
+    }
+    // 状态转移：其余行
+    for (int i = 1; i < n; i++) {
+        // 状态转移：首列
+        dp[0] = dp[0] + grid[i][0];
+        // 状态转移：其余列
+        for (int j = 1; j < m; j++) {
+            dp[j] = Math.min(dp[j - 1], dp[j]) + grid[i][j];
+        }
+    }
+    return dp[m - 1];
+}
+```  

@@ -21,9 +21,54 @@
 
 示例代码如下：
 
-```src
-[file]{insertion_sort}-[class]{}-[func]{insertion_sort}
-```
+- "Python"
+```python
+def insertion_sort(nums: list[int]):
+    """插入排序"""
+    # 外循环：已排序区间为 [0, i-1]
+    for i in range(1, len(nums)):
+        base = nums[i]
+        j = i - 1
+        # 内循环：将 base 插入到已排序区间 [0, i-1] 中的正确位置
+        while j >= 0 and nums[j] > base:
+            nums[j + 1] = nums[j]  # 将 nums[j] 向右移动一位
+            j -= 1
+        nums[j + 1] = base  # 将 base 赋值到正确位置
+```  
+
+- "C++"
+```cpp
+/* 插入排序 */
+void insertionSort(vector<int> &nums) {
+    // 外循环：已排序元素数量为 1, 2, ..., n
+    for (int i = 1; i < nums.size(); i++) {
+        int base = nums[i], j = i - 1;
+        // 内循环：将 base 插入到已排序部分的正确位置
+        while (j >= 0 && nums[j] > base) {
+            nums[j + 1] = nums[j]; // 将 nums[j] 向右移动一位
+            j--;
+        }
+        nums[j + 1] = base; // 将 base 赋值到正确位置
+    }
+}
+```  
+
+- "Java"
+```java
+/* 插入排序 */
+void insertionSort(int[] nums) {
+    // 外循环：已排序元素数量为 1, 2, ..., n
+    for (int i = 1; i < nums.length; i++) {
+        int base = nums[i], j = i - 1;
+        // 内循环：将 base 插入到已排序部分的正确位置
+        while (j >= 0 && nums[j] > base) {
+            nums[j + 1] = nums[j]; // 将 nums[j] 向右移动一位
+            j--;
+        }
+        nums[j + 1] = base;        // 将 base 赋值到正确位置
+    }
+}
+```  
 
 ## 算法特性
 

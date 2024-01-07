@@ -24,47 +24,160 @@
 
     实际上，元素出堆操作中也包含第 `2.` 步和第 `3.` 步，只是多了一个弹出元素的步骤。
 
-=== "<1>"
+- "<1>"
     ![堆排序步骤](heap_sort.assets/heap_sort_step1.png)
 
-=== "<2>"
+- "<2>"
     ![heap_sort_step2](heap_sort.assets/heap_sort_step2.png)
 
-=== "<3>"
+- "<3>"
     ![heap_sort_step3](heap_sort.assets/heap_sort_step3.png)
 
-=== "<4>"
+- "<4>"
     ![heap_sort_step4](heap_sort.assets/heap_sort_step4.png)
 
-=== "<5>"
+- "<5>"
     ![heap_sort_step5](heap_sort.assets/heap_sort_step5.png)
 
-=== "<6>"
+- "<6>"
     ![heap_sort_step6](heap_sort.assets/heap_sort_step6.png)
 
-=== "<7>"
+- "<7>"
     ![heap_sort_step7](heap_sort.assets/heap_sort_step7.png)
 
-=== "<8>"
+- "<8>"
     ![heap_sort_step8](heap_sort.assets/heap_sort_step8.png)
 
-=== "<9>"
+- "<9>"
     ![heap_sort_step9](heap_sort.assets/heap_sort_step9.png)
 
-=== "<10>"
+- "<10>"
     ![heap_sort_step10](heap_sort.assets/heap_sort_step10.png)
 
-=== "<11>"
+- "<11>"
     ![heap_sort_step11](heap_sort.assets/heap_sort_step11.png)
 
-=== "<12>"
+- "<12>"
     ![heap_sort_step12](heap_sort.assets/heap_sort_step12.png)
 
 在代码实现中，我们使用了与“堆”章节相同的从顶至底堆化 `sift_down()` 函数。值得注意的是，由于堆的长度会随着提取最大元素而减小，因此我们需要给 `sift_down()` 函数添加一个长度参数 $n$ ，用于指定堆的当前有效长度。代码如下所示：
 
-```src
-[file]{heap_sort}-[class]{}-[func]{heap_sort}
-```
+- "Python"
+```python
+def sift_down(nums: list[int], n: int, i: int):
+    """堆的长度为 n ，从节点 i 开始，从顶至底堆化"""
+    while True:
+        # 判断节点 i, l, r 中值最大的节点，记为 ma
+        l = 2 * i + 1
+        r = 2 * i + 2
+        ma = i
+        if l < n and nums[l] > nums[ma]:
+            ma = l
+        if r < n and nums[r] > nums[ma]:
+            ma = r
+        # 若节点 i 最大或索引 l, r 越界，则无须继续堆化，跳出
+        if ma == i:
+            break
+        # 交换两节点
+        nums[i], nums[ma] = nums[ma], nums[i]
+        # 循环向下堆化
+        i = ma
+
+def heap_sort(nums: list[int]):
+    """堆排序"""
+    # 建堆操作：堆化除叶节点以外的其他所有节点
+    for i in range(len(nums) // 2 - 1, -1, -1):
+        sift_down(nums, len(nums), i)
+    # 从堆中提取最大元素，循环 n-1 轮
+    for i in range(len(nums) - 1, 0, -1):
+        # 交换根节点与最右叶节点（交换首元素与尾元素）
+        nums[0], nums[i] = nums[i], nums[0]
+        # 以根节点为起点，从顶至底进行堆化
+        sift_down(nums, i, 0)
+```  
+
+- "C++"
+```cpp
+/* 堆的长度为 n ，从节点 i 开始，从顶至底堆化 */
+void siftDown(vector<int> &nums, int n, int i) {
+    while (true) {
+        // 判断节点 i, l, r 中值最大的节点，记为 ma
+        int l = 2 * i + 1;
+        int r = 2 * i + 2;
+        int ma = i;
+        if (l < n && nums[l] > nums[ma])
+            ma = l;
+        if (r < n && nums[r] > nums[ma])
+            ma = r;
+        // 若节点 i 最大或索引 l, r 越界，则无须继续堆化，跳出
+        if (ma == i) {
+            break;
+        }
+        // 交换两节点
+        swap(nums[i], nums[ma]);
+        // 循环向下堆化
+        i = ma;
+    }
+}
+
+/* 堆排序 */
+void heapSort(vector<int> &nums) {
+    // 建堆操作：堆化除叶节点以外的其他所有节点
+    for (int i = nums.size() / 2 - 1; i >= 0; --i) {
+        siftDown(nums, nums.size(), i);
+    }
+    // 从堆中提取最大元素，循环 n-1 轮
+    for (int i = nums.size() - 1; i > 0; --i) {
+        // 交换根节点与最右叶节点（交换首元素与尾元素）
+        swap(nums[0], nums[i]);
+        // 以根节点为起点，从顶至底进行堆化
+        siftDown(nums, i, 0);
+    }
+}
+```  
+
+- "Java"
+```java
+/* 堆的长度为 n ，从节点 i 开始，从顶至底堆化 */
+void siftDown(int[] nums, int n, int i) {
+    while (true) {
+        // 判断节点 i, l, r 中值最大的节点，记为 ma
+        int l = 2 * i + 1;
+        int r = 2 * i + 2;
+        int ma = i;
+        if (l < n && nums[l] > nums[ma])
+            ma = l;
+        if (r < n && nums[r] > nums[ma])
+            ma = r;
+        // 若节点 i 最大或索引 l, r 越界，则无须继续堆化，跳出
+        if (ma == i)
+            break;
+        // 交换两节点
+        int temp = nums[i];
+        nums[i] = nums[ma];
+        nums[ma] = temp;
+        // 循环向下堆化
+        i = ma;
+    }
+}
+
+/* 堆排序 */
+void heapSort(int[] nums) {
+    // 建堆操作：堆化除叶节点以外的其他所有节点
+    for (int i = nums.length / 2 - 1; i >= 0; i--) {
+        siftDown(nums, nums.length, i);
+    }
+    // 从堆中提取最大元素，循环 n-1 轮
+    for (int i = nums.length - 1; i > 0; i--) {
+        // 交换根节点与最右叶节点（交换首元素与尾元素）
+        int tmp = nums[0];
+        nums[0] = nums[i];
+        nums[i] = tmp;
+        // 以根节点为起点，从顶至底进行堆化
+        siftDown(nums, i, 0);
+    }
+}
+```  
 
 ## 算法特性
 

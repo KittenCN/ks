@@ -14,9 +14,87 @@
 
 本题的目标是求解方案数量，**我们可以考虑通过回溯来穷举所有可能性**。具体来说，将爬楼梯想象为一个多轮选择的过程：从地面出发，每轮选择上 $1$ 阶或 $2$ 阶，每当到达楼梯顶部时就将方案数量加 $1$ ，当越过楼梯顶部时就将其剪枝。代码如下所示：
 
-```src
-[file]{climbing_stairs_backtrack}-[class]{}-[func]{climbing_stairs_backtrack}
-```
+- "Python"
+```python
+def backtrack(choices: list[int], state: int, n: int, res: list[int]) -> int:
+    """回溯"""
+    # 当爬到第 n 阶时，方案数量加 1
+    if state == n:
+        res[0] += 1
+    # 遍历所有选择
+    for choice in choices:
+        # 剪枝：不允许越过第 n 阶
+        if state + choice > n:
+            continue
+        # 尝试：做出选择，更新状态
+        backtrack(choices, state + choice, n, res)
+        # 回退
+
+def climbing_stairs_backtrack(n: int) -> int:
+    """爬楼梯：回溯"""
+    choices = [1, 2]  # 可选择向上爬 1 阶或 2 阶
+    state = 0  # 从第 0 阶开始爬
+    res = [0]  # 使用 res[0] 记录方案数量
+    backtrack(choices, state, n, res)
+    return res[0]
+```  
+
+- "C++"
+```cpp
+/* 回溯 */
+void backtrack(vector<int> &choices, int state, int n, vector<int> &res) {
+    // 当爬到第 n 阶时，方案数量加 1
+    if (state == n)
+        res[0]++;
+    // 遍历所有选择
+    for (auto &choice : choices) {
+        // 剪枝：不允许越过第 n 阶
+        if (state + choice > n)
+            continue;
+        // 尝试：做出选择，更新状态
+        backtrack(choices, state + choice, n, res);
+        // 回退
+    }
+}
+
+/* 爬楼梯：回溯 */
+int climbingStairsBacktrack(int n) {
+    vector<int> choices = {1, 2}; // 可选择向上爬 1 阶或 2 阶
+    int state = 0;                // 从第 0 阶开始爬
+    vector<int> res = {0};        // 使用 res[0] 记录方案数量
+    backtrack(choices, state, n, res);
+    return res[0];
+}
+```  
+
+- "Java"
+```java
+/* 回溯 */
+void backtrack(List<Integer> choices, int state, int n, List<Integer> res) {
+    // 当爬到第 n 阶时，方案数量加 1
+    if (state == n)
+        res.set(0, res.get(0) + 1);
+    // 遍历所有选择
+    for (Integer choice : choices) {
+        // 剪枝：不允许越过第 n 阶
+        if (state + choice > n)
+            continue;
+        // 尝试：做出选择，更新状态
+        backtrack(choices, state + choice, n, res);
+        // 回退
+    }
+}
+
+/* 爬楼梯：回溯 */
+int climbingStairsBacktrack(int n) {
+    List<Integer> choices = Arrays.asList(1, 2); // 可选择向上爬 1 阶或 2 阶
+    int state = 0; // 从第 0 阶开始爬
+    List<Integer> res = new ArrayList<>();
+    res.add(0); // 使用 res[0] 记录方案数量
+    backtrack(choices, state, n, res);
+    return res.get(0);
+}
+```  
 
 ## 方法一：暴力搜索
 
@@ -44,9 +122,57 @@ $$
 
 观察以下代码，它和标准回溯代码都属于深度优先搜索，但更加简洁：
 
-```src
-[file]{climbing_stairs_dfs}-[class]{}-[func]{climbing_stairs_dfs}
-```
+- "Python"
+```python
+def dfs(i: int) -> int:
+    """搜索"""
+    # 已知 dp[1] 和 dp[2] ，返回之
+    if i == 1 or i == 2:
+        return i
+    # dp[i] = dp[i-1] + dp[i-2]
+    count = dfs(i - 1) + dfs(i - 2)
+    return count
+
+def climbing_stairs_dfs(n: int) -> int:
+    """爬楼梯：搜索"""
+    return dfs(n)
+```  
+
+- "C++"
+```cpp
+/* 搜索 */
+int dfs(int i) {
+    // 已知 dp[1] 和 dp[2] ，返回之
+    if (i == 1 || i == 2)
+        return i;
+    // dp[i] = dp[i-1] + dp[i-2]
+    int count = dfs(i - 1) + dfs(i - 2);
+    return count;
+}
+
+/* 爬楼梯：搜索 */
+int climbingStairsDFS(int n) {
+    return dfs(n);
+}
+```  
+
+- "Java"
+```java
+/* 搜索 */
+int dfs(int i) {
+    // 已知 dp[1] 和 dp[2] ，返回之
+    if (i == 1 || i == 2)
+        return i;
+    // dp[i] = dp[i-1] + dp[i-2]
+    int count = dfs(i - 1) + dfs(i - 2);
+    return count;
+}
+
+/* 爬楼梯：搜索 */
+int climbingStairsDFS(int n) {
+    return dfs(n);
+}
+```  
 
 下图展示了暴力搜索形成的递归树。对于问题 $dp[n]$ ，其递归树的深度为 $n$ ，时间复杂度为 $O(2^n)$ 。指数阶属于爆炸式增长，如果我们输入一个比较大的 $n$ ，则会陷入漫长的等待之中。
 
@@ -65,9 +191,79 @@ $$
 
 代码如下所示：
 
-```src
-[file]{climbing_stairs_dfs_mem}-[class]{}-[func]{climbing_stairs_dfs_mem}
-```
+- "Python"
+```python
+def dfs(i: int, mem: list[int]) -> int:
+    """记忆化搜索"""
+    # 已知 dp[1] 和 dp[2] ，返回之
+    if i == 1 or i == 2:
+        return i
+    # 若存在记录 dp[i] ，则直接返回之
+    if mem[i] != -1:
+        return mem[i]
+    # dp[i] = dp[i-1] + dp[i-2]
+    count = dfs(i - 1, mem) + dfs(i - 2, mem)
+    # 记录 dp[i]
+    mem[i] = count
+    return count
+
+def climbing_stairs_dfs_mem(n: int) -> int:
+    """爬楼梯：记忆化搜索"""
+    # mem[i] 记录爬到第 i 阶的方案总数，-1 代表无记录
+    mem = [-1] * (n + 1)
+    return dfs(n, mem)
+```  
+
+- "C++"
+```cpp
+/* 记忆化搜索 */
+int dfs(int i, vector<int> &mem) {
+    // 已知 dp[1] 和 dp[2] ，返回之
+    if (i == 1 || i == 2)
+        return i;
+    // 若存在记录 dp[i] ，则直接返回之
+    if (mem[i] != -1)
+        return mem[i];
+    // dp[i] = dp[i-1] + dp[i-2]
+    int count = dfs(i - 1, mem) + dfs(i - 2, mem);
+    // 记录 dp[i]
+    mem[i] = count;
+    return count;
+}
+
+/* 爬楼梯：记忆化搜索 */
+int climbingStairsDFSMem(int n) {
+    // mem[i] 记录爬到第 i 阶的方案总数，-1 代表无记录
+    vector<int> mem(n + 1, -1);
+    return dfs(n, mem);
+}
+```  
+
+- "Java"
+```java
+/* 记忆化搜索 */
+int dfs(int i, int[] mem) {
+    // 已知 dp[1] 和 dp[2] ，返回之
+    if (i == 1 || i == 2)
+        return i;
+    // 若存在记录 dp[i] ，则直接返回之
+    if (mem[i] != -1)
+        return mem[i];
+    // dp[i] = dp[i-1] + dp[i-2]
+    int count = dfs(i - 1, mem) + dfs(i - 2, mem);
+    // 记录 dp[i]
+    mem[i] = count;
+    return count;
+}
+
+/* 爬楼梯：记忆化搜索 */
+int climbingStairsDFSMem(int n) {
+    // mem[i] 记录爬到第 i 阶的方案总数，-1 代表无记录
+    int[] mem = new int[n + 1];
+    Arrays.fill(mem, -1);
+    return dfs(n, mem);
+}
+```  
 
 观察下图，**经过记忆化处理后，所有重叠子问题都只需计算一次，时间复杂度优化至 $O(n)$** ，这是一个巨大的飞跃。
 
@@ -81,9 +277,59 @@ $$
 
 由于动态规划不包含回溯过程，因此只需使用循环迭代实现，无须使用递归。在以下代码中，我们初始化一个数组 `dp` 来存储子问题的解，它起到了与记忆化搜索中数组 `mem` 相同的记录作用：
 
-```src
-[file]{climbing_stairs_dp}-[class]{}-[func]{climbing_stairs_dp}
-```
+- "Python"
+```python
+def climbing_stairs_dp(n: int) -> int:
+    """爬楼梯：动态规划"""
+    if n == 1 or n == 2:
+        return n
+    # 初始化 dp 表，用于存储子问题的解
+    dp = [0] * (n + 1)
+    # 初始状态：预设最小子问题的解
+    dp[1], dp[2] = 1, 2
+    # 状态转移：从较小子问题逐步求解较大子问题
+    for i in range(3, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+    return dp[n]
+```  
+
+- "C++"
+```cpp
+/* 爬楼梯：动态规划 */
+int climbingStairsDP(int n) {
+    if (n == 1 || n == 2)
+        return n;
+    // 初始化 dp 表，用于存储子问题的解
+    vector<int> dp(n + 1);
+    // 初始状态：预设最小子问题的解
+    dp[1] = 1;
+    dp[2] = 2;
+    // 状态转移：从较小子问题逐步求解较大子问题
+    for (int i = 3; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    return dp[n];
+}
+```  
+
+- "Java"
+```java
+/* 爬楼梯：动态规划 */
+int climbingStairsDP(int n) {
+    if (n == 1 || n == 2)
+        return n;
+    // 初始化 dp 表，用于存储子问题的解
+    int[] dp = new int[n + 1];
+    // 初始状态：预设最小子问题的解
+    dp[1] = 1;
+    dp[2] = 2;
+    // 状态转移：从较小子问题逐步求解较大子问题
+    for (int i = 3; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    return dp[n];
+}
+```  
 
 下图模拟了以上代码的执行过程。
 
@@ -101,9 +347,49 @@ $$
 
 细心的读者可能发现了，**由于 $dp[i]$ 只与 $dp[i-1]$ 和 $dp[i-2]$ 有关，因此我们无须使用一个数组 `dp` 来存储所有子问题的解**，而只需两个变量滚动前进即可。代码如下所示：
 
-```src
-[file]{climbing_stairs_dp}-[class]{}-[func]{climbing_stairs_dp_comp}
-```
+- "Python"
+```python
+def climbing_stairs_dp_comp(n: int) -> int:
+    """爬楼梯：空间优化后的动态规划"""
+    if n == 1 or n == 2:
+        return n
+    a, b = 1, 2
+    for _ in range(3, n + 1):
+        a, b = b, a + b
+    return b
+```  
+
+- "C++"
+```cpp
+/* 爬楼梯：空间优化后的动态规划 */
+int climbingStairsDPComp(int n) {
+    if (n == 1 || n == 2)
+        return n;
+    int a = 1, b = 2;
+    for (int i = 3; i <= n; i++) {
+        int tmp = b;
+        b = a + b;
+        a = tmp;
+    }
+    return b;
+}
+```  
+
+- "Java"
+```java
+/* 爬楼梯：空间优化后的动态规划 */
+int climbingStairsDPComp(int n) {
+    if (n == 1 || n == 2)
+        return n;
+    int a = 1, b = 2;
+    for (int i = 3; i <= n; i++) {
+        int tmp = b;
+        b = a + b;
+        a = tmp;
+    }
+    return b;
+}
+```  
 
 观察以上代码，由于省去了数组 `dp` 占用的空间，因此空间复杂度从 $O(n)$ 降至 $O(1)$ 。
 

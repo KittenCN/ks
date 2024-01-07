@@ -57,37 +57,127 @@
 
 为了提升查询 $m$ 的效率，我们借助一个哈希表 `hmap` 来存储数组 `inorder` 中元素到索引的映射：
 
-```src
-[file]{build_tree}-[class]{}-[func]{build_tree}
-```
+- "Python"
+```python
+def dfs(
+    preorder: list[int],
+    inorder_map: dict[int, int],
+    i: int,
+    l: int,
+    r: int,
+) -> TreeNode | None:
+    """构建二叉树：分治"""
+    # 子树区间为空时终止
+    if r - l < 0:
+        return None
+    # 初始化根节点
+    root = TreeNode(preorder[i])
+    # 查询 m ，从而划分左右子树
+    m = inorder_map[preorder[i]]
+    # 子问题：构建左子树
+    root.left = dfs(preorder, inorder_map, i + 1, l, m - 1)
+    # 子问题：构建右子树
+    root.right = dfs(preorder, inorder_map, i + 1 + m - l, m + 1, r)
+    # 返回根节点
+    return root
+
+def build_tree(preorder: list[int], inorder: list[int]) -> TreeNode | None:
+    """构建二叉树"""
+    # 初始化哈希表，存储 inorder 元素到索引的映射
+    inorder_map = {val: i for i, val in enumerate(inorder)}
+    root = dfs(preorder, inorder_map, 0, 0, len(inorder) - 1)
+    return root
+```  
+
+- "C++"
+```cpp
+/* 构建二叉树：分治 */
+TreeNode *dfs(vector<int> &preorder, unordered_map<int, int> &inorderMap, int i, int l, int r) {
+    // 子树区间为空时终止
+    if (r - l < 0)
+        return NULL;
+    // 初始化根节点
+    TreeNode *root = new TreeNode(preorder[i]);
+    // 查询 m ，从而划分左右子树
+    int m = inorderMap[preorder[i]];
+    // 子问题：构建左子树
+    root->left = dfs(preorder, inorderMap, i + 1, l, m - 1);
+    // 子问题：构建右子树
+    root->right = dfs(preorder, inorderMap, i + 1 + m - l, m + 1, r);
+    // 返回根节点
+    return root;
+}
+
+/* 构建二叉树 */
+TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
+    // 初始化哈希表，存储 inorder 元素到索引的映射
+    unordered_map<int, int> inorderMap;
+    for (int i = 0; i < inorder.size(); i++) {
+        inorderMap[inorder[i]] = i;
+    }
+    TreeNode *root = dfs(preorder, inorderMap, 0, 0, inorder.size() - 1);
+    return root;
+}
+```  
+
+- "Java"
+```java
+/* 构建二叉树：分治 */
+TreeNode dfs(int[] preorder, Map<Integer, Integer> inorderMap, int i, int l, int r) {
+    // 子树区间为空时终止
+    if (r - l < 0)
+        return null;
+    // 初始化根节点
+    TreeNode root = new TreeNode(preorder[i]);
+    // 查询 m ，从而划分左右子树
+    int m = inorderMap.get(preorder[i]);
+    // 子问题：构建左子树
+    root.left = dfs(preorder, inorderMap, i + 1, l, m - 1);
+    // 子问题：构建右子树
+    root.right = dfs(preorder, inorderMap, i + 1 + m - l, m + 1, r);
+    // 返回根节点
+    return root;
+}
+
+/* 构建二叉树 */
+TreeNode buildTree(int[] preorder, int[] inorder) {
+    // 初始化哈希表，存储 inorder 元素到索引的映射
+    Map<Integer, Integer> inorderMap = new HashMap<>();
+    for (int i = 0; i < inorder.length; i++) {
+        inorderMap.put(inorder[i], i);
+    }
+    TreeNode root = dfs(preorder, inorderMap, 0, 0, inorder.length - 1);
+    return root;
+}
+```  
 
 下图展示了构建二叉树的递归过程，各个节点是在向下“递”的过程中建立的，而各条边（引用）是在向上“归”的过程中建立的。
 
-=== "<1>"
+- "<1>"
     ![构建二叉树的递归过程](build_binary_tree_problem.assets/built_tree_step1.png)
 
-=== "<2>"
+- "<2>"
     ![built_tree_step2](build_binary_tree_problem.assets/built_tree_step2.png)
 
-=== "<3>"
+- "<3>"
     ![built_tree_step3](build_binary_tree_problem.assets/built_tree_step3.png)
 
-=== "<4>"
+- "<4>"
     ![built_tree_step4](build_binary_tree_problem.assets/built_tree_step4.png)
 
-=== "<5>"
+- "<5>"
     ![built_tree_step5](build_binary_tree_problem.assets/built_tree_step5.png)
 
-=== "<6>"
+- "<6>"
     ![built_tree_step6](build_binary_tree_problem.assets/built_tree_step6.png)
 
-=== "<7>"
+- "<7>"
     ![built_tree_step7](build_binary_tree_problem.assets/built_tree_step7.png)
 
-=== "<8>"
+- "<8>"
     ![built_tree_step8](build_binary_tree_problem.assets/built_tree_step8.png)
 
-=== "<9>"
+- "<9>"
     ![built_tree_step9](build_binary_tree_problem.assets/built_tree_step9.png)
 
 每个递归函数内的前序遍历 `preorder` 和中序遍历 `inorder` 的划分结果如下图所示。

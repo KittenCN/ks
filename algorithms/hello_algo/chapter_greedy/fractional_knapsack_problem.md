@@ -29,9 +29,114 @@
 
 我们建立了一个物品类 `Item` ，以便将物品按照单位价值进行排序。循环进行贪心选择，当背包已满时跳出并返回解：
 
-```src
-[file]{fractional_knapsack}-[class]{}-[func]{fractional_knapsack}
-```
+- "Python"
+```python
+class Item:
+    """物品"""
+
+    def __init__(self, w: int, v: int):
+        self.w = w  # 物品重量
+        self.v = v  # 物品价值
+
+def fractional_knapsack(wgt: list[int], val: list[int], cap: int) -> int:
+    """分数背包：贪心"""
+    # 创建物品列表，包含两个属性：重量、价值
+    items = [Item(w, v) for w, v in zip(wgt, val)]
+    # 按照单位价值 item.v / item.w 从高到低进行排序
+    items.sort(key=lambda item: item.v / item.w, reverse=True)
+    # 循环贪心选择
+    res = 0
+    for item in items:
+        if item.w <= cap:
+            # 若剩余容量充足，则将当前物品整个装进背包
+            res += item.v
+            cap -= item.w
+        else:
+            # 若剩余容量不足，则将当前物品的一部分装进背包
+            res += (item.v / item.w) * cap
+            # 已无剩余容量，因此跳出循环
+            break
+    return res
+```  
+
+- "C++"
+```cpp
+/* 物品 */
+class Item {
+  public:
+    int w; // 物品重量
+    int v; // 物品价值
+
+    Item(int w, int v) : w(w), v(v) {
+    }
+};
+
+/* 分数背包：贪心 */
+double fractionalKnapsack(vector<int> &wgt, vector<int> &val, int cap) {
+    // 创建物品列表，包含两个属性：重量、价值
+    vector<Item> items;
+    for (int i = 0; i < wgt.size(); i++) {
+        items.push_back(Item(wgt[i], val[i]));
+    }
+    // 按照单位价值 item.v / item.w 从高到低进行排序
+    sort(items.begin(), items.end(), [](Item &a, Item &b) { return (double)a.v / a.w > (double)b.v / b.w; });
+    // 循环贪心选择
+    double res = 0;
+    for (auto &item : items) {
+        if (item.w <= cap) {
+            // 若剩余容量充足，则将当前物品整个装进背包
+            res += item.v;
+            cap -= item.w;
+        } else {
+            // 若剩余容量不足，则将当前物品的一部分装进背包
+            res += (double)item.v / item.w * cap;
+            // 已无剩余容量，因此跳出循环
+            break;
+        }
+    }
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* 物品 */
+class Item {
+    int w; // 物品重量
+    int v; // 物品价值
+
+    public Item(int w, int v) {
+        this.w = w;
+        this.v = v;
+    }
+}
+
+/* 分数背包：贪心 */
+double fractionalKnapsack(int[] wgt, int[] val, int cap) {
+    // 创建物品列表，包含两个属性：重量、价值
+    Item[] items = new Item[wgt.length];
+    for (int i = 0; i < wgt.length; i++) {
+        items[i] = new Item(wgt[i], val[i]);
+    }
+    // 按照单位价值 item.v / item.w 从高到低进行排序
+    Arrays.sort(items, Comparator.comparingDouble(item -> -((double) item.v / item.w)));
+    // 循环贪心选择
+    double res = 0;
+    for (Item item : items) {
+        if (item.w <= cap) {
+            // 若剩余容量充足，则将当前物品整个装进背包
+            res += item.v;
+            cap -= item.w;
+        } else {
+            // 若剩余容量不足，则将当前物品的一部分装进背包
+            res += (double) item.v / item.w * cap;
+            // 已无剩余容量，因此跳出循环
+            break;
+        }
+    }
+    return res;
+}
+```  
 
 除排序之外，在最差情况下，需要遍历整个物品列表，**因此时间复杂度为 $O(n)$** ，其中 $n$ 为物品数量。
 

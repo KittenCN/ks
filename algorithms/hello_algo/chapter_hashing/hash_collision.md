@@ -31,9 +31,317 @@
 - 使用列表（动态数组）代替链表，从而简化代码。在这种设定下，哈希表（数组）包含多个桶，每个桶都是一个列表。
 - 以下实现包含哈希表扩容方法。当负载因子超过 $\frac{2}{3}$ 时，我们将哈希表扩容至原先的 $2$ 倍。
 
-```src
-[file]{hash_map_chaining}-[class]{hash_map_chaining}-[func]{}
-```
+- "Python"
+```python
+class HashMapChaining:
+    """链式地址哈希表"""
+
+    def __init__(self):
+        """构造方法"""
+        self.size = 0  # 键值对数量
+        self.capacity = 4  # 哈希表容量
+        self.load_thres = 2.0 / 3.0  # 触发扩容的负载因子阈值
+        self.extend_ratio = 2  # 扩容倍数
+        self.buckets = [[] for _ in range(self.capacity)]  # 桶数组
+
+    def hash_func(self, key: int) -> int:
+        """哈希函数"""
+        return key % self.capacity
+
+    def load_factor(self) -> float:
+        """负载因子"""
+        return self.size / self.capacity
+
+    def get(self, key: int) -> str | None:
+        """查询操作"""
+        index = self.hash_func(key)
+        bucket = self.buckets[index]
+        # 遍历桶，若找到 key ，则返回对应 val
+        for pair in bucket:
+            if pair.key == key:
+                return pair.val
+        # 若未找到 key ，则返回 None
+        return None
+
+    def put(self, key: int, val: str):
+        """添加操作"""
+        # 当负载因子超过阈值时，执行扩容
+        if self.load_factor() > self.load_thres:
+            self.extend()
+        index = self.hash_func(key)
+        bucket = self.buckets[index]
+        # 遍历桶，若遇到指定 key ，则更新对应 val 并返回
+        for pair in bucket:
+            if pair.key == key:
+                pair.val = val
+                return
+        # 若无该 key ，则将键值对添加至尾部
+        pair = Pair(key, val)
+        bucket.append(pair)
+        self.size += 1
+
+    def remove(self, key: int):
+        """删除操作"""
+        index = self.hash_func(key)
+        bucket = self.buckets[index]
+        # 遍历桶，从中删除键值对
+        for pair in bucket:
+            if pair.key == key:
+                bucket.remove(pair)
+                self.size -= 1
+                break
+
+    def extend(self):
+        """扩容哈希表"""
+        # 暂存原哈希表
+        buckets = self.buckets
+        # 初始化扩容后的新哈希表
+        self.capacity *= self.extend_ratio
+        self.buckets = [[] for _ in range(self.capacity)]
+        self.size = 0
+        # 将键值对从原哈希表搬运至新哈希表
+        for bucket in buckets:
+            for pair in bucket:
+                self.put(pair.key, pair.val)
+
+    def print(self):
+        """打印哈希表"""
+        for bucket in self.buckets:
+            res = []
+            for pair in bucket:
+                res.append(str(pair.key) + " -> " + pair.val)
+            print(res)
+```  
+
+- "C++"
+```cpp
+/* 链式地址哈希表 */
+class HashMapChaining {
+  private:
+    int size;                       // 键值对数量
+    int capacity;                   // 哈希表容量
+    double loadThres;               // 触发扩容的负载因子阈值
+    int extendRatio;                // 扩容倍数
+    vector<vector<Pair *>> buckets; // 桶数组
+
+  public:
+    /* 构造方法 */
+    HashMapChaining() : size(0), capacity(4), loadThres(2.0 / 3.0), extendRatio(2) {
+        buckets.resize(capacity);
+    }
+
+    /* 析构方法 */
+    ~HashMapChaining() {
+        for (auto &bucket : buckets) {
+            for (Pair *pair : bucket) {
+                // 释放内存
+                delete pair;
+            }
+        }
+    }
+
+    /* 哈希函数 */
+    int hashFunc(int key) {
+        return key % capacity;
+    }
+
+    /* 负载因子 */
+    double loadFactor() {
+        return (double)size / (double)capacity;
+    }
+
+    /* 查询操作 */
+    string get(int key) {
+        int index = hashFunc(key);
+        // 遍历桶，若找到 key ，则返回对应 val
+        for (Pair *pair : buckets[index]) {
+            if (pair->key == key) {
+                return pair->val;
+            }
+        }
+        // 若未找到 key ，则返回空字符串
+        return "";
+    }
+
+    /* 添加操作 */
+    void put(int key, string val) {
+        // 当负载因子超过阈值时，执行扩容
+        if (loadFactor() > loadThres) {
+            extend();
+        }
+        int index = hashFunc(key);
+        // 遍历桶，若遇到指定 key ，则更新对应 val 并返回
+        for (Pair *pair : buckets[index]) {
+            if (pair->key == key) {
+                pair->val = val;
+                return;
+            }
+        }
+        // 若无该 key ，则将键值对添加至尾部
+        buckets[index].push_back(new Pair(key, val));
+        size++;
+    }
+
+    /* 删除操作 */
+    void remove(int key) {
+        int index = hashFunc(key);
+        auto &bucket = buckets[index];
+        // 遍历桶，从中删除键值对
+        for (int i = 0; i < bucket.size(); i++) {
+            if (bucket[i]->key == key) {
+                Pair *tmp = bucket[i];
+                bucket.erase(bucket.begin() + i); // 从中删除键值对
+                delete tmp;                       // 释放内存
+                size--;
+                return;
+            }
+        }
+    }
+
+    /* 扩容哈希表 */
+    void extend() {
+        // 暂存原哈希表
+        vector<vector<Pair *>> bucketsTmp = buckets;
+        // 初始化扩容后的新哈希表
+        capacity *= extendRatio;
+        buckets.clear();
+        buckets.resize(capacity);
+        size = 0;
+        // 将键值对从原哈希表搬运至新哈希表
+        for (auto &bucket : bucketsTmp) {
+            for (Pair *pair : bucket) {
+                put(pair->key, pair->val);
+                // 释放内存
+                delete pair;
+            }
+        }
+    }
+
+    /* 打印哈希表 */
+    void print() {
+        for (auto &bucket : buckets) {
+            cout << "[";
+            for (Pair *pair : bucket) {
+                cout << pair->key << " -> " << pair->val << ", ";
+            }
+            cout << "]\n";
+        }
+    }
+};
+```  
+
+- "Java"
+```java
+/* 链式地址哈希表 */
+class HashMapChaining {
+    int size; // 键值对数量
+    int capacity; // 哈希表容量
+    double loadThres; // 触发扩容的负载因子阈值
+    int extendRatio; // 扩容倍数
+    List<List<Pair>> buckets; // 桶数组
+
+    /* 构造方法 */
+    public HashMapChaining() {
+        size = 0;
+        capacity = 4;
+        loadThres = 2.0 / 3.0;
+        extendRatio = 2;
+        buckets = new ArrayList<>(capacity);
+        for (int i = 0; i < capacity; i++) {
+            buckets.add(new ArrayList<>());
+        }
+    }
+
+    /* 哈希函数 */
+    int hashFunc(int key) {
+        return key % capacity;
+    }
+
+    /* 负载因子 */
+    double loadFactor() {
+        return (double) size / capacity;
+    }
+
+    /* 查询操作 */
+    String get(int key) {
+        int index = hashFunc(key);
+        List<Pair> bucket = buckets.get(index);
+        // 遍历桶，若找到 key ，则返回对应 val
+        for (Pair pair : bucket) {
+            if (pair.key == key) {
+                return pair.val;
+            }
+        }
+        // 若未找到 key ，则返回 null
+        return null;
+    }
+
+    /* 添加操作 */
+    void put(int key, String val) {
+        // 当负载因子超过阈值时，执行扩容
+        if (loadFactor() > loadThres) {
+            extend();
+        }
+        int index = hashFunc(key);
+        List<Pair> bucket = buckets.get(index);
+        // 遍历桶，若遇到指定 key ，则更新对应 val 并返回
+        for (Pair pair : bucket) {
+            if (pair.key == key) {
+                pair.val = val;
+                return;
+            }
+        }
+        // 若无该 key ，则将键值对添加至尾部
+        Pair pair = new Pair(key, val);
+        bucket.add(pair);
+        size++;
+    }
+
+    /* 删除操作 */
+    void remove(int key) {
+        int index = hashFunc(key);
+        List<Pair> bucket = buckets.get(index);
+        // 遍历桶，从中删除键值对
+        for (Pair pair : bucket) {
+            if (pair.key == key) {
+                bucket.remove(pair);
+                size--;
+                break;
+            }
+        }
+    }
+
+    /* 扩容哈希表 */
+    void extend() {
+        // 暂存原哈希表
+        List<List<Pair>> bucketsTmp = buckets;
+        // 初始化扩容后的新哈希表
+        capacity *= extendRatio;
+        buckets = new ArrayList<>(capacity);
+        for (int i = 0; i < capacity; i++) {
+            buckets.add(new ArrayList<>());
+        }
+        size = 0;
+        // 将键值对从原哈希表搬运至新哈希表
+        for (List<Pair> bucket : bucketsTmp) {
+            for (Pair pair : bucket) {
+                put(pair.key, pair.val);
+            }
+        }
+    }
+
+    /* 打印哈希表 */
+    void print() {
+        for (List<Pair> bucket : buckets) {
+            List<String> res = new ArrayList<>();
+            for (Pair pair : bucket) {
+                res.add(pair.key + " -> " + pair.val);
+            }
+            System.out.println(res);
+        }
+    }
+}
+```  
 
 值得注意的是，当链表很长时，查询效率 $O(n)$ 很差。**此时可以将链表转换为“AVL 树”或“红黑树”**，从而将查询操作的时间复杂度优化至 $O(\log n)$ 。
 
@@ -68,9 +376,371 @@
 
 以下代码实现了一个包含懒删除的开放寻址（线性探测）哈希表。为了更加充分地使用哈希表的空间，我们将哈希表看作一个“环形数组”，当越过数组尾部时，回到头部继续遍历。
 
-```src
-[file]{hash_map_open_addressing}-[class]{hash_map_open_addressing}-[func]{}
-```
+- "Python"
+```python
+class HashMapOpenAddressing:
+    """开放寻址哈希表"""
+
+    def __init__(self):
+        """构造方法"""
+        self.size = 0  # 键值对数量
+        self.capacity = 4  # 哈希表容量
+        self.load_thres = 2.0 / 3.0  # 触发扩容的负载因子阈值
+        self.extend_ratio = 2  # 扩容倍数
+        self.buckets: list[Pair | None] = [None] * self.capacity  # 桶数组
+        self.TOMBSTONE = Pair(-1, "-1")  # 删除标记
+
+    def hash_func(self, key: int) -> int:
+        """哈希函数"""
+        return key % self.capacity
+
+    def load_factor(self) -> float:
+        """负载因子"""
+        return self.size / self.capacity
+
+    def find_bucket(self, key: int) -> int:
+        """搜索 key 对应的桶索引"""
+        index = self.hash_func(key)
+        first_tombstone = -1
+        # 线性探测，当遇到空桶时跳出
+        while self.buckets[index] is not None:
+            # 若遇到 key ，返回对应的桶索引
+            if self.buckets[index].key == key:
+                # 若之前遇到了删除标记，则将键值对移动至该索引处
+                if first_tombstone != -1:
+                    self.buckets[first_tombstone] = self.buckets[index]
+                    self.buckets[index] = self.TOMBSTONE
+                    return first_tombstone  # 返回移动后的桶索引
+                return index  # 返回桶索引
+            # 记录遇到的首个删除标记
+            if first_tombstone == -1 and self.buckets[index] is self.TOMBSTONE:
+                first_tombstone = index
+            # 计算桶索引，越过尾部则返回头部
+            index = (index + 1) % self.capacity
+        # 若 key 不存在，则返回添加点的索引
+        return index if first_tombstone == -1 else first_tombstone
+
+    def get(self, key: int) -> str:
+        """查询操作"""
+        # 搜索 key 对应的桶索引
+        index = self.find_bucket(key)
+        # 若找到键值对，则返回对应 val
+        if self.buckets[index] not in [None, self.TOMBSTONE]:
+            return self.buckets[index].val
+        # 若键值对不存在，则返回 None
+        return None
+
+    def put(self, key: int, val: str):
+        """添加操作"""
+        # 当负载因子超过阈值时，执行扩容
+        if self.load_factor() > self.load_thres:
+            self.extend()
+        # 搜索 key 对应的桶索引
+        index = self.find_bucket(key)
+        # 若找到键值对，则覆盖 val 并返回
+        if self.buckets[index] not in [None, self.TOMBSTONE]:
+            self.buckets[index].val = val
+            return
+        # 若键值对不存在，则添加该键值对
+        self.buckets[index] = Pair(key, val)
+        self.size += 1
+
+    def remove(self, key: int):
+        """删除操作"""
+        # 搜索 key 对应的桶索引
+        index = self.find_bucket(key)
+        # 若找到键值对，则用删除标记覆盖它
+        if self.buckets[index] not in [None, self.TOMBSTONE]:
+            self.buckets[index] = self.TOMBSTONE
+            self.size -= 1
+
+    def extend(self):
+        """扩容哈希表"""
+        # 暂存原哈希表
+        buckets_tmp = self.buckets
+        # 初始化扩容后的新哈希表
+        self.capacity *= self.extend_ratio
+        self.buckets = [None] * self.capacity
+        self.size = 0
+        # 将键值对从原哈希表搬运至新哈希表
+        for pair in buckets_tmp:
+            if pair not in [None, self.TOMBSTONE]:
+                self.put(pair.key, pair.val)
+
+    def print(self):
+        """打印哈希表"""
+        for pair in self.buckets:
+            if pair is None:
+                print("None")
+            elif pair is self.TOMBSTONE:
+                print("TOMBSTONE")
+            else:
+                print(pair.key, "->", pair.val)
+```  
+
+- "C++"
+```cpp
+/* 开放寻址哈希表 */
+class HashMapOpenAddressing {
+  private:
+    int size;                             // 键值对数量
+    int capacity = 4;                     // 哈希表容量
+    const double loadThres = 2.0 / 3.0;     // 触发扩容的负载因子阈值
+    const int extendRatio = 2;            // 扩容倍数
+    vector<Pair *> buckets;               // 桶数组
+    Pair *TOMBSTONE = new Pair(-1, "-1"); // 删除标记
+
+  public:
+    /* 构造方法 */
+    HashMapOpenAddressing() : size(0), buckets(capacity, nullptr) {
+    }
+
+    /* 析构方法 */
+    ~HashMapOpenAddressing() {
+        for (Pair *pair : buckets) {
+            if (pair != nullptr && pair != TOMBSTONE) {
+                delete pair;
+            }
+        }
+        delete TOMBSTONE;
+    }
+
+    /* 哈希函数 */
+    int hashFunc(int key) {
+        return key % capacity;
+    }
+
+    /* 负载因子 */
+    double loadFactor() {
+        return (double)size / capacity;
+    }
+
+    /* 搜索 key 对应的桶索引 */
+    int findBucket(int key) {
+        int index = hashFunc(key);
+        int firstTombstone = -1;
+        // 线性探测，当遇到空桶时跳出
+        while (buckets[index] != nullptr) {
+            // 若遇到 key ，返回对应的桶索引
+            if (buckets[index]->key == key) {
+                // 若之前遇到了删除标记，则将键值对移动至该索引处
+                if (firstTombstone != -1) {
+                    buckets[firstTombstone] = buckets[index];
+                    buckets[index] = TOMBSTONE;
+                    return firstTombstone; // 返回移动后的桶索引
+                }
+                return index; // 返回桶索引
+            }
+            // 记录遇到的首个删除标记
+            if (firstTombstone == -1 && buckets[index] == TOMBSTONE) {
+                firstTombstone = index;
+            }
+            // 计算桶索引，越过尾部则返回头部
+            index = (index + 1) % capacity;
+        }
+        // 若 key 不存在，则返回添加点的索引
+        return firstTombstone == -1 ? index : firstTombstone;
+    }
+
+    /* 查询操作 */
+    string get(int key) {
+        // 搜索 key 对应的桶索引
+        int index = findBucket(key);
+        // 若找到键值对，则返回对应 val
+        if (buckets[index] != nullptr && buckets[index] != TOMBSTONE) {
+            return buckets[index]->val;
+        }
+        // 若键值对不存在，则返回空字符串
+        return "";
+    }
+
+    /* 添加操作 */
+    void put(int key, string val) {
+        // 当负载因子超过阈值时，执行扩容
+        if (loadFactor() > loadThres) {
+            extend();
+        }
+        // 搜索 key 对应的桶索引
+        int index = findBucket(key);
+        // 若找到键值对，则覆盖 val 并返回
+        if (buckets[index] != nullptr && buckets[index] != TOMBSTONE) {
+            buckets[index]->val = val;
+            return;
+        }
+        // 若键值对不存在，则添加该键值对
+        buckets[index] = new Pair(key, val);
+        size++;
+    }
+
+    /* 删除操作 */
+    void remove(int key) {
+        // 搜索 key 对应的桶索引
+        int index = findBucket(key);
+        // 若找到键值对，则用删除标记覆盖它
+        if (buckets[index] != nullptr && buckets[index] != TOMBSTONE) {
+            delete buckets[index];
+            buckets[index] = TOMBSTONE;
+            size--;
+        }
+    }
+
+    /* 扩容哈希表 */
+    void extend() {
+        // 暂存原哈希表
+        vector<Pair *> bucketsTmp = buckets;
+        // 初始化扩容后的新哈希表
+        capacity *= extendRatio;
+        buckets = vector<Pair *>(capacity, nullptr);
+        size = 0;
+        // 将键值对从原哈希表搬运至新哈希表
+        for (Pair *pair : bucketsTmp) {
+            if (pair != nullptr && pair != TOMBSTONE) {
+                put(pair->key, pair->val);
+                delete pair;
+            }
+        }
+    }
+
+    /* 打印哈希表 */
+    void print() {
+        for (Pair *pair : buckets) {
+            if (pair == nullptr) {
+                cout << "nullptr" << endl;
+            } else if (pair == TOMBSTONE) {
+                cout << "TOMBSTONE" << endl;
+            } else {
+                cout << pair->key << " -> " << pair->val << endl;
+            }
+        }
+    }
+};
+```  
+
+- "Java"
+```java
+/* 开放寻址哈希表 */
+class HashMapOpenAddressing {
+    private int size; // 键值对数量
+    private int capacity = 4; // 哈希表容量
+    private final double loadThres = 2.0 / 3.0; // 触发扩容的负载因子阈值
+    private final int extendRatio = 2; // 扩容倍数
+    private Pair[] buckets; // 桶数组
+    private final Pair TOMBSTONE = new Pair(-1, "-1"); // 删除标记
+
+    /* 构造方法 */
+    public HashMapOpenAddressing() {
+        size = 0;
+        buckets = new Pair[capacity];
+    }
+
+    /* 哈希函数 */
+    private int hashFunc(int key) {
+        return key % capacity;
+    }
+
+    /* 负载因子 */
+    private double loadFactor() {
+        return (double) size / capacity;
+    }
+
+    /* 搜索 key 对应的桶索引 */
+    private int findBucket(int key) {
+        int index = hashFunc(key);
+        int firstTombstone = -1;
+        // 线性探测，当遇到空桶时跳出
+        while (buckets[index] != null) {
+            // 若遇到 key ，返回对应的桶索引
+            if (buckets[index].key == key) {
+                // 若之前遇到了删除标记，则将键值对移动至该索引处
+                if (firstTombstone != -1) {
+                    buckets[firstTombstone] = buckets[index];
+                    buckets[index] = TOMBSTONE;
+                    return firstTombstone; // 返回移动后的桶索引
+                }
+                return index; // 返回桶索引
+            }
+            // 记录遇到的首个删除标记
+            if (firstTombstone == -1 && buckets[index] == TOMBSTONE) {
+                firstTombstone = index;
+            }
+            // 计算桶索引，越过尾部则返回头部
+            index = (index + 1) % capacity;
+        }
+        // 若 key 不存在，则返回添加点的索引
+        return firstTombstone == -1 ? index : firstTombstone;
+    }
+
+    /* 查询操作 */
+    public String get(int key) {
+        // 搜索 key 对应的桶索引
+        int index = findBucket(key);
+        // 若找到键值对，则返回对应 val
+        if (buckets[index] != null && buckets[index] != TOMBSTONE) {
+            return buckets[index].val;
+        }
+        // 若键值对不存在，则返回 null
+        return null;
+    }
+
+    /* 添加操作 */
+    public void put(int key, String val) {
+        // 当负载因子超过阈值时，执行扩容
+        if (loadFactor() > loadThres) {
+            extend();
+        }
+        // 搜索 key 对应的桶索引
+        int index = findBucket(key);
+        // 若找到键值对，则覆盖 val 并返回
+        if (buckets[index] != null && buckets[index] != TOMBSTONE) {
+            buckets[index].val = val;
+            return;
+        }
+        // 若键值对不存在，则添加该键值对
+        buckets[index] = new Pair(key, val);
+        size++;
+    }
+
+    /* 删除操作 */
+    public void remove(int key) {
+        // 搜索 key 对应的桶索引
+        int index = findBucket(key);
+        // 若找到键值对，则用删除标记覆盖它
+        if (buckets[index] != null && buckets[index] != TOMBSTONE) {
+            buckets[index] = TOMBSTONE;
+            size--;
+        }
+    }
+
+    /* 扩容哈希表 */
+    private void extend() {
+        // 暂存原哈希表
+        Pair[] bucketsTmp = buckets;
+        // 初始化扩容后的新哈希表
+        capacity *= extendRatio;
+        buckets = new Pair[capacity];
+        size = 0;
+        // 将键值对从原哈希表搬运至新哈希表
+        for (Pair pair : bucketsTmp) {
+            if (pair != null && pair != TOMBSTONE) {
+                put(pair.key, pair.val);
+            }
+        }
+    }
+
+    /* 打印哈希表 */
+    public void print() {
+        for (Pair pair : buckets) {
+            if (pair == null) {
+                System.out.println("null");
+            } else if (pair == TOMBSTONE) {
+                System.out.println("TOMBSTONE");
+            } else {
+                System.out.println(pair.key + " -> " + pair.val);
+            }
+        }
+    }
+}
+```  
 
 ### 平方探测
 

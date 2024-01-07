@@ -44,7 +44,7 @@
 
 换句话说，**基本数据类型提供了数据的“内容类型”，而数据结构提供了数据的“组织方式”**。例如以下代码，我们用相同的数据结构（数组）来存储与表示不同的基本数据类型，包括 `int`、`float`、`char`、`bool` 等。
 
-=== "Python"
+- "Python"
 
     ```python title=""
     # 使用多种基本数据类型来初始化数组
@@ -57,7 +57,7 @@
     data = [0, 0.0, 'a', False, ListNode(0)]
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title=""
     // 使用多种基本数据类型来初始化数组
@@ -67,7 +67,7 @@
     bool bools[5];
     ```
 
-=== "Java"
+- "Java"
 
     ```java title=""
     // 使用多种基本数据类型来初始化数组
@@ -77,7 +77,7 @@
     boolean[] bools = new boolean[5];
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title=""
     // 使用多种基本数据类型来初始化数组
@@ -87,7 +87,7 @@
     bool[] bools = new bool[5];
     ```
 
-=== "Go"
+- "Go"
 
     ```go title=""
     // 使用多种基本数据类型来初始化数组
@@ -97,7 +97,7 @@
     var bools = [5]bool{}
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title=""
     // 使用多种基本数据类型来初始化数组
@@ -107,14 +107,14 @@
     let bools = Array(repeating: Bool(), count: 5)
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title=""
     // JavaScript 的数组可以自由存储各种基本数据类型和对象
     const array = [0, 0.0, 'a', false];
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title=""
     // 使用多种基本数据类型来初始化数组
@@ -123,7 +123,7 @@
     const bools: boolean[] = [];
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title=""
     // 使用多种基本数据类型来初始化数组
@@ -133,7 +133,7 @@
     List<bool> bools = List.filled(5, false);
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title=""
     // 使用多种基本数据类型来初始化数组
@@ -143,7 +143,7 @@
     let bools: Vec<bool> = vec![false; 5];
     ```
 
-=== "C"
+- "C"
 
     ```c title=""
     // 使用多种基本数据类型来初始化数组
@@ -153,7 +153,7 @@
     bool bools[10];
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title=""
     

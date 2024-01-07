@@ -16,9 +16,91 @@
 
 代码如下所示：
 
-```src
-[file]{bucket_sort}-[class]{}-[func]{bucket_sort}
-```
+- "Python"
+```python
+def bucket_sort(nums: list[float]):
+    """桶排序"""
+    # 初始化 k = n/2 个桶，预期向每个桶分配 2 个元素
+    k = len(nums) // 2
+    buckets = [[] for _ in range(k)]
+    # 1. 将数组元素分配到各个桶中
+    for num in nums:
+        # 输入数据范围为 [0, 1)，使用 num * k 映射到索引范围 [0, k-1]
+        i = int(num * k)
+        # 将 num 添加进桶 i
+        buckets[i].append(num)
+    # 2. 对各个桶执行排序
+    for bucket in buckets:
+        # 使用内置排序函数，也可以替换成其他排序算法
+        bucket.sort()
+    # 3. 遍历桶合并结果
+    i = 0
+    for bucket in buckets:
+        for num in bucket:
+            nums[i] = num
+            i += 1
+```  
+
+- "C++"
+```cpp
+/* 桶排序 */
+void bucketSort(vector<float> &nums) {
+    // 初始化 k = n/2 个桶，预期向每个桶分配 2 个元素
+    int k = nums.size() / 2;
+    vector<vector<float>> buckets(k);
+    // 1. 将数组元素分配到各个桶中
+    for (float num : nums) {
+        // 输入数据范围为 [0, 1)，使用 num * k 映射到索引范围 [0, k-1]
+        int i = num * k;
+        // 将 num 添加进桶 bucket_idx
+        buckets[i].push_back(num);
+    }
+    // 2. 对各个桶执行排序
+    for (vector<float> &bucket : buckets) {
+        // 使用内置排序函数，也可以替换成其他排序算法
+        sort(bucket.begin(), bucket.end());
+    }
+    // 3. 遍历桶合并结果
+    int i = 0;
+    for (vector<float> &bucket : buckets) {
+        for (float num : bucket) {
+            nums[i++] = num;
+        }
+    }
+}
+```  
+
+- "Java"
+```java
+/* 桶排序 */
+void bucketSort(float[] nums) {
+    // 初始化 k = n/2 个桶，预期向每个桶分配 2 个元素
+    int k = nums.length / 2;
+    List<List<Float>> buckets = new ArrayList<>();
+    for (int i = 0; i < k; i++) {
+        buckets.add(new ArrayList<>());
+    }
+    // 1. 将数组元素分配到各个桶中
+    for (float num : nums) {
+        // 输入数据范围为 [0, 1)，使用 num * k 映射到索引范围 [0, k-1]
+        int i = (int) (num * k);
+        // 将 num 添加进桶 i
+        buckets.get(i).add(num);
+    }
+    // 2. 对各个桶执行排序
+    for (List<Float> bucket : buckets) {
+        // 使用内置排序函数，也可以替换成其他排序算法
+        Collections.sort(bucket);
+    }
+    // 3. 遍历桶合并结果
+    int i = 0;
+    for (List<Float> bucket : buckets) {
+        for (float num : bucket) {
+            nums[i++] = num;
+        }
+    }
+}
+```  
 
 ## 算法特性
 

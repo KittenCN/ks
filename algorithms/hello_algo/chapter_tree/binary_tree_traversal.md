@@ -16,9 +16,67 @@
 
 广度优先遍历通常借助“队列”来实现。队列遵循“先进先出”的规则，而广度优先遍历则遵循“逐层推进”的规则，两者背后的思想是一致的。实现代码如下：
 
-```src
-[file]{binary_tree_bfs}-[class]{}-[func]{level_order}
-```
+- "Python"
+```python
+def level_order(root: TreeNode | None) -> list[int]:
+    """层序遍历"""
+    # 初始化队列，加入根节点
+    queue: deque[TreeNode] = deque()
+    queue.append(root)
+    # 初始化一个列表，用于保存遍历序列
+    res = []
+    while queue:
+        node: TreeNode = queue.popleft()  # 队列出队
+        res.append(node.val)  # 保存节点值
+        if node.left is not None:
+            queue.append(node.left)  # 左子节点入队
+        if node.right is not None:
+            queue.append(node.right)  # 右子节点入队
+    return res
+```  
+
+- "C++"
+```cpp
+/* 层序遍历 */
+vector<int> levelOrder(TreeNode *root) {
+    // 初始化队列，加入根节点
+    queue<TreeNode *> queue;
+    queue.push(root);
+    // 初始化一个列表，用于保存遍历序列
+    vector<int> vec;
+    while (!queue.empty()) {
+        TreeNode *node = queue.front();
+        queue.pop();              // 队列出队
+        vec.push_back(node->val); // 保存节点值
+        if (node->left != nullptr)
+            queue.push(node->left); // 左子节点入队
+        if (node->right != nullptr)
+            queue.push(node->right); // 右子节点入队
+    }
+    return vec;
+}
+```  
+
+- "Java"
+```java
+/* 层序遍历 */
+List<Integer> levelOrder(TreeNode root) {
+    // 初始化队列，加入根节点
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.add(root);
+    // 初始化一个列表，用于保存遍历序列
+    List<Integer> list = new ArrayList<>();
+    while (!queue.isEmpty()) {
+        TreeNode node = queue.poll(); // 队列出队
+        list.add(node.val);           // 保存节点值
+        if (node.left != null)
+            queue.offer(node.left);   // 左子节点入队
+        if (node.right != null)
+            queue.offer(node.right);  // 右子节点入队
+    }
+    return list;
+}
+```  
 
 ### 复杂度分析
 
@@ -37,9 +95,101 @@
 
 深度优先搜索通常基于递归实现：
 
-```src
-[file]{binary_tree_dfs}-[class]{}-[func]{post_order}
-```
+- "Python"
+```python
+def pre_order(root: TreeNode | None):
+    """前序遍历"""
+    if root is None:
+        return
+    # 访问优先级：根节点 -> 左子树 -> 右子树
+    res.append(root.val)
+    pre_order(root=root.left)
+    pre_order(root=root.right)
+
+def in_order(root: TreeNode | None):
+    """中序遍历"""
+    if root is None:
+        return
+    # 访问优先级：左子树 -> 根节点 -> 右子树
+    in_order(root=root.left)
+    res.append(root.val)
+    in_order(root=root.right)
+
+def post_order(root: TreeNode | None):
+    """后序遍历"""
+    if root is None:
+        return
+    # 访问优先级：左子树 -> 右子树 -> 根节点
+    post_order(root=root.left)
+    post_order(root=root.right)
+    res.append(root.val)
+```  
+
+- "C++"
+```cpp
+/* 前序遍历 */
+void preOrder(TreeNode *root) {
+    if (root == nullptr)
+        return;
+    // 访问优先级：根节点 -> 左子树 -> 右子树
+    vec.push_back(root->val);
+    preOrder(root->left);
+    preOrder(root->right);
+}
+
+/* 中序遍历 */
+void inOrder(TreeNode *root) {
+    if (root == nullptr)
+        return;
+    // 访问优先级：左子树 -> 根节点 -> 右子树
+    inOrder(root->left);
+    vec.push_back(root->val);
+    inOrder(root->right);
+}
+
+/* 后序遍历 */
+void postOrder(TreeNode *root) {
+    if (root == nullptr)
+        return;
+    // 访问优先级：左子树 -> 右子树 -> 根节点
+    postOrder(root->left);
+    postOrder(root->right);
+    vec.push_back(root->val);
+}
+```  
+
+- "Java"
+```java
+/* 前序遍历 */
+void preOrder(TreeNode root) {
+    if (root == null)
+        return;
+    // 访问优先级：根节点 -> 左子树 -> 右子树
+    list.add(root.val);
+    preOrder(root.left);
+    preOrder(root.right);
+}
+
+/* 中序遍历 */
+void inOrder(TreeNode root) {
+    if (root == null)
+        return;
+    // 访问优先级：左子树 -> 根节点 -> 右子树
+    inOrder(root.left);
+    list.add(root.val);
+    inOrder(root.right);
+}
+
+/* 后序遍历 */
+void postOrder(TreeNode root) {
+    if (root == null)
+        return;
+    // 访问优先级：左子树 -> 右子树 -> 根节点
+    postOrder(root.left);
+    postOrder(root.right);
+    list.add(root.val);
+}
+```  
 
 !!! tip
 
@@ -50,37 +200,37 @@
 1. “递”表示开启新方法，程序在此过程中访问下一个节点。
 2. “归”表示函数返回，代表当前节点已经访问完毕。
 
-=== "<1>"
+- "<1>"
     ![前序遍历的递归过程](binary_tree_traversal.assets/preorder_step1.png)
 
-=== "<2>"
+- "<2>"
     ![preorder_step2](binary_tree_traversal.assets/preorder_step2.png)
 
-=== "<3>"
+- "<3>"
     ![preorder_step3](binary_tree_traversal.assets/preorder_step3.png)
 
-=== "<4>"
+- "<4>"
     ![preorder_step4](binary_tree_traversal.assets/preorder_step4.png)
 
-=== "<5>"
+- "<5>"
     ![preorder_step5](binary_tree_traversal.assets/preorder_step5.png)
 
-=== "<6>"
+- "<6>"
     ![preorder_step6](binary_tree_traversal.assets/preorder_step6.png)
 
-=== "<7>"
+- "<7>"
     ![preorder_step7](binary_tree_traversal.assets/preorder_step7.png)
 
-=== "<8>"
+- "<8>"
     ![preorder_step8](binary_tree_traversal.assets/preorder_step8.png)
 
-=== "<9>"
+- "<9>"
     ![preorder_step9](binary_tree_traversal.assets/preorder_step9.png)
 
-=== "<10>"
+- "<10>"
     ![preorder_step10](binary_tree_traversal.assets/preorder_step10.png)
 
-=== "<11>"
+- "<11>"
     ![preorder_step11](binary_tree_traversal.assets/preorder_step11.png)
 
 ### 复杂度分析

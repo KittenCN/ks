@@ -22,7 +22,7 @@
 
 通常情况下，我们可以直接使用编程语言内置的栈类。然而，某些语言可能没有专门提供栈类，这时我们可以将该语言的“数组”或“链表”当作栈来使用，并在程序逻辑上忽略与栈无关的操作。
 
-=== "Python"
+- "Python"
 
     ```python title="stack.py"
     # 初始化栈
@@ -49,7 +49,7 @@
     is_empty: bool = len(stack) == 0
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title="stack.cpp"
     /* 初始化栈 */
@@ -75,7 +75,7 @@
     bool empty = stack.empty();
     ```
 
-=== "Java"
+- "Java"
 
     ```java title="stack.java"
     /* 初始化栈 */
@@ -101,7 +101,7 @@
     boolean isEmpty = stack.isEmpty();
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title="stack.cs"
     /* 初始化栈 */
@@ -127,7 +127,7 @@
     bool isEmpty = stack.Count == 0;
     ```
 
-=== "Go"
+- "Go"
 
     ```go title="stack_test.go"
     /* 初始化栈 */
@@ -155,7 +155,7 @@
     isEmpty := len(stack) == 0
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title="stack.swift"
     /* 初始化栈 */
@@ -182,7 +182,7 @@
     let isEmpty = stack.isEmpty
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title="stack.js"
     /* 初始化栈 */
@@ -206,10 +206,10 @@
     const size = stack.length;
     
     /* 判断是否为空 */
-    const is_empty = stack.length === 0;
+    const is_empty = stack.length - 0;
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title="stack.ts"
     /* 初始化栈 */
@@ -233,10 +233,10 @@
     const size = stack.length;
     
     /* 判断是否为空 */
-    const is_empty = stack.length === 0;
+    const is_empty = stack.length - 0;
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title="stack.dart"
     /* 初始化栈 */
@@ -263,7 +263,7 @@
     bool isEmpty = stack.isEmpty;
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title="stack.rs"
     /* 初始化栈 */
@@ -290,13 +290,13 @@
     let is_empty = stack.is_empty();
     ```
 
-=== "C"
+- "C"
 
     ```c title="stack.c"
     // C 未提供内置栈
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title="stack.zig"
 
@@ -314,39 +314,334 @@
 
 如下图所示，对于入栈操作，我们只需将元素插入链表头部，这种节点插入方法被称为“头插法”。而对于出栈操作，只需将头节点从链表中删除即可。
 
-=== "LinkedListStack"
+- "LinkedListStack"
     ![基于链表实现栈的入栈出栈操作](stack.assets/linkedlist_stack.png)
 
-=== "push()"
+- "push()"
     ![linkedlist_stack_push](stack.assets/linkedlist_stack_push.png)
 
-=== "pop()"
+- "pop()"
     ![linkedlist_stack_pop](stack.assets/linkedlist_stack_pop.png)
 
 以下是基于链表实现栈的示例代码：
 
-```src
-[file]{linkedlist_stack}-[class]{linked_list_stack}-[func]{}
-```
+- "Python"
+```python
+class LinkedListStack:
+    """基于链表实现的栈"""
+
+    def __init__(self):
+        """构造方法"""
+        self._peek: ListNode | None = None
+        self._size: int = 0
+
+    def size(self) -> int:
+        """获取栈的长度"""
+        return self._size
+
+    def is_empty(self) -> bool:
+        """判断栈是否为空"""
+        return not self._peek
+
+    def push(self, val: int):
+        """入栈"""
+        node = ListNode(val)
+        node.next = self._peek
+        self._peek = node
+        self._size += 1
+
+    def pop(self) -> int:
+        """出栈"""
+        num = self.peek()
+        self._peek = self._peek.next
+        self._size -= 1
+        return num
+
+    def peek(self) -> int:
+        """访问栈顶元素"""
+        if self.is_empty():
+            raise IndexError("栈为空")
+        return self._peek.val
+
+    def to_list(self) -> list[int]:
+        """转化为列表用于打印"""
+        arr = []
+        node = self._peek
+        while node:
+            arr.append(node.val)
+            node = node.next
+        arr.reverse()
+        return arr
+```  
+
+- "C++"
+```cpp
+/* 基于链表实现的栈 */
+class LinkedListStack {
+  private:
+    ListNode *stackTop; // 将头节点作为栈顶
+    int stkSize;        // 栈的长度
+
+  public:
+    LinkedListStack() {
+        stackTop = nullptr;
+        stkSize = 0;
+    }
+
+    ~LinkedListStack() {
+        // 遍历链表删除节点，释放内存
+        freeMemoryLinkedList(stackTop);
+    }
+
+    /* 获取栈的长度 */
+    int size() {
+        return stkSize;
+    }
+
+    /* 判断栈是否为空 */
+    bool isEmpty() {
+        return size() == 0;
+    }
+
+    /* 入栈 */
+    void push(int num) {
+        ListNode *node = new ListNode(num);
+        node->next = stackTop;
+        stackTop = node;
+        stkSize++;
+    }
+
+    /* 出栈 */
+    int pop() {
+        int num = top();
+        ListNode *tmp = stackTop;
+        stackTop = stackTop->next;
+        // 释放内存
+        delete tmp;
+        stkSize--;
+        return num;
+    }
+
+    /* 访问栈顶元素 */
+    int top() {
+        if (isEmpty())
+            throw out_of_range("栈为空");
+        return stackTop->val;
+    }
+
+    /* 将 List 转化为 Array 并返回 */
+    vector<int> toVector() {
+        ListNode *node = stackTop;
+        vector<int> res(size());
+        for (int i = res.size() - 1; i >= 0; i--) {
+            res[i] = node->val;
+            node = node->next;
+        }
+        return res;
+    }
+};
+```  
+
+- "Java"
+```java
+/* 基于链表实现的栈 */
+class LinkedListStack {
+    private ListNode stackPeek; // 将头节点作为栈顶
+    private int stkSize = 0; // 栈的长度
+
+    public LinkedListStack() {
+        stackPeek = null;
+    }
+
+    /* 获取栈的长度 */
+    public int size() {
+        return stkSize;
+    }
+
+    /* 判断栈是否为空 */
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    /* 入栈 */
+    public void push(int num) {
+        ListNode node = new ListNode(num);
+        node.next = stackPeek;
+        stackPeek = node;
+        stkSize++;
+    }
+
+    /* 出栈 */
+    public int pop() {
+        int num = peek();
+        stackPeek = stackPeek.next;
+        stkSize--;
+        return num;
+    }
+
+    /* 访问栈顶元素 */
+    public int peek() {
+        if (isEmpty())
+            throw new IndexOutOfBoundsException();
+        return stackPeek.val;
+    }
+
+    /* 将 List 转化为 Array 并返回 */
+    public int[] toArray() {
+        ListNode node = stackPeek;
+        int[] res = new int[size()];
+        for (int i = res.length - 1; i >= 0; i--) {
+            res[i] = node.val;
+            node = node.next;
+        }
+        return res;
+    }
+}
+```  
 
 ### 基于数组的实现
 
 使用数组实现栈时，我们可以将数组的尾部作为栈顶。如下图所示，入栈与出栈操作分别对应在数组尾部添加元素与删除元素，时间复杂度都为 $O(1)$ 。
 
-=== "ArrayStack"
+- "ArrayStack"
     ![基于数组实现栈的入栈出栈操作](stack.assets/array_stack.png)
 
-=== "push()"
+- "push()"
     ![array_stack_push](stack.assets/array_stack_push.png)
 
-=== "pop()"
+- "pop()"
     ![array_stack_pop](stack.assets/array_stack_pop.png)
 
 由于入栈的元素可能会源源不断地增加，因此我们可以使用动态数组，这样就无须自行处理数组扩容问题。以下为示例代码：
 
-```src
-[file]{array_stack}-[class]{array_stack}-[func]{}
-```
+- "Python"
+```python
+class ArrayStack:
+    """基于数组实现的栈"""
+
+    def __init__(self):
+        """构造方法"""
+        self._stack: list[int] = []
+
+    def size(self) -> int:
+        """获取栈的长度"""
+        return len(self._stack)
+
+    def is_empty(self) -> bool:
+        """判断栈是否为空"""
+        return self._stack == []
+
+    def push(self, item: int):
+        """入栈"""
+        self._stack.append(item)
+
+    def pop(self) -> int:
+        """出栈"""
+        if self.is_empty():
+            raise IndexError("栈为空")
+        return self._stack.pop()
+
+    def peek(self) -> int:
+        """访问栈顶元素"""
+        if self.is_empty():
+            raise IndexError("栈为空")
+        return self._stack[-1]
+
+    def to_list(self) -> list[int]:
+        """返回列表用于打印"""
+        return self._stack
+```  
+
+- "C++"
+```cpp
+/* 基于数组实现的栈 */
+class ArrayStack {
+  private:
+    vector<int> stack;
+
+  public:
+    /* 获取栈的长度 */
+    int size() {
+        return stack.size();
+    }
+
+    /* 判断栈是否为空 */
+    bool isEmpty() {
+        return stack.size() == 0;
+    }
+
+    /* 入栈 */
+    void push(int num) {
+        stack.push_back(num);
+    }
+
+    /* 出栈 */
+    int pop() {
+        int num = top();
+        stack.pop_back();
+        return num;
+    }
+
+    /* 访问栈顶元素 */
+    int top() {
+        if (isEmpty())
+            throw out_of_range("栈为空");
+        return stack.back();
+    }
+
+    /* 返回 Vector */
+    vector<int> toVector() {
+        return stack;
+    }
+};
+```  
+
+- "Java"
+```java
+/* 基于数组实现的栈 */
+class ArrayStack {
+    private ArrayList<Integer> stack;
+
+    public ArrayStack() {
+        // 初始化列表（动态数组）
+        stack = new ArrayList<>();
+    }
+
+    /* 获取栈的长度 */
+    public int size() {
+        return stack.size();
+    }
+
+    /* 判断栈是否为空 */
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    /* 入栈 */
+    public void push(int num) {
+        stack.add(num);
+    }
+
+    /* 出栈 */
+    public int pop() {
+        if (isEmpty())
+            throw new IndexOutOfBoundsException();
+        return stack.remove(size() - 1);
+    }
+
+    /* 访问栈顶元素 */
+    public int peek() {
+        if (isEmpty())
+            throw new IndexOutOfBoundsException();
+        return stack.get(size() - 1);
+    }
+
+    /* 将 List 转化为 Array 并返回 */
+    public Object[] toArray() {
+        return stack.toArray();
+    }
+}
+```  
 
 ## 两种实现对比
 

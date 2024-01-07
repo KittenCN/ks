@@ -17,8 +17,107 @@
 
 而与全排列问题不同的是，**本题集合中的元素可以被无限次选取**，因此无须借助 `selected` 布尔列表来记录元素是否已被选择。我们可以对全排列代码进行小幅修改，初步得到解题代码：
 
-```src
-[file]{subset_sum_i_naive}-[class]{}-[func]{subset_sum_i_naive}
+- "Python"
+```python
+def backtrack(
+    state: list[int],
+    target: int,
+    total: int,
+    choices: list[int],
+    res: list[list[int]],
+):
+    """回溯算法：子集和 I"""
+    # 子集和等于 target 时，记录解
+    if total == target:
+        res.append(list(state))
+        return
+    # 遍历所有选择
+    for i in range(len(choices)):
+        # 剪枝：若子集和超过 target ，则跳过该选择
+        if total + choices[i] > target:
+            continue
+        # 尝试：做出选择，更新元素和 total
+        state.append(choices[i])
+        # 进行下一轮选择
+        backtrack(state, target, total + choices[i], choices, res)
+        # 回退：撤销选择，恢复到之前的状态
+        state.pop()
+
+def subset_sum_i_naive(nums: list[int], target: int) -> list[list[int]]:
+    """求解子集和 I（包含重复子集）"""
+    state = []  # 状态（子集）
+    total = 0  # 子集和
+    res = []  # 结果列表（子集列表）
+    backtrack(state, target, total, nums, res)
+    return res
+```  
+
+- "C++"
+```cpp
+/* 回溯算法：子集和 I */
+void backtrack(vector<int> &state, int target, int total, vector<int> &choices, vector<vector<int>> &res) {
+    // 子集和等于 target 时，记录解
+    if (total == target) {
+        res.push_back(state);
+        return;
+    }
+    // 遍历所有选择
+    for (size_t i = 0; i < choices.size(); i++) {
+        // 剪枝：若子集和超过 target ，则跳过该选择
+        if (total + choices[i] > target) {
+            continue;
+        }
+        // 尝试：做出选择，更新元素和 total
+        state.push_back(choices[i]);
+        // 进行下一轮选择
+        backtrack(state, target, total + choices[i], choices, res);
+        // 回退：撤销选择，恢复到之前的状态
+        state.pop_back();
+    }
+}
+
+/* 求解子集和 I（包含重复子集） */
+vector<vector<int>> subsetSumINaive(vector<int> &nums, int target) {
+    vector<int> state;       // 状态（子集）
+    int total = 0;           // 子集和
+    vector<vector<int>> res; // 结果列表（子集列表）
+    backtrack(state, target, total, nums, res);
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* 回溯算法：子集和 I */
+void backtrack(List<Integer> state, int target, int total, int[] choices, List<List<Integer>> res) {
+    // 子集和等于 target 时，记录解
+    if (total == target) {
+        res.add(new ArrayList<>(state));
+        return;
+    }
+    // 遍历所有选择
+    for (int i = 0; i < choices.length; i++) {
+        // 剪枝：若子集和超过 target ，则跳过该选择
+        if (total + choices[i] > target) {
+            continue;
+        }
+        // 尝试：做出选择，更新元素和 total
+        state.add(choices[i]);
+        // 进行下一轮选择
+        backtrack(state, target, total + choices[i], choices, res);
+        // 回退：撤销选择，恢复到之前的状态
+        state.remove(state.size() - 1);
+    }
+}
+
+/* 求解子集和 I（包含重复子集） */
+List<List<Integer>> subsetSumINaive(int[] nums, int target) {
+    List<Integer> state = new ArrayList<>(); // 状态（子集）
+    int total = 0; // 子集和
+    List<List<Integer>> res = new ArrayList<>(); // 结果列表（子集列表）
+    backtrack(state, target, total, nums, res);
+    return res;
+}
 ```
 
 向以上代码输入数组 $[3, 4, 5]$ 和目标元素 $9$ ，输出结果为 $[3, 3, 3], [4, 5], [5, 4]$ 。**虽然成功找出了所有和为 $9$ 的子集，但其中存在重复的子集 $[4, 5]$ 和 $[5, 4]$** 。
@@ -56,11 +155,115 @@
 除此之外，我们还对代码进行了以下两项优化。
 
 - 在开启搜索前，先将数组 `nums` 排序。在遍历所有选择时，**当子集和超过 `target` 时直接结束循环**，因为后边的元素更大，其子集和一定超过 `target` 。
-- 省去元素和变量 `total` ，**通过在 `target` 上执行减法来统计元素和**，当 `target` 等于 $0$ 时记录解。
+- 省去元素和变量 `total` ，**通过在 `target` 上执行减法来统计元素和**，当 `target` 等于 $0$ 时记录解。  
+  
+- "Python"
+```python
+def backtrack(
+    state: list[int], target: int, choices: list[int], start: int, res: list[list[int]]
+):
+    """回溯算法：子集和 I"""
+    # 子集和等于 target 时，记录解
+    if target == 0:
+        res.append(list(state))
+        return
+    # 遍历所有选择
+    # 剪枝二：从 start 开始遍历，避免生成重复子集
+    for i in range(start, len(choices)):
+        # 剪枝一：若子集和超过 target ，则直接结束循环
+        # 这是因为数组已排序，后边元素更大，子集和一定超过 target
+        if target - choices[i] < 0:
+            break
+        # 尝试：做出选择，更新 target, start
+        state.append(choices[i])
+        # 进行下一轮选择
+        backtrack(state, target - choices[i], choices, i, res)
+        # 回退：撤销选择，恢复到之前的状态
+        state.pop()
 
-```src
-[file]{subset_sum_i}-[class]{}-[func]{subset_sum_i}
-```
+def subset_sum_i(nums: list[int], target: int) -> list[list[int]]:
+    """求解子集和 I"""
+    state = []  # 状态（子集）
+    nums.sort()  # 对 nums 进行排序
+    start = 0  # 遍历起始点
+    res = []  # 结果列表（子集列表）
+    backtrack(state, target, nums, start, res)
+    return res
+```  
+
+- "C++"
+```cpp
+/* 回溯算法：子集和 I */
+void backtrack(vector<int> &state, int target, vector<int> &choices, int start, vector<vector<int>> &res) {
+    // 子集和等于 target 时，记录解
+    if (target == 0) {
+        res.push_back(state);
+        return;
+    }
+    // 遍历所有选择
+    // 剪枝二：从 start 开始遍历，避免生成重复子集
+    for (int i = start; i < choices.size(); i++) {
+        // 剪枝一：若子集和超过 target ，则直接结束循环
+        // 这是因为数组已排序，后边元素更大，子集和一定超过 target
+        if (target - choices[i] < 0) {
+            break;
+        }
+        // 尝试：做出选择，更新 target, start
+        state.push_back(choices[i]);
+        // 进行下一轮选择
+        backtrack(state, target - choices[i], choices, i, res);
+        // 回退：撤销选择，恢复到之前的状态
+        state.pop_back();
+    }
+}
+
+/* 求解子集和 I */
+vector<vector<int>> subsetSumI(vector<int> &nums, int target) {
+    vector<int> state;              // 状态（子集）
+    sort(nums.begin(), nums.end()); // 对 nums 进行排序
+    int start = 0;                  // 遍历起始点
+    vector<vector<int>> res;        // 结果列表（子集列表）
+    backtrack(state, target, nums, start, res);
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* 回溯算法：子集和 I */
+void backtrack(List<Integer> state, int target, int[] choices, int start, List<List<Integer>> res) {
+    // 子集和等于 target 时，记录解
+    if (target == 0) {
+        res.add(new ArrayList<>(state));
+        return;
+    }
+    // 遍历所有选择
+    // 剪枝二：从 start 开始遍历，避免生成重复子集
+    for (int i = start; i < choices.length; i++) {
+        // 剪枝一：若子集和超过 target ，则直接结束循环
+        // 这是因为数组已排序，后边元素更大，子集和一定超过 target
+        if (target - choices[i] < 0) {
+            break;
+        }
+        // 尝试：做出选择，更新 target, start
+        state.add(choices[i]);
+        // 进行下一轮选择
+        backtrack(state, target - choices[i], choices, i, res);
+        // 回退：撤销选择，恢复到之前的状态
+        state.remove(state.size() - 1);
+    }
+}
+
+/* 求解子集和 I */
+List<List<Integer>> subsetSumI(int[] nums, int target) {
+    List<Integer> state = new ArrayList<>(); // 状态（子集）
+    Arrays.sort(nums); // 对 nums 进行排序
+    int start = 0; // 遍历起始点
+    List<List<Integer>> res = new ArrayList<>(); // 结果列表（子集列表）
+    backtrack(state, target, nums, start, res);
+    return res;
+}
+```  
 
 下图所示为将数组 $[3, 4, 5]$ 和目标元素 $9$ 输入以上代码后的整体回溯过程。
 
@@ -86,9 +289,127 @@
 
 ### 代码实现
 
-```src
-[file]{subset_sum_ii}-[class]{}-[func]{subset_sum_ii}
-```
+- "Python"
+```python
+def backtrack(
+    state: list[int], target: int, choices: list[int], start: int, res: list[list[int]]
+):
+    """回溯算法：子集和 II"""
+    # 子集和等于 target 时，记录解
+    if target == 0:
+        res.append(list(state))
+        return
+    # 遍历所有选择
+    # 剪枝二：从 start 开始遍历，避免生成重复子集
+    # 剪枝三：从 start 开始遍历，避免重复选择同一元素
+    for i in range(start, len(choices)):
+        # 剪枝一：若子集和超过 target ，则直接结束循环
+        # 这是因为数组已排序，后边元素更大，子集和一定超过 target
+        if target - choices[i] < 0:
+            break
+        # 剪枝四：如果该元素与左边元素相等，说明该搜索分支重复，直接跳过
+        if i > start and choices[i] == choices[i - 1]:
+            continue
+        # 尝试：做出选择，更新 target, start
+        state.append(choices[i])
+        # 进行下一轮选择
+        backtrack(state, target - choices[i], choices, i + 1, res)
+        # 回退：撤销选择，恢复到之前的状态
+        state.pop()
+
+def subset_sum_ii(nums: list[int], target: int) -> list[list[int]]:
+    """求解子集和 II"""
+    state = []  # 状态（子集）
+    nums.sort()  # 对 nums 进行排序
+    start = 0  # 遍历起始点
+    res = []  # 结果列表（子集列表）
+    backtrack(state, target, nums, start, res)
+    return res
+```  
+
+- "C++"
+```cpp
+/* 回溯算法：子集和 II */
+void backtrack(vector<int> &state, int target, vector<int> &choices, int start, vector<vector<int>> &res) {
+    // 子集和等于 target 时，记录解
+    if (target == 0) {
+        res.push_back(state);
+        return;
+    }
+    // 遍历所有选择
+    // 剪枝二：从 start 开始遍历，避免生成重复子集
+    // 剪枝三：从 start 开始遍历，避免重复选择同一元素
+    for (int i = start; i < choices.size(); i++) {
+        // 剪枝一：若子集和超过 target ，则直接结束循环
+        // 这是因为数组已排序，后边元素更大，子集和一定超过 target
+        if (target - choices[i] < 0) {
+            break;
+        }
+        // 剪枝四：如果该元素与左边元素相等，说明该搜索分支重复，直接跳过
+        if (i > start && choices[i] == choices[i - 1]) {
+            continue;
+        }
+        // 尝试：做出选择，更新 target, start
+        state.push_back(choices[i]);
+        // 进行下一轮选择
+        backtrack(state, target - choices[i], choices, i + 1, res);
+        // 回退：撤销选择，恢复到之前的状态
+        state.pop_back();
+    }
+}
+
+/* 求解子集和 II */
+vector<vector<int>> subsetSumII(vector<int> &nums, int target) {
+    vector<int> state;              // 状态（子集）
+    sort(nums.begin(), nums.end()); // 对 nums 进行排序
+    int start = 0;                  // 遍历起始点
+    vector<vector<int>> res;        // 结果列表（子集列表）
+    backtrack(state, target, nums, start, res);
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* 回溯算法：子集和 II */
+void backtrack(List<Integer> state, int target, int[] choices, int start, List<List<Integer>> res) {
+    // 子集和等于 target 时，记录解
+    if (target == 0) {
+        res.add(new ArrayList<>(state));
+        return;
+    }
+    // 遍历所有选择
+    // 剪枝二：从 start 开始遍历，避免生成重复子集
+    // 剪枝三：从 start 开始遍历，避免重复选择同一元素
+    for (int i = start; i < choices.length; i++) {
+        // 剪枝一：若子集和超过 target ，则直接结束循环
+        // 这是因为数组已排序，后边元素更大，子集和一定超过 target
+        if (target - choices[i] < 0) {
+            break;
+        }
+        // 剪枝四：如果该元素与左边元素相等，说明该搜索分支重复，直接跳过
+        if (i > start && choices[i] == choices[i - 1]) {
+            continue;
+        }
+        // 尝试：做出选择，更新 target, start
+        state.add(choices[i]);
+        // 进行下一轮选择
+        backtrack(state, target - choices[i], choices, i + 1, res);
+        // 回退：撤销选择，恢复到之前的状态
+        state.remove(state.size() - 1);
+    }
+}
+
+/* 求解子集和 II */
+List<List<Integer>> subsetSumII(int[] nums, int target) {
+    List<Integer> state = new ArrayList<>(); // 状态（子集）
+    Arrays.sort(nums); // 对 nums 进行排序
+    int start = 0; // 遍历起始点
+    List<List<Integer>> res = new ArrayList<>(); // 结果列表（子集列表）
+    backtrack(state, target, nums, start, res);
+    return res;
+}
+```  
 
 下图展示了数组 $[4, 4, 5]$ 和目标元素 $9$ 的回溯过程，共包含四种剪枝操作。请你将图示与代码注释相结合，理解整个搜索过程，以及每种剪枝操作是如何工作的。
 

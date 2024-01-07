@@ -43,9 +43,105 @@
 
 想清楚以上信息之后，我们就可以在框架代码中做“完形填空”了。为了缩短整体代码，我们不单独实现框架代码中的各个函数，而是将它们展开在 `backtrack()` 函数中：
 
-```src
-[file]{permutations_i}-[class]{}-[func]{permutations_i}
-```
+- "Python"
+```python
+def backtrack(
+    state: list[int], choices: list[int], selected: list[bool], res: list[list[int]]
+):
+    """回溯算法：全排列 I"""
+    # 当状态长度等于元素数量时，记录解
+    if len(state) == len(choices):
+        res.append(list(state))
+        return
+    # 遍历所有选择
+    for i, choice in enumerate(choices):
+        # 剪枝：不允许重复选择元素
+        if not selected[i]:
+            # 尝试：做出选择，更新状态
+            selected[i] = True
+            state.append(choice)
+            # 进行下一轮选择
+            backtrack(state, choices, selected, res)
+            # 回退：撤销选择，恢复到之前的状态
+            selected[i] = False
+            state.pop()
+
+def permutations_i(nums: list[int]) -> list[list[int]]:
+    """全排列 I"""
+    res = []
+    backtrack(state=[], choices=nums, selected=[False] * len(nums), res=res)
+    return res
+```  
+
+- "C++"
+```cpp
+/* 回溯算法：全排列 I */
+void backtrack(vector<int> &state, const vector<int> &choices, vector<bool> &selected, vector<vector<int>> &res) {
+    // 当状态长度等于元素数量时，记录解
+    if (state.size() == choices.size()) {
+        res.push_back(state);
+        return;
+    }
+    // 遍历所有选择
+    for (int i = 0; i < choices.size(); i++) {
+        int choice = choices[i];
+        // 剪枝：不允许重复选择元素
+        if (!selected[i]) {
+            // 尝试：做出选择，更新状态
+            selected[i] = true;
+            state.push_back(choice);
+            // 进行下一轮选择
+            backtrack(state, choices, selected, res);
+            // 回退：撤销选择，恢复到之前的状态
+            selected[i] = false;
+            state.pop_back();
+        }
+    }
+}
+
+/* 全排列 I */
+vector<vector<int>> permutationsI(vector<int> nums) {
+    vector<int> state;
+    vector<bool> selected(nums.size(), false);
+    vector<vector<int>> res;
+    backtrack(state, nums, selected, res);
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* 回溯算法：全排列 I */
+void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List<Integer>> res) {
+    // 当状态长度等于元素数量时，记录解
+    if (state.size() == choices.length) {
+        res.add(new ArrayList<Integer>(state));
+        return;
+    }
+    // 遍历所有选择
+    for (int i = 0; i < choices.length; i++) {
+        int choice = choices[i];
+        // 剪枝：不允许重复选择元素
+        if (!selected[i]) {
+            // 尝试：做出选择，更新状态
+            selected[i] = true;
+            state.add(choice);
+            // 进行下一轮选择
+            backtrack(state, choices, selected, res);
+            // 回退：撤销选择，恢复到之前的状态
+            selected[i] = false;
+            state.remove(state.size() - 1);
+        }
+    }
+}
+
+/* 全排列 I */
+List<List<Integer>> permutationsI(int[] nums) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    backtrack(new ArrayList<Integer>(), nums, new boolean[nums.length], res);
+    return res;
+}
+```  
 
 ## 考虑相等元素的情况
 
@@ -75,9 +171,111 @@
 
 在上一题的代码的基础上，我们考虑在每一轮选择中开启一个哈希表 `duplicated` ，用于记录该轮中已经尝试过的元素，并将重复元素剪枝：
 
-```src
-[file]{permutations_ii}-[class]{}-[func]{permutations_ii}
-```
+- "Python"
+```python
+def backtrack(
+    state: list[int], choices: list[int], selected: list[bool], res: list[list[int]]
+):
+    """回溯算法：全排列 II"""
+    # 当状态长度等于元素数量时，记录解
+    if len(state) == len(choices):
+        res.append(list(state))
+        return
+    # 遍历所有选择
+    duplicated = set[int]()
+    for i, choice in enumerate(choices):
+        # 剪枝：不允许重复选择元素 且 不允许重复选择相等元素
+        if not selected[i] and choice not in duplicated:
+            # 尝试：做出选择，更新状态
+            duplicated.add(choice)  # 记录选择过的元素值
+            selected[i] = True
+            state.append(choice)
+            # 进行下一轮选择
+            backtrack(state, choices, selected, res)
+            # 回退：撤销选择，恢复到之前的状态
+            selected[i] = False
+            state.pop()
+
+def permutations_ii(nums: list[int]) -> list[list[int]]:
+    """全排列 II"""
+    res = []
+    backtrack(state=[], choices=nums, selected=[False] * len(nums), res=res)
+    return res
+```  
+
+- "C++"
+```cpp
+/* 回溯算法：全排列 II */
+void backtrack(vector<int> &state, const vector<int> &choices, vector<bool> &selected, vector<vector<int>> &res) {
+    // 当状态长度等于元素数量时，记录解
+    if (state.size() == choices.size()) {
+        res.push_back(state);
+        return;
+    }
+    // 遍历所有选择
+    unordered_set<int> duplicated;
+    for (int i = 0; i < choices.size(); i++) {
+        int choice = choices[i];
+        // 剪枝：不允许重复选择元素 且 不允许重复选择相等元素
+        if (!selected[i] && duplicated.find(choice) == duplicated.end()) {
+            // 尝试：做出选择，更新状态
+            duplicated.emplace(choice); // 记录选择过的元素值
+            selected[i] = true;
+            state.push_back(choice);
+            // 进行下一轮选择
+            backtrack(state, choices, selected, res);
+            // 回退：撤销选择，恢复到之前的状态
+            selected[i] = false;
+            state.pop_back();
+        }
+    }
+}
+
+/* 全排列 II */
+vector<vector<int>> permutationsII(vector<int> nums) {
+    vector<int> state;
+    vector<bool> selected(nums.size(), false);
+    vector<vector<int>> res;
+    backtrack(state, nums, selected, res);
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* 回溯算法：全排列 II */
+void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List<Integer>> res) {
+    // 当状态长度等于元素数量时，记录解
+    if (state.size() == choices.length) {
+        res.add(new ArrayList<Integer>(state));
+        return;
+    }
+    // 遍历所有选择
+    Set<Integer> duplicated = new HashSet<Integer>();
+    for (int i = 0; i < choices.length; i++) {
+        int choice = choices[i];
+        // 剪枝：不允许重复选择元素 且 不允许重复选择相等元素
+        if (!selected[i] && !duplicated.contains(choice)) {
+            // 尝试：做出选择，更新状态
+            duplicated.add(choice); // 记录选择过的元素值
+            selected[i] = true;
+            state.add(choice);
+            // 进行下一轮选择
+            backtrack(state, choices, selected, res);
+            // 回退：撤销选择，恢复到之前的状态
+            selected[i] = false;
+            state.remove(state.size() - 1);
+        }
+    }
+}
+
+/* 全排列 II */
+List<List<Integer>> permutationsII(int[] nums) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    backtrack(new ArrayList<Integer>(), nums, new boolean[nums.length], res);
+    return res;
+}
+```  
 
 假设元素两两之间互不相同，则 $n$ 个元素共有 $n!$  种排列（阶乘）；在记录结果时，需要复制长度为 $n$ 的列表，使用 $O(n)$ 时间。**因此时间复杂度为 $O(n!n)$** 。
 

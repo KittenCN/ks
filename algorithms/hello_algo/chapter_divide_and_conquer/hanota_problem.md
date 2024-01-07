@@ -18,10 +18,10 @@
 
 如下图所示，对于问题 $f(1)$ ，即当只有一个圆盘时，我们将它直接从 `A` 移动至 `C` 即可。
 
-=== "<1>"
+- "<1>"
     ![规模为 1 的问题的解](hanota_problem.assets/hanota_f1_step1.png)
 
-=== "<2>"
+- "<2>"
     ![hanota_f1_step2](hanota_problem.assets/hanota_f1_step2.png)
 
 如下图所示，对于问题 $f(2)$ ，即当有两个圆盘时，**由于要时刻满足小圆盘在大圆盘之上，因此需要借助 `B` 来完成移动**。
@@ -30,16 +30,16 @@
 2. 再将大圆盘从 `A` 移至 `C` 。
 3. 最后将小圆盘从 `B` 移至 `C` 。
 
-=== "<1>"
+- "<1>"
     ![规模为 2 的问题的解](hanota_problem.assets/hanota_f2_step1.png)
 
-=== "<2>"
+- "<2>"
     ![hanota_f2_step2](hanota_problem.assets/hanota_f2_step2.png)
 
-=== "<3>"
+- "<3>"
     ![hanota_f2_step3](hanota_problem.assets/hanota_f2_step3.png)
 
-=== "<4>"
+- "<4>"
     ![hanota_f2_step4](hanota_problem.assets/hanota_f2_step4.png)
 
 解决问题 $f(2)$ 的过程可总结为：**将两个圆盘借助 `B` 从 `A` 移至 `C`** 。其中，`C` 称为目标柱、`B` 称为缓冲柱。
@@ -54,16 +54,16 @@
 2. 将 `A` 中剩余的一个圆盘从 `A` 直接移动至 `C` 。
 3. 令 `C` 为目标柱、`A` 为缓冲柱，将两个圆盘从 `B` 移至 `C` 。
 
-=== "<1>"
+- "<1>"
     ![规模为 3 的问题的解](hanota_problem.assets/hanota_f3_step1.png)
 
-=== "<2>"
+- "<2>"
     ![hanota_f3_step2](hanota_problem.assets/hanota_f3_step2.png)
 
-=== "<3>"
+- "<3>"
     ![hanota_f3_step3](hanota_problem.assets/hanota_f3_step3.png)
 
-=== "<4>"
+- "<4>"
     ![hanota_f3_step4](hanota_problem.assets/hanota_f3_step4.png)
 
 从本质上看，**我们将问题 $f(3)$ 划分为两个子问题 $f(2)$ 和一个子问题 $f(1)$** 。按顺序解决这三个子问题之后，原问题随之得到解决。这说明子问题是独立的，而且解可以合并。
@@ -82,9 +82,101 @@
 
 在代码中，我们声明一个递归函数 `dfs(i, src, buf, tar)` ，它的作用是将柱 `src` 顶部的 $i$ 个圆盘借助缓冲柱 `buf` 移动至目标柱 `tar` ：
 
-```src
-[file]{hanota}-[class]{}-[func]{solve_hanota}
-```
+- "Python"
+```python
+def move(src: list[int], tar: list[int]):
+    """移动一个圆盘"""
+    # 从 src 顶部拿出一个圆盘
+    pan = src.pop()
+    # 将圆盘放入 tar 顶部
+    tar.append(pan)
+
+def dfs(i: int, src: list[int], buf: list[int], tar: list[int]):
+    """求解汉诺塔问题 f(i)"""
+    # 若 src 只剩下一个圆盘，则直接将其移到 tar
+    if i == 1:
+        move(src, tar)
+        return
+    # 子问题 f(i-1) ：将 src 顶部 i-1 个圆盘借助 tar 移到 buf
+    dfs(i - 1, src, tar, buf)
+    # 子问题 f(1) ：将 src 剩余一个圆盘移到 tar
+    move(src, tar)
+    # 子问题 f(i-1) ：将 buf 顶部 i-1 个圆盘借助 src 移到 tar
+    dfs(i - 1, buf, src, tar)
+
+def solve_hanota(A: list[int], B: list[int], C: list[int]):
+    """求解汉诺塔问题"""
+    n = len(A)
+    # 将 A 顶部 n 个圆盘借助 B 移到 C
+    dfs(n, A, B, C)
+```  
+
+- "C++"
+```cpp
+/* 移动一个圆盘 */
+void move(vector<int> &src, vector<int> &tar) {
+    // 从 src 顶部拿出一个圆盘
+    int pan = src.back();
+    src.pop_back();
+    // 将圆盘放入 tar 顶部
+    tar.push_back(pan);
+}
+
+/* 求解汉诺塔问题 f(i) */
+void dfs(int i, vector<int> &src, vector<int> &buf, vector<int> &tar) {
+    // 若 src 只剩下一个圆盘，则直接将其移到 tar
+    if (i == 1) {
+        move(src, tar);
+        return;
+    }
+    // 子问题 f(i-1) ：将 src 顶部 i-1 个圆盘借助 tar 移到 buf
+    dfs(i - 1, src, tar, buf);
+    // 子问题 f(1) ：将 src 剩余一个圆盘移到 tar
+    move(src, tar);
+    // 子问题 f(i-1) ：将 buf 顶部 i-1 个圆盘借助 src 移到 tar
+    dfs(i - 1, buf, src, tar);
+}
+
+/* 求解汉诺塔问题 */
+void solveHanota(vector<int> &A, vector<int> &B, vector<int> &C) {
+    int n = A.size();
+    // 将 A 顶部 n 个圆盘借助 B 移到 C
+    dfs(n, A, B, C);
+}
+```  
+
+- "Java"
+```java
+/* 移动一个圆盘 */
+void move(List<Integer> src, List<Integer> tar) {
+    // 从 src 顶部拿出一个圆盘
+    Integer pan = src.remove(src.size() - 1);
+    // 将圆盘放入 tar 顶部
+    tar.add(pan);
+}
+
+/* 求解汉诺塔问题 f(i) */
+void dfs(int i, List<Integer> src, List<Integer> buf, List<Integer> tar) {
+    // 若 src 只剩下一个圆盘，则直接将其移到 tar
+    if (i == 1) {
+        move(src, tar);
+        return;
+    }
+    // 子问题 f(i-1) ：将 src 顶部 i-1 个圆盘借助 tar 移到 buf
+    dfs(i - 1, src, tar, buf);
+    // 子问题 f(1) ：将 src 剩余一个圆盘移到 tar
+    move(src, tar);
+    // 子问题 f(i-1) ：将 buf 顶部 i-1 个圆盘借助 src 移到 tar
+    dfs(i - 1, buf, src, tar);
+}
+
+/* 求解汉诺塔问题 */
+void solveHanota(List<Integer> A, List<Integer> B, List<Integer> C) {
+    int n = A.size();
+    // 将 A 顶部 n 个圆盘借助 B 移到 C
+    dfs(n, A, B, C);
+}
+```  
 
 如下图所示，汉诺塔问题形成一棵高度为 $n$ 的递归树，每个节点代表一个子问题，对应一个开启的 `dfs()` 函数，**因此时间复杂度为 $O(2^n)$ ，空间复杂度为 $O(n)$** 。
 

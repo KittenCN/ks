@@ -35,38 +35,96 @@
 3. 从第 $k + 1$ 个元素开始，若当前元素大于堆顶元素，则将堆顶元素出堆，并将当前元素入堆。
 4. 遍历完成后，堆中保存的就是最大的 $k$ 个元素。
 
-=== "<1>"
+- "<1>"
     ![基于堆寻找最大的 k 个元素](top_k.assets/top_k_heap_step1.png)
 
-=== "<2>"
+- "<2>"
     ![top_k_heap_step2](top_k.assets/top_k_heap_step2.png)
 
-=== "<3>"
+- "<3>"
     ![top_k_heap_step3](top_k.assets/top_k_heap_step3.png)
 
-=== "<4>"
+- "<4>"
     ![top_k_heap_step4](top_k.assets/top_k_heap_step4.png)
 
-=== "<5>"
+- "<5>"
     ![top_k_heap_step5](top_k.assets/top_k_heap_step5.png)
 
-=== "<6>"
+- "<6>"
     ![top_k_heap_step6](top_k.assets/top_k_heap_step6.png)
 
-=== "<7>"
+- "<7>"
     ![top_k_heap_step7](top_k.assets/top_k_heap_step7.png)
 
-=== "<8>"
+- "<8>"
     ![top_k_heap_step8](top_k.assets/top_k_heap_step8.png)
 
-=== "<9>"
+- "<9>"
     ![top_k_heap_step9](top_k.assets/top_k_heap_step9.png)
 
 示例代码如下：
 
-```src
-[file]{top_k}-[class]{}-[func]{top_k_heap}
-```
+- "Python"
+```python
+def top_k_heap(nums: list[int], k: int) -> list[int]:
+    """基于堆查找数组中最大的 k 个元素"""
+    # 初始化小顶堆
+    heap = []
+    # 将数组的前 k 个元素入堆
+    for i in range(k):
+        heapq.heappush(heap, nums[i])
+    # 从第 k+1 个元素开始，保持堆的长度为 k
+    for i in range(k, len(nums)):
+        # 若当前元素大于堆顶元素，则将堆顶元素出堆、当前元素入堆
+        if nums[i] > heap[0]:
+            heapq.heappop(heap)
+            heapq.heappush(heap, nums[i])
+    return heap
+```  
+
+- "C++"
+```cpp
+/* 基于堆查找数组中最大的 k 个元素 */
+priority_queue<int, vector<int>, greater<int>> topKHeap(vector<int> &nums, int k) {
+    // 初始化小顶堆
+    priority_queue<int, vector<int>, greater<int>> heap;
+    // 将数组的前 k 个元素入堆
+    for (int i = 0; i < k; i++) {
+        heap.push(nums[i]);
+    }
+    // 从第 k+1 个元素开始，保持堆的长度为 k
+    for (int i = k; i < nums.size(); i++) {
+        // 若当前元素大于堆顶元素，则将堆顶元素出堆、当前元素入堆
+        if (nums[i] > heap.top()) {
+            heap.pop();
+            heap.push(nums[i]);
+        }
+    }
+    return heap;
+}
+```  
+
+- "Java"
+```java
+/* 基于堆查找数组中最大的 k 个元素 */
+Queue<Integer> topKHeap(int[] nums, int k) {
+    // 初始化小顶堆
+    Queue<Integer> heap = new PriorityQueue<Integer>();
+    // 将数组的前 k 个元素入堆
+    for (int i = 0; i < k; i++) {
+        heap.offer(nums[i]);
+    }
+    // 从第 k+1 个元素开始，保持堆的长度为 k
+    for (int i = k; i < nums.length; i++) {
+        // 若当前元素大于堆顶元素，则将堆顶元素出堆、当前元素入堆
+        if (nums[i] > heap.peek()) {
+            heap.poll();
+            heap.offer(nums[i]);
+        }
+    }
+    return heap;
+}
+```  
 
 总共执行了 $n$ 轮入堆和出堆，堆的最大长度为 $k$ ，因此时间复杂度为 $O(n \log k)$ 。该方法的效率很高，当 $k$ 较小时，时间复杂度趋向 $O(n)$ ；当 $k$ 较大时，时间复杂度不会超过 $O(n \log n)$ 。
 

@@ -20,7 +20,7 @@
 
 我们可以直接使用编程语言中现成的队列类：
 
-=== "Python"
+- "Python"
 
     ```python title="queue.py"
     from collections import deque
@@ -50,7 +50,7 @@
     is_empty: bool = len(que) == 0
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title="queue.cpp"
     /* 初始化队列 */
@@ -76,7 +76,7 @@
     bool empty = queue.empty();
     ```
 
-=== "Java"
+- "Java"
 
     ```java title="queue.java"
     /* 初始化队列 */
@@ -102,7 +102,7 @@
     boolean isEmpty = queue.isEmpty();
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title="queue.cs"
     /* 初始化队列 */
@@ -128,7 +128,7 @@
     bool isEmpty = queue.Count == 0;
     ```
 
-=== "Go"
+- "Go"
 
     ```go title="queue_test.go"
     /* 初始化队列 */
@@ -156,7 +156,7 @@
     isEmpty := queue.Len() == 0
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title="queue.swift"
     /* 初始化队列 */
@@ -184,7 +184,7 @@
     let isEmpty = queue.isEmpty
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title="queue.js"
     /* 初始化队列 */
@@ -209,10 +209,10 @@
     const size = queue.length;
     
     /* 判断队列是否为空 */
-    const empty = queue.length === 0;
+    const empty = queue.length - 0;
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title="queue.ts"
     /* 初始化队列 */
@@ -237,10 +237,10 @@
     const size = queue.length;
     
     /* 判断队列是否为空 */
-    const empty = queue.length === 0;
+    const empty = queue.length - 0;
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title="queue.dart"
     /* 初始化队列 */
@@ -267,7 +267,7 @@
     bool isEmpty = queue.isEmpty;
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title="queue.rs"
     /* 初始化双向队列 */
@@ -296,13 +296,13 @@
     let is_empty = deque.is_empty();
     ```
 
-=== "C"
+- "C"
 
     ```c title="queue.c"
     // C 未提供内置队列
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title="queue.zig"
 
@@ -316,20 +316,219 @@
 
 如下图所示，我们可以将链表的“头节点”和“尾节点”分别视为“队首”和“队尾”，规定队尾仅可添加节点，队首仅可删除节点。
 
-=== "LinkedListQueue"
+- "LinkedListQueue"
     ![基于链表实现队列的入队出队操作](queue.assets/linkedlist_queue.png)
 
-=== "push()"
+- "push()"
     ![linkedlist_queue_push](queue.assets/linkedlist_queue_push.png)
 
-=== "pop()"
+- "pop()"
     ![linkedlist_queue_pop](queue.assets/linkedlist_queue_pop.png)
 
 以下是用链表实现队列的代码：
 
-```src
-[file]{linkedlist_queue}-[class]{linked_list_queue}-[func]{}
-```
+- "Python"
+```python
+class LinkedListQueue:
+    """基于链表实现的队列"""
+
+    def __init__(self):
+        """构造方法"""
+        self._front: ListNode | None = None  # 头节点 front
+        self._rear: ListNode | None = None  # 尾节点 rear
+        self._size: int = 0
+
+    def size(self) -> int:
+        """获取队列的长度"""
+        return self._size
+
+    def is_empty(self) -> bool:
+        """判断队列是否为空"""
+        return not self._front
+
+    def push(self, num: int):
+        """入队"""
+        # 在尾节点后添加 num
+        node = ListNode(num)
+        # 如果队列为空，则令头、尾节点都指向该节点
+        if self._front is None:
+            self._front = node
+            self._rear = node
+        # 如果队列不为空，则将该节点添加到尾节点后
+        else:
+            self._rear.next = node
+            self._rear = node
+        self._size += 1
+
+    def pop(self) -> int:
+        """出队"""
+        num = self.peek()
+        # 删除头节点
+        self._front = self._front.next
+        self._size -= 1
+        return num
+
+    def peek(self) -> int:
+        """访问队首元素"""
+        if self.is_empty():
+            raise IndexError("队列为空")
+        return self._front.val
+
+    def to_list(self) -> list[int]:
+        """转化为列表用于打印"""
+        queue = []
+        temp = self._front
+        while temp:
+            queue.append(temp.val)
+            temp = temp.next
+        return queue
+```  
+
+- "C++"
+```cpp
+/* 基于链表实现的队列 */
+class LinkedListQueue {
+  private:
+    ListNode *front, *rear; // 头节点 front ，尾节点 rear
+    int queSize;
+
+  public:
+    LinkedListQueue() {
+        front = nullptr;
+        rear = nullptr;
+        queSize = 0;
+    }
+
+    ~LinkedListQueue() {
+        // 遍历链表删除节点，释放内存
+        freeMemoryLinkedList(front);
+    }
+
+    /* 获取队列的长度 */
+    int size() {
+        return queSize;
+    }
+
+    /* 判断队列是否为空 */
+    bool isEmpty() {
+        return queSize == 0;
+    }
+
+    /* 入队 */
+    void push(int num) {
+        // 在尾节点后添加 num
+        ListNode *node = new ListNode(num);
+        // 如果队列为空，则令头、尾节点都指向该节点
+        if (front == nullptr) {
+            front = node;
+            rear = node;
+        }
+        // 如果队列不为空，则将该节点添加到尾节点后
+        else {
+            rear->next = node;
+            rear = node;
+        }
+        queSize++;
+    }
+
+    /* 出队 */
+    int pop() {
+        int num = peek();
+        // 删除头节点
+        ListNode *tmp = front;
+        front = front->next;
+        // 释放内存
+        delete tmp;
+        queSize--;
+        return num;
+    }
+
+    /* 访问队首元素 */
+    int peek() {
+        if (size() == 0)
+            throw out_of_range("队列为空");
+        return front->val;
+    }
+
+    /* 将链表转化为 Vector 并返回 */
+    vector<int> toVector() {
+        ListNode *node = front;
+        vector<int> res(size());
+        for (int i = 0; i < res.size(); i++) {
+            res[i] = node->val;
+            node = node->next;
+        }
+        return res;
+    }
+};
+```  
+
+- "Java"
+```java
+/* 基于链表实现的队列 */
+class LinkedListQueue {
+    private ListNode front, rear; // 头节点 front ，尾节点 rear
+    private int queSize = 0;
+
+    public LinkedListQueue() {
+        front = null;
+        rear = null;
+    }
+
+    /* 获取队列的长度 */
+    public int size() {
+        return queSize;
+    }
+
+    /* 判断队列是否为空 */
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
+    /* 入队 */
+    public void push(int num) {
+        // 在尾节点后添加 num
+        ListNode node = new ListNode(num);
+        // 如果队列为空，则令头、尾节点都指向该节点
+        if (front == null) {
+            front = node;
+            rear = node;
+        // 如果队列不为空，则将该节点添加到尾节点后
+        } else {
+            rear.next = node;
+            rear = node;
+        }
+        queSize++;
+    }
+
+    /* 出队 */
+    public int pop() {
+        int num = peek();
+        // 删除头节点
+        front = front.next;
+        queSize--;
+        return num;
+    }
+
+    /* 访问队首元素 */
+    public int peek() {
+        if (isEmpty())
+            throw new IndexOutOfBoundsException();
+        return front.val;
+    }
+
+    /* 将链表转化为 Array 并返回 */
+    public int[] toArray() {
+        ListNode node = front;
+        int[] res = new int[size()];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = node.val;
+            node = node.next;
+        }
+        return res;
+    }
+}
+```  
 
 ### 基于数组的实现
 
@@ -344,22 +543,225 @@
 
 可以看到，入队和出队操作都只需进行一次操作，时间复杂度均为 $O(1)$ 。
 
-=== "ArrayQueue"
+- "ArrayQueue"
     ![基于数组实现队列的入队出队操作](queue.assets/array_queue.png)
 
-=== "push()"
+- "push()"
     ![array_queue_push](queue.assets/array_queue_push.png)
 
-=== "pop()"
+- "pop()"
     ![array_queue_pop](queue.assets/array_queue_pop.png)
 
 你可能会发现一个问题：在不断进行入队和出队的过程中，`front` 和 `rear` 都在向右移动，**当它们到达数组尾部时就无法继续移动了**。为了解决此问题，我们可以将数组视为首尾相接的“环形数组”。
 
 对于环形数组，我们需要让 `front` 或 `rear` 在越过数组尾部时，直接回到数组头部继续遍历。这种周期性规律可以通过“取余操作”来实现，代码如下所示：
 
-```src
-[file]{array_queue}-[class]{array_queue}-[func]{}
-```
+- "Python"
+```python
+class ArrayQueue:
+    """基于环形数组实现的队列"""
+
+    def __init__(self, size: int):
+        """构造方法"""
+        self._nums: list[int] = [0] * size  # 用于存储队列元素的数组
+        self._front: int = 0  # 队首指针，指向队首元素
+        self._size: int = 0  # 队列长度
+
+    def capacity(self) -> int:
+        """获取队列的容量"""
+        return len(self._nums)
+
+    def size(self) -> int:
+        """获取队列的长度"""
+        return self._size
+
+    def is_empty(self) -> bool:
+        """判断队列是否为空"""
+        return self._size == 0
+
+    def push(self, num: int):
+        """入队"""
+        if self._size == self.capacity():
+            raise IndexError("队列已满")
+        # 计算队尾指针，指向队尾索引 + 1
+        # 通过取余操作实现 rear 越过数组尾部后回到头部
+        rear: int = (self._front + self._size) % self.capacity()
+        # 将 num 添加至队尾
+        self._nums[rear] = num
+        self._size += 1
+
+    def pop(self) -> int:
+        """出队"""
+        num: int = self.peek()
+        # 队首指针向后移动一位，若越过尾部，则返回到数组头部
+        self._front = (self._front + 1) % self.capacity()
+        self._size -= 1
+        return num
+
+    def peek(self) -> int:
+        """访问队首元素"""
+        if self.is_empty():
+            raise IndexError("队列为空")
+        return self._nums[self._front]
+
+    def to_list(self) -> list[int]:
+        """返回列表用于打印"""
+        res = [0] * self.size()
+        j: int = self._front
+        for i in range(self.size()):
+            res[i] = self._nums[(j % self.capacity())]
+            j += 1
+        return res
+```  
+
+- "C++"
+```cpp
+/* 基于环形数组实现的队列 */
+class ArrayQueue {
+  private:
+    int *nums;       // 用于存储队列元素的数组
+    int front;       // 队首指针，指向队首元素
+    int queSize;     // 队列长度
+    int queCapacity; // 队列容量
+
+  public:
+    ArrayQueue(int capacity) {
+        // 初始化数组
+        nums = new int[capacity];
+        queCapacity = capacity;
+        front = queSize = 0;
+    }
+
+    ~ArrayQueue() {
+        delete[] nums;
+    }
+
+    /* 获取队列的容量 */
+    int capacity() {
+        return queCapacity;
+    }
+
+    /* 获取队列的长度 */
+    int size() {
+        return queSize;
+    }
+
+    /* 判断队列是否为空 */
+    bool isEmpty() {
+        return size() == 0;
+    }
+
+    /* 入队 */
+    void push(int num) {
+        if (queSize == queCapacity) {
+            cout << "队列已满" << endl;
+            return;
+        }
+        // 计算队尾指针，指向队尾索引 + 1
+        // 通过取余操作实现 rear 越过数组尾部后回到头部
+        int rear = (front + queSize) % queCapacity;
+        // 将 num 添加至队尾
+        nums[rear] = num;
+        queSize++;
+    }
+
+    /* 出队 */
+    int pop() {
+        int num = peek();
+        // 队首指针向后移动一位，若越过尾部，则返回到数组头部
+        front = (front + 1) % queCapacity;
+        queSize--;
+        return num;
+    }
+
+    /* 访问队首元素 */
+    int peek() {
+        if (isEmpty())
+            throw out_of_range("队列为空");
+        return nums[front];
+    }
+
+    /* 将数组转化为 Vector 并返回 */
+    vector<int> toVector() {
+        // 仅转换有效长度范围内的列表元素
+        vector<int> arr(queSize);
+        for (int i = 0, j = front; i < queSize; i++, j++) {
+            arr[i] = nums[j % queCapacity];
+        }
+        return arr;
+    }
+};
+```  
+
+- "Java"
+```java
+/* 基于环形数组实现的队列 */
+class ArrayQueue {
+    private int[] nums; // 用于存储队列元素的数组
+    private int front; // 队首指针，指向队首元素
+    private int queSize; // 队列长度
+
+    public ArrayQueue(int capacity) {
+        nums = new int[capacity];
+        front = queSize = 0;
+    }
+
+    /* 获取队列的容量 */
+    public int capacity() {
+        return nums.length;
+    }
+
+    /* 获取队列的长度 */
+    public int size() {
+        return queSize;
+    }
+
+    /* 判断队列是否为空 */
+    public boolean isEmpty() {
+        return queSize == 0;
+    }
+
+    /* 入队 */
+    public void push(int num) {
+        if (queSize == capacity()) {
+            System.out.println("队列已满");
+            return;
+        }
+        // 计算队尾指针，指向队尾索引 + 1
+        // 通过取余操作实现 rear 越过数组尾部后回到头部
+        int rear = (front + queSize) % capacity();
+        // 将 num 添加至队尾
+        nums[rear] = num;
+        queSize++;
+    }
+
+    /* 出队 */
+    public int pop() {
+        int num = peek();
+        // 队首指针向后移动一位，若越过尾部，则返回到数组头部
+        front = (front + 1) % capacity();
+        queSize--;
+        return num;
+    }
+
+    /* 访问队首元素 */
+    public int peek() {
+        if (isEmpty())
+            throw new IndexOutOfBoundsException();
+        return nums[front];
+    }
+
+    /* 返回数组 */
+    public int[] toArray() {
+        // 仅转换有效长度范围内的列表元素
+        int[] res = new int[queSize];
+        for (int i = 0, j = front; i < queSize; i++, j++) {
+            res[i] = nums[j % capacity()];
+        }
+        return res;
+    }
+}
+```  
 
 以上实现的队列仍然具有局限性：其长度不可变。然而，这个问题不难解决，我们可以将数组替换为动态数组，从而引入扩容机制。有兴趣的读者可以尝试自行实现。
 

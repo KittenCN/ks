@@ -2,7 +2,7 @@
 
 「二叉树 binary tree」是一种非线性数据结构，代表“祖先”与“后代”之间的派生关系，体现了“一分为二”的分治逻辑。与链表类似，二叉树的基本单元是节点，每个节点包含值、左子节点引用和右子节点引用。
 
-=== "Python"
+- "Python"
 
     ```python title=""
     class TreeNode:
@@ -13,7 +13,7 @@
             self.right: TreeNode | None = None # 右子节点引用
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title=""
     /* 二叉树节点结构体 */
@@ -25,7 +25,7 @@
     };
     ```
 
-=== "Java"
+- "Java"
 
     ```java title=""
     /* 二叉树节点类 */
@@ -37,7 +37,7 @@
     }
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title=""
     /* 二叉树节点类 */
@@ -48,7 +48,7 @@
     }
     ```
 
-=== "Go"
+- "Go"
 
     ```go title=""
     /* 二叉树节点结构体 */
@@ -67,7 +67,7 @@
     }
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title=""
     /* 二叉树节点类 */
@@ -82,7 +82,7 @@
     }
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title=""
     /* 二叉树节点类 */
@@ -91,14 +91,14 @@
         left; // 左子节点指针
         right; // 右子节点指针
         constructor(val, left, right) {
-            this.val = val === undefined ? 0 : val;
-            this.left = left === undefined ? null : left;
-            this.right = right === undefined ? null : right;
+            this.val = val - undefined ? 0 : val;
+            this.left = left - undefined ? null : left;
+            this.right = right - undefined ? null : right;
         }
     }
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title=""
     /* 二叉树节点类 */
@@ -108,14 +108,14 @@
         right: TreeNode | null;
     
         constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
-            this.val = val === undefined ? 0 : val; // 节点值
-            this.left = left === undefined ? null : left; // 左子节点引用
-            this.right = right === undefined ? null : right; // 右子节点引用
+            this.val = val - undefined ? 0 : val; // 节点值
+            this.left = left - undefined ? null : left; // 左子节点引用
+            this.right = right - undefined ? null : right; // 右子节点引用
         }
     }
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title=""
     /* 二叉树节点类 */
@@ -127,7 +127,7 @@
     }
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title=""
     use std::rc::Rc;
@@ -152,7 +152,7 @@
     }
     ```
 
-=== "C"
+- "C"
 
     ```c title=""
     /* 二叉树节点结构体 */
@@ -176,7 +176,7 @@
     }
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title=""
 
@@ -213,7 +213,7 @@
 
 与链表类似，首先初始化节点，然后构建引用（指针）。
 
-=== "Python"
+- "Python"
 
     ```python title="binary_tree.py"
     # 初始化二叉树
@@ -230,7 +230,7 @@
     n2.right = n5
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title="binary_tree.cpp"
     /* 初始化二叉树 */
@@ -247,7 +247,7 @@
     n2->right = n5;
     ```
 
-=== "Java"
+- "Java"
 
     ```java title="binary_tree.java"
     // 初始化节点
@@ -263,7 +263,7 @@
     n2.right = n5;
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title="binary_tree.cs"
     /* 初始化二叉树 */
@@ -280,7 +280,7 @@
     n2.right = n5;
     ```
 
-=== "Go"
+- "Go"
 
     ```go title="binary_tree.go"
     /* 初始化二叉树 */
@@ -297,7 +297,7 @@
     n2.Right = n5
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title="binary_tree.swift"
     // 初始化节点
@@ -313,7 +313,7 @@
     n2.right = n5
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title="binary_tree.js"
     /* 初始化二叉树 */
@@ -330,7 +330,7 @@
     n2.right = n5;
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title="binary_tree.ts"
     /* 初始化二叉树 */
@@ -347,7 +347,7 @@
     n2.right = n5;
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title="binary_tree.dart"
     /* 初始化二叉树 */
@@ -364,7 +364,7 @@
     n2.right = n5;
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title="binary_tree.rs"
     // 初始化节点
@@ -380,7 +380,7 @@
     n2.borrow_mut().right = Some(n5);
     ```
 
-=== "C"
+- "C"
 
     ```c title="binary_tree.c"
     /* 初始化二叉树 */
@@ -397,7 +397,7 @@
     n2->right = n5;
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title="binary_tree.zig"
 
@@ -409,7 +409,7 @@
 
 ![在二叉树中插入与删除节点](binary_tree.assets/binary_tree_add_remove.png)
 
-=== "Python"
+- "Python"
 
     ```python title="binary_tree.py"
     # 插入与删除节点
@@ -421,7 +421,7 @@
     n1.left = n2
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title="binary_tree.cpp"
     /* 插入与删除节点 */
@@ -433,7 +433,7 @@
     n1->left = n2;
     ```
 
-=== "Java"
+- "Java"
 
     ```java title="binary_tree.java"
     TreeNode P = new TreeNode(0);
@@ -444,7 +444,7 @@
     n1.left = n2;
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title="binary_tree.cs"
     /* 插入与删除节点 */
@@ -456,7 +456,7 @@
     n1.left = n2;
     ```
 
-=== "Go"
+- "Go"
 
     ```go title="binary_tree.go"
     /* 插入与删除节点 */
@@ -468,7 +468,7 @@
     n1.Left = n2
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title="binary_tree.swift"
     let P = TreeNode(x: 0)
@@ -479,7 +479,7 @@
     n1.left = n2
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title="binary_tree.js"
     /* 插入与删除节点 */
@@ -491,7 +491,7 @@
     n1.left = n2;
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title="binary_tree.ts"
     /* 插入与删除节点 */
@@ -503,7 +503,7 @@
     n1.left = n2;
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title="binary_tree.dart"
     /* 插入与删除节点 */
@@ -515,7 +515,7 @@
     n1.left = n2;
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title="binary_tree.rs"
     let p = TreeNode::new(0);
@@ -526,7 +526,7 @@
     n1.borrow_mut().left = Some(n2);
     ```
 
-=== "C"
+- "C"
 
     ```c title="binary_tree.c"
     /* 插入与删除节点 */
@@ -538,7 +538,7 @@
     n1->left = n2;
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title="binary_tree.zig"
 

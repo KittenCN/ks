@@ -12,9 +12,42 @@
 
 以下函数基于 `for` 循环实现了求和 $1 + 2 + \dots + n$ ，求和结果使用变量 `res` 记录。需要注意的是，Python 中 `range(a, b)` 对应的区间是“左闭右开”的，对应的遍历范围为 $a, a + 1, \dots, b-1$ ：
 
-```src
-[file]{iteration}-[class]{}-[func]{for_loop}
-```
+- "Python"
+```python
+def for_loop(n: int) -> int:
+    """for 循环"""
+    res = 0
+    # 循环求和 1, 2, ..., n-1, n
+    for i in range(1, n + 1):
+        res += i
+    return res
+```  
+
+- "C++"
+```cpp
+/* for 循环 */
+int forLoop(int n) {
+    int res = 0;
+    // 循环求和 1, 2, ..., n-1, n
+    for (int i = 1; i <= n; ++i) {
+        res += i;
+    }
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* for 循环 */
+int forLoop(int n) {
+    int res = 0;
+    // 循环求和 1, 2, ..., n-1, n
+    for (int i = 1; i <= n; i++) {
+        res += i;
+    }
+    return res;
+}
+```  
 
 下图是该求和函数的流程框图。
 
@@ -28,17 +61,101 @@
 
 下面我们用 `while` 循环来实现求和 $1 + 2 + \dots + n$ ：
 
-```src
-[file]{iteration}-[class]{}-[func]{while_loop}
-```
+- "Python"
+```python
+def while_loop(n: int) -> int:
+    """while 循环"""
+    res = 0
+    i = 1  # 初始化条件变量
+    # 循环求和 1, 2, ..., n-1, n
+    while i <= n:
+        res += i
+        i += 1  # 更新条件变量
+    return res
+```  
+
+- "C++"
+```cpp
+/* while 循环 */
+int whileLoop(int n) {
+    int res = 0;
+    int i = 1; // 初始化条件变量
+    // 循环求和 1, 2, ..., n-1, n
+    while (i <= n) {
+        res += i;
+        i++; // 更新条件变量
+    }
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* while 循环 */
+int whileLoop(int n) {
+    int res = 0;
+    int i = 1; // 初始化条件变量
+    // 循环求和 1, 2, ..., n-1, n
+    while (i <= n) {
+        res += i;
+        i++; // 更新条件变量
+    }
+    return res;
+}
+```  
 
 **`while` 循环比 `for` 循环的自由度更高**。在 `while` 循环中，我们可以自由地设计条件变量的初始化和更新步骤。
 
 例如在以下代码中，条件变量 $i$ 每轮进行两次更新，这种情况就不太方便用 `for` 循环实现：
 
-```src
-[file]{iteration}-[class]{}-[func]{while_loop_ii}
-```
+- "Python"
+```python
+def while_loop_ii(n: int) -> int:
+    """while 循环（两次更新）"""
+    res = 0
+    i = 1  # 初始化条件变量
+    # 循环求和 1, 4, 10, ...
+    while i <= n:
+        res += i
+        # 更新条件变量
+        i += 1
+        i *= 2
+    return res
+```  
+
+- "C++"
+```cpp
+/* while 循环（两次更新） */
+int whileLoopII(int n) {
+    int res = 0;
+    int i = 1; // 初始化条件变量
+    // 循环求和 1, 4, 10, ...
+    while (i <= n) {
+        res += i;
+        // 更新条件变量
+        i++;
+        i *= 2;
+    }
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* while 循环（两次更新） */
+int whileLoopII(int n) {
+    int res = 0;
+    int i = 1; // 初始化条件变量
+    // 循环求和 1, 4, 10, ...
+    while (i <= n) {
+        res += i;
+        // 更新条件变量
+        i++;
+        i *= 2;
+    }
+    return res;
+}
+```  
 
 总的来说，**`for` 循环的代码更加紧凑，`while` 循环更加灵活**，两者都可以实现迭代结构。选择使用哪一个应该根据特定问题的需求来决定。
 
@@ -46,9 +163,51 @@
 
 我们可以在一个循环结构内嵌套另一个循环结构，下面以 `for` 循环为例：
 
-```src
-[file]{iteration}-[class]{}-[func]{nested_for_loop}
-```
+- "Python"
+```python
+def nested_for_loop(n: int) -> str:
+    """双层 for 循环"""
+    res = ""
+    # 循环 i = 1, 2, ..., n-1, n
+    for i in range(1, n + 1):
+        # 循环 j = 1, 2, ..., n-1, n
+        for j in range(1, n + 1):
+            res += f"({i}, {j}), "
+    return res
+```  
+
+- "C++"
+```cpp
+/* 双层 for 循环 */
+string nestedForLoop(int n) {
+    ostringstream res;
+    // 循环 i = 1, 2, ..., n-1, n
+    for (int i = 1; i <= n; ++i) {
+        // 循环 j = 1, 2, ..., n-1, n
+        for (int j = 1; j <= n; ++j) {
+            res << "(" << i << ", " << j << "), ";
+        }
+    }
+    return res.str();
+}
+```  
+
+- "Java"
+```java
+/* 双层 for 循环 */
+String nestedForLoop(int n) {
+    StringBuilder res = new StringBuilder();
+    // 循环 i = 1, 2, ..., n-1, n
+    for (int i = 1; i <= n; i++) {
+        // 循环 j = 1, 2, ..., n-1, n
+        for (int j = 1; j <= n; j++) {
+            res.append("(" + i + ", " + j + "), ");
+        }
+    }
+    return res.toString();
+}
+```  
+
 
 下图是该嵌套循环的流程框图。
 
@@ -73,9 +232,46 @@
 
 观察以下代码，我们只需调用函数 `recur(n)`  ，就可以完成 $1 + 2 + \dots + n$ 的计算：
 
-```src
-[file]{recursion}-[class]{}-[func]{recur}
-```
+- "Python"
+```python
+def recur(n: int) -> int:
+    """递归"""
+    # 终止条件
+    if n == 1:
+        return 1
+    # 递：递归调用
+    res = recur(n - 1)
+    # 归：返回结果
+    return n + res
+```  
+
+- "C++"
+```cpp
+/* 递归 */
+int recur(int n) {
+    // 终止条件
+    if (n == 1)
+        return 1;
+    // 递：递归调用
+    int res = recur(n - 1);
+    // 归：返回结果
+    return n + res;
+}
+```  
+
+- "Java"
+```java
+/* 递归 */
+int recur(int n) {
+    // 终止条件
+    if (n == 1)
+        return 1;
+    // 递：递归调用
+    int res = recur(n - 1);
+    // 归：返回结果
+    return n + res;
+}
+```  
 
 下图展示了该函数的递归过程。
 
@@ -113,9 +309,40 @@
 
 以计算 $1 + 2 + \dots + n$ 为例，我们可以将结果变量 `res` 设为函数参数，从而实现尾递归：
 
-```src
-[file]{recursion}-[class]{}-[func]{tail_recur}
-```
+- "Python"
+```python
+def tail_recur(n, res):
+    """尾递归"""
+    # 终止条件
+    if n == 0:
+        return res
+    # 尾递归调用
+    return tail_recur(n - 1, res + n)
+```  
+
+- "C++"
+```cpp
+/* 尾递归 */
+int tailRecur(int n, int res) {
+    // 终止条件
+    if (n == 0)
+        return res;
+    // 尾递归调用
+    return tailRecur(n - 1, res + n);
+}
+```  
+
+- "Java"
+```java
+/* 尾递归 */
+int tailRecur(int n, int res) {
+    // 终止条件
+    if (n == 0)
+        return res;
+    // 尾递归调用
+    return tailRecur(n - 1, res + n);
+}
+```  
 
 尾递归的执行过程如下图所示。对比普通递归和尾递归，两者的求和操作的执行点是不同的。
 
@@ -143,9 +370,46 @@
 
 按照递推关系进行递归调用，将前两个数字作为终止条件，便可写出递归代码。调用 `fib(n)` 即可得到斐波那契数列的第 $n$ 个数字：
 
-```src
-[file]{recursion}-[class]{}-[func]{fib}
-```
+- "Python"
+```python
+def fib(n: int) -> int:
+    """斐波那契数列：递归"""
+    # 终止条件 f(1) = 0, f(2) = 1
+    if n == 1 or n == 2:
+        return n - 1
+    # 递归调用 f(n) = f(n-1) + f(n-2)
+    res = fib(n - 1) + fib(n - 2)
+    # 返回结果 f(n)
+    return res
+```  
+
+- "C++"
+```cpp
+/* 斐波那契数列：递归 */
+int fib(int n) {
+    // 终止条件 f(1) = 0, f(2) = 1
+    if (n == 1 || n == 2)
+        return n - 1;
+    // 递归调用 f(n) = f(n-1) + f(n-2)
+    int res = fib(n - 1) + fib(n - 2);
+    // 返回结果 f(n)
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* 斐波那契数列：递归 */
+int fib(int n) {
+    // 终止条件 f(1) = 0, f(2) = 1
+    if (n == 1 || n == 2)
+        return n - 1;
+    // 递归调用 f(n) = f(n-1) + f(n-2)
+    int res = fib(n - 1) + fib(n - 2);
+    // 返回结果 f(n)
+    return res;
+}
+```  
 
 观察以上代码，我们在函数内递归调用了两个函数，**这意味着从一个调用产生了两个调用分支**。如下图所示，这样不断递归调用下去，最终将产生一棵层数为 $n$ 的「递归树 recursion tree」。
 
@@ -182,9 +446,69 @@
 
 因此，**我们可以使用一个显式的栈来模拟调用栈的行为**，从而将递归转化为迭代形式：
 
-```src
-[file]{recursion}-[class]{}-[func]{for_loop_recur}
-```
+- "Python"
+```python
+def for_loop_recur(n: int) -> int:
+    """使用迭代模拟递归"""
+    # 使用一个显式的栈来模拟系统调用栈
+    stack = []
+    res = 0
+    # 递：递归调用
+    for i in range(n, 0, -1):
+        # 通过“入栈操作”模拟“递”
+        stack.append(i)
+    # 归：返回结果
+    while stack:
+        # 通过“出栈操作”模拟“归”
+        res += stack.pop()
+    # res = 1+2+3+...+n
+    return res
+```  
+
+- "C++"
+```cpp
+/* 使用迭代模拟递归 */
+int forLoopRecur(int n) {
+    // 使用一个显式的栈来模拟系统调用栈
+    stack<int> stack;
+    int res = 0;
+    // 递：递归调用
+    for (int i = n; i > 0; i--) {
+        // 通过“入栈操作”模拟“递”
+        stack.push(i);
+    }
+    // 归：返回结果
+    while (!stack.empty()) {
+        // 通过“出栈操作”模拟“归”
+        res += stack.top();
+        stack.pop();
+    }
+    // res = 1+2+3+...+n
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* 使用迭代模拟递归 */
+int forLoopRecur(int n) {
+    // 使用一个显式的栈来模拟系统调用栈
+    Stack<Integer> stack = new Stack<>();
+    int res = 0;
+    // 递：递归调用
+    for (int i = n; i > 0; i--) {
+        // 通过“入栈操作”模拟“递”
+        stack.push(i);
+    }
+    // 归：返回结果
+    while (!stack.isEmpty()) {
+        // 通过“出栈操作”模拟“归”
+        res += stack.pop();
+    }
+    // res = 1+2+3+...+n
+    return res;
+}
+```  
 
 观察以上代码，当递归转化为迭代后，代码变得更加复杂了。尽管迭代和递归在很多情况下可以互相转化，但不一定值得这样做，有以下两点原因。
 

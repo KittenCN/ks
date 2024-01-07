@@ -15,9 +15,48 @@
 
 当遇到以上两种情况时，直接返回 $-1$ 即可。代码如下所示：
 
-```src
-[file]{binary_search_edge}-[class]{}-[func]{binary_search_left_edge}
-```
+- "Python"
+```python
+def binary_search_left_edge(nums: list[int], target: int) -> int:
+    """二分查找最左一个 target"""
+    # 等价于查找 target 的插入点
+    i = binary_search_insertion(nums, target)
+    # 未找到 target ，返回 -1
+    if i == len(nums) or nums[i] != target:
+        return -1
+    # 找到 target ，返回索引 i
+    return i
+```  
+
+- "C++"
+```cpp
+/* 二分查找最左一个 target */
+int binarySearchLeftEdge(vector<int> &nums, int target) {
+    // 等价于查找 target 的插入点
+    int i = binarySearchInsertion(nums, target);
+    // 未找到 target ，返回 -1
+    if (i == nums.size() || nums[i] != target) {
+        return -1;
+    }
+    // 找到 target ，返回索引 i
+    return i;
+}
+```  
+
+- "Java"
+```java
+/* 二分查找最左一个 target */
+int binarySearchLeftEdge(int[] nums, int target) {
+    // 等价于查找 target 的插入点
+    int i = binary_search_insertion.binarySearchInsertion(nums, target);
+    // 未找到 target ，返回 -1
+    if (i == nums.length || nums[i] != target) {
+        return -1;
+    }
+    // 找到 target ，返回索引 i
+    return i;
+}
+```  
 
 ## 查找右边界
 
@@ -35,9 +74,54 @@
 
 请注意，返回的插入点是 $i$ ，因此需要将其减 $1$ ，从而获得 $j$ ：
 
-```src
-[file]{binary_search_edge}-[class]{}-[func]{binary_search_right_edge}
-```
+- "Python"
+```python
+def binary_search_right_edge(nums: list[int], target: int) -> int:
+    """二分查找最右一个 target"""
+    # 转化为查找最左一个 target + 1
+    i = binary_search_insertion(nums, target + 1)
+    # j 指向最右一个 target ，i 指向首个大于 target 的元素
+    j = i - 1
+    # 未找到 target ，返回 -1
+    if j == -1 or nums[j] != target:
+        return -1
+    # 找到 target ，返回索引 j
+    return j
+```  
+
+- "C++"
+```cpp
+/* 二分查找最右一个 target */
+int binarySearchRightEdge(vector<int> &nums, int target) {
+    // 转化为查找最左一个 target + 1
+    int i = binarySearchInsertion(nums, target + 1);
+    // j 指向最右一个 target ，i 指向首个大于 target 的元素
+    int j = i - 1;
+    // 未找到 target ，返回 -1
+    if (j == -1 || nums[j] != target) {
+        return -1;
+    }
+    // 找到 target ，返回索引 j
+    return j;
+}
+```  
+
+- "Java"
+```java
+/* 二分查找最右一个 target */
+int binarySearchRightEdge(int[] nums, int target) {
+    // 转化为查找最左一个 target + 1
+    int i = binary_search_insertion.binarySearchInsertion(nums, target + 1);
+    // j 指向最右一个 target ，i 指向首个大于 target 的元素
+    int j = i - 1;
+    // 未找到 target ，返回 -1
+    if (j == -1 || nums[j] != target) {
+        return -1;
+    }
+    // 找到 target ，返回索引 j
+    return j;
+}
+```  
 
 ### 转化为查找元素
 

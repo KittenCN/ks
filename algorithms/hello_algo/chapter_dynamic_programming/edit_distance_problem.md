@@ -67,55 +67,132 @@ $$
 
 ### 代码实现
 
-```src
-[file]{edit_distance}-[class]{}-[func]{edit_distance_dp}
-```
+- "Python"
+```python
+def edit_distance_dp(s: str, t: str) -> int:
+    """编辑距离：动态规划"""
+    n, m = len(s), len(t)
+    dp = [[0] * (m + 1) for _ in range(n + 1)]
+    # 状态转移：首行首列
+    for i in range(1, n + 1):
+        dp[i][0] = i
+    for j in range(1, m + 1):
+        dp[0][j] = j
+    # 状态转移：其余行和列
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            if s[i - 1] == t[j - 1]:
+                # 若两字符相等，则直接跳过此两字符
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                # 最少编辑步数 = 插入、删除、替换这三种操作的最少编辑步数 + 1
+                dp[i][j] = min(dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1]) + 1
+    return dp[n][m]
+```  
+
+- "C++"
+```cpp
+/* 编辑距离：动态规划 */
+int editDistanceDP(string s, string t) {
+    int n = s.length(), m = t.length();
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+    // 状态转移：首行首列
+    for (int i = 1; i <= n; i++) {
+        dp[i][0] = i;
+    }
+    for (int j = 1; j <= m; j++) {
+        dp[0][j] = j;
+    }
+    // 状态转移：其余行和列
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (s[i - 1] == t[j - 1]) {
+                // 若两字符相等，则直接跳过此两字符
+                dp[i][j] = dp[i - 1][j - 1];
+            } else {
+                // 最少编辑步数 = 插入、删除、替换这三种操作的最少编辑步数 + 1
+                dp[i][j] = min(min(dp[i][j - 1], dp[i - 1][j]), dp[i - 1][j - 1]) + 1;
+            }
+        }
+    }
+    return dp[n][m];
+}
+```  
+
+- "Java"
+```java
+/* 编辑距离：动态规划 */
+int editDistanceDP(String s, String t) {
+    int n = s.length(), m = t.length();
+    int[][] dp = new int[n + 1][m + 1];
+    // 状态转移：首行首列
+    for (int i = 1; i <= n; i++) {
+        dp[i][0] = i;
+    }
+    for (int j = 1; j <= m; j++) {
+        dp[0][j] = j;
+    }
+    // 状态转移：其余行和列
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            if (s.charAt(i - 1) == t.charAt(j - 1)) {
+                // 若两字符相等，则直接跳过此两字符
+                dp[i][j] = dp[i - 1][j - 1];
+            } else {
+                // 最少编辑步数 = 插入、删除、替换这三种操作的最少编辑步数 + 1
+                dp[i][j] = Math.min(Math.min(dp[i][j - 1], dp[i - 1][j]), dp[i - 1][j - 1]) + 1;
+            }
+        }
+    }
+    return dp[n][m];
+}
+```  
 
 如下图所示，编辑距离问题的状态转移过程与背包问题非常类似，都可以看作填写一个二维网格的过程。
 
-=== "<1>"
+- "<1>"
     ![编辑距离的动态规划过程](edit_distance_problem.assets/edit_distance_dp_step1.png)
 
-=== "<2>"
+- "<2>"
     ![edit_distance_dp_step2](edit_distance_problem.assets/edit_distance_dp_step2.png)
 
-=== "<3>"
+- "<3>"
     ![edit_distance_dp_step3](edit_distance_problem.assets/edit_distance_dp_step3.png)
 
-=== "<4>"
+- "<4>"
     ![edit_distance_dp_step4](edit_distance_problem.assets/edit_distance_dp_step4.png)
 
-=== "<5>"
+- "<5>"
     ![edit_distance_dp_step5](edit_distance_problem.assets/edit_distance_dp_step5.png)
 
-=== "<6>"
+- "<6>"
     ![edit_distance_dp_step6](edit_distance_problem.assets/edit_distance_dp_step6.png)
 
-=== "<7>"
+- "<7>"
     ![edit_distance_dp_step7](edit_distance_problem.assets/edit_distance_dp_step7.png)
 
-=== "<8>"
+- "<8>"
     ![edit_distance_dp_step8](edit_distance_problem.assets/edit_distance_dp_step8.png)
 
-=== "<9>"
+- "<9>"
     ![edit_distance_dp_step9](edit_distance_problem.assets/edit_distance_dp_step9.png)
 
-=== "<10>"
+- "<10>"
     ![edit_distance_dp_step10](edit_distance_problem.assets/edit_distance_dp_step10.png)
 
-=== "<11>"
+- "<11>"
     ![edit_distance_dp_step11](edit_distance_problem.assets/edit_distance_dp_step11.png)
 
-=== "<12>"
+- "<12>"
     ![edit_distance_dp_step12](edit_distance_problem.assets/edit_distance_dp_step12.png)
 
-=== "<13>"
+- "<13>"
     ![edit_distance_dp_step13](edit_distance_problem.assets/edit_distance_dp_step13.png)
 
-=== "<14>"
+- "<14>"
     ![edit_distance_dp_step14](edit_distance_problem.assets/edit_distance_dp_step14.png)
 
-=== "<15>"
+- "<15>"
     ![edit_distance_dp_step15](edit_distance_problem.assets/edit_distance_dp_step15.png)
 
 ### 空间优化
@@ -124,6 +201,93 @@ $$
 
 为此，我们可以使用一个变量 `leftup` 来暂存左上方的解 $dp[i-1, j-1]$ ，从而只需考虑左方和上方的解。此时的情况与完全背包问题相同，可使用正序遍历。代码如下所示：
 
-```src
-[file]{edit_distance}-[class]{}-[func]{edit_distance_dp_comp}
-```
+- "Python"
+```python
+def edit_distance_dp_comp(s: str, t: str) -> int:
+    """编辑距离：空间优化后的动态规划"""
+    n, m = len(s), len(t)
+    dp = [0] * (m + 1)
+    # 状态转移：首行
+    for j in range(1, m + 1):
+        dp[j] = j
+    # 状态转移：其余行
+    for i in range(1, n + 1):
+        # 状态转移：首列
+        leftup = dp[0]  # 暂存 dp[i-1, j-1]
+        dp[0] += 1
+        # 状态转移：其余列
+        for j in range(1, m + 1):
+            temp = dp[j]
+            if s[i - 1] == t[j - 1]:
+                # 若两字符相等，则直接跳过此两字符
+                dp[j] = leftup
+            else:
+                # 最少编辑步数 = 插入、删除、替换这三种操作的最少编辑步数 + 1
+                dp[j] = min(dp[j - 1], dp[j], leftup) + 1
+            leftup = temp  # 更新为下一轮的 dp[i-1, j-1]
+    return dp[m]
+```  
+
+- "C++"
+```cpp
+/* 编辑距离：空间优化后的动态规划 */
+int editDistanceDPComp(string s, string t) {
+    int n = s.length(), m = t.length();
+    vector<int> dp(m + 1, 0);
+    // 状态转移：首行
+    for (int j = 1; j <= m; j++) {
+        dp[j] = j;
+    }
+    // 状态转移：其余行
+    for (int i = 1; i <= n; i++) {
+        // 状态转移：首列
+        int leftup = dp[0]; // 暂存 dp[i-1, j-1]
+        dp[0] = i;
+        // 状态转移：其余列
+        for (int j = 1; j <= m; j++) {
+            int temp = dp[j];
+            if (s[i - 1] == t[j - 1]) {
+                // 若两字符相等，则直接跳过此两字符
+                dp[j] = leftup;
+            } else {
+                // 最少编辑步数 = 插入、删除、替换这三种操作的最少编辑步数 + 1
+                dp[j] = min(min(dp[j - 1], dp[j]), leftup) + 1;
+            }
+            leftup = temp; // 更新为下一轮的 dp[i-1, j-1]
+        }
+    }
+    return dp[m];
+}
+```  
+
+- "Java"
+```java
+/* 编辑距离：空间优化后的动态规划 */
+int editDistanceDPComp(String s, String t) {
+    int n = s.length(), m = t.length();
+    int[] dp = new int[m + 1];
+    // 状态转移：首行
+    for (int j = 1; j <= m; j++) {
+        dp[j] = j;
+    }
+    // 状态转移：其余行
+    for (int i = 1; i <= n; i++) {
+        // 状态转移：首列
+        int leftup = dp[0]; // 暂存 dp[i-1, j-1]
+        dp[0] = i;
+        // 状态转移：其余列
+        for (int j = 1; j <= m; j++) {
+            int temp = dp[j];
+            if (s.charAt(i - 1) == t.charAt(j - 1)) {
+                // 若两字符相等，则直接跳过此两字符
+                dp[j] = leftup;
+            } else {
+                // 最少编辑步数 = 插入、删除、替换这三种操作的最少编辑步数 + 1
+                dp[j] = Math.min(Math.min(dp[j - 1], dp[j]), leftup) + 1;
+            }
+            leftup = temp; // 更新为下一轮的 dp[i-1, j-1]
+        }
+    }
+    return dp[m];
+}
+```  

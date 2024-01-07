@@ -20,34 +20,91 @@
 
 若数组不包含目标元素，搜索区间最终会缩小为空。此时返回 $-1$ 。
 
-=== "<1>"
+- "<1>"
     ![二分查找流程](binary_search.assets/binary_search_step1.png)
 
-=== "<2>"
+- "<2>"
     ![binary_search_step2](binary_search.assets/binary_search_step2.png)
 
-=== "<3>"
+- "<3>"
     ![binary_search_step3](binary_search.assets/binary_search_step3.png)
 
-=== "<4>"
+- "<4>"
     ![binary_search_step4](binary_search.assets/binary_search_step4.png)
 
-=== "<5>"
+- "<5>"
     ![binary_search_step5](binary_search.assets/binary_search_step5.png)
 
-=== "<6>"
+- "<6>"
     ![binary_search_step6](binary_search.assets/binary_search_step6.png)
 
-=== "<7>"
+- "<7>"
     ![binary_search_step7](binary_search.assets/binary_search_step7.png)
 
 值得注意的是，由于 $i$ 和 $j$ 都是 `int` 类型，**因此 $i + j$ 可能会超出 `int` 类型的取值范围**。为了避免大数越界，我们通常采用公式 $m = \lfloor {i + (j - i) / 2} \rfloor$ 来计算中点。
 
 代码如下所示：
 
-```src
-[file]{binary_search}-[class]{}-[func]{binary_search}
-```
+- "Python"
+```python
+def binary_search(nums: list[int], target: int) -> int:
+    """二分查找（双闭区间）"""
+    # 初始化双闭区间 [0, n-1] ，即 i, j 分别指向数组首元素、尾元素
+    i, j = 0, len(nums) - 1
+    # 循环，当搜索区间为空时跳出（当 i > j 时为空）
+    while i <= j:
+        # 理论上 Python 的数字可以无限大（取决于内存大小），无须考虑大数越界问题
+        m = (i + j) // 2  # 计算中点索引 m
+        if nums[m] < target:
+            i = m + 1  # 此情况说明 target 在区间 [m+1, j] 中
+        elif nums[m] > target:
+            j = m - 1  # 此情况说明 target 在区间 [i, m-1] 中
+        else:
+            return m  # 找到目标元素，返回其索引
+    return -1  # 未找到目标元素，返回 -1
+```  
+
+- "C++"
+```cpp
+/* 二分查找（双闭区间） */
+int binarySearch(vector<int> &nums, int target) {
+    // 初始化双闭区间 [0, n-1] ，即 i, j 分别指向数组首元素、尾元素
+    int i = 0, j = nums.size() - 1;
+    // 循环，当搜索区间为空时跳出（当 i > j 时为空）
+    while (i <= j) {
+        int m = i + (j - i) / 2; // 计算中点索引 m
+        if (nums[m] < target)    // 此情况说明 target 在区间 [m+1, j] 中
+            i = m + 1;
+        else if (nums[m] > target) // 此情况说明 target 在区间 [i, m-1] 中
+            j = m - 1;
+        else // 找到目标元素，返回其索引
+            return m;
+    }
+    // 未找到目标元素，返回 -1
+    return -1;
+}
+```  
+
+- "Java"
+```java
+/* 二分查找（双闭区间） */
+int binarySearch(int[] nums, int target) {
+    // 初始化双闭区间 [0, n-1] ，即 i, j 分别指向数组首元素、尾元素
+    int i = 0, j = nums.length - 1;
+    // 循环，当搜索区间为空时跳出（当 i > j 时为空）
+    while (i <= j) {
+        int m = i + (j - i) / 2; // 计算中点索引 m
+        if (nums[m] < target) // 此情况说明 target 在区间 [m+1, j] 中
+            i = m + 1;
+        else if (nums[m] > target) // 此情况说明 target 在区间 [i, m-1] 中
+            j = m - 1;
+        else // 找到目标元素，返回其索引
+            return m;
+    }
+    // 未找到目标元素，返回 -1
+    return -1;
+}
+```  
 
 **时间复杂度为 $O(\log n)$** ：在二分循环中，区间每轮缩小一半，循环次数为 $\log_2 n$ 。
 
@@ -59,9 +116,65 @@
 
 我们可以基于该表示实现具有相同功能的二分查找算法：
 
-```src
-[file]{binary_search}-[class]{}-[func]{binary_search_lcro}
-```
+- "Python"
+```python
+def binary_search_lcro(nums: list[int], target: int) -> int:
+    """二分查找（左闭右开区间）"""
+    # 初始化左闭右开区间 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1
+    i, j = 0, len(nums)
+    # 循环，当搜索区间为空时跳出（当 i = j 时为空）
+    while i < j:
+        m = (i + j) // 2  # 计算中点索引 m
+        if nums[m] < target:
+            i = m + 1  # 此情况说明 target 在区间 [m+1, j) 中
+        elif nums[m] > target:
+            j = m  # 此情况说明 target 在区间 [i, m) 中
+        else:
+            return m  # 找到目标元素，返回其索引
+    return -1  # 未找到目标元素，返回 -1
+```  
+
+- "C++"
+```cpp
+/* 二分查找（左闭右开区间） */
+int binarySearchLCRO(vector<int> &nums, int target) {
+    // 初始化左闭右开区间 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1
+    int i = 0, j = nums.size();
+    // 循环，当搜索区间为空时跳出（当 i = j 时为空）
+    while (i < j) {
+        int m = i + (j - i) / 2; // 计算中点索引 m
+        if (nums[m] < target)    // 此情况说明 target 在区间 [m+1, j) 中
+            i = m + 1;
+        else if (nums[m] > target) // 此情况说明 target 在区间 [i, m) 中
+            j = m;
+        else // 找到目标元素，返回其索引
+            return m;
+    }
+    // 未找到目标元素，返回 -1
+    return -1;
+}
+```  
+
+- "Java"
+```java
+/* 二分查找（左闭右开区间） */
+int binarySearchLCRO(int[] nums, int target) {
+    // 初始化左闭右开区间 [0, n) ，即 i, j 分别指向数组首元素、尾元素+1
+    int i = 0, j = nums.length;
+    // 循环，当搜索区间为空时跳出（当 i = j 时为空）
+    while (i < j) {
+        int m = i + (j - i) / 2; // 计算中点索引 m
+        if (nums[m] < target) // 此情况说明 target 在区间 [m+1, j) 中
+            i = m + 1;
+        else if (nums[m] > target) // 此情况说明 target 在区间 [i, m) 中
+            j = m;
+        else // 找到目标元素，返回其索引
+            return m;
+    }
+    // 未找到目标元素，返回 -1
+    return -1;
+}
+```  
 
 如下图所示，在两种区间表示下，二分查找算法的初始化、循环条件和缩小区间操作皆有所不同。
 

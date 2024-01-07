@@ -34,9 +34,62 @@ $$
 
 根据状态转移方程，以及初始状态 $dp[1] = cost[1]$ 和 $dp[2] = cost[2]$ ，我们就可以得到动态规划代码：
 
-```src
-[file]{min_cost_climbing_stairs_dp}-[class]{}-[func]{min_cost_climbing_stairs_dp}
-```
+- "Python"    
+```python
+def min_cost_climbing_stairs_dp(cost: list[int]) -> int:
+    """爬楼梯最小代价：动态规划"""
+    n = len(cost) - 1
+    if n == 1 or n == 2:
+        return cost[n]
+    # 初始化 dp 表，用于存储子问题的解
+    dp = [0] * (n + 1)
+    # 初始状态：预设最小子问题的解
+    dp[1], dp[2] = cost[1], cost[2]
+    # 状态转移：从较小子问题逐步求解较大子问题
+    for i in range(3, n + 1):
+        dp[i] = min(dp[i - 1], dp[i - 2]) + cost[i]
+return dp[n]
+```  
+
+- "C++"    
+```cpp
+/* 爬楼梯最小代价：动态规划 */
+int minCostClimbingStairsDP(vector<int> &cost) {
+    int n = cost.size() - 1;
+    if (n == 1 || n == 2)
+        return cost[n];
+    // 初始化 dp 表，用于存储子问题的解
+    vector<int> dp(n + 1);
+    // 初始状态：预设最小子问题的解
+    dp[1] = cost[1];
+    dp[2] = cost[2];
+    // 状态转移：从较小子问题逐步求解较大子问题
+    for (int i = 3; i <= n; i++) {
+        dp[i] = min(dp[i - 1], dp[i - 2]) + cost[i];
+    }
+    return dp[n];
+}
+```  
+
+- "Java"
+```java
+/* 爬楼梯最小代价：动态规划 */
+int minCostClimbingStairsDP(int[] cost) {
+    int n = cost.length - 1;
+    if (n == 1 || n == 2)
+        return cost[n];
+    // 初始化 dp 表，用于存储子问题的解
+    int[] dp = new int[n + 1];
+    // 初始状态：预设最小子问题的解
+    dp[1] = cost[1];
+    dp[2] = cost[2];
+    // 状态转移：从较小子问题逐步求解较大子问题
+    for (int i = 3; i <= n; i++) {
+        dp[i] = Math.min(dp[i - 1], dp[i - 2]) + cost[i];
+    }
+    return dp[n];
+}
+```  
 
 下图展示了以上代码的动态规划过程。
 
@@ -44,9 +97,52 @@ $$
 
 本题也可以进行空间优化，将一维压缩至零维，使得空间复杂度从 $O(n)$ 降至 $O(1)$ ：
 
-```src
-[file]{min_cost_climbing_stairs_dp}-[class]{}-[func]{min_cost_climbing_stairs_dp_comp}
-```
+- "Python"    
+```python
+def min_cost_climbing_stairs_dp_comp(cost: list[int]) -> int:
+    """爬楼梯最小代价：空间优化后的动态规划"""
+    n = len(cost) - 1
+    if n == 1 or n == 2:
+        return cost[n]
+    a, b = cost[1], cost[2]
+    for i in range(3, n + 1):
+        a, b = b, min(a, b) + cost[i]
+    return b
+```  
+
+- "C++"    
+```cpp
+/* 爬楼梯最小代价：空间优化后的动态规划 */
+int minCostClimbingStairsDPComp(vector<int> &cost) {
+    int n = cost.size() - 1;
+    if (n == 1 || n == 2)
+        return cost[n];
+    int a = cost[1], b = cost[2];
+    for (int i = 3; i <= n; i++) {
+        int tmp = b;
+        b = min(a, tmp) + cost[i];
+        a = tmp;
+    }
+    return b;
+}
+```  
+
+- "Java"
+```java
+/* 爬楼梯最小代价：空间优化后的动态规划 */
+int minCostClimbingStairsDPComp(int[] cost) {
+    int n = cost.length - 1;
+    if (n == 1 || n == 2)
+        return cost[n];
+    int a = cost[1], b = cost[2];
+    for (int i = 3; i <= n; i++) {
+        int tmp = b;
+        b = Math.min(a, tmp) + cost[i];
+        a = tmp;
+    }
+    return b;
+}
+```  
 
 ## 无后效性
 
@@ -86,9 +182,69 @@ $$
 
 最终，返回 $dp[n, 1] + dp[n, 2]$ 即可，两者之和代表爬到第 $n$ 阶的方案总数：
 
-```src
-[file]{climbing_stairs_constraint_dp}-[class]{}-[func]{climbing_stairs_constraint_dp}
-```
+- "Python"    
+```python
+def climbing_stairs_constraint_dp(n: int) -> int:
+    """带约束爬楼梯：动态规划"""
+    if n == 1 or n == 2:
+        return 1
+    # 初始化 dp 表，用于存储子问题的解
+    dp = [[0] * 3 for _ in range(n + 1)]
+    # 初始状态：预设最小子问题的解
+    dp[1][1], dp[1][2] = 1, 0
+    dp[2][1], dp[2][2] = 0, 1
+    # 状态转移：从较小子问题逐步求解较大子问题
+    for i in range(3, n + 1):
+        dp[i][1] = dp[i - 1][2]
+        dp[i][2] = dp[i - 2][1] + dp[i - 2][2]
+    return dp[n][1] + dp[n][2]
+```  
+
+- "C++"    
+```cpp
+/* 带约束爬楼梯：动态规划 */
+int climbingStairsConstraintDP(int n) {
+    if (n == 1 || n == 2) {
+        return 1;
+    }
+    // 初始化 dp 表，用于存储子问题的解
+    vector<vector<int>> dp(n + 1, vector<int>(3, 0));
+    // 初始状态：预设最小子问题的解
+    dp[1][1] = 1;
+    dp[1][2] = 0;
+    dp[2][1] = 0;
+    dp[2][2] = 1;
+    // 状态转移：从较小子问题逐步求解较大子问题
+    for (int i = 3; i <= n; i++) {
+        dp[i][1] = dp[i - 1][2];
+        dp[i][2] = dp[i - 2][1] + dp[i - 2][2];
+    }
+    return dp[n][1] + dp[n][2];
+}
+```  
+
+- "Java"
+```java
+/* 带约束爬楼梯：动态规划 */
+int climbingStairsConstraintDP(int n) {
+    if (n == 1 || n == 2) {
+        return 1;
+    }
+    // 初始化 dp 表，用于存储子问题的解
+    int[][] dp = new int[n + 1][3];
+    // 初始状态：预设最小子问题的解
+    dp[1][1] = 1;
+    dp[1][2] = 0;
+    dp[2][1] = 0;
+    dp[2][2] = 1;
+    // 状态转移：从较小子问题逐步求解较大子问题
+    for (int i = 3; i <= n; i++) {
+        dp[i][1] = dp[i - 1][2];
+        dp[i][2] = dp[i - 2][1] + dp[i - 2][2];
+    }
+    return dp[n][1] + dp[n][2];
+}
+```  
 
 在上面的案例中，由于仅需多考虑前面一个状态，因此我们仍然可以通过扩展状态定义，使得问题重新满足无后效性。然而，某些问题具有非常严重的“有后效性”。
 

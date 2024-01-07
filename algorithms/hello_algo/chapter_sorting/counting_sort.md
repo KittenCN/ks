@@ -14,9 +14,79 @@
 
 代码如下所示：
 
-```src
-[file]{counting_sort}-[class]{}-[func]{counting_sort_naive}
-```
+- "Python"
+```python
+def counting_sort_naive(nums: list[int]):
+    """计数排序"""
+    # 简单实现，无法用于排序对象
+    # 1. 统计数组最大元素 m
+    m = 0
+    for num in nums:
+        m = max(m, num)
+    # 2. 统计各数字的出现次数
+    # counter[num] 代表 num 的出现次数
+    counter = [0] * (m + 1)
+    for num in nums:
+        counter[num] += 1
+    # 3. 遍历 counter ，将各元素填入原数组 nums
+    i = 0
+    for num in range(m + 1):
+        for _ in range(counter[num]):
+            nums[i] = num
+            i += 1
+```  
+
+- "C++"
+```cpp
+/* 计数排序 */
+// 简单实现，无法用于排序对象
+void countingSortNaive(vector<int> &nums) {
+    // 1. 统计数组最大元素 m
+    int m = 0;
+    for (int num : nums) {
+        m = max(m, num);
+    }
+    // 2. 统计各数字的出现次数
+    // counter[num] 代表 num 的出现次数
+    vector<int> counter(m + 1, 0);
+    for (int num : nums) {
+        counter[num]++;
+    }
+    // 3. 遍历 counter ，将各元素填入原数组 nums
+    int i = 0;
+    for (int num = 0; num < m + 1; num++) {
+        for (int j = 0; j < counter[num]; j++, i++) {
+            nums[i] = num;
+        }
+    }
+}
+```  
+
+- "Java"
+```java
+/* 计数排序 */
+// 简单实现，无法用于排序对象
+void countingSortNaive(int[] nums) {
+    // 1. 统计数组最大元素 m
+    int m = 0;
+    for (int num : nums) {
+        m = Math.max(m, num);
+    }
+    // 2. 统计各数字的出现次数
+    // counter[num] 代表 num 的出现次数
+    int[] counter = new int[m + 1];
+    for (int num : nums) {
+        counter[num]++;
+    }
+    // 3. 遍历 counter ，将各元素填入原数组 nums
+    int i = 0;
+    for (int num = 0; num < m + 1; num++) {
+        for (int j = 0; j < counter[num]; j++, i++) {
+            nums[i] = num;
+        }
+    }
+}
+```  
 
 !!! note "计数排序与桶排序的联系"
 
@@ -39,35 +109,132 @@ $$
 
 遍历完成后，数组 `res` 中就是排序好的结果，最后使用 `res` 覆盖原数组 `nums` 即可。下图展示了完整的计数排序流程。
 
-=== "<1>"
+- "<1>"
     ![计数排序步骤](counting_sort.assets/counting_sort_step1.png)
 
-=== "<2>"
+- "<2>"
     ![counting_sort_step2](counting_sort.assets/counting_sort_step2.png)
 
-=== "<3>"
+- "<3>"
     ![counting_sort_step3](counting_sort.assets/counting_sort_step3.png)
 
-=== "<4>"
+- "<4>"
     ![counting_sort_step4](counting_sort.assets/counting_sort_step4.png)
 
-=== "<5>"
+- "<5>"
     ![counting_sort_step5](counting_sort.assets/counting_sort_step5.png)
 
-=== "<6>"
+- "<6>"
     ![counting_sort_step6](counting_sort.assets/counting_sort_step6.png)
 
-=== "<7>"
+- "<7>"
     ![counting_sort_step7](counting_sort.assets/counting_sort_step7.png)
 
-=== "<8>"
+- "<8>"
     ![counting_sort_step8](counting_sort.assets/counting_sort_step8.png)
 
 计数排序的实现代码如下所示：
 
-```src
-[file]{counting_sort}-[class]{}-[func]{counting_sort}
-```
+- "Python"
+```python
+def counting_sort(nums: list[int]):
+    """计数排序"""
+    # 完整实现，可排序对象，并且是稳定排序
+    # 1. 统计数组最大元素 m
+    m = max(nums)
+    # 2. 统计各数字的出现次数
+    # counter[num] 代表 num 的出现次数
+    counter = [0] * (m + 1)
+    for num in nums:
+        counter[num] += 1
+    # 3. 求 counter 的前缀和，将“出现次数”转换为“尾索引”
+    # 即 counter[num]-1 是 num 在 res 中最后一次出现的索引
+    for i in range(m):
+        counter[i + 1] += counter[i]
+    # 4. 倒序遍历 nums ，将各元素填入结果数组 res
+    # 初始化数组 res 用于记录结果
+    n = len(nums)
+    res = [0] * n
+    for i in range(n - 1, -1, -1):
+        num = nums[i]
+        res[counter[num] - 1] = num  # 将 num 放置到对应索引处
+        counter[num] -= 1  # 令前缀和自减 1 ，得到下次放置 num 的索引
+    # 使用结果数组 res 覆盖原数组 nums
+    for i in range(n):
+        nums[i] = res[i]
+```  
+
+- "C++"
+```cpp
+/* 计数排序 */
+// 完整实现，可排序对象，并且是稳定排序
+void countingSort(vector<int> &nums) {
+    // 1. 统计数组最大元素 m
+    int m = 0;
+    for (int num : nums) {
+        m = max(m, num);
+    }
+    // 2. 统计各数字的出现次数
+    // counter[num] 代表 num 的出现次数
+    vector<int> counter(m + 1, 0);
+    for (int num : nums) {
+        counter[num]++;
+    }
+    // 3. 求 counter 的前缀和，将“出现次数”转换为“尾索引”
+    // 即 counter[num]-1 是 num 在 res 中最后一次出现的索引
+    for (int i = 0; i < m; i++) {
+        counter[i + 1] += counter[i];
+    }
+    // 4. 倒序遍历 nums ，将各元素填入结果数组 res
+    // 初始化数组 res 用于记录结果
+    int n = nums.size();
+    vector<int> res(n);
+    for (int i = n - 1; i >= 0; i--) {
+        int num = nums[i];
+        res[counter[num] - 1] = num; // 将 num 放置到对应索引处
+        counter[num]--;              // 令前缀和自减 1 ，得到下次放置 num 的索引
+    }
+    // 使用结果数组 res 覆盖原数组 nums
+    nums = res;
+}
+```  
+
+- "Java"
+```java
+/* 计数排序 */
+// 完整实现，可排序对象，并且是稳定排序
+void countingSort(int[] nums) {
+    // 1. 统计数组最大元素 m
+    int m = 0;
+    for (int num : nums) {
+        m = Math.max(m, num);
+    }
+    // 2. 统计各数字的出现次数
+    // counter[num] 代表 num 的出现次数
+    int[] counter = new int[m + 1];
+    for (int num : nums) {
+        counter[num]++;
+    }
+    // 3. 求 counter 的前缀和，将“出现次数”转换为“尾索引”
+    // 即 counter[num]-1 是 num 在 res 中最后一次出现的索引
+    for (int i = 0; i < m; i++) {
+        counter[i + 1] += counter[i];
+    }
+    // 4. 倒序遍历 nums ，将各元素填入结果数组 res
+    // 初始化数组 res 用于记录结果
+    int n = nums.length;
+    int[] res = new int[n];
+    for (int i = n - 1; i >= 0; i--) {
+        int num = nums[i];
+        res[counter[num] - 1] = num; // 将 num 放置到对应索引处
+        counter[num]--; // 令前缀和自减 1 ，得到下次放置 num 的索引
+    }
+    // 使用结果数组 res 覆盖原数组 nums
+    for (int i = 0; i < n; i++) {
+        nums[i] = res[i];
+    }
+}
+```  
 
 ## 算法特性
 

@@ -20,43 +20,124 @@ BFS 通常借助队列来实现，代码如下所示。队列具有“先入先�
 
 为了防止重复遍历顶点，我们需要借助一个哈希表 `visited` 来记录哪些节点已被访问。
 
-```src
-[file]{graph_bfs}-[class]{}-[func]{graph_bfs}
-```
+- "Python"
+```python
+def graph_bfs(graph: GraphAdjList, start_vet: Vertex) -> list[Vertex]:
+    """广度优先遍历"""
+    # 使用邻接表来表示图，以便获取指定顶点的所有邻接顶点
+    # 顶点遍历序列
+    res = []
+    # 哈希表，用于记录已被访问过的顶点
+    visited = set[Vertex]([start_vet])
+    # 队列用于实现 BFS
+    que = deque[Vertex]([start_vet])
+    # 以顶点 vet 为起点，循环直至访问完所有顶点
+    while len(que) > 0:
+        vet = que.popleft()  # 队首顶点出队
+        res.append(vet)  # 记录访问顶点
+        # 遍历该顶点的所有邻接顶点
+        for adj_vet in graph.adj_list[vet]:
+            if adj_vet in visited:
+                continue  # 跳过已被访问的顶点
+            que.append(adj_vet)  # 只入队未访问的顶点
+            visited.add(adj_vet)  # 标记该顶点已被访问
+    # 返回顶点遍历序列
+    return res
+```  
+
+- "C++"
+```cpp
+/* 广度优先遍历 */
+// 使用邻接表来表示图，以便获取指定顶点的所有邻接顶点
+vector<Vertex *> graphBFS(GraphAdjList &graph, Vertex *startVet) {
+    // 顶点遍历序列
+    vector<Vertex *> res;
+    // 哈希表，用于记录已被访问过的顶点
+    unordered_set<Vertex *> visited = {startVet};
+    // 队列用于实现 BFS
+    queue<Vertex *> que;
+    que.push(startVet);
+    // 以顶点 vet 为起点，循环直至访问完所有顶点
+    while (!que.empty()) {
+        Vertex *vet = que.front();
+        que.pop();          // 队首顶点出队
+        res.push_back(vet); // 记录访问顶点
+        // 遍历该顶点的所有邻接顶点
+        for (auto adjVet : graph.adjList[vet]) {
+            if (visited.count(adjVet))
+                continue;            // 跳过已被访问的顶点
+            que.push(adjVet);        // 只入队未访问的顶点
+            visited.emplace(adjVet); // 标记该顶点已被访问
+        }
+    }
+    // 返回顶点遍历序列
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* 广度优先遍历 */
+// 使用邻接表来表示图，以便获取指定顶点的所有邻接顶点
+List<Vertex> graphBFS(GraphAdjList graph, Vertex startVet) {
+    // 顶点遍历序列
+    List<Vertex> res = new ArrayList<>();
+    // 哈希表，用于记录已被访问过的顶点
+    Set<Vertex> visited = new HashSet<>();
+    visited.add(startVet);
+    // 队列用于实现 BFS
+    Queue<Vertex> que = new LinkedList<>();
+    que.offer(startVet);
+    // 以顶点 vet 为起点，循环直至访问完所有顶点
+    while (!que.isEmpty()) {
+        Vertex vet = que.poll(); // 队首顶点出队
+        res.add(vet);            // 记录访问顶点
+        // 遍历该顶点的所有邻接顶点
+        for (Vertex adjVet : graph.adjList.get(vet)) {
+            if (visited.contains(adjVet))
+                continue;        // 跳过已被访问的顶点
+            que.offer(adjVet);   // 只入队未访问的顶点
+            visited.add(adjVet); // 标记该顶点已被访问
+        }
+    }
+    // 返回顶点遍历序列
+    return res;
+}
+```  
 
 代码相对抽象，建议对照下图来加深理解。
 
-=== "<1>"
+- "<1>"
     ![图的广度优先遍历步骤](graph_traversal.assets/graph_bfs_step1.png)
 
-=== "<2>"
+- "<2>"
     ![graph_bfs_step2](graph_traversal.assets/graph_bfs_step2.png)
 
-=== "<3>"
+- "<3>"
     ![graph_bfs_step3](graph_traversal.assets/graph_bfs_step3.png)
 
-=== "<4>"
+- "<4>"
     ![graph_bfs_step4](graph_traversal.assets/graph_bfs_step4.png)
 
-=== "<5>"
+- "<5>"
     ![graph_bfs_step5](graph_traversal.assets/graph_bfs_step5.png)
 
-=== "<6>"
+- "<6>"
     ![graph_bfs_step6](graph_traversal.assets/graph_bfs_step6.png)
 
-=== "<7>"
+- "<7>"
     ![graph_bfs_step7](graph_traversal.assets/graph_bfs_step7.png)
 
-=== "<8>"
+- "<8>"
     ![graph_bfs_step8](graph_traversal.assets/graph_bfs_step8.png)
 
-=== "<9>"
+- "<9>"
     ![graph_bfs_step9](graph_traversal.assets/graph_bfs_step9.png)
 
-=== "<10>"
+- "<10>"
     ![graph_bfs_step10](graph_traversal.assets/graph_bfs_step10.png)
 
-=== "<11>"
+- "<11>"
     ![graph_bfs_step11](graph_traversal.assets/graph_bfs_step11.png)
 
 !!! question "广度优先遍历的序列是否唯一？"
@@ -79,9 +160,83 @@ BFS 通常借助队列来实现，代码如下所示。队列具有“先入先�
 
 这种“走到尽头再返回”的算法范式通常基于递归来实现。与广度优先遍历类似，在深度优先遍历中，我们也需要借助一个哈希表 `visited` 来记录已被访问的顶点，以避免重复访问顶点。
 
-```src
-[file]{graph_dfs}-[class]{}-[func]{graph_dfs}
-```
+- "Python"
+```python
+def dfs(graph: GraphAdjList, visited: set[Vertex], res: list[Vertex], vet: Vertex):
+    """深度优先遍历辅助函数"""
+    res.append(vet)  # 记录访问顶点
+    visited.add(vet)  # 标记该顶点已被访问
+    # 遍历该顶点的所有邻接顶点
+    for adjVet in graph.adj_list[vet]:
+        if adjVet in visited:
+            continue  # 跳过已被访问的顶点
+        # 递归访问邻接顶点
+        dfs(graph, visited, res, adjVet)
+
+def graph_dfs(graph: GraphAdjList, start_vet: Vertex) -> list[Vertex]:
+    """深度优先遍历"""
+    # 使用邻接表来表示图，以便获取指定顶点的所有邻接顶点
+    # 顶点遍历序列
+    res = []
+    # 哈希表，用于记录已被访问过的顶点
+    visited = set[Vertex]()
+    dfs(graph, visited, res, start_vet)
+    return res
+```  
+
+- "C++"
+```cpp
+/* 深度优先遍历辅助函数 */
+void dfs(GraphAdjList &graph, unordered_set<Vertex *> &visited, vector<Vertex *> &res, Vertex *vet) {
+    res.push_back(vet);   // 记录访问顶点
+    visited.emplace(vet); // 标记该顶点已被访问
+    // 遍历该顶点的所有邻接顶点
+    for (Vertex *adjVet : graph.adjList[vet]) {
+        if (visited.count(adjVet))
+            continue; // 跳过已被访问的顶点
+        // 递归访问邻接顶点
+        dfs(graph, visited, res, adjVet);
+    }
+}
+
+/* 深度优先遍历 */
+// 使用邻接表来表示图，以便获取指定顶点的所有邻接顶点
+vector<Vertex *> graphDFS(GraphAdjList &graph, Vertex *startVet) {
+    // 顶点遍历序列
+    vector<Vertex *> res;
+    // 哈希表，用于记录已被访问过的顶点
+    unordered_set<Vertex *> visited;
+    dfs(graph, visited, res, startVet);
+    return res;
+}
+```  
+
+- "Java"
+```java
+/* 深度优先遍历辅助函数 */
+void dfs(GraphAdjList graph, Set<Vertex> visited, List<Vertex> res, Vertex vet) {
+    res.add(vet);     // 记录访问顶点
+    visited.add(vet); // 标记该顶点已被访问
+    // 遍历该顶点的所有邻接顶点
+    for (Vertex adjVet : graph.adjList.get(vet)) {
+        if (visited.contains(adjVet))
+            continue; // 跳过已被访问的顶点
+        // 递归访问邻接顶点
+        dfs(graph, visited, res, adjVet);
+    }
+}
+
+/* 深度优先遍历 */
+// 使用邻接表来表示图，以便获取指定顶点的所有邻接顶点
+List<Vertex> graphDFS(GraphAdjList graph, Vertex startVet) {
+    // 顶点遍历序列
+    List<Vertex> res = new ArrayList<>();
+    // 哈希表，用于记录已被访问过的顶点
+    Set<Vertex> visited = new HashSet<>();
+    dfs(graph, visited, res, startVet);
+    return res;
+}
+```  
 
 深度优先遍历的算法流程如下图所示。
 
@@ -90,37 +245,37 @@ BFS 通常借助队列来实现，代码如下所示。队列具有“先入先�
 
 为了加深理解，建议将下图与代码结合起来，在脑中模拟（或者用笔画下来）整个 DFS 过程，包括每个递归方法何时开启、何时返回。
 
-=== "<1>"
+- "<1>"
     ![图的深度优先遍历步骤](graph_traversal.assets/graph_dfs_step1.png)
 
-=== "<2>"
+- "<2>"
     ![graph_dfs_step2](graph_traversal.assets/graph_dfs_step2.png)
 
-=== "<3>"
+- "<3>"
     ![graph_dfs_step3](graph_traversal.assets/graph_dfs_step3.png)
 
-=== "<4>"
+- "<4>"
     ![graph_dfs_step4](graph_traversal.assets/graph_dfs_step4.png)
 
-=== "<5>"
+- "<5>"
     ![graph_dfs_step5](graph_traversal.assets/graph_dfs_step5.png)
 
-=== "<6>"
+- "<6>"
     ![graph_dfs_step6](graph_traversal.assets/graph_dfs_step6.png)
 
-=== "<7>"
+- "<7>"
     ![graph_dfs_step7](graph_traversal.assets/graph_dfs_step7.png)
 
-=== "<8>"
+- "<8>"
     ![graph_dfs_step8](graph_traversal.assets/graph_dfs_step8.png)
 
-=== "<9>"
+- "<9>"
     ![graph_dfs_step9](graph_traversal.assets/graph_dfs_step9.png)
 
-=== "<10>"
+- "<10>"
     ![graph_dfs_step10](graph_traversal.assets/graph_dfs_step10.png)
 
-=== "<11>"
+- "<11>"
     ![graph_dfs_step11](graph_traversal.assets/graph_dfs_step11.png)
 
 !!! question "深度优先遍历的序列是否唯一？"

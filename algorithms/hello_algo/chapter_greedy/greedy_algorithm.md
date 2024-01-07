@@ -19,9 +19,68 @@
 
 实现代码如下所示：
 
-```src
-[file]{coin_change_greedy}-[class]{}-[func]{coin_change_greedy}
-```
+- "Python"
+```python
+def coin_change_greedy(coins: list[int], amt: int) -> int:
+    """零钱兑换：贪心"""
+    # 假设 coins 列表有序
+    i = len(coins) - 1
+    count = 0
+    # 循环进行贪心选择，直到无剩余金额
+    while amt > 0:
+        # 找到小于且最接近剩余金额的硬币
+        while i > 0 and coins[i] > amt:
+            i -= 1
+        # 选择 coins[i]
+        amt -= coins[i]
+        count += 1
+    # 若未找到可行方案，则返回 -1
+    return count if amt == 0 else -1
+```  
+
+- "C++"
+```cpp
+/* 零钱兑换：贪心 */
+int coinChangeGreedy(vector<int> &coins, int amt) {
+    // 假设 coins 列表有序
+    int i = coins.size() - 1;
+    int count = 0;
+    // 循环进行贪心选择，直到无剩余金额
+    while (amt > 0) {
+        // 找到小于且最接近剩余金额的硬币
+        while (i > 0 && coins[i] > amt) {
+            i--;
+        }
+        // 选择 coins[i]
+        amt -= coins[i];
+        count++;
+    }
+    // 若未找到可行方案，则返回 -1
+    return amt == 0 ? count : -1;
+}
+```  
+
+- "Java"
+```java
+/* 零钱兑换：贪心 */
+int coinChangeGreedy(int[] coins, int amt) {
+    // 假设 coins 列表有序
+    int i = coins.length - 1;
+    int count = 0;
+    // 循环进行贪心选择，直到无剩余金额
+    while (amt > 0) {
+        // 找到小于且最接近剩余金额的硬币
+        while (i > 0 && coins[i] > amt) {
+            i--;
+        }
+        // 选择 coins[i]
+        amt -= coins[i];
+        count++;
+    }
+    // 若未找到可行方案，则返回 -1
+    return amt == 0 ? count : -1;
+}
+```  
 
 你可能会不由地发出感叹：So clean ！贪心算法仅用约十行代码就解决了零钱兑换问题。
 

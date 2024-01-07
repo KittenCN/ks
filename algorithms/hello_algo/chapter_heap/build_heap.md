@@ -23,9 +23,42 @@
 
 值得说明的是，**由于叶节点没有子节点，因此它们天然就是合法的子堆，无须堆化**。如以下代码所示，最后一个非叶节点是最后一个节点的父节点，我们从它开始倒序遍历并执行堆化：
 
-```src
-[file]{my_heap}-[class]{max_heap}-[func]{__init__}
-```
+- "Python"
+```python
+def __init__(self, nums: list[int]):
+    """构造方法，根据输入列表建堆"""
+    # 将列表元素原封不动添加进堆
+    self.max_heap = nums
+    # 堆化除叶节点以外的其他所有节点
+    for i in range(self.parent(self.size() - 1), -1, -1):
+        self.sift_down(i)
+```  
+
+- "C++"
+```cpp
+/* 构造方法，根据输入列表建堆 */
+MaxHeap(vector<int> nums) {
+    // 将列表元素原封不动添加进堆
+    maxHeap = nums;
+    // 堆化除叶节点以外的其他所有节点
+    for (int i = parent(size() - 1); i >= 0; i--) {
+        siftDown(i);
+    }
+}
+```  
+
+- "Java"
+```java
+/* 构造方法，根据输入列表建堆 */
+MaxHeap(List<Integer> nums) {
+    // 将列表元素原封不动添加进堆
+    maxHeap = new ArrayList<>(nums);
+    // 堆化除叶节点以外的其他所有节点
+    for (int i = parent(size() - 1); i >= 0; i--) {
+        siftDown(i);
+    }
+}
+```  
 
 ## 复杂度分析
 

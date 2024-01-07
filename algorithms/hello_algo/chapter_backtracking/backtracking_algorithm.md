@@ -10,9 +10,50 @@
 
 对于此题，我们前序遍历这棵树，并判断当前节点的值是否为 $7$ ，若是，则将该节点的值加入结果列表 `res` 之中。相关过程实现如下图和以下代码所示：
 
-```src
-[file]{preorder_traversal_i_compact}-[class]{}-[func]{pre_order}
-```
+- "Python"
+```python title=""
+def pre_order(root: TreeNode):
+    """前序遍历：例题一"""
+    if root is None:
+        return
+    if root.val == 7:
+        # 记录解
+        res.append(root)
+    pre_order(root.left)
+    pre_order(root.right)
+```  
+
+- "C++"
+```cpp title=""
+/* 前序遍历：例题一 */
+void preOrder(TreeNode *root) {
+    if (root == nullptr) {
+        return;
+    }
+    if (root->val == 7) {
+        // 记录解
+        res.push_back(root);
+    }
+    preOrder(root->left);
+    preOrder(root->right);
+}
+```  
+
+- "Java"
+```java title=""
+/* 前序遍历：例题一 */
+void preOrder(TreeNode root) {
+    if (root == null) {
+        return;
+    }
+    if (root.val == 7) {
+        // 记录解
+        res.add(root);
+    }
+    preOrder(root.left);
+    preOrder(root.right);
+}
+```  
 
 ![在前序遍历中搜索节点](backtracking_algorithm.assets/preorder_find_nodes.png)
 
@@ -30,45 +71,98 @@
 
 在例题一代码的基础上，我们需要借助一个列表 `path` 记录访问过的节点路径。当访问到值为 $7$ 的节点时，则复制 `path` 并添加进结果列表 `res` 。遍历完成后，`res` 中保存的就是所有的解。代码如下所示：
 
-```src
-[file]{preorder_traversal_ii_compact}-[class]{}-[func]{pre_order}
-```
+- "Python"
+```python title=""
+def pre_order(root: TreeNode):
+    """前序遍历：例题二"""
+    if root is None:
+        return
+    # 尝试
+    path.append(root)
+    if root.val == 7:
+        # 记录解
+        res.append(list(path))
+    pre_order(root.left)
+    pre_order(root.right)
+    # 回退
+    path.pop()
+```  
+
+- "C++"
+```cpp title=""
+/* 前序遍历：例题二 */
+void preOrder(TreeNode *root) {
+    if (root == nullptr) {
+        return;
+    }
+    // 尝试
+    path.push_back(root);
+    if (root->val == 7) {
+        // 记录解
+        res.push_back(path);
+    }
+    preOrder(root->left);
+    preOrder(root->right);
+    // 回退
+    path.pop_back();
+}
+```  
+
+- "Java"
+```java title=""
+/* 前序遍历：例题二 */
+void preOrder(TreeNode root) {
+    if (root == null) {
+        return;
+    }
+    // 尝试
+    path.add(root);
+    if (root.val == 7) {
+        // 记录解
+        res.add(new ArrayList<>(path));
+    }
+    preOrder(root.left);
+    preOrder(root.right);
+    // 回退
+    path.remove(path.size() - 1);
+}
+```  
 
 在每次“尝试”中，我们通过将当前节点添加进 `path` 来记录路径；而在“回退”前，我们需要将该节点从 `path` 中弹出，**以恢复本次尝试之前的状态**。
 
 观察下图所示的过程，**我们可以将尝试和回退理解为“前进”与“撤销”**，两个操作互为逆向。
 
-=== "<1>"
+- "<1>"
     ![尝试与回退](backtracking_algorithm.assets/preorder_find_paths_step1.png)
 
-=== "<2>"
+- "<2>"
     ![preorder_find_paths_step2](backtracking_algorithm.assets/preorder_find_paths_step2.png)
 
-=== "<3>"
+- "<3>"
     ![preorder_find_paths_step3](backtracking_algorithm.assets/preorder_find_paths_step3.png)
 
-=== "<4>"
+- "<4>"
     ![preorder_find_paths_step4](backtracking_algorithm.assets/preorder_find_paths_step4.png)
 
-=== "<5>"
+- "<5>"
     ![preorder_find_paths_step5](backtracking_algorithm.assets/preorder_find_paths_step5.png)
 
-=== "<6>"
+- "<6>"
     ![preorder_find_paths_step6](backtracking_algorithm.assets/preorder_find_paths_step6.png)
 
-=== "<7>"
+- "<7>"
     ![preorder_find_paths_step7](backtracking_algorithm.assets/preorder_find_paths_step7.png)
 
-=== "<8>"
+- "<8>"
     ![preorder_find_paths_step8](backtracking_algorithm.assets/preorder_find_paths_step8.png)
 
-=== "<9>"
+- "<9>"
     ![preorder_find_paths_step9](backtracking_algorithm.assets/preorder_find_paths_step9.png)
 
-=== "<10>"
+- "<10>"
     ![preorder_find_paths_step10](backtracking_algorithm.assets/preorder_find_paths_step10.png)
 
-=== "<11>"
+- "<11>"
     ![preorder_find_paths_step11](backtracking_algorithm.assets/preorder_find_paths_step11.png)
 
 ## 剪枝
@@ -81,9 +175,65 @@
 
 为了满足以上约束条件，**我们需要添加剪枝操作**：在搜索过程中，若遇到值为 $3$ 的节点，则提前返回，不再继续搜索。代码如下所示：
 
-```src
-[file]{preorder_traversal_iii_compact}-[class]{}-[func]{pre_order}
-```
+- "Python"
+```python title=""
+def pre_order(root: TreeNode):
+    """前序遍历：例题三"""
+    # 剪枝
+    if root is None or root.val == 3:
+        return
+    # 尝试
+    path.append(root)
+    if root.val == 7:
+        # 记录解
+        res.append(list(path))
+    pre_order(root.left)
+    pre_order(root.right)
+    # 回退
+    path.pop()
+```  
+
+- "C++"
+```cpp title=""
+/* 前序遍历：例题三 */
+void preOrder(TreeNode *root) {
+    // 剪枝
+    if (root == nullptr || root->val == 3) {
+        return;
+    }
+    // 尝试
+    path.push_back(root);
+    if (root->val == 7) {
+        // 记录解
+        res.push_back(path);
+    }
+    preOrder(root->left);
+    preOrder(root->right);
+    // 回退
+    path.pop_back();
+}
+```  
+
+- "Java"
+```java title=""
+/* 前序遍历：例题三 */
+void preOrder(TreeNode root) {
+    // 剪枝
+    if (root == null || root.val == 3) {
+        return;
+    }
+    // 尝试
+    path.add(root);
+    if (root.val == 7) {
+        // 记录解
+        res.add(new ArrayList<>(path));
+    }
+    preOrder(root.left);
+    preOrder(root.right);
+    // 回退
+    path.remove(path.size() - 1);
+}
+```  
 
 “剪枝”是一个非常形象的名词。如下图所示，在搜索过程中，**我们“剪掉”了不满足约束条件的搜索分支**，避免许多无意义的尝试，从而提高了搜索效率。
 
@@ -95,7 +245,7 @@
 
 在以下框架代码中，`state` 表示问题的当前状态，`choices` 表示当前状态下可以做出的选择：
 
-=== "Python"
+- "Python"
 
     ```python title=""
     def backtrack(state: State, choices: list[choice], res: list[state]):
@@ -117,7 +267,7 @@
                 undo_choice(state, choice)
     ```
 
-=== "C++"
+- "C++"
 
     ```cpp title=""
     /* 回溯算法框架 */
@@ -143,7 +293,7 @@
     }
     ```
 
-=== "Java"
+- "Java"
 
     ```java title=""
     /* 回溯算法框架 */
@@ -169,7 +319,7 @@
     }
     ```
 
-=== "C#"
+- "C#"
 
     ```csharp title=""
     /* 回溯算法框架 */
@@ -195,7 +345,7 @@
     }
     ```
 
-=== "Go"
+- "Go"
 
     ```go title=""
     /* 回溯算法框架 */
@@ -221,7 +371,7 @@
     }
     ```
 
-=== "Swift"
+- "Swift"
 
     ```swift title=""
     /* 回溯算法框架 */
@@ -247,7 +397,7 @@
     }
     ```
 
-=== "JS"
+- "JS"
 
     ```javascript title=""
     /* 回溯算法框架 */
@@ -273,7 +423,7 @@
     }
     ```
 
-=== "TS"
+- "TS"
 
     ```typescript title=""
     /* 回溯算法框架 */
@@ -299,7 +449,7 @@
     }
     ```
 
-=== "Dart"
+- "Dart"
 
     ```dart title=""
     /* 回溯算法框架 */
@@ -325,7 +475,7 @@
     }
     ```
 
-=== "Rust"
+- "Rust"
 
     ```rust title=""
     /* 回溯算法框架 */
@@ -351,7 +501,7 @@
     }
     ```
 
-=== "C"
+- "C"
 
     ```c title=""
     /* 回溯算法框架 */
@@ -377,7 +527,7 @@
     }
     ```
 
-=== "Zig"
+- "Zig"
 
     ```zig title=""
 
@@ -385,9 +535,146 @@
 
 接下来，我们基于框架代码来解决例题三。状态 `state` 为节点遍历路径，选择 `choices` 为当前节点的左子节点和右子节点，结果 `res` 是路径列表：
 
-```src
-[file]{preorder_traversal_iii_template}-[class]{}-[func]{backtrack}
-```
+- "Python"
+```python title=""
+def is_solution(state: list[TreeNode]) -> bool:
+    """判断当前状态是否为解"""
+    return state and state[-1].val == 7
+
+def record_solution(state: list[TreeNode], res: list[list[TreeNode]]):
+    """记录解"""
+    res.append(list(state))
+
+def is_valid(state: list[TreeNode], choice: TreeNode) -> bool:
+    """判断在当前状态下，该选择是否合法"""
+    return choice is not None and choice.val != 3
+
+def make_choice(state: list[TreeNode], choice: TreeNode):
+    """更新状态"""
+    state.append(choice)
+
+def undo_choice(state: list[TreeNode], choice: TreeNode):
+    """恢复状态"""
+    state.pop()
+
+def backtrack(
+    state: list[TreeNode], choices: list[TreeNode], res: list[list[TreeNode]]
+):
+    """回溯算法：例题三"""
+    # 检查是否为解
+    if is_solution(state):
+        # 记录解
+        record_solution(state, res)
+    # 遍历所有选择
+    for choice in choices:
+        # 剪枝：检查选择是否合法
+        if is_valid(state, choice):
+            # 尝试：做出选择，更新状态
+            make_choice(state, choice)
+            # 进行下一轮选择
+            backtrack(state, [choice.left, choice.right], res)
+            # 回退：撤销选择，恢复到之前的状态
+            undo_choice(state, choice)
+```  
+
+- "C++"
+```cpp title=""
+/* 判断当前状态是否为解 */
+bool isSolution(vector<TreeNode *> &state) {
+    return !state.empty() && state.back()->val == 7;
+}
+
+/* 记录解 */
+void recordSolution(vector<TreeNode *> &state, vector<vector<TreeNode *>> &res) {
+    res.push_back(state);
+}
+
+/* 判断在当前状态下，该选择是否合法 */
+bool isValid(vector<TreeNode *> &state, TreeNode *choice) {
+    return choice != nullptr && choice->val != 3;
+}
+
+/* 更新状态 */
+void makeChoice(vector<TreeNode *> &state, TreeNode *choice) {
+    state.push_back(choice);
+}
+
+/* 恢复状态 */
+void undoChoice(vector<TreeNode *> &state, TreeNode *choice) {
+    state.pop_back();
+}
+
+/* 回溯算法：例题三 */
+void backtrack(vector<TreeNode *> &state, vector<TreeNode *> &choices, vector<vector<TreeNode *>> &res) {
+    // 检查是否为解
+    if (isSolution(state)) {
+        // 记录解
+        recordSolution(state, res);
+    }
+    // 遍历所有选择
+    for (TreeNode *choice : choices) {
+        // 剪枝：检查选择是否合法
+        if (isValid(state, choice)) {
+            // 尝试：做出选择，更新状态
+            makeChoice(state, choice);
+            // 进行下一轮选择
+            vector<TreeNode *> nextChoices{choice->left, choice->right};
+            backtrack(state, nextChoices, res);
+            // 回退：撤销选择，恢复到之前的状态
+            undoChoice(state, choice);
+        }
+    }
+}
+```  
+
+- "Java"
+```java title=""
+/* 判断当前状态是否为解 */
+boolean isSolution(List<TreeNode> state) {
+    return !state.isEmpty() && state.get(state.size() - 1).val == 7;
+}
+
+/* 记录解 */
+void recordSolution(List<TreeNode> state, List<List<TreeNode>> res) {
+    res.add(new ArrayList<>(state));
+}
+
+/* 判断在当前状态下，该选择是否合法 */
+boolean isValid(List<TreeNode> state, TreeNode choice) {
+    return choice != null && choice.val != 3;
+}
+
+/* 更新状态 */
+void makeChoice(List<TreeNode> state, TreeNode choice) {
+    state.add(choice);
+}
+
+/* 恢复状态 */
+void undoChoice(List<TreeNode> state, TreeNode choice) {
+    state.remove(state.size() - 1);
+}
+
+/* 回溯算法：例题三 */
+void backtrack(List<TreeNode> state, List<TreeNode> choices, List<List<TreeNode>> res) {
+    // 检查是否为解
+    if (isSolution(state)) {
+        // 记录解
+        recordSolution(state, res);
+    }
+    // 遍历所有选择
+    for (TreeNode choice : choices) {
+        // 剪枝：检查选择是否合法
+        if (isValid(state, choice)) {
+            // 尝试：做出选择，更新状态
+            makeChoice(state, choice);
+            // 进行下一轮选择
+            backtrack(state, Arrays.asList(choice.left, choice.right), res);
+            // 回退：撤销选择，恢复到之前的状态
+            undoChoice(state, choice);
+        }
+    }
+}
+```  
 
 根据题意，我们在找到值为 $7$ 的节点后应该继续搜索，**因此需要将记录解之后的 `return` 语句删除**。下图对比了保留或删除 `return` 语句的搜索过程。
 

@@ -16,34 +16,34 @@
 
 “合并阶段”从底至顶地将左子数组和右子数组合并为一个有序数组。需要注意的是，从长度为 1 的子数组开始合并，合并阶段中的每个子数组都是有序的。
 
-=== "<1>"
+- "<1>"
     ![归并排序步骤](merge_sort.assets/merge_sort_step1.png)
 
-=== "<2>"
+- "<2>"
     ![merge_sort_step2](merge_sort.assets/merge_sort_step2.png)
 
-=== "<3>"
+- "<3>"
     ![merge_sort_step3](merge_sort.assets/merge_sort_step3.png)
 
-=== "<4>"
+- "<4>"
     ![merge_sort_step4](merge_sort.assets/merge_sort_step4.png)
 
-=== "<5>"
+- "<5>"
     ![merge_sort_step5](merge_sort.assets/merge_sort_step5.png)
 
-=== "<6>"
+- "<6>"
     ![merge_sort_step6](merge_sort.assets/merge_sort_step6.png)
 
-=== "<7>"
+- "<7>"
     ![merge_sort_step7](merge_sort.assets/merge_sort_step7.png)
 
-=== "<8>"
+- "<8>"
     ![merge_sort_step8](merge_sort.assets/merge_sort_step8.png)
 
-=== "<9>"
+- "<9>"
     ![merge_sort_step9](merge_sort.assets/merge_sort_step9.png)
 
-=== "<10>"
+- "<10>"
     ![merge_sort_step10](merge_sort.assets/merge_sort_step10.png)
 
 观察发现，归并排序与二叉树后序遍历的递归顺序是一致的。
@@ -53,9 +53,135 @@
 
 归并排序的实现如以下代码所示。请注意，`nums` 的待合并区间为 `[left, right]` ，而 `tmp` 的对应区间为 `[0, right - left]` 。
 
-```src
-[file]{merge_sort}-[class]{}-[func]{merge_sort}
-```
+- "Python"
+```python
+def merge(nums: list[int], left: int, mid: int, right: int):
+    """合并左子数组和右子数组"""
+    # 左子数组区间为 [left, mid], 右子数组区间为 [mid+1, right]
+    # 创建一个临时数组 tmp ，用于存放合并后的结果
+    tmp = [0] * (right - left + 1)
+    # 初始化左子数组和右子数组的起始索引
+    i, j, k = left, mid + 1, 0
+    # 当左右子数组都还有元素时，进行比较并将较小的元素复制到临时数组中
+    while i <= mid and j <= right:
+        if nums[i] <= nums[j]:
+            tmp[k] = nums[i]
+            i += 1
+        else:
+            tmp[k] = nums[j]
+            j += 1
+        k += 1
+    # 将左子数组和右子数组的剩余元素复制到临时数组中
+    while i <= mid:
+        tmp[k] = nums[i]
+        i += 1
+        k += 1
+    while j <= right:
+        tmp[k] = nums[j]
+        j += 1
+        k += 1
+    # 将临时数组 tmp 中的元素复制回原数组 nums 的对应区间
+    for k in range(0, len(tmp)):
+        nums[left + k] = tmp[k]
+
+def merge_sort(nums: list[int], left: int, right: int):
+    """归并排序"""
+    # 终止条件
+    if left >= right:
+        return  # 当子数组长度为 1 时终止递归
+    # 划分阶段
+    mid = (left + right) // 2  # 计算中点
+    merge_sort(nums, left, mid)  # 递归左子数组
+    merge_sort(nums, mid + 1, right)  # 递归右子数组
+    # 合并阶段
+    merge(nums, left, mid, right)
+```  
+
+- "C++"
+```cpp
+/* 合并左子数组和右子数组 */
+void merge(vector<int> &nums, int left, int mid, int right) {
+    // 左子数组区间为 [left, mid], 右子数组区间为 [mid+1, right]
+    // 创建一个临时数组 tmp ，用于存放合并后的结果
+    vector<int> tmp(right - left + 1);
+    // 初始化左子数组和右子数组的起始索引
+    int i = left, j = mid + 1, k = 0;
+    // 当左右子数组都还有元素时，进行比较并将较小的元素复制到临时数组中
+    while (i <= mid && j <= right) {
+        if (nums[i] <= nums[j])
+            tmp[k++] = nums[i++];
+        else
+            tmp[k++] = nums[j++];
+    }
+    // 将左子数组和右子数组的剩余元素复制到临时数组中
+    while (i <= mid) {
+        tmp[k++] = nums[i++];
+    }
+    while (j <= right) {
+        tmp[k++] = nums[j++];
+    }
+    // 将临时数组 tmp 中的元素复制回原数组 nums 的对应区间
+    for (k = 0; k < tmp.size(); k++) {
+        nums[left + k] = tmp[k];
+    }
+}
+
+/* 归并排序 */
+void mergeSort(vector<int> &nums, int left, int right) {
+    // 终止条件
+    if (left >= right)
+        return; // 当子数组长度为 1 时终止递归
+    // 划分阶段
+    int mid = (left + right) / 2;    // 计算中点
+    mergeSort(nums, left, mid);      // 递归左子数组
+    mergeSort(nums, mid + 1, right); // 递归右子数组
+    // 合并阶段
+    merge(nums, left, mid, right);
+}
+```  
+
+- "Java"
+```java
+/* 合并左子数组和右子数组 */
+void merge(int[] nums, int left, int mid, int right) {
+    // 左子数组区间为 [left, mid], 右子数组区间为 [mid+1, right]
+    // 创建一个临时数组 tmp ，用于存放合并后的结果
+    int[] tmp = new int[right - left + 1];
+    // 初始化左子数组和右子数组的起始索引
+    int i = left, j = mid + 1, k = 0;
+    // 当左右子数组都还有元素时，进行比较并将较小的元素复制到临时数组中
+    while (i <= mid && j <= right) {
+        if (nums[i] <= nums[j])
+            tmp[k++] = nums[i++];
+        else
+            tmp[k++] = nums[j++];
+    }
+    // 将左子数组和右子数组的剩余元素复制到临时数组中
+    while (i <= mid) {
+        tmp[k++] = nums[i++];
+    }
+    while (j <= right) {
+        tmp[k++] = nums[j++];
+    }
+    // 将临时数组 tmp 中的元素复制回原数组 nums 的对应区间
+    for (k = 0; k < tmp.length; k++) {
+        nums[left + k] = tmp[k];
+    }
+}
+
+/* 归并排序 */
+void mergeSort(int[] nums, int left, int right) {
+    // 终止条件
+    if (left >= right)
+        return; // 当子数组长度为 1 时终止递归
+    // 划分阶段
+    int mid = (left + right) / 2; // 计算中点
+    mergeSort(nums, left, mid); // 递归左子数组
+    mergeSort(nums, mid + 1, right); // 递归右子数组
+    // 合并阶段
+    merge(nums, left, mid, right);
+}
+```  
 
 ## 算法特性
 
