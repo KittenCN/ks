@@ -9,9 +9,9 @@ public class BubbleSort {
     public static void bubbleSort(int[] arr) {
         if(arr == null || arr.length == 0)
             return ;
-        for(int i=0; i&lt;arr.length-1; i++) {
-            for(int j=arr.length-1; j&gt;i; j--) {
-                if(arr[j] &lt; arr[j-1]) {
+        for(int i=0; i<arr.length-1; i++) {
+            for(int j=arr.length-1; j>i; j--) {
+                if(arr[j] < arr[j-1]) {
                     swap(arr, j-1, j);
                 }
             }
@@ -35,10 +35,10 @@ public class SelectSort {
         if(arr == null || arr.length == 0)
             return ;
         int minIndex = 0;
-        for(int i=0; i&lt;arr.length-1; i++) { //只需要比较n-1次
+        for(int i=0; i<arr.length-1; i++) { //只需要比较n-1次
             minIndex = i;
-            for(int j=i+1; j&lt;arr.length; j++) { //从i+1开始比较，因为minIndex默认为i了，i就没必要比了。
-                if(arr[j] &lt; arr[minIndex]) {
+            for(int j=i+1; j<arr.length; j++) { //从i+1开始比较，因为minIndex默认为i了，i就没必要比了。
+                if(arr[j] < arr[minIndex]) {
                     minIndex = j;
                 }
             }
@@ -65,11 +65,11 @@ public class InsertSort {
     public static void insertSort(int[] arr) {
         if(arr == null || arr.length == 0)
             return ;
-        for(int i=1; i&lt;arr.length; i++) { //假设第一个数位置时正确的；要往后移，必须要假设第一个。
+        for(int i=1; i<arr.length; i++) { //假设第一个数位置时正确的；要往后移，必须要假设第一个。
             int j = i;
             int target = arr[i]; //待插入的
             //后移
-            while(j &gt; 0 &amp;&amp; target &lt; arr[j-1]) {
+            while(j > 0 && target < arr[j-1]) {
                 arr[j] = arr[j-1];
                 j --;
             }
@@ -98,10 +98,10 @@ public class QuickSort {
         int pivotKey = arr[left];
         int pivotPointer = left;
 
-        while(left &lt; right) {
-            while(left &lt; right &amp;&amp; arr[right] &gt;= pivotKey)
+        while(left < right) {
+            while(left < right && arr[right] >= pivotKey)
                 right --;
-            while(left &lt; right &amp;&amp; arr[left] &lt;= pivotKey)
+            while(left < right && arr[left] <= pivotKey)
                 left ++;
             swap(arr, left, right); //把大的交换到右边，把小的交换到左边。
         }
@@ -109,7 +109,7 @@ public class QuickSort {
         return left;
     }
     public static void quickSort(int[] arr, int left, int right) {
-        if(left &gt;= right)
+        if(left >= right)
             return ;
         int pivotPos = partition(arr, left, right);
         quickSort(arr, left, pivotPos-1);
@@ -142,11 +142,11 @@ public class QuickSort {
     public static int partition(int[] arr, int left, int right) {
         int pivotKey = arr[left];
 
-        while(left &lt; right) {
-            while(left &lt; right &amp;&amp; arr[right] &gt;= pivotKey)
+        while(left < right) {
+            while(left < right && arr[right] >= pivotKey)
                 right --;
             arr[left] = arr[right]; //把小的移动到左边
-            while(left &lt; right &amp;&amp; arr[left] &lt;= pivotKey)
+            while(left < right && arr[left] <= pivotKey)
                 left ++;
             arr[right] = arr[left]; //把大的移动到右边
         }
@@ -160,7 +160,7 @@ public class QuickSort {
      * @param right
      */
     public static void quickSort(int[] arr, int left, int right) {
-        if(left &gt;= right)
+        if(left >= right)
             return ;
         int pivotPos = partition(arr, left, right);
         quickSort(arr, left, pivotPos-1);
@@ -200,13 +200,13 @@ public class HeapSort {
     public static void heapAdjust(int[] arr, int start, int end) {
         int temp = arr[start];
 
-        for(int i=2*start+1; i&lt;=end; i*=2) {
+        for(int i=2*start+1; i<=end; i*=2) {
             //左右孩子的节点分别为2*i+1,2*i+2
             //选择出左右孩子较小的下标
-            if(i &lt; end &amp;&amp; arr[i] &lt; arr[i+1]) {
+            if(i < end && arr[i] < arr[i+1]) {
                 i ++; 
             }
-            if(temp &gt;= arr[i]) {
+            if(temp >= arr[i]) {
                 break; //已经为大顶堆，=保持稳定性。
             }
             arr[start] = arr[i]; //将子节点上移
@@ -218,11 +218,11 @@ public class HeapSort {
         if(arr == null || arr.length == 0)
             return ;
         //建立大顶堆
-        for(int i=arr.length/2; i&gt;=0; i--) {
+        for(int i=arr.length/2; i>=0; i--) {
             heapAdjust(arr, i, arr.length-1);
         }
 
-        for(int i=arr.length-1; i&gt;=0; i--) {
+        for(int i=arr.length-1; i>=0; i--) {
             swap(arr, 0, i);
             heapAdjust(arr, 0, i-1);
         }
@@ -256,10 +256,10 @@ public class ShellSort {
      * @param d 增量
      */
     public static void shellInsert(int[] arr, int d) {
-        for(int i=d; i&lt;arr.length; i++) {
+        for(int i=d; i<arr.length; i++) {
             int j = i - d;
             int temp = arr[i];    //记录要插入的数据  
-            while (j&gt;=0 &amp;&amp; arr[j]&gt;temp) {  //从后向前，找到比其小的数的位置   
+            while (j>=0 && arr[j]>temp) {  //从后向前，找到比其小的数的位置   
                 arr[j+d] = arr[j];    //向后挪动  
                 j -= d;  
             }  
@@ -272,7 +272,7 @@ public class ShellSort {
         if(arr == null || arr.length == 0)
             return ;
         int d = arr.length / 2;
-        while(d &gt;= 1) {
+        while(d >= 1) {
             shellInsert(arr, d);
             d /= 2;
         }
@@ -296,7 +296,7 @@ public class MergeSort {
      * @param right 右指针
      */
     public static void mSort(int[] arr, int left, int right) {
-        if(left &gt;= right)
+        if(left >= right)
             return ;
         int mid = (left + right) / 2;
         mSort(arr, left, mid); //递归排序左边
@@ -316,21 +316,21 @@ public class MergeSort {
         int i = left;
         int j = mid + 1;
         int k = 0;
-        while(i &lt;= mid &amp;&amp; j &lt;= right) {
-            if(arr[i] &lt;= arr[j]) {
+        while(i <= mid && j <= right) {
+            if(arr[i] <= arr[j]) {
                 temp[k++] = arr[i++];
             }
             else {
                 temp[k++] = arr[j++];
             }
         }
-        while(i &lt;= mid) {
+        while(i <= mid) {
             temp[k++] = arr[i++];
         }
-        while(j &lt;= right) {
+        while(j <= right) {
             temp[k++] = arr[j++];
         }
-        for(int p=0; p&lt;temp.length; p++) {
+        for(int p=0; p<temp.length; p++) {
             arr[left + p] = temp[p];
         }
     }
@@ -349,12 +349,12 @@ public class CountSort {
         int max = max(arr);
         int[] count = new int[max+1];
         Arrays.fill(count, 0);
-        for(int i=0; i&lt;arr.length; i++) {
+        for(int i=0; i<arr.length; i++) {
             count[arr[i]] ++;
         }
         int k = 0;
-        for(int i=0; i&lt;=max; i++) {
-            for(int j=0; j&lt;count[i]; j++) {
+        for(int i=0; i<=max; i++) {
+            for(int j=0; j<count[i]; j++) {
                 arr[k++] = i;
             }
         }
@@ -362,7 +362,7 @@ public class CountSort {
     public static int max(int[] arr) {
         int max = Integer.MIN_VALUE;
         for(int ele : arr) {
-            if(ele &gt; max)
+            if(ele > max)
                 max = ele;
         }
         return max;
@@ -374,7 +374,7 @@ public class CountSort {
 <p>桶排序算是计数排序的一种改进和推广，但是网上有许多资料把计数排序和桶排序混为一谈。其实桶排序要比计数排序复杂许多。</p>
 <p>对桶排序的分析和解释借鉴这位兄弟的文章（有改动）：http://hxraid.iteye.com/blog/647759</p>
 <p>桶排序的基本思想：</p>
-<p>假设有一组长度为N的待排关键字序列K[1....n]。首先将这个序列划分成M个的子区间(桶) 。然后基于某种映射函数 ，将待排序列的关键字k映射到第i个桶中(即桶数组B的下标 i) ，那么该关键字k就作为B[i]中的元素(每个桶B[i]都是一组大小为N/M的序列)。接着对每个桶B[i]中的所有元素进行比较排序(可以使用快排)。然后依次枚举输出B[0]&#8230;.B[M]中的全部内容即是一个有序序列。bindex=f(key)   其中，bindex 为桶数组B的下标(即第bindex个桶), k为待排序列的关键字。桶排序之所以能够高效，其关键在于这个映射函数，它必须做到：如果关键字k1&lt;k2，那么f(k1)&lt;=f(k2)。也就是说B(i)中的最小数据都要大于B(i-1)中最大数据。很显然，映射函数的确定与数据本身的特点有很大的关系。</p>
+<p>假设有一组长度为N的待排关键字序列K[1....n]。首先将这个序列划分成M个的子区间(桶) 。然后基于某种映射函数 ，将待排序列的关键字k映射到第i个桶中(即桶数组B的下标 i) ，那么该关键字k就作为B[i]中的元素(每个桶B[i]都是一组大小为N/M的序列)。接着对每个桶B[i]中的所有元素进行比较排序(可以使用快排)。然后依次枚举输出B[0]&#8230;.B[M]中的全部内容即是一个有序序列。bindex=f(key)   其中，bindex 为桶数组B的下标(即第bindex个桶), k为待排序列的关键字。桶排序之所以能够高效，其关键在于这个映射函数，它必须做到：如果关键字k1<k2，那么f(k1)<=f(k2)。也就是说B(i)中的最小数据都要大于B(i-1)中最大数据。很显然，映射函数的确定与数据本身的特点有很大的关系。</p>
 <p>假如待排序列K= {49、 38 、 35、 97 、 76、 73 、 27、 49 }。这些数据全部在1—100之间。因此我们定制10个桶，然后确定映射函数f(k)=k/10。则第一个关键字49将定位到第4个桶中(49/10=4)。依次将所有关键字全部堆入桶中，并在每个非空的桶中进行快速排序后得到如图所示。只要顺序输出每个B[i]中的数据就可以得到有序序列了。</p>
 <p>桶排序分析：</p>
 <p>桶排序利用函数的映射关系，减少了几乎所有的比较工作。实际上，桶排序的f(k)值的计算，其作用就相当于快排中划分，希尔排序中的子序列，归并排序中的子问题，已经把大量数据分割成了基本有序的数据块(桶)。然后只需要对桶中的少量数据做先进的比较排序即可。</p>
@@ -393,26 +393,26 @@ public class CountSort {
 ```cpp
 public class BucketSort {
     public static void bucketSort(int[] arr) {
-        if(arr == null &amp;&amp; arr.length == 0)
+        if(arr == null && arr.length == 0)
             return ;
         int bucketNums = 10; //这里默认为10，规定待排数[0,100)
-        List&lt;List&lt;Integer&gt;&gt; buckets = new ArrayList&lt;List&lt;Integer&gt;&gt;(); //桶的索引
-        for(int i=0; i&lt;10; i++) {
-            buckets.add(new LinkedList&lt;Integer&gt;()); //用链表比较合适
+        List<List<Integer>> buckets = new ArrayList<List<Integer>>(); //桶的索引
+        for(int i=0; i<10; i++) {
+            buckets.add(new LinkedList<Integer>()); //用链表比较合适
         }
         //划分桶
-        for(int i=0; i&lt;arr.length; i++) {
+        for(int i=0; i<arr.length; i++) {
             buckets.get(f(arr[i])).add(arr[i]);
         }
         //对每个桶进行排序
-        for(int i=0; i&lt;buckets.size(); i++) {
+        for(int i=0; i<buckets.size(); i++) {
             if(!buckets.get(i).isEmpty()) {
                 Collections.sort(buckets.get(i)); //对每个桶进行快排
             }
         }
         //还原排好序的数组
         int k = 0;
-        for(List&lt;Integer&gt; bucket : buckets) {
+        for(List<Integer> bucket : buckets) {
             for(int ele : bucket) {
                 arr[k++] = ele;
             }
@@ -437,11 +437,11 @@ public class BucketSort {
 ```cpp
 public class RadixSort {
     public static void radixSort(int[] arr) {
-        if(arr == null &amp;&amp; arr.length == 0)
+        if(arr == null && arr.length == 0)
             return ;
         int maxBit = getMaxBit(arr);
-        for(int i=1; i&lt;=maxBit; i++) {
-            List&lt;List&lt;Integer&gt;&gt; buf = distribute(arr, i); //分配
+        for(int i=1; i<=maxBit; i++) {
+            List<List<Integer>> buf = distribute(arr, i); //分配
             collecte(arr, buf); //收集
         }
     }
@@ -451,12 +451,12 @@ public class RadixSort {
      * @param iBit 要分配第几位
      * @return
      */
-    public static List&lt;List&lt;Integer&gt;&gt; distribute(int[] arr, int iBit) {
-        List&lt;List&lt;Integer&gt;&gt; buf = new ArrayList&lt;List&lt;Integer&gt;&gt;();
-        for(int j=0; j&lt;10; j++) {
-            buf.add(new LinkedList&lt;Integer&gt;());
+    public static List<List<Integer>> distribute(int[] arr, int iBit) {
+        List<List<Integer>> buf = new ArrayList<List<Integer>>();
+        for(int j=0; j<10; j++) {
+            buf.add(new LinkedList<Integer>());
         }
-        for(int i=0; i&lt;arr.length; i++) {
+        for(int i=0; i<arr.length; i++) {
             buf.get(getNBit(arr[i], iBit)).add(arr[i]);
         }
         return buf;
@@ -466,9 +466,9 @@ public class RadixSort {
      * @param arr 把分配的数据收集到arr中
      * @param buf 
      */
-    public static void collecte(int[] arr, List&lt;List&lt;Integer&gt;&gt; buf) {
+    public static void collecte(int[] arr, List<List<Integer>> buf) {
         int k = 0;
-        for(List&lt;Integer&gt; bucket : buf) {
+        for(List<Integer> bucket : buf) {
             for(int ele : bucket) {
                 arr[k++] = ele;
             }
@@ -483,7 +483,7 @@ public class RadixSort {
         int max = Integer.MIN_VALUE;
         for(int ele : arr) {
             int len = (ele+"").length();
-            if(len &gt; max)
+            if(len > max)
                 max = len;
         }
         return max;
@@ -497,7 +497,7 @@ public class RadixSort {
     public static int getNBit(int x, int n) {
 
         String sx = x + "";
-        if(sx.length() &lt; n)
+        if(sx.length() < n)
             return 0;
         else
             return sx.charAt(sx.length()-n) - '0';
@@ -517,7 +517,7 @@ public class RadixSort {
 <p>附：基于比较排序算法时间下限为O(nlogn)的证明：</p>
 <p>基于比较排序下限的证明是通过决策树证明的，决策树的高度Ω（nlgn），这样就得出了比较排序的下限。</p>
 
-<p>首先要引入决策树。 首先决策树是一颗二叉树，每个节点表示元素之间一组可能的排序，它予以京进行的比较相一致，比较的结果是树的边。 先来说明一些二叉树的性质，令T是深度为d的二叉树，则T最多有2^片树叶。 具有L片树叶的二叉树的深度至少是logL。 所以，对n个元素排序的决策树必然有n!片树叶（因为n个数有n!种不同的大小关系），所以决策树的深度至少是log(n!)，即至少需要log(n!)次比较。 而 log(n!)=logn+log(n-1)+log(n-2)+&#8230;+log2+log1 &gt;=logn+log(n-1)+log(n-2)+&#8230;+log(n/2) &gt;=(n/2)log(n/2) &gt;=(n/2)logn-n/2 =O(nlogn) 所以只用到比较的排序算法最低时间复杂度是O(nlogn)。</p>
+<p>首先要引入决策树。 首先决策树是一颗二叉树，每个节点表示元素之间一组可能的排序，它予以京进行的比较相一致，比较的结果是树的边。 先来说明一些二叉树的性质，令T是深度为d的二叉树，则T最多有2^片树叶。 具有L片树叶的二叉树的深度至少是logL。 所以，对n个元素排序的决策树必然有n!片树叶（因为n个数有n!种不同的大小关系），所以决策树的深度至少是log(n!)，即至少需要log(n!)次比较。 而 log(n!)=logn+log(n-1)+log(n-2)+&#8230;+log2+log1 >=logn+log(n-1)+log(n-2)+&#8230;+log(n/2) >=(n/2)log(n/2) >=(n/2)logn-n/2 =O(nlogn) 所以只用到比较的排序算法最低时间复杂度是O(nlogn)。</p>
 <p><strong>参考资料：</strong></p>
 <ul>
 <li>《数据结构》 严蔚敏 吴伟民 编著</li>
