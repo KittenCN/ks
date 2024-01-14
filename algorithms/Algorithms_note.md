@@ -363,7 +363,8 @@ public class TwoStackQueue {
     - 基本思路是：将当前节点cur的下一个节点 cur.getNext()缓存到temp后，然后更改当前节点指针指向上一结点pre。也就是说在反转当前结点指针指向前，先把当前结点的指针域用tmp临时保存，以便下一次使用，其过程可表示如下：
     - pre：上一结点
     - cur: 当前结点
-    - tmp: 临时结点，用于保存当前结点的指针域（即下一结点）
+    - tmp: 临时结点，用于保存当前结点的指针域（即下一结点）  
+
 ```java
 public class LinkedListReverse {
     private void Display(Node node){
@@ -415,9 +416,9 @@ class Node{
 
 
 - 判断一个单链表是否有环
-    最常用方法：定义两个指针，同时从链表的头节点出发，一个指针一次走一步，另一个指针一次走两步。如果走得快的指针追上了走得慢的指针，那么链表就是环形链表；如果走得快的指针走到了链表的末尾（next指向 NULL）都没有追上第一个指针，那么链表就不是环形链表。
+    最常用方法：定义两个指针，同时从链表的头节点出发，一个指针一次走一步，另一个指针一次走两步。如果走得快的指针追上了走得慢的指针，那么链表就是环形链表；如果走得快的指针走到了链表的末尾（next指向 NULL）都没有追上第一个指针，那么链表就不是环形链表。  
 
-- **使用异或交换两个整数或者字符串**
+- **使用异或交换两个整数或者字符串**  
     ```java
     public static String reverse(String s){
         char[] a = s.toCharArray();
@@ -433,7 +434,7 @@ class Node{
     }
     ```
 ### 5.3 树
-#### BST转换为有序双向链表
+#### BST转换为有序双向链表  
 ```java
  //双向链表的左边头结点和右边头节点
     static Node lhead = null;
@@ -512,7 +513,7 @@ class Node{
 
 	但是，它的时间复杂度很低，意味着数据量不大时，效率极高。
 ### string 反转
-除了普通的交换，还可以用异或的方法减少空间复杂度。
+除了普通的交换，还可以用异或的方法减少空间复杂度。  
 
 ```Java
 public static String reverse(String s){
@@ -528,7 +529,7 @@ public static String reverse(String s){
     return new String(a);
 }
 ```
-### 链表反转
+### 链表反转  
 ```java
     private Node Reverse(Node head){
         if (head == null)
@@ -548,10 +549,9 @@ public static String reverse(String s){
         return pre;
     }
 ```
-### 两个线程交替输出1-100
+### 两个线程交替输出1-100  
 ```java
-
-//两个线程交替执行打印 1~100
+//两个线程交替执行打印 1~100  
 public class TwoThread {
     private int out = 1;
 
@@ -650,9 +650,9 @@ public class TwoThread {
 - 一位表示一个老鼠，0-7表示8个瓶子。也就是分别将1、3、5、7号瓶子的药混起来给老鼠1吃，2、3、6、7号瓶子的药混起来给老鼠2吃，4、5、6、7号瓶子的药混起来给老鼠3吃，哪个老鼠死了，相应的位标为1。如老鼠1死了、老鼠2没死、老鼠3死了，那么就是101=5号瓶子有毒。同样道理10个老鼠可以确定1000个瓶子
 
 
-- 你只有 10 只小白鼠和一星期的时间，如何检验出哪个瓶子里有毒药？
+- 你只有 10 只小白鼠和一星期的时间，如何检验出哪个瓶子里有毒药？  
 
-### LRU
+### LRU  
 ```java
 package practice;
 
