@@ -123,9 +123,9 @@ public class zhaolingqian {
 }
 ```
 ## 3. 排序算法
-[各种排序算法原理与比较](Sorting.md)
+[各种排序算法原理与比较](/algorithms/Sorting.md)
 
-[七大查找算法](Searching.md)
+[七大查找算法](/algorithms/Searching.md)
 > 查找是在大量的信息中寻找一个特定的信息元素，在计算机应用中，查找是常用的基本运算，例如编译程序中符号表的查找。本文简单概括性的介绍了常见的七种查找算法，说是七种，其实二分查找、插值查找以及斐波那契查找都可以归为一类——插值查找。插值查找和斐波那契查找是在二分查找的基础上的优化查找算法。树表查找和哈希查找会在后续的博文中进行详细介绍。 >
 >
 > - **查找定义**：根据给定的某个值，在查找表中确定一个其关键字等于给定值的数据元素（或记录）。
@@ -308,7 +308,7 @@ public class Main {
     优先队列通常用堆排序来实现
 
 ## 4. 图论
-### [图的遍历和图的连通性](Graph_traversal_and_graph_connectivity.md)**  
+### [图的遍历和图的连通性](/algorithms/Graph_traversal_and_graph_connectivity.md)**  
     即BFS、DFS和Kruskal、Prim 算法
 ### 拓扑排序  
 由AOV网构造拓扑序列的拓扑排序算法主要是循环执行以下两步，直到不存在入度为0的顶点为止。
