@@ -1,5 +1,5 @@
--   [算法系统](/algorithms/base_algo.md)
--   [人工智能](/algorithms/ai.md)
+-   [算法系统](/algorithms/base_algo/)
+-   [人工智能](/algorithms/ai/)
     -   [动手学深度学习](/algorithms/ai/d2l/)
         -   [前言](/algorithms/ai/d2l/chapter_preface/index.md)
         -   [安装](/algorithms/ai/d2l/chapter_installation/index.md)
@@ -141,4 +141,4 @@
             -   [16.5. 为本书做贡献](/algorithms/ai/d2l/chapter_appendix-tools-for-deep-learning/contributing.md)
             -   [16.6. d2l API 文档](/algorithms/ai/d2l/chapter_appendix-tools-for-deep-learning/d2l.md)
         -   [参考文献](/algorithms/ai/d2l/chapter_references/zreferences.md)
--   [算法杂谈](/algorithms/other_algo.md)
+-   [算法杂谈](/algorithms/other_algo/)
