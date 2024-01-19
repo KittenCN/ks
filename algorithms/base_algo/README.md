@@ -1,8 +1,7 @@
 # algorithms
   
--   [算法系统](/algorithms/base_algo.md)
--   [人工智能](/algorithms/ai.md)
--   [算法杂谈](/algorithms/other_algo.md)
+-   [Hello 算法](/algorithms/hello_algo/)
+-   [算法笔记](/algorithms/Algorithms_note.md)
 
 <br />
 <img  src='./img/bjkb.PNG' width="600" alt="logo">
