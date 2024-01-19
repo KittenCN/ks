@@ -5,7 +5,7 @@
 (**是图像分类中广泛使用的数据集之一，但作为基准数据集过于简单。
 我们将使用类似但更复杂的Fashion-MNIST数据集**) :cite:`Xiao.Rasul.Vollgraf.2017`。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import gluon
@@ -14,7 +14,7 @@ import sys
 d2l.use_svg_display()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -26,7 +26,7 @@ from torch.utils import data
 d2l.use_svg_display()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -35,7 +35,7 @@ import tensorflow as tf
 d2l.use_svg_display()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -52,12 +52,12 @@ d2l.use_svg_display()
 
 我们可以[**通过框架中的内置函数将Fashion-MNIST数据集下载并读取到内存中**]。
 
-```{.python .input}
+```python
 mnist_train = gluon.data.vision.FashionMNIST(train=True)
 mnist_test = gluon.data.vision.FashionMNIST(train=False)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # 通过ToTensor实例将图像数据从PIL类型变换成32位浮点数格式，
 # 并除以255使得所有像素的数值均在0～1之间
@@ -68,12 +68,12 @@ mnist_test = torchvision.datasets.FashionMNIST(
     root="../data", train=False, transform=trans, download=True)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 mnist_train, mnist_test = tf.keras.datasets.fashion_mnist.load_data()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 trans = transforms.ToTensor()
 mnist_train = paddle.vision.datasets.FashionMNIST(mode="train",
@@ -87,12 +87,12 @@ Fashion-MNIST由10个类别的图像组成，
 因此，训练集和测试集分别包含60000和10000张图像。
 测试数据集不会用于训练，只用于评估模型性能。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 len(mnist_train), len(mnist_test)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 len(mnist_train[0]), len(mnist_test[0])
 ```
@@ -101,7 +101,7 @@ len(mnist_train[0]), len(mnist_test[0])
 数据集由灰度图像组成，其通道数为1。
 为了简洁起见，本书将高度$h$像素、宽度$w$像素图像的形状记为$h \times w$或（$h$,$w$）。
 
-```{.python .input}
+```python
 #@tab all
 mnist_train[0][0].shape
 ```
@@ -111,7 +111,7 @@ mnist_train[0][0].shape
 Fashion-MNIST中包含的10个类别，分别为t-shirt（T恤）、trouser（裤子）、pullover（套衫）、dress（连衣裙）、coat（外套）、sandal（凉鞋）、shirt（衬衫）、sneaker（运动鞋）、bag（包）和ankle boot（短靴）。
 以下函数用于在数字标签索引及其文本名称之间进行转换。
 
-```{.python .input}
+```python
 #@tab all
 def get_fashion_mnist_labels(labels):  #@save
     """返回Fashion-MNIST数据集的文本标签"""
@@ -122,7 +122,7 @@ def get_fashion_mnist_labels(labels):  #@save
 
 我们现在可以创建一个函数来可视化这些样本。
 
-```{.python .input}
+```python
 #@tab mxnet, tensorflow
 def show_images(imgs, num_rows, num_cols, titles=None, scale=1.5):  #@save
     """绘制图像列表"""
@@ -138,7 +138,7 @@ def show_images(imgs, num_rows, num_cols, titles=None, scale=1.5):  #@save
     return axes
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def show_images(imgs, num_rows, num_cols, titles=None, scale=1.5):  #@save
     """绘制图像列表"""
@@ -159,7 +159,7 @@ def show_images(imgs, num_rows, num_cols, titles=None, scale=1.5):  #@save
     return axes
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def show_images(imgs, num_rows, num_cols, titles=None, scale=1.5):
@@ -183,27 +183,27 @@ def show_images(imgs, num_rows, num_cols, titles=None, scale=1.5):
 
 以下是训练数据集中前[**几个样本的图像及其相应的标签**]。
 
-```{.python .input}
+```python
 X, y = mnist_train[:18]
 
 print(X.shape)
 show_images(X.squeeze(axis=-1), 2, 9, titles=get_fashion_mnist_labels(y));
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X, y = next(iter(data.DataLoader(mnist_train, batch_size=18)))
 show_images(X.reshape(18, 28, 28), 2, 9, titles=get_fashion_mnist_labels(y));
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.constant(mnist_train[0][:18])
 y = tf.constant(mnist_train[1][:18])
 show_images(X, 2, 9, titles=get_fashion_mnist_labels(y));
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X, y = next(iter(paddle.io.DataLoader(mnist_train, batch_size=18)))
 show_images(X.reshape([18, 28, 28]), 2, 9, titles=get_fashion_mnist_labels(y));
@@ -215,7 +215,7 @@ show_images(X.reshape([18, 28, 28]), 2, 9, titles=get_fashion_mnist_labels(y));
 回顾一下，在每次迭代中，数据加载器每次都会[**读取一小批量数据，大小为`batch_size`**]。
 通过内置数据迭代器，我们可以随机打乱了所有样本，从而无偏见地读取小批量。
 
-```{.python .input}
+```python
 batch_size = 256
 
 def get_dataloader_workers():  #@save
@@ -230,7 +230,7 @@ train_iter = gluon.data.DataLoader(mnist_train.transform_first(transformer),
                                    num_workers=get_dataloader_workers())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 batch_size = 256
 
@@ -242,14 +242,14 @@ train_iter = data.DataLoader(mnist_train, batch_size, shuffle=True,
                              num_workers=get_dataloader_workers())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 batch_size = 256
 train_iter = tf.data.Dataset.from_tensor_slices(
     mnist_train).batch(batch_size).shuffle(len(mnist_train[0]))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 batch_size = 256
 
@@ -266,7 +266,7 @@ train_iter = paddle.io.DataLoader(dataset=mnist_train,
 
 我们看一下读取训练数据所需的时间。
 
-```{.python .input}
+```python
 #@tab all
 timer = d2l.Timer()
 for X, y in train_iter:
@@ -280,7 +280,7 @@ f'{timer.stop():.2f} sec'
 这个函数返回训练集和验证集的数据迭代器。
 此外，这个函数还接受一个可选参数`resize`，用来将图像大小调整为另一种形状。
 
-```{.python .input}
+```python
 def load_data_fashion_mnist(batch_size, resize=None):  #@save
     """下载Fashion-MNIST数据集，然后将其加载到内存中"""
     dataset = gluon.data.vision
@@ -296,7 +296,7 @@ def load_data_fashion_mnist(batch_size, resize=None):  #@save
                                   num_workers=get_dataloader_workers()))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def load_data_fashion_mnist(batch_size, resize=None):  #@save
     """下载Fashion-MNIST数据集，然后将其加载到内存中"""
@@ -314,7 +314,7 @@ def load_data_fashion_mnist(batch_size, resize=None):  #@save
                             num_workers=get_dataloader_workers()))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def load_data_fashion_mnist(batch_size, resize=None):   #@save
     """下载Fashion-MNIST数据集，然后将其加载到内存中"""
@@ -332,7 +332,7 @@ def load_data_fashion_mnist(batch_size, resize=None):   #@save
             batch_size).map(resize_fn))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def load_data_fashion_mnist(batch_size, resize=None):  
@@ -359,7 +359,7 @@ def load_data_fashion_mnist(batch_size, resize=None):
 
 下面，我们通过指定`resize`参数来测试`load_data_fashion_mnist`函数的图像大小调整功能。
 
-```{.python .input}
+```python
 #@tab all
 train_iter, test_iter = load_data_fashion_mnist(32, resize=64)
 for X, y in train_iter:
