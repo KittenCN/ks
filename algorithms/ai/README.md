@@ -1,6 +1,6 @@
 # algorithms
   
-
+-   [动手学深度学习](/algorithms/ai/d2l.md)
 
 <br />
 <img  src='./img/bjkb.PNG' width="600" alt="logo">
