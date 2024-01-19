@@ -8,7 +8,7 @@ using functions provided by high-level APIs
 of a deep learning framework.
 We begin as before by reading the time machine dataset.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn, rnn
@@ -18,7 +18,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -36,13 +36,13 @@ We construct the recurrent neural network layer `rnn_layer` with a single hidden
 In fact, we have not even discussed yet what it means to have multiple layers---this will happen in :numref:`sec_deep_rnn`.
 For now, suffice it to say that multiple layers simply amount to the output of one layer of RNN being used as the input for the next layer of RNN.
 
-```{.python .input}
+```python
 num_hiddens = 256
 rnn_layer = rnn.RNN(num_hiddens)
 rnn_layer.initialize()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_hiddens = 256
 rnn_layer = nn.RNN(len(vocab), num_hiddens)
@@ -70,12 +70,12 @@ whose shape is
 (number of hidden layers, batch size, number of hidden units).
 :end_tab:
 
-```{.python .input}
+```python
 state = rnn_layer.begin_state(batch_size=batch_size)
 len(state), state[0].shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 state = torch.zeros((1, batch_size, num_hiddens))
 state.shape
@@ -110,13 +110,13 @@ this variable also
 contains other information.
 :end_tab:
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(num_steps, batch_size, len(vocab)))
 Y, state_new = rnn_layer(X, state)
 Y.shape, len(state_new), state_new[0].shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.rand(size=(num_steps, batch_size, len(vocab)))
 Y, state_new = rnn_layer(X, state)
@@ -128,7 +128,7 @@ we define an `RNNModel` class
 for a complete RNN model.
 Note that `rnn_layer` only contains the hidden recurrent layers, we need to create a separate output layer.
 
-```{.python .input}
+```python
 #@save
 class RNNModel(nn.Block):
     """The RNN model."""
@@ -151,7 +151,7 @@ class RNNModel(nn.Block):
         return self.rnn.begin_state(*args, **kwargs)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class RNNModel(nn.Module):
@@ -200,14 +200,14 @@ class RNNModel(nn.Module):
 
 Before training the model, let us make a prediction with the a model that has random weights.
 
-```{.python .input}
+```python
 device = d2l.try_gpu()
 model = RNNModel(rnn_layer, len(vocab))
 model.initialize(force_reinit=True, ctx=device)
 d2l.predict_ch8('time traveller', 10, model, vocab, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 device = d2l.try_gpu()
 model = RNNModel(rnn_layer, vocab_size=len(vocab))
@@ -217,7 +217,7 @@ d2l.predict_ch8('time traveller', 10, model, vocab, device)
 
 As is quite obvious, this model does not work at all. Next, we call `train_ch8` with the same hyperparameters defined in :numref:`sec_rnn_scratch` and train our model with high-level APIs.
 
-```{.python .input}
+```python
 #@tab all
 num_epochs, lr = 500, 1
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)

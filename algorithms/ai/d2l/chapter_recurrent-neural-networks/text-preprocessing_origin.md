@@ -23,20 +23,20 @@ Usually, these steps are:
 1. Build a table of vocabulary to map the split tokens to numerical indices.
 1. Convert text into sequences of numerical indices so they can be manipulated by models easily.
 
-```{.python .input}
+```python
 import collections
 from d2l import mxnet as d2l
 import re
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import collections
 from d2l import torch as d2l
 import re
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import collections
 from d2l import tensorflow as d2l
@@ -51,7 +51,7 @@ More realistic document collections contain many billions of words.
 The following function reads the dataset into a list of text lines, where each line is a string.
 For simplicity, here we ignore punctuation and capitalization.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['time_machine'] = (d2l.DATA_URL + 'timemachine.txt',
@@ -80,7 +80,7 @@ In the end,
 a list of token lists are returned,
 where each token is a string.
 
-```{.python .input}
+```python
 #@tab all
 def tokenize(lines, token='word'):  #@save
     """Split text lines into word or character tokens."""
@@ -109,7 +109,7 @@ We optionally add a list of reserved tokens, such as
 “&lt;pad&gt;” for padding,
 “&lt;bos&gt;” to present the beginning for a sequence, and “&lt;eos&gt;” for the end of a sequence.
 
-```{.python .input}
+```python
 #@tab all
 class Vocab:  #@save
     """Vocabulary for text."""
@@ -155,7 +155,7 @@ def count_corpus(tokens):  #@save
 We construct a vocabulary using the time machine dataset as the corpus. 
 Then we print the first few frequent tokens with their indices.
 
-```{.python .input}
+```python
 #@tab all
 vocab = Vocab(tokens)
 print(list(vocab.token_to_idx.items())[:10])
@@ -163,7 +163,7 @@ print(list(vocab.token_to_idx.items())[:10])
 
 Now we can convert each text line into a list of numerical indices.
 
-```{.python .input}
+```python
 #@tab all
 for i in [0, 10]:
     print('words:', tokens[i])
@@ -177,7 +177,7 @@ The modifications we did here are:
 i) we tokenize text into characters, not words, to simplify the training in later sections;
 ii) `corpus` is a single list, not a list of token lists, since each text line in the time machine dataset is not necessarily a sentence or a paragraph.
 
-```{.python .input}
+```python
 #@tab all
 def load_corpus_time_machine(max_tokens=-1):  #@save
     """Return token indices and the vocabulary of the time machine dataset."""

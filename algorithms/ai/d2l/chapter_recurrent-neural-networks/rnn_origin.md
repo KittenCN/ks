@@ -128,32 +128,32 @@ we define matrices `X`, `W_xh`, `H`, and `W_hh`, whose shapes are (3, 1), (1, 4)
 Multiplying `X` by `W_xh`, and `H` by `W_hh`, respectively, and then adding these two multiplications,
 we obtain a matrix of shape (3, 4).
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 X, W_xh = d2l.normal(0, 1, (3, 1)), d2l.normal(0, 1, (1, 4))
 H, W_hh = d2l.normal(0, 1, (3, 4)), d2l.normal(0, 1, (4, 4))
 d2l.matmul(X, W_xh) + d2l.matmul(H, W_hh)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X, W_xh = d2l.normal((3, 1), 0, 1), d2l.normal((1, 4), 0, 1)
 H, W_hh = d2l.normal((3, 4), 0, 1), d2l.normal((4, 4), 0, 1)
@@ -172,7 +172,7 @@ Multiplying these two concatenated matrices,
 we obtain the same output matrix of shape (3, 4)
 as above.
 
-```{.python .input}
+```python
 #@tab all
 d2l.matmul(d2l.concat((X, H), 1), d2l.concat((W_xh, W_hh), 0))
 ```

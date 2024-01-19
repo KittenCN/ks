@@ -39,7 +39,7 @@
 
 [**斯坦福自然语言推断语料库（Stanford Natural Language Inference，SNLI）**]是由500000多个带标签的英语句子对组成的集合 :cite:`Bowman.Angeli.Potts.ea.2015`。我们在路径`../data/snli_1.0`中下载并存储提取的SNLI数据集。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, np, npx
 import os
@@ -55,7 +55,7 @@ d2l.DATA_HUB['SNLI'] = (
 data_dir = d2l.download_extract('SNLI')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -71,7 +71,7 @@ d2l.DATA_HUB['SNLI'] = (
 data_dir = d2l.download_extract('SNLI')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -93,7 +93,7 @@ data_dir = d2l.download_extract('SNLI')
 
 原始的SNLI数据集包含的信息比我们在实验中真正需要的信息丰富得多。因此，我们定义函数`read_snli`以仅提取数据集的一部分，然后返回前提、假设及其标签的列表。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def read_snli(data_dir, is_train):
@@ -119,7 +119,7 @@ def read_snli(data_dir, is_train):
 
 现在让我们[**打印前3对**]前提和假设，以及它们的标签（“0”“1”和“2”分别对应于“蕴涵”“矛盾”和“中性”）。
 
-```{.python .input}
+```python
 #@tab all
 train_data = read_snli(data_dir, is_train=True)
 for x0, x1, y in zip(train_data[0][:3], train_data[1][:3], train_data[2][:3]):
@@ -130,7 +130,7 @@ for x0, x1, y in zip(train_data[0][:3], train_data[1][:3], train_data[2][:3]):
 
 训练集约有550000对，测试集约有10000对。下面显示了训练集和测试集中的三个[**标签“蕴涵”“矛盾”和“中性”是平衡的**]。
 
-```{.python .input}
+```python
 #@tab all
 test_data = read_snli(data_dir, is_train=False)
 for data in [train_data, test_data]:
@@ -141,7 +141,7 @@ for data in [train_data, test_data]:
 
 下面我们来定义一个用于加载SNLI数据集的类。类构造函数中的变量`num_steps`指定文本序列的长度，使得每个小批量序列将具有相同的形状。换句话说，在较长序列中的前`num_steps`个标记之后的标记被截断，而特殊标记“&lt;pad&gt;”将被附加到较短的序列后，直到它们的长度变为`num_steps`。通过实现`__getitem__`功能，我们可以任意访问带有索引`idx`的前提、假设和标签。
 
-```{.python .input}
+```python
 #@save
 class SNLIDataset(gluon.data.Dataset):
     """用于加载SNLI数据集的自定义数据集"""
@@ -171,7 +171,7 @@ class SNLIDataset(gluon.data.Dataset):
         return len(self.premises)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class SNLIDataset(torch.utils.data.Dataset):
@@ -202,7 +202,7 @@ class SNLIDataset(torch.utils.data.Dataset):
         return len(self.premises)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class SNLIDataset(paddle.io.Dataset):
@@ -237,7 +237,7 @@ class SNLIDataset(paddle.io.Dataset):
 
 现在，我们可以调用`read_snli`函数和`SNLIDataset`类来下载SNLI数据集，并返回训练集和测试集的`DataLoader`实例，以及训练集的词表。值得注意的是，我们必须使用从训练集构造的词表作为测试集的词表。因此，在训练集中训练的模型将不知道来自测试集的任何新词元。
 
-```{.python .input}
+```python
 #@save
 def load_data_snli(batch_size, num_steps=50):
     """下载SNLI数据集并返回数据迭代器和词表"""
@@ -254,7 +254,7 @@ def load_data_snli(batch_size, num_steps=50):
     return train_iter, test_iter, train_set.vocab
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def load_data_snli(batch_size, num_steps=50):
@@ -274,7 +274,7 @@ def load_data_snli(batch_size, num_steps=50):
     return train_iter, test_iter, train_set.vocab
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def load_data_snli(batch_size, num_steps=50):
@@ -299,7 +299,7 @@ def load_data_snli(batch_size, num_steps=50):
 
 在这里，我们将批量大小设置为128时，将序列长度设置为50，并调用`load_data_snli`函数来获取数据迭代器和词表。然后我们打印词表大小。
 
-```{.python .input}
+```python
 #@tab all
 train_iter, test_iter, vocab = load_data_snli(128, 50)
 len(vocab)
@@ -307,7 +307,7 @@ len(vocab)
 
 现在我们打印第一个小批量的形状。与情感分析相反，我们有分别代表前提和假设的两个输入`X[0]`和`X[1]`。
 
-```{.python .input}
+```python
 #@tab all
 for X, Y in train_iter:
     print(X[0].shape)

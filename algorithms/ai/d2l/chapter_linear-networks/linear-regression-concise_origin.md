@@ -22,13 +22,13 @@ concisely by using high-level APIs of deep learning frameworks.
 
 To start, we will generate the same dataset as in :numref:`sec_linear_scratch`.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import numpy as np
@@ -36,14 +36,14 @@ import torch
 from torch.utils import data
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import numpy as np
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab all
 true_w = d2l.tensor([2, -3.4])
 true_b = 4.2
@@ -61,14 +61,14 @@ indicates whether or not
 we want the data iterator object to shuffle the data
 on each epoch (pass through the dataset).
 
-```{.python .input}
+```python
 def load_array(data_arrays, batch_size, is_train=True):  #@save
     """Construct a Gluon data iterator."""
     dataset = gluon.data.ArrayDataset(*data_arrays)
     return gluon.data.DataLoader(dataset, batch_size, shuffle=is_train)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def load_array(data_arrays, batch_size, is_train=True):  #@save
     """Construct a PyTorch data iterator."""
@@ -76,7 +76,7 @@ def load_array(data_arrays, batch_size, is_train=True):  #@save
     return data.DataLoader(dataset, batch_size, shuffle=is_train)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def load_array(data_arrays, batch_size, is_train=True):  #@save
     """Construct a TensorFlow data iterator."""
@@ -87,7 +87,7 @@ def load_array(data_arrays, batch_size, is_train=True):  #@save
     return dataset
 ```
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 10
 data_iter = load_array((features, labels), batch_size)
@@ -100,7 +100,7 @@ the first minibatch of examples.
 Comparing with :numref:`sec_linear_scratch`,
 here we use `iter` to construct a Python iterator and use `next` to obtain the first item from the iterator.
 
-```{.python .input}
+```python
 #@tab all
 next(iter(data_iter))
 ```
@@ -179,21 +179,21 @@ Keras will automatically infer the number of inputs to each layer.
 We will describe how this works in more detail later.
 :end_tab:
 
-```{.python .input}
+```python
 # `nn` is an abbreviation for neural networks
 from mxnet.gluon import nn
 net = nn.Sequential()
 net.add(nn.Dense(1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # `nn` is an abbreviation for neural networks
 from torch import nn
 net = nn.Sequential(nn.Linear(2, 1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # `keras` is the high-level API for TensorFlow
 net = tf.keras.Sequential()
@@ -227,18 +227,18 @@ As we have specified the input and output dimensions when constructing `nn.Linea
 The `initializers` module in TensorFlow provides various methods for model parameter initialization. The easiest way to specify the initialization method in Keras is when creating the layer by specifying `kernel_initializer`. Here we recreate `net` again.
 :end_tab:
 
-```{.python .input}
+```python
 from mxnet import init
 net.initialize(init.Normal(sigma=0.01))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net[0].weight.data.normal_(0, 0.01)
 net[0].bias.data.fill_(0)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 initializer = tf.initializers.RandomNormal(stddev=0.01)
 net = tf.keras.Sequential()
@@ -299,16 +299,16 @@ The `MeanSquaredError` class computes the mean squared error, also known as squa
 By default it returns the average loss over examples.
 :end_tab:
 
-```{.python .input}
+```python
 loss = gluon.loss.L2Loss()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 loss = nn.MSELoss()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 loss = tf.keras.losses.MeanSquaredError()
 ```
@@ -352,17 +352,17 @@ Minibatch stochastic gradient descent just requires that
 we set the value `learning_rate`, which is set to 0.03 here.
 :end_tab:
 
-```{.python .input}
+```python
 from mxnet import gluon
 trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': 0.03})
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 trainer = torch.optim.SGD(net.parameters(), lr=0.03)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 trainer = tf.keras.optimizers.SGD(learning_rate=0.03)
 ```
@@ -392,7 +392,7 @@ For each minibatch, we go through the following ritual:
 
 For good measure, we compute the loss after each epoch and print it to monitor progress.
 
-```{.python .input}
+```python
 num_epochs = 3
 for epoch in range(num_epochs):
     for X, y in data_iter:
@@ -404,7 +404,7 @@ for epoch in range(num_epochs):
     print(f'epoch {epoch + 1}, loss {l.mean().asnumpy():f}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_epochs = 3
 for epoch in range(num_epochs):
@@ -417,7 +417,7 @@ for epoch in range(num_epochs):
     print(f'epoch {epoch + 1}, loss {l:f}')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_epochs = 3
 for epoch in range(num_epochs):
@@ -439,14 +439,14 @@ As in our from-scratch implementation,
 note that our estimated parameters are
 close to their ground-truth counterparts.
 
-```{.python .input}
+```python
 w = net[0].weight.data()
 print(f'error in estimating w: {true_w - d2l.reshape(w, true_w.shape)}')
 b = net[0].bias.data()
 print(f'error in estimating b: {true_b - b}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 w = net[0].weight.data
 print('error in estimating w:', true_w - d2l.reshape(w, true_w.shape))
@@ -454,7 +454,7 @@ b = net[0].bias.data
 print('error in estimating b:', true_b - b)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 w = net.get_weights()[0]
 print('error in estimating w', true_w - d2l.reshape(w, true_w.shape))

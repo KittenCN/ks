@@ -6,28 +6,28 @@
 本节我们将使用刚刚在 :numref:`sec_fashion_mnist`中引入的Fashion-MNIST数据集，
 并设置数据迭代器的批量大小为256。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, np, npx, gluon
 from IPython import display
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from IPython import display
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 from IPython import display
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -36,7 +36,7 @@ import paddle
 from IPython import display
 ```
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
@@ -56,7 +56,7 @@ train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
 偏置将构成一个$1 \times 10$的行向量。
 与线性回归一样，我们将使用正态分布初始化我们的权重`W`，偏置初始化为0。
 
-```{.python .input}
+```python
 num_inputs = 784
 num_outputs = 10
 
@@ -66,7 +66,7 @@ W.attach_grad()
 b.attach_grad()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_inputs = 784
 num_outputs = 10
@@ -75,7 +75,7 @@ W = torch.normal(0, 0.01, size=(num_inputs, num_outputs), requires_grad=True)
 b = torch.zeros(num_outputs, requires_grad=True)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_inputs = 784
 num_outputs = 10
@@ -85,7 +85,7 @@ W = tf.Variable(tf.random.normal(shape=(num_inputs, num_outputs),
 b = tf.Variable(tf.zeros(num_outputs))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_inputs = 784
 num_outputs = 10
@@ -108,13 +108,13 @@ b.stop_gradient=False
  当调用`sum`运算符时，我们可以指定保持在原始张量的轴数，而不折叠求和的维度。
  这将产生一个具有形状`(1, 3)`的二维张量。
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 X = d2l.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
 d2l.reduce_sum(X, 0, keepdim=True), d2l.reduce_sum(X, 1, keepdim=True)
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, tensorflow
 X = d2l.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
 d2l.reduce_sum(X, 0, keepdims=True), d2l.reduce_sum(X, 1, keepdims=True)
@@ -137,7 +137,7 @@ $$
 分母或规范化常数，有时也称为*配分函数*（其对数称为对数-配分函数）。
 该名称来自[统计物理学](https://en.wikipedia.org/wiki/Partition_function_(statistical_mechanics))中一个模拟粒子群分布的方程。
 
-```{.python .input}
+```python
 #@tab mxnet, tensorflow
 def softmax(X):
     X_exp = d2l.exp(X)
@@ -145,7 +145,7 @@ def softmax(X):
     return X_exp / partition  # 这里应用了广播机制
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 def softmax(X):
     X_exp = d2l.exp(X)
@@ -156,14 +156,14 @@ def softmax(X):
 正如上述代码，对于任何随机输入，[**我们将每个元素变成一个非负数。
 此外，依据概率原理，每行总和为1**]。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 X = d2l.normal(0, 1, (2, 5))
 X_prob = softmax(X)
 X_prob, d2l.reduce_sum(X_prob, 1)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.normal((2, 5), 0, 1)
 X_prob = softmax(X)
@@ -179,7 +179,7 @@ X_prob, tf.reduce_sum(X_prob, 1)
 下面的代码定义了输入如何通过网络映射到输出。
 注意，将数据传递到模型之前，我们使用`reshape`函数将每张原始图像展平为向量。
 
-```{.python .input}
+```python
 #@tab all
 def net(X):
     return softmax(d2l.matmul(d2l.reshape(X, (-1, W.shape[0])), W) + b)
@@ -200,14 +200,14 @@ def net(X):
 然后(**使用`y`作为`y_hat`中概率的索引**)，
 我们选择第一个样本中第一个类的概率和第二个样本中第三个类的概率。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 y = d2l.tensor([0, 2])
 y_hat = d2l.tensor([[0.1, 0.3, 0.6], [0.3, 0.2, 0.5]])
 y_hat[[0, 1], y]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 y_hat = tf.constant([[0.1, 0.3, 0.6], [0.3, 0.2, 0.5]])
 y = tf.constant([0, 2])
@@ -216,7 +216,7 @@ tf.boolean_mask(y_hat, tf.one_hot(y, depth=y_hat.shape[-1]))
 
 现在我们只需一行代码就可以[**实现交叉熵损失函数**]。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def cross_entropy(y_hat, y):
     return - d2l.log(y_hat[range(len(y_hat)), y])
@@ -224,7 +224,7 @@ def cross_entropy(y_hat, y):
 cross_entropy(y_hat, y)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def cross_entropy(y_hat, y):
     return -tf.math.log(tf.boolean_mask(
@@ -233,7 +233,7 @@ def cross_entropy(y_hat, y):
 cross_entropy(y_hat, y)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def cross_entropy(y_hat, y):
     return - paddle.log(y_hat[[i for i in range(len(y_hat))], y.squeeze()])
@@ -263,7 +263,7 @@ Gmail做分类时可能在内部估计概率，但最终它必须在类中选择
 结果是一个包含0（错）和1（对）的张量。
 最后，我们求和会得到正确预测的数量。
 
-```{.python .input}
+```python
 #@tab all
 def accuracy(y_hat, y):  #@save
     """计算预测正确的数量"""
@@ -273,7 +273,7 @@ def accuracy(y_hat, y):  #@save
     return float(d2l.reduce_sum(d2l.astype(cmp, y.dtype)))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def accuracy(y_hat, y):
@@ -292,7 +292,7 @@ def accuracy(y_hat, y):
 第二个样本的预测类别是2（该行的最大元素为0.5，索引为2），这与实际标签2一致。
 因此，这两个样本的分类精度率为0.5。
 
-```{.python .input}
+```python
 #@tab all
 accuracy(y_hat, y) / len(y)
 ```
@@ -300,7 +300,7 @@ accuracy(y_hat, y) / len(y)
 同样，对于任意数据迭代器`data_iter`可访问的数据集，
 [**我们可以评估在任意模型`net`的精度**]。
 
-```{.python .input}
+```python
 #@tab mxnet, tensorflow
 def evaluate_accuracy(net, data_iter):  #@save
     """计算在指定数据集上模型的精度"""
@@ -310,7 +310,7 @@ def evaluate_accuracy(net, data_iter):  #@save
     return metric[0] / metric[1]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def evaluate_accuracy(net, data_iter):  #@save
     """计算在指定数据集上模型的精度"""
@@ -323,7 +323,7 @@ def evaluate_accuracy(net, data_iter):  #@save
     return metric[0] / metric[1]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def evaluate_accuracy(net, data_iter):
@@ -343,7 +343,7 @@ def evaluate_accuracy(net, data_iter):
 分别用于存储正确预测的数量和预测的总数量**)。
 当我们遍历数据集时，两者都将随着时间的推移而累加。
 
-```{.python .input}
+```python
 #@tab all
 class Accumulator:  #@save
     """在n个变量上累加"""
@@ -364,7 +364,7 @@ class Accumulator:  #@save
 因此该模型的精度应接近于随机猜测。
 例如在有10个类别情况下的精度为0.1。
 
-```{.python .input}
+```python
 #@tab all
 evaluate_accuracy(net, test_iter)
 ```
@@ -378,7 +378,7 @@ evaluate_accuracy(net, test_iter)
 请注意，`updater`是更新模型参数的常用函数，它接受批量大小作为参数。
 它可以是`d2l.sgd`函数，也可以是框架的内置优化函数。
 
-```{.python .input}
+```python
 def train_epoch_ch3(net, train_iter, loss, updater):  #@save
     """训练模型一个迭代周期（定义见第3章）"""
     # 训练损失总和、训练准确度总和、样本数
@@ -397,7 +397,7 @@ def train_epoch_ch3(net, train_iter, loss, updater):  #@save
     return metric[0] / metric[2], metric[1] / metric[2]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train_epoch_ch3(net, train_iter, loss, updater):  #@save
     """训练模型一个迭代周期（定义见第3章）"""
@@ -424,7 +424,7 @@ def train_epoch_ch3(net, train_iter, loss, updater):  #@save
     return metric[0] / metric[2], metric[1] / metric[2]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def train_epoch_ch3(net, train_iter, loss, updater):  #@save
     """训练模型一个迭代周期（定义见第3章）"""
@@ -454,7 +454,7 @@ def train_epoch_ch3(net, train_iter, loss, updater):  #@save
     return metric[0] / metric[2], metric[1] / metric[2]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def train_epoch_ch3(net, train_iter, loss, updater):
@@ -485,7 +485,7 @@ def train_epoch_ch3(net, train_iter, loss, updater):
 在展示训练函数的实现之前，我们[**定义一个在动画中绘制数据的实用程序类**]`Animator`，
 它能够简化本书其余部分的代码。
 
-```{.python .input}
+```python
 #@tab all
 class Animator:  #@save
     """在动画中绘制数据"""
@@ -534,7 +534,7 @@ class Animator:  #@save
 在每个迭代周期结束时，利用`test_iter`访问到的测试数据集对模型进行评估。
 我们将利用`Animator`类来可视化训练进度。
 
-```{.python .input}
+```python
 #@tab all
 def train_ch3(net, train_iter, test_iter, loss, num_epochs, updater):  #@save
     """训练模型（定义见第3章）"""
@@ -553,7 +553,7 @@ def train_ch3(net, train_iter, test_iter, loss, num_epochs, updater):  #@save
 作为一个从零开始的实现，我们使用 :numref:`sec_linear_scratch`中定义的
 [**小批量随机梯度下降来优化模型的损失函数**]，设置学习率为0.1。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 lr = 0.1
 
@@ -561,7 +561,7 @@ def updater(batch_size):
     return d2l.sgd([W, b], lr, batch_size)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class Updater():  #@save
     """用小批量随机梯度下降法更新参数"""
@@ -579,7 +579,7 @@ updater = Updater([W, b], lr=0.1)
 请注意，迭代周期（`num_epochs`）和学习率（`lr`）都是可调节的超参数。
 通过更改它们的值，我们可以提高模型的分类精度。
 
-```{.python .input}
+```python
 #@tab all
 num_epochs = 10
 train_ch3(net, train_iter, test_iter, cross_entropy, num_epochs, updater)
@@ -590,7 +590,7 @@ train_ch3(net, train_iter, test_iter, cross_entropy, num_epochs, updater)
 现在训练已经完成，我们的模型已经准备好[**对图像进行分类预测**]。
 给定一系列图像，我们将比较它们的实际标签（文本输出的第一行）和模型预测（文本输出的第二行）。
 
-```{.python .input}
+```python
 #@tab all
 def predict_ch3(net, test_iter, n=6):  #@save
     """预测标签（定义见第3章）"""

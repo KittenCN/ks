@@ -51,7 +51,7 @@ $$\mathbf W_o \begin{bmatrix}\mathbf h_1\\\vdots\\\mathbf h_h\end{bmatrix} \in \
 基于这种设计，每个头都可能会关注输入的不同部分，
 可以表示比简单加权平均值更复杂的函数。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 import math
 from mxnet import autograd, np, npx
@@ -59,7 +59,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import math
@@ -67,13 +67,13 @@ import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -93,7 +93,7 @@ $p_q h = p_k h = p_v h = p_o$，
 则可以并行计算$h$个头。
 在下面的实现中，$p_o$是通过参数`num_hiddens`指定的。
 
-```{.python .input}
+```python
 #@save
 class MultiHeadAttention(nn.Block):
     """多头注意力"""
@@ -133,7 +133,7 @@ class MultiHeadAttention(nn.Block):
         return self.W_o(output_concat)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class MultiHeadAttention(nn.Module):
@@ -175,7 +175,7 @@ class MultiHeadAttention(nn.Module):
         return self.W_o(output_concat)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 class MultiHeadAttention(tf.keras.layers.Layer):
@@ -216,7 +216,7 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         return self.W_o(output_concat)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class MultiHeadAttention(nn.Layer):
@@ -260,7 +260,7 @@ class MultiHeadAttention(nn.Layer):
 上面的`MultiHeadAttention`类将使用下面定义的两个转置函数。
 具体来说，`transpose_output`函数反转了`transpose_qkv`函数的操作。
 
-```{.python .input}
+```python
 #@save
 def transpose_qkv(X, num_heads):
     """为了多注意力头的并行计算而变换形状"""
@@ -286,7 +286,7 @@ def transpose_output(X, num_heads):
     return X.reshape(X.shape[0], X.shape[1], -1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def transpose_qkv(X, num_heads):
@@ -313,7 +313,7 @@ def transpose_output(X, num_heads):
     return X.reshape(X.shape[0], X.shape[1], -1)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 def transpose_qkv(X, num_heads):
@@ -340,7 +340,7 @@ def transpose_output(X, num_heads):
     return tf.reshape(X, shape=(X.shape[0], X.shape[1], -1))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def transpose_qkv(X, num_heads):
@@ -370,13 +370,13 @@ def transpose_output(X, num_heads):
 下面使用键和值相同的小例子来[**测试**]我们编写的`MultiHeadAttention`类。
 多头注意力输出的形状是（`batch_size`，`num_queries`，`num_hiddens`）。
 
-```{.python .input}
+```python
 num_hiddens, num_heads = 100, 5
 attention = MultiHeadAttention(num_hiddens, num_heads, 0.5)
 attention.initialize()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_hiddens, num_heads = 100, 5
 attention = MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
@@ -384,14 +384,14 @@ attention = MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
 attention.eval()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_hiddens, num_heads = 100, 5
 attention = MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
                                num_hiddens, num_heads, 0.5)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_hiddens, num_heads = 100, 5
 attention = MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
@@ -399,7 +399,7 @@ attention = MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
 attention.eval()
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 batch_size, num_queries = 2, 4
 num_kvpairs, valid_lens =  6, d2l.tensor([3, 2])
@@ -408,7 +408,7 @@ Y = d2l.ones((batch_size, num_kvpairs, num_hiddens))
 attention(X, Y, Y, valid_lens).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 batch_size, num_queries = 2, 4
 num_kvpairs, valid_lens = 6, d2l.tensor([3, 2])

@@ -79,7 +79,7 @@ The code is very similar to the one we used previously in :numref:`sec_lstm`.
 In fact, the only difference is that we specify the number of layers explicitly rather than picking the default of a single layer. 
 As usual, we begin by loading the dataset.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import npx
 from mxnet.gluon import rnn
@@ -89,7 +89,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -104,14 +104,14 @@ We pick the same number of inputs and outputs as we have distinct tokens, i.e., 
 The number of hidden units is still 256.
 The only difference is that we now select a nontrivial number of hidden layers by specifying the value of `num_layers`.
 
-```{.python .input}
+```python
 vocab_size, num_hiddens, num_layers = len(vocab), 256, 2
 device = d2l.try_gpu()
 lstm_layer = rnn.LSTM(num_hiddens, num_layers)
 model = d2l.RNNModel(lstm_layer, len(vocab))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 vocab_size, num_hiddens, num_layers = len(vocab), 256, 2
 num_inputs = vocab_size
@@ -125,7 +125,7 @@ model = model.to(device)
 
 Since now we instantiate two layers with the LSTM model, this rather more complex architecture slows down training considerably.
 
-```{.python .input}
+```python
 #@tab all
 num_epochs, lr = 500, 2
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)

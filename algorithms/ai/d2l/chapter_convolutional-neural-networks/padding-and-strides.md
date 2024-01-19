@@ -42,7 +42,7 @@ $$(n_h-k_h+p_h+1)\times(n_w-k_w+p_w+1)。$$
 
 比如，在下面的例子中，我们创建一个高度和宽度为3的二维卷积层，并(**在所有侧边填充1个像素**)。给定高度和宽度为8的输入，则输出的高度和宽度也是8。
 
-```{.python .input}
+```python
 from mxnet import np, npx
 from mxnet.gluon import nn
 npx.set_np()
@@ -63,7 +63,7 @@ X = np.random.uniform(size=(8, 8))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 from torch import nn
@@ -83,7 +83,7 @@ X = torch.rand(size=(8, 8))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -102,7 +102,7 @@ X = tf.random.uniform(shape=(8, 8))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 import warnings
 warnings.filterwarnings(action='ignore')
@@ -125,24 +125,24 @@ comp_conv2d(conv2d, X).shape
 
 当卷积核的高度和宽度不同时，我们可以[**填充不同的高度和宽度**]，使输出和输入具有相同的高度和宽度。在如下示例中，我们使用高度为5，宽度为3的卷积核，高度和宽度两边的填充分别为2和1。
 
-```{.python .input}
+```python
 conv2d = nn.Conv2D(1, kernel_size=(5, 3), padding=(2, 1))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 conv2d = nn.Conv2d(1, 1, kernel_size=(5, 3), padding=(2, 1))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 conv2d = tf.keras.layers.Conv2D(1, kernel_size=(5, 3), padding='same')
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 conv2d = nn.Conv2D(in_channels=1, out_channels=1, kernel_size=(5, 3), padding=(2, 1))
 comp_conv2d(conv2d, X).shape
@@ -172,24 +172,24 @@ $$\lfloor(n_h-k_h+p_h+s_h)/s_h\rfloor \times \lfloor(n_w-k_w+p_w+s_w)/s_w\rfloor
 
 下面，我们[**将高度和宽度的步幅设置为2**]，从而将输入的高度和宽度减半。
 
-```{.python .input}
+```python
 conv2d = nn.Conv2D(1, kernel_size=3, padding=1, strides=2)
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 conv2d = nn.Conv2d(1, 1, kernel_size=3, padding=1, stride=2)
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 conv2d = tf.keras.layers.Conv2D(1, kernel_size=3, padding='same', strides=2)
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 conv2d = nn.Conv2D(1, 1, kernel_size=3, padding=1, stride=2)
 comp_conv2d(conv2d, X).shape
@@ -197,25 +197,25 @@ comp_conv2d(conv2d, X).shape
 
 接下来，看(**一个稍微复杂的例子**)。
 
-```{.python .input}
+```python
 conv2d = nn.Conv2D(1, kernel_size=(3, 5), padding=(0, 1), strides=(3, 4))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 conv2d = nn.Conv2d(1, 1, kernel_size=(3, 5), padding=(0, 1), stride=(3, 4))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 conv2d = tf.keras.layers.Conv2D(1, kernel_size=(3,5), padding='valid',
                                 strides=(3, 4))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 conv2d = nn.Conv2D(1, 1, kernel_size=(3, 5), padding=(0, 1), stride=(3, 4))
 comp_conv2d(conv2d, X).shape

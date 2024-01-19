@@ -44,7 +44,7 @@ is [Pascal VOC2012](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/).**]
 In the following,
 we will take a look at this dataset.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import gluon, image, np, npx
@@ -53,7 +53,7 @@ import os
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -66,7 +66,7 @@ The tar file of the dataset is about 2 GB,
 so it may take a while to download the file.
 The extracted dataset is located at `../data/VOCdevkit/VOC2012`.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['voc2012'] = (d2l.DATA_URL + 'VOCtrainval_11-May-2012.tar',
@@ -88,7 +88,7 @@ Besides,
 pixels with the same color in any label image belong to the same semantic class.
 The following defines the `read_voc_images` function to [**read all the input images and labels into the memory**].
 
-```{.python .input}
+```python
 #@save
 def read_voc_images(voc_dir, is_train=True):
     """Read all VOC feature and label images."""
@@ -107,7 +107,7 @@ def read_voc_images(voc_dir, is_train=True):
 train_features, train_labels = read_voc_images(voc_dir, True)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def read_voc_images(voc_dir, is_train=True):
@@ -131,13 +131,13 @@ train_features, train_labels = read_voc_images(voc_dir, True)
 We [**draw the first five input images and their labels**].
 In the label images, white and black represent borders and  background, respectively, while the other colors correspond to different classes.
 
-```{.python .input}
+```python
 n = 5
 imgs = train_features[0:n] + train_labels[0:n]
 d2l.show_images(imgs, 2, n);
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 n = 5
 imgs = train_features[0:n] + train_labels[0:n]
@@ -149,7 +149,7 @@ Next, we [**enumerate
 the RGB color values and class names**]
 for all the labels in this dataset.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 VOC_COLORMAP = [[0, 0, 0], [128, 0, 0], [0, 128, 0], [128, 128, 0],
@@ -175,7 +175,7 @@ to class indices,
 and the `voc_label_indices` function
 to map any RGB values to their class indices in this Pascal VOC2012 dataset.
 
-```{.python .input}
+```python
 #@save
 def voc_colormap2label():
     """Build the mapping from RGB to class indices for VOC labels."""
@@ -194,7 +194,7 @@ def voc_label_indices(colormap, colormap2label):
     return colormap2label[idx]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def voc_colormap2label():
@@ -218,7 +218,7 @@ def voc_label_indices(colormap, colormap2label):
 the class index for the front part of the airplane is 1,
 while the background index is 0.
 
-```{.python .input}
+```python
 #@tab all
 y = voc_label_indices(train_labels[0], voc_colormap2label())
 y[105:115, 130:140], VOC_CLASSES[1]
@@ -239,7 +239,7 @@ especially for segmented regions with different classes. To avoid this issue,
 we crop the image to a *fixed* shape instead of rescaling. Specifically, [**using random cropping from image augmentation, we crop the same area of
 the input image and the label**].
 
-```{.python .input}
+```python
 #@save
 def voc_rand_crop(feature, label, height, width):
     """Randomly crop both feature and label images."""
@@ -248,7 +248,7 @@ def voc_rand_crop(feature, label, height, width):
     return feature, label
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def voc_rand_crop(feature, label, height, width):
@@ -260,14 +260,14 @@ def voc_rand_crop(feature, label, height, width):
     return feature, label
 ```
 
-```{.python .input}
+```python
 imgs = []
 for _ in range(n):
     imgs += voc_rand_crop(train_features[0], train_labels[0], 200, 300)
 d2l.show_images(imgs[::2] + imgs[1::2], 2, n);
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 imgs = []
 for _ in range(n):
@@ -291,7 +291,7 @@ In addition, we also
 define the `normalize_image` function to
 standardize the values of the three RGB channels of input images.
 
-```{.python .input}
+```python
 #@save
 class VOCSegDataset(gluon.data.Dataset):
     """A customized dataset to load the VOC dataset."""
@@ -324,7 +324,7 @@ class VOCSegDataset(gluon.data.Dataset):
         return len(self.features)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class VOCSegDataset(torch.utils.data.Dataset):
@@ -367,7 +367,7 @@ we specify that the output shape of randomly cropped images is $320\times 480$.
 Below we can view the number of examples
 that are retained in the training set and test set.
 
-```{.python .input}
+```python
 #@tab all
 crop_size = (320, 480)
 voc_train = VOCSegDataset(True, crop_size, voc_dir)
@@ -379,7 +379,7 @@ we define the data loader for the training set.
 Let us print the shape of the first minibatch.
 Different from in image classification or object detection, labels here are three-dimensional tensors.
 
-```{.python .input}
+```python
 batch_size = 64
 train_iter = gluon.data.DataLoader(voc_train, batch_size, shuffle=True,
                                    last_batch='discard',
@@ -390,7 +390,7 @@ for X, Y in train_iter:
     break
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 batch_size = 64
 train_iter = torch.utils.data.DataLoader(voc_train, batch_size, shuffle=True,
@@ -408,7 +408,7 @@ Finally, we define the following `load_data_voc` function
 to download and read the Pascal VOC2012 semantic segmentation dataset. 
 It returns data loaders for both the training and test datasets.
 
-```{.python .input}
+```python
 #@save
 def load_data_voc(batch_size, crop_size):
     """Load the VOC semantic segmentation dataset."""
@@ -424,7 +424,7 @@ def load_data_voc(batch_size, crop_size):
     return train_iter, test_iter
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def load_data_voc(batch_size, crop_size):

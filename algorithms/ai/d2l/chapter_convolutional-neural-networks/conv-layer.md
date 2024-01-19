@@ -33,21 +33,21 @@ $$(n_h-k_h+1) \times (n_w-k_w+1).$$
 这是因为我们需要足够的空间在图像上“移动”卷积核。稍后，我们将看到如何通过在图像边界周围填充零来保证有足够的空间移动卷积核，从而保持输出大小不变。
 接下来，我们在`corr2d`函数中实现如上过程，该函数接受输入张量`X`和卷积核张量`K`，并返回输出张量`Y`。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, np, npx
 from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -56,7 +56,7 @@ import paddle
 from paddle import nn
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 def corr2d(X, K):  #@save
     """计算二维互相关运算"""
@@ -68,7 +68,7 @@ def corr2d(X, K):  #@save
     return Y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -86,7 +86,7 @@ def corr2d(X, K):  #@save
 
 通过 :numref:`fig_correlation`的输入张量`X`和卷积核张量`K`，我们来[**验证上述二维互相关运算的输出**]。
 
-```{.python .input}
+```python
 #@tab all
 X = d2l.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0], [6.0, 7.0, 8.0]])
 K = d2l.tensor([[0.0, 1.0], [2.0, 3.0]])
@@ -101,7 +101,7 @@ corr2d(X, K)
 
 基于上面定义的`corr2d`函数[**实现二维卷积层**]。在`__init__`构造函数中，将`weight`和`bias`声明为两个模型参数。前向传播函数调用`corr2d`函数并添加偏置。
 
-```{.python .input}
+```python
 class Conv2D(nn.Block):
     def __init__(self, kernel_size, **kwargs):
         super().__init__(**kwargs)
@@ -112,7 +112,7 @@ class Conv2D(nn.Block):
         return corr2d(x, self.weight.data()) + self.bias.data()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class Conv2D(nn.Module):
     def __init__(self, kernel_size):
@@ -124,7 +124,7 @@ class Conv2D(nn.Module):
         return corr2d(x, self.weight) + self.bias
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class Conv2D(tf.keras.layers.Layer):
     def __init__(self):
@@ -141,7 +141,7 @@ class Conv2D(tf.keras.layers.Layer):
         return corr2d(inputs, self.weight) + self.bias
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class Conv2D(nn.Layer):
     def __init__(self, kernel_size):
@@ -161,14 +161,14 @@ class Conv2D(nn.Layer):
 如下是[**卷积层的一个简单应用：**]通过找到像素变化的位置，来(**检测图像中不同颜色的边缘**)。
 首先，我们构造一个$6\times 8$像素的黑白图像。中间四列为黑色（$0$），其余像素为白色（$1$）。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 X = d2l.ones((6, 8))
 X[:, 2:6] = 0
 X
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.Variable(tf.ones((6, 8)))
 X[:, 2:6].assign(tf.zeros(X[:, 2:6].shape))
@@ -177,7 +177,7 @@ X
 
 接下来，我们构造一个高度为$1$、宽度为$2$的卷积核`K`。当进行互相关运算时，如果水平相邻的两元素相同，则输出为零，否则输出为非零。
 
-```{.python .input}
+```python
 #@tab all
 K = d2l.tensor([[1.0, -1.0]])
 ```
@@ -185,7 +185,7 @@ K = d2l.tensor([[1.0, -1.0]])
 现在，我们对参数`X`（输入）和`K`（卷积核）执行互相关运算。
 如下所示，[**输出`Y`中的1代表从白色到黑色的边缘，-1代表从黑色到白色的边缘**]，其他情况的输出为$0$。
 
-```{.python .input}
+```python
 #@tab all
 Y = corr2d(X, K)
 Y
@@ -195,7 +195,7 @@ Y
 其输出如下，之前检测到的垂直边缘消失了。
 不出所料，这个[**卷积核`K`只可以检测垂直边缘**]，无法检测水平边缘。
 
-```{.python .input}
+```python
 #@tab all
 corr2d(d2l.transpose(X), K)
 ```
@@ -207,7 +207,7 @@ corr2d(d2l.transpose(X), K)
 现在让我们看看是否可以通过仅查看“输入-输出”对来学习由`X`生成`Y`的卷积核。
 我们先构造一个卷积层，并将其卷积核初始化为随机张量。接下来，在每次迭代中，我们比较`Y`与卷积层输出的平方误差，然后计算梯度来更新卷积核。为了简单起见，我们在此使用内置的二维卷积层，并忽略偏置。
 
-```{.python .input}
+```python
 # 构造一个二维卷积层，它具有1个输出通道和形状为（1，2）的卷积核
 conv2d = nn.Conv2D(1, kernel_size=(1, 2), use_bias=False)
 conv2d.initialize()
@@ -231,7 +231,7 @@ for i in range(10):
         print(f'epoch {i+1}, loss {float(l.sum()):.3f}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # 构造一个二维卷积层，它具有1个输出通道和形状为（1，2）的卷积核
 conv2d = nn.Conv2d(1,1, kernel_size=(1, 2), bias=False)
@@ -253,7 +253,7 @@ for i in range(10):
         print(f'epoch {i+1}, loss {l.sum():.3f}')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # 构造一个二维卷积层，它具有1个输出通道和形状为（1，2）的卷积核
 conv2d = tf.keras.layers.Conv2D(1, (1, 2), use_bias=False)
@@ -279,7 +279,7 @@ for i in range(10):
             print(f'epoch {i+1}, loss {tf.reduce_sum(l):.3f}')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # 构造一个二维卷积层，它具有1个输出通道和形状为（1，2）的卷积核
 conv2d = nn.Conv2D(1, 1, kernel_size=(1, 2))
@@ -304,21 +304,21 @@ for i in range(10):
 
 在$10$次迭代之后，误差已经降到足够低。现在我们来看看我们[**所学的卷积核的权重张量**]。
 
-```{.python .input}
+```python
 d2l.reshape(conv2d.weight.data(), (1, 2))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 d2l.reshape(conv2d.weight.data, (1, 2))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 d2l.reshape(conv2d.get_weights()[0], (1, 2))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 d2l.reshape(conv2d.weight, (1, 2))
 ```

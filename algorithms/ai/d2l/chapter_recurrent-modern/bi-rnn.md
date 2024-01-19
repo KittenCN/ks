@@ -212,7 +212,7 @@ $$\mathbf{O}_t = \mathbf{H}_t \mathbf{W}_{hq} + \mathbf{b}_q.$$
 该模型预测未来词元的能力却可能存在严重缺陷。
 我们用下面的示例代码引以为戒，以防在错误的环境中使用它们。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import npx
 from mxnet.gluon import rnn
@@ -230,7 +230,7 @@ num_epochs, lr = 500, 1
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -250,7 +250,7 @@ num_epochs, lr = 500, 1
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings

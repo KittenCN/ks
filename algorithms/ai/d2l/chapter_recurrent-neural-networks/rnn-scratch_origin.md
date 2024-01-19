@@ -10,7 +10,7 @@ Such a model
 will be trained on H. G. Wells' *The Time Machine*.
 As before, we start by reading the dataset first, which is introduced in :numref:`sec_language_model`.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 import math
@@ -18,7 +18,7 @@ from mxnet import autograd, gluon, np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -28,7 +28,7 @@ from torch import nn
 from torch.nn import functional as F
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -37,13 +37,13 @@ import numpy as np
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab all
 batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 train_random_iter, vocab_random_iter = d2l.load_data_time_machine(
     batch_size, num_steps, use_random_iter=True)
@@ -63,16 +63,16 @@ In a nutshell, we map each index to a different unit vector: assume that the num
 If the index of a token is the integer $i$, then we create a vector of all 0s with a length of $N$ and set the element at position $i$ to 1.
 This vector is the one-hot vector of the original token. The one-hot vectors with indices 0 and 2 are shown below.
 
-```{.python .input}
+```python
 npx.one_hot(np.array([0, 2]), len(vocab))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 F.one_hot(torch.tensor([0, 2]), len(vocab))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 tf.one_hot(tf.constant([0, 2]), len(vocab))
 ```
@@ -88,18 +88,18 @@ loop through the outermost dimension
 for updating hidden states of a minibatch,
 time step by time step.
 
-```{.python .input}
+```python
 X = d2l.reshape(d2l.arange(10), (2, 5))
 npx.one_hot(X.T, 28).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = d2l.reshape(d2l.arange(10), (2, 5))
 F.one_hot(X.T, 28).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = d2l.reshape(d2l.arange(10), (2, 5))
 tf.one_hot(tf.transpose(X), 28).shape
@@ -115,7 +115,7 @@ the inputs and outputs are from the same vocabulary.
 Hence, they have the same dimension,
 which is equal to the vocabulary size.
 
-```{.python .input}
+```python
 def get_params(vocab_size, num_hiddens, device):
     num_inputs = num_outputs = vocab_size
 
@@ -136,7 +136,7 @@ def get_params(vocab_size, num_hiddens, device):
     return params
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_params(vocab_size, num_hiddens, device):
     num_inputs = num_outputs = vocab_size
@@ -158,7 +158,7 @@ def get_params(vocab_size, num_hiddens, device):
     return params
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def get_params(vocab_size, num_hidden):
     num_inputs = num_outputs = vocab_size
@@ -186,18 +186,18 @@ It returns a tensor filled with 0 and with a shape of (batch size, number of hid
 Using tuples makes it easier to handle situations where the hidden state contains multiple variables,
 which we will encounter in later sections.
 
-```{.python .input}
+```python
 def init_rnn_state(batch_size, num_hiddens, device):
     return (d2l.zeros((batch_size, num_hiddens), ctx=device), )
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_rnn_state(batch_size, num_hiddens, device):
     return (d2l.zeros((batch_size, num_hiddens), device=device), )
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def init_rnn_state(batch_size, num_hiddens):
     return (d2l.zeros((batch_size, num_hiddens)), )
@@ -217,7 +217,7 @@ described in :numref:`sec_mlp`, the
 mean value of the $\tanh$ function is 0, when the elements are uniformly
 distributed over the real numbers.
 
-```{.python .input}
+```python
 def rnn(inputs, state, params):
     # Shape of `inputs`: (`num_steps`, `batch_size`, `vocab_size`)
     W_xh, W_hh, b_h, W_hq, b_q = params
@@ -231,7 +231,7 @@ def rnn(inputs, state, params):
     return np.concatenate(outputs, axis=0), (H,)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def rnn(inputs, state, params):
     # Here `inputs` shape: (`num_steps`, `batch_size`, `vocab_size`)
@@ -246,7 +246,7 @@ def rnn(inputs, state, params):
     return torch.cat(outputs, dim=0), (H,)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def rnn(inputs, state, params):
     # Here `inputs` shape: (`num_steps`, `batch_size`, `vocab_size`)
@@ -265,7 +265,7 @@ def rnn(inputs, state, params):
 With all the needed functions being defined,
 next we create a class to wrap these functions and store parameters for an RNN model implemented from scratch.
 
-```{.python .input}
+```python
 class RNNModelScratch:  #@save
     """An RNN Model implemented from scratch."""
     def __init__(self, vocab_size, num_hiddens, device, get_params,
@@ -282,7 +282,7 @@ class RNNModelScratch:  #@save
         return self.init_state(batch_size, self.num_hiddens, ctx)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class RNNModelScratch: #@save
     """A RNN Model implemented from scratch."""
@@ -300,7 +300,7 @@ class RNNModelScratch: #@save
         return self.init_state(batch_size, self.num_hiddens, device)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class RNNModelScratch: #@save
     """A RNN Model implemented from scratch."""
@@ -320,7 +320,7 @@ class RNNModelScratch: #@save
 
 Let us check whether the outputs have the correct shapes, e.g., to ensure that the dimensionality of the hidden state remains unchanged.
 
-```{.python .input}
+```python
 #@tab mxnet
 num_hiddens = 512
 model = RNNModelScratch(len(vocab), num_hiddens, d2l.try_gpu(), get_params,
@@ -330,7 +330,7 @@ Y, new_state = model(X.as_in_context(d2l.try_gpu()), state)
 Y.shape, len(new_state), new_state[0].shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_hiddens = 512
 model = RNNModelScratch(len(vocab), num_hiddens, d2l.try_gpu(), get_params,
@@ -340,7 +340,7 @@ Y, new_state = model(X.to(d2l.try_gpu()), state)
 Y.shape, len(new_state), new_state[0].shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # defining tensorflow training strategy
 device_name = d2l.try_gpu()._device_name
@@ -378,7 +378,7 @@ the hidden state is generally better than
 its initialized value at the beginning.
 So we generate the predicted characters and emit them.
 
-```{.python .input}
+```python
 def predict_ch8(prefix, num_preds, model, vocab, device):  #@save
     """Generate new characters following the `prefix`."""
     state = model.begin_state(batch_size=1, ctx=device)
@@ -394,7 +394,7 @@ def predict_ch8(prefix, num_preds, model, vocab, device):  #@save
     return ''.join([vocab.idx_to_token[i] for i in outputs])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def predict_ch8(prefix, num_preds, model, vocab, device):  #@save
     """Generate new characters following the `prefix`."""
@@ -411,7 +411,7 @@ def predict_ch8(prefix, num_preds, model, vocab, device):  #@save
     return ''.join([vocab.idx_to_token[i] for i in outputs])
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def predict_ch8(prefix, num_preds, model, vocab, params):  #@save
     """Generate new characters following the `prefix`."""
@@ -432,12 +432,12 @@ We specify the prefix as `time traveller ` and have it generate 10 additional ch
 Given that we have not trained the network,
 it will generate nonsensical predictions.
 
-```{.python .input}
+```python
 #@tab mxnet,pytorch
 predict_ch8('time traveller ', 10, model, vocab, d2l.try_gpu())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 predict_ch8('time traveller ', 10, model, vocab, params)
 ```
@@ -492,7 +492,7 @@ Below we define a function to clip the gradients of
 a model that is implemented from scratch or a model constructed by the high-level APIs.
 Also note that we compute the gradient norm over all the model parameters.
 
-```{.python .input}
+```python
 def grad_clipping(model, theta):  #@save
     """Clip the gradient."""
     if isinstance(model, gluon.Block):
@@ -505,7 +505,7 @@ def grad_clipping(model, theta):  #@save
             param.grad[:] *= theta / norm
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def grad_clipping(model, theta):  #@save
     """Clip the gradient."""
@@ -519,7 +519,7 @@ def grad_clipping(model, theta):  #@save
             param.grad[:] *= theta / norm
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def grad_clipping(grads, theta): #@save
     """Clip the gradient."""
@@ -577,7 +577,7 @@ to update the model parameters.
 It can be either the `d2l.sgd` function implemented from scratch or the built-in optimization function in
 a deep learning framework.
 
-```{.python .input}
+```python
 def train_epoch_ch8(model, train_iter, loss, updater, device,  #@save
                     use_random_iter):
     """Train a model within one epoch (defined in Chapter 8)."""
@@ -603,7 +603,7 @@ def train_epoch_ch8(model, train_iter, loss, updater, device,  #@save
     return math.exp(metric[0] / metric[1]), metric[1] / timer.stop()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train_epoch_ch8(model, train_iter, loss, updater, device,  #@save
                     use_random_iter):
@@ -642,7 +642,7 @@ def train_epoch_ch8(model, train_iter, loss, updater, device,  #@save
     return math.exp(metric[0] / metric[1]), metric[1] / timer.stop()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def train_epoch_ch8(model, train_iter, loss, updater,   #@save
                     params, use_random_iter):
@@ -675,7 +675,7 @@ an RNN model implemented
 either from scratch
 or using high-level APIs.
 
-```{.python .input}
+```python
 def train_ch8(model, train_iter, vocab, lr, num_epochs, device,  #@save
               use_random_iter=False):
     """Train a model (defined in Chapter 8)."""
@@ -703,7 +703,7 @@ def train_ch8(model, train_iter, vocab, lr, num_epochs, device,  #@save
     print(predict('traveller'))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def train_ch8(model, train_iter, vocab, lr, num_epochs, device,
@@ -730,7 +730,7 @@ def train_ch8(model, train_iter, vocab, lr, num_epochs, device,
     print(predict('traveller'))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 def train_ch8(model, train_iter, vocab, num_hiddens, lr, num_epochs, strategy,
@@ -759,13 +759,13 @@ def train_ch8(model, train_iter, vocab, num_hiddens, lr, num_epochs, strategy,
 Now we can train the RNN model.
 Since we only use 10000 tokens in the dataset, the model needs more epochs to converge better.
 
-```{.python .input}
+```python
 #@tab mxnet,pytorch
 num_epochs, lr = 500, 1
 train_ch8(model, train_iter, vocab, lr, num_epochs, d2l.try_gpu())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_epochs, lr = 500, 1
 train_ch8(model, train_iter, vocab, num_hiddens, lr, num_epochs, strategy)
@@ -774,13 +774,13 @@ train_ch8(model, train_iter, vocab, num_hiddens, lr, num_epochs, strategy)
 Finally,
 let us check the results of using the random sampling method.
 
-```{.python .input}
+```python
 #@tab mxnet,pytorch
 train_ch8(model, train_iter, vocab, lr, num_epochs, d2l.try_gpu(),
           use_random_iter=True)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 params = get_params(len(vocab_random_iter), num_hiddens)
 train_ch8(model, train_random_iter, vocab_random_iter, num_hiddens, lr,

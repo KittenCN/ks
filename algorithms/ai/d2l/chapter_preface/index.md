@@ -55,7 +55,7 @@
 
 有时，为了避免不必要的重复，我们将本书中经常导入和引用的函数、类等封装在`d2l`包中。对于要保存到包中的任何代码块，比如一个函数、一个类或者多个导入，我们都会标记为`#@save`。我们在 :numref:`sec_d2l` 中提供了这些函数和类的详细描述。`d2l`软件包是轻量级的，仅需要以下软件包和模块作为依赖项：
 
-```{.python .input}
+```python
 #@tab all
 #@save
 import collections
@@ -100,13 +100,13 @@ d2l = sys.modules[__name__]
 下面是我们如何从TensorFlow导入模块。
 :end_tab:
 
-```{.python .input}
+```python
 #@save
 from mxnet import autograd, context, gluon, image, init, np, npx
 from mxnet.gluon import nn, rnn
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 import numpy as np
@@ -119,14 +119,14 @@ from torchvision import transforms
 from PIL import Image
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 import numpy as np
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 import numpy as np

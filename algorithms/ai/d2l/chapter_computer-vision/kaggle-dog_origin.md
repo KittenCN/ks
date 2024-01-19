@@ -19,7 +19,7 @@ to submit your results.
 :width:`400px`
 :label:`fig_kaggle_dog`
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, init, npx
 from mxnet.gluon import nn
@@ -28,7 +28,7 @@ import os
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -64,7 +64,7 @@ the labels for the training images.
 Similarly, to make it easier to get started, we provide a small sample of the dataset mentioned above: `train_valid_test_tiny.zip`.
 If you are going to use the full dataset for the Kaggle competition, you need to change the `demo` variable below to `False`.
 
-```{.python .input}
+```python
 #@tab all
 #@save 
 d2l.DATA_HUB['dog_tiny'] = (d2l.DATA_URL + 'kaggle_dog_tiny.zip',
@@ -87,7 +87,7 @@ a validation set from the original training set, and moving images into subfolde
 The `reorg_dog_data` function below reads
 the training data labels, splits out the validation set, and organizes the training set.
 
-```{.python .input}
+```python
 #@tab all
 def reorg_dog_data(data_dir, valid_ratio):
     labels = d2l.read_csv_labels(os.path.join(data_dir, 'labels.csv'))
@@ -111,7 +111,7 @@ The following
 lists a few image augmentation operations
 that might be useful for relatively larger images.
 
-```{.python .input}
+```python
 transform_train = gluon.data.vision.transforms.Compose([
     # Randomly crop the image to obtain an image with an area of 0.08 to 1 of
     # the original area and height-to-width ratio between 3/4 and 4/3. Then,
@@ -131,7 +131,7 @@ transform_train = gluon.data.vision.transforms.Compose([
                                            [0.229, 0.224, 0.225])])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 transform_train = torchvision.transforms.Compose([
     # Randomly crop the image to obtain an image with an area of 0.08 to 1 of
@@ -155,7 +155,7 @@ During prediction,
 we only use image preprocessing operations
 without randomness.
 
-```{.python .input}
+```python
 transform_test = gluon.data.vision.transforms.Compose([
     gluon.data.vision.transforms.Resize(256),
     # Crop a 224 x 224 square area from the center of the image
@@ -165,7 +165,7 @@ transform_test = gluon.data.vision.transforms.Compose([
                                            [0.229, 0.224, 0.225])])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 transform_test = torchvision.transforms.Compose([
     torchvision.transforms.Resize(256),
@@ -182,14 +182,14 @@ As in :numref:`sec_kaggle_cifar10`,
 we can read the organized dataset
 consisting of raw image files.
 
-```{.python .input}
+```python
 train_ds, valid_ds, train_valid_ds, test_ds = [
     gluon.data.vision.ImageFolderDataset(
         os.path.join(data_dir, 'train_valid_test', folder))
     for folder in ('train', 'valid', 'train_valid', 'test')]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train_ds, train_valid_ds = [torchvision.datasets.ImageFolder(
     os.path.join(data_dir, 'train_valid_test', folder),
@@ -204,7 +204,7 @@ Below we create data loader instances
 the same way
 as in :numref:`sec_kaggle_cifar10`.
 
-```{.python .input}
+```python
 train_iter, train_valid_iter = [gluon.data.DataLoader(
     dataset.transform_first(transform_train), batch_size, shuffle=True, 
     last_batch='discard') for dataset in (train_ds, train_valid_ds)]
@@ -218,7 +218,7 @@ test_iter = gluon.data.DataLoader(
     last_batch='keep')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train_iter, train_valid_iter = [torch.utils.data.DataLoader(
     dataset, batch_size, shuffle=True, drop_last=True)
@@ -267,7 +267,7 @@ In fact,
 this is also consistent with the standardization operation
 by the pretrained model on ImageNet.
 
-```{.python .input}
+```python
 def get_net(devices):
     finetune_net = gluon.model_zoo.vision.resnet34_v2(pretrained=True)
     # Define a new output network
@@ -282,7 +282,7 @@ def get_net(devices):
     return finetune_net
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_net(devices):
     finetune_net = nn.Sequential()
@@ -303,7 +303,7 @@ Before calculating the loss,
 we first obtain the input of the pretrained model's output layer, i.e., the extracted feature.
 Then we use this feature as the input for our small custom output network to calculate the loss.
 
-```{.python .input}
+```python
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 
 def evaluate_loss(data_iter, net, devices):
@@ -319,7 +319,7 @@ def evaluate_loss(data_iter, net, devices):
     return l_sum / n
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 loss = nn.CrossEntropyLoss(reduction='none')
 
@@ -339,7 +339,7 @@ def evaluate_loss(data_iter, net, devices):
 We will select the model and tune hyperparameters according to the model's performance on the validation set. The model training function `train` only
 iterates parameters of the small custom output network.
 
-```{.python .input}
+```python
 def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           lr_decay):
     # Only train the small custom output network
@@ -381,7 +381,7 @@ def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           f'on {str(devices)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           lr_decay):
@@ -428,7 +428,7 @@ Now we can train and validate the model.
 The following hyperparameters are all tunable.
 For example, the number of epochs can be increased. Because `lr_period` and `lr_decay` are set to 10 and 0.1, respectively, the learning rate of the optimization algorithm will be multiplied by 0.1 after every 10 epochs.
 
-```{.python .input}
+```python
 devices, num_epochs, lr, wd = d2l.try_all_gpus(), 5, 0.01, 1e-4
 lr_period, lr_decay, net = 10, 0.1, get_net(devices)
 net.hybridize()
@@ -436,7 +436,7 @@ train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
       lr_decay)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 devices, num_epochs, lr, wd = d2l.try_all_gpus(), 5, 0.001, 1e-4
 lr_period, lr_decay, net = 10, 0.1, get_net(devices)
@@ -452,7 +452,7 @@ in the end all the labeled data (including the validation set) are used for trai
 We will use the trained custom output network
 for classification.
 
-```{.python .input}
+```python
 net = get_net(devices)
 net.hybridize()
 train(net, train_valid_iter, None, num_epochs, lr, wd, devices, lr_period,
@@ -472,7 +472,7 @@ with open('submission.csv', 'w') as f:
             [str(num) for num in output]) + '\n')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = get_net(devices)
 train(net, train_valid_iter, None, num_epochs, lr, wd, devices, lr_period,

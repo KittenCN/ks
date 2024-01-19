@@ -82,14 +82,14 @@
 
 下面我们将使用一个简单网络来演示多GPU训练。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -98,7 +98,7 @@ from torch import nn
 from torch.nn import functional as F
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -114,7 +114,7 @@ from paddle.nn import functional as F
 我们使用 :numref:`sec_lenet`中介绍的（稍加修改的）LeNet，
 从零开始定义它，从而详细说明参数交换和同步。
 
-```{.python .input}
+```python
 # 初始化模型参数
 scale = 0.01
 W1 = np.random.normal(scale=scale, size=(20, 1, 3, 3))
@@ -149,7 +149,7 @@ def lenet(X, params):
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # 初始化模型参数
 scale = 0.01
@@ -181,7 +181,7 @@ def lenet(X, params):
 loss = nn.CrossEntropyLoss(reduction='none')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # 初始化模型参数
 scale = 0.01
@@ -220,7 +220,7 @@ loss = nn.CrossEntropyLoss(reduction='none')
 如果没有参数，就不可能在GPU上评估网络。
 第二，需要跨多个设备对参数求和，也就是说，需要一个`allreduce`函数。
 
-```{.python .input}
+```python
 def get_params(params, device):
     new_params = [p.copyto(device) for p in params]
     for p in new_params:
@@ -228,7 +228,7 @@ def get_params(params, device):
     return new_params
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_params(params, device):
     new_params = [p.to(device) for p in params]
@@ -237,7 +237,7 @@ def get_params(params, device):
     return new_params
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def get_params(params, device):
     new_params = [paddle.to_tensor(p, place=device) for p in params]
@@ -248,7 +248,7 @@ def get_params(params, device):
 
 通过将模型参数复制到一个GPU。
 
-```{.python .input}
+```python
 #@tab all
 new_params = get_params(params, d2l.try_gpu(0))
 print('b1 权重:', new_params[1])
@@ -259,7 +259,7 @@ print('b1 梯度:', new_params[1].grad)
 假设现在有一个向量分布在多个GPU上，下面的[**`allreduce`函数将所有向量相加，并将结果广播给所有GPU**]。
 请注意，我们需要将数据复制到累积结果的设备，才能使函数正常工作。
 
-```{.python .input}
+```python
 def allreduce(data):
     for i in range(1, len(data)):
         data[0][:] += data[i].copyto(data[0].ctx)
@@ -267,7 +267,7 @@ def allreduce(data):
         data[0].copyto(data[i])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def allreduce(data):
     for i in range(1, len(data)):
@@ -276,7 +276,7 @@ def allreduce(data):
         data[i][:] = data[0].to(data[i].device)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def allreduce(data):
     paddle.set_device("gpu:0")
@@ -288,14 +288,14 @@ def allreduce(data):
 
 通过在不同设备上创建具有不同值的向量并聚合它们。
 
-```{.python .input}
+```python
 data = [np.ones((1, 2), ctx=d2l.try_gpu(i)) * (i + 1) for i in range(2)]
 print('allreduce之前：\n', data[0], '\n', data[1])
 allreduce(data)
 print('allreduce之后：\n', data[0], '\n', data[1])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 data = [torch.ones((1, 2), device=d2l.try_gpu(i)) * (i + 1) for i in range(2)]
 print('allreduce之前：\n', data[0], '\n', data[1])
@@ -303,7 +303,7 @@ allreduce(data)
 print('allreduce之后：\n', data[0], '\n', data[1])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_gpus = 2
 devices = [d2l.try_gpu(i) for i in range(num_gpus)]
@@ -320,7 +320,7 @@ print('allreduce之后：\n', data[0], '\n', data[1])
 例如，有两个GPU时，我们希望每个GPU可以复制一半的数据。
 因为深度学习框架的内置函数编写代码更方便、更简洁，所以在$4 \times 5$矩阵上使用它进行尝试。
 
-```{.python .input}
+```python
 data = np.arange(20).reshape(4, 5)
 devices = [npx.gpu(0), npx.gpu(1)]
 split = gluon.utils.split_and_load(data, devices)
@@ -329,7 +329,7 @@ print('设备：', devices)
 print('输出：', split)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 data = torch.arange(20).reshape(4, 5)
 devices = [torch.device('cuda:0'), torch.device('cuda:1')]
@@ -339,7 +339,7 @@ print('load into', devices)
 print('output:', split)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def paddlescatter(XY, devices): 
     xy = XY.shape[0]//len(devices) # 根据GPU数目计算分块大小
@@ -356,7 +356,7 @@ print('output:', split)
 
 为了方便以后复用，我们定义了可以同时拆分数据和标签的`split_batch`函数。
 
-```{.python .input}
+```python
 #@save
 def split_batch(X, y, devices):
     """将X和y拆分到多个设备上"""
@@ -365,7 +365,7 @@ def split_batch(X, y, devices):
             gluon.utils.split_and_load(y, devices))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def split_batch(X, y, devices):
@@ -375,7 +375,7 @@ def split_batch(X, y, devices):
             nn.parallel.scatter(y, devices))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def split_batch(X, y, devices):
@@ -392,7 +392,7 @@ def split_batch(X, y, devices):
 我们不需要编写任何特定的代码来实现并行性。
 因为计算图在小批量内的设备之间没有任何依赖关系，因此它是“自动地”并行执行。
 
-```{.python .input}
+```python
 def train_batch(X, y, device_params, devices, lr):
     X_shards, y_shards = split_batch(X, y, devices)
     with autograd.record():  # 在每个GPU上分别计算损失
@@ -409,7 +409,7 @@ def train_batch(X, y, device_params, devices, lr):
         d2l.sgd(param, lr, X.shape[0])  # 在这里，我们使用全尺寸的小批量
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train_batch(X, y, device_params, devices, lr):
     X_shards, y_shards = split_batch(X, y, devices)
@@ -429,7 +429,7 @@ def train_batch(X, y, device_params, devices, lr):
         d2l.sgd(param, lr, X.shape[0]) # 在这里，我们使用全尺寸的小批量
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train_batch(X, y, device_params, devices, lr):
     X_shards, y_shards = split_batch(X, y, devices)
@@ -459,7 +459,7 @@ def train_batch(X, y, device_params, devices, lr):
 显然，每个小批量都是使用`train_batch`函数来处理多个GPU。
 我们只在一个GPU上计算模型的精确度，而让其他GPU保持空闲，尽管这是相对低效的，但是使用方便且代码简洁。
 
-```{.python .input}
+```python
 def train(num_gpus, batch_size, lr):
     train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
     devices = [d2l.try_gpu(i) for i in range(num_gpus)]
@@ -482,7 +482,7 @@ def train(num_gpus, batch_size, lr):
           f'在{str(devices)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(num_gpus, batch_size, lr):
     train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
@@ -506,7 +506,7 @@ def train(num_gpus, batch_size, lr):
           f'在{str(devices)}')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train(num_gpus, batch_size, lr):
     train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
@@ -533,7 +533,7 @@ def train(num_gpus, batch_size, lr):
 让我们看看[**在单个GPU上运行**]效果得有多好。
 首先使用的批量大小是$256$，学习率是$0.2$。
 
-```{.python .input}
+```python
 #@tab all
 train(num_gpus=1, batch_size=256, lr=0.2)
 ```
@@ -544,7 +544,7 @@ train(num_gpus=1, batch_size=256, lr=0.2)
 在未来，我们将遇到更复杂的模型和更复杂的并行化方法。
 尽管如此，让我们看看Fashion-MNIST数据集上会发生什么。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 train(num_gpus=2, batch_size=256, lr=0.2)
 ```

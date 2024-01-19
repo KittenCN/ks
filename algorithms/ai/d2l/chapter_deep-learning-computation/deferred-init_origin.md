@@ -41,7 +41,7 @@ Next, we go deeper into the mechanics of initialization.
 
 To begin, let us instantiate an MLP.
 
-```{.python .input}
+```python
 from mxnet import init, np, npx
 from mxnet.gluon import nn
 npx.set_np()
@@ -55,7 +55,7 @@ def get_net():
 net = get_net()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -71,12 +71,12 @@ because the input dimension remains unknown.
 Consequently the framework has not yet initialized any parameters.
 We confirm by attempting to access the parameters below.
 
-```{.python .input}
+```python
 print(net.collect_params)
 print(net.collect_params())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 [net.layers[i].get_weights() for i in range(len(net.layers))]
 ```
@@ -99,7 +99,7 @@ Using `net.get_weights()` would throw an error since the weights
 have not been initialized yet.
 :end_tab:
 
-```{.python .input}
+```python
 net.initialize()
 net.collect_params()
 ```
@@ -116,14 +116,14 @@ to initialize the parameters.
 Next let us pass data through the network
 to make the framework finally initialize parameters.
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(2, 20))
 net(X)
 
 net.collect_params()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.uniform((2, 20))
 net(X)

@@ -57,7 +57,7 @@
 
 首先，我们导入必要的软件包。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import np, npx
@@ -65,7 +65,7 @@ import random
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -73,7 +73,7 @@ import torch
 from torch.distributions import multinomial
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -82,7 +82,7 @@ import tensorflow_probability as tfp
 import numpy as np
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -101,24 +101,24 @@ import numpy as np
 为了抽取一个样本，即掷骰子，我们只需传入一个概率向量。
 输出是另一个相同长度的向量：它在索引$i$处的值是采样结果中$i$出现的次数。
 
-```{.python .input}
+```python
 fair_probs = [1.0 / 6] * 6
 np.random.multinomial(1, fair_probs)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 fair_probs = torch.ones([6]) / 6
 multinomial.Multinomial(1, fair_probs).sample()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 fair_probs = tf.ones(6) / 6
 tfp.distributions.Multinomial(1, fair_probs).sample()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 fair_probs = [1.0 / 6] * 6
 paddle.distribution.Multinomial(1, paddle.to_tensor(fair_probs)).sample()
@@ -128,21 +128,21 @@ paddle.distribution.Multinomial(1, paddle.to_tensor(fair_probs)).sample()
 如果用Python的for循环来完成这个任务，速度会慢得惊人。
 因此我们使用深度学习框架的函数同时抽取多个样本，得到我们想要的任意形状的独立样本数组。
 
-```{.python .input}
+```python
 np.random.multinomial(10, fair_probs)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 multinomial.Multinomial(10, fair_probs).sample()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 tfp.distributions.Multinomial(10, fair_probs).sample()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 paddle.distribution.Multinomial(10, paddle.to_tensor(fair_probs)).sample()
 ```
@@ -151,25 +151,25 @@ paddle.distribution.Multinomial(10, paddle.to_tensor(fair_probs)).sample()
 然后，我们可以统计1000次投掷后，每个数字被投中了多少次。
 具体来说，我们计算相对频率，以作为真实概率的估计。
 
-```{.python .input}
+```python
 counts = np.random.multinomial(1000, fair_probs).astype(np.float32)
 counts / 1000
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # 将结果存储为32位浮点数以进行除法
 counts = multinomial.Multinomial(1000, fair_probs).sample()
 counts / 1000  # 相对频率作为估计值
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 counts = tfp.distributions.Multinomial(1000, fair_probs).sample()
 counts / 1000
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 counts = paddle.distribution.Multinomial(1000, paddle.to_tensor(fair_probs)).sample()
 counts / 1000
@@ -181,7 +181,7 @@ counts / 1000
 我们也可以看到这些概率如何随着时间的推移收敛到真实概率。
 让我们进行500组实验，每组抽取10个样本。
 
-```{.python .input}
+```python
 counts = np.random.multinomial(10, fair_probs, size=500)
 cum_counts = counts.astype(np.float32).cumsum(axis=0)
 estimates = cum_counts / cum_counts.sum(axis=1, keepdims=True)
@@ -196,7 +196,7 @@ d2l.plt.gca().set_ylabel('Estimated probability')
 d2l.plt.legend();
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 counts = multinomial.Multinomial(10, fair_probs).sample((500,))
 cum_counts = counts.cumsum(dim=0)
@@ -212,7 +212,7 @@ d2l.plt.gca().set_ylabel('Estimated probability')
 d2l.plt.legend();
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 counts = tfp.distributions.Multinomial(10, fair_probs).sample(500)
 cum_counts = tf.cumsum(counts, axis=0)
@@ -228,7 +228,7 @@ d2l.plt.gca().set_ylabel('Estimated probability')
 d2l.plt.legend();
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 counts = paddle.distribution.Multinomial(10, paddle.to_tensor(fair_probs)).sample((500,1))
 cum_counts = counts.cumsum(axis=0)

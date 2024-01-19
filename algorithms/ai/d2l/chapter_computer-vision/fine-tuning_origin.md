@@ -60,7 +60,7 @@ thousands of images with and without hot dogs.
 We will use the fine-tuned model to recognize 
 hot dogs from images.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import gluon, init, np, npx
@@ -70,7 +70,7 @@ import os
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -93,7 +93,7 @@ After unzipping the downloaded dataset,
 we obtain two folders `hotdog/train` and `hotdog/test`. Both folders have `hotdog` and `not-hotdog` subfolders, either of which contains images of
 the corresponding class.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['hotdog'] = (d2l.DATA_URL + 'hotdog.zip', 
@@ -104,14 +104,14 @@ data_dir = d2l.download_extract('hotdog')
 
 We create two instances to read all the image files in the training and testing datasets, respectively.
 
-```{.python .input}
+```python
 train_imgs = gluon.data.vision.ImageFolderDataset(
     os.path.join(data_dir, 'train'))
 test_imgs = gluon.data.vision.ImageFolderDataset(
     os.path.join(data_dir, 'test'))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train_imgs = torchvision.datasets.ImageFolder(os.path.join(data_dir, 'train'))
 test_imgs = torchvision.datasets.ImageFolder(os.path.join(data_dir, 'test'))
@@ -119,7 +119,7 @@ test_imgs = torchvision.datasets.ImageFolder(os.path.join(data_dir, 'test'))
 
 The first 8 positive examples and the last 8 negative images are shown below. As you can see, the images vary in size and aspect ratio.
 
-```{.python .input}
+```python
 #@tab all
 hotdogs = [train_imgs[i][0] for i in range(8)]
 not_hotdogs = [train_imgs[-i - 1][0] for i in range(8)]
@@ -136,7 +136,7 @@ we *standardize* their values channel by channel.
 Concretely,
 the mean value of a channel is subtracted from each value of that channel and then the result is divided by the standard deviation of that channel.
 
-```{.python .input}
+```python
 # Specify the means and standard deviations of the three RGB channels to
 # standardize each channel
 normalize = gluon.data.vision.transforms.Normalize(
@@ -155,7 +155,7 @@ test_augs = gluon.data.vision.transforms.Compose([
     normalize])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # Specify the means and standard deviations of the three RGB channels to
 # standardize each channel
@@ -181,11 +181,11 @@ We use ResNet-18, which was pretrained on the ImageNet dataset, as the source mo
 If this model is used for the first time,
 Internet connection is required for download.
 
-```{.python .input}
+```python
 pretrained_net = gluon.model_zoo.vision.resnet18_v2(pretrained=True)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 pretrained_net = torchvision.models.resnet18(pretrained=True)
 ```
@@ -200,11 +200,11 @@ The pretrained source model instance contains a number of feature layers and an 
 The main purpose of this division is to facilitate the fine-tuning of model parameters of all layers but the output layer. The member variable `fc` of source model is given below.
 :end_tab:
 
-```{.python .input}
+```python
 pretrained_net.output
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 pretrained_net.fc
 ```
@@ -231,7 +231,7 @@ a small learning rate to *fine-tune* such pretrained parameters.
 In contrast, model parameters in the output layer are randomly initialized and generally require a larger learning rate to be learned from scratch.
 Let the base learning rate be $\eta$, a learning rate of $10\eta$ will be used to iterate the model parameters in the output layer.
 
-```{.python .input}
+```python
 finetune_net = gluon.model_zoo.vision.resnet18_v2(classes=2)
 finetune_net.features = pretrained_net.features
 finetune_net.output.initialize(init.Xavier())
@@ -240,7 +240,7 @@ finetune_net.output.initialize(init.Xavier())
 finetune_net.output.collect_params().setattr('lr_mult', 10)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 finetune_net = torchvision.models.resnet18(pretrained=True)
 finetune_net.fc = nn.Linear(finetune_net.fc.in_features, 2)
@@ -251,7 +251,7 @@ nn.init.xavier_uniform_(finetune_net.fc.weight);
 
 First, we define a training function `train_fine_tuning` that uses fine-tuning so it can be called multiple times.
 
-```{.python .input}
+```python
 def train_fine_tuning(net, learning_rate, batch_size=128, num_epochs=5):
     train_iter = gluon.data.DataLoader(
         train_imgs.transform_first(train_augs), batch_size, shuffle=True)
@@ -267,7 +267,7 @@ def train_fine_tuning(net, learning_rate, batch_size=128, num_epochs=5):
                    devices)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # If `param_group=True`, the model parameters in the output layer will be
 # updated using a learning rate ten times greater
@@ -298,24 +298,24 @@ def train_fine_tuning(net, learning_rate, batch_size=128, num_epochs=5,
 We set the base learning rate to a small value
 in order to *fine-tune* the model parameters obtained via pretraining. Based on the previous settings, we will train the output layer parameters of the target model from scratch using a learning rate ten times greater.
 
-```{.python .input}
+```python
 train_fine_tuning(finetune_net, 0.01)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train_fine_tuning(finetune_net, 5e-5)
 ```
 
 For comparison, we define an identical model, but initialize all of its model parameters to random values. Since the entire model needs to be trained from scratch, we can use a larger learning rate.
 
-```{.python .input}
+```python
 scratch_net = gluon.model_zoo.vision.resnet18_v2(classes=2)
 scratch_net.initialize(init=init.Xavier())
 train_fine_tuning(scratch_net, 0.1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 scratch_net = torchvision.models.resnet18()
 scratch_net.fc = nn.Linear(scratch_net.fc.in_features, 2)
@@ -339,11 +339,11 @@ because its initial parameter values are more effective.
 2. Further adjust hyperparameters of `finetune_net` and `scratch_net` in the comparative experiment. Do they still differ in accuracy?
 3. Set the parameters before the output layer of `finetune_net` to those of the source model and do *not* update them during training. How does the accuracy of the model change? You can use the following code.
 
-```{.python .input}
+```python
 finetune_net.features.collect_params().setattr('grad_req', 'null')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 for param in finetune_net.parameters():
     param.requires_grad = False
@@ -351,13 +351,13 @@ for param in finetune_net.parameters():
 
 4. In fact, there is a "hotdog" class in the `ImageNet` dataset. Its corresponding weight parameter in the output layer can be obtained via the following code. How can we leverage this weight parameter?
 
-```{.python .input}
+```python
 weight = pretrained_net.output.weight
 hotdog_w = np.split(weight.data(), 1000, axis=0)[713]
 hotdog_w.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 weight = pretrained_net.fc.weight
 hotdog_w = torch.split(weight.data, 1, dim=0)[713]

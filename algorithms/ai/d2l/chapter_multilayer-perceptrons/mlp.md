@@ -176,28 +176,28 @@ C语言和任何其他现代编程语言一样，能够表达任何可计算的�
 大多数激活函数都是非线性的。
 由于激活函数是深度学习的基础，下面(**简要介绍一些常见的激活函数**)。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -219,7 +219,7 @@ import paddle
 为了直观感受一下，我们可以画出函数的曲线图。
 正如从图中所看到，激活函数是分段线性的。
 
-```{.python .input}
+```python
 x = np.arange(-8.0, 8.0, 0.1)
 x.attach_grad()
 with autograd.record():
@@ -227,21 +227,21 @@ with autograd.record():
 d2l.plot(x, y, 'x', 'relu(x)', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x = torch.arange(-8.0, 8.0, 0.1, requires_grad=True)
 y = torch.relu(x)
 d2l.plot(x.detach(), y.detach(), 'x', 'relu(x)', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 x = tf.Variable(tf.range(-8.0, 8.0, 0.1), dtype=tf.float32)
 y = tf.nn.relu(x)
 d2l.plot(x.numpy(), y.numpy(), 'x', 'relu(x)', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 x = paddle.arange(-8.0, 8.0, 0.1, dtype='float32')
 x.stop_gradient = False
@@ -257,18 +257,18 @@ d2l.plot(x.detach().numpy(), y.detach().numpy(), 'x', 'relu(x)', figsize=(5, 2.5
 这个观点正好适用于这里。
 下面我们绘制ReLU函数的导数。
 
-```{.python .input}
+```python
 y.backward()
 d2l.plot(x, x.grad, 'x', 'grad of relu', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 y.backward(torch.ones_like(x), retain_graph=True)
 d2l.plot(x.detach(), x.grad, 'x', 'grad of relu', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 with tf.GradientTape() as t:
     y = tf.nn.relu(x)
@@ -276,7 +276,7 @@ d2l.plot(x.numpy(), t.gradient(y, x).numpy(), 'x', 'grad of relu',
          figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 y.backward(paddle.ones_like(x), retain_graph=True)
 d2l.plot(x.detach().numpy(), x.grad.numpy(), 'x', 'grad of relu', figsize=(5, 2.5))
@@ -316,25 +316,25 @@ sigmoid仍然被广泛用作输出单元上的激活函数
 下面，我们绘制sigmoid函数。
 注意，当输入接近0时，sigmoid函数接近线性变换。
 
-```{.python .input}
+```python
 with autograd.record():
     y = npx.sigmoid(x)
 d2l.plot(x, y, 'x', 'sigmoid(x)', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 y = torch.sigmoid(x)
 d2l.plot(x.detach(), y.detach(), 'x', 'sigmoid(x)', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 y = tf.nn.sigmoid(x)
 d2l.plot(x.numpy(), y.numpy(), 'x', 'sigmoid(x)', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 y = paddle.nn.functional.sigmoid(x)
 d2l.plot(x.detach().numpy(), y.detach().numpy(), 'x', 'sigmoid(x)', figsize=(5, 2.5))
@@ -348,12 +348,12 @@ sigmoid函数的导数图像如下所示。
 注意，当输入为0时，sigmoid函数的导数达到最大值0.25；
 而输入在任一方向上越远离0点时，导数越接近0。
 
-```{.python .input}
+```python
 y.backward()
 d2l.plot(x, x.grad, 'x', 'grad of sigmoid', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # 清除以前的梯度
 x.grad.data.zero_()
@@ -361,7 +361,7 @@ y.backward(torch.ones_like(x),retain_graph=True)
 d2l.plot(x.detach(), x.grad, 'x', 'grad of sigmoid', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 with tf.GradientTape() as t:
     y = tf.nn.sigmoid(x)
@@ -369,7 +369,7 @@ d2l.plot(x.numpy(), t.gradient(y, x).numpy(), 'x', 'grad of sigmoid',
          figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # 清除以前的梯度。
 x.clear_gradient()
@@ -390,25 +390,25 @@ tanh函数的公式如下：
 函数的形状类似于sigmoid函数，
 不同的是tanh函数关于坐标系原点中心对称。
 
-```{.python .input}
+```python
 with autograd.record():
     y = np.tanh(x)
 d2l.plot(x, y, 'x', 'tanh(x)', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 y = torch.tanh(x)
 d2l.plot(x.detach(), y.detach(), 'x', 'tanh(x)', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 y = tf.nn.tanh(x)
 d2l.plot(x.numpy(), y.numpy(), 'x', 'tanh(x)', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 y = paddle.tanh(x)
 d2l.plot(x.detach().numpy(), y.detach().numpy(), 'x', 'tanh(x)', figsize=(5, 2.5))
@@ -423,12 +423,12 @@ tanh函数的导数图像如下所示。
 与我们在sigmoid函数图像中看到的类似，
 输入在任一方向上越远离0点，导数越接近0。
 
-```{.python .input}
+```python
 y.backward()
 d2l.plot(x, x.grad, 'x', 'grad of tanh', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # 清除以前的梯度
 x.grad.data.zero_()
@@ -436,7 +436,7 @@ y.backward(torch.ones_like(x),retain_graph=True)
 d2l.plot(x.detach(), x.grad, 'x', 'grad of tanh', figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 with tf.GradientTape() as t:
     y = tf.nn.tanh(x)
@@ -444,7 +444,7 @@ d2l.plot(x.numpy(), t.gradient(y, x).numpy(), 'x', 'grad of tanh',
          figsize=(5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # 清除以前的梯度。
 x.clear_gradient()

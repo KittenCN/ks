@@ -15,7 +15,7 @@
 以其他格式存储的数据也可以通过类似的方式进行处理。
 下面我们将数据集按行写入CSV文件中。
 
-```{.python .input}
+```python
 #@tab all
 import os
 
@@ -31,7 +31,7 @@ with open(data_file, 'w') as f:
 
 要[**从创建的CSV文件中加载原始数据集**]，我们导入`pandas`包并调用`read_csv`函数。该数据集有四行三列。其中每行描述了房间数量（“NumRooms”）、巷子类型（“Alley”）和房屋价格（“Price”）。
 
-```{.python .input}
+```python
 #@tab all
 # 如果没有安装pandas，只需取消对以下行的注释来安装pandas
 # !pip install pandas
@@ -52,7 +52,7 @@ print(data)
 其中前者为`data`的前两列，而后者为`data`的最后一列。
 对于`inputs`中缺少的数值，我们用同一列的均值替换“NaN”项。
 
-```{.python .input}
+```python
 #@tab all
 inputs, outputs = data.iloc[:, 0:2], data.iloc[:, 2]
 inputs = inputs.fillna(inputs.mean())
@@ -65,7 +65,7 @@ print(inputs)
 巷子类型为“Pave”的行会将“Alley_Pave”的值设置为1，“Alley_nan”的值设置为0。
 缺少巷子类型的行会将“Alley_Pave”和“Alley_nan”分别设置为0和1。
 
-```{.python .input}
+```python
 #@tab all
 inputs = pd.get_dummies(inputs, dummy_na=True)
 print(inputs)
@@ -76,14 +76,14 @@ print(inputs)
 [**现在`inputs`和`outputs`中的所有条目都是数值类型，它们可以转换为张量格式。**]
 当数据采用张量格式后，可以通过在 :numref:`sec_ndarray`中引入的那些张量函数来进一步操作。
 
-```{.python .input}
+```python
 from mxnet import np
 
 X, y = np.array(inputs.to_numpy(dtype=float)), np.array(outputs.to_numpy(dtype=float))
 X, y
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 
@@ -92,7 +92,7 @@ y = torch.tensor(outputs.to_numpy(dtype=float))
 X, y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -101,7 +101,7 @@ y = tf.constant(outputs.to_numpy(dtype=float))
 X, y
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 import warnings
 warnings.filterwarnings(action='ignore')

@@ -16,7 +16,7 @@ In this section, we will rely only on tensors and auto differentiation.
 Afterwards, we will introduce a more concise implementation,
 taking advantage of bells and whistles of deep learning frameworks.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, np, npx
@@ -24,7 +24,7 @@ import random
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -32,7 +32,7 @@ import torch
 import random
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -67,7 +67,7 @@ that $\epsilon$ obeys a normal distribution with mean of 0.
 To make our problem easy, we will set its standard deviation to 0.01.
 The following code generates our synthetic dataset.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def synthetic_data(w, b, num_examples):  #@save
     """Generate y = Xw + b + noise."""
@@ -77,7 +77,7 @@ def synthetic_data(w, b, num_examples):  #@save
     return X, d2l.reshape(y, (-1, 1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def synthetic_data(w, b, num_examples):  #@save
     """Generate y = Xw + b + noise."""
@@ -89,7 +89,7 @@ def synthetic_data(w, b, num_examples):  #@save
     return X, y
 ```
 
-```{.python .input}
+```python
 #@tab all
 true_w = d2l.tensor([2, -3.4])
 true_b = 4.2
@@ -99,7 +99,7 @@ features, labels = synthetic_data(true_w, true_b, 1000)
 Note that each row in `features` consists of a 2-dimensional data point
 and that each row in `labels` consists of a 1-dimensional label value (a scalar).
 
-```{.python .input}
+```python
 #@tab all
 print('features:', features[0],'\nlabel:', labels[0])
 ```
@@ -107,7 +107,7 @@ print('features:', features[0],'\nlabel:', labels[0])
 By generating a scatter plot using the second feature `features[:, 1]` and `labels`,
 we can clearly observe the linear correlation between the two.
 
-```{.python .input}
+```python
 #@tab all
 d2l.set_figsize()
 # The semicolon is for displaying the plot only
@@ -131,7 +131,7 @@ The function takes a batch size, a matrix of features,
 and a vector of labels, yielding minibatches of the size `batch_size`.
 Each minibatch consists of a tuple of features and labels.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def data_iter(batch_size, features, labels):
     num_examples = len(features)
@@ -144,7 +144,7 @@ def data_iter(batch_size, features, labels):
         yield features[batch_indices], labels[batch_indices]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def data_iter(batch_size, features, labels):
     num_examples = len(features)
@@ -170,7 +170,7 @@ The shape of the features in each minibatch tells us
 both the minibatch size and the number of input features.
 Likewise, our minibatch of labels will have a shape given by `batch_size`.
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 10
 
@@ -198,20 +198,20 @@ In the following code, we initialize weights by sampling
 random numbers from a normal distribution with mean 0
 and a standard deviation of 0.01, and setting the bias to 0.
 
-```{.python .input}
+```python
 w = np.random.normal(0, 0.01, (2, 1))
 b = np.zeros(1)
 w.attach_grad()
 b.attach_grad()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 w = torch.normal(0, 0.01, size=(2,1), requires_grad=True)
 b = torch.zeros(1, requires_grad=True)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 w = tf.Variable(tf.random.normal(shape=(2, 1), mean=0, stddev=0.01),
                 trainable=True)
@@ -245,7 +245,7 @@ Recall the broadcasting mechanism as described in :numref:`subsec_broadcasting`.
 When we add a vector and a scalar,
 the scalar is added to each component of the vector.
 
-```{.python .input}
+```python
 #@tab all
 def linreg(X, w, b):  #@save
     """The linear regression model."""
@@ -264,7 +264,7 @@ into the predicted value's shape `y_hat`.
 The result returned by the following function
 will also have the same shape as `y_hat`.
 
-```{.python .input}
+```python
 #@tab all
 def squared_loss(y_hat, y):  #@save
     """Squared loss."""
@@ -294,14 +294,14 @@ we normalize our step size by the batch size (`batch_size`),
 so that the magnitude of a typical step size
 does not depend heavily on our choice of the batch size.
 
-```{.python .input}
+```python
 def sgd(params, lr, batch_size):  #@save
     """Minibatch stochastic gradient descent."""
     for param in params:
         param[:] = param - lr * param.grad / batch_size
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def sgd(params, lr, batch_size):  #@save
     """Minibatch stochastic gradient descent."""
@@ -310,7 +310,7 @@ def sgd(params, lr, batch_size):  #@save
         param.grad.data.zero_()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def sgd(params, grads, lr, batch_size):  #@save
     """Minibatch stochastic gradient descent."""
@@ -353,7 +353,7 @@ We elide these details for now but revise them
 later in
 :numref:`chap_optimization`.
 
-```{.python .input}
+```python
 #@tab all
 lr = 0.03
 num_epochs = 3
@@ -361,7 +361,7 @@ net = linreg
 loss = squared_loss
 ```
 
-```{.python .input}
+```python
 for epoch in range(num_epochs):
     for X, y in data_iter(batch_size, features, labels):
         with autograd.record():
@@ -375,7 +375,7 @@ for epoch in range(num_epochs):
     print(f'epoch {epoch + 1}, loss {float(train_l.mean()):f}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 for epoch in range(num_epochs):
     for X, y in data_iter(batch_size, features, labels):
@@ -388,7 +388,7 @@ for epoch in range(num_epochs):
         print(f'epoch {epoch + 1}, loss {float(train_l.mean()):f}')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 for epoch in range(num_epochs):
     for X, y in data_iter(batch_size, features, labels):
@@ -409,7 +409,7 @@ by comparing the true parameters
 with those that we learned through our training loop.
 Indeed they turn out to be very close to each other.
 
-```{.python .input}
+```python
 #@tab all
 print(f'error in estimating w: {true_w - d2l.reshape(w, true_w.shape)}')
 print(f'error in estimating b: {true_b - b}')

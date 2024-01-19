@@ -8,7 +8,7 @@
 ![将GloVe放入卷积神经网络架构进行情感分析](../img/nlp-map-sa-cnn.svg)
 :label:`fig_nlp-map-sa-cnn`
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, init, np, npx
 from mxnet.gluon import nn
@@ -18,7 +18,7 @@ batch_size = 64
 train_iter, test_iter, vocab = d2l.load_data_imdb(batch_size)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -28,7 +28,7 @@ batch_size = 64
 train_iter, test_iter, vocab = d2l.load_data_imdb(batch_size)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -51,7 +51,7 @@ train_iter, test_iter, vocab = d2l.load_data_imdb(batch_size)
 
 我们在下面的`corr1d`函数中实现了一维互相关。给定输入张量`X`和核张量`K`，它返回输出张量`Y`。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def corr1d(X, K):
     w = K.shape[0]
@@ -61,7 +61,7 @@ def corr1d(X, K):
     return Y
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def corr1d(X, K):
     w = K.shape[0]
@@ -73,7 +73,7 @@ def corr1d(X, K):
 
 我们可以从 :numref:`fig_conv1d`构造输入张量`X`和核张量`K`来验证上述一维互相关实现的输出。
 
-```{.python .input}
+```python
 #@tab all
 X, K = d2l.tensor([0, 1, 2, 3, 4, 5, 6]), d2l.tensor([1, 2])
 corr1d(X, K)
@@ -86,7 +86,7 @@ corr1d(X, K)
 
 我们可以实现多个输入通道的一维互相关运算，并在 :numref:`fig_conv1d_channel`中验证结果。
 
-```{.python .input}
+```python
 #@tab all
 def corr1d_multi_in(X, K):
     # 首先，遍历'X'和'K'的第0维（通道维）。然后，把它们加在一起
@@ -129,7 +129,7 @@ corr1d_multi_in(X, K)
 
 我们在下面的类中实现textCNN模型。与 :numref:`sec_sentiment_rnn`的双向循环神经网络模型相比，除了用卷积层代替循环神经网络层外，我们还使用了两个嵌入层：一个是可训练权重，另一个是固定权重。
 
-```{.python .input}
+```python
 class TextCNN(nn.Block):
     def __init__(self, vocab_size, embed_size, kernel_sizes, num_channels,
                  **kwargs):
@@ -162,7 +162,7 @@ class TextCNN(nn.Block):
         return outputs
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class TextCNN(nn.Module):
     def __init__(self, vocab_size, embed_size, kernel_sizes, num_channels,
@@ -197,7 +197,7 @@ class TextCNN(nn.Module):
         return outputs
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class TextCNN(nn.Layer):
     def __init__(self, vocab_size, embed_size, kernel_sizes, num_channels,
@@ -234,14 +234,14 @@ class TextCNN(nn.Layer):
 
 让我们创建一个textCNN实例。它有3个卷积层，卷积核宽度分别为3、4和5，均有100个输出通道。
 
-```{.python .input}
+```python
 embed_size, kernel_sizes, nums_channels = 100, [3, 4, 5], [100, 100, 100]
 devices = d2l.try_all_gpus()
 net = TextCNN(len(vocab), embed_size, kernel_sizes, nums_channels)
 net.initialize(init.Xavier(), ctx=devices)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 embed_size, kernel_sizes, nums_channels = 100, [3, 4, 5], [100, 100, 100]
 devices = d2l.try_all_gpus()
@@ -254,7 +254,7 @@ def init_weights(m):
 net.apply(init_weights);
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 embed_size, kernel_sizes, nums_channels = 100, [3, 4, 5], [100, 100, 100]
 devices = d2l.try_all_gpus()
@@ -273,7 +273,7 @@ init_weights(net)
 
 与 :numref:`sec_sentiment_rnn`相同，我们加载预训练的100维GloVe嵌入作为初始化的词元表示。这些词元表示（嵌入权重）在`embedding`中将被训练，在`constant_embedding`中将被固定。
 
-```{.python .input}
+```python
 glove_embedding = d2l.TokenEmbedding('glove.6b.100d')
 embeds = glove_embedding[vocab.idx_to_token]
 net.embedding.weight.set_data(embeds)
@@ -281,7 +281,7 @@ net.constant_embedding.weight.set_data(embeds)
 net.constant_embedding.collect_params().setattr('grad_req', 'null')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 glove_embedding = d2l.TokenEmbedding('glove.6b.100d')
 embeds = glove_embedding[vocab.idx_to_token]
@@ -290,7 +290,7 @@ net.constant_embedding.weight.data.copy_(embeds)
 net.constant_embedding.weight.requires_grad = False
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 glove_embedding = d2l.TokenEmbedding('glove.6b.100d')
 embeds = glove_embedding[vocab.idx_to_token]
@@ -303,14 +303,14 @@ net.constant_embedding.weight.stop_gradient = True
 
 现在我们可以训练textCNN模型进行情感分析。
 
-```{.python .input}
+```python
 lr, num_epochs = 0.001, 5
 trainer = gluon.Trainer(net.collect_params(), 'adam', {'learning_rate': lr})
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs, devices)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 lr, num_epochs = 0.001, 5
 trainer = torch.optim.Adam(net.parameters(), lr=lr)
@@ -318,7 +318,7 @@ loss = nn.CrossEntropyLoss(reduction="none")
 d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs, devices)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 lr, num_epochs = 0.001, 5
 trainer = paddle.optimizer.Adam(learning_rate=lr, parameters=net.parameters())
@@ -328,12 +328,12 @@ d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs, devices)
 
 下面，我们使用训练好的模型来预测两个简单句子的情感。
 
-```{.python .input}
+```python
 #@tab all
 d2l.predict_sentiment(net, vocab, 'this movie is so great')
 ```
 
-```{.python .input}
+```python
 #@tab all
 d2l.predict_sentiment(net, vocab, 'this movie is so bad')
 ```

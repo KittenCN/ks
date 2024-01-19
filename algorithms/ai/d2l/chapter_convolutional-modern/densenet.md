@@ -44,7 +44,7 @@ DenseNet这个名字由变量之间的“稠密连接”而得来，最后一层
 DenseNet使用了ResNet改良版的“批量规范化、激活和卷积”架构（参见 :numref:`sec_resnet`中的练习）。
 我们首先实现一下这个架构。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
@@ -58,7 +58,7 @@ def conv_block(num_channels):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -70,7 +70,7 @@ def conv_block(input_channels, num_channels):
         nn.Conv2d(input_channels, num_channels, kernel_size=3, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -93,7 +93,7 @@ class ConvBlock(tf.keras.layers.Layer):
         return y
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -110,7 +110,7 @@ def conv_block(input_channels, num_channels):
 一个*稠密块*由多个卷积块组成，每个卷积块使用相同数量的输出通道。
 然而，在前向传播中，我们将每个卷积块的输入和输出在通道维上连结。
 
-```{.python .input}
+```python
 class DenseBlock(nn.Block):
     def __init__(self, num_convs, num_channels, **kwargs):
         super().__init__(**kwargs)
@@ -126,7 +126,7 @@ class DenseBlock(nn.Block):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class DenseBlock(nn.Module):
     def __init__(self, num_convs, input_channels, num_channels):
@@ -145,7 +145,7 @@ class DenseBlock(nn.Module):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class DenseBlock(tf.keras.layers.Layer):
     def __init__(self, num_convs, num_channels):
@@ -160,7 +160,7 @@ class DenseBlock(tf.keras.layers.Layer):
         return x
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class DenseBlock(nn.Layer):
     def __init__(self, num_convs, input_channels, num_channels):
@@ -183,7 +183,7 @@ class DenseBlock(nn.Layer):
 使用通道数为3的输入时，我们会得到通道数为$3+2\times 10=23$的输出。
 卷积块的通道数控制了输出通道数相对于输入通道数的增长，因此也被称为*增长率*（growth rate）。
 
-```{.python .input}
+```python
 blk = DenseBlock(2, 10)
 blk.initialize()
 X = np.random.uniform(size=(4, 3, 8, 8))
@@ -191,7 +191,7 @@ Y = blk(X)
 Y.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 blk = DenseBlock(2, 3, 10)
 X = torch.randn(4, 3, 8, 8)
@@ -199,7 +199,7 @@ Y = blk(X)
 Y.shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 blk = DenseBlock(2, 10)
 X = tf.random.uniform((4, 8, 8, 3))
@@ -207,7 +207,7 @@ Y = blk(X)
 Y.shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 blk = DenseBlock(2, 3, 10)
 X = paddle.randn([4, 3, 8, 8])
@@ -221,7 +221,7 @@ Y.shape
 而过渡层可以用来控制模型复杂度。
 它通过$1\times 1$卷积层来减小通道数，并使用步幅为2的平均汇聚层减半高和宽，从而进一步降低模型复杂度。
 
-```{.python .input}
+```python
 def transition_block(num_channels):
     blk = nn.Sequential()
     blk.add(nn.BatchNorm(), nn.Activation('relu'),
@@ -230,7 +230,7 @@ def transition_block(num_channels):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def transition_block(input_channels, num_channels):
     return nn.Sequential(
@@ -239,7 +239,7 @@ def transition_block(input_channels, num_channels):
         nn.AvgPool2d(kernel_size=2, stride=2))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class TransitionBlock(tf.keras.layers.Layer):
     def __init__(self, num_channels, **kwargs):
@@ -256,7 +256,7 @@ class TransitionBlock(tf.keras.layers.Layer):
         return self.avg_pool(x)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def transition_block(input_channels, num_channels):
     return nn.Sequential(
@@ -268,19 +268,19 @@ def transition_block(input_channels, num_channels):
 对上一个例子中稠密块的输出[**使用**]通道数为10的[**过渡层**]。
 此时输出的通道数减为10，高和宽均减半。
 
-```{.python .input}
+```python
 blk = transition_block(10)
 blk.initialize()
 blk(Y).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 blk = transition_block(23, 10)
 blk(Y).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 blk = TransitionBlock(10)
 blk(Y).shape
@@ -290,14 +290,14 @@ blk(Y).shape
 
 我们来构造DenseNet模型。DenseNet首先使用同ResNet一样的单卷积层和最大汇聚层。
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nn.Conv2D(64, kernel_size=7, strides=2, padding=3),
         nn.BatchNorm(), nn.Activation('relu'),
         nn.MaxPool2D(pool_size=3, strides=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 b1 = nn.Sequential(
     nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3),
@@ -305,7 +305,7 @@ b1 = nn.Sequential(
     nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def block_1():
     return tf.keras.Sequential([
@@ -315,7 +315,7 @@ def block_1():
        tf.keras.layers.MaxPool2D(pool_size=3, strides=2, padding='same')])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 b1 = nn.Sequential(
     nn.Conv2D(1, 64, kernel_size=7, stride=2, padding=3),
@@ -330,7 +330,7 @@ b1 = nn.Sequential(
 
 在每个模块之间，ResNet通过步幅为2的残差块减小高和宽，DenseNet则使用过渡层来减半高和宽，并减半通道数。
 
-```{.python .input}
+```python
 # num_channels为当前的通道数
 num_channels, growth_rate = 64, 32
 num_convs_in_dense_blocks = [4, 4, 4, 4]
@@ -345,7 +345,7 @@ for i, num_convs in enumerate(num_convs_in_dense_blocks):
         net.add(transition_block(num_channels))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # num_channels为当前的通道数
 num_channels, growth_rate = 64, 32
@@ -361,7 +361,7 @@ for i, num_convs in enumerate(num_convs_in_dense_blocks):
         num_channels = num_channels // 2
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def block_2():
     net = block_1()
@@ -380,7 +380,7 @@ def block_2():
     return net
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # num_channels为当前的通道数
 num_channels, growth_rate = 64, 32
@@ -398,14 +398,14 @@ for i, num_convs in enumerate(num_convs_in_dense_blocks):
 
 与ResNet类似，最后接上全局汇聚层和全连接层来输出结果。
 
-```{.python .input}
+```python
 net.add(nn.BatchNorm(),
         nn.Activation('relu'),
         nn.GlobalAvgPool2D(),
         nn.Dense(10))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(
     b1, *blks,
@@ -415,7 +415,7 @@ net = nn.Sequential(
     nn.Linear(num_channels, 10))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def net():
     net = block_2()
@@ -427,7 +427,7 @@ def net():
     return net
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = nn.Sequential(
     b1, *blks, 
@@ -441,7 +441,7 @@ net = nn.Sequential(
 
 由于这里使用了比较深的网络，本节里我们将输入高和宽从224降到96来简化计算。
 
-```{.python .input}
+```python
 #@tab all
 lr, num_epochs, batch_size = 0.1, 10, 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=96)

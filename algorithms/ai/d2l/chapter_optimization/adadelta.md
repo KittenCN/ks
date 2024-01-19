@@ -41,7 +41,7 @@ $$\begin{aligned}
 
 Adadelta需要为每个变量维护两个状态变量，即$\mathbf{s}_t$和$\Delta\mathbf{x}_t$。这将产生以下实现。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import np, npx
@@ -62,7 +62,7 @@ def adadelta(params, states, hyperparams):
         delta[:] = rho * delta + (1 - rho) * g * g
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -85,7 +85,7 @@ def adadelta(params, states, hyperparams):
         p.grad.data.zero_()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -107,7 +107,7 @@ def adadelta(params, grads, states, hyperparams):
         delta[:].assign(rho * delta + (1 - rho) * g * g)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -137,7 +137,7 @@ def adadelta(params, states, hyperparams):
 
 对于每次参数更新，选择$\rho = 0.9$相当于10个半衰期。由此我们得到：
 
-```{.python .input}
+```python
 #@tab all
 data_iter, feature_dim = d2l.get_data_ch11(batch_size=10)
 d2l.train_ch11(adadelta, init_adadelta_states(feature_dim),
@@ -146,17 +146,17 @@ d2l.train_ch11(adadelta, init_adadelta_states(feature_dim),
 
 为了简洁实现，我们只需使用高级API中的Adadelta算法。
 
-```{.python .input}
+```python
 d2l.train_concise_ch11('adadelta', {'rho': 0.9}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 trainer = torch.optim.Adadelta
 d2l.train_concise_ch11(trainer, {'rho': 0.9}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # adadeltaisnotconvergingatdefaultlearningrate
 # butit'sconvergingatlr=5.0
@@ -164,7 +164,7 @@ trainer = tf.keras.optimizers.Adadelta
 d2l.train_concise_ch11(trainer, {'learning_rate':5.0, 'rho': 0.9}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 trainer = paddle.optimizer.Adadelta
 d2l.train_concise_ch11(trainer, {'rho': 0.9}, data_iter)

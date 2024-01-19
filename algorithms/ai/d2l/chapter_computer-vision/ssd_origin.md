@@ -128,7 +128,7 @@ padding of 1.
 The width and height of the input and output of this
 convolutional layer remain unchanged.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, image, init, np, npx
@@ -141,7 +141,7 @@ def cls_predictor(num_anchors, num_classes):
                      padding=1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -161,12 +161,12 @@ The design of the bounding box prediction layer is similar to that of the class 
 The only difference lies in the number of outputs for each anchor box: 
 here we need to predict four offsets rather than $q+1$ classes.
 
-```{.python .input}
+```python
 def bbox_predictor(num_anchors):
     return nn.Conv2D(num_anchors * 4, kernel_size=3, padding=1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def bbox_predictor(num_inputs, num_anchors):
     return nn.Conv2d(num_inputs, num_anchors * 4, kernel_size=3, padding=1)
@@ -202,7 +202,7 @@ are $5\times(10+1)=55$ and $3\times(10+1)=33$, respectively,
 where either output shape is
 (batch size, number of channels, height, width).
 
-```{.python .input}
+```python
 def forward(x, block):
     block.initialize()
     return block(x)
@@ -212,7 +212,7 @@ Y2 = forward(np.zeros((2, 16, 10, 10)), cls_predictor(3, 10))
 Y1.shape, Y2.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def forward(x, block):
     return block(x)
@@ -239,7 +239,7 @@ Then we can concatenate
 such outputs at different scales
 along dimension 1.
 
-```{.python .input}
+```python
 def flatten_pred(pred):
     return npx.batch_flatten(pred.transpose(0, 2, 3, 1))
 
@@ -247,7 +247,7 @@ def concat_preds(preds):
     return np.concatenate([flatten_pred(p) for p in preds], axis=1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def flatten_pred(pred):
     return torch.flatten(pred.permute(0, 2, 3, 1), start_dim=1)
@@ -261,7 +261,7 @@ even though `Y1` and `Y2` have different sizes
 in channels, heights, and widths,
 we can still concatenate these two prediction outputs at two different scales for the same minibatch.
 
-```{.python .input}
+```python
 #@tab all
 concat_preds([Y1, Y2]).shape
 ```
@@ -286,7 +286,7 @@ each unit in the output
 has a $6\times6$ receptive field on the input.
 Therefore, the downsampling block enlarges the receptive field of each unit in its output feature maps.
 
-```{.python .input}
+```python
 def down_sample_blk(num_channels):
     blk = nn.Sequential()
     for _ in range(2):
@@ -297,7 +297,7 @@ def down_sample_blk(num_channels):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def down_sample_blk(in_channels, out_channels):
     blk = []
@@ -313,11 +313,11 @@ def down_sample_blk(in_channels, out_channels):
 
 In the following example, our constructed downsampling block changes the number of input channels and halves the height and width of the input feature maps.
 
-```{.python .input}
+```python
 forward(np.zeros((2, 3, 20, 20)), down_sample_blk(10)).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 forward(torch.zeros((2, 3, 20, 20)), down_sample_blk(3, 10)).shape
 ```
@@ -332,7 +332,7 @@ that double the number of channels at each block.
 Given a $256\times256$ input image,
 this base network block outputs $32 \times 32$ feature maps ($256/2^3=32$).
 
-```{.python .input}
+```python
 def base_net():
     blk = nn.Sequential()
     for num_filters in [16, 32, 64]:
@@ -342,7 +342,7 @@ def base_net():
 forward(np.zeros((2, 3, 256, 256)), base_net()).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def base_net():
     blk = []
@@ -379,7 +379,7 @@ those
 multiscale feature map blocks
 in :numref:`fig_ssd`.
 
-```{.python .input}
+```python
 def get_blk(i):
     if i == 0:
         blk = base_net()
@@ -390,7 +390,7 @@ def get_blk(i):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_blk(i):
     if i == 0:
@@ -414,7 +414,7 @@ outputs here include
 and (iii) classes and offsets predicted (based on `Y`)
 for these anchor boxes.
 
-```{.python .input}
+```python
 def blk_forward(X, blk, size, ratio, cls_predictor, bbox_predictor):
     Y = blk(X)
     anchors = d2l.multibox_prior(Y, sizes=size, ratios=ratio)
@@ -423,7 +423,7 @@ def blk_forward(X, blk, size, ratio, cls_predictor, bbox_predictor):
     return (Y, anchors, cls_preds, bbox_preds)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def blk_forward(X, blk, size, ratio, cls_predictor, bbox_predictor):
     Y = blk(X)
@@ -453,7 +453,7 @@ Then their larger scale values
 are given by
 $\sqrt{0.2 \times 0.37} = 0.272$, $\sqrt{0.37 \times 0.54} = 0.447$, and so on.
 
-```{.python .input}
+```python
 #@tab all
 sizes = [[0.2, 0.272], [0.37, 0.447], [0.54, 0.619], [0.71, 0.79],
          [0.88, 0.961]]
@@ -463,7 +463,7 @@ num_anchors = len(sizes[0]) + len(ratios[0]) - 1
 
 Now we can define the complete model `TinySSD` as follows.
 
-```{.python .input}
+```python
 class TinySSD(nn.Block):
     def __init__(self, num_classes, **kwargs):
         super(TinySSD, self).__init__(**kwargs)
@@ -489,7 +489,7 @@ class TinySSD(nn.Block):
         return anchors, cls_preds, bbox_preds
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class TinySSD(nn.Module):
     def __init__(self, num_classes, **kwargs):
@@ -535,7 +535,7 @@ of feature maps,
 at all the five scales
 a total of $(32^2 + 16^2 + 8^2 + 4^2 + 1)\times 4 = 5444$ anchor boxes are generated for each image.
 
-```{.python .input}
+```python
 net = TinySSD(num_classes=1)
 net.initialize()
 X = np.zeros((32, 3, 256, 256))
@@ -546,7 +546,7 @@ print('output class preds:', cls_preds.shape)
 print('output bbox preds:', bbox_preds.shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = TinySSD(num_classes=1)
 X = torch.zeros((32, 3, 256, 256))
@@ -571,7 +571,7 @@ let us read
 the banana detection dataset
 described in :numref:`sec_object-detection-dataset`.
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 32
 train_iter, _ = d2l.load_data_bananas(batch_size)
@@ -581,14 +581,14 @@ There is only one class in the banana detection dataset. After defining the mode
 we need to initialize its parameters and define
 the optimization algorithm.
 
-```{.python .input}
+```python
 device, net = d2l.try_gpu(), TinySSD(num_classes=1)
 net.initialize(init=init.Xavier(), ctx=device)
 trainer = gluon.Trainer(net.collect_params(), 'sgd',
                         {'learning_rate': 0.2, 'wd': 5e-4})
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 device, net = d2l.try_gpu(), TinySSD(num_classes=1)
 trainer = torch.optim.SGD(net.parameters(), lr=0.2, weight_decay=5e-4)
@@ -621,7 +621,7 @@ the anchor box class loss
 and the anchor box offset loss
 to obtain the loss function for the model.
 
-```{.python .input}
+```python
 cls_loss = gluon.loss.SoftmaxCrossEntropyLoss()
 bbox_loss = gluon.loss.L1Loss()
 
@@ -631,7 +631,7 @@ def calc_loss(cls_preds, cls_labels, bbox_preds, bbox_labels, bbox_masks):
     return cls + bbox
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 cls_loss = nn.CrossEntropyLoss(reduction='none')
 bbox_loss = nn.L1Loss(reduction='none')
@@ -653,7 +653,7 @@ These prediction results are obtained
 from the generated anchor boxes and the
 predicted offsets for them.
 
-```{.python .input}
+```python
 def cls_eval(cls_preds, cls_labels):
     # Because the class prediction results are on the final dimension,
     # `argmax` needs to specify this dimension
@@ -664,7 +664,7 @@ def bbox_eval(bbox_preds, bbox_labels, bbox_masks):
     return float((np.abs((bbox_labels - bbox_preds) * bbox_masks)).sum())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def cls_eval(cls_preds, cls_labels):
     # Because the class prediction results are on the final dimension,
@@ -689,7 +689,7 @@ of the classes and offsets.
 For concise implementations,
 evaluation of the test dataset is omitted here.
 
-```{.python .input}
+```python
 num_epochs, timer = 20, d2l.Timer()
 animator = d2l.Animator(xlabel='epoch', xlim=[1, num_epochs],
                         legend=['class error', 'bbox mae'])
@@ -724,7 +724,7 @@ print(f'{len(train_iter._dataset) / timer.stop():.1f} examples/sec on '
       f'{str(device)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_epochs, timer = 20, d2l.Timer()
 animator = d2l.Animator(xlabel='epoch', xlim=[1, num_epochs],
@@ -771,13 +771,13 @@ converting it to
 a four-dimensional tensor that is 
 required by convolutional layers.
 
-```{.python .input}
+```python
 img = image.imread('../img/banana.jpg')
 feature = image.imresize(img, 256, 256).astype('float32')
 X = np.expand_dims(feature.transpose(2, 0, 1), axis=0)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torchvision.io.read_image('../img/banana.jpg').unsqueeze(0).float()
 img = X.squeeze(0).permute(1, 2, 0).long()
@@ -790,7 +790,7 @@ from the anchor boxes and their predicted offsets.
 Then non-maximum suppression is used 
 to remove similar predicted bounding boxes.
 
-```{.python .input}
+```python
 def predict(X):
     anchors, cls_preds, bbox_preds = net(X.as_in_ctx(device))
     cls_probs = npx.softmax(cls_preds).transpose(0, 2, 1)
@@ -801,7 +801,7 @@ def predict(X):
 output = predict(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def predict(X):
     net.eval()
@@ -819,7 +819,7 @@ all the predicted bounding boxes with
 confidence 0.9 or above
 as the output.
 
-```{.python .input}
+```python
 def display(img, output, threshold):
     d2l.set_figsize((5, 5))
     fig = d2l.plt.imshow(img.asnumpy())
@@ -834,7 +834,7 @@ def display(img, output, threshold):
 display(img, output, threshold=0.9)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def display(img, output, threshold):
     d2l.set_figsize((5, 5))
@@ -871,7 +871,7 @@ $$
 
 When $\sigma$ is very large, this loss is similar to the $L_1$ norm loss. When its value is smaller, the loss function is smoother.
 
-```{.python .input}
+```python
 sigmas = [10, 1, 0.5]
 lines = ['-', '--', '-.']
 x = np.arange(-2, 2, 0.1)
@@ -883,7 +883,7 @@ for l, s in zip(lines, sigmas):
 d2l.plt.legend();
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def smooth_l1(data, scalar):
     out = []
@@ -918,7 +918,7 @@ for well-classified examples (e.g., $p_j > 0.5$)
 so the training
 can focus more on those difficult examples that are misclassified.
 
-```{.python .input}
+```python
 def focal_loss(gamma, x):
     return -(1 - x) ** gamma * np.log(x)
 
@@ -929,7 +929,7 @@ for l, gamma in zip(lines, [0, 1, 5]):
 d2l.plt.legend();
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def focal_loss(gamma, x):
     return -(1 - x) ** gamma * torch.log(x)

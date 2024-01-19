@@ -17,7 +17,7 @@
 
 (**我们首先看一下具有单隐藏层的多层感知机。**)
 
-```{.python .input}
+```python
 from mxnet import init, np, npx
 from mxnet.gluon import nn
 npx.set_np()
@@ -31,7 +31,7 @@ X = np.random.uniform(size=(2, 4))
 net(X)  # 正向传播
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 from torch import nn
@@ -41,7 +41,7 @@ X = torch.rand(size=(2, 4))
 net(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -55,7 +55,7 @@ X = tf.random.uniform((2, 4))
 net(X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 import warnings
 warnings.filterwarnings(action='ignore')
@@ -75,16 +75,16 @@ net(X)
 这就像模型是一个列表一样，每层的参数都在其属性中。
 如下所示，我们可以检查第二个全连接层的参数。
 
-```{.python .input}
+```python
 print(net[1].params)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 print(net[2].state_dict())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 print(net.layers[2].weights)
 ```
@@ -102,27 +102,27 @@ print(net.layers[2].weights)
 下面的代码从第二个全连接层（即第三个神经网络层）提取偏置，
 提取后返回的是一个参数类实例，并进一步访问该参数的值。
 
-```{.python .input}
+```python
 print(type(net[1].bias))
 print(net[1].bias)
 print(net[1].bias.data())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 print(type(net[2].bias))
 print(net[2].bias)
 print(net[2].bias.data)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 print(type(net.layers[2].weights[1]))
 print(net.layers[2].weights[1])
 print(tf.convert_to_tensor(net.layers[2].weights[1]))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 print(type(net[2].bias))
 print(net[2].bias)
@@ -136,11 +136,11 @@ print(net[2].bias.value)
 在上面这个网络中，由于我们还没有调用反向传播，所以参数的梯度处于初始状态。
 :end_tab:
 
-```{.python .input}
+```python
 net[1].weight.grad()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 net[2].weight.grad == None
 ```
@@ -152,18 +152,18 @@ net[2].weight.grad == None
 因为我们需要递归整个树来提取每个子块的参数。
 下面，我们将通过演示来比较访问第一个全连接层的参数和访问所有层。
 
-```{.python .input}
+```python
 print(net[0].collect_params())
 print(net.collect_params())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 print(*[(name, param.shape) for name, param in net[0].named_parameters()])
 print(*[(name, param.shape) for name, param in net.named_parameters()])
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 print(net.layers[1].weights)
 print(net.get_weights())
@@ -171,21 +171,21 @@ print(net.get_weights())
 
 这为我们提供了另一种访问网络参数的方式，如下所示。
 
-```{.python .input}
+```python
 net.collect_params()['dense1_bias'].data()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net.state_dict()['2.bias'].data
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net.get_weights()[1]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net.state_dict()['2.bias']
 ```
@@ -195,7 +195,7 @@ net.state_dict()['2.bias']
 让我们看看，如果我们将多个块相互嵌套，参数命名约定是如何工作的。
 我们首先定义一个生成块的函数（可以说是“块工厂”），然后将这些块组合到更大的块中。
 
-```{.python .input}
+```python
 def block1():
     net = nn.Sequential()
     net.add(nn.Dense(32, activation='relu'))
@@ -216,7 +216,7 @@ rgnet.initialize()
 rgnet(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def block1():
     return nn.Sequential(nn.Linear(4, 8), nn.ReLU(),
@@ -233,7 +233,7 @@ rgnet = nn.Sequential(block2(), nn.Linear(4, 1))
 rgnet(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def block1(name):
     return tf.keras.Sequential([
@@ -254,7 +254,7 @@ rgnet.add(tf.keras.layers.Dense(1))
 rgnet(X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def block1():
     return nn.Sequential(nn.Linear(4, 8), nn.ReLU(), 
@@ -273,17 +273,17 @@ rgnet(X)
 
 [**设计了网络后，我们看看它是如何工作的。**]
 
-```{.python .input}
+```python
 print(rgnet.collect_params)
 print(rgnet.collect_params())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 print(rgnet)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 print(rgnet.summary())
 ```
@@ -291,21 +291,21 @@ print(rgnet.summary())
 因为层是分层嵌套的，所以我们也可以像通过嵌套列表索引一样访问它们。
 下面，我们访问第一个主要的块中、第二个子块的第一层的偏置项。
 
-```{.python .input}
+```python
 rgnet[0][1][0].bias.data()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 rgnet[0][1][0].bias.data
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 rgnet.layers[0].layers[1].layers[1].weights[1]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 print(rgnet[0].state_dict()['block 0.0.bias'])
 ```
@@ -349,13 +349,13 @@ PaddlePaddle的`nn.initializer`模块提供了多种预置初始化方法。
 下面的代码将所有权重参数初始化为标准差为0.01的高斯随机变量，
 且将偏置参数设置为0。
 
-```{.python .input}
+```python
 # 这里的force_reinit确保参数会被重新初始化，不论之前是否已经被初始化
 net.initialize(init=init.Normal(sigma=0.01), force_reinit=True)
 net[0].weight.data()[0]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_normal(m):
     if type(m) == nn.Linear:
@@ -365,7 +365,7 @@ net.apply(init_normal)
 net[0].weight.data[0], net[0].bias.data[0]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = tf.keras.models.Sequential([
     tf.keras.layers.Flatten(),
@@ -379,7 +379,7 @@ net(X)
 net.weights[0], net.weights[1]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def init_normal(m):
     if type(m) == nn.Linear:
@@ -391,12 +391,12 @@ net[0].weight[0],net[0].state_dict()['bias']
 
 我们还可以将所有参数初始化为给定的常数，比如初始化为1。
 
-```{.python .input}
+```python
 net.initialize(init=init.Constant(1), force_reinit=True)
 net[0].weight.data()[0]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_constant(m):
     if type(m) == nn.Linear:
@@ -406,7 +406,7 @@ net.apply(init_constant)
 net[0].weight.data[0], net[0].bias.data[0]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = tf.keras.models.Sequential([
     tf.keras.layers.Flatten(),
@@ -421,7 +421,7 @@ net(X)
 net.weights[0], net.weights[1]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def init_constant(m):
     if type(m) == nn.Linear:
@@ -435,14 +435,14 @@ net[0].weight[0],net[0].state_dict()['bias']
 例如，下面我们使用Xavier初始化方法初始化第一个神经网络层，
 然后将第三个神经网络层初始化为常量值42。
 
-```{.python .input}
+```python
 net[0].weight.initialize(init=init.Xavier(), force_reinit=True)
 net[1].initialize(init=init.Constant(42), force_reinit=True)
 print(net[0].weight.data()[0])
 print(net[1].weight.data())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_xavier(m):
     if type(m) == nn.Linear:
@@ -457,7 +457,7 @@ print(net[0].weight.data[0])
 print(net[2].weight.data)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = tf.keras.models.Sequential([
     tf.keras.layers.Flatten(),
@@ -474,7 +474,7 @@ print(net.layers[1].weights[0])
 print(net.layers[2].weights[0])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def xavier(m):
     if type(m) == nn.Linear:
@@ -524,7 +524,7 @@ $$
 同样，我们实现了一个`my_init`函数来应用到`net`。
 :end_tab:
 
-```{.python .input}
+```python
 class MyInit(init.Initializer):
     def _init_weight(self, name, data):
         print('Init', name, data.shape)
@@ -535,7 +535,7 @@ net.initialize(MyInit(), force_reinit=True)
 net[0].weight.data()[:2]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def my_init(m):
     if type(m) == nn.Linear:
@@ -548,7 +548,7 @@ net.apply(my_init)
 net[0].weight[:2]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class MyInit(tf.keras.initializers.Initializer):
     def __call__(self, shape, dtype=None):
@@ -570,7 +570,7 @@ net(X)
 print(net.layers[1].weights[0])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def my_init(m):
     if type(m) == nn.Linear:
@@ -588,27 +588,27 @@ net[0].weight[:2]
 
 注意，我们始终可以直接设置参数。
 
-```{.python .input}
+```python
 net[0].weight.data()[:] += 1
 net[0].weight.data()[0, 0] = 42
 net[0].weight.data()[0]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net[0].weight.data[:] += 1
 net[0].weight.data[0, 0] = 42
 net[0].weight.data[0]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net.layers[1].weights[0][:].assign(net.layers[1].weights[0] + 1)
 net.layers[1].weights[0][0, 0].assign(42)
 net.layers[1].weights[0]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net[0].weight.set_value(net[0].weight.numpy() + 1)
 val = net[0].weight.numpy()
@@ -627,7 +627,7 @@ net[0].weight[0]
 有时我们希望在多个层间共享参数：
 我们可以定义一个稠密层，然后使用它的参数来设置另一个层的参数。
 
-```{.python .input}
+```python
 net = nn.Sequential()
 # 我们需要给共享层一个名称，以便可以引用它的参数
 shared = nn.Dense(8, activation='relu')
@@ -647,7 +647,7 @@ net[1].weight.data()[0, 0] = 100
 print(net[1].weight.data()[0] == net[2].weight.data()[0])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # 我们需要给共享层一个名称，以便可以引用它的参数
 shared = nn.Linear(8, 8)
@@ -663,7 +663,7 @@ net[2].weight.data[0, 0] = 100
 print(net[2].weight.data[0] == net[4].weight.data[0])
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # tf.keras的表现有点不同。它会自动删除重复层
 shared = tf.keras.layers.Dense(4, activation=tf.nn.relu)
@@ -679,7 +679,7 @@ net(X)
 print(len(net.layers) == 3)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # 我们需要给共享层一个名称，以便可以引用它的参数。
 shared = nn.Linear(8, 8)

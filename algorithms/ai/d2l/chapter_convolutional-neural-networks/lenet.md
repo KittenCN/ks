@@ -33,7 +33,7 @@ LeNet被广泛用于自动取款机（ATM）机中，帮助识别处理支票的
 
 通过下面的LeNet代码，可以看出用深度学习框架实现此类模型非常简单。我们只需要实例化一个`Sequential`块并将需要的层连接在一起。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, init, np, npx
 from mxnet.gluon import nn
@@ -51,7 +51,7 @@ net.add(nn.Conv2D(channels=6, kernel_size=5, padding=2, activation='sigmoid'),
         nn.Dense(10))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -68,7 +68,7 @@ net = nn.Sequential(
     nn.Linear(84, 10))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -87,7 +87,7 @@ def net():
         tf.keras.layers.Dense(10)])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -113,7 +113,7 @@ net = nn.Sequential(
 ![LeNet 的简化版。](../img/lenet-vert.svg)
 :label:`img_lenet_vert`
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(1, 1, 28, 28))
 net.initialize()
 for layer in net:
@@ -121,7 +121,7 @@ for layer in net:
     print(layer.name, 'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.rand(size=(1, 1, 28, 28), dtype=torch.float32)
 for layer in net:
@@ -129,7 +129,7 @@ for layer in net:
     print(layer.__class__.__name__,'output shape: \t',X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.uniform((1, 28, 28, 1))
 for layer in net().layers:
@@ -137,7 +137,7 @@ for layer in net().layers:
     print(layer.__class__.__name__, 'output shape: \t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = paddle.rand((1, 1, 28, 28), 'float32')
 for layer in net:
@@ -155,7 +155,7 @@ for layer in net:
 
 现在我们已经实现了LeNet，让我们看看[**LeNet在Fashion-MNIST数据集上的表现**]。
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size=batch_size)
@@ -169,7 +169,7 @@ train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size=batch_size)
 由于完整的数据集位于内存中，因此在模型使用GPU计算数据集之前，我们需要将其复制到显存中。
 :end_tab:
 
-```{.python .input}
+```python
 def evaluate_accuracy_gpu(net, data_iter, device=None):  #@save
     """使用GPU计算模型在数据集上的精度"""
     if not device:  # 查询第一个参数所在的第一个设备
@@ -181,7 +181,7 @@ def evaluate_accuracy_gpu(net, data_iter, device=None):  #@save
     return metric[0] / metric[1]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def evaluate_accuracy_gpu(net, data_iter, device=None): #@save
     """使用GPU计算模型在数据集上的精度"""
@@ -203,7 +203,7 @@ def evaluate_accuracy_gpu(net, data_iter, device=None): #@save
     return metric[0] / metric[1]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def evaluate_accuracy_gpu(net, data_iter, device=None):     #@save
     """使用GPU计算模型在数据集上的精度"""
@@ -235,7 +235,7 @@ def evaluate_accuracy_gpu(net, data_iter, device=None):     #@save
 我们使用在 :numref:`subsec_xavier`中介绍的Xavier随机初始化模型参数。
 与全连接层一样，我们使用交叉熵损失函数和小批量随机梯度下降。
 
-```{.python .input}
+```python
 #@save
 def train_ch6(net, train_iter, test_iter, num_epochs, lr, device):
     """用GPU训练模型(在第六章定义)"""
@@ -272,7 +272,7 @@ def train_ch6(net, train_iter, test_iter, num_epochs, lr, device):
           f'on {str(device)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def train_ch6(net, train_iter, test_iter, num_epochs, lr, device):
@@ -316,7 +316,7 @@ def train_ch6(net, train_iter, test_iter, num_epochs, lr, device):
           f'on {str(device)}')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class TrainCallback(tf.keras.callbacks.Callback):  #@save
     """一个以可视化的训练进展的回调"""
@@ -365,7 +365,7 @@ def train_ch6(net_fn, train_iter, test_iter, num_epochs, lr, device):
     return net
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def train_ch6(net, train_iter, test_iter, num_epochs, lr, device):
@@ -411,7 +411,7 @@ def train_ch6(net, train_iter, test_iter, num_epochs, lr, device):
 
 现在，我们[**训练和评估LeNet-5模型**]。
 
-```{.python .input}
+```python
 #@tab all
 lr, num_epochs = 0.9, 10
 train_ch6(net, train_iter, test_iter, num_epochs, lr, d2l.try_gpu())

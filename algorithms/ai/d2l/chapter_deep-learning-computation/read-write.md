@@ -14,7 +14,7 @@
 对于单个张量，我们可以直接调用`load`和`save`函数分别读写它们。
 这两个函数都要求我们提供一个名称，`save`要求将要保存的变量作为输入。
 
-```{.python .input}
+```python
 from mxnet import np, npx
 from mxnet.gluon import nn
 npx.set_np()
@@ -23,7 +23,7 @@ x = np.arange(4)
 npx.save('x-file', x)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 from torch import nn
@@ -33,7 +33,7 @@ x = torch.arange(4)
 torch.save(x, 'x-file')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 import numpy as np
@@ -42,7 +42,7 @@ x = tf.range(4)
 np.save('x-file.npy', x)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 import warnings
 warnings.filterwarnings(action='ignore')
@@ -56,24 +56,24 @@ paddle.save(x, 'x-file')
 
 我们现在可以将存储在文件中的数据读回内存。
 
-```{.python .input}
+```python
 x2 = npx.load('x-file')
 x2
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x2 = torch.load('x-file')
 x2
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 x2 = np.load('x-file.npy', allow_pickle=True)
 x2
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 x2 = paddle.load('x-file')
 x2
@@ -81,14 +81,14 @@ x2
 
 我们可以[**存储一个张量列表，然后把它们读回内存。**]
 
-```{.python .input}
+```python
 y = np.zeros(4)
 npx.save('x-files', [x, y])
 x2, y2 = npx.load('x-files')
 (x2, y2)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 y = torch.zeros(4)
 torch.save([x, y],'x-files')
@@ -96,7 +96,7 @@ x2, y2 = torch.load('x-files')
 (x2, y2)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 y = tf.zeros(4)
 np.save('xy-files.npy', [x, y])
@@ -104,7 +104,7 @@ x2, y2 = np.load('xy-files.npy', allow_pickle=True)
 (x2, y2)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 y = paddle.zeros([4])
 paddle.save([x,y], 'x-file')
@@ -115,14 +115,14 @@ x2, y2 = paddle.load('x-file')
 我们甚至可以(**写入或读取从字符串映射到张量的字典**)。
 当我们要读取或写入模型中的所有权重时，这很方便。
 
-```{.python .input}
+```python
 mydict = {'x': x, 'y': y}
 npx.save('mydict', mydict)
 mydict2 = npx.load('mydict')
 mydict2
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 mydict = {'x': x, 'y': y}
 torch.save(mydict, 'mydict')
@@ -130,7 +130,7 @@ mydict2 = torch.load('mydict')
 mydict2
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 mydict = {'x': x, 'y': y}
 np.save('mydict.npy', mydict)
@@ -138,7 +138,7 @@ mydict2 = np.load('mydict.npy', allow_pickle=True)
 mydict2
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 mydict = {'x': x, 'y': y}
 paddle.save(mydict, 'mydict')
@@ -160,7 +160,7 @@ mydict2
 然后从磁盘加载参数。
 让我们从熟悉的多层感知机开始尝试一下。
 
-```{.python .input}
+```python
 class MLP(nn.Block):
     def __init__(self, **kwargs):
         super(MLP, self).__init__(**kwargs)
@@ -176,7 +176,7 @@ X = np.random.uniform(size=(2, 20))
 Y = net(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class MLP(nn.Module):
     def __init__(self):
@@ -192,7 +192,7 @@ X = torch.randn(size=(2, 20))
 Y = net(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class MLP(tf.keras.Model):
     def __init__(self):
@@ -211,7 +211,7 @@ X = tf.random.uniform((2, 20))
 Y = net(X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class MLP(nn.Layer):
     def __init__(self):
@@ -229,21 +229,21 @@ Y = net(X)
 
 接下来，我们[**将模型的参数存储在一个叫做“mlp.params”的文件中。**]
 
-```{.python .input}
+```python
 net.save_parameters('mlp.params')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 torch.save(net.state_dict(), 'mlp.params')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net.save_weights('mlp.params')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 paddle.save(net.state_dict(), 'mlp.pdparams')
 ```
@@ -251,25 +251,25 @@ paddle.save(net.state_dict(), 'mlp.pdparams')
 为了恢复模型，我们[**实例化了原始多层感知机模型的一个备份。**]
 这里我们不需要随机初始化模型参数，而是(**直接读取文件中存储的参数。**)
 
-```{.python .input}
+```python
 clone = MLP()
 clone.load_parameters('mlp.params')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 clone = MLP()
 clone.load_state_dict(torch.load('mlp.params'))
 clone.eval()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 clone = MLP()
 clone.load_weights('mlp.params')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 clone = MLP()
 clone.set_state_dict(paddle.load('mlp.pdparams'))
@@ -280,18 +280,18 @@ clone.eval()
 两个实例的计算结果应该相同。
 让我们来验证一下。
 
-```{.python .input}
+```python
 Y_clone = clone(X)
 Y_clone == Y
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 Y_clone = clone(X)
 Y_clone == Y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 Y_clone = clone(X)
 Y_clone == Y

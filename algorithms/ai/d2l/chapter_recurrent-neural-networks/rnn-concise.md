@@ -6,7 +6,7 @@
 本节将展示如何使用深度学习框架的高级API提供的函数更有效地实现相同的语言模型。
 我们仍然从读取时光机器数据集开始。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn, rnn
@@ -16,7 +16,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -27,7 +27,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -35,7 +35,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -55,19 +55,19 @@ train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 事实上，我们还没有讨论多层循环神经网络的意义（这将在 :numref:`sec_deep_rnn`中介绍）。
 现在仅需要将多层理解为一层循环神经网络的输出被用作下一层循环神经网络的输入就足够了。
 
-```{.python .input}
+```python
 num_hiddens = 256
 rnn_layer = rnn.RNN(num_hiddens)
 rnn_layer.initialize()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_hiddens = 256
 rnn_layer = nn.RNN(len(vocab), num_hiddens)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_hiddens = 256
 rnn_cell = tf.keras.layers.SimpleRNNCell(num_hiddens,
@@ -76,7 +76,7 @@ rnn_layer = tf.keras.layers.RNN(rnn_cell, time_major=True,
     return_sequences=True, return_state=True)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_hiddens = 256
 rnn_layer = nn.SimpleRNN(len(vocab), num_hiddens, time_major=True)
@@ -93,24 +93,24 @@ rnn_layer = nn.SimpleRNN(len(vocab), num_hiddens, time_major=True)
 我们(**使用张量来初始化隐状态**)，它的形状是（隐藏层数，批量大小，隐藏单元数）。
 :end_tab:
 
-```{.python .input}
+```python
 state = rnn_layer.begin_state(batch_size=batch_size)
 len(state), state[0].shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 state = torch.zeros((1, batch_size, num_hiddens))
 state.shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 state = rnn_cell.get_initial_state(batch_size=batch_size, dtype=tf.float32)
 state.shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 state = paddle.zeros(shape=[1, batch_size, num_hiddens])
 state.shape
@@ -128,27 +128,27 @@ state.shape
 至于稍后要介绍的某些模型（例如，长－短期记忆），此变量还包含其他信息。
 :end_tab:
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(num_steps, batch_size, len(vocab)))
 Y, state_new = rnn_layer(X, state)
 Y.shape, len(state_new), state_new[0].shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.rand(size=(num_steps, batch_size, len(vocab)))
 Y, state_new = rnn_layer(X, state)
 Y.shape, state_new.shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.uniform((num_steps, batch_size, len(vocab)))
 Y, state_new = rnn_layer(X, state)
 Y.shape, len(state_new), state_new[0].shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = paddle.rand(shape=[num_steps, batch_size, len(vocab)])
 Y, state_new = rnn_layer(X, state)
@@ -159,7 +159,7 @@ Y.shape, state_new.shape
 [**我们为一个完整的循环神经网络模型定义了一个`RNNModel`类**]。
 注意，`rnn_layer`只包含隐藏的循环层，我们还需要创建一个单独的输出层。
 
-```{.python .input}
+```python
 #@save
 class RNNModel(nn.Block):
     """循环神经网络模型"""
@@ -181,7 +181,7 @@ class RNNModel(nn.Block):
         return self.rnn.begin_state(*args, **kwargs)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class RNNModel(nn.Module):
@@ -224,7 +224,7 @@ class RNNModel(nn.Module):
                         batch_size, self.num_hiddens), device=device))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 class RNNModel(tf.keras.layers.Layer):
@@ -245,7 +245,7 @@ class RNNModel(tf.keras.layers.Layer):
         return self.rnn.cell.get_initial_state(*args, **kwargs)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class RNNModel(nn.Layer):   
@@ -290,14 +290,14 @@ class RNNModel(nn.Layer):
 
 在训练模型之前，让我们[**基于一个具有随机权重的模型进行预测**]。
 
-```{.python .input}
+```python
 device = d2l.try_gpu()
 net = RNNModel(rnn_layer, len(vocab))
 net.initialize(force_reinit=True, ctx=device)
 d2l.predict_ch8('time traveller', 10, net, vocab, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 device = d2l.try_gpu()
 net = RNNModel(rnn_layer, vocab_size=len(vocab))
@@ -305,7 +305,7 @@ net = net.to(device)
 d2l.predict_ch8('time traveller', 10, net, vocab, device)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 device_name = d2l.try_gpu()._device_name
 strategy = tf.distribute.OneDeviceStrategy(device_name)
@@ -315,7 +315,7 @@ with strategy.scope():
 d2l.predict_ch8('time traveller', 10, net, vocab)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 device = d2l.try_gpu()
 net = RNNModel(rnn_layer, vocab_size=len(vocab))
@@ -326,24 +326,24 @@ d2l.predict_ch8('time traveller', 10, net, vocab, device)
 接下来，我们使用 :numref:`sec_rnn_scratch`中
 定义的超参数调用`train_ch8`，并且[**使用高级API训练模型**]。
 
-```{.python .input}
+```python
 num_epochs, lr = 500, 1
 d2l.train_ch8(net, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_epochs, lr = 500, 1
 d2l.train_ch8(net, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_epochs, lr = 500, 1
 d2l.train_ch8(net, train_iter, vocab, lr, num_epochs, strategy)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_epochs, lr = 500, 1.0
 d2l.train_ch8(net, train_iter, vocab, lr, num_epochs, device)

@@ -22,7 +22,7 @@ Kaggle的房价预测比赛是一个很好的起点。
 这个二元组包含数据集的url和验证文件完整性的sha-1密钥。
 所有类似的数据集都托管在地址为`DATA_URL`的站点上。
 
-```{.python .input}
+```python
 #@tab all
 import os
 import requests
@@ -41,7 +41,7 @@ DATA_URL = 'http://d2l-data.s3-accelerate.amazonaws.com/'
 如果缓存目录中已经存在此数据集文件，并且其sha-1与存储在`DATA_HUB`中的相匹配，
 我们将使用缓存的文件，以避免重复的下载。
 
-```{.python .input}
+```python
 #@tab all
 def download(name, cache_dir=os.path.join('..', 'data')):  #@save
     """下载一个DATA_HUB中的文件，返回本地文件名"""
@@ -70,7 +70,7 @@ def download(name, cache_dir=os.path.join('..', 'data')):  #@save
 一个将下载并解压缩一个zip或tar文件，
 另一个是将本书中使用的所有数据集从`DATA_HUB`下载到缓存目录中。
 
-```{.python .input}
+```python
 #@tab all
 def download_extract(name, folder=None):  #@save
     """下载并解压zip/tar文件"""
@@ -133,7 +133,7 @@ def download_all():  #@save
 因此，在继续操作之前，我们需要确保已安装`pandas`。
 幸运的是，如果我们正在用Jupyter阅读该书，可以在不离开笔记本的情况下安装`pandas`。
 
-```{.python .input}
+```python
 # 如果没有安装pandas，请取消下一行的注释
 # !pip install pandas
 
@@ -145,7 +145,7 @@ import pandas as pd
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # 如果没有安装pandas，请取消下一行的注释
 # !pip install pandas
@@ -158,7 +158,7 @@ import pandas as pd
 import numpy as np
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # 如果没有安装pandas，请取消下一行的注释
 # !pip install pandas
@@ -170,7 +170,7 @@ import pandas as pd
 import numpy as np
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # 如果你没有安装pandas，请取消下一行的注释
 # !pip install pandas
@@ -188,7 +188,7 @@ from d2l import paddle as d2l
 
 为方便起见，我们可以使用上面定义的脚本下载并缓存Kaggle房屋数据集。
 
-```{.python .input}
+```python
 #@tab all
 DATA_HUB['kaggle_house_train'] = (  #@save
     DATA_URL + 'kaggle_house_pred_train.csv',
@@ -201,7 +201,7 @@ DATA_HUB['kaggle_house_test'] = (  #@save
 
 我们使用`pandas`分别加载包含训练数据和测试数据的两个CSV文件。
 
-```{.python .input}
+```python
 #@tab all
 train_data = pd.read_csv(download('kaggle_house_train'))
 test_data = pd.read_csv(download('kaggle_house_test'))
@@ -210,7 +210,7 @@ test_data = pd.read_csv(download('kaggle_house_test'))
 训练数据集包括1460个样本，每个样本80个特征和1个标签，
 而测试数据集包含1459个样本，每个样本80个特征。
 
-```{.python .input}
+```python
 #@tab all
 print(train_data.shape)
 print(test_data.shape)
@@ -218,7 +218,7 @@ print(test_data.shape)
 
 让我们看看[**前四个和最后两个特征，以及相应标签**]（房价）。
 
-```{.python .input}
+```python
 #@tab all
 print(train_data.iloc[0:4, [0, 1, 2, 3, -3, -2, -1]])
 ```
@@ -228,7 +228,7 @@ print(train_data.iloc[0:4, [0, 1, 2, 3, -3, -2, -1]])
 虽然这很方便，但它不携带任何用于预测的信息。
 因此，在将数据提供给模型之前，(**我们将其从数据集中删除**)。
 
-```{.python .input}
+```python
 #@tab all
 all_features = pd.concat((train_data.iloc[:, 1:-1], test_data.iloc[:, 1:]))
 ```
@@ -249,7 +249,7 @@ $$x \leftarrow \frac{x - \mu}{\sigma},$$
 其次，因为我们不知道哪些特征是相关的，
 所以我们不想让惩罚分配给一个特征的系数比分配给其他任何特征的系数更大。
 
-```{.python .input}
+```python
 #@tab all
 # 若无法获得测试数据，则可根据训练数据计算均值和标准差
 numeric_features = all_features.dtypes[all_features.dtypes != 'object'].index
@@ -270,7 +270,7 @@ all_features[numeric_features] = all_features[numeric_features].fillna(0)
 则：“MSZoning_RL”为1，“MSZoning_RM”为0。
 `pandas`软件包会自动为我们实现这一点。
 
-```{.python .input}
+```python
 #@tab all
 # “Dummy_na=True”将“na”（缺失值）视为有效的特征值，并为其创建指示符特征
 all_features = pd.get_dummies(all_features, dummy_na=True)
@@ -281,7 +281,7 @@ all_features.shape
 最后，通过`values`属性，我们可以
 [**从`pandas`格式中提取NumPy格式，并将其转换为张量表示**]用于训练。
 
-```{.python .input}
+```python
 #@tab all
 n_train = train_data.shape[0]
 train_features = d2l.tensor(all_features[:n_train].values, dtype=d2l.float32)
@@ -299,7 +299,7 @@ train_labels = d2l.tensor(
 如果一切顺利，线性模型将作为*基线*（baseline）模型，
 让我们直观地知道最好的模型有超出简单的模型多少。
 
-```{.python .input}
+```python
 loss = gluon.loss.L2Loss()
 
 def get_net():
@@ -309,7 +309,7 @@ def get_net():
     return net
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 loss = nn.MSELoss()
 in_features = train_features.shape[1]
@@ -319,7 +319,7 @@ def get_net():
     return net
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 loss = tf.keras.losses.MeanSquaredError()
 
@@ -349,14 +349,14 @@ def get_net():
 
 $$\sqrt{\frac{1}{n}\sum_{i=1}^n\left(\log y_i -\log \hat{y}_i\right)^2}.$$
 
-```{.python .input}
+```python
 def log_rmse(net, features, labels):
     # 为了在取对数时进一步稳定该值，将小于1的值设置为1
     clipped_preds = np.clip(net(features), 1, float('inf'))
     return np.sqrt(2 * loss(np.log(clipped_preds), np.log(labels)).mean())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def log_rmse(net, features, labels):
     # 为了在取对数时进一步稳定该值，将小于1的值设置为1
@@ -366,7 +366,7 @@ def log_rmse(net, features, labels):
     return rmse.item()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def log_rmse(y_true, y_pred):
     # 为了在取对数时进一步稳定该值，将小于1的值设置为1
@@ -375,7 +375,7 @@ def log_rmse(y_true, y_pred):
         tf.math.log(y_true), tf.math.log(clipped_preds))))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def log_rmse(net, features, labels):
     # 为了在取对数时进一步稳定该值，将小于1的值设置为1
@@ -389,7 +389,7 @@ def log_rmse(net, features, labels):
 （我们将在后面章节更详细地描述它）。
 Adam优化器的主要吸引力在于它对初始学习率不那么敏感。
 
-```{.python .input}
+```python
 def train(net, train_features, train_labels, test_features, test_labels,
           num_epochs, learning_rate, weight_decay, batch_size):
     train_ls, test_ls = [], []
@@ -409,7 +409,7 @@ def train(net, train_features, train_labels, test_features, test_labels,
     return train_ls, test_ls
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(net, train_features, train_labels, test_features, test_labels,
           num_epochs, learning_rate, weight_decay, batch_size):
@@ -431,7 +431,7 @@ def train(net, train_features, train_labels, test_features, test_labels,
     return train_ls, test_ls
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def train(net, train_features, train_labels, test_features, test_labels,
           num_epochs, learning_rate, weight_decay, batch_size):
@@ -454,7 +454,7 @@ def train(net, train_features, train_labels, test_features, test_labels,
     return train_ls, test_ls
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train(net, train_features, train_labels, test_features, test_labels,
           num_epochs, learning_rate, weight_decay, batch_size):
@@ -485,7 +485,7 @@ def train(net, train_features, train_labels, test_features, test_labels,
 具体地说，它选择第$i$个切片作为验证数据，其余部分作为训练数据。
 注意，这并不是处理数据的最有效方法，如果我们的数据集大得多，会有其他解决办法。
 
-```{.python .input}
+```python
 #@tab all
 def get_k_fold_data(k, i, X, y):
     assert k > 1
@@ -506,7 +506,7 @@ def get_k_fold_data(k, i, X, y):
 
 当我们在$K$折交叉验证中训练$K$次后，[**返回训练和验证误差的平均值**]。
 
-```{.python .input}
+```python
 #@tab all
 def k_fold(k, X_train, y_train, num_epochs, learning_rate, weight_decay,
            batch_size):
@@ -534,7 +534,7 @@ def k_fold(k, X_train, y_train, num_epochs, learning_rate, weight_decay,
 有了足够大的数据集和合理设置的超参数，$K$折交叉验证往往对多次测试具有相当的稳定性。
 然而，如果我们尝试了不合理的超参数，我们可能会发现验证效果不再代表真正的误差。
 
-```{.python .input}
+```python
 #@tab all
 k, num_epochs, lr, weight_decay, batch_size = 5, 100, 5, 0, 64
 train_l, valid_l = k_fold(k, train_features, train_labels, num_epochs, lr,
@@ -557,7 +557,7 @@ print(f'{k}-折验证: 平均训练log rmse: {float(train_l):f}, '
 然后，我们通过这种方式获得的模型可以应用于测试集。
 将预测保存在CSV文件中可以简化将结果上传到Kaggle的过程。
 
-```{.python .input}
+```python
 #@tab all
 def train_and_pred(train_features, test_features, train_labels, test_data,
                    num_epochs, lr, weight_decay, batch_size):
@@ -579,7 +579,7 @@ def train_and_pred(train_features, test_features, train_labels, test_data,
 那就是时候把它们上传到Kaggle了。
 下面的代码将生成一个名为`submission.csv`的文件。
 
-```{.python .input}
+```python
 #@tab all
 train_and_pred(train_features, test_features, train_labels, test_data,
                num_epochs, lr, weight_decay, batch_size)

@@ -16,7 +16,7 @@
 作为一个演示例子，(**假设我们想对函数$y=2\mathbf{x}^{\top}\mathbf{x}$关于列向量$\mathbf{x}$求导**)。
 首先，我们创建变量`x`并为其分配一个初始值。
 
-```{.python .input}
+```python
 from mxnet import autograd, np, npx
 npx.set_np()
 
@@ -24,7 +24,7 @@ x = np.arange(4.0)
 x
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 
@@ -32,7 +32,7 @@ x = torch.arange(4.0)
 x
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -40,7 +40,7 @@ x = tf.range(4, dtype=tf.float32)
 x
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 import warnings
 warnings.filterwarnings(action='ignore')
@@ -55,25 +55,25 @@ x
 因为我们经常会成千上万次地更新相同的参数，每次都分配新的内存可能很快就会将内存耗尽。
 注意，一个标量函数关于向量$\mathbf{x}$的梯度是向量，并且与$\mathbf{x}$具有相同的形状。
 
-```{.python .input}
+```python
 # 通过调用attach_grad来为一个张量的梯度分配内存
 x.attach_grad()
 # 在计算关于x的梯度后，将能够通过'grad'属性访问它，它的值被初始化为0
 x.grad
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x.requires_grad_(True)  # 等价于x=torch.arange(4.0,requires_grad=True)
 x.grad  # 默认值是None
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 x = tf.Variable(x)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 x = paddle.to_tensor(x, stop_gradient=False)
 x.grad  # 默认值是None
@@ -81,20 +81,20 @@ x.grad  # 默认值是None
 
 (**现在计算$y$。**)
 
-```{.python .input}
+```python
 # 把代码放到autograd.record内，以建立计算图
 with autograd.record():
     y = 2 * np.dot(x, x)
 y
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 y = 2 * torch.dot(x, x)
 y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # 把所有计算记录在磁带上
 with tf.GradientTape() as t:
@@ -102,7 +102,7 @@ with tf.GradientTape() as t:
 y
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 y = 2 * paddle.dot(x, x)
 y
@@ -111,24 +111,24 @@ y
 `x`是一个长度为4的向量，计算`x`和`x`的点积，得到了我们赋值给`y`的标量输出。
 接下来，[**通过调用反向传播函数来自动计算`y`关于`x`每个分量的梯度**]，并打印这些梯度。
 
-```{.python .input}
+```python
 y.backward()
 x.grad
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 y.backward()
 x.grad
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 x_grad = t.gradient(y, x)
 x_grad
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 y.backward()
 x.grad
@@ -137,35 +137,35 @@ x.grad
 函数$y=2\mathbf{x}^{\top}\mathbf{x}$关于$\mathbf{x}$的梯度应为$4\mathbf{x}$。
 让我们快速验证这个梯度是否计算正确。
 
-```{.python .input}
+```python
 x.grad == 4 * x
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x.grad == 4 * x
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 x_grad == 4 * x
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 x.grad == 4 * x
 ```
 
 [**现在计算`x`的另一个函数。**]
 
-```{.python .input}
+```python
 with autograd.record():
     y = x.sum()
 y.backward()
 x.grad  # 被新计算的梯度覆盖
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # 在默认情况下，PyTorch会累积梯度，我们需要清除之前的值
 x.grad.zero_()
@@ -174,14 +174,14 @@ y.backward()
 x.grad
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 with tf.GradientTape() as t:
     y = tf.reduce_sum(x)
 t.gradient(y, x)  # 被新计算的梯度覆盖
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # 在默认情况下，PaddlePaddle会累积梯度，我们需要清除之前的值
 x.clear_gradient()
@@ -199,7 +199,7 @@ x.grad
 但当调用向量的反向计算时，我们通常会试图计算一批训练样本中每个组成部分的损失函数的导数。
 这里(**，我们的目的不是计算微分矩阵，而是单独计算批量中每个样本的偏导数之和。**)
 
-```{.python .input}
+```python
 # 当对向量值变量y（关于x的函数）调用backward时，将通过对y中的元素求和来创建
 # 一个新的标量变量。然后计算这个标量变量相对于x的梯度
 with autograd.record():
@@ -208,7 +208,7 @@ y.backward()
 x.grad  # 等价于y=sum(x*x)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # 对非标量调用backward需要传入一个gradient参数，该参数指定微分函数关于self的梯度。
 # 本例只想求偏导数的和，所以传递一个1的梯度是合适的
@@ -219,14 +219,14 @@ y.sum().backward()
 x.grad
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 with tf.GradientTape() as t:
     y = x * x
 t.gradient(y, x)  # 等价于y=tf.reduce_sum(x*x)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 x.clear_gradient()
 y = x * x
@@ -247,7 +247,7 @@ x.grad
 因此，下面的反向传播函数计算`z=u*x`关于`x`的偏导数，同时将`u`作为常数处理，
 而不是`z=x*x*x`关于`x`的偏导数。
 
-```{.python .input}
+```python
 with autograd.record():
     y = x * x
     u = y.detach()
@@ -256,7 +256,7 @@ z.backward()
 x.grad == u
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x.grad.zero_()
 y = x * x
@@ -267,7 +267,7 @@ z.sum().backward()
 x.grad == u
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # 设置persistent=True来运行t.gradient多次
 with tf.GradientTape(persistent=True) as t:
@@ -279,7 +279,7 @@ x_grad = t.gradient(z, x)
 x_grad == u
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 x.clear_gradient()
 y = x * x
@@ -293,24 +293,24 @@ x.grad == u
 由于记录了`y`的计算结果，我们可以随后在`y`上调用反向传播，
 得到`y=x*x`关于的`x`的导数，即`2*x`。
 
-```{.python .input}
+```python
 y.backward()
 x.grad == 2 * x
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x.grad.zero_()
 y.sum().backward()
 x.grad == 2 * x
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 t.gradient(y, x) == 2 * x
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 x.clear_gradient()
 paddle.sum(y).backward()
@@ -323,7 +323,7 @@ x.grad == 2 * x
 [**即使构建函数的计算图需要通过Python控制流（例如，条件、循环或任意函数调用），我们仍然可以计算得到的变量的梯度**]。
 在下面的代码中，`while`循环的迭代次数和`if`语句的结果都取决于输入`a`的值。
 
-```{.python .input}
+```python
 def f(a):
     b = a * 2
     while np.linalg.norm(b) < 1000:
@@ -335,7 +335,7 @@ def f(a):
     return c
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def f(a):
     b = a * 2
@@ -348,7 +348,7 @@ def f(a):
     return c
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def f(a):
     b = a * 2
@@ -361,7 +361,7 @@ def f(a):
     return c
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def f(a):
     b = a * 2
@@ -376,7 +376,7 @@ def f(a):
 
 让我们计算梯度。
 
-```{.python .input}
+```python
 a = np.random.normal()
 a.attach_grad()
 with autograd.record():
@@ -384,14 +384,14 @@ with autograd.record():
 d.backward()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 a = torch.randn(size=(), requires_grad=True)
 d = f(a)
 d.backward()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 a = tf.Variable(tf.random.normal(shape=()))
 with tf.GradientTape() as t:
@@ -400,7 +400,7 @@ d_grad = t.gradient(d, a)
 d_grad
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 a = paddle.to_tensor(paddle.randn(shape=[1]), stop_gradient=False)
 d = f(a)
@@ -411,21 +411,21 @@ d.backward()
 请注意，它在其输入`a`中是分段线性的。
 换言之，对于任何`a`，存在某个常量标量`k`，使得`f(a)=k*a`，其中`k`的值取决于输入`a`，因此可以用`d/a`验证梯度是否正确。
 
-```{.python .input}
+```python
 a.grad == d / a
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 a.grad == d / a
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 d_grad == d / a
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 a.grad == d / a
 ```

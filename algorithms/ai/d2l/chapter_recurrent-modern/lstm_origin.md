@@ -126,7 +126,7 @@ Now let us implement an LSTM from scratch.
 As same as the experiments in :numref:`sec_rnn_scratch`,
 we first load the time machine dataset.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import rnn
@@ -136,7 +136,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -150,7 +150,7 @@ train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 
 Next we need to define and initialize the model parameters. As previously, the hyperparameter `num_hiddens` defines the number of hidden units. We initialize weights following a Gaussian distribution with 0.01 standard deviation, and we set the biases to 0.
 
-```{.python .input}
+```python
 def get_lstm_params(vocab_size, num_hiddens, device):
     num_inputs = num_outputs = vocab_size
 
@@ -177,7 +177,7 @@ def get_lstm_params(vocab_size, num_hiddens, device):
     return params
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_lstm_params(vocab_size, num_hiddens, device):
     num_inputs = num_outputs = vocab_size
@@ -209,13 +209,13 @@ def get_lstm_params(vocab_size, num_hiddens, device):
 
 In the initialization function, the hidden state of the LSTM needs to return an *additional* memory cell with a value of 0 and a shape of (batch size, number of hidden units). Hence we get the following state initialization.
 
-```{.python .input}
+```python
 def init_lstm_state(batch_size, num_hiddens, device):
     return (np.zeros((batch_size, num_hiddens), ctx=device),
             np.zeros((batch_size, num_hiddens), ctx=device))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_lstm_state(batch_size, num_hiddens, device):
     return (torch.zeros((batch_size, num_hiddens), device=device),
@@ -224,7 +224,7 @@ def init_lstm_state(batch_size, num_hiddens, device):
 
 The actual model is defined just like what we discussed before: providing three gates and an auxiliary memory cell. Note that only the hidden state is passed to the output layer. The memory cell $\mathbf{C}_t$ does not directly participate in the output computation.
 
-```{.python .input}
+```python
 def lstm(inputs, state, params):
     [W_xi, W_hi, b_i, W_xf, W_hf, b_f, W_xo, W_ho, b_o, W_xc, W_hc, b_c,
      W_hq, b_q] = params
@@ -242,7 +242,7 @@ def lstm(inputs, state, params):
     return np.concatenate(outputs, axis=0), (H, C)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def lstm(inputs, state, params):
     [W_xi, W_hi, b_i, W_xf, W_hf, b_f, W_xo, W_ho, b_o, W_xc, W_hc, b_c,
@@ -265,7 +265,7 @@ def lstm(inputs, state, params):
 
 Let us train an LSTM as same as what we did in :numref:`sec_gru`, by instantiating the `RNNModelScratch` class as introduced in :numref:`sec_rnn_scratch`.
 
-```{.python .input}
+```python
 #@tab all
 vocab_size, num_hiddens, device = len(vocab), 256, d2l.try_gpu()
 num_epochs, lr = 500, 1
@@ -280,13 +280,13 @@ Using high-level APIs,
 we can directly instantiate an `LSTM` model.
 This encapsulates all the configuration details that we made explicit above. The code is significantly faster as it uses compiled operators rather than Python for many details that we spelled out in detail before.
 
-```{.python .input}
+```python
 lstm_layer = rnn.LSTM(num_hiddens)
 model = d2l.RNNModel(lstm_layer, len(vocab))
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_inputs = vocab_size
 lstm_layer = nn.LSTM(num_inputs, num_hiddens)

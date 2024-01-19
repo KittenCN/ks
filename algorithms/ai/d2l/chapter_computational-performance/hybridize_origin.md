@@ -3,7 +3,7 @@
 
 So far, this book has focused on imperative programming, which makes use of statements such as `print`, `+`, and `if` to change a program's state. Consider the following example of a simple imperative program.
 
-```{.python .input}
+```python
 #@tab all
 def add(a, b):
     return a + b
@@ -36,7 +36,7 @@ This allows for a significant amount of optimization. First, we can skip the Pyt
 Second, a compiler might optimize and rewrite the above code into `print((1 + 2) + (3 + 4))` or even `print(10)`. This is possible since a compiler gets to see the full code before turning it into machine instructions. For instance, it can release memory (or never allocate it) whenever a variable is no longer needed. Or it can transform the code entirely into an equivalent piece.
 To get a better idea, consider the following simulation of imperative programming (it is Python after all) below.
 
-```{.python .input}
+```python
 #@tab all
 def add_():
     return '''
@@ -91,7 +91,7 @@ The imperative programming paradigm is now the default in Tensorflow 2, a welcom
 
 The easiest way to get a feel for how hybridization works is to consider deep networks with multiple layers. Conventionally the Python interpreter will need to execute the code for all layers to generate an instruction that can then be forwarded to a CPU or a GPU. For a single (fast) computing device this does not cause any major issues. On the other hand, if we use an advanced 8-GPU server such as an AWS P3dn.24xlarge instance Python will struggle to keep all GPUs busy. The single-threaded Python interpreter becomes the bottleneck here. Let us see how we can address this for significant parts of the code by replacing `Sequential` with `HybridSequential`. We begin by defining a simple MLP.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
@@ -111,7 +111,7 @@ net = get_net()
 net(x)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -131,7 +131,7 @@ net = get_net()
 net(x)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -163,18 +163,18 @@ Formerly, all functions built in tensorflow were built as a computational graph,
 We cen re-enable this functionality with tf.function. tf.function is more commonly used as a function decorator, however it is possible to call it direcly as a normal python function, shown below. The model's computation result remains unchanged.
 :end_tab:
 
-```{.python .input}
+```python
 net.hybridize()
 net(x)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = torch.jit.script(net)
 net(x)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = tf.function(net)
 net(x)
@@ -197,7 +197,7 @@ Explicitly adding the `jit_compile = True` flag to the `tf.function()` call enab
 
 To demonstrate the performance improvement gained by compilation we compare the time needed to evaluate `net(x)` before and after hybridization. Let us define a function to measure this time first. It will come handy throughout the chapter as we set out to measure (and improve) performance.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 class Benchmark:
@@ -224,7 +224,7 @@ Now we can invoke the network twice, once with and once without torchscript.
 Now we can invoke the network three times, once executed eagerly, once with graph-mode execution, and again using JIT compiled XLA.
 :end_tab:
 
-```{.python .input}
+```python
 net = get_net()
 with Benchmark('Without hybridization'):
     for i in range(1000): net(x)
@@ -236,7 +236,7 @@ with Benchmark('With hybridization'):
     npx.waitall()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = get_net()
 with Benchmark('Without torchscript'):
@@ -247,7 +247,7 @@ with Benchmark('With torchscript'):
     for i in range(1000): net(x)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = get_net()
 with Benchmark('Eager Mode'):
@@ -286,18 +286,18 @@ The low-level API that allows us to save in tensorflow is `tf.saved_model`.
 Let's see the `saved_model` instance in action.
 :end_tab:
 
-```{.python .input}
+```python
 net.export('my_mlp')
 !ls -lh my_mlp*
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net.save('my_mlp')
 !ls -lh my_mlp*
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = get_net()
 tf.saved_model.save(net, 'my_mlp')
@@ -308,7 +308,7 @@ tf.saved_model.save(net, 'my_mlp')
 The model is decomposed into a (large binary) parameter file and a JSON description of the program required to execute the model computation. The files can be read by other front-end languages supported by Python or MXNet, such as C++, R, Scala, and Perl. Let us have a look at the first few lines in the model description.
 :end_tab:
 
-```{.python .input}
+```python
 !head my_mlp-symbol.json
 ```
 
@@ -318,7 +318,7 @@ Earlier, we demonstrated that, after calling the `hybridize` function, the model
 Besides, contrary to the `Block` instance, which needs to use the `forward` function, for a `HybridBlock` instance we need to use the `hybrid_forward` function.
 :end_tab:
 
-```{.python .input}
+```python
 class HybridNet(nn.HybridBlock):
     def __init__(self, **kwargs):
         super(HybridNet, self).__init__(**kwargs)
@@ -337,7 +337,7 @@ class HybridNet(nn.HybridBlock):
 The code above implements a simple network with 4 hidden units and 2 outputs. The `hybrid_forward` function takes an additional argument `F`. This is needed since, depending on whether the code has been hybridized or not, it will use a slightly different library (`ndarray` or `symbol`) for processing. Both classes perform very similar functions and MXNet automatically determines the argument. To understand what is going on we print the arguments as part of the function invocation.
 :end_tab:
 
-```{.python .input}
+```python
 net = HybridNet()
 net.initialize()
 x = np.random.normal(size=(1, 3))
@@ -348,7 +348,7 @@ net(x)
 Repeating the forward computation will lead to the same output (we omit details). Now let us see what happens if we invoke the `hybridize` function.
 :end_tab:
 
-```{.python .input}
+```python
 net.hybridize()
 net(x)
 ```
@@ -357,7 +357,7 @@ net(x)
 Instead of using `ndarray` we now use the `symbol` module for `F`. Moreover, even though the input is of `ndarray` type, the data flowing through the network is now converted to `symbol` type as part of the compilation process. Repeating the function call leads to a surprising outcome:
 :end_tab:
 
-```{.python .input}
+```python
 net(x)
 ```
 

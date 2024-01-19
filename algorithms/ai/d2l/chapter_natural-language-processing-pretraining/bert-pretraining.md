@@ -3,21 +3,21 @@
 
 利用 :numref:`sec_bert`中实现的BERT模型和 :numref:`sec_bert-dataset`中从WikiText-2数据集生成的预训练样本，我们将在本节中在WikiText-2数据集上对BERT进行预训练。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, init, np, npx
 
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -28,13 +28,13 @@ from paddle import nn
 
 首先，我们加载WikiText-2数据集作为小批量的预训练样本，用于遮蔽语言模型和下一句预测。批量大小是512，BERT输入序列的最大长度是64。注意，在原始BERT模型中，最大长度是512。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 batch_size, max_len = 512, 64
 train_iter, vocab = d2l.load_data_wiki(batch_size, max_len)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def load_data_wiki(batch_size, max_len):
     """加载WikiText-2数据集
@@ -55,7 +55,7 @@ train_iter, vocab = load_data_wiki(batch_size, max_len)
 
 原始BERT :cite:`Devlin.Chang.Lee.ea.2018`有两个不同模型尺寸的版本。基本模型（$\text{BERT}_{\text{BASE}}$）使用12层（Transformer编码器块），768个隐藏单元（隐藏大小）和12个自注意头。大模型（$\text{BERT}_{\text{LARGE}}$）使用24层，1024个隐藏单元和16个自注意头。值得注意的是，前者有1.1亿个参数，后者有3.4亿个参数。为了便于演示，我们定义了一个小的BERT，使用了2层、128个隐藏单元和2个自注意头。
 
-```{.python .input}
+```python
 net = d2l.BERTModel(len(vocab), num_hiddens=128, ffn_num_hiddens=256,
                     num_heads=2, num_layers=2, dropout=0.2)
 devices = d2l.try_all_gpus()
@@ -63,7 +63,7 @@ net.initialize(init.Xavier(), ctx=devices)
 loss = gluon.loss.SoftmaxCELoss()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 net = d2l.BERTModel(len(vocab), num_hiddens=128, norm_shape=[128],
                     ffn_num_input=128, ffn_num_hiddens=256, num_heads=2,
@@ -76,7 +76,7 @@ loss = nn.CrossEntropyLoss()
 
 在定义训练代码实现之前，我们定义了一个辅助函数`_get_batch_loss_bert`。给定训练样本，该函数计算遮蔽语言模型和下一句子预测任务的损失。请注意，BERT预训练的最终损失是遮蔽语言模型损失和下一句预测损失的和。
 
-```{.python .input}
+```python
 #@save
 def _get_batch_loss_bert(net, loss, vocab_size, tokens_X_shards,
                          segments_X_shards, valid_lens_x_shards,
@@ -108,7 +108,7 @@ def _get_batch_loss_bert(net, loss, vocab_size, tokens_X_shards,
     return mlm_ls, nsp_ls, ls
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def _get_batch_loss_bert(net, loss, vocab_size, tokens_X,
@@ -129,7 +129,7 @@ def _get_batch_loss_bert(net, loss, vocab_size, tokens_X,
     return mlm_l, nsp_l, l
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def _get_batch_loss_bert(net, loss, vocab_size, tokens_X,
@@ -152,7 +152,7 @@ def _get_batch_loss_bert(net, loss, vocab_size, tokens_X,
 
 通过调用上述两个辅助函数，下面的`train_bert`函数定义了在WikiText-2（`train_iter`）数据集上预训练BERT（`net`）的过程。训练BERT可能需要很长时间。以下函数的输入`num_steps`指定了训练的迭代步数，而不是像`train_ch13`函数那样指定训练的轮数（参见 :numref:`sec_image_augmentation`）。
 
-```{.python .input}
+```python
 def train_bert(train_iter, net, loss, vocab_size, devices, num_steps):
     trainer = gluon.Trainer(net.collect_params(), 'adam',
                             {'learning_rate': 0.01})
@@ -194,7 +194,7 @@ def train_bert(train_iter, net, loss, vocab_size, devices, num_steps):
           f'{str(devices)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train_bert(train_iter, net, loss, vocab_size, devices, num_steps):
     net = nn.DataParallel(net, device_ids=devices).to(devices[0])
@@ -236,7 +236,7 @@ def train_bert(train_iter, net, loss, vocab_size, devices, num_steps):
           f'{str(devices)}')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train_bert(train_iter, net, loss, vocab_size, devices, num_steps):
     trainer = paddle.optimizer.Adam(parameters=net.parameters(), learning_rate=0.01)
@@ -273,12 +273,12 @@ def train_bert(train_iter, net, loss, vocab_size, devices, num_steps):
 
 在预训练过程中，我们可以绘制出遮蔽语言模型损失和下一句预测损失。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 train_bert(train_iter, net, loss, len(vocab), devices, 50)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 train_bert(train_iter, net, loss, len(vocab), devices[:1], 50)
 ```
@@ -287,7 +287,7 @@ train_bert(train_iter, net, loss, len(vocab), devices[:1], 50)
 
 在预训练BERT之后，我们可以用它来表示单个文本、文本对或其中的任何词元。下面的函数返回`tokens_a`和`tokens_b`中所有词元的BERT（`net`）表示。
 
-```{.python .input}
+```python
 def get_bert_encoding(net, tokens_a, tokens_b=None):
     tokens, segments = d2l.get_tokens_and_segments(tokens_a, tokens_b)
     token_ids = np.expand_dims(np.array(vocab[tokens], ctx=devices[0]),
@@ -298,7 +298,7 @@ def get_bert_encoding(net, tokens_a, tokens_b=None):
     return encoded_X
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_bert_encoding(net, tokens_a, tokens_b=None):
     tokens, segments = d2l.get_tokens_and_segments(tokens_a, tokens_b)
@@ -309,7 +309,7 @@ def get_bert_encoding(net, tokens_a, tokens_b=None):
     return encoded_X
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def get_bert_encoding(net, tokens_a, tokens_b=None):
     tokens, segments = d2l.get_tokens_and_segments(tokens_a, tokens_b)
@@ -323,7 +323,7 @@ def get_bert_encoding(net, tokens_a, tokens_b=None):
 
 考虑“a crane is flying”这句话。回想一下 :numref:`subsec_bert_input_rep`中讨论的BERT的输入表示。插入特殊标记“&lt;cls&gt;”（用于分类）和“&lt;sep&gt;”（用于分隔）后，BERT输入序列的长度为6。因为零是“&lt;cls&gt;”词元，`encoded_text[:, 0, :]`是整个输入语句的BERT表示。为了评估一词多义词元“crane”，我们还打印出了该词元的BERT表示的前三个元素。
 
-```{.python .input}
+```python
 #@tab all
 tokens_a = ['a', 'crane', 'is', 'flying']
 encoded_text = get_bert_encoding(net, tokens_a)
@@ -335,7 +335,7 @@ encoded_text.shape, encoded_text_cls.shape, encoded_text_crane[0][:3]
 
 现在考虑一个句子“a crane driver came”和“he just left”。类似地，`encoded_pair[:, 0, :]`是来自预训练BERT的整个句子对的编码结果。注意，多义词元“crane”的前三个元素与上下文不同时的元素不同。这支持了BERT表示是上下文敏感的。
 
-```{.python .input}
+```python
 #@tab all
 tokens_a, tokens_b = ['a', 'crane', 'driver', 'came'], ['he', 'just', 'left']
 encoded_pair = get_bert_encoding(net, tokens_a, tokens_b)

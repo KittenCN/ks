@@ -21,19 +21,19 @@
 为了加深理解，我们(**实现一下多输入通道互相关运算**)。
 简而言之，我们所做的就是对每个通道执行互相关操作，然后将结果相加。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -41,14 +41,14 @@ warnings.filterwarnings("ignore")
 import paddle
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 def corr2d_multi_in(X, K):
     # 先遍历“X”和“K”的第0个维度（通道维度），再把它们加在一起
     return sum(d2l.corr2d(x, k) for x, k in zip(X, K))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -60,7 +60,7 @@ def corr2d_multi_in(X, K):
 
 我们可以构造与 :numref:`fig_conv_multi_in`中的值相对应的输入张量`X`和核张量`K`，以(**验证互相关运算的输出**)。
 
-```{.python .input}
+```python
 #@tab all
 X = d2l.tensor([[[0.0, 1.0, 2.0], [3.0, 4.0, 5.0], [6.0, 7.0, 8.0]],
                [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]])
@@ -77,7 +77,7 @@ corr2d_multi_in(X, K)
 
 如下所示，我们实现一个[**计算多个通道的输出的互相关函数**]。
 
-```{.python .input}
+```python
 #@tab all
 def corr2d_multi_in_out(X, K):
     # 迭代“K”的第0个维度，每次都对输入“X”执行互相关运算。
@@ -87,7 +87,7 @@ def corr2d_multi_in_out(X, K):
 
 通过将核张量`K`与`K+1`（`K`中每个元素加$1$）和`K+2`连接起来，构造了一个具有$3$个输出通道的卷积核。
 
-```{.python .input}
+```python
 #@tab all
 K = d2l.stack((K, K + 1, K + 2), 0)
 K.shape
@@ -95,7 +95,7 @@ K.shape
 
 下面，我们对输入张量`X`与卷积核张量`K`执行互相关运算。现在的输出包含$3$个通道，第一个通道的结果与先前输入张量`X`和多输入单输出通道的结果一致。
 
-```{.python .input}
+```python
 #@tab all
 corr2d_multi_in_out(X, K)
 ```
@@ -123,7 +123,7 @@ $1 \times 1$卷积，即$k_h = k_w = 1$，看起来似乎没有多大意义。
 下面，我们使用全连接层实现$1 \times 1$卷积。
 请注意，我们需要对输入和输出的数据形状进行调整。
 
-```{.python .input}
+```python
 #@tab all
 def corr2d_multi_in_out_1x1(X, K):
     c_i, h, w = X.shape
@@ -137,19 +137,19 @@ def corr2d_multi_in_out_1x1(X, K):
 
 当执行$1\times 1$卷积运算时，上述函数相当于先前实现的互相关函数`corr2d_multi_in_out`。让我们用一些样本数据来验证这一点。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 X = d2l.normal(0, 1, (3, 3, 3))
 K = d2l.normal(0, 1, (2, 3, 1, 1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = d2l.normal((3, 3, 3), 0, 1)
 K = d2l.normal((2, 3, 1, 1), 0, 1)
 ```
 
-```{.python .input}
+```python
 #@tab all
 Y1 = corr2d_multi_in_out_1x1(X, K)
 Y2 = corr2d_multi_in_out(X, K)

@@ -13,27 +13,27 @@
 1. 建立一个词表，将拆分的词元映射到数字索引。
 1. 将文本转换为数字索引序列，方便模型操作。
 
-```{.python .input}
+```python
 import collections
 from d2l import mxnet as d2l
 import re
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import collections
 from d2l import torch as d2l
 import re
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import collections
 from d2l import tensorflow as d2l
 import re
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 import collections
 from d2l import paddle as d2l
@@ -48,7 +48,7 @@ import re
 下面的函数(**将数据集读取到由多条文本行组成的列表中**)，其中每条文本行都是一个字符串。
 为简单起见，我们在这里忽略了标点符号和字母大写。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['time_machine'] = (d2l.DATA_URL + 'timemachine.txt',
@@ -73,7 +73,7 @@ print(lines[10])
 [**每个文本序列又被拆分成一个词元列表**]，*词元*（token）是文本的基本单位。
 最后，返回一个由词元列表组成的列表，其中的每个词元都是一个字符串（string）。
 
-```{.python .input}
+```python
 #@tab all
 def tokenize(lines, token='word'):  #@save
     """将文本行拆分为单词或字符词元"""
@@ -104,7 +104,7 @@ for i in range(11):
 序列开始词元（“&lt;bos&gt;”）；
 序列结束词元（“&lt;eos&gt;”）。
 
-```{.python .input}
+```python
 #@tab all
 class Vocab:  #@save
     """文本词表"""
@@ -160,7 +160,7 @@ def count_corpus(tokens):  #@save
 
 我们首先使用时光机器数据集作为语料库来[**构建词表**]，然后打印前几个高频词元及其索引。
 
-```{.python .input}
+```python
 #@tab all
 vocab = Vocab(tokens)
 print(list(vocab.token_to_idx.items())[:10])
@@ -168,7 +168,7 @@ print(list(vocab.token_to_idx.items())[:10])
 
 现在，我们可以(**将每一条文本行转换成一个数字索引列表**)。
 
-```{.python .input}
+```python
 #@tab all
 for i in [0, 10]:
     print('文本:', tokens[i])
@@ -184,7 +184,7 @@ for i in [0, 10]:
 1. 为了简化后面章节中的训练，我们使用字符（而不是单词）实现文本词元化；
 1. 时光机器数据集中的每个文本行不一定是一个句子或一个段落，还可能是一个单词，因此返回的`corpus`仅处理为单个列表，而不是使用多词元列表构成的一个列表。
 
-```{.python .input}
+```python
 #@tab all
 def load_corpus_time_machine(max_tokens=-1):  #@save
     """返回时光机器数据集的词元索引列表和词表"""

@@ -23,24 +23,24 @@ API文档、其他教程和示例提供了本书之外的大量文档。
 为了知道模块中可以调用哪些函数和类，可以调用`dir`函数。
 例如，我们可以(**查询随机数生成模块中的所有属性：**)
 
-```{.python .input}
+```python
 from mxnet import np
 print(dir(np.random))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 print(dir(torch.distributions))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 print(dir(tf.random))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 import warnings
 warnings.filterwarnings(action='ignore')
@@ -58,21 +58,21 @@ print(dir(paddle.distribution))
 有关如何使用给定函数或类的更具体说明，可以调用`help`函数。
 例如，我们来[**查看张量`ones`函数的用法。**]
 
-```{.python .input}
+```python
 help(np.ones)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 help(torch.ones)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 help(tf.ones)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 help(paddle.ones)
 ```
@@ -80,21 +80,21 @@ help(paddle.ones)
 从文档中，我们可以看到`ones`函数创建一个具有指定形状的新张量，并将所有元素值设置为1。
 下面来[**运行一个快速测试**]来确认这一解释：
 
-```{.python .input}
+```python
 np.ones(4)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 torch.ones(4)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 tf.ones(4)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 paddle.ones([4], dtype='float32')
 ```

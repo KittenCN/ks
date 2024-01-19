@@ -120,7 +120,7 @@ $$
 该函数以`dropout`的概率丢弃张量输入`X`中的元素**)，
 如上所述重新缩放剩余部分：将剩余部分除以`1.0-dropout`。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, init, np, npx
 from mxnet.gluon import nn
@@ -138,7 +138,7 @@ def dropout_layer(X, dropout):
     return mask.astype(np.float32) * X / (1.0 - dropout)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -156,7 +156,7 @@ def dropout_layer(X, dropout):
     return mask * X / (1.0 - dropout)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -174,7 +174,7 @@ def dropout_layer(X, dropout):
     return tf.cast(mask, dtype=tf.float32) * X / (1.0 - dropout)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 import warnings
 warnings.filterwarnings(action='ignore')
@@ -201,14 +201,14 @@ def dropout_layer(X, dropout):
 我们可以通过下面几个例子来[**测试`dropout_layer`函数**]。
 我们将输入`X`通过暂退法操作，暂退概率分别为0、0.5和1。
 
-```{.python .input}
+```python
 X = np.arange(16).reshape(2, 8)
 print(dropout_layer(X, 0))
 print(dropout_layer(X, 0.5))
 print(dropout_layer(X, 1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X= torch.arange(16, dtype = torch.float32).reshape((2, 8))
 print(X)
@@ -217,7 +217,7 @@ print(dropout_layer(X, 0.5))
 print(dropout_layer(X, 1.))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.reshape(tf.range(16, dtype=tf.float32), (2, 8))
 print(X)
@@ -226,7 +226,7 @@ print(dropout_layer(X, 0.5))
 print(dropout_layer(X, 1.))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X= paddle.arange(16, dtype = paddle.float32).reshape((2, 8))
 print(X)
@@ -240,7 +240,7 @@ print(dropout_layer(X, 1.))
 同样，我们使用 :numref:`sec_fashion_mnist`中引入的Fashion-MNIST数据集。
 我们[**定义具有两个隐藏层的多层感知机，每个隐藏层包含256个单元**]。
 
-```{.python .input}
+```python
 num_inputs, num_outputs, num_hiddens1, num_hiddens2 = 784, 10, 256, 256
 
 W1 = np.random.normal(scale=0.01, size=(num_inputs, num_hiddens1))
@@ -255,12 +255,12 @@ for param in params:
     param.attach_grad()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 num_inputs, num_outputs, num_hiddens1, num_hiddens2 = 784, 10, 256, 256
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_outputs, num_hiddens1, num_hiddens2 = 10, 256, 256
 ```
@@ -273,7 +273,7 @@ num_outputs, num_hiddens1, num_hiddens2 = 10, 256, 256
 下面的模型将第一个和第二个隐藏层的暂退概率分别设置为0.2和0.5，
 并且暂退法只在训练期间有效。
 
-```{.python .input}
+```python
 dropout1, dropout2 = 0.2, 0.5
 
 def net(X):
@@ -290,7 +290,7 @@ def net(X):
     return np.dot(H2, W3) + b3
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 dropout1, dropout2 = 0.2, 0.5
 
@@ -322,7 +322,7 @@ class Net(nn.Module):
 net = Net(num_inputs, num_outputs, num_hiddens1, num_hiddens2)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 dropout1, dropout2 = 0.2, 0.5
 
@@ -351,7 +351,7 @@ class Net(tf.keras.Model):
 net = Net(num_outputs, num_hiddens1, num_hiddens2)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 dropout1, dropout2 = 0.2, 0.5
 
@@ -386,7 +386,7 @@ net = Net(num_inputs, num_outputs, num_hiddens1, num_hiddens2)
 
 这类似于前面描述的多层感知机训练和测试。
 
-```{.python .input}
+```python
 num_epochs, lr, batch_size = 10, 0.5, 256
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
@@ -394,7 +394,7 @@ d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs,
               lambda batch_size: d2l.sgd(params, lr, batch_size))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_epochs, lr, batch_size = 10, 0.5, 256
 loss = nn.CrossEntropyLoss(reduction='none')
@@ -403,7 +403,7 @@ trainer = torch.optim.SGD(net.parameters(), lr=lr)
 d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_epochs, lr, batch_size = 10, 0.5, 256
 loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
@@ -412,7 +412,7 @@ trainer = tf.keras.optimizers.SGD(learning_rate=lr)
 d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_epochs, lr, batch_size = 10, 0.5, 256
 loss = nn.CrossEntropyLoss(reduction='none')
@@ -428,7 +428,7 @@ d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)
 在训练时，`Dropout`层将根据指定的暂退概率随机丢弃上一层的输出（相当于下一层的输入）。
 在测试时，`Dropout`层仅传递数据。
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nn.Dense(256, activation="relu"),
         # 在第一个全连接层之后添加一个dropout层
@@ -440,7 +440,7 @@ net.add(nn.Dense(256, activation="relu"),
 net.initialize(init.Normal(sigma=0.01))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(nn.Flatten(),
         nn.Linear(784, 256),
@@ -460,7 +460,7 @@ def init_weights(m):
 net.apply(init_weights);
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = tf.keras.models.Sequential([
     tf.keras.layers.Flatten(),
@@ -474,7 +474,7 @@ net = tf.keras.models.Sequential([
 ])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 weight_attr = paddle.ParamAttr(initializer=paddle.nn.initializer.Normal(std=0.01)) 
 
@@ -492,24 +492,24 @@ net = nn.Sequential(nn.Flatten(),
 
 接下来，我们[**对模型进行训练和测试**]。
 
-```{.python .input}
+```python
 trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': lr})
 d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 trainer = torch.optim.SGD(net.parameters(), lr=lr)
 d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 trainer = tf.keras.optimizers.SGD(learning_rate=lr)
 d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 trainer = paddle.optimizer.SGD(learning_rate=0.5, parameters=net.parameters())
 d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)

@@ -11,7 +11,7 @@
 
 包含所有图像和CSV标签文件的香蕉检测数据集可以直接从互联网下载。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import gluon, image, np, npx
@@ -21,7 +21,7 @@ import pandas as pd
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -31,7 +31,7 @@ import os
 import pandas as pd
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -43,7 +43,7 @@ import paddle
 import paddle.vision as paddlevision
 ```
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['banana-detection'] = (
@@ -56,7 +56,7 @@ d2l.DATA_HUB['banana-detection'] = (
 通过`read_data_bananas`函数，我们[**读取香蕉检测数据集**]。
 该数据集包括一个的CSV文件，内含目标类别标签和位于左上角和右下角的真实边界框坐标。
 
-```{.python .input}
+```python
 #@save
 def read_data_bananas(is_train=True):
     """读取香蕉检测数据集中的图像和标签"""
@@ -76,7 +76,7 @@ def read_data_bananas(is_train=True):
     return images, np.expand_dims(np.array(targets), 1) / 256
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def read_data_bananas(is_train=True):
@@ -97,7 +97,7 @@ def read_data_bananas(is_train=True):
     return images, torch.tensor(targets).unsqueeze(1) / 256
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def read_data_bananas(is_train=True):
@@ -120,7 +120,7 @@ def read_data_bananas(is_train=True):
 
 通过使用`read_data_bananas`函数读取图像和标签，以下`BananasDataset`类别将允许我们[**创建一个自定义`Dataset`实例**]来加载香蕉检测数据集。
 
-```{.python .input}
+```python
 #@save
 class BananasDataset(gluon.data.Dataset):
     """一个用于加载香蕉检测数据集的自定义数据集"""
@@ -137,7 +137,7 @@ class BananasDataset(gluon.data.Dataset):
         return len(self.features)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class BananasDataset(torch.utils.data.Dataset):
@@ -154,7 +154,7 @@ class BananasDataset(torch.utils.data.Dataset):
         return len(self.features)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class BananasDataset(paddle.io.Dataset):
@@ -173,7 +173,7 @@ class BananasDataset(paddle.io.Dataset):
 
 最后，我们定义`load_data_bananas`函数，来[**为训练集和测试集返回两个数据加载器实例**]。对于测试集，无须按随机顺序读取它。
 
-```{.python .input}
+```python
 #@save
 def load_data_bananas(batch_size):
     """加载香蕉检测数据集"""
@@ -184,7 +184,7 @@ def load_data_bananas(batch_size):
     return train_iter, val_iter
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def load_data_bananas(batch_size):
@@ -196,7 +196,7 @@ def load_data_bananas(batch_size):
     return train_iter, val_iter
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def load_data_bananas(batch_size):
@@ -219,7 +219,7 @@ def load_data_bananas(batch_size):
 数组的其余四个元素是边界框左上角和右下角的（$x$，$y$）坐标值（值域在0～1之间）。
 对于香蕉数据集而言，由于每张图像上只有一个边界框，因此$m=1$。
 
-```{.python .input}
+```python
 #@tab all
 batch_size, edge_size = 32, 256
 train_iter, _ = load_data_bananas(batch_size)
@@ -233,14 +233,14 @@ batch[0].shape, batch[1].shape
 我们可以看到在所有这些图像中香蕉的旋转角度、大小和位置都有所不同。
 当然，这只是一个简单的人工数据集，实践中真实世界的数据集通常要复杂得多。
 
-```{.python .input}
+```python
 imgs = (batch[0][0:10].transpose(0, 2, 3, 1)) / 255
 axes = d2l.show_images(imgs, 2, 5, scale=2)
 for ax, label in zip(axes, batch[1][0:10]):
     d2l.show_bboxes(ax, [label[0][1:5] * edge_size], colors=['w'])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 imgs = (batch[0][0:10].permute(0, 2, 3, 1)) / 255
 axes = d2l.show_images(imgs, 2, 5, scale=2)
@@ -248,7 +248,7 @@ for ax, label in zip(axes, batch[1][0:10]):
     d2l.show_bboxes(ax, [label[0][1:5] * edge_size], colors=['w'])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 imgs = (batch[0][0:10].transpose([0, 2, 3, 1])) / 255
 axes = d2l.show_images(imgs, 2, 5, scale=2)

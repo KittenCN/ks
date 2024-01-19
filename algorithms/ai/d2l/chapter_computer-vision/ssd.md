@@ -42,7 +42,7 @@
 在下面，我们定义了这样一个类别预测层，通过参数`num_anchors`和`num_classes`分别指定了$a$和$q$。
 该图层使用填充为1的$3\times3$的卷积层。此卷积层的输入和输出的宽度和高度保持不变。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, image, init, np, npx
@@ -55,7 +55,7 @@ def cls_predictor(num_anchors, num_classes):
                      padding=1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -69,7 +69,7 @@ def cls_predictor(num_inputs, num_anchors, num_classes):
                      kernel_size=3, padding=1)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -90,18 +90,18 @@ def cls_predictor(num_inputs, num_anchors, num_classes):
 边界框预测层的设计与类别预测层的设计类似。
 唯一不同的是，这里需要为每个锚框预测4个偏移量，而不是$q+1$个类别。
 
-```{.python .input}
+```python
 def bbox_predictor(num_anchors):
     return nn.Conv2D(num_anchors * 4, kernel_size=3, padding=1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def bbox_predictor(num_inputs, num_anchors):
     return nn.Conv2d(num_inputs, num_anchors * 4, kernel_size=3, padding=1)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def bbox_predictor(num_inputs, num_anchors):
     return nn.Conv2D(num_inputs, num_anchors * 4, kernel_size=3, padding=1)
@@ -117,7 +117,7 @@ def bbox_predictor(num_inputs, num_anchors):
 以类别预测为例，假设`Y1`和`Y2`的每个单元分别生成了$5$个和$3$个锚框。
 进一步假设目标类别的数量为$10$，对于特征图`Y1`和`Y2`，类别预测输出中的通道数分别为$5\times(10+1)=55$和$3\times(10+1)=33$，其中任一输出的形状是（批量大小，通道数，高度，宽度）。
 
-```{.python .input}
+```python
 def forward(x, block):
     block.initialize()
     return block(x)
@@ -127,7 +127,7 @@ Y2 = forward(np.zeros((2, 16, 10, 10)), cls_predictor(3, 10))
 Y1.shape, Y2.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def forward(x, block):
     return block(x)
@@ -137,7 +137,7 @@ Y2 = forward(torch.zeros((2, 16, 10, 10)), cls_predictor(16, 3, 10))
 Y1.shape, Y2.shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def forward(x, block):
     return block(x)
@@ -153,7 +153,7 @@ Y1.shape, Y2.shape
 通道维包含中心相同的锚框的预测结果。我们首先将通道维移到最后一维。
 因为不同尺度下批量大小仍保持不变，我们可以将预测结果转成二维的（批量大小，高$\times$宽$\times$通道数）的格式，以方便之后在维度$1$上的连结。
 
-```{.python .input}
+```python
 def flatten_pred(pred):
     return npx.batch_flatten(pred.transpose(0, 2, 3, 1))
 
@@ -161,7 +161,7 @@ def concat_preds(preds):
     return np.concatenate([flatten_pred(p) for p in preds], axis=1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def flatten_pred(pred):
     return torch.flatten(pred.permute(0, 2, 3, 1), start_dim=1)
@@ -170,7 +170,7 @@ def concat_preds(preds):
     return torch.cat([flatten_pred(p) for p in preds], dim=1)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def flatten_pred(pred):
     return paddle.flatten(pred.transpose([0, 2, 3, 1]), start_axis=1)
@@ -181,7 +181,7 @@ def concat_preds(preds):
 
 这样一来，尽管`Y1`和`Y2`在通道数、高度和宽度方面具有不同的大小，我们仍然可以在同一个小批量的两个不同尺度上连接这两个预测输出。
 
-```{.python .input}
+```python
 #@tab all
 concat_preds([Y1, Y2]).shape
 ```
@@ -194,7 +194,7 @@ concat_preds([Y1, Y2]).shape
 我们知道，填充为$1$的$3\times3$卷积层不改变特征图的形状。但是，其后的$2\times2$的最大汇聚层将输入特征图的高度和宽度减少了一半。
 对于此高和宽减半块的输入和输出特征图，因为$1\times 2+(3-1)+(3-1)=6$，所以输出中的每个单元在输入上都有一个$6\times6$的感受野。因此，高和宽减半块会扩大每个单元在其输出特征图中的感受野。
 
-```{.python .input}
+```python
 def down_sample_blk(num_channels):
     blk = nn.Sequential()
     for _ in range(2):
@@ -205,7 +205,7 @@ def down_sample_blk(num_channels):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def down_sample_blk(in_channels, out_channels):
     blk = []
@@ -219,7 +219,7 @@ def down_sample_blk(in_channels, out_channels):
     return nn.Sequential(*blk)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def down_sample_blk(in_channels, out_channels):
     blk = []
@@ -235,16 +235,16 @@ def down_sample_blk(in_channels, out_channels):
 
 在以下示例中，我们构建的高和宽减半块会更改输入通道的数量，并将输入特征图的高度和宽度减半。
 
-```{.python .input}
+```python
 forward(np.zeros((2, 3, 20, 20)), down_sample_blk(10)).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 forward(torch.zeros((2, 3, 20, 20)), down_sample_blk(3, 10)).shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 forward(paddle.zeros((2, 3, 20, 20)), down_sample_blk(3, 10)).shape
 ```
@@ -255,7 +255,7 @@ forward(paddle.zeros((2, 3, 20, 20)), down_sample_blk(3, 10)).shape
 为了计算简洁，我们构造了一个小的基础网络，该网络串联3个高和宽减半块，并逐步将通道数翻倍。
 给定输入图像的形状为$256\times256$，此基本网络块输出的特征图形状为$32 \times 32$（$256/2^3=32$）。
 
-```{.python .input}
+```python
 def base_net():
     blk = nn.Sequential()
     for num_filters in [16, 32, 64]:
@@ -265,7 +265,7 @@ def base_net():
 forward(np.zeros((2, 3, 256, 256)), base_net()).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def base_net():
     blk = []
@@ -277,7 +277,7 @@ def base_net():
 forward(torch.zeros((2, 3, 256, 256)), base_net()).shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def base_net():
     blk = []
@@ -293,7 +293,7 @@ forward(paddle.zeros((2, 3, 256, 256)), base_net()).shape
 
 [**完整的单发多框检测模型由五个模块组成**]。每个块生成的特征图既用于生成锚框，又用于预测这些锚框的类别和偏移量。在这五个模块中，第一个是基本网络块，第二个到第四个是高和宽减半块，最后一个模块使用全局最大池将高度和宽度都降到1。从技术上讲，第二到第五个区块都是 :numref:`fig_ssd`中的多尺度特征块。
 
-```{.python .input}
+```python
 def get_blk(i):
     if i == 0:
         blk = base_net()
@@ -304,7 +304,7 @@ def get_blk(i):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_blk(i):
     if i == 0:
@@ -318,7 +318,7 @@ def get_blk(i):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def get_blk(i):
     if i == 0:
@@ -334,7 +334,7 @@ def get_blk(i):
 
 现在我们[**为每个块定义前向传播**]。与图像分类任务不同，此处的输出包括：CNN特征图`Y`；在当前尺度下根据`Y`生成的锚框；预测的这些锚框的类别和偏移量（基于`Y`）。
 
-```{.python .input}
+```python
 def blk_forward(X, blk, size, ratio, cls_predictor, bbox_predictor):
     Y = blk(X)
     anchors = d2l.multibox_prior(Y, sizes=size, ratios=ratio)
@@ -343,7 +343,7 @@ def blk_forward(X, blk, size, ratio, cls_predictor, bbox_predictor):
     return (Y, anchors, cls_preds, bbox_preds)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def blk_forward(X, blk, size, ratio, cls_predictor, bbox_predictor):
     Y = blk(X)
@@ -353,7 +353,7 @@ def blk_forward(X, blk, size, ratio, cls_predictor, bbox_predictor):
     return (Y, anchors, cls_preds, bbox_preds)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def blk_forward(X, blk, size, ratio, cls_predictor, bbox_predictor):
     Y = blk(X)
@@ -370,7 +370,7 @@ def blk_forward(X, blk, size, ratio, cls_predictor, bbox_predictor):
 
 [~~超参数~~]
 
-```{.python .input}
+```python
 #@tab all
 sizes = [[0.2, 0.272], [0.37, 0.447], [0.54, 0.619], [0.71, 0.79],
          [0.88, 0.961]]
@@ -380,7 +380,7 @@ num_anchors = len(sizes[0]) + len(ratios[0]) - 1
 
 现在，我们就可以按如下方式[**定义完整的模型**]`TinySSD`了。
 
-```{.python .input}
+```python
 class TinySSD(nn.Block):
     def __init__(self, num_classes, **kwargs):
         super(TinySSD, self).__init__(**kwargs)
@@ -406,7 +406,7 @@ class TinySSD(nn.Block):
         return anchors, cls_preds, bbox_preds
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class TinySSD(nn.Module):
     def __init__(self, num_classes, **kwargs):
@@ -436,7 +436,7 @@ class TinySSD(nn.Module):
         return anchors, cls_preds, bbox_preds
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class TinySSD(nn.Layer):
     def __init__(self, num_classes, **kwargs):
@@ -472,7 +472,7 @@ class TinySSD(nn.Layer):
 回想一下，第二到第四个模块为高和宽减半块，第五个模块为全局汇聚层。
 由于以特征图的每个单元为中心有$4$个锚框生成，因此在所有五个尺度下，每个图像总共生成$(32^2 + 16^2 + 8^2 + 4^2 + 1)\times 4 = 5444$个锚框。
 
-```{.python .input}
+```python
 net = TinySSD(num_classes=1)
 net.initialize()
 X = np.zeros((32, 3, 256, 256))
@@ -483,7 +483,7 @@ print('output class preds:', cls_preds.shape)
 print('output bbox preds:', bbox_preds.shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = TinySSD(num_classes=1)
 X = torch.zeros((32, 3, 256, 256))
@@ -494,7 +494,7 @@ print('output class preds:', cls_preds.shape)
 print('output bbox preds:', bbox_preds.shape)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = TinySSD(num_classes=1)
 X = paddle.zeros((32, 3, 256, 256))
@@ -513,7 +513,7 @@ print('output bbox preds:', bbox_preds.shape)
 
 首先，让我们[**读取**] :numref:`sec_object-detection-dataset`中描述的(**香蕉检测数据集**)。
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 32
 train_iter, _ = d2l.load_data_bananas(batch_size)
@@ -522,20 +522,20 @@ train_iter, _ = d2l.load_data_bananas(batch_size)
 香蕉检测数据集中，目标的类别数为1。
 定义好模型后，我们需要(**初始化其参数并定义优化算法**)。
 
-```{.python .input}
+```python
 device, net = d2l.try_gpu(), TinySSD(num_classes=1)
 net.initialize(init=init.Xavier(), ctx=device)
 trainer = gluon.Trainer(net.collect_params(), 'sgd',
                         {'learning_rate': 0.2, 'wd': 5e-4})
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 device, net = d2l.try_gpu(), TinySSD(num_classes=1)
 trainer = torch.optim.SGD(net.parameters(), lr=0.2, weight_decay=5e-4)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 device, net = d2l.try_gpu(), TinySSD(num_classes=1)
 trainer = paddle.optimizer.SGD(learning_rate=0.2, 
@@ -552,7 +552,7 @@ trainer = paddle.optimizer.SGD(learning_rate=0.2,
 掩码变量`bbox_masks`令负类锚框和填充锚框不参与损失的计算。
 最后，我们将锚框类别和偏移量的损失相加，以获得模型的最终损失函数。
 
-```{.python .input}
+```python
 cls_loss = gluon.loss.SoftmaxCrossEntropyLoss()
 bbox_loss = gluon.loss.L1Loss()
 
@@ -562,7 +562,7 @@ def calc_loss(cls_preds, cls_labels, bbox_preds, bbox_labels, bbox_masks):
     return cls + bbox
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 cls_loss = nn.CrossEntropyLoss(reduction='none')
 bbox_loss = nn.L1Loss(reduction='none')
@@ -576,7 +576,7 @@ def calc_loss(cls_preds, cls_labels, bbox_preds, bbox_labels, bbox_masks):
     return cls + bbox
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 cls_loss = nn.CrossEntropyLoss(reduction='none')
 bbox_loss = nn.L1Loss(reduction='none')
@@ -593,7 +593,7 @@ def calc_loss(cls_preds, cls_labels, bbox_preds, bbox_labels, bbox_masks):
 我们可以沿用准确率评价分类结果。
 由于偏移量使用了$L_1$范数损失，我们使用*平均绝对误差*来评价边界框的预测结果。这些预测结果是从生成的锚框及其预测偏移量中获得的。
 
-```{.python .input}
+```python
 def cls_eval(cls_preds, cls_labels):
     # 由于类别预测结果放在最后一维，argmax需要指定最后一维。
     return float((cls_preds.argmax(axis=-1).astype(
@@ -603,7 +603,7 @@ def bbox_eval(bbox_preds, bbox_labels, bbox_masks):
     return float((np.abs((bbox_labels - bbox_preds) * bbox_masks)).sum())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def cls_eval(cls_preds, cls_labels):
     # 由于类别预测结果放在最后一维，argmax需要指定最后一维。
@@ -614,7 +614,7 @@ def bbox_eval(bbox_preds, bbox_labels, bbox_masks):
     return float((torch.abs((bbox_labels - bbox_preds) * bbox_masks)).sum())
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def cls_eval(cls_preds, cls_labels):
     # 由于类别预测结果放在最后一维，argmax需要指定最后一维。
@@ -631,7 +631,7 @@ def bbox_eval(bbox_preds, bbox_labels, bbox_masks):
 然后，我们根据标签信息`Y`为生成的锚框标记类别（`cls_labels`）和偏移量（`bbox_labels`）。
 最后，我们根据类别和偏移量的预测和标注值计算损失函数。为了代码简洁，这里没有评价测试数据集。
 
-```{.python .input}
+```python
 num_epochs, timer = 20, d2l.Timer()
 animator = d2l.Animator(xlabel='epoch', xlim=[1, num_epochs],
                         legend=['class error', 'bbox mae'])
@@ -664,7 +664,7 @@ print(f'{len(train_iter._dataset) / timer.stop():.1f} examples/sec on '
       f'{str(device)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_epochs, timer = 20, d2l.Timer()
 animator = d2l.Animator(xlabel='epoch', xlim=[1, num_epochs],
@@ -698,7 +698,7 @@ print(f'{len(train_iter.dataset) / timer.stop():.1f} examples/sec on '
       f'{str(device)}')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_epochs, timer = 20, d2l.Timer()
 animator = d2l.Animator(xlabel='epoch', xlim=[1, num_epochs],
@@ -735,19 +735,19 @@ print(f'{len(train_iter.dataset) / timer.stop():.1f} examples/sec on '
 
 在预测阶段，我们希望能把图像里面所有我们感兴趣的目标检测出来。在下面，我们读取并调整测试图像的大小，然后将其转成卷积层需要的四维格式。
 
-```{.python .input}
+```python
 img = image.imread('../img/banana.jpg')
 feature = image.imresize(img, 256, 256).astype('float32')
 X = np.expand_dims(feature.transpose(2, 0, 1), axis=0)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torchvision.io.read_image('../img/banana.jpg').unsqueeze(0).float()
 img = X.squeeze(0).permute(1, 2, 0).long()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = paddle.to_tensor(
             paddlevision.image.image_load(
@@ -759,7 +759,7 @@ img = X.squeeze(0).transpose([1, 2, 0]).astype(paddle.int64)
 
 使用下面的`multibox_detection`函数，我们可以根据锚框及其预测偏移量得到预测边界框。然后，通过非极大值抑制来移除相似的预测边界框。
 
-```{.python .input}
+```python
 def predict(X):
     anchors, cls_preds, bbox_preds = net(X.as_in_ctx(device))
     cls_probs = npx.softmax(cls_preds).transpose(0, 2, 1)
@@ -770,7 +770,7 @@ def predict(X):
 output = predict(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def predict(X):
     net.eval()
@@ -783,7 +783,7 @@ def predict(X):
 output = predict(X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def predict(X):
     net.eval()
@@ -798,7 +798,7 @@ output = predict(X)
 
 最后，我们[**筛选所有置信度不低于0.9的边界框，做为最终输出**]。
 
-```{.python .input}
+```python
 def display(img, output, threshold):
     d2l.set_figsize((5, 5))
     fig = d2l.plt.imshow(img.asnumpy())
@@ -813,7 +813,7 @@ def display(img, output, threshold):
 display(img, output, threshold=0.9)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def display(img, output, threshold):
     d2l.set_figsize((5, 5))
@@ -829,7 +829,7 @@ def display(img, output, threshold):
 display(img, output.cpu(), threshold=0.9)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def display(img, output, threshold):
     d2l.set_figsize((5, 5))
@@ -864,7 +864,7 @@ $$
 
 当$\sigma$非常大时，这种损失类似于$L_1$范数损失。当它的值较小时，损失函数较平滑。
 
-```{.python .input}
+```python
 sigmas = [10, 1, 0.5]
 lines = ['-', '--', '-.']
 x = np.arange(-2, 2, 0.1)
@@ -876,7 +876,7 @@ for l, s in zip(lines, sigmas):
 d2l.plt.legend();
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def smooth_l1(data, scalar):
     out = []
@@ -898,7 +898,7 @@ for l, s in zip(lines, sigmas):
 d2l.plt.legend();
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def smooth_l1(data, scalar):
     out = []
@@ -926,7 +926,7 @@ $$ - \alpha (1-p_j)^{\gamma} \log p_j.$$
 
 可以看到，增大$\gamma$可以有效地减少正类预测概率较大时（例如$p_j > 0.5$）的相对损失，因此训练可以更集中在那些错误分类的困难示例上。
 
-```{.python .input}
+```python
 def focal_loss(gamma, x):
     return -(1 - x) ** gamma * np.log(x)
 
@@ -937,7 +937,7 @@ for l, gamma in zip(lines, [0, 1, 5]):
 d2l.plt.legend();
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def focal_loss(gamma, x):
     return -(1 - x) ** gamma * torch.log(x)
@@ -948,7 +948,7 @@ for l, gamma in zip(lines, [0, 1, 5]):
 d2l.plt.legend();
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def focal_loss(gamma, x):
     return -(1 - x) ** gamma * paddle.log(x)

@@ -28,7 +28,7 @@ $y = 2\mathbf{x}^{\top}\mathbf{x}$
 with respect to the column vector $\mathbf{x}$.**)
 To start, let us create the variable `x` and assign it an initial value.
 
-```{.python .input}
+```python
 from mxnet import autograd, np, npx
 npx.set_np()
 
@@ -36,7 +36,7 @@ x = np.arange(4.0)
 x
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 
@@ -44,7 +44,7 @@ x = torch.arange(4.0)
 x
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -64,7 +64,7 @@ Note that a gradient of a scalar-valued function
 with respect to a vector $\mathbf{x}$
 is itself vector-valued and has the same shape as $\mathbf{x}$.
 
-```{.python .input}
+```python
 # We allocate memory for a tensor's gradient by invoking `attach_grad`
 x.attach_grad()
 # After we calculate a gradient taken with respect to `x`, we will be able to
@@ -72,20 +72,20 @@ x.attach_grad()
 x.grad
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x.requires_grad_(True)  # Same as `x = torch.arange(4.0, requires_grad=True)`
 x.grad  # The default value is None
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 x = tf.Variable(x)
 ```
 
 (**Now let us calculate $y$.**)
 
-```{.python .input}
+```python
 # Place our code inside an `autograd.record` scope to build the computational
 # graph
 with autograd.record():
@@ -93,13 +93,13 @@ with autograd.record():
 y
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 y = 2 * torch.dot(x, x)
 y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # Record all computations onto a tape
 with tf.GradientTape() as t:
@@ -114,18 +114,18 @@ Next, [**we can automatically calculate the gradient of `y`
 with respect to each component of `x`**]
 by calling the function for backpropagation and printing the gradient.
 
-```{.python .input}
+```python
 y.backward()
 x.grad
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 y.backward()
 x.grad
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 x_grad = t.gradient(y, x)
 x_grad
@@ -135,30 +135,30 @@ x_grad
 with respect to $\mathbf{x}$ should be $4\mathbf{x}$.**)
 Let us quickly verify that our desired gradient was calculated correctly.
 
-```{.python .input}
+```python
 x.grad == 4 * x
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x.grad == 4 * x
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 x_grad == 4 * x
 ```
 
 [**Now let us calculate another function of `x`.**]
 
-```{.python .input}
+```python
 with autograd.record():
     y = x.sum()
 y.backward()
 x.grad  # Overwritten by the newly calculated gradient
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # PyTorch accumulates the gradient in default, we need to clear the previous
 # values
@@ -168,7 +168,7 @@ y.backward()
 x.grad
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 with tf.GradientTape() as t:
     y = tf.reduce_sum(x)
@@ -192,7 +192,7 @@ Here, (**our intent is**) not to calculate the differentiation matrix
 but rather (**the sum of the partial derivatives
 computed individually for each example**) in the batch.
 
-```{.python .input}
+```python
 # When we invoke `backward` on a vector-valued variable `y` (function of `x`),
 # a new scalar variable is created by summing the elements in `y`. Then the
 # gradient of that scalar variable with respect to `x` is computed
@@ -202,7 +202,7 @@ y.backward()
 x.grad  # Equals to y = sum(x * x)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # Invoking `backward` on a non-scalar requires passing in a `gradient` argument
 # which specifies the gradient of the differentiated function w.r.t `self`.
@@ -215,7 +215,7 @@ y.sum().backward()
 x.grad
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 with tf.GradientTape() as t:
     y = x * x
@@ -242,7 +242,7 @@ Thus, the following backpropagation function computes
 the partial derivative of `z = u * x` with respect to `x` while treating `u` as a constant,
 instead of the partial derivative of `z = x * x * x` with respect to `x`.
 
-```{.python .input}
+```python
 with autograd.record():
     y = x * x
     u = y.detach()
@@ -251,7 +251,7 @@ z.backward()
 x.grad == u
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x.grad.zero_()
 y = x * x
@@ -262,7 +262,7 @@ z.sum().backward()
 x.grad == u
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # Set `persistent=True` to run `t.gradient` more than once
 with tf.GradientTape(persistent=True) as t:
@@ -277,19 +277,19 @@ x_grad == u
 Since the computation of `y` was recorded,
 we can subsequently invoke backpropagation on `y` to get the derivative of `y = x * x` with respect to `x`, which is `2 * x`.
 
-```{.python .input}
+```python
 y.backward()
 x.grad == 2 * x
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x.grad.zero_()
 y.sum().backward()
 x.grad == 2 * x
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 t.gradient(y, x) == 2 * x
 ```
@@ -306,7 +306,7 @@ the number of iterations of the `while` loop
 and the evaluation of the `if` statement
 both depend on the value of the input `a`.
 
-```{.python .input}
+```python
 def f(a):
     b = a * 2
     while np.linalg.norm(b) < 1000:
@@ -318,7 +318,7 @@ def f(a):
     return c
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def f(a):
     b = a * 2
@@ -331,7 +331,7 @@ def f(a):
     return c
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def f(a):
     b = a * 2
@@ -346,7 +346,7 @@ def f(a):
 
 Let us compute the gradient.
 
-```{.python .input}
+```python
 a = np.random.normal()
 a.attach_grad()
 with autograd.record():
@@ -354,14 +354,14 @@ with autograd.record():
 d.backward()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 a = torch.randn(size=(), requires_grad=True)
 d = f(a)
 d.backward()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 a = tf.Variable(tf.random.normal(shape=()))
 with tf.GradientTape() as t:
@@ -376,16 +376,16 @@ In other words, for any `a` there exists some constant scalar `k`
 such that `f(a) = k * a`, where the value of `k` depends on the input `a`.
 Consequently `d / a` allows us to verify that the gradient is correct.
 
-```{.python .input}
+```python
 a.grad == d / a
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 a.grad == d / a
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 d_grad == d / a
 ```

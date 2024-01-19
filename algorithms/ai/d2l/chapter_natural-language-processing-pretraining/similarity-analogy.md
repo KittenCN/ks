@@ -3,7 +3,7 @@
 
 在 :numref:`sec_word2vec_pretraining`中，我们在一个小的数据集上训练了一个word2vec模型，并使用它为一个输入词寻找语义相似的词。实际上，在大型语料库上预先训练的词向量可以应用于下游的自然语言处理任务，这将在后面的 :numref:`chap_nlp_app`中讨论。为了直观地演示大型语料库中预训练词向量的语义，让我们将预训练词向量应用到词的相似性和类比任务中。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 import os
@@ -11,7 +11,7 @@ import os
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -19,7 +19,7 @@ from torch import nn
 import os
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -33,7 +33,7 @@ import os
 
 以下列出维度为50、100和300的预训练GloVe嵌入，可从[GloVe网站](https://nlp.stanford.edu/projects/glove/)下载。预训练的fastText嵌入有多种语言。这里我们使用可以从[fastText网站](https://fasttext.cc/)下载300维度的英文版本（“wiki.en”）。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['glove.6b.50d'] = (d2l.DATA_URL + 'glove.6B.50d.zip',
@@ -54,7 +54,7 @@ d2l.DATA_HUB['wiki.en'] = (d2l.DATA_URL + 'wiki.en.zip',
 
 为了加载这些预训练的GloVe和fastText嵌入，我们定义了以下`TokenEmbedding`类。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 class TokenEmbedding:
@@ -94,21 +94,21 @@ class TokenEmbedding:
 
 下面我们加载50维GloVe嵌入（在维基百科的子集上预训练）。创建`TokenEmbedding`实例时，如果尚未下载指定的嵌入文件，则必须下载该文件。
 
-```{.python .input}
+```python
 #@tab all
 glove_6b50d = TokenEmbedding('glove.6b.50d')
 ```
 
 输出词表大小。词表包含400000个词（词元）和一个特殊的未知词元。
 
-```{.python .input}
+```python
 #@tab all
 len(glove_6b50d)
 ```
 
 我们可以得到词表中一个单词的索引，反之亦然。
 
-```{.python .input}
+```python
 #@tab all
 glove_6b50d.token_to_idx['beautiful'], glove_6b50d.idx_to_token[3367]
 ```
@@ -121,7 +121,7 @@ glove_6b50d.token_to_idx['beautiful'], glove_6b50d.idx_to_token[3367]
 
 与 :numref:`subsec_apply-word-embed`类似，为了根据词向量之间的余弦相似性为输入词查找语义相似的词，我们实现了以下`knn`（$k$近邻）函数。
 
-```{.python .input}
+```python
 def knn(W, x, k):
     # 增加1e-9以获得数值稳定性
     cos = np.dot(W, x.reshape(-1,)) / (
@@ -130,7 +130,7 @@ def knn(W, x, k):
     return topk, [cos[int(i)] for i in topk]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def knn(W, x, k):
     # 增加1e-9以获得数值稳定性
@@ -141,7 +141,7 @@ def knn(W, x, k):
     return topk, [cos[int(i)] for i in topk]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def knn(W, x, k):
     # 增加1e-9以获得数值稳定性
@@ -154,7 +154,7 @@ def knn(W, x, k):
 
 然后，我们使用`TokenEmbedding`的实例`embed`中预训练好的词向量来搜索相似的词。
 
-```{.python .input}
+```python
 #@tab all
 def get_similar_tokens(query_token, k, embed):
     topk, cos = knn(embed.idx_to_vec, embed[[query_token]], k + 1)
@@ -164,19 +164,19 @@ def get_similar_tokens(query_token, k, embed):
 
 `glove_6b50d`中预训练词向量的词表包含400000个词和一个特殊的未知词元。排除输入词和未知词元后，我们在词表中找到与“chip”一词语义最相似的三个词。
 
-```{.python .input}
+```python
 #@tab all
 get_similar_tokens('chip', 3, glove_6b50d)
 ```
 
 下面输出与“baby”和“beautiful”相似的词。
 
-```{.python .input}
+```python
 #@tab all
 get_similar_tokens('baby', 3, glove_6b50d)
 ```
 
-```{.python .input}
+```python
 #@tab all
 get_similar_tokens('beautiful', 3, glove_6b50d)
 ```
@@ -192,7 +192,7 @@ get_similar_tokens('beautiful', 3, glove_6b50d)
 为了完成这个类比，我们将找到一个词，
 其向量与$\text{vec}(c)+\text{vec}(b)-\text{vec}(a)$的结果最相似。
 
-```{.python .input}
+```python
 #@tab all
 def get_analogy(token_a, token_b, token_c, embed):
     vecs = embed[[token_a, token_b, token_c]]
@@ -203,7 +203,7 @@ def get_analogy(token_a, token_b, token_c, embed):
 
 让我们使用加载的词向量来验证“male-female”类比。
 
-```{.python .input}
+```python
 #@tab all
 get_analogy('man', 'woman', 'son', glove_6b50d)
 ```
@@ -212,21 +212,21 @@ get_analogy('man', 'woman', 'son', glove_6b50d)
 “beijing” : “china” :: “tokyo” : “japan”。
 这说明了预训练词向量中的语义。
 
-```{.python .input}
+```python
 #@tab all
 get_analogy('beijing', 'china', 'tokyo', glove_6b50d)
 ```
 
 另外，对于“bad” : “worst” :: “big” : “biggest”等“形容词-形容词最高级”的比喻，预训练词向量可以捕捉到句法信息。
 
-```{.python .input}
+```python
 #@tab all
 get_analogy('bad', 'worst', 'big', glove_6b50d)
 ```
 
 为了演示在预训练词向量中捕捉到的过去式概念，我们可以使用“现在式-过去式”的类比来测试句法：“do” : “did” :: “go” : “went”。
 
-```{.python .input}
+```python
 #@tab all
 get_analogy('do', 'did', 'go', glove_6b50d)
 ```

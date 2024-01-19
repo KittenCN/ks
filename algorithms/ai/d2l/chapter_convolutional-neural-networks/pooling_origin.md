@@ -99,21 +99,21 @@ in :numref:`sec_conv_layer`.
 However, here we have no kernel, computing the output
 as either the maximum or the average of each region in the input.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def pool2d(X, pool_size, mode='max'):
     p_h, p_w = pool_size
@@ -127,7 +127,7 @@ def pool2d(X, pool_size, mode='max'):
     return Y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -145,7 +145,7 @@ def pool2d(X, pool_size, mode='max'):
 
 We can construct the input tensor `X` in :numref:`fig_pooling` to validate the output of the two-dimensional maximum pooling layer.
 
-```{.python .input}
+```python
 #@tab all
 X = d2l.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0], [6.0, 7.0, 8.0]])
 pool2d(X, (2, 2))
@@ -153,7 +153,7 @@ pool2d(X, (2, 2))
 
 Also, we experiment with the average pooling layer.
 
-```{.python .input}
+```python
 #@tab all
 pool2d(X, (2, 2), 'avg')
 ```
@@ -169,13 +169,13 @@ in pooling layers via the built-in two-dimensional maximum pooling layer from th
 We first construct an input tensor `X` whose shape has four dimensions,
 where the number of examples and number of channels are both 1.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 X = d2l.reshape(d2l.arange(16, dtype=d2l.float32), (1, 1, 4, 4))
 X
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = d2l.reshape(d2l.arange(16, dtype=d2l.float32), (1, 4, 4, 1))
 X
@@ -186,20 +186,20 @@ have the same shape.
 Below, we use a pooling window of shape `(3, 3)`,
 so we get a stride shape of `(3, 3)` by default.
 
-```{.python .input}
+```python
 pool2d = nn.MaxPool2D(3)
 # Because there are no model parameters in the pooling layer, we do not need
 # to call the parameter initialization function
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 pool2d = nn.MaxPool2d(3)
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 pool2d = tf.keras.layers.MaxPool2D(pool_size=[3, 3])
 pool2d(X)
@@ -207,18 +207,18 @@ pool2d(X)
 
 The stride and padding can be manually specified.
 
-```{.python .input}
+```python
 pool2d = nn.MaxPool2D(3, padding=1, strides=2)
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 pool2d = nn.MaxPool2d(3, padding=1, stride=2)
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 pool2d = tf.keras.layers.MaxPool2D(pool_size=[3, 3], padding='same',
                                    strides=2)
@@ -228,18 +228,18 @@ pool2d(X)
 Of course, we can specify an arbitrary rectangular pooling window
 and specify the padding and stride for height and width, respectively.
 
-```{.python .input}
+```python
 pool2d = nn.MaxPool2D((2, 3), padding=(1, 2), strides=(2, 3))
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 pool2d = nn.MaxPool2d((2, 3), padding=(1, 1), stride=(2, 3))
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 pool2d = tf.keras.layers.MaxPool2D(pool_size=[2, 3], padding='same',
                                    strides=(2, 3))
@@ -257,31 +257,31 @@ is the same as the number of input channels.
 Below, we will concatenate tensors `X` and `X + 1`
 on the channel dimension to construct an input with 2 channels.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 X = d2l.concat((X, X + 1), 1)
 X
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.reshape(tf.stack([X, X+1], 0), (1, 2, 4, 4))
 ```
 
 As we can see, the number of output channels is still 2 after pooling.
 
-```{.python .input}
+```python
 pool2d = nn.MaxPool2D(3, padding=1, strides=2)
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 pool2d = nn.MaxPool2d(3, padding=1, stride=2)
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 pool2d = tf.keras.layers.MaxPool2D(3, padding='same', strides=2)
 pool2d(X)

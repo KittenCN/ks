@@ -26,7 +26,7 @@ you need to register a Kaggle account.
 :width:`600px`
 :label:`fig_kaggle_cifar10`
 
-```{.python .input}
+```python
 import collections
 from d2l import mxnet as d2l
 import math
@@ -39,7 +39,7 @@ import shutil
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import collections
 from d2l import torch as d2l
@@ -88,7 +88,7 @@ To make it easier to get started, we provide a small-scale sample of the dataset
 contains the first 1000 training images and 5 random testing images.
 To use the full dataset of the Kaggle competition, you need to set the following `demo` variable to `False`.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['cifar10_tiny'] = (d2l.DATA_URL + 'kaggle_cifar10_tiny.zip',
@@ -111,7 +111,7 @@ Let us first read the labels from the csv file.
 The following function returns a dictionary that maps
 the non-extension part of the filename to its label.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def read_csv_labels(fname):
@@ -138,7 +138,7 @@ there will be 45000 images used for training in the path `train_valid_test/train
 while the other 5000 images will be split out
 as validation set in the path `train_valid_test/valid`. After organizing the dataset, images of the same class will be placed under the same folder.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def copyfile(filename, target_dir):
@@ -171,7 +171,7 @@ def reorg_train_valid(data_dir, labels, valid_ratio):
 
 The `reorg_test` function below organizes the testing set for data loading during prediction.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def reorg_test(data_dir):
@@ -184,7 +184,7 @@ def reorg_test(data_dir):
 Finally, we use a function to invoke
 the `read_csv_labels`, `reorg_train_valid`, and `reorg_test` functions defined above.
 
-```{.python .input}
+```python
 #@tab all
 def reorg_cifar10_data(data_dir, valid_ratio):
     labels = read_csv_labels(os.path.join(data_dir, 'trainLabels.csv'))
@@ -198,7 +198,7 @@ the complete dataset of the Kaggle competition,
 `batch_size` should be set to a larger integer, such as 128.
 We split out 10% of the training examples as the validation set for tuning hyperparameters.
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 4 if demo else 128
 valid_ratio = 0.1
@@ -211,7 +211,7 @@ We use image augmentation to address overfitting.
 For example, images can be flipped horizontally at random during training.
 We can also perform standardization for the three RGB channels of color images. Below lists some of these operations that you can tweak.
 
-```{.python .input}
+```python
 transform_train = gluon.data.vision.transforms.Compose([
     # Scale the image up to a square of 40 pixels in both height and width
     gluon.data.vision.transforms.Resize(40),
@@ -228,7 +228,7 @@ transform_train = gluon.data.vision.transforms.Compose([
                                            [0.2023, 0.1994, 0.2010])])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 transform_train = torchvision.transforms.Compose([
     # Scale the image up to a square of 40 pixels in both height and width
@@ -251,14 +251,14 @@ we only perform standardization on images
 so as to
 remove randomness in the evaluation results.
 
-```{.python .input}
+```python
 transform_test = gluon.data.vision.transforms.Compose([
     gluon.data.vision.transforms.ToTensor(),
     gluon.data.vision.transforms.Normalize([0.4914, 0.4822, 0.4465],
                                            [0.2023, 0.1994, 0.2010])])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 transform_test = torchvision.transforms.Compose([
     torchvision.transforms.ToTensor(),
@@ -270,14 +270,14 @@ transform_test = torchvision.transforms.Compose([
 
 Next, we read the organized dataset consisting of raw image files. Each example includes an image and a label.
 
-```{.python .input}
+```python
 train_ds, valid_ds, train_valid_ds, test_ds = [
     gluon.data.vision.ImageFolderDataset(
         os.path.join(data_dir, 'train_valid_test', folder))
     for folder in ['train', 'valid', 'train_valid', 'test']]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train_ds, train_valid_ds = [torchvision.datasets.ImageFolder(
     os.path.join(data_dir, 'train_valid_test', folder),
@@ -296,7 +296,7 @@ no randomness from image augmentation should be introduced.
 Before final prediction,
 we train the model on the combined training set and validation set to make full use of all the labeled data.
 
-```{.python .input}
+```python
 train_iter, train_valid_iter = [gluon.data.DataLoader(
     dataset.transform_first(transform_train), batch_size, shuffle=True,
     last_batch='discard') for dataset in (train_ds, train_valid_ds)]
@@ -310,7 +310,7 @@ test_iter = gluon.data.DataLoader(
     last_batch='keep')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train_iter, train_valid_iter = [torch.utils.data.DataLoader(
     dataset, batch_size, shuffle=True, drop_last=True)
@@ -332,7 +332,7 @@ slightly different from the implementation described in
 This is for improving computational efficiency.
 :end_tab:
 
-```{.python .input}
+```python
 class Residual(nn.HybridBlock):
     def __init__(self, num_channels, use_1x1conv=False, strides=1, **kwargs):
         super(Residual, self).__init__(**kwargs)
@@ -359,7 +359,7 @@ class Residual(nn.HybridBlock):
 Next, we define the ResNet-18 model.
 :end_tab:
 
-```{.python .input}
+```python
 def resnet18(num_classes):
     net = nn.HybridSequential()
     net.add(nn.Conv2D(64, kernel_size=3, strides=1, padding=1),
@@ -391,7 +391,7 @@ We define the ResNet-18 model described in
 :numref:`sec_resnet`.
 :end_tab:
 
-```{.python .input}
+```python
 def get_net(devices):
     num_classes = 10
     net = resnet18(num_classes)
@@ -401,7 +401,7 @@ def get_net(devices):
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_net():
     num_classes = 10
@@ -416,7 +416,7 @@ loss = nn.CrossEntropyLoss(reduction="none")
 We will select models and tune hyperparameters according to the model's performance on the validation set. 
 In the following, we define the model training function `train`.
 
-```{.python .input}
+```python
 def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           lr_decay):
     trainer = gluon.Trainer(net.collect_params(), 'sgd',
@@ -454,7 +454,7 @@ def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           f'on {str(devices)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           lr_decay):
@@ -501,7 +501,7 @@ For example, we can increase the number of epochs.
 When `lr_period` and `lr_decay` are set to 50 and 0.1, respectively, the learning rate of the optimization algorithm will be multiplied by 0.1 after every 50 epochs. Just for demonstration,
 we only train 5 epochs here.
 
-```{.python .input}
+```python
 devices, num_epochs, lr, wd = d2l.try_all_gpus(), 5, 0.1, 5e-4
 lr_period, lr_decay, net = 50, 0.1, get_net(devices)
 net.hybridize()
@@ -509,7 +509,7 @@ train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
       lr_decay)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 devices, num_epochs, lr, wd = d2l.try_all_gpus(), 5, 0.1, 5e-4
 lr_period, lr_decay, net = 50, 0.1, get_net()
@@ -522,7 +522,7 @@ train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
 After obtaining a promising model with hyperparameters,
 we use all the labeled data (including the validation set) to retrain the model and classify the testing set.
 
-```{.python .input}
+```python
 net, preds = get_net(devices), []
 net.hybridize()
 train(net, train_valid_iter, None, num_epochs, lr, wd, devices, lr_period,
@@ -538,7 +538,7 @@ df['label'] = df['label'].apply(lambda x: train_valid_ds.synsets[x])
 df.to_csv('submission.csv', index=False)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net, preds = get_net(), []
 train(net, train_valid_iter, None, num_epochs, lr, wd, devices, lr_period,

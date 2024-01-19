@@ -65,7 +65,7 @@ we introduce two popular scoring functions
 that we will use to develop more
 sophisticated attention mechanisms later.
 
-```{.python .input}
+```python
 import math
 from d2l import mxnet as d2l
 from mxnet import np, npx
@@ -73,7 +73,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import math
@@ -104,7 +104,7 @@ in the following `masked_softmax` function,
 where any value beyond the valid length
 is masked as zero.
 
-```{.python .input}
+```python
 #@save
 def masked_softmax(X, valid_lens):
     """Perform softmax operation by masking elements on the last axis."""
@@ -124,7 +124,7 @@ def masked_softmax(X, valid_lens):
         return npx.softmax(X).reshape(shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def masked_softmax(X, valid_lens):
@@ -153,11 +153,11 @@ As a result of the masked softmax operation,
 values beyond the valid lengths
 are all masked as zero.
 
-```{.python .input}
+```python
 masked_softmax(np.random.uniform(size=(2, 2, 4)), d2l.tensor([2, 3]))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 masked_softmax(torch.rand(2, 2, 4), torch.tensor([2, 3]))
 ```
@@ -167,12 +167,12 @@ use a two-dimensional tensor
 to specify valid lengths
 for every row in each matrix example.
 
-```{.python .input}
+```python
 masked_softmax(np.random.uniform(size=(2, 2, 4)),
                d2l.tensor([[1, 3], [2, 4]]))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 masked_softmax(torch.rand(2, 2, 4), d2l.tensor([[1, 3], [2, 4]]))
 ```
@@ -202,7 +202,7 @@ By using $\tanh$ as the activation function and disabling
 bias terms,
 we implement additive attention in the following.
 
-```{.python .input}
+```python
 #@save
 class AdditiveAttention(nn.Block):
     """Additive attention."""
@@ -234,7 +234,7 @@ class AdditiveAttention(nn.Block):
         return npx.batch_dot(self.dropout(self.attention_weights), values)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class AdditiveAttention(nn.Module):
@@ -272,7 +272,7 @@ and ($2$, $10$, $4$), respectively.
 The attention pooling output
 has a shape of (batch size, number of steps for queries, feature size for values).
 
-```{.python .input}
+```python
 queries, keys = d2l.normal(0, 1, (2, 1, 20)), d2l.ones((2, 10, 2))
 # The two value matrices in the `values` minibatch are identical
 values = np.arange(40).reshape(1, 10, 4).repeat(2, axis=0)
@@ -283,7 +283,7 @@ attention.initialize()
 attention(queries, keys, values, valid_lens)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 queries, keys = d2l.normal(0, 1, (2, 1, 20)), d2l.ones((2, 10, 2))
 # The two value matrices in the `values` minibatch are identical
@@ -302,7 +302,7 @@ since every key is the same in this example,
 the attention weights are uniform,
 determined by the specified valid lengths.
 
-```{.python .input}
+```python
 #@tab all
 d2l.show_heatmaps(d2l.reshape(attention.attention_weights, (1, 1, 2, 10)),
                   xlabel='Keys', ylabel='Queries')
@@ -351,7 +351,7 @@ $$ \mathrm{softmax}\left(\frac{\mathbf Q \mathbf K^\top }{\sqrt{d}}\right) \math
 
 In the following implementation of the scaled dot product attention, we use dropout for model regularization.
 
-```{.python .input}
+```python
 #@save
 class DotProductAttention(nn.Block):
     """Scaled dot product attention."""
@@ -372,7 +372,7 @@ class DotProductAttention(nn.Block):
         return npx.batch_dot(self.dropout(self.attention_weights), values)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class DotProductAttention(nn.Module):
@@ -401,14 +401,14 @@ For the dot product operation,
 we make the feature size of queries
 the same as that of keys.
 
-```{.python .input}
+```python
 queries = d2l.normal(0, 1, (2, 1, 2))
 attention = DotProductAttention(dropout=0.5)
 attention.initialize()
 attention(queries, keys, values, valid_lens)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 queries = d2l.normal(0, 1, (2, 1, 2))
 attention = DotProductAttention(dropout=0.5)
@@ -421,7 +421,7 @@ since `keys` contains the same element
 that cannot be differentiated by any query,
 uniform attention weights are obtained.
 
-```{.python .input}
+```python
 #@tab all
 d2l.show_heatmaps(d2l.reshape(attention.attention_weights, (1, 1, 2, 10)),
                   xlabel='Keys', ylabel='Queries')

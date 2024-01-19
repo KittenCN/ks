@@ -4,21 +4,21 @@
 As you might expect, by relying on the high-level APIs,
 we can implement MLPs even more concisely.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, init, npx
 from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -37,14 +37,14 @@ which contains 256 hidden units
 and applies the ReLU activation function.
 The second is our output layer.
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nn.Dense(256, activation='relu'),
         nn.Dense(10))
 net.initialize(init.Normal(sigma=0.01))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(nn.Flatten(),
                     nn.Linear(784, 256),
@@ -58,7 +58,7 @@ def init_weights(m):
 net.apply(init_weights)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = tf.keras.models.Sequential([
     tf.keras.layers.Flatten(),
@@ -72,27 +72,27 @@ This modularity enables us to separate
 matters concerning the model architecture
 from orthogonal considerations.
 
-```{.python .input}
+```python
 batch_size, lr, num_epochs = 256, 0.1, 10
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': lr})
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 batch_size, lr, num_epochs = 256, 0.1, 10
 loss = nn.CrossEntropyLoss()
 trainer = torch.optim.SGD(net.parameters(), lr=lr)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 batch_size, lr, num_epochs = 256, 0.1, 10
 loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 trainer = tf.keras.optimizers.SGD(learning_rate=lr)
 ```
 
-```{.python .input}
+```python
 #@tab all
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
 d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)

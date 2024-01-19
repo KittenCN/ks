@@ -11,7 +11,7 @@
 也被称为*内部注意力*（intra-attention） :cite:`Cheng.Dong.Lapata.2016,Parikh.Tackstrom.Das.ea.2016,Paulus.Xiong.Socher.2017`。
 本节将使用自注意力进行序列编码，以及如何使用序列的顺序作为补充信息。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 import math
 from mxnet import autograd, np, npx
@@ -19,7 +19,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import math
@@ -27,14 +27,14 @@ import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import numpy as np
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import math
@@ -58,13 +58,13 @@ $$\mathbf{y}_i = f(\mathbf{x}_i, (\mathbf{x}_1, \mathbf{x}_1), \ldots, (\mathbf{
 张量的形状为（批量大小，时间步的数目或词元序列的长度，$d$）。
 输出与输入的张量形状相同。
 
-```{.python .input}
+```python
 num_hiddens, num_heads = 100, 5
 attention = d2l.MultiHeadAttention(num_hiddens, num_heads, 0.5)
 attention.initialize()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_hiddens, num_heads = 100, 5
 attention = d2l.MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
@@ -72,14 +72,14 @@ attention = d2l.MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
 attention.eval()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_hiddens, num_heads = 100, 5
 attention = d2l.MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
                                    num_hiddens, num_heads, 0.5)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_hiddens, num_heads = 100, 5
 attention = d2l.MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
@@ -87,14 +87,14 @@ attention = d2l.MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
 attention.eval()
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 batch_size, num_queries, valid_lens = 2, 4, d2l.tensor([3, 2])
 X = d2l.ones((batch_size, num_queries, num_hiddens))
 attention(X, X, X, valid_lens).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 batch_size, num_queries, valid_lens = 2, 4, tf.constant([3, 2])
 X = tf.ones((batch_size, num_queries, num_hiddens))
@@ -162,7 +162,7 @@ $$\begin{aligned} p_{i, 2j} &= \sin\left(\frac{i}{10000^{2j/d}}\right),\\p_{i, 2
 乍一看，这种基于三角函数的设计看起来很奇怪。
 在解释这个设计之前，让我们先在下面的`PositionalEncoding`类中实现它。
 
-```{.python .input}
+```python
 #@save
 class PositionalEncoding(nn.Block):
     """位置编码"""
@@ -181,7 +181,7 @@ class PositionalEncoding(nn.Block):
         return self.dropout(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class PositionalEncoding(nn.Module):
@@ -202,7 +202,7 @@ class PositionalEncoding(nn.Module):
         return self.dropout(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 class PositionalEncoding(tf.keras.layers.Layer):
@@ -223,7 +223,7 @@ class PositionalEncoding(tf.keras.layers.Layer):
         return self.dropout(X, **kwargs)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class PositionalEncoding(nn.Layer):
@@ -249,7 +249,7 @@ class PositionalEncoding(nn.Layer):
 从下面的例子中可以看到位置嵌入矩阵的第$6$列和第$7$列的频率高于第$8$列和第$9$列。
 第$6$列和第$7$列之间的偏移量（第$8$列和第$9$列相同）是由于正弦函数和余弦函数的交替。
 
-```{.python .input}
+```python
 encoding_dim, num_steps = 32, 60
 pos_encoding = PositionalEncoding(encoding_dim, 0)
 pos_encoding.initialize()
@@ -259,7 +259,7 @@ d2l.plot(d2l.arange(num_steps), P[0, :, 6:10].T, xlabel='Row (position)',
          figsize=(6, 2.5), legend=["Col %d" % d for d in d2l.arange(6, 10)])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 encoding_dim, num_steps = 32, 60
 pos_encoding = PositionalEncoding(encoding_dim, 0)
@@ -270,7 +270,7 @@ d2l.plot(d2l.arange(num_steps), P[0, :, 6:10].T, xlabel='Row (position)',
          figsize=(6, 2.5), legend=["Col %d" % d for d in d2l.arange(6, 10)])
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 encoding_dim, num_steps = 32, 60
 pos_encoding = PositionalEncoding(encoding_dim, 0)
@@ -280,7 +280,7 @@ d2l.plot(np.arange(num_steps), P[0, :, 6:10].T, xlabel='Row (position)',
          figsize=(6, 2.5), legend=["Col %d" % d for d in np.arange(6, 10)])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 encoding_dim, num_steps = 32, 60
 pos_encoding = PositionalEncoding(encoding_dim, 0)
@@ -298,7 +298,7 @@ d2l.plot(paddle.arange(num_steps), P[0, :, 6:10].T, xlabel='Row (position)',
 正如所看到的，每个数字、每两个数字和每四个数字上的比特值
 在第一个最低位、第二个最低位和第三个最低位上分别交替。
 
-```{.python .input}
+```python
 #@tab all
 for i in range(8):
     print(f'{i}的二进制是：{i:>03b}')
@@ -308,27 +308,27 @@ for i in range(8):
 与下面的热图所示相似，只是位置编码通过使用三角函数[**在编码维度上降低频率**]。
 由于输出是浮点数，因此此类连续表示比二进制表示法更节省空间。
 
-```{.python .input}
+```python
 P = np.expand_dims(np.expand_dims(P[0, :, :], 0), 0)
 d2l.show_heatmaps(P, xlabel='Column (encoding dimension)',
                   ylabel='Row (position)', figsize=(3.5, 4), cmap='Blues')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 P = P[0, :, :].unsqueeze(0).unsqueeze(0)
 d2l.show_heatmaps(P, xlabel='Column (encoding dimension)',
                   ylabel='Row (position)', figsize=(3.5, 4), cmap='Blues')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 P = tf.expand_dims(tf.expand_dims(P[0, :, :], axis=0), axis=0)
 d2l.show_heatmaps(P, xlabel='Column (encoding dimension)',
                   ylabel='Row (position)', figsize=(3.5, 4), cmap='Blues')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 P = P[0, :, :].unsqueeze(0).unsqueeze(0)
 d2l.show_heatmaps(P, xlabel='Column (encoding dimension)',

@@ -21,7 +21,7 @@ formats may be processed in similar ways.
 
 Below we write the dataset row by row into a csv file.
 
-```{.python .input}
+```python
 #@tab all
 import os
 
@@ -39,7 +39,7 @@ To [**load the raw dataset from the created csv file**],
 we import the `pandas` package and invoke the `read_csv` function.
 This dataset has four rows and three columns, where each row describes the number of rooms ("NumRooms"), the alley type ("Alley"), and the price ("Price") of a house.
 
-```{.python .input}
+```python
 #@tab all
 # If pandas is not installed, just uncomment the following line:
 # !pip install pandas
@@ -61,7 +61,7 @@ where the former takes the first two columns while the latter only keeps the las
 For numerical values in `inputs` that are missing,
 we [**replace the "NaN" entries with the mean value of the same column.**]
 
-```{.python .input}
+```python
 #@tab all
 inputs, outputs = data.iloc[:, 0:2], data.iloc[:, 2]
 inputs = inputs.fillna(inputs.mean())
@@ -74,7 +74,7 @@ Since the "Alley" column only takes two types of categorical values "Pave" and "
 A row whose alley type is "Pave" will set values of "Alley_Pave" and "Alley_nan" to 1 and 0.
 A row with a missing alley type will set their values to 0 and 1.
 
-```{.python .input}
+```python
 #@tab all
 inputs = pd.get_dummies(inputs, dummy_na=True)
 print(inputs)
@@ -85,14 +85,14 @@ print(inputs)
 Now that [**all the entries in `inputs` and `outputs` are numerical, they can be converted to the tensor format.**]
 Once data are in this format, they can be further manipulated with those tensor functionalities that we have introduced in :numref:`sec_ndarray`.
 
-```{.python .input}
+```python
 from mxnet import np
 
 X, y = np.array(inputs.values), np.array(outputs.values)
 X, y
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 
@@ -100,7 +100,7 @@ X, y = torch.tensor(inputs.values), torch.tensor(outputs.values)
 X, y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 

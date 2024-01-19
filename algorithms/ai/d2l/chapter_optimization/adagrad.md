@@ -118,7 +118,7 @@ $$f(\mathbf{x}) = 0.1 x_1^2 + 2 x_2^2.$$
 可以看到，自变量的迭代轨迹较平滑。
 但由于$\boldsymbol{s}_t$的累加效果使学习率不断衰减，自变量在迭代后期的移动幅度较小。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 import math
@@ -126,7 +126,7 @@ from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -134,7 +134,7 @@ import math
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -142,7 +142,7 @@ import math
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -152,7 +152,7 @@ import math
 import paddle
 ```
 
-```{.python .input}
+```python
 #@tab all
 def adagrad_2d(x1, x2, s1, s2):
     eps = 1e-6
@@ -173,7 +173,7 @@ d2l.show_trace_2d(f_2d, d2l.train_2d(adagrad_2d))
 我们将学习率提高到$2$，可以看到更好的表现。
 这已经表明，即使在无噪声的情况下，学习率的降低可能相当剧烈，我们需要确保参数能够适当地收敛。
 
-```{.python .input}
+```python
 #@tab all
 eta = 2
 d2l.show_trace_2d(f_2d, d2l.train_2d(adagrad_2d))
@@ -183,7 +183,7 @@ d2l.show_trace_2d(f_2d, d2l.train_2d(adagrad_2d))
 
 同动量法一样，AdaGrad算法需要对每个自变量维护同它一样形状的状态变量。
 
-```{.python .input}
+```python
 def init_adagrad_states(feature_dim):
     s_w = d2l.zeros((feature_dim, 1))
     s_b = d2l.zeros(1)
@@ -196,7 +196,7 @@ def adagrad(params, states, hyperparams):
         p[:] -= hyperparams['lr'] * p.grad / np.sqrt(s + eps)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_adagrad_states(feature_dim):
     s_w = d2l.zeros((feature_dim, 1))
@@ -212,7 +212,7 @@ def adagrad(params, states, hyperparams):
         p.grad.data.zero_()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def init_adagrad_states(feature_dim):
     s_w = tf.Variable(d2l.zeros((feature_dim, 1)))
@@ -226,7 +226,7 @@ def adagrad(params, grads, states, hyperparams):
         p[:].assign(p - hyperparams['lr'] * g / tf.math.sqrt(s + eps))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def init_adagrad_states(feature_dim):
     s_w = d2l.zeros((feature_dim, 1))
@@ -247,7 +247,7 @@ def adagrad(params, states, hyperparams):
 
 与 :numref:`sec_minibatch_sgd`一节中的实验相比，这里使用更大的学习率来训练模型。
 
-```{.python .input}
+```python
 #@tab all
 data_iter, feature_dim = d2l.get_data_ch11(batch_size=10)
 d2l.train_ch11(adagrad, init_adagrad_states(feature_dim),
@@ -258,23 +258,23 @@ d2l.train_ch11(adagrad, init_adagrad_states(feature_dim),
 
 我们可直接使用深度学习框架中提供的AdaGrad算法来训练模型。
 
-```{.python .input}
+```python
 d2l.train_concise_ch11('adagrad', {'learning_rate': 0.1}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 trainer = torch.optim.Adagrad
 d2l.train_concise_ch11(trainer, {'lr': 0.1}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 trainer = tf.keras.optimizers.Adagrad
 d2l.train_concise_ch11(trainer, {'learning_rate' : 0.1}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 trainer = paddle.optimizer.Adagrad
 d2l.train_concise_ch11(trainer, {'learning_rate': 0.1}, data_iter)

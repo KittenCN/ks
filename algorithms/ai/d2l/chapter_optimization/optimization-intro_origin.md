@@ -24,7 +24,7 @@ To accomplish the latter we need to pay
 attention to overfitting in addition to using the optimization algorithm to
 reduce the training error.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mpl_toolkits import mplot3d
@@ -32,7 +32,7 @@ from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -41,7 +41,7 @@ from mpl_toolkits import mplot3d
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -66,7 +66,7 @@ and the empirical risk function `g`.
 Suppose that we have only a finite amount of training data.
 As a result, here `g` is less smooth than `f`.
 
-```{.python .input}
+```python
 #@tab all
 def f(x):
     return x * d2l.cos(np.pi * x)
@@ -77,7 +77,7 @@ def g(x):
 
 The graph below illustrates that the minimum of the empirical risk on a training dataset may be at a different location from the minimum of the risk (generalization error).
 
-```{.python .input}
+```python
 #@tab all
 def annotate(text, xy, xytext):  #@save
     d2l.plt.gca().annotate(text, xy=xy, xytext=xytext,
@@ -121,7 +121,7 @@ $$f(x) = x \cdot \text{cos}(\pi x) \text{ for } -1.0 \leq x \leq 2.0,$$
 
 we can approximate the local minimum and global minimum of this function.
 
-```{.python .input}
+```python
 #@tab all
 x = d2l.arange(-1.0, 2.0, 0.01)
 d2l.plot(x, [f(x), ], 'x', 'f(x)')
@@ -140,7 +140,7 @@ minibatch stochastic gradient descent where the natural variation of gradients o
 Besides local minima, saddle points are another reason for gradients to vanish. A *saddle point* is any location where all gradients of a function vanish but which is neither a global nor a local minimum. 
 Consider the function $f(x) = x^3$. Its first and second derivative vanish for $x=0$. Optimization might stall at this point, even though it is not a minimum.
 
-```{.python .input}
+```python
 #@tab all
 x = d2l.arange(-2.0, 2.0, 0.01)
 d2l.plot(x, [x**3], 'x', 'f(x)')
@@ -149,7 +149,7 @@ annotate('saddle point', (0, -0.2), (-0.52, -5.0))
 
 Saddle points in higher dimensions are even more insidious, as the example below shows. Consider the function $f(x, y) = x^2 - y^2$. It has its saddle point at $(0, 0)$. This is a maximum with respect to $y$ and a minimum with respect to $x$. Moreover, it *looks* like a saddle, which is where this mathematical property got its name.
 
-```{.python .input}
+```python
 #@tab all
 x, y = d2l.meshgrid(
     d2l.linspace(-1.0, 1.0, 101), d2l.linspace(-1.0, 1.0, 101))
@@ -187,7 +187,7 @@ For instance, assume that we want to minimize the function $f(x) = \tanh(x)$ and
 More specifically, $f'(x) = 1 - \tanh^2(x)$ and thus $f'(4) = 0.0013$.
 Consequently, optimization will get stuck for a long time before we make progress. This turns out to be one of the reasons that training deep learning models was quite tricky prior to the introduction of the ReLU activation function.
 
-```{.python .input}
+```python
 #@tab all
 x = d2l.arange(-2.0, 5.0, 0.01)
 d2l.plot(x, [d2l.tanh(x)], 'x', 'f(x)')

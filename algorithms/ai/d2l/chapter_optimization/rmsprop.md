@@ -40,7 +40,7 @@ $$
 因此，权重总和标准化为$1$且观测值的半衰期为$\gamma^{-1}$。
 让我们图像化各种数值的$\gamma$在过去40个时间步长的权重。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 import math
@@ -49,21 +49,21 @@ from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 import math
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 import math
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -72,7 +72,7 @@ import paddle
 import math
 ```
 
-```{.python .input}
+```python
 #@tab all
 d2l.set_figsize()
 gammas = [0.95, 0.9, 0.8, 0.7]
@@ -88,7 +88,7 @@ d2l.plt.xlabel('time');
 回想在 :numref:`sec_adagrad`一节中，当我们使用学习率为0.4的Adagrad算法时，变量在算法的后期阶段移动非常缓慢，因为学习率衰减太快。
 RMSProp算法中不会发生这种情况，因为$\eta$是单独控制的。
 
-```{.python .input}
+```python
 #@tab all
 def rmsprop_2d(x1, x2, s1, s2):
     g1, g2, eps = 0.2 * x1, 4 * x2, 1e-6
@@ -107,7 +107,7 @@ d2l.show_trace_2d(f_2d, d2l.train_2d(rmsprop_2d))
 
 接下来，我们在深度网络中实现RMSProp算法。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def init_rmsprop_states(feature_dim):
     s_w = d2l.zeros((feature_dim, 1))
@@ -115,7 +115,7 @@ def init_rmsprop_states(feature_dim):
     return (s_w, s_b)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def init_rmsprop_states(feature_dim):
     s_w = d2l.zeros((feature_dim, 1))
@@ -123,7 +123,7 @@ def init_rmsprop_states(feature_dim):
     return (s_w, s_b)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def init_rmsprop_states(feature_dim):
     s_w = tf.Variable(d2l.zeros((feature_dim, 1)))
@@ -131,7 +131,7 @@ def init_rmsprop_states(feature_dim):
     return (s_w, s_b)
 ```
 
-```{.python .input}
+```python
 def rmsprop(params, states, hyperparams):
     gamma, eps = hyperparams['gamma'], 1e-6
     for p, s in zip(params, states):
@@ -139,7 +139,7 @@ def rmsprop(params, states, hyperparams):
         p[:] -= hyperparams['lr'] * p.grad / np.sqrt(s + eps)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def rmsprop(params, states, hyperparams):
     gamma, eps = hyperparams['gamma'], 1e-6
@@ -150,7 +150,7 @@ def rmsprop(params, states, hyperparams):
         p.grad.data.zero_()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def rmsprop(params, grads, states, hyperparams):
     gamma, eps = hyperparams['gamma'], 1e-6
@@ -159,7 +159,7 @@ def rmsprop(params, grads, states, hyperparams):
         p[:].assign(p - hyperparams['lr'] * g / tf.math.sqrt(s + eps))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def rmsprop(params, states, hyperparams):
     a = []
@@ -176,7 +176,7 @@ def rmsprop(params, states, hyperparams):
 我们将初始学习率设置为0.01，加权项$\gamma$设置为0.9。
 也就是说，$\mathbf{s}$累加了过去的$1/(1-\gamma) = 10$次平方梯度观测值的平均值。
 
-```{.python .input}
+```python
 #@tab all
 data_iter, feature_dim = d2l.get_data_ch11(batch_size=10)
 d2l.train_ch11(rmsprop, init_rmsprop_states(feature_dim),
@@ -187,26 +187,26 @@ d2l.train_ch11(rmsprop, init_rmsprop_states(feature_dim),
 
 我们可直接使用深度学习框架中提供的RMSProp算法来训练模型。
 
-```{.python .input}
+```python
 d2l.train_concise_ch11('rmsprop', {'learning_rate': 0.01, 'gamma1': 0.9},
                        data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 trainer = torch.optim.RMSprop
 d2l.train_concise_ch11(trainer, {'lr': 0.01, 'alpha': 0.9},
                        data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 trainer = tf.keras.optimizers.RMSprop
 d2l.train_concise_ch11(trainer, {'learning_rate': 0.01, 'rho': 0.9},
                        data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 trainer = paddle.optimizer.RMSProp
 d2l.train_concise_ch11(trainer, {'learning_rate': 0.01, 'rho': 0.9},

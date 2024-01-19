@@ -98,25 +98,25 @@
 实际上，注意力汇聚得到的是加权平均的总和值，
 其中权重是在给定的查询和不同的键之间计算得出的。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -128,7 +128,7 @@ import paddle
 其输入`matrices`的形状是
 （要显示的行数，要显示的列数，查询的数目，键的数目）。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def show_heatmaps(matrices, xlabel, ylabel, titles=None, figsize=(2.5, 2.5),
@@ -153,7 +153,7 @@ def show_heatmaps(matrices, xlabel, ylabel, titles=None, figsize=(2.5, 2.5),
 下面使用一个简单的例子进行演示。
 在本例子中，仅当查询和键相同时，注意力权重为1，否则为0。
 
-```{.python .input}
+```python
 #@tab all
 attention_weights = d2l.reshape(d2l.eye(10), (1, 1, 10, 10))
 show_heatmaps(attention_weights, xlabel='Keys', ylabel='Queries')

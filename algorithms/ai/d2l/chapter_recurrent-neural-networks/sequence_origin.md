@@ -98,7 +98,7 @@ let us try this out in practice.
 We begin by generating some data.
 To keep things simple we generate our sequence data by using a sine function with some additive noise for time steps $1, 2, \ldots, 1000$.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, np, npx, gluon, init
@@ -106,7 +106,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -114,14 +114,14 @@ import torch
 import torch.nn as nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 T = 1000  # Generate a total of 1000 points
 time = d2l.arange(1, T + 1, dtype=d2l.float32)
@@ -129,7 +129,7 @@ x = d2l.sin(0.01 * time) + d2l.normal(0, 0.2, (T,))
 d2l.plot(time, [x], 'time', 'x', xlim=[1, 1000], figsize=(6, 3))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 T = 1000  # Generate a total of 1000 points
 time = d2l.arange(1, T + 1, dtype=d2l.float32)
@@ -145,7 +145,7 @@ is to discard those few terms.
 Alternatively we could pad the sequence with zeros.
 Here we only use the first 600 feature-label pairs for training.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 tau = 4
 features = d2l.zeros((T - tau, tau))
@@ -154,7 +154,7 @@ for i in range(tau):
 labels = d2l.reshape(x[tau:], (-1, 1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 tau = 4
 features = tf.Variable(d2l.zeros((T - tau, tau)))
@@ -163,7 +163,7 @@ for i in range(tau):
 labels = d2l.reshape(x[tau:], (-1, 1))
 ```
 
-```{.python .input}
+```python
 #@tab all
 batch_size, n_train = 16, 600
 # Only the first `n_train` examples are used for training
@@ -174,7 +174,7 @@ train_iter = d2l.load_array((features[:n_train], labels[:n_train]),
 Here we keep the architecture fairly simple:
 just an MLP with two fully-connected layers, ReLU activation, and square loss.
 
-```{.python .input}
+```python
 # A simple MLP
 def get_net():
     net = nn.Sequential()
@@ -187,7 +187,7 @@ def get_net():
 loss = gluon.loss.L2Loss()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # Function for initializing the weights of the network
 def init_weights(m):
@@ -206,7 +206,7 @@ def get_net():
 loss = nn.MSELoss()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # Vanilla MLP architecture
 def get_net():
@@ -225,7 +225,7 @@ Now we are ready to train the model. The code below is essentially identical to 
 such as :numref:`sec_linear_concise`.
 Thus, we will not delve into much detail.
 
-```{.python .input}
+```python
 def train(net, train_iter, loss, epochs, lr):
     trainer = gluon.Trainer(net.collect_params(), 'adam',
                             {'learning_rate': lr})
@@ -242,7 +242,7 @@ net = get_net()
 train(net, train_iter, loss, 5, 0.01)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(net, train_iter, loss, epochs, lr):
     trainer = torch.optim.Adam(net.parameters(), lr)
@@ -259,7 +259,7 @@ net = get_net()
 train(net, train_iter, loss, 5, 0.01)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def train(net, train_iter, loss, epochs, lr):
     trainer = tf.keras.optimizers.Adam()
@@ -283,7 +283,7 @@ train(net, train_iter, loss, 5, 0.01)
 Since the training loss is small, we would expect our model to work well. Let us see what this means in practice. The first thing to check is how well the model is able to predict what happens just in the next time step,
 namely the *one-step-ahead prediction*.
 
-```{.python .input}
+```python
 #@tab all
 onestep_preds = net(features)
 d2l.plot([time, time[tau:]], [d2l.numpy(x), d2l.numpy(onestep_preds)], 'time',
@@ -310,7 +310,7 @@ Generally, for an observed sequence up to $x_t$, its predicted output $\hat{x}_{
 In other words, we will have to use our own predictions to make multistep-ahead predictions.
 Let us see how well this goes.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 multistep_preds = d2l.zeros(T)
 multistep_preds[: n_train + tau] = x[: n_train + tau]
@@ -319,7 +319,7 @@ for i in range(n_train + tau, T):
         multistep_preds[i - tau: i].reshape(1, -1)), 1)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 multistep_preds = tf.Variable(d2l.zeros(T))
 multistep_preds[:n_train + tau].assign(x[:n_train + tau])
@@ -328,7 +328,7 @@ for i in range(n_train + tau, T):
         d2l.reshape(multistep_preds[i - tau: i], (1, -1))), ()))
 ```
 
-```{.python .input}
+```python
 #@tab all
 d2l.plot([time, time[tau:], time[n_train + tau:]],
          [d2l.numpy(x), d2l.numpy(onestep_preds),
@@ -346,12 +346,12 @@ Now the *input* for step 2 is perturbed by $\epsilon_1$, hence we suffer some er
 Let us take a closer look at the difficulties in $k$-step-ahead predictions
 by computing predictions on the entire sequence for $k = 1, 4, 16, 64$.
 
-```{.python .input}
+```python
 #@tab all
 max_steps = 64
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 features = d2l.zeros((T - tau - max_steps + 1, tau + max_steps))
 # Column `i` (`i` < `tau`) are observations from `x` for time steps from
@@ -365,7 +365,7 @@ for i in range(tau, tau + max_steps):
     features[:, i] = d2l.reshape(net(features[:, i - tau: i]), -1)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 features = tf.Variable(d2l.zeros((T - tau - max_steps + 1, tau + max_steps)))
 # Column `i` (`i` < `tau`) are observations from `x` for time steps from
@@ -379,7 +379,7 @@ for i in range(tau, tau + max_steps):
     features[:, i].assign(d2l.reshape(net((features[:, i - tau: i])), -1))
 ```
 
-```{.python .input}
+```python
 #@tab all
 steps = (1, 4, 16, 64)
 d2l.plot([time[tau + i - 1: T - max_steps + i] for i in steps],

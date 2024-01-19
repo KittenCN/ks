@@ -17,7 +17,7 @@
 
 首先，导入竞赛所需的包和模块。
 
-```{.python .input}
+```python
 import collections
 from d2l import mxnet as d2l
 import math
@@ -30,7 +30,7 @@ import shutil
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import collections
 from d2l import torch as d2l
@@ -43,7 +43,7 @@ import pandas as pd
 import shutil
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -82,7 +82,7 @@ import paddle.vision as paddlevision
 为了便于入门，[**我们提供包含前1000个训练图像和5个随机测试图像的数据集的小规模样本**]。
 要使用Kaggle竞赛的完整数据集，需要将以下`demo`变量设置为`False`。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['cifar10_tiny'] = (d2l.DATA_URL + 'kaggle_cifar10_tiny.zip',
@@ -102,7 +102,7 @@ else:
 我们需要整理数据集来训练和测试模型。
 首先，我们用以下函数读取CSV文件中的标签，它返回一个字典，该字典将文件名中不带扩展名的部分映射到其标签。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def read_csv_labels(fname):
@@ -125,7 +125,7 @@ print('# 类别 :', len(set(labels.values())))
 让我们以`valid_ratio=0.1`为例，由于原始的训练集有50000张图像，因此`train_valid_test/train`路径中将有45000张图像用于训练，而剩下5000张图像将作为路径`train_valid_test/valid`中的验证集。
 组织数据集后，同类别的图像将被放置在同一文件夹下。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def copyfile(filename, target_dir):
@@ -158,7 +158,7 @@ def reorg_train_valid(data_dir, labels, valid_ratio):
 
 下面的`reorg_test`函数用来[**在预测期间整理测试集，以方便读取**]。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def reorg_test(data_dir):
@@ -171,7 +171,7 @@ def reorg_test(data_dir):
 
 最后，我们使用一个函数来[**调用前面定义的函数**]`read_csv_labels`、`reorg_train_valid`和`reorg_test`。
 
-```{.python .input}
+```python
 #@tab all
 def reorg_cifar10_data(data_dir, valid_ratio):
     labels = read_csv_labels(os.path.join(data_dir, 'trainLabels.csv'))
@@ -183,7 +183,7 @@ def reorg_cifar10_data(data_dir, valid_ratio):
 在实际训练和测试中，应该使用Kaggle竞赛的完整数据集，并将`batch_size`设置为更大的整数，例如128。
 我们将10％的训练样本作为调整超参数的验证集。
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 32 if demo else 128
 valid_ratio = 0.1
@@ -196,7 +196,7 @@ reorg_cifar10_data(data_dir, valid_ratio)
 我们还可以对彩色图像的三个RGB通道执行标准化。
 下面，我们列出了其中一些可以调整的操作。
 
-```{.python .input}
+```python
 transform_train = gluon.data.vision.transforms.Compose([
     # 在高度和宽度上将图像放大到40像素的正方形
     gluon.data.vision.transforms.Resize(40),
@@ -212,7 +212,7 @@ transform_train = gluon.data.vision.transforms.Compose([
                                            [0.2023, 0.1994, 0.2010])])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 transform_train = torchvision.transforms.Compose([
     # 在高度和宽度上将图像放大到40像素的正方形
@@ -229,7 +229,7 @@ transform_train = torchvision.transforms.Compose([
                                      [0.2023, 0.1994, 0.2010])])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 transform_train = paddlevision.transforms.Compose([
     # 在高度和宽度上将图像放大到40像素的正方形
@@ -248,14 +248,14 @@ transform_train = paddlevision.transforms.Compose([
 
 在测试期间，我们只对图像执行标准化，以消除评估结果中的随机性。
 
-```{.python .input}
+```python
 transform_test = gluon.data.vision.transforms.Compose([
     gluon.data.vision.transforms.ToTensor(),
     gluon.data.vision.transforms.Normalize([0.4914, 0.4822, 0.4465],
                                            [0.2023, 0.1994, 0.2010])])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 transform_test = torchvision.transforms.Compose([
     torchvision.transforms.ToTensor(),
@@ -263,7 +263,7 @@ transform_test = torchvision.transforms.Compose([
                                      [0.2023, 0.1994, 0.2010])])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 transform_test = paddlevision.transforms.Compose([
     paddlevision.transforms.ToTensor(),
@@ -275,14 +275,14 @@ transform_test = paddlevision.transforms.Compose([
 
 接下来，我们[**读取由原始图像组成的数据集**]，每个样本都包括一张图片和一个标签。
 
-```{.python .input}
+```python
 train_ds, valid_ds, train_valid_ds, test_ds = [
     gluon.data.vision.ImageFolderDataset(
         os.path.join(data_dir, 'train_valid_test', folder))
     for folder in ['train', 'valid', 'train_valid', 'test']]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train_ds, train_valid_ds = [torchvision.datasets.ImageFolder(
     os.path.join(data_dir, 'train_valid_test', folder),
@@ -293,7 +293,7 @@ valid_ds, test_ds = [torchvision.datasets.ImageFolder(
     transform=transform_test) for folder in ['valid', 'test']]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 train_ds, train_valid_ds = [paddlevision.datasets.DatasetFolder(
     os.path.join(data_dir, 'train_valid_test', folder),
@@ -308,7 +308,7 @@ valid_ds, test_ds = [paddlevision.datasets.DatasetFolder(
 当验证集在超参数调整过程中用于模型评估时，不应引入图像增广的随机性。
 在最终预测之前，我们根据训练集和验证集组合而成的训练模型进行训练，以充分利用所有标记的数据。
 
-```{.python .input}
+```python
 train_iter, train_valid_iter = [gluon.data.DataLoader(
     dataset.transform_first(transform_train), batch_size, shuffle=True,
     last_batch='discard') for dataset in (train_ds, train_valid_ds)]
@@ -322,7 +322,7 @@ test_iter = gluon.data.DataLoader(
     last_batch='keep')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train_iter, train_valid_iter = [torch.utils.data.DataLoader(
     dataset, batch_size, shuffle=True, drop_last=True)
@@ -335,7 +335,7 @@ test_iter = torch.utils.data.DataLoader(test_ds, batch_size, shuffle=False,
                                         drop_last=False)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 train_iter, train_valid_iter = [paddle.io.DataLoader(
     dataset, batch_size=batch_size, shuffle=True, drop_last=True)
@@ -354,7 +354,7 @@ test_iter = paddle.io.DataLoader(test_ds, batch_size=batch_size, shuffle=False,
 在这里，我们基于`HybridBlock`类构建剩余块，这与 :numref:`sec_resnet`中描述的实现方法略有不同，是为了提高计算效率。
 :end_tab:
 
-```{.python .input}
+```python
 class Residual(nn.HybridBlock):
     def __init__(self, num_channels, use_1x1conv=False, strides=1, **kwargs):
         super(Residual, self).__init__(**kwargs)
@@ -381,7 +381,7 @@ class Residual(nn.HybridBlock):
 接下来，我们定义Resnet-18模型。
 :end_tab:
 
-```{.python .input}
+```python
 def resnet18(num_classes):
     net = nn.HybridSequential()
     net.add(nn.Conv2D(64, kernel_size=3, strides=1, padding=1),
@@ -416,7 +416,7 @@ def resnet18(num_classes):
 我们定义了 :numref:`sec_resnet`中描述的Resnet-18模型。
 :end_tab:
 
-```{.python .input}
+```python
 def get_net(devices):
     num_classes = 10
     net = resnet18(num_classes)
@@ -426,7 +426,7 @@ def get_net(devices):
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_net():
     num_classes = 10
@@ -436,7 +436,7 @@ def get_net():
 loss = nn.CrossEntropyLoss(reduction="none")
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def get_net():
     num_classes = 10
@@ -451,7 +451,7 @@ loss = nn.CrossEntropyLoss(reduction="none")
 我们将根据模型在验证集上的表现来选择模型并调整超参数。
 下面我们定义了模型训练函数`train`。
 
-```{.python .input}
+```python
 def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           lr_decay):
     trainer = gluon.Trainer(net.collect_params(), 'sgd',
@@ -489,7 +489,7 @@ def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           f' examples/sec on {str(devices)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           lr_decay):
@@ -528,7 +528,7 @@ def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           f' examples/sec on {str(devices)}')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           lr_decay):
@@ -573,7 +573,7 @@ def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
 例如，我们可以增加周期的数量。当`lr_period`和`lr_decay`分别设置为4和0.9时，优化算法的学习速率将在每4个周期乘以0.9。
 为便于演示，我们在这里只训练20个周期。
 
-```{.python .input}
+```python
 devices, num_epochs, lr, wd = d2l.try_all_gpus(), 20, 0.02, 5e-4
 lr_period, lr_decay, net = 4, 0.9, get_net(devices)
 net.hybridize()
@@ -581,7 +581,7 @@ train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
       lr_decay)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 devices, num_epochs, lr, wd = d2l.try_all_gpus(), 20, 2e-4, 5e-4
 lr_period, lr_decay, net = 4, 0.9, get_net()
@@ -589,7 +589,7 @@ train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
       lr_decay)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 devices, num_epochs, lr, wd = d2l.try_all_gpus(), 20, 2e-4, 5e-4
 lr_period, lr_decay, net = 4, 0.9, get_net()
@@ -601,7 +601,7 @@ train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
 
 在获得具有超参数的满意的模型后，我们使用所有标记的数据（包括验证集）来重新训练模型并对测试集进行分类。
 
-```{.python .input}
+```python
 net, preds = get_net(devices), []
 net.hybridize()
 train(net, train_valid_iter, None, num_epochs, lr, wd, devices, lr_period,
@@ -617,7 +617,7 @@ df['label'] = df['label'].apply(lambda x: train_valid_ds.synsets[x])
 df.to_csv('submission.csv', index=False)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net, preds = get_net(), []
 train(net, train_valid_iter, None, num_epochs, lr, wd, devices, lr_period,
@@ -633,7 +633,7 @@ df['label'] = df['label'].apply(lambda x: train_valid_ds.classes[x])
 df.to_csv('submission.csv', index=False)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net, preds = get_net(), []
 train(net, train_valid_iter, None, num_epochs, lr, wd, devices, lr_period,

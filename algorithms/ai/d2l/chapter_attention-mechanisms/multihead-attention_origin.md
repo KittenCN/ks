@@ -78,7 +78,7 @@ each head may attend to different parts of the input.
 More sophisticated functions than the simple weighted average
 can be expressed.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 import math
 from mxnet import autograd, np, npx
@@ -86,7 +86,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import math
@@ -112,7 +112,7 @@ to $p_q h = p_k h = p_v h = p_o$.
 In the following implementation,
 $p_o$ is specified via the argument `num_hiddens`.
 
-```{.python .input}
+```python
 #@save
 class MultiHeadAttention(nn.Block):
     def __init__(self, num_hiddens, num_heads, dropout, use_bias=False,
@@ -152,7 +152,7 @@ class MultiHeadAttention(nn.Block):
         return self.W_o(output_concat)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class MultiHeadAttention(nn.Module):
@@ -200,7 +200,7 @@ Specifically,
 the `transpose_output` function reverses the operation
 of the `transpose_qkv` function.
 
-```{.python .input}
+```python
 #@save
 def transpose_qkv(X, num_heads):
     # Shape of input `X`:
@@ -229,7 +229,7 @@ def transpose_output(X, num_heads):
     return X.reshape(X.shape[0], X.shape[1], -1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def transpose_qkv(X, num_heads):
@@ -265,13 +265,13 @@ As a result,
 the shape of the multi-head attention output
 is (`batch_size`, `num_queries`, `num_hiddens`).
 
-```{.python .input}
+```python
 num_hiddens, num_heads = 100, 5
 attention = MultiHeadAttention(num_hiddens, num_heads, 0.5)
 attention.initialize()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_hiddens, num_heads = 100, 5
 attention = MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
@@ -279,7 +279,7 @@ attention = MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
 attention.eval()
 ```
 
-```{.python .input}
+```python
 #@tab all
 batch_size, num_queries, num_kvpairs, valid_lens = 2, 4, 6, d2l.tensor([3, 2])
 X = d2l.ones((batch_size, num_queries, num_hiddens))

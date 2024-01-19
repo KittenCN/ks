@@ -9,7 +9,7 @@
 在这一节中，我们将只使用张量和自动求导。
 在之后的章节中，我们会充分利用深度学习框架的优势，介绍更简洁的实现方式。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, np, npx
@@ -17,7 +17,7 @@ import random
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -25,7 +25,7 @@ import torch
 import random
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -33,7 +33,7 @@ import tensorflow as tf
 import random
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -63,7 +63,7 @@ $\epsilon$可以视为模型预测和标签时的潜在观测误差。
 为了简化问题，我们将标准差设为0.01。
 下面的代码生成合成数据集。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 def synthetic_data(w, b, num_examples):  #@save
     """生成y=Xw+b+噪声"""
@@ -73,7 +73,7 @@ def synthetic_data(w, b, num_examples):  #@save
     return X, d2l.reshape(y, (-1, 1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def synthetic_data(w, b, num_examples):  #@save
     """生成y=Xw+b+噪声"""
@@ -85,7 +85,7 @@ def synthetic_data(w, b, num_examples):  #@save
     return X, y
 ```
 
-```{.python .input}
+```python
 #@tab all
 true_w = d2l.tensor([2, -3.4])
 true_b = 4.2
@@ -95,7 +95,7 @@ features, labels = synthetic_data(true_w, true_b, 1000)
 注意，[**`features`中的每一行都包含一个二维数据样本，
 `labels`中的每一行都包含一维标签值（一个标量）**]。
 
-```{.python .input}
+```python
 #@tab all
 print('features:', features[0],'\nlabel:', labels[0])
 ```
@@ -103,7 +103,7 @@ print('features:', features[0],'\nlabel:', labels[0])
 通过生成第二个特征`features[:, 1]`和`labels`的散点图，
 可以直观观察到两者之间的线性关系。
 
-```{.python .input}
+```python
 #@tab all
 d2l.set_figsize()
 d2l.plt.scatter(d2l.numpy(features[:, 1]), d2l.numpy(labels), 1);
@@ -119,7 +119,7 @@ d2l.plt.scatter(d2l.numpy(features[:, 1]), d2l.numpy(labels), 1);
 该函数接收批量大小、特征矩阵和标签向量作为输入，生成大小为`batch_size`的小批量**]。
 每个小批量包含一组特征和标签。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 def data_iter(batch_size, features, labels):
     num_examples = len(features)
@@ -132,7 +132,7 @@ def data_iter(batch_size, features, labels):
         yield features[batch_indices], labels[batch_indices]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def data_iter(batch_size, features, labels):
     num_examples = len(features)
@@ -152,7 +152,7 @@ GPU可以在处理几百个样本时，所花费的时间不比处理一个样�
 每个批量的特征维度显示批量大小和输入特征数。
 同样的，批量的标签形状与`batch_size`相等。
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 10
 
@@ -174,27 +174,27 @@ for X, y in data_iter(batch_size, features, labels):
 在下面的代码中，我们通过从均值为0、标准差为0.01的正态分布中采样随机数来初始化权重，
 并将偏置初始化为0。
 
-```{.python .input}
+```python
 w = np.random.normal(0, 0.01, (2, 1))
 b = np.zeros(1)
 w.attach_grad()
 b.attach_grad()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 w = torch.normal(0, 0.01, size=(2,1), requires_grad=True)
 b = torch.zeros(1, requires_grad=True)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 w = tf.Variable(tf.random.normal(shape=(2, 1), mean=0, stddev=0.01),
                 trainable=True)
 b = tf.Variable(tf.zeros(1), trainable=True)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 w = d2l.normal(0, 0.01, shape=(2,1))
 b = d2l.zeros(shape=[1])
@@ -218,7 +218,7 @@ b.stop_gradient = False
 回想一下 :numref:`subsec_broadcasting`中描述的广播机制：
 当我们用一个向量加一个标量时，标量会被加到向量的每个分量上。
 
-```{.python .input}
+```python
 #@tab all
 def linreg(X, w, b):  #@save
     """线性回归模型"""
@@ -231,7 +231,7 @@ def linreg(X, w, b):  #@save
 这里我们使用 :numref:`sec_linear_regression`中描述的平方损失函数。
 在实现中，我们需要将真实值`y`的形状转换为和预测值`y_hat`的形状相同。
 
-```{.python .input}
+```python
 #@tab all
 def squared_loss(y_hat, y):  #@save
     """均方损失"""
@@ -252,14 +252,14 @@ def squared_loss(y_hat, y):  #@save
 因为我们计算的损失是一个批量样本的总和，所以我们用批量大小（`batch_size`）
 来规范化步长，这样步长大小就不会取决于我们对批量大小的选择。
 
-```{.python .input}
+```python
 def sgd(params, lr, batch_size):  #@save
     """小批量随机梯度下降"""
     for param in params:
         param[:] = param - lr * param.grad / batch_size
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def sgd(params, lr, batch_size):  #@save
     """小批量随机梯度下降"""
@@ -269,7 +269,7 @@ def sgd(params, lr, batch_size):  #@save
             param.grad.zero_()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def sgd(params, grads, lr, batch_size):  #@save
     """小批量随机梯度下降"""
@@ -277,7 +277,7 @@ def sgd(params, grads, lr, batch_size):  #@save
         param.assign_sub(lr*grad/batch_size)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def sgd(params, lr, batch_size):
@@ -311,7 +311,7 @@ def sgd(params, lr, batch_size):
 设置超参数很棘手，需要通过反复试验进行调整。
 我们现在忽略这些细节，以后会在 :numref:`chap_optimization`中详细介绍。
 
-```{.python .input}
+```python
 #@tab all
 lr = 0.03
 num_epochs = 3
@@ -319,7 +319,7 @@ net = linreg
 loss = squared_loss
 ```
 
-```{.python .input}
+```python
 for epoch in range(num_epochs):
     for X, y in data_iter(batch_size, features, labels):
         with autograd.record():
@@ -331,7 +331,7 @@ for epoch in range(num_epochs):
     print(f'epoch {epoch + 1}, loss {float(train_l.mean()):f}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 for epoch in range(num_epochs):
     for X, y in data_iter(batch_size, features, labels):
@@ -345,7 +345,7 @@ for epoch in range(num_epochs):
         print(f'epoch {epoch + 1}, loss {float(train_l.mean()):f}')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 for epoch in range(num_epochs):
     for X, y in data_iter(batch_size, features, labels):
@@ -359,7 +359,7 @@ for epoch in range(num_epochs):
     print(f'epoch {epoch + 1}, loss {float(tf.reduce_mean(train_l)):f}')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 for epoch in range(num_epochs):
     for X, y in data_iter(batch_size, features, labels):
@@ -377,7 +377,7 @@ for epoch in range(num_epochs):
 因此，我们可以通过[**比较真实参数和通过训练学到的参数来评估训练的成功程度**]。
 事实上，真实参数和通过训练学到的参数确实非常接近。
 
-```{.python .input}
+```python
 #@tab all
 print(f'w的估计误差: {true_w - d2l.reshape(w, true_w.shape)}')
 print(f'b的估计误差: {true_b - b}')

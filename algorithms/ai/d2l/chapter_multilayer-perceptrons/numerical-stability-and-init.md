@@ -55,7 +55,7 @@ $\mathbf{M}^{(L)} \cdot \ldots \cdot \mathbf{M}^{(l+1)}$
 然而，它却是导致梯度消失问题的一个常见的原因，
 让我们仔细看看sigmoid函数为什么会导致梯度消失。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, np, npx
@@ -70,7 +70,7 @@ y.backward()
 d2l.plot(x, [y, x.grad], legend=['sigmoid', 'gradient'], figsize=(4.5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -84,7 +84,7 @@ d2l.plot(x.detach().numpy(), [y.detach().numpy(), x.grad.numpy()],
          legend=['sigmoid', 'gradient'], figsize=(4.5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -97,7 +97,7 @@ d2l.plot(x.numpy(), [y.numpy(), t.gradient(y, x).numpy()],
          legend=['sigmoid', 'gradient'], figsize=(4.5, 2.5))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -128,7 +128,7 @@ d2l.plot(x.detach().numpy(), [y.detach().numpy(), x.grad.numpy()],
 对于我们选择的尺度（方差$\sigma^2=1$），矩阵乘积发生爆炸。
 当这种情况是由于深度网络的初始化所导致时，我们没有机会让梯度下降优化器收敛。
 
-```{.python .input}
+```python
 M = np.random.normal(size=(4, 4))
 print('一个矩阵 \n', M)
 for i in range(100):
@@ -137,7 +137,7 @@ for i in range(100):
 print('乘以100个矩阵后\n', M)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 M = torch.normal(0, 1, size=(4,4))
 print('一个矩阵 \n',M)
@@ -147,7 +147,7 @@ for i in range(100):
 print('乘以100个矩阵后\n', M)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 M = tf.random.normal((4, 4))
 print('一个矩阵 \n', M)
@@ -157,7 +157,7 @@ for i in range(100):
 print('乘以100个矩阵后\n', M.numpy())
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 M = paddle.normal(0, 1, shape=(4,4))
 print('一个矩阵 \n',M)

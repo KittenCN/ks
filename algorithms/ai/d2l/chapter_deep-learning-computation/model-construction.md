@@ -55,7 +55,7 @@
 下面的代码生成一个网络，其中包含一个具有256个单元和ReLU激活函数的全连接隐藏层，
 然后是一个具有10个隐藏单元且不带激活函数的全连接输出层。
 
-```{.python .input}
+```python
 from mxnet import np, npx
 from mxnet.gluon import nn
 npx.set_np()
@@ -69,7 +69,7 @@ X = np.random.uniform(size=(2, 20))
 net(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 from torch import nn
@@ -81,7 +81,7 @@ X = torch.rand(2, 20)
 net(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -94,7 +94,7 @@ X = tf.random.uniform((2, 20))
 net(X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 import warnings
 warnings.filterwarnings(action='ignore')
@@ -195,7 +195,7 @@ net(X)
 注意，下面的`MLP`类继承了表示块的类。
 我们的实现只需要提供我们自己的构造函数（Python中的`__init__`函数）和前向传播函数。
 
-```{.python .input}
+```python
 class MLP(nn.Block):
     # 用模型参数声明层。这里，我们声明两个全连接的层
     def __init__(self, **kwargs):
@@ -210,7 +210,7 @@ class MLP(nn.Block):
         return self.out(self.hidden(X))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class MLP(nn.Module):
     # 用模型参数声明层。这里，我们声明两个全连接的层
@@ -227,7 +227,7 @@ class MLP(nn.Module):
         return self.out(F.relu(self.hidden(X)))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class MLP(tf.keras.Model):
     # 用模型参数声明层。这里，我们声明两个全连接的层
@@ -244,7 +244,7 @@ class MLP(tf.keras.Model):
         return self.out(self.hidden((X)))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class MLP(nn.Layer):
     # 用模型参数声明层。这里，我们声明两个全连接的层
@@ -281,19 +281,19 @@ class MLP(nn.Layer):
 
 我们来试一下这个函数：
 
-```{.python .input}
+```python
 net = MLP()
 net.initialize()
 net(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 net = MLP()
 net(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = MLP()
 net(X)
@@ -317,7 +317,7 @@ net(X)
 
 下面的`MySequential`类提供了与默认`Sequential`类相同的功能。
 
-```{.python .input}
+```python
 class MySequential(nn.Block):
     def add(self, block):
     # 这里，block是Block子类的一个实例，我们假设它有一个唯一的名称。我们把它
@@ -333,7 +333,7 @@ class MySequential(nn.Block):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class MySequential(nn.Module):
     def __init__(self, *args):
@@ -350,7 +350,7 @@ class MySequential(nn.Module):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class MySequential(tf.keras.Model):
     def __init__(self, *args):
@@ -366,7 +366,7 @@ class MySequential(tf.keras.Model):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class MySequential(nn.Layer):
     def __init__(self, *layers):
@@ -418,7 +418,7 @@ Gluon知道在`_children`字典中查找需要初始化参数的子块。
 每个添加的块都按照它们被添加的顺序执行。
 现在可以使用我们的`MySequential`类重新实现多层感知机。
 
-```{.python .input}
+```python
 net = MySequential()
 net.add(nn.Dense(256, activation='relu'))
 net.add(nn.Dense(10))
@@ -426,13 +426,13 @@ net.initialize()
 net(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 net = MySequential(nn.Linear(20, 256), nn.ReLU(), nn.Linear(256, 10))
 net(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = MySequential(
     tf.keras.layers.Dense(units=256, activation=tf.nn.relu),
@@ -464,7 +464,7 @@ $\mathbf{w}$是参数，
 $c$是某个在优化过程中没有更新的指定常量。
 因此我们实现了一个`FixedHiddenMLP`类，如下所示：
 
-```{.python .input}
+```python
 class FixedHiddenMLP(nn.Block):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -485,7 +485,7 @@ class FixedHiddenMLP(nn.Block):
         return X.sum()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class FixedHiddenMLP(nn.Module):
     def __init__(self):
@@ -506,7 +506,7 @@ class FixedHiddenMLP(nn.Module):
         return X.sum()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class FixedHiddenMLP(tf.keras.Model):
     def __init__(self):
@@ -528,7 +528,7 @@ class FixedHiddenMLP(tf.keras.Model):
         return tf.reduce_sum(X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class FixedHiddenMLP(nn.Layer):
     def __init__(self):
@@ -561,13 +561,13 @@ class FixedHiddenMLP(nn.Layer):
 注意，此操作可能不会常用于在任何实际任务中，
 我们只展示如何将任意代码集成到神经网络计算的流程中。
 
-```{.python .input}
+```python
 net = FixedHiddenMLP()
 net.initialize()
 net(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, tensorflow, paddle
 net = FixedHiddenMLP()
 net(X)
@@ -576,7 +576,7 @@ net(X)
 我们可以[**混合搭配各种组合块的方法**]。
 在下面的例子中，我们以一些想到的方法嵌套块。
 
-```{.python .input}
+```python
 class NestMLP(nn.Block):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -594,7 +594,7 @@ chimera.initialize()
 chimera(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class NestMLP(nn.Module):
     def __init__(self):
@@ -610,7 +610,7 @@ chimera = nn.Sequential(NestMLP(), nn.Linear(16, 20), FixedHiddenMLP())
 chimera(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class NestMLP(tf.keras.Model):
     def __init__(self):
@@ -630,7 +630,7 @@ chimera.add(FixedHiddenMLP())
 chimera(X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class NestMLP(nn.Layer):
     def __init__(self):

@@ -17,7 +17,7 @@ proposed in 1964
 is a simple yet complete example
 for demonstrating machine learning with attention mechanisms.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, np, npx
 from mxnet.gluon import nn
@@ -25,7 +25,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -48,18 +48,18 @@ Both 50 training examples and 50 testing examples
 are generated.
 To better visualize the pattern of attention later, the training inputs are sorted.
 
-```{.python .input}
+```python
 n_train = 50  # No. of training examples
 x_train = np.sort(d2l.rand(n_train) * 5)   # Training inputs
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 n_train = 50  # No. of training examples
 x_train, _ = torch.sort(d2l.rand(n_train) * 5)   # Training inputs
 ```
 
-```{.python .input}
+```python
 #@tab all
 def f(x):
     return 2 * d2l.sin(x) + x**0.8
@@ -74,7 +74,7 @@ n_test
 The following function plots all the training examples (represented by circles),
 the ground-truth data generation function `f` without the noise term (labeled by "Truth"), and the learned prediction function (labeled by "Pred").
 
-```{.python .input}
+```python
 #@tab all
 def plot_kernel_reg(y_hat):
     d2l.plot(x_test, [y_truth, y_hat], 'x', 'y', legend=['Truth', 'Pred'],
@@ -92,12 +92,12 @@ $$f(x) = \frac{1}{n}\sum_{i=1}^n y_i,$$
 
 which is plotted below. As we can see, this estimator is indeed not so smart.
 
-```{.python .input}
+```python
 y_hat = y_train.mean().repeat(n_test)
 plot_kernel_reg(y_hat)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 y_hat = torch.repeat_interleave(y_train.mean(), n_test)
 plot_kernel_reg(y_hat)
@@ -166,7 +166,7 @@ In the following, we plot the prediction based on this
 nonparametric attention model.
 The predicted line is smooth and closer to the ground-truth than that produced by average pooling.
 
-```{.python .input}
+```python
 # Shape of `X_repeat`: (`n_test`, `n_train`), where each row contains the
 # same testing inputs (i.e., same queries)
 X_repeat = d2l.reshape(x_test.repeat(n_train), (-1, n_train))
@@ -180,7 +180,7 @@ y_hat = d2l.matmul(attention_weights, y_train)
 plot_kernel_reg(y_hat)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # Shape of `X_repeat`: (`n_test`, `n_train`), where each row contains the
 # same testing inputs (i.e., same queries)
@@ -201,13 +201,13 @@ Since both inputs are sorted,
 we can see that the closer the query-key pair is,
 the higher attention weight is in the attention pooling.
 
-```{.python .input}
+```python
 d2l.show_heatmaps(np.expand_dims(np.expand_dims(attention_weights, 0), 0),
                   xlabel='Sorted training inputs',
                   ylabel='Sorted testing inputs')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 d2l.show_heatmaps(attention_weights.unsqueeze(0).unsqueeze(0),
                   xlabel='Sorted training inputs',
@@ -249,13 +249,13 @@ Suppose that the first minibatch contains $n$ matrices $\mathbf{X}_1, \ldots, \m
 results in
 $n$ matrices $\mathbf{X}_1\mathbf{Y}_1, \ldots, \mathbf{X}_n\mathbf{Y}_n$ of shape $a\times c$. Therefore, given two tensors of shape ($n$, $a$, $b$) and ($n$, $b$, $c$), the shape of their batch matrix multiplication output is ($n$, $a$, $c$).
 
-```{.python .input}
+```python
 X = d2l.ones((2, 1, 4))
 Y = d2l.ones((2, 4, 6))
 npx.batch_dot(X, Y).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = d2l.ones((2, 1, 4))
 Y = d2l.ones((2, 4, 6))
@@ -264,13 +264,13 @@ torch.bmm(X, Y).shape
 
 In the context of attention mechanisms, we can use minibatch matrix multiplication to compute weighted averages of values in a minibatch.
 
-```{.python .input}
+```python
 weights = d2l.ones((2, 10)) * 0.1
 values = d2l.reshape(d2l.arange(20), (2, 10))
 npx.batch_dot(np.expand_dims(weights, 1), np.expand_dims(values, -1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 weights = d2l.ones((2, 10)) * 0.1
 values = d2l.reshape(d2l.arange(20.0), (2, 10))
@@ -285,7 +285,7 @@ of Nadaraya-Watson kernel regression
 based on the parametric attention pooling in
 :eqref:`eq_nadaraya-waston-gaussian-para`.
 
-```{.python .input}
+```python
 class NWKernelRegression(nn.Block):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -303,7 +303,7 @@ class NWKernelRegression(nn.Block):
                              np.expand_dims(values, -1)).reshape(-1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class NWKernelRegression(nn.Module):
     def __init__(self, **kwargs):
@@ -329,7 +329,7 @@ to keys and values to train the attention model.
 In the parametric attention pooling,
 any training input takes key-value pairs from all the training examples except for itself to predict its output.
 
-```{.python .input}
+```python
 # Shape of `X_tile`: (`n_train`, `n_train`), where each column contains the
 # same training inputs
 X_tile = np.tile(x_train, (n_train, 1))
@@ -344,7 +344,7 @@ values = d2l.reshape(Y_tile[(1 - d2l.eye(n_train)).astype('bool')],
                      (n_train, -1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # Shape of `X_tile`: (`n_train`, `n_train`), where each column contains the
 # same training inputs
@@ -363,7 +363,7 @@ values = d2l.reshape(Y_tile[(1 - d2l.eye(n_train)).type(torch.bool)],
 Using the squared loss and stochastic gradient descent,
 we train the parametric attention model.
 
-```{.python .input}
+```python
 net = NWKernelRegression()
 net.initialize()
 loss = gluon.loss.L2Loss()
@@ -379,7 +379,7 @@ for epoch in range(5):
     animator.add(epoch + 1, float(l.sum()))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = NWKernelRegression()
 loss = nn.MSELoss(reduction='none')
@@ -403,7 +403,7 @@ Trying to fit the training dataset with noise,
 the predicted line is less smooth
 than its nonparametric counterpart that was plotted earlier.
 
-```{.python .input}
+```python
 # Shape of `keys`: (`n_test`, `n_train`), where each column contains the same
 # training inputs (i.e., same keys)
 keys = np.tile(x_train, (n_test, 1))
@@ -413,7 +413,7 @@ y_hat = net(x_test, keys, values)
 plot_kernel_reg(y_hat)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # Shape of `keys`: (`n_test`, `n_train`), where each column contains the same
 # training inputs (i.e., same keys)
@@ -428,13 +428,13 @@ Comparing with nonparametric attention pooling,
 the region with large attention weights becomes sharper
 in the learnable and parametric setting.
 
-```{.python .input}
+```python
 d2l.show_heatmaps(np.expand_dims(np.expand_dims(net.attention_weights, 0), 0),
                   xlabel='Sorted training inputs',
                   ylabel='Sorted testing inputs')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 d2l.show_heatmaps(net.attention_weights.unsqueeze(0).unsqueeze(0),
                   xlabel='Sorted training inputs',

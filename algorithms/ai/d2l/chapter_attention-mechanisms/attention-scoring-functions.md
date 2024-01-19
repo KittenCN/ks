@@ -40,7 +40,7 @@ $$\alpha(\mathbf{q}, \mathbf{k}_i) = \mathrm{softmax}(a(\mathbf{q}, \mathbf{k}_i
 正如上图所示，选择不同的注意力评分函数$a$会导致不同的注意力汇聚操作。
 本节将介绍两个流行的评分函数，稍后将用他们来实现更复杂的注意力机制。
 
-```{.python .input}
+```python
 import math
 from d2l import mxnet as d2l
 from mxnet import np, npx
@@ -48,7 +48,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import math
@@ -56,13 +56,13 @@ import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import math
@@ -85,7 +85,7 @@ from paddle import nn
 实现了这样的*掩蔽softmax操作*（masked softmax operation），
 其中任何超出有效长度的位置都被掩蔽并置为0。
 
-```{.python .input}
+```python
 #@save
 def masked_softmax(X, valid_lens):
     """通过在最后一个轴上掩蔽元素来执行softmax操作"""
@@ -104,7 +104,7 @@ def masked_softmax(X, valid_lens):
         return npx.softmax(X).reshape(shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def masked_softmax(X, valid_lens):
@@ -124,7 +124,7 @@ def masked_softmax(X, valid_lens):
         return nn.functional.softmax(X.reshape(shape), dim=-1)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 def masked_softmax(X, valid_lens):
@@ -145,7 +145,7 @@ def masked_softmax(X, valid_lens):
         return tf.nn.softmax(tf.reshape(X, shape=shape), axis=-1)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def masked_softmax(X, valid_lens):
@@ -170,43 +170,43 @@ def masked_softmax(X, valid_lens):
 这两个样本的有效长度分别为$2$和$3$。
 经过掩蔽softmax操作，超出有效长度的值都被掩蔽为0。
 
-```{.python .input}
+```python
 masked_softmax(np.random.uniform(size=(2, 2, 4)), d2l.tensor([2, 3]))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 masked_softmax(torch.rand(2, 2, 4), torch.tensor([2, 3]))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 masked_softmax(tf.random.uniform(shape=(2, 2, 4)), tf.constant([2, 3]))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 masked_softmax(paddle.rand((2, 2, 4)), paddle.to_tensor([2, 3]))
 ```
 
 同样，也可以使用二维张量，为矩阵样本中的每一行指定有效长度。
 
-```{.python .input}
+```python
 masked_softmax(np.random.uniform(size=(2, 2, 4)),
                d2l.tensor([[1, 3], [2, 4]]))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 masked_softmax(torch.rand(2, 2, 4), d2l.tensor([[1, 3], [2, 4]]))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 masked_softmax(tf.random.uniform(shape=(2, 2, 4)), tf.constant([[1, 3], [2, 4]]))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 masked_softmax(paddle.rand((2, 2, 4)), paddle.to_tensor([[1, 3], [2, 4]]))
 ```
@@ -232,7 +232,7 @@ $\mathbf w_v\in\mathbb R^{h}$。
 
 下面来实现加性注意力。
 
-```{.python .input}
+```python
 #@save
 class AdditiveAttention(nn.Block):
     """加性注意力"""
@@ -261,7 +261,7 @@ class AdditiveAttention(nn.Block):
         return npx.batch_dot(self.dropout(self.attention_weights), values)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class AdditiveAttention(nn.Module):
@@ -289,7 +289,7 @@ class AdditiveAttention(nn.Module):
         return torch.bmm(self.dropout(self.attention_weights), values)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 class AdditiveAttention(tf.keras.layers.Layer):
@@ -319,7 +319,7 @@ class AdditiveAttention(tf.keras.layers.Layer):
             self.attention_weights, **kwargs), values)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class AdditiveAttention(nn.Layer):
@@ -352,7 +352,7 @@ class AdditiveAttention(nn.Layer):
 实际输出为$(2,1,20)$、$(2,10,2)$和$(2,10,4)$。
 注意力汇聚输出的形状为（批量大小，查询的步数，值的维度）。
 
-```{.python .input}
+```python
 queries, keys = d2l.normal(0, 1, (2, 1, 20)), d2l.ones((2, 10, 2))
 # values的小批量数据集中，两个值矩阵是相同的
 values = np.arange(40).reshape(1, 10, 4).repeat(2, axis=0)
@@ -363,7 +363,7 @@ attention.initialize()
 attention(queries, keys, values, valid_lens)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 queries, keys = d2l.normal(0, 1, (2, 1, 20)), d2l.ones((2, 10, 2))
 # values的小批量，两个值矩阵是相同的
@@ -377,7 +377,7 @@ attention.eval()
 attention(queries, keys, values, valid_lens)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 queries, keys = tf.random.normal(shape=(2, 1, 20)), tf.ones((2, 10, 2))
 # values的小批量，两个值矩阵是相同的
@@ -390,7 +390,7 @@ attention = AdditiveAttention(key_size=2, query_size=20, num_hiddens=8,
 attention(queries, keys, values, valid_lens, training=False)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 queries, keys = paddle.normal(0, 1, (2, 1, 20)), paddle.ones((2, 10, 2))
 # values的小批量，两个值矩阵是相同的
@@ -407,7 +407,7 @@ attention(queries, keys, values, valid_lens)
 尽管加性注意力包含了可学习的参数，但由于本例子中每个键都是相同的，
 所以[**注意力权重**]是均匀的，由指定的有效长度决定。
 
-```{.python .input}
+```python
 #@tab all
 d2l.show_heatmaps(d2l.reshape(attention.attention_weights, (1, 1, 2, 10)),
                   xlabel='Keys', ylabel='Queries')
@@ -439,7 +439,7 @@ $$ \mathrm{softmax}\left(\frac{\mathbf Q \mathbf K^\top }{\sqrt{d}}\right) \math
 
 下面的缩放点积注意力的实现使用了暂退法进行模型正则化。
 
-```{.python .input}
+```python
 #@save
 class DotProductAttention(nn.Block):
     """缩放点积注意力"""
@@ -459,7 +459,7 @@ class DotProductAttention(nn.Block):
         return npx.batch_dot(self.dropout(self.attention_weights), values)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class DotProductAttention(nn.Module):
@@ -480,7 +480,7 @@ class DotProductAttention(nn.Module):
         return torch.bmm(self.dropout(self.attention_weights), values)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 class DotProductAttention(tf.keras.layers.Layer):
@@ -501,7 +501,7 @@ class DotProductAttention(tf.keras.layers.Layer):
         return tf.matmul(self.dropout(self.attention_weights, **kwargs), values)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class DotProductAttention(nn.Layer):
@@ -526,14 +526,14 @@ class DotProductAttention(nn.Layer):
 我们使用与先前加性注意力例子中相同的键、值和有效长度。
 对于点积操作，我们令查询的特征维度与键的特征维度大小相同。
 
-```{.python .input}
+```python
 queries = d2l.normal(0, 1, (2, 1, 2))
 attention = DotProductAttention(dropout=0.5)
 attention.initialize()
 attention(queries, keys, values, valid_lens)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 queries = d2l.normal(0, 1, (2, 1, 2))
 attention = DotProductAttention(dropout=0.5)
@@ -541,14 +541,14 @@ attention.eval()
 attention(queries, keys, values, valid_lens)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 queries = tf.random.normal(shape=(2, 1, 2))
 attention = DotProductAttention(dropout=0.5)
 attention(queries, keys, values, valid_lens, training=False)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 queries = paddle.normal(0, 1, (2, 1, 2))
 attention = DotProductAttention(dropout=0.5)
@@ -559,7 +559,7 @@ attention(queries, keys, values, valid_lens)
 与加性注意力演示相同，由于键包含的是相同的元素，
 而这些元素无法通过任何查询进行区分，因此获得了[**均匀的注意力权重**]。
 
-```{.python .input}
+```python
 #@tab all
 d2l.show_heatmaps(d2l.reshape(attention.attention_weights, (1, 1, 2, 10)),
                   xlabel='Keys', ylabel='Queries')

@@ -3,21 +3,21 @@
 
 每个新模型的并行计算都从零开始实现是无趣的。此外，优化同步工具以获得高性能也是有好处的。下面我们将展示如何使用深度学习框架的高级API来实现这一点。数学和算法与 :numref:`sec_multi_gpu`中的相同。本节的代码至少需要两个GPU来运行。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, init, np, npx
 from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -30,7 +30,7 @@ from paddle import nn
 
 让我们使用一个比 :numref:`sec_multi_gpu`的LeNet更有意义的网络，它依然能够容易地和快速地训练。我们选择的是 :cite:`He.Zhang.Ren.ea.2016`中的ResNet-18。因为输入的图像很小，所以稍微修改了一下。与 :numref:`sec_resnet`的区别在于，我们在开始时使用了更小的卷积核、步长和填充，而且删除了最大汇聚层。
 
-```{.python .input}
+```python
 #@save
 def resnet18(num_classes):
     """稍加修改的ResNet-18模型"""
@@ -56,7 +56,7 @@ def resnet18(num_classes):
     return net
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def resnet18(num_classes, in_channels=1):
@@ -88,7 +88,7 @@ def resnet18(num_classes, in_channels=1):
     return net
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def resnet18(num_classes, in_channels=1):
@@ -130,7 +130,7 @@ def resnet18(num_classes, in_channels=1):
 我们将在训练回路中初始化网络。请参见 :numref:`sec_numerical_stability`复习初始化方法。
 :end_tab:
 
-```{.python .input}
+```python
 net = resnet18(10)
 # 获取GPU列表
 devices = d2l.try_all_gpus()
@@ -138,7 +138,7 @@ devices = d2l.try_all_gpus()
 net.initialize(init=init.Normal(sigma=0.01), ctx=devices)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = resnet18(10)
 # 获取GPU列表
@@ -146,7 +146,7 @@ devices = d2l.try_all_gpus()
 # 我们将在训练代码实现中初始化网络
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = resnet18(10)
 # 获取GPU列表
@@ -158,7 +158,7 @@ devices = d2l.try_all_gpus()
 使用 :numref:`sec_multi_gpu`中引入的`split_and_load`函数可以切分一个小批量数据，并将切分后的分块数据复制到`devices`变量提供的设备列表中。网络实例自动使用适当的GPU来计算前向传播的值。我们将在下面生成$4$个观测值，并在GPU上将它们拆分。
 :end_tab:
 
-```{.python .input}
+```python
 x = np.random.uniform(size=(4, 1, 28, 28))
 x_shards = gluon.utils.split_and_load(x, devices)
 net(x_shards[0]), net(x_shards[1])
@@ -168,7 +168,7 @@ net(x_shards[0]), net(x_shards[1])
 一旦数据通过网络，网络对应的参数就会在*有数据通过的设备上初始化*。这意味着初始化是基于每个设备进行的。由于我们选择的是GPU0和GPU1，所以网络只在这两个GPU上初始化，而不是在CPU上初始化。事实上，CPU上甚至没有这些参数。我们可以通过打印参数和观察可能出现的任何错误来验证这一点。
 :end_tab:
 
-```{.python .input}
+```python
 weight = net[0].params.get('weight')
 
 try:
@@ -183,7 +183,7 @@ weight.data(devices[0])[0], weight.data(devices[1])[0]
 这里主要是 :numref:`sec_lenet`的`evaluate_accuracy_gpu`函数的替代，代码的主要区别在于在调用网络之前拆分了一个小批量，其他在本质上是一样的。
 :end_tab:
 
-```{.python .input}
+```python
 #@save
 def evaluate_accuracy_gpus(net, data_iter, split_f=d2l.split_batch):
     """使用多个GPU计算数据集上模型的精度"""
@@ -212,7 +212,7 @@ def evaluate_accuracy_gpus(net, data_iter, split_f=d2l.split_batch):
 
 最后，并行地计算精确度和发布网络的最终性能。除了需要拆分和聚合数据外，训练代码与前几章的实现非常相似。
 
-```{.python .input}
+```python
 def train(num_gpus, batch_size, lr):
     train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
     ctx = [d2l.try_gpu(i) for i in range(num_gpus)]
@@ -239,7 +239,7 @@ def train(num_gpus, batch_size, lr):
           f'在{str(ctx)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(net, num_gpus, batch_size, lr):
     train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
@@ -269,7 +269,7 @@ def train(net, num_gpus, batch_size, lr):
           f'在{str(devices)}')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train(net, num_gpus, batch_size, lr):
     train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
@@ -303,22 +303,22 @@ def train(net, num_gpus, batch_size, lr):
 
 接下来看看这在实践中是如何运作的。我们先[**在单个GPU上训练网络**]进行预热。
 
-```{.python .input}
+```python
 train(num_gpus=1, batch_size=256, lr=0.1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 train(net, num_gpus=1, batch_size=256, lr=0.1)
 ```
 
 接下来我们[**使用2个GPU进行训练**]。与 :numref:`sec_multi_gpu`中评估的LeNet相比，ResNet-18的模型要复杂得多。这就是显示并行化优势的地方，计算所需时间明显大于同步参数需要的时间。因为并行化开销的相关性较小，因此这种操作提高了模型的可伸缩性。
 
-```{.python .input}
+```python
 train(num_gpus=2, batch_size=512, lr=0.2)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train(net, num_gpus=2, batch_size=512, lr=0.2)
 ```

@@ -8,7 +8,7 @@
 
 首先，让我们修改输出精度，以获得更简洁的输出。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import gluon, image, np, npx
@@ -17,7 +17,7 @@ np.set_printoptions(2)  # 精简输出精度
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -26,7 +26,7 @@ import torch
 torch.set_printoptions(2)  # 精简输出精度
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -60,7 +60,7 @@ $$(s_1, r_1), (s_1, r_2), \ldots, (s_1, r_m), (s_2, r_1), (s_3, r_1), \ldots, (s
 上述生成锚框的方法在下面的`multibox_prior`函数中实现。
 我们指定输入图像、尺寸列表和宽高比列表，然后此函数将返回所有的锚框。
 
-```{.python .input}
+```python
 #@save
 def multibox_prior(data, sizes, ratios):
     """生成以每个像素为中心具有不同形状的锚框"""
@@ -101,7 +101,7 @@ def multibox_prior(data, sizes, ratios):
     return np.expand_dims(output, axis=0)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def multibox_prior(data, sizes, ratios):
@@ -143,7 +143,7 @@ def multibox_prior(data, sizes, ratios):
     return output.unsqueeze(0)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def multibox_prior(data, sizes, ratios):
@@ -187,7 +187,7 @@ def multibox_prior(data, sizes, ratios):
 
 可以看到[**返回的锚框变量`Y`的形状**]是（批量大小，锚框的数量，4）。
 
-```{.python .input}
+```python
 img = image.imread('../img/catdog.jpg').asnumpy()
 h, w = img.shape[:2]
 
@@ -197,7 +197,7 @@ Y = multibox_prior(X, sizes=[0.75, 0.5, 0.25], ratios=[1, 2, 0.5])
 Y.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 img = d2l.plt.imread('../img/catdog.jpg')
 h, w = img.shape[:2]
@@ -208,7 +208,7 @@ Y = multibox_prior(X, sizes=[0.75, 0.5, 0.25], ratios=[1, 2, 0.5])
 Y.shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 img = d2l.plt.imread('../img/catdog.jpg')
 h, w = img.shape[:2]
@@ -224,13 +224,13 @@ Y.shape
 它有四个元素：锚框左上角的$(x, y)$轴坐标和右下角的$(x, y)$轴坐标。
 输出中两个轴的坐标各分别除以了图像的宽度和高度。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 boxes = Y.reshape(h, w, 5, 4)
 boxes[250, 250, 0, :]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 boxes = Y.reshape([h, w, 5, 4])
 boxes[250, 250, 0, :]
@@ -238,7 +238,7 @@ boxes[250, 250, 0, :]
 
 为了[**显示以图像中以某个像素为中心的所有锚框**]，定义下面的`show_bboxes`函数来在图像上绘制多个边界框。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def show_bboxes(axes, bboxes, labels=None, colors=None):
@@ -269,7 +269,7 @@ def show_bboxes(axes, bboxes, labels=None, colors=None):
 现在可以绘制出图像中所有以(250,250)为中心的锚框了。
 如下所示，缩放比为0.75且宽高比为1的蓝色锚框很好地围绕着图像中的狗。
 
-```{.python .input}
+```python
 #@tab all
 d2l.set_figsize()
 bbox_scale = d2l.tensor((w, h, w, h))
@@ -300,7 +300,7 @@ $$J(\mathcal{A},\mathcal{B}) = \frac{\left|\mathcal{A} \cap \mathcal{B}\right|}{
 接下来部分将使用交并比来衡量锚框和真实边界框之间、以及不同锚框之间的相似度。
 给定两个锚框或边界框的列表，以下`box_iou`函数将在这两个列表中计算它们成对的交并比。
 
-```{.python .input}
+```python
 #@save
 def box_iou(boxes1, boxes2):
     """计算两个锚框或边界框列表中成对的交并比"""
@@ -325,7 +325,7 @@ def box_iou(boxes1, boxes2):
     return inter_areas / union_areas
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def box_iou(boxes1, boxes2):
@@ -350,7 +350,7 @@ def box_iou(boxes1, boxes2):
     return inter_areas / union_areas
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def box_iou(boxes1, boxes2):
@@ -409,7 +409,7 @@ def box_iou(boxes1, boxes2):
 
 此算法在下面的`assign_anchor_to_bbox`函数中实现。
 
-```{.python .input}
+```python
 #@save
 def assign_anchor_to_bbox(ground_truth, anchors, device, iou_threshold=0.5):
     """将最接近的真实边界框分配给锚框"""
@@ -435,7 +435,7 @@ def assign_anchor_to_bbox(ground_truth, anchors, device, iou_threshold=0.5):
     return anchors_bbox_map
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def assign_anchor_to_bbox(ground_truth, anchors, device, iou_threshold=0.5):
@@ -463,7 +463,7 @@ def assign_anchor_to_bbox(ground_truth, anchors, device, iou_threshold=0.5):
     return anchors_bbox_map
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def assign_anchor_to_bbox(ground_truth, anchors, place, iou_threshold=0.5):
@@ -509,7 +509,7 @@ $$\left( \frac{ \frac{x_b - x_a}{w_a} - \mu_x }{\sigma_x},
 其中常量的默认值为 $\mu_x = \mu_y = \mu_w = \mu_h = 0, \sigma_x=\sigma_y=0.1$ ， $\sigma_w=\sigma_h=0.2$。
 这种转换在下面的 `offset_boxes` 函数中实现。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def offset_boxes(anchors, assigned_bb, eps=1e-6):
@@ -527,7 +527,7 @@ def offset_boxes(anchors, assigned_bb, eps=1e-6):
 我们使用真实边界框（`labels`参数）实现以下`multibox_target`函数，来[**标记锚框的类别和偏移量**]（`anchors`参数）。
 此函数将背景类别的索引设置为零，然后将新类别的整数索引递增一。
 
-```{.python .input}
+```python
 #@save
 def multibox_target(anchors, labels):
     """使用真实边界框标记锚框"""
@@ -561,7 +561,7 @@ def multibox_target(anchors, labels):
     return (bbox_offset, bbox_mask, class_labels)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def multibox_target(anchors, labels):
@@ -597,7 +597,7 @@ def multibox_target(anchors, labels):
     return (bbox_offset, bbox_mask, class_labels)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def multibox_target(anchors, labels):
@@ -639,7 +639,7 @@ def multibox_target(anchors, labels):
 我们还构建了五个锚框，用左上角和右下角的坐标进行标记：$A_0, \ldots, A_4$（索引从0开始）。
 然后我们[**在图像中绘制这些真实边界框和锚框**]。
 
-```{.python .input}
+```python
 #@tab all
 ground_truth = d2l.tensor([[0, 0.1, 0.08, 0.52, 0.92],
                          [1, 0.55, 0.2, 0.9, 0.88]])
@@ -656,18 +656,18 @@ show_bboxes(fig.axes, anchors * bbox_scale, ['0', '1', '2', '3', '4']);
 在这个例子中，背景、狗和猫的类索引分别为0、1和2。
 下面我们为锚框和真实边界框样本添加一个维度。
 
-```{.python .input}
+```python
 labels = multibox_target(np.expand_dims(anchors, axis=0),
                          np.expand_dims(ground_truth, axis=0))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 labels = multibox_target(anchors.unsqueeze(dim=0),
                          ground_truth.unsqueeze(dim=0))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 labels = multibox_target(anchors.unsqueeze(axis=0),
                          ground_truth.unsqueeze(axis=0))
@@ -685,7 +685,7 @@ labels = multibox_target(anchors.unsqueeze(axis=0),
 对于$A_2$，与其拥有最大IoU的真实边界框的类别是猫，IoU超过阈值，所以类别被标记为猫；
 对于$A_3$，与其拥有最大IoU的真实边界框的类别是猫，但值低于阈值，因此该类别被标记为背景。
 
-```{.python .input}
+```python
 #@tab all
 labels[2]
 ```
@@ -695,7 +695,7 @@ labels[2]
 由于我们不关心对背景的检测，负类的偏移量不应影响目标函数。
 通过元素乘法，掩码变量中的零将在计算目标函数之前过滤掉负类偏移量。
 
-```{.python .input}
+```python
 #@tab all
 labels[1]
 ```
@@ -703,7 +703,7 @@ labels[1]
 返回的第一个元素包含了为每个锚框标记的四个偏移值。
 请注意，负类锚框的偏移量被标记为零。
 
-```{.python .input}
+```python
 #@tab all
 labels[0]
 ```
@@ -715,7 +715,7 @@ labels[0]
 一个*预测好的边界框*则根据其中某个带有预测偏移量的锚框而生成。
 下面我们实现了`offset_inverse`函数，该函数将锚框和偏移量预测作为输入，并[**应用逆偏移变换来返回预测的边界框坐标**]。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def offset_inverse(anchors, offset_preds):
@@ -744,7 +744,7 @@ def offset_inverse(anchors, offset_preds):
 
 [**以下`nms`函数按降序对置信度进行排序并返回其索引**]。
 
-```{.python .input}
+```python
 #@save
 def nms(boxes, scores, iou_threshold):
     """对预测边界框的置信度进行排序"""
@@ -761,7 +761,7 @@ def nms(boxes, scores, iou_threshold):
     return np.array(keep, dtype=np.int32, ctx=boxes.ctx)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def nms(boxes, scores, iou_threshold):
@@ -779,7 +779,7 @@ def nms(boxes, scores, iou_threshold):
     return d2l.tensor(keep, device=boxes.device)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def nms(boxes, scores, iou_threshold):
@@ -800,7 +800,7 @@ def nms(boxes, scores, iou_threshold):
 我们定义以下`multibox_detection`函数来[**将非极大值抑制应用于预测边界框**]。
 这里的实现有点复杂，请不要担心。我们将在实现之后，马上用一个具体的例子来展示它是如何工作的。
 
-```{.python .input}
+```python
 #@save
 def multibox_detection(cls_probs, offset_preds, anchors, nms_threshold=0.5,
                        pos_threshold=0.009999999):
@@ -835,7 +835,7 @@ def multibox_detection(cls_probs, offset_preds, anchors, nms_threshold=0.5,
     return d2l.stack(out)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def multibox_detection(cls_probs, offset_preds, anchors, nms_threshold=0.5,
@@ -871,7 +871,7 @@ def multibox_detection(cls_probs, offset_preds, anchors, nms_threshold=0.5,
     return d2l.stack(out)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def multibox_detection(cls_probs, offset_preds, anchors, nms_threshold=0.5,
@@ -912,7 +912,7 @@ def multibox_detection(cls_probs, offset_preds, anchors, nms_threshold=0.5,
 为简单起见，我们假设预测的偏移量都是零，这意味着预测的边界框即是锚框。
 对于背景、狗和猫其中的每个类，我们还定义了它的预测概率。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 anchors = d2l.tensor([[0.1, 0.08, 0.52, 0.92], [0.08, 0.2, 0.56, 0.95],
                       [0.15, 0.3, 0.62, 0.91], [0.55, 0.2, 0.9, 0.88]])
@@ -922,7 +922,7 @@ cls_probs = d2l.tensor([[0] * 4,  # 背景的预测概率
                       [0.1, 0.2, 0.3, 0.9]])  # 猫的预测概率
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 anchors = d2l.tensor([[0.1, 0.08, 0.52, 0.92], [0.08, 0.2, 0.56, 0.95],
                       [0.15, 0.3, 0.62, 0.91], [0.55, 0.2, 0.9, 0.88]])
@@ -934,7 +934,7 @@ cls_probs = d2l.tensor([[0] * 4,  # 背景的预测概率
 
 我们可以[**在图像上绘制这些预测边界框和置信度**]。
 
-```{.python .input}
+```python
 #@tab all
 fig = d2l.plt.imshow(img)
 show_bboxes(fig.axes, anchors * bbox_scale,
@@ -950,7 +950,7 @@ show_bboxes(fig.axes, anchors * bbox_scale,
 第二个元素是预测的边界框的置信度。
 其余四个元素分别是预测边界框左上角和右下角的$(x, y)$轴坐标（范围介于0和1之间）。
 
-```{.python .input}
+```python
 output = multibox_detection(np.expand_dims(cls_probs, axis=0),
                             np.expand_dims(offset_preds, axis=0),
                             np.expand_dims(anchors, axis=0),
@@ -958,7 +958,7 @@ output = multibox_detection(np.expand_dims(cls_probs, axis=0),
 output
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 output = multibox_detection(cls_probs.unsqueeze(dim=0),
                             offset_preds.unsqueeze(dim=0),
@@ -967,7 +967,7 @@ output = multibox_detection(cls_probs.unsqueeze(dim=0),
 output
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 output = multibox_detection(cls_probs.unsqueeze(axis=0),
                             offset_preds.unsqueeze(axis=0),
@@ -978,7 +978,7 @@ output
 
 删除-1类别（背景）的预测边界框后，我们可以[**输出由非极大值抑制保存的最终预测边界框**]。
 
-```{.python .input}
+```python
 #@tab all
 fig = d2l.plt.imshow(img)
 for i in d2l.numpy(output[0]):

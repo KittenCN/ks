@@ -84,7 +84,7 @@ forward propagate faster through the residual connections across layers.
 ResNet follows VGG's full $3\times 3$ convolutional layer design. The residual block has two $3\times 3$ convolutional layers with the same number of output channels. Each convolutional layer is followed by a batch normalization layer and a ReLU activation function. Then, we skip these two convolution operations and add the input directly before the final ReLU activation function.
 This kind of design requires that the output of the two convolutional layers has to be of the same shape as the input, so that they can be added together. If we want to change the number of channels, we need to introduce an additional $1\times 1$ convolutional layer to transform the input into the desired shape for the addition operation. Let us have a look at the code below.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
@@ -113,7 +113,7 @@ class Residual(nn.Block):  #@save
         return npx.relu(Y + X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -147,7 +147,7 @@ class Residual(nn.Module):  #@save
         return F.relu(Y)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -183,14 +183,14 @@ This code generates two types of networks: one where we add the input to the out
 
 Now let us look at a situation where the input and output are of the same shape.
 
-```{.python .input}
+```python
 blk = Residual(3)
 blk.initialize()
 X = np.random.uniform(size=(4, 3, 6, 6))
 blk(X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 blk = Residual(3,3)
 X = torch.rand(4, 3, 6, 6)
@@ -198,7 +198,7 @@ Y = blk(X)
 Y.shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 blk = Residual(3)
 X = tf.random.uniform((4, 6, 6, 3))
@@ -208,19 +208,19 @@ Y.shape
 
 We also have the option to halve the output height and width while increasing the number of output channels.
 
-```{.python .input}
+```python
 blk = Residual(6, use_1x1conv=True, strides=2)
 blk.initialize()
 blk(X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 blk = Residual(3,6, use_1x1conv=True, strides=2)
 blk(X).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 blk = Residual(6, use_1x1conv=True, strides=2)
 blk(X).shape
@@ -230,21 +230,21 @@ blk(X).shape
 
 The first two layers of ResNet are the same as those of the GoogLeNet we described before: the $7\times 7$ convolutional layer with 64 output channels and a stride of 2 is followed by the $3\times 3$ maximum pooling layer with a stride of 2. The difference is the batch normalization layer added after each convolutional layer in ResNet.
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nn.Conv2D(64, kernel_size=7, strides=2, padding=3),
         nn.BatchNorm(), nn.Activation('relu'),
         nn.MaxPool2D(pool_size=3, strides=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 b1 = nn.Sequential(nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3),
                    nn.BatchNorm2d(64), nn.ReLU(),
                    nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 b1 = tf.keras.models.Sequential([
     tf.keras.layers.Conv2D(64, kernel_size=7, strides=2, padding='same'),
@@ -259,7 +259,7 @@ The number of channels in the first module is the same as the number of input ch
 
 Now, we implement this module. Note that special processing has been performed on the first module.
 
-```{.python .input}
+```python
 def resnet_block(num_channels, num_residuals, first_block=False):
     blk = nn.Sequential()
     for i in range(num_residuals):
@@ -270,7 +270,7 @@ def resnet_block(num_channels, num_residuals, first_block=False):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def resnet_block(input_channels, num_channels, num_residuals,
                  first_block=False):
@@ -284,7 +284,7 @@ def resnet_block(input_channels, num_channels, num_residuals,
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class ResnetBlock(tf.keras.layers.Layer):
     def __init__(self, num_channels, num_residuals, first_block=False,
@@ -306,14 +306,14 @@ class ResnetBlock(tf.keras.layers.Layer):
 
 Then, we add all the modules to ResNet. Here, two residual blocks are used for each module.
 
-```{.python .input}
+```python
 net.add(resnet_block(64, 2, first_block=True),
         resnet_block(128, 2),
         resnet_block(256, 2),
         resnet_block(512, 2))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 b2 = nn.Sequential(*resnet_block(64, 64, 2, first_block=True))
 b3 = nn.Sequential(*resnet_block(64, 128, 2))
@@ -321,7 +321,7 @@ b4 = nn.Sequential(*resnet_block(128, 256, 2))
 b5 = nn.Sequential(*resnet_block(256, 512, 2))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 b2 = ResnetBlock(64, 2, first_block=True)
 b3 = ResnetBlock(128, 2)
@@ -331,18 +331,18 @@ b5 = ResnetBlock(512, 2)
 
 Finally, just like GoogLeNet, we add a global average pooling layer, followed by the fully-connected layer output.
 
-```{.python .input}
+```python
 net.add(nn.GlobalAvgPool2D(), nn.Dense(10))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(b1, b2, b3, b4, b5,
                     nn.AdaptiveAvgPool2d((1,1)),
                     nn.Flatten(), nn.Linear(512, 10))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # Recall that we define this as a function so we can reuse later and run it
 # within `tf.distribute.MirroredStrategy`'s scope to utilize various
@@ -374,7 +374,7 @@ By configuring different numbers of channels and residual blocks in the module, 
 
 Before training ResNet, let us observe how the input shape changes across different modules in ResNet. As in all the previous architectures, the resolution decreases while the number of channels increases up until the point where a global average pooling layer aggregates all features.
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(1, 1, 224, 224))
 net.initialize()
 for layer in net:
@@ -382,7 +382,7 @@ for layer in net:
     print(layer.name, 'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.rand(size=(1, 1, 224, 224))
 for layer in net:
@@ -390,7 +390,7 @@ for layer in net:
     print(layer.__class__.__name__,'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.uniform(shape=(1, 224, 224, 1))
 for layer in net().layers:
@@ -402,7 +402,7 @@ for layer in net().layers:
 
 We train ResNet on the Fashion-MNIST dataset, just like before.
 
-```{.python .input}
+```python
 #@tab all
 lr, num_epochs, batch_size = 0.05, 10, 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=96)

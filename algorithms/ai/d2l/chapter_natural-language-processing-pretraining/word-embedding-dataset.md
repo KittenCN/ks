@@ -3,7 +3,7 @@
 
 现在我们已经了解了word2vec模型的技术细节和大致的训练方法，让我们来看看它们的实现。具体地说，我们将以 :numref:`sec_word2vec`的跳元模型和 :numref:`sec_approx_train`的负采样为例。本节从用于预训练词嵌入模型的数据集开始：数据的原始格式将被转换为可以在训练期间迭代的小批量。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 import math
 from mxnet import gluon, np
@@ -11,7 +11,7 @@ import os
 import random
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import math
@@ -20,7 +20,7 @@ import os
 import random
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -35,7 +35,7 @@ import random
 
 我们在这里使用的数据集是[Penn Tree Bank（PTB）](https://catalog.ldc.upenn.edu/LDC99T42)。该语料库取自“华尔街日报”的文章，分为训练集、验证集和测试集。在原始格式中，文本文件的每一行表示由空格分隔的一句话。在这里，我们将每个单词视为一个词元。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['ptb'] = (d2l.DATA_URL + 'ptb.zip',
@@ -56,7 +56,7 @@ f'# sentences数: {len(sentences)}'
 
 在读取训练集之后，我们为语料库构建了一个词表，其中出现次数少于10次的任何单词都将由“&lt;unk&gt;”词元替换。请注意，原始数据集还包含表示稀有（未知）单词的“&lt;unk&gt;”词元。
 
-```{.python .input}
+```python
 #@tab all
 vocab = d2l.Vocab(sentences, min_freq=10)
 f'vocab size: {len(vocab)}'
@@ -70,7 +70,7 @@ $$ P(w_i) = \max\left(1 - \sqrt{\frac{t}{f(w_i)}}, 0\right),$$
 
 其中$f(w_i)$是$w_i$的词数与数据集中的总词数的比率，常量$t$是超参数（在实验中为$10^{-4}$）。我们可以看到，只有当相对比率$f(w_i) > t$时，（高频）词$w_i$才能被丢弃，且该词的相对比率越高，被丢弃的概率就越大。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def subsample(sentences, vocab):
@@ -94,7 +94,7 @@ subsampled, counter = subsample(sentences, vocab)
 
 下面的代码片段绘制了下采样前后每句话的词元数量的直方图。正如预期的那样，下采样通过删除高频词来显著缩短句子，这将使训练加速。
 
-```{.python .input}
+```python
 #@tab all
 d2l.show_list_len_pair_hist(
     ['origin', 'subsampled'], '# tokens per sentence',
@@ -103,7 +103,7 @@ d2l.show_list_len_pair_hist(
 
 对于单个词元，高频词“the”的采样率不到1/20。
 
-```{.python .input}
+```python
 #@tab all
 def compare_counts(token):
     return (f'"{token}"的数量：'
@@ -115,14 +115,14 @@ compare_counts('the')
 
 相比之下，低频词“join”则被完全保留。
 
-```{.python .input}
+```python
 #@tab all
 compare_counts('join')
 ```
 
 在下采样之后，我们将词元映射到它们在语料库中的索引。
 
-```{.python .input}
+```python
 #@tab all
 corpus = [vocab[line] for line in subsampled]
 corpus[:3]
@@ -132,7 +132,7 @@ corpus[:3]
 
 下面的`get_centers_and_contexts`函数从`corpus`中提取所有中心词及其上下文词。它随机采样1到`max_window_size`之间的整数作为上下文窗口。对于任一中心词，与其距离不超过采样上下文窗口大小的词为其上下文词。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def get_centers_and_contexts(corpus, max_window_size):
@@ -155,7 +155,7 @@ def get_centers_and_contexts(corpus, max_window_size):
 
 接下来，我们创建一个人工数据集，分别包含7个和3个单词的两个句子。设置最大上下文窗口大小为2，并打印所有中心词及其上下文词。
 
-```{.python .input}
+```python
 #@tab all
 tiny_dataset = [list(range(7)), list(range(7, 10))]
 print('数据集', tiny_dataset)
@@ -165,7 +165,7 @@ for center, context in zip(*get_centers_and_contexts(tiny_dataset, 2)):
 
 在PTB数据集上进行训练时，我们将最大上下文窗口大小设置为5。下面提取数据集中的所有中心词及其上下文词。
 
-```{.python .input}
+```python
 #@tab all
 all_centers, all_contexts = get_centers_and_contexts(corpus, 5)
 f'# “中心词-上下文词对”的数量: {sum([len(contexts) for contexts in all_contexts])}'
@@ -175,7 +175,7 @@ f'# “中心词-上下文词对”的数量: {sum([len(contexts) for contexts i
 
 我们使用负采样进行近似训练。为了根据预定义的分布对噪声词进行采样，我们定义以下`RandomGenerator`类，其中（可能未规范化的）采样分布通过变量`sampling_weights`传递。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 class RandomGenerator:
@@ -199,7 +199,7 @@ class RandomGenerator:
 
 例如，我们可以在索引1、2和3中绘制10个随机变量$X$，采样概率为$P(X=1)=2/9, P(X=2)=3/9$和$P(X=3)=4/9$，如下所示。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 generator = RandomGenerator([2, 3, 4])
@@ -208,7 +208,7 @@ generator = RandomGenerator([2, 3, 4])
 
 对于一对中心词和上下文词，我们随机抽取了`K`个（实验中为5个）噪声词。根据word2vec论文中的建议，将噪声词$w$的采样概率$P(w)$设置为其在字典中的相对频率，其幂为0.75 :cite:`Mikolov.Sutskever.Chen.ea.2013`。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def get_negatives(all_contexts, vocab, counter, K):
@@ -241,7 +241,7 @@ all_negatives = get_negatives(all_contexts, vocab, counter, 5)
 
 上述思想在下面的`batchify`函数中实现。其输入`data`是长度等于批量大小的列表，其中每个元素是由中心词`center`、其上下文词`context`和其噪声词`negative`组成的样本。此函数返回一个可以在训练期间加载用于计算的小批量，例如包括掩码变量。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def batchify(data):
@@ -261,7 +261,7 @@ def batchify(data):
 
 让我们使用一个小批量的两个样本来测试此函数。
 
-```{.python .input}
+```python
 #@tab all
 x_1 = (1, [2, 2], [3, 3, 3, 3])
 x_2 = (1, [2, 2, 2], [3, 3])
@@ -276,7 +276,7 @@ for name, data in zip(names, batch):
 
 最后，我们定义了读取PTB数据集并返回数据迭代器和词表的`load_data_ptb`函数。
 
-```{.python .input}
+```python
 #@save
 def load_data_ptb(batch_size, max_window_size, num_noise_words):
     """下载PTB数据集，然后将其加载到内存中"""
@@ -296,7 +296,7 @@ def load_data_ptb(batch_size, max_window_size, num_noise_words):
     return data_iter, vocab
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def load_data_ptb(batch_size, max_window_size, num_noise_words):
@@ -333,7 +333,7 @@ def load_data_ptb(batch_size, max_window_size, num_noise_words):
     return data_iter, vocab
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def load_data_ptb(batch_size, max_window_size, num_noise_words):
@@ -372,7 +372,7 @@ def load_data_ptb(batch_size, max_window_size, num_noise_words):
 
 让我们打印数据迭代器的第一个小批量。
 
-```{.python .input}
+```python
 #@tab all
 data_iter, vocab = load_data_ptb(512, 5, 5)
 for batch in data_iter:

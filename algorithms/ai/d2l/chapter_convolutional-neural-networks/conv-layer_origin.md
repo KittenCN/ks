@@ -75,21 +75,21 @@ Next, we implement this process in the `corr2d` function,
 which accepts an input tensor `X` and a kernel tensor `K`
 and returns an output tensor `Y`.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, np, npx
 from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def corr2d(X, K):  #@save
     """Compute 2D cross-correlation."""
@@ -101,7 +101,7 @@ def corr2d(X, K):  #@save
     return Y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -122,7 +122,7 @@ from :numref:`fig_correlation`
 to validate the output of the above implementation
 of the two-dimensional cross-correlation operation.
 
-```{.python .input}
+```python
 #@tab all
 X = d2l.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0], [6.0, 7.0, 8.0]])
 K = d2l.tensor([[0.0, 1.0], [2.0, 3.0]])
@@ -146,7 +146,7 @@ we declare `weight` and `bias` as the two model parameters.
 The forward propagation function
 calls the `corr2d` function and adds the bias.
 
-```{.python .input}
+```python
 class Conv2D(nn.Block):
     def __init__(self, kernel_size, **kwargs):
         super().__init__(**kwargs)
@@ -157,7 +157,7 @@ class Conv2D(nn.Block):
         return corr2d(x, self.weight.data()) + self.bias.data()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class Conv2D(nn.Module):
     def __init__(self, kernel_size):
@@ -169,7 +169,7 @@ class Conv2D(nn.Module):
         return corr2d(x, self.weight) + self.bias
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class Conv2D(tf.keras.layers.Layer):
     def __init__(self):
@@ -203,14 +203,14 @@ by finding the location of the pixel change.
 First, we construct an "image" of $6\times 8$ pixels.
 The middle four columns are black (0) and the rest are white (1).
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 X = d2l.ones((6, 8))
 X[:, 2:6] = 0
 X
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.Variable(tf.ones((6, 8)))
 X[:, 2:6].assign(tf.zeros(X[:, 2:6].shape))
@@ -222,7 +222,7 @@ When we perform the cross-correlation operation with the input,
 if the horizontally adjacent elements are the same,
 the output is 0. Otherwise, the output is non-zero.
 
-```{.python .input}
+```python
 #@tab all
 K = d2l.tensor([[1.0, -1.0]])
 ```
@@ -233,7 +233,7 @@ As you can see, we detect 1 for the edge from white to black
 and -1 for the edge from black to white.
 All other outputs take value 0.
 
-```{.python .input}
+```python
 #@tab all
 Y = corr2d(X, K)
 Y
@@ -242,7 +242,7 @@ Y
 We can now apply the kernel to the transposed image.
 As expected, it vanishes. The kernel `K` only detects vertical edges.
 
-```{.python .input}
+```python
 #@tab all
 corr2d(d2l.transpose(X), K)
 ```
@@ -269,7 +269,7 @@ we use the built-in class
 for two-dimensional convolutional layers
 and ignore the bias.
 
-```{.python .input}
+```python
 # Construct a two-dimensional convolutional layer with 1 output channel and a
 # kernel of shape (1, 2). For the sake of simplicity, we ignore the bias here
 conv2d = nn.Conv2D(1, kernel_size=(1, 2), use_bias=False)
@@ -292,7 +292,7 @@ for i in range(10):
         print(f'batch {i + 1}, loss {float(l.sum()):.3f}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # Construct a two-dimensional convolutional layer with 1 output channel and a
 # kernel of shape (1, 2). For the sake of simplicity, we ignore the bias here
@@ -315,7 +315,7 @@ for i in range(10):
         print(f'batch {i + 1}, loss {l.sum():.3f}')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # Construct a two-dimensional convolutional layer with 1 output channel and a
 # kernel of shape (1, 2). For the sake of simplicity, we ignore the bias here
@@ -344,16 +344,16 @@ for i in range(10):
 
 Note that the error has dropped to a small value after 10 iterations. Now we will take a look at the kernel tensor we learned.
 
-```{.python .input}
+```python
 d2l.reshape(conv2d.weight.data(), (1, 2))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 d2l.reshape(conv2d.weight.data, (1, 2))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 d2l.reshape(conv2d.get_weights()[0], (1, 2))
 ```

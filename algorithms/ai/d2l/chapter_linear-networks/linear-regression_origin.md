@@ -337,7 +337,7 @@ Doing this efficiently requires that we vectorize the calculations
 and leverage fast linear algebra libraries
 rather than writing costly for-loops in Python.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 import math
@@ -345,7 +345,7 @@ from mxnet import np
 import time
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -355,7 +355,7 @@ import numpy as np
 import time
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -372,7 +372,7 @@ containing all ones.
 In one method we will loop over the vectors with a Python for-loop.
 In the other method we will rely on a single call to `+`.
 
-```{.python .input}
+```python
 #@tab all
 n = 10000
 a = d2l.ones(n)
@@ -382,7 +382,7 @@ b = d2l.ones(n)
 Since we will benchmark the running time frequently in this book,
 let us define a timer.
 
-```{.python .input}
+```python
 #@tab all
 class Timer:  #@save
     """Record multiple running times."""
@@ -416,7 +416,7 @@ Now we can benchmark the workloads.
 First, we add them, one coordinate at a time,
 using a for-loop.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 c = d2l.zeros(n)
 timer = Timer()
@@ -425,7 +425,7 @@ for i in range(n):
 f'{timer.stop():.5f} sec'
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 c = tf.Variable(d2l.zeros(n))
 timer = Timer()
@@ -436,7 +436,7 @@ f'{timer.stop():.5f} sec'
 
 Alternatively, we rely on the reloaded `+` operator to compute the elementwise sum.
 
-```{.python .input}
+```python
 #@tab all
 timer.start()
 d = a + b
@@ -470,7 +470,7 @@ $$p(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp\left(-\frac{1}{2 \sigma^2} (x - \m
 
 Below we define a Python function to compute the normal distribution.
 
-```{.python .input}
+```python
 #@tab all
 def normal(x, mu, sigma):
     p = 1 / math.sqrt(2 * math.pi * sigma**2)
@@ -479,7 +479,7 @@ def normal(x, mu, sigma):
 
 We can now visualize the normal distributions.
 
-```{.python .input}
+```python
 #@tab all
 # Use numpy again for visualization
 x = np.arange(-7, 7, 0.01)

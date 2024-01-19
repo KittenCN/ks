@@ -7,7 +7,7 @@ For PyTorch, by default, GPU operations are asynchronous. When you call a functi
 
 Hence, understanding how asynchronous programming works helps us to develop more efficient programs, by proactively reducing computational requirements and mutual dependencies. This allows us to reduce memory overhead and increase processor utilization.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 import numpy, os, subprocess
 from mxnet import autograd, gluon, np, npx
@@ -15,7 +15,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import numpy, os, subprocess
@@ -34,7 +34,7 @@ For a warmup consider the following toy problem: we want to generate a random ma
 Note that PyTorch `tensor` is defined on a GPU.
 :end_tab:
 
-```{.python .input}
+```python
 with d2l.Benchmark('numpy'):
     for _ in range(10):
         a = numpy.random.normal(size=(1000, 1000))
@@ -46,7 +46,7 @@ with d2l.Benchmark('mxnet.np'):
         b = np.dot(a, a)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # Warmup for GPU computation
 device = d2l.try_gpu()
@@ -81,7 +81,7 @@ what happened previously: computation is being executed by the backend
 while the frontend returns control to Python.
 :end_tab:
 
-```{.python .input}
+```python
 with d2l.Benchmark():
     for _ in range(10):
         a = np.random.normal(size=(1000, 1000))
@@ -89,7 +89,7 @@ with d2l.Benchmark():
     npx.waitall()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 with d2l.Benchmark():
     for _ in range(10):
@@ -119,14 +119,14 @@ Hence, it is not possible to parallelize operations that depend on each other.
 
 Let us look at another toy example to understand the dependency graph a bit better.
 
-```{.python .input}
+```python
 x = np.ones((1, 2))
 y = np.ones((1, 2))
 z = x * y + 2
 z
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x = torch.ones((1, 2), device=device)
 y = torch.ones((1, 2), device=device)
@@ -159,7 +159,7 @@ There are a number of operations that will force Python to wait for completion:
 Let us see how this works in practice.
 :end_tab:
 
-```{.python .input}
+```python
 with d2l.Benchmark('waitall'):
     b = np.dot(a, a)
     npx.waitall()
@@ -175,7 +175,7 @@ Both operations take approximately the same time to complete. Besides the obviou
 Copying small amounts of data frequently from MXNet's scope to NumPy and back can destroy performance of an otherwise efficient code, since each such operation requires the computational graph to evaluate all intermediate results needed to get the relevant term *before* anything else can be done.
 :end_tab:
 
-```{.python .input}
+```python
 with d2l.Benchmark('numpy conversion'):
     b = np.dot(a, a)
     b.asnumpy()
@@ -191,7 +191,7 @@ with d2l.Benchmark('scalar conversion'):
 On a heavily multithreaded system (even regular laptops have 4 threads or more and on multi-socket servers this number can exceed 256) the overhead of scheduling operations can become significant. This is why it is highly desirable to have computation and scheduling occur asynchronously and in parallel. To illustrate the benefit of doing so let us see what happens if we increment a variable by 1 multiple times, both in sequence or asynchronously. We simulate synchronous execution by inserting a `wait_to_read` barrier in between each addition.
 :end_tab:
 
-```{.python .input}
+```python
 with d2l.Benchmark('synchronous'):
     for _ in range(10000):
         y = x + 1

@@ -388,7 +388,7 @@ and the broad digitization of the economy.
 We can now explore these concepts interactively
 by fitting polynomials to data.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, np, npx
 from mxnet.gluon import nn
@@ -396,7 +396,7 @@ import math
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -405,7 +405,7 @@ import numpy as np
 import math
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -429,7 +429,7 @@ are rescaled from $x^i$ to $\frac{x^i}{i!}$.
 It allows us to avoid very large values for large exponents $i$.
 We will synthesize 100 samples each for the training set and test set.
 
-```{.python .input}
+```python
 #@tab all
 max_degree = 20  # Maximum degree of the polynomial
 n_train, n_test = 100, 100  # Training and test dataset sizes
@@ -453,14 +453,14 @@ Take a look at the first 2 samples from the generated dataset.
 The value 1 is technically a feature,
 namely the constant feature corresponding to the bias.
 
-```{.python .input}
+```python
 #@tab pytorch, tensorflow
 # Convert from NumPy ndarrays to tensors
 true_w, features, poly_features, labels = [d2l.tensor(x, dtype=
     d2l.float32) for x in [true_w, features, poly_features, labels]]
 ```
 
-```{.python .input}
+```python
 #@tab all
 features[:2], poly_features[:2, :], labels[:2]
 ```
@@ -469,7 +469,7 @@ features[:2], poly_features[:2, :], labels[:2]
 
 Let us first implement a function to evaluate the loss on a given dataset.
 
-```{.python .input}
+```python
 #@tab all
 def evaluate_loss(net, data_iter, loss):  #@save
     """Evaluate the loss of a model on the given dataset."""
@@ -482,7 +482,7 @@ def evaluate_loss(net, data_iter, loss):  #@save
 
 Now define the training function.
 
-```{.python .input}
+```python
 def train(train_features, test_features, train_labels, test_labels,
           num_epochs=400):
     loss = gluon.loss.L2Loss()
@@ -508,7 +508,7 @@ def train(train_features, test_features, train_labels, test_labels,
     print('weight:', net[0].weight.data().asnumpy())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(train_features, test_features, train_labels, test_labels,
           num_epochs=400):
@@ -534,7 +534,7 @@ def train(train_features, test_features, train_labels, test_labels,
     print('weight:', net[0].weight.data.numpy())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def train(train_features, test_features, train_labels, test_labels,
           num_epochs=400):
@@ -567,7 +567,7 @@ The results show that this model's training and test losses can be both effectiv
 The learned model parameters are also close
 to the true values $w = [5, 1.2, -3.4, 5.6]$.
 
-```{.python .input}
+```python
 #@tab all
 # Pick the first four dimensions, i.e., 1, x, x^2/2!, x^3/3! from the
 # polynomial features
@@ -587,7 +587,7 @@ When used to fit nonlinear patterns
 (like the third-order polynomial function here)
 linear models are liable to underfit.
 
-```{.python .input}
+```python
 #@tab all
 # Pick the first two dimensions, i.e., 1, x, from the polynomial features
 train(poly_features[:n_train, :2], poly_features[n_train:, :2],
@@ -608,7 +608,7 @@ the test loss is still much higher.
 It shows that
 the complex model overfits the data.
 
-```{.python .input}
+```python
 #@tab all
 # Pick all the dimensions from the polynomial features
 train(poly_features[:n_train, :], poly_features[n_train:, :],

@@ -14,7 +14,7 @@ and the vocabulary for this dataset
 by calling the `d2l.load_data_ptb`
 function, which was described in :numref:`sec_word2vec_data`
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 import math
 from mxnet import autograd, gluon, np, npx
@@ -26,7 +26,7 @@ data_iter, vocab = d2l.load_data_ptb(batch_size, max_window_size,
                                      num_noise_words)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import math
@@ -59,13 +59,13 @@ the vector dimension for each token (`output_dim`).
 After a word embedding model is trained,
 this weight is what we need.
 
-```{.python .input}
+```python
 embed = nn.Embedding(input_dim=20, output_dim=4)
 embed.initialize()
 embed.weight
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 embed = nn.Embedding(num_embeddings=20, embedding_dim=4)
 print(f'Parameter embedding_weight ({embed.weight.shape}, '
@@ -86,7 +86,7 @@ returns vectors with shape (2, 3, 4)
 for a minibatch of token indices with shape
 (2, 3).
 
-```{.python .input}
+```python
 #@tab all
 x = d2l.tensor([[1, 2, 3], [4, 5, 6]])
 embed(x)
@@ -114,7 +114,7 @@ an output of shape (batch size, 1, `max_len`).
 Each element in the output is the dot product of
 a center word vector and a context or noise word vector.
 
-```{.python .input}
+```python
 def skip_gram(center, contexts_and_negatives, embed_v, embed_u):
     v = embed_v(center)
     u = embed_u(contexts_and_negatives)
@@ -122,7 +122,7 @@ def skip_gram(center, contexts_and_negatives, embed_v, embed_u):
     return pred
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def skip_gram(center, contexts_and_negatives, embed_v, embed_u):
     v = embed_v(center)
@@ -133,11 +133,11 @@ def skip_gram(center, contexts_and_negatives, embed_v, embed_u):
 
 Let us print the output shape of this `skip_gram` function for some example inputs.
 
-```{.python .input}
+```python
 skip_gram(np.ones((2, 1)), np.ones((2, 4)), embed, embed).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 skip_gram(torch.ones((2, 1), dtype=torch.long),
           torch.ones((2, 4), dtype=torch.long), embed, embed).shape
@@ -156,11 +156,11 @@ for negative sampling in :numref:`subsec_negative-sampling`,
 we will use 
 the binary cross-entropy loss.
 
-```{.python .input}
+```python
 loss = gluon.loss.SigmoidBCELoss()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class SigmoidBCELoss(nn.Module):
     # Binary cross-entropy loss with masking
@@ -184,7 +184,7 @@ calculates the
 binary cross-entropy loss
 for the given variables.
 
-```{.python .input}
+```python
 #@tab all
 pred = d2l.tensor([[1.1, -2.2, 3.3, -4.4]] * 2)
 label = d2l.tensor([[1.0, 0.0, 0.0, 0.0], [0.0, 1.0, 0.0, 0.0]])
@@ -203,7 +203,7 @@ the two outputs as
 two normalized losses
 that are averaged over non-masked predictions.
 
-```{.python .input}
+```python
 #@tab all
 def sigmd(x):
     return -math.log(1 / (1 + math.exp(-x)))
@@ -221,14 +221,14 @@ and context words, respectively.
 The word vector dimension
 `embed_size` is set to 100.
 
-```{.python .input}
+```python
 embed_size = 100
 net = nn.Sequential()
 net.add(nn.Embedding(input_dim=len(vocab), output_dim=embed_size),
         nn.Embedding(input_dim=len(vocab), output_dim=embed_size))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 embed_size = 100
 net = nn.Sequential(nn.Embedding(num_embeddings=len(vocab),
@@ -241,7 +241,7 @@ net = nn.Sequential(nn.Embedding(num_embeddings=len(vocab),
 
 The training loop is defined below. Because of the existence of padding, the calculation of the loss function is slightly different compared to the previous training functions.
 
-```{.python .input}
+```python
 def train(net, data_iter, lr, num_epochs, device=d2l.try_gpu()):
     net.initialize(ctx=device, force_reinit=True)
     trainer = gluon.Trainer(net.collect_params(), 'adam',
@@ -269,7 +269,7 @@ def train(net, data_iter, lr, num_epochs, device=d2l.try_gpu()):
           f'{metric[1] / timer.stop():.1f} tokens/sec on {str(device)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(net, data_iter, lr, num_epochs, device=d2l.try_gpu()):
     def init_weights(m):
@@ -304,7 +304,7 @@ def train(net, data_iter, lr, num_epochs, device=d2l.try_gpu()):
 
 Now we can train a skip-gram model using negative sampling.
 
-```{.python .input}
+```python
 #@tab all
 lr, num_epochs = 0.002, 5
 train(net, data_iter, lr, num_epochs)
@@ -320,7 +320,7 @@ find words from the dictionary
 that are most semantically similar
 to an input word.
 
-```{.python .input}
+```python
 def get_similar_tokens(query_token, k, embed):
     W = embed.weight.data()
     x = W[vocab[query_token]]
@@ -333,7 +333,7 @@ def get_similar_tokens(query_token, k, embed):
 get_similar_tokens('chip', 3, net[0])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_similar_tokens(query_token, k, embed):
     W = embed.weight.data

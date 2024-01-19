@@ -26,7 +26,7 @@ subtracts the mean from its input.
 To build it, we simply need to inherit
 from the base layer class and implement the forward propagation function.
 
-```{.python .input}
+```python
 from mxnet import gluon, np, npx
 from mxnet.gluon import nn
 npx.set_np()
@@ -39,7 +39,7 @@ class CenteredLayer(nn.Block):
         return X - X.mean()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 from torch import nn
@@ -52,7 +52,7 @@ class CenteredLayer(nn.Module):
         return X - X.mean()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -66,18 +66,18 @@ class CenteredLayer(tf.keras.Model):
 
 Let us verify that our layer works as intended by feeding some data through it.
 
-```{.python .input}
+```python
 layer = CenteredLayer()
 layer(np.array([1, 2, 3, 4, 5]))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 layer = CenteredLayer()
 layer(torch.FloatTensor([1, 2, 3, 4, 5]))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 layer = CenteredLayer()
 layer(tf.constant([1, 2, 3, 4, 5]))
@@ -86,18 +86,18 @@ layer(tf.constant([1, 2, 3, 4, 5]))
 We can now incorporate our layer as a component
 in constructing more complex models.
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nn.Dense(128), CenteredLayer())
 net.initialize()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(nn.Linear(8, 128), CenteredLayer())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = tf.keras.Sequential([tf.keras.layers.Dense(128), CenteredLayer()])
 ```
@@ -108,18 +108,18 @@ Because we are dealing with floating point numbers,
 we may still see a very small nonzero number
 due to quantization.
 
-```{.python .input}
+```python
 Y = net(np.random.uniform(size=(4, 8)))
 Y.mean()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 Y = net(torch.rand(4, 8))
 Y.mean()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 Y = net(tf.random.uniform((4, 8)))
 tf.reduce_mean(Y)
@@ -144,7 +144,7 @@ In this implementation, we bake in the ReLU activation as a default.
 This layer requires to input arguments: `in_units` and `units`, which
 denote the number of inputs and outputs, respectively.
 
-```{.python .input}
+```python
 class MyDense(nn.Block):
     def __init__(self, units, in_units, **kwargs):
         super().__init__(**kwargs)
@@ -157,7 +157,7 @@ class MyDense(nn.Block):
         return npx.relu(linear)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class MyLinear(nn.Module):
     def __init__(self, in_units, units):
@@ -168,7 +168,7 @@ class MyLinear(nn.Module):
         return torch.matmul(X, self.weight.data) + self.bias.data
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class MyDense(tf.keras.Model):
     def __init__(self, units):
@@ -190,18 +190,18 @@ class MyDense(tf.keras.Model):
 Next, we instantiate the `MyDense` class
 and access its model parameters.
 
-```{.python .input}
+```python
 dense = MyDense(units=3, in_units=5)
 dense.params
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 dense = MyLinear(5, 3)
 dense.weight
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 dense = MyDense(3)
 dense(tf.random.uniform((2, 5)))
@@ -210,17 +210,17 @@ dense.get_weights()
 
 We can directly carry out forward propagation calculations using custom layers.
 
-```{.python .input}
+```python
 dense.initialize()
 dense(np.random.uniform(size=(2, 5)))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 dense(torch.randn(2, 5))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 dense(tf.random.uniform((2, 5)))
 ```
@@ -228,7 +228,7 @@ dense(tf.random.uniform((2, 5)))
 We can also construct models using custom layers.
 Once we have that we can use it just like the built-in fully-connected layer.
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(MyDense(8, in_units=64),
         MyDense(1, in_units=8))
@@ -236,13 +236,13 @@ net.initialize()
 net(np.random.uniform(size=(2, 64)))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(MyLinear(64, 8), nn.ReLU(), MyLinear(8, 1))
 net(torch.randn(2, 64))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = tf.keras.models.Sequential([MyDense(8), MyDense(1)])
 net(tf.random.uniform((2, 64)))

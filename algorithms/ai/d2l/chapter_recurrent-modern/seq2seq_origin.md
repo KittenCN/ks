@@ -72,7 +72,7 @@ We will train this model for machine translation
 on the English-French dataset as introduced in
 :numref:`sec_machine_translation`.
 
-```{.python .input}
+```python
 import collections
 from d2l import mxnet as d2l
 import math
@@ -81,7 +81,7 @@ from mxnet.gluon import nn, rnn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import collections
 from d2l import torch as d2l
@@ -144,7 +144,7 @@ Besides,
 here we choose a multilayer GRU to
 implement the encoder.
 
-```{.python .input}
+```python
 #@save
 class Seq2SeqEncoder(d2l.Encoder):
     """The RNN encoder for sequence to sequence learning."""
@@ -167,7 +167,7 @@ class Seq2SeqEncoder(d2l.Encoder):
         return output, state
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class Seq2SeqEncoder(d2l.Encoder):
@@ -209,7 +209,7 @@ are a tensor
 of shape
 (number of time steps, batch size, number of hidden units).
 
-```{.python .input}
+```python
 encoder = Seq2SeqEncoder(vocab_size=10, embed_size=8, num_hiddens=16,
                          num_layers=2)
 encoder.initialize()
@@ -218,7 +218,7 @@ output, state = encoder(X)
 output.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 encoder = Seq2SeqEncoder(vocab_size=10, embed_size=8, num_hiddens=16,
                          num_layers=2)
@@ -236,11 +236,11 @@ is
 If an LSTM is used,
 memory cell information will also be contained in `state`.
 
-```{.python .input}
+```python
 len(state), state[0].shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 state.shape
 ```
@@ -290,7 +290,7 @@ To predict the probability distribution of the output token,
 a fully-connected layer is used to transform
 the hidden state at the final layer of the RNN decoder.
 
-```{.python .input}
+```python
 class Seq2SeqDecoder(d2l.Decoder):
     """The RNN decoder for sequence to sequence learning."""
     def __init__(self, vocab_size, embed_size, num_hiddens, num_layers,
@@ -319,7 +319,7 @@ class Seq2SeqDecoder(d2l.Decoder):
         return output, state
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class Seq2SeqDecoder(d2l.Decoder):
     """The RNN decoder for sequence to sequence learning."""
@@ -352,7 +352,7 @@ below we instantiate it with the same hyperparameters from the aforementioned en
 As we can see, the output shape of the decoder becomes (batch size, number of time steps, vocabulary size),
 where the last dimension of the tensor stores the predicted token distribution.
 
-```{.python .input}
+```python
 decoder = Seq2SeqDecoder(vocab_size=10, embed_size=8, num_hiddens=16,
                          num_layers=2)
 decoder.initialize()
@@ -361,7 +361,7 @@ output, state = decoder(X, state)
 output.shape, len(state), state[0].shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 decoder = Seq2SeqDecoder(vocab_size=10, embed_size=8, num_hiddens=16,
                          num_layers=2)
@@ -409,12 +409,12 @@ the remaining entries after
 the first one
 and the first two entries are cleared to zeros.
 
-```{.python .input}
+```python
 X = np.array([[1, 2, 3], [4, 5, 6]])
 npx.sequence_mask(X, np.array([1, 2]), True, axis=1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def sequence_mask(X, valid_len, value=0):
@@ -434,12 +434,12 @@ few axes.
 If you like, you may even specify
 to replace such entries with a non-zero value.
 
-```{.python .input}
+```python
 X = d2l.ones((2, 3, 4))
 npx.sequence_mask(X, np.array([1, 2]), True, value=-1, axis=1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = d2l.ones(2, 3, 4)
 sequence_mask(X, torch.tensor([1, 2]), value=-1)
@@ -457,7 +457,7 @@ the loss for all the tokens
 will be multipled by the mask to filter out
 irrelevant predictions of padding tokens in the loss.
 
-```{.python .input}
+```python
 #@save
 class MaskedSoftmaxCELoss(gluon.loss.SoftmaxCELoss):
     """The softmax cross-entropy loss with masks."""
@@ -471,7 +471,7 @@ class MaskedSoftmaxCELoss(gluon.loss.SoftmaxCELoss):
         return super(MaskedSoftmaxCELoss, self).forward(pred, label, weights)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class MaskedSoftmaxCELoss(nn.CrossEntropyLoss):
@@ -498,12 +498,12 @@ the loss of the first sequence
 should be twice as large as that of the second sequence,
 while the third sequence should have a zero loss.
 
-```{.python .input}
+```python
 loss = MaskedSoftmaxCELoss()
 loss(d2l.ones((3, 4, 10)), d2l.ones((3, 4)), np.array([4, 2, 0]))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 loss = MaskedSoftmaxCELoss()
 loss(d2l.ones(3, 4, 10), d2l.ones((3, 4), dtype=torch.long),
@@ -524,7 +524,7 @@ we could also feed the *predicted* token
 from the previous time step
 as the current input to the decoder.
 
-```{.python .input}
+```python
 #@save
 def train_seq2seq(net, data_iter, lr, num_epochs, tgt_vocab, device):
     """Train a model for sequence to sequence."""
@@ -557,7 +557,7 @@ def train_seq2seq(net, data_iter, lr, num_epochs, tgt_vocab, device):
           f'tokens/sec on {str(device)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def train_seq2seq(net, data_iter, lr, num_epochs, tgt_vocab, device):
@@ -601,7 +601,7 @@ def train_seq2seq(net, data_iter, lr, num_epochs, tgt_vocab, device):
 Now we can create and train an RNN encoder-decoder model
 for sequence to sequence learning on the machine translation dataset.
 
-```{.python .input}
+```python
 #@tab all
 embed_size, num_hiddens, num_layers, dropout = 32, 32, 2, 0.1
 batch_size, num_steps = 64, 10
@@ -640,7 +640,7 @@ We will introduce different
 strategies for sequence generation in
 :numref:`sec_beam-search`.
 
-```{.python .input}
+```python
 #@save
 def predict_seq2seq(net, src_sentence, src_vocab, tgt_vocab, num_steps,
                     device, save_attention_weights=False):
@@ -673,7 +673,7 @@ def predict_seq2seq(net, src_sentence, src_vocab, tgt_vocab, num_steps,
     return ' '.join(tgt_vocab.to_tokens(output_seq)), attention_weight_seq
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def predict_seq2seq(net, src_sentence, src_vocab, tgt_vocab, num_steps,
@@ -768,7 +768,7 @@ although $p_1 = p_2 = 1$, the penalty factor $\exp(1-6/2) \approx 0.14$ lowers t
 
 We implement the BLEU measure as follows.
 
-```{.python .input}
+```python
 #@tab all
 def bleu(pred_seq, label_seq, k):  #@save
     """Compute the BLEU."""
@@ -792,7 +792,7 @@ we use the trained RNN encoder-decoder
 to translate a few English sentences into French
 and compute the BLEU of the results.
 
-```{.python .input}
+```python
 #@tab all
 engs = ['go .', "i lost .", 'he\'s calm .', 'i\'m home .']
 fras = ['va !', 'j\'ai perdu .', 'il est calme .', 'je suis chez moi .']

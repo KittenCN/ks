@@ -125,28 +125,28 @@ Let us see how this works on real data.
 We construct a vocabulary based on the time machine dataset as introduced in :numref:`sec_text_preprocessing` 
 and print the top 10 most frequent words.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 import random
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 import random
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 import random
 ```
 
-```{.python .input}
+```python
 #@tab all
 tokens = d2l.tokenize(d2l.read_time_machine())
 # Since each text line is not necessisarily a sentence or a paragraph, we
@@ -161,7 +161,7 @@ They are often referred to as *stop words* and thus filtered out.
 Nonetheless, they still carry meaning and we will still use them.
 Besides, it is quite clear that the word frequency decays rather rapidly. The $10^{\mathrm{th}}$ most frequent word is less than $1/5$ as common as the most popular one. To get a better idea, we plot the figure of the word frequency.
 
-```{.python .input}
+```python
 #@tab all
 freqs = [freq for token, freq in vocab.token_freqs]
 d2l.plot(freqs, xlabel='token: x', ylabel='frequency: n(x)',
@@ -185,7 +185,7 @@ This should already give us pause if we want to model words by count statistics 
 After all, we will significantly overestimate the frequency of the tail, also known as the infrequent words. But what about the other word combinations, such as bigrams, trigrams, and beyond?
 Let us see whether the bigram frequency behaves in the same manner as the unigram frequency.
 
-```{.python .input}
+```python
 #@tab all
 bigram_tokens = [pair for pair in zip(corpus[:-1], corpus[1:])]
 bigram_vocab = d2l.Vocab(bigram_tokens)
@@ -194,7 +194,7 @@ bigram_vocab.token_freqs[:10]
 
 One thing is notable here. Out of the ten most frequent word pairs, nine are composed of both stop words and only one is relevant to the actual book---"the time". Furthermore, let us see whether the trigram frequency behaves in the same manner.
 
-```{.python .input}
+```python
 #@tab all
 trigram_tokens = [triple for triple in zip(
     corpus[:-2], corpus[1:-1], corpus[2:])]
@@ -204,7 +204,7 @@ trigram_vocab.token_freqs[:10]
 
 Last, let us visualize the token frequency among these three models: unigrams, bigrams, and trigrams.
 
-```{.python .input}
+```python
 #@tab all
 bigram_freqs = [freq for token, freq in bigram_vocab.token_freqs]
 trigram_freqs = [freq for token, freq in trigram_vocab.token_freqs]
@@ -278,7 +278,7 @@ Here, the argument `batch_size` specifies the number of subsequence examples in 
 and `num_steps` is the predefined number of time steps
 in each subsequence.
 
-```{.python .input}
+```python
 #@tab all
 def seq_data_iter_random(corpus, batch_size, num_steps):  #@save
     """Generate a minibatch of subsequences using random sampling."""
@@ -313,7 +313,7 @@ the batch size and numbers of time steps are 2 and 5,
 respectively.
 This means that we can generate $\lfloor (35 - 1) / 5 \rfloor= 6$ feature-label subsequence pairs. With a minibatch size of 2, we only get 3 minibatches.
 
-```{.python .input}
+```python
 #@tab all
 my_seq = list(range(35))
 for X, Y in seq_data_iter_random(my_seq, batch_size=2, num_steps=5):
@@ -328,7 +328,7 @@ during iteration
 are adjacent on the original sequence.
 This strategy preserves the order of split subsequences when iterating over minibatches, hence is called sequential partitioning.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def seq_data_iter_sequential(corpus, batch_size, num_steps):  #@save
     """Generate a minibatch of subsequences using sequential partitioning."""
@@ -345,7 +345,7 @@ def seq_data_iter_sequential(corpus, batch_size, num_steps):  #@save
         yield X, Y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def seq_data_iter_sequential(corpus, batch_size, num_steps):  #@save
     """Generate a minibatch of subsequences using sequential partitioning."""
@@ -370,7 +370,7 @@ the subsequences from two adjacent minibatches
 during iteration
 are indeed adjacent on the original sequence.
 
-```{.python .input}
+```python
 #@tab all
 for X, Y in seq_data_iter_sequential(my_seq, batch_size=2, num_steps=5):
     print('X: ', X, '\nY:', Y)
@@ -378,7 +378,7 @@ for X, Y in seq_data_iter_sequential(my_seq, batch_size=2, num_steps=5):
 
 Now we wrap the above two sampling functions to a class so that we can use it as a data iterator later.
 
-```{.python .input}
+```python
 #@tab all
 class SeqDataLoader:  #@save
     """An iterator to load sequence data."""
@@ -396,7 +396,7 @@ class SeqDataLoader:  #@save
 
 Last, we define a function `load_data_time_machine` that returns both the data iterator and the vocabulary, so we can use it similarly as other other functions with the `load_data` prefix, such as `d2l.load_data_fashion_mnist` defined in :numref:`sec_fashion_mnist`.
 
-```{.python .input}
+```python
 #@tab all
 def load_data_time_machine(batch_size, num_steps,  #@save
                            use_random_iter=False, max_tokens=10000):

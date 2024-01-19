@@ -57,7 +57,7 @@ ResNet沿用了VGG完整的$3\times 3$卷积层设计。
 如果想改变通道数，就需要引入一个额外的$1\times 1$卷积层来将输入变换成需要的形状后再做相加运算。
 残差块的实现如下：
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
@@ -85,7 +85,7 @@ class Residual(nn.Block):  #@save
         return npx.relu(Y + X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -117,7 +117,7 @@ class Residual(nn.Module):  #@save
         return F.relu(Y)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -145,7 +145,7 @@ class Residual(tf.keras.Model):  #@save
         return tf.keras.activations.relu(Y)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -189,14 +189,14 @@ class Residual(nn.Layer):  #@save
 
 下面我们来查看[**输入和输出形状一致**]的情况。
 
-```{.python .input}
+```python
 blk = Residual(3)
 blk.initialize()
 X = np.random.uniform(size=(4, 3, 6, 6))
 blk(X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 blk = Residual(3,3)
 X = torch.rand(4, 3, 6, 6)
@@ -204,7 +204,7 @@ Y = blk(X)
 Y.shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 blk = Residual(3)
 X = tf.random.uniform((4, 6, 6, 3))
@@ -212,7 +212,7 @@ Y = blk(X)
 Y.shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 blk = Residual(3, 3)
 X = paddle.rand([4, 3, 6, 6])
@@ -222,25 +222,25 @@ Y.shape
 
 我们也可以在[**增加输出通道数的同时，减半输出的高和宽**]。
 
-```{.python .input}
+```python
 blk = Residual(6, use_1x1conv=True, strides=2)
 blk.initialize()
 blk(X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 blk = Residual(3,6, use_1x1conv=True, strides=2)
 blk(X).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 blk = Residual(6, use_1x1conv=True, strides=2)
 blk(X).shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 blk = Residual(3, 6, use_1x1conv=True, strides=2)
 blk(X).shape
@@ -252,21 +252,21 @@ ResNet的前两层跟之前介绍的GoogLeNet中的一样：
 在输出通道数为64、步幅为2的$7 \times 7$卷积层后，接步幅为2的$3 \times 3$的最大汇聚层。
 不同之处在于ResNet每个卷积层后增加了批量规范化层。
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nn.Conv2D(64, kernel_size=7, strides=2, padding=3),
         nn.BatchNorm(), nn.Activation('relu'),
         nn.MaxPool2D(pool_size=3, strides=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 b1 = nn.Sequential(nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3),
                    nn.BatchNorm2d(64), nn.ReLU(),
                    nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 b1 = tf.keras.models.Sequential([
     tf.keras.layers.Conv2D(64, kernel_size=7, strides=2, padding='same'),
@@ -275,7 +275,7 @@ b1 = tf.keras.models.Sequential([
     tf.keras.layers.MaxPool2D(pool_size=3, strides=2, padding='same')])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 b1 = nn.Sequential(nn.Conv2D(1, 64, kernel_size=7, stride=2, padding=3),
                    nn.BatchNorm2D(64), nn.ReLU(),
@@ -290,7 +290,7 @@ ResNet则使用4个由残差块组成的模块，每个模块使用若干个同�
 
 下面我们来实现这个模块。注意，我们对第一个模块做了特别处理。
 
-```{.python .input}
+```python
 def resnet_block(num_channels, num_residuals, first_block=False):
     blk = nn.Sequential()
     for i in range(num_residuals):
@@ -301,7 +301,7 @@ def resnet_block(num_channels, num_residuals, first_block=False):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def resnet_block(input_channels, num_channels, num_residuals,
                  first_block=False):
@@ -315,7 +315,7 @@ def resnet_block(input_channels, num_channels, num_residuals,
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class ResnetBlock(tf.keras.layers.Layer):
     def __init__(self, num_channels, num_residuals, first_block=False,
@@ -335,7 +335,7 @@ class ResnetBlock(tf.keras.layers.Layer):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def resnet_block(input_channels, num_channels, num_residuals,
                  first_block=False):
@@ -352,14 +352,14 @@ def resnet_block(input_channels, num_channels, num_residuals,
 
 接着在ResNet加入所有残差块，这里每个模块使用2个残差块。
 
-```{.python .input}
+```python
 net.add(resnet_block(64, 2, first_block=True),
         resnet_block(128, 2),
         resnet_block(256, 2),
         resnet_block(512, 2))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 b2 = nn.Sequential(*resnet_block(64, 64, 2, first_block=True))
 b3 = nn.Sequential(*resnet_block(64, 128, 2))
@@ -367,7 +367,7 @@ b4 = nn.Sequential(*resnet_block(128, 256, 2))
 b5 = nn.Sequential(*resnet_block(256, 512, 2))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 b2 = ResnetBlock(64, 2, first_block=True)
 b3 = ResnetBlock(128, 2)
@@ -377,18 +377,18 @@ b5 = ResnetBlock(512, 2)
 
 最后，与GoogLeNet一样，在ResNet中加入全局平均汇聚层，以及全连接层输出。
 
-```{.python .input}
+```python
 net.add(nn.GlobalAvgPool2D(), nn.Dense(10))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(b1, b2, b3, b4, b5,
                     nn.AdaptiveAvgPool2d((1,1)),
                     nn.Flatten(), nn.Linear(512, 10))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # 回想之前我们定义一个函数，以便用它在tf.distribute.MirroredStrategy的范围，
 # 来利用各种计算资源，例如gpu。另外，尽管我们已经创建了b1、b2、b3、b4、b5，
@@ -410,7 +410,7 @@ def net():
         tf.keras.layers.Dense(units=10)])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = nn.Sequential(b1, b2, b3, b4, b5, 
                     nn.AdaptiveAvgPool2D((1, 1)),
@@ -430,7 +430,7 @@ net = nn.Sequential(b1, b2, b3, b4, b5,
 在训练ResNet之前，让我们[**观察一下ResNet中不同模块的输入形状是如何变化的**]。
 在之前所有架构中，分辨率降低，通道数量增加，直到全局平均汇聚层聚集所有特征。
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(1, 1, 224, 224))
 net.initialize()
 for layer in net:
@@ -438,7 +438,7 @@ for layer in net:
     print(layer.name, 'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.rand(size=(1, 1, 224, 224))
 for layer in net:
@@ -446,7 +446,7 @@ for layer in net:
     print(layer.__class__.__name__,'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.uniform(shape=(1, 224, 224, 1))
 for layer in net().layers:
@@ -454,7 +454,7 @@ for layer in net().layers:
     print(layer.__class__.__name__,'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = paddle.rand(shape=(1, 1, 224, 224))
 for layer in net:
@@ -466,7 +466,7 @@ for layer in net:
 
 同之前一样，我们在Fashion-MNIST数据集上训练ResNet。
 
-```{.python .input}
+```python
 #@tab all
 lr, num_epochs, batch_size = 0.05, 10, 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=96)

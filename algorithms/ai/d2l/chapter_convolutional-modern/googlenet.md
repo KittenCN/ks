@@ -21,7 +21,7 @@ GoogLeNet吸收了NiN中串联网络的思想，并在此基础上做了改进�
 第四条路径使用$3\times 3$最大汇聚层，然后使用$1\times 1$卷积层来改变通道数。
 这四条路径都使用合适的填充来使输入与输出的高和宽一致，最后我们将每条线路的输出在通道维度上连结，并构成Inception块的输出。在Inception块中，通常调整的超参数是每层输出通道数。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
@@ -54,7 +54,7 @@ class Inception(nn.Block):
         return np.concatenate((p1, p2, p3, p4), axis=1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -86,7 +86,7 @@ class Inception(nn.Module):
         return torch.cat((p1, p2, p3, p4), dim=1)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -119,7 +119,7 @@ class Inception(tf.keras.Model):
         return tf.keras.layers.Concatenate()([p1, p2, p3, p4])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -167,20 +167,20 @@ class Inception(nn.Layer):
 
 现在，我们逐一实现GoogLeNet的每个模块。第一个模块使用64个通道、$7\times 7$卷积层。
 
-```{.python .input}
+```python
 b1 = nn.Sequential()
 b1.add(nn.Conv2D(64, kernel_size=7, strides=2, padding=3, activation='relu'),
        nn.MaxPool2D(pool_size=3, strides=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 b1 = nn.Sequential(nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3),
                    nn.ReLU(),
                    nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def b1():
     return tf.keras.models.Sequential([
@@ -189,7 +189,7 @@ def b1():
         tf.keras.layers.MaxPool2D(pool_size=3, strides=2, padding='same')])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 b1 = nn.Sequential(nn.Conv2D(1, 64, kernel_size=7, stride=2, padding=3),
                    nn.ReLU(), 
@@ -199,14 +199,14 @@ b1 = nn.Sequential(nn.Conv2D(1, 64, kernel_size=7, stride=2, padding=3),
 第二个模块使用两个卷积层：第一个卷积层是64个通道、$1\times 1$卷积层；第二个卷积层使用将通道数量增加三倍的$3\times 3$卷积层。
 这对应于Inception块中的第二条路径。
 
-```{.python .input}
+```python
 b2 = nn.Sequential()
 b2.add(nn.Conv2D(64, kernel_size=1, activation='relu'),
        nn.Conv2D(192, kernel_size=3, padding=1, activation='relu'),
        nn.MaxPool2D(pool_size=3, strides=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 b2 = nn.Sequential(nn.Conv2d(64, 64, kernel_size=1),
                    nn.ReLU(),
@@ -215,7 +215,7 @@ b2 = nn.Sequential(nn.Conv2d(64, 64, kernel_size=1),
                    nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def b2():
     return tf.keras.Sequential([
@@ -224,7 +224,7 @@ def b2():
         tf.keras.layers.MaxPool2D(pool_size=3, strides=2, padding='same')])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 b2 = nn.Sequential(nn.Conv2D(64, 64, kernel_size=1), 
                    nn.ReLU(),
@@ -238,21 +238,21 @@ b2 = nn.Sequential(nn.Conv2D(64, 64, kernel_size=1),
 第二个和第三个路径首先将输入通道的数量分别减少到$96/192=1/2$和$16/192=1/12$，然后连接第二个卷积层。第二个Inception块的输出通道数增加到$128+192+96+64=480$，四个路径之间的输出通道数量比为$128:192:96:64 = 4:6:3:2$。
 第二条和第三条路径首先将输入通道的数量分别减少到$128/256=1/2$和$32/256=1/8$。
 
-```{.python .input}
+```python
 b3 = nn.Sequential()
 b3.add(Inception(64, (96, 128), (16, 32), 32),
        Inception(128, (128, 192), (32, 96), 64),
        nn.MaxPool2D(pool_size=3, strides=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 b3 = nn.Sequential(Inception(192, 64, (96, 128), (16, 32), 32),
                    Inception(256, 128, (128, 192), (32, 96), 64),
                    nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def b3():
     return tf.keras.models.Sequential([
@@ -261,7 +261,7 @@ def b3():
         tf.keras.layers.MaxPool2D(pool_size=3, strides=2, padding='same')])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 b3 = nn.Sequential(Inception(192, 64, (96, 128), (16, 32), 32),
                    Inception(256, 128, (128, 192), (32, 96), 64),
@@ -274,7 +274,7 @@ b3 = nn.Sequential(Inception(192, 64, (96, 128), (16, 32), 32),
 其中第二、第三条路径都会先按比例减小通道数。
 这些比例在各个Inception块中都略有不同。
 
-```{.python .input}
+```python
 b4 = nn.Sequential()
 b4.add(Inception(192, (96, 208), (16, 48), 64),
        Inception(160, (112, 224), (24, 64), 64),
@@ -284,7 +284,7 @@ b4.add(Inception(192, (96, 208), (16, 48), 64),
        nn.MaxPool2D(pool_size=3, strides=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 b4 = nn.Sequential(Inception(480, 192, (96, 208), (16, 48), 64),
                    Inception(512, 160, (112, 224), (24, 64), 64),
@@ -294,7 +294,7 @@ b4 = nn.Sequential(Inception(480, 192, (96, 208), (16, 48), 64),
                    nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def b4():
     return tf.keras.Sequential([
@@ -306,7 +306,7 @@ def b4():
         tf.keras.layers.MaxPool2D(pool_size=3, strides=2, padding='same')])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 b4 = nn.Sequential(Inception(480, 192, (96, 208), (16, 48), 64),
                    Inception(512, 160, (112, 224), (24, 64), 64),
@@ -321,7 +321,7 @@ b4 = nn.Sequential(Inception(480, 192, (96, 208), (16, 48), 64),
 需要注意的是，第五模块的后面紧跟输出层，该模块同NiN一样使用全局平均汇聚层，将每个通道的高和宽变成1。
 最后我们将输出变成二维数组，再接上一个输出个数为标签类别数的全连接层。
 
-```{.python .input}
+```python
 b5 = nn.Sequential()
 b5.add(Inception(256, (160, 320), (32, 128), 128),
        Inception(384, (192, 384), (48, 128), 128),
@@ -331,7 +331,7 @@ net = nn.Sequential()
 net.add(b1, b2, b3, b4, b5, nn.Dense(10))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 b5 = nn.Sequential(Inception(832, 256, (160, 320), (32, 128), 128),
                    Inception(832, 384, (192, 384), (48, 128), 128),
@@ -341,7 +341,7 @@ b5 = nn.Sequential(Inception(832, 256, (160, 320), (32, 128), 128),
 net = nn.Sequential(b1, b2, b3, b4, b5, nn.Linear(1024, 10))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def b5():
     return tf.keras.Sequential([
@@ -358,7 +358,7 @@ def net():
                                 tf.keras.layers.Dense(10)])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 b5 = nn.Sequential(Inception(832, 256, (160, 320), (32, 128), 128),
                    Inception(832, 384, (192, 384), (48, 128), 128),
@@ -371,7 +371,7 @@ net = nn.Sequential(b1, b2, b3, b4, b5, nn.Linear(1024, 10))
 GoogLeNet模型的计算复杂，而且不如VGG那样便于修改通道数。
 [**为了使Fashion-MNIST上的训练短小精悍，我们将输入的高和宽从224降到96**]，这简化了计算。下面演示各个模块输出的形状变化。
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(1, 1, 96, 96))
 net.initialize()
 for layer in net:
@@ -379,7 +379,7 @@ for layer in net:
     print(layer.name, 'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.rand(size=(1, 1, 96, 96))
 for layer in net:
@@ -387,7 +387,7 @@ for layer in net:
     print(layer.__class__.__name__,'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.uniform(shape=(1, 96, 96, 1))
 for layer in net().layers:
@@ -395,7 +395,7 @@ for layer in net().layers:
     print(layer.__class__.__name__, 'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = paddle.rand(shape=(1, 1, 96, 96))
 for layer in net:
@@ -407,7 +407,7 @@ for layer in net:
 
 和以前一样，我们使用Fashion-MNIST数据集来训练我们的模型。在训练之前，我们将图片转换为$96 \times 96$分辨率。
 
-```{.python .input}
+```python
 #@tab all
 lr, num_epochs, batch_size = 0.1, 10, 128
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=96)

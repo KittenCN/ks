@@ -17,7 +17,7 @@ Transformer解码器也是由多个相同的层叠加而成的，并且层中使
 
 在此之前已经描述并实现了基于缩放点积多头注意力 :numref:`sec_multihead-attention`和位置编码 :numref:`subsec_positional-encoding`。接下来将实现Transformer模型的剩余部分。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 import math
 from mxnet import autograd, np, npx
@@ -26,7 +26,7 @@ import pandas as pd
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import math
@@ -35,7 +35,7 @@ import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import numpy as np
@@ -43,7 +43,7 @@ import pandas as pd
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import math
@@ -58,7 +58,7 @@ from paddle import nn
 
 基于位置的前馈网络对序列中的所有位置的表示进行变换时使用的是同一个多层感知机（MLP），这就是称前馈网络是*基于位置的*（positionwise）的原因。在下面的实现中，输入`X`的形状（批量大小，时间步数或序列长度，隐单元数或特征维度）将被一个两层的感知机转换成形状为（批量大小，时间步数，`ffn_num_outputs`）的输出张量。
 
-```{.python .input}
+```python
 #@save
 class PositionWiseFFN(nn.Block):
     """基于位置的前馈网络"""
@@ -72,7 +72,7 @@ class PositionWiseFFN(nn.Block):
         return self.dense2(self.dense1(X))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class PositionWiseFFN(nn.Module):
@@ -88,7 +88,7 @@ class PositionWiseFFN(nn.Module):
         return self.dense2(self.relu(self.dense1(X)))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 class PositionWiseFFN(tf.keras.layers.Layer):
@@ -103,7 +103,7 @@ class PositionWiseFFN(tf.keras.layers.Layer):
         return self.dense2(self.relu(self.dense1(X)))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class PositionWiseFFN(nn.Layer):
@@ -121,26 +121,26 @@ class PositionWiseFFN(nn.Layer):
 
 下面的例子显示，[**改变张量的最里层维度的尺寸**]，会改变成基于位置的前馈网络的输出尺寸。因为用同一个多层感知机对所有位置上的输入进行变换，所以当所有这些位置的输入相同时，它们的输出也是相同的。
 
-```{.python .input}
+```python
 ffn = PositionWiseFFN(4, 8)
 ffn.initialize()
 ffn(np.ones((2, 3, 4)))[0]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 ffn = PositionWiseFFN(4, 4, 8)
 ffn.eval()
 ffn(d2l.ones((2, 3, 4)))[0]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 ffn = PositionWiseFFN(4, 8)
 ffn(tf.ones((2, 3, 4)))[0]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 ffn = PositionWiseFFN(4, 4, 8)
 ffn.eval()
@@ -155,7 +155,7 @@ ffn(d2l.ones((2, 3, 4)))[0]
 
 以下代码[**对比不同维度的层规范化和批量规范化的效果**]。
 
-```{.python .input}
+```python
 ln = nn.LayerNorm()
 ln.initialize()
 bn = nn.BatchNorm()
@@ -166,7 +166,7 @@ with autograd.record():
     print('层规范化：', ln(X), '\n批量规范化：', bn(X))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 ln = nn.LayerNorm(2)
 bn = nn.BatchNorm1d(2)
@@ -175,7 +175,7 @@ X = d2l.tensor([[1, 2], [2, 3]], dtype=torch.float32)
 print('layer norm:', ln(X), '\nbatch norm:', bn(X))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 ln = tf.keras.layers.LayerNormalization()
 bn = tf.keras.layers.BatchNormalization()
@@ -183,7 +183,7 @@ X = tf.constant([[1, 2], [2, 3]], dtype=tf.float32)
 print('layer norm:', ln(X), '\nbatch norm:', bn(X, training=True))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 ln = nn.LayerNorm(2)
 bn = nn.BatchNorm1D(2)
@@ -194,7 +194,7 @@ print('layer norm:', ln(X), '\nbatch norm:', bn(X))
 
 现在可以[**使用残差连接和层规范化**]来实现`AddNorm`类。暂退法也被作为正则化方法使用。
 
-```{.python .input}
+```python
 #@save
 class AddNorm(nn.Block):
     """残差连接后进行层规范化"""
@@ -207,7 +207,7 @@ class AddNorm(nn.Block):
         return self.ln(self.dropout(Y) + X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class AddNorm(nn.Module):
@@ -221,7 +221,7 @@ class AddNorm(nn.Module):
         return self.ln(self.dropout(Y) + X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 class AddNorm(tf.keras.layers.Layer):
@@ -235,7 +235,7 @@ class AddNorm(tf.keras.layers.Layer):
         return self.ln(self.dropout(Y, **kwargs) + X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class AddNorm(nn.Layer):
@@ -251,20 +251,20 @@ class AddNorm(nn.Layer):
 
 残差连接要求两个输入的形状相同，以便[**加法操作后输出张量的形状相同**]。
 
-```{.python .input}
+```python
 add_norm = AddNorm(0.5)
 add_norm.initialize()
 add_norm(d2l.ones((2, 3, 4)), d2l.ones((2, 3, 4))).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 add_norm = AddNorm([3, 4], 0.5)
 add_norm.eval()
 add_norm(d2l.ones((2, 3, 4)), d2l.ones((2, 3, 4))).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 add_norm = AddNorm([1, 2], 0.5)
 add_norm(tf.ones((2, 3, 4)), tf.ones((2, 3, 4)), training=False).shape
@@ -274,7 +274,7 @@ add_norm(tf.ones((2, 3, 4)), tf.ones((2, 3, 4)), training=False).shape
 
 有了组成Transformer编码器的基础组件，现在可以先[**实现编码器中的一个层**]。下面的`EncoderBlock`类包含两个子层：多头自注意力和基于位置的前馈网络，这两个子层都使用了残差连接和紧随的层规范化。
 
-```{.python .input}
+```python
 #@save
 class EncoderBlock(nn.Block):
     """Transformer编码器块"""
@@ -292,7 +292,7 @@ class EncoderBlock(nn.Block):
         return self.addnorm2(Y, self.ffn(Y))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class EncoderBlock(nn.Module):
@@ -314,7 +314,7 @@ class EncoderBlock(nn.Module):
         return self.addnorm2(Y, self.ffn(Y))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 class EncoderBlock(tf.keras.layers.Layer):
@@ -333,7 +333,7 @@ class EncoderBlock(tf.keras.layers.Layer):
         return self.addnorm2(Y, self.ffn(Y), **kwargs)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class EncoderBlock(nn.Layer):
@@ -357,7 +357,7 @@ class EncoderBlock(nn.Layer):
 
 正如从代码中所看到的，[**Transformer编码器中的任何层都不会改变其输入的形状**]。
 
-```{.python .input}
+```python
 X = d2l.ones((2, 100, 24))
 valid_lens = d2l.tensor([3, 2])
 encoder_blk = EncoderBlock(24, 48, 8, 0.5)
@@ -365,7 +365,7 @@ encoder_blk.initialize()
 encoder_blk(X, valid_lens).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 X = d2l.ones((2, 100, 24))
 valid_lens = d2l.tensor([3, 2])
@@ -374,7 +374,7 @@ encoder_blk.eval()
 encoder_blk(X, valid_lens).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.ones((2, 100, 24))
 valid_lens = tf.constant([3, 2])
@@ -385,7 +385,7 @@ encoder_blk(X, valid_lens, training=False).shape
 
 下面实现的[**Transformer编码器**]的代码中，堆叠了`num_layers`个`EncoderBlock`类的实例。由于这里使用的是值范围在$-1$和$1$之间的固定位置编码，因此通过学习得到的输入的嵌入表示的值需要先乘以嵌入维度的平方根进行重新缩放，然后再与位置编码相加。
 
-```{.python .input}
+```python
 #@save
 class TransformerEncoder(d2l.Encoder):
     """Transformer编码器"""
@@ -414,7 +414,7 @@ class TransformerEncoder(d2l.Encoder):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class TransformerEncoder(d2l.Encoder):
@@ -446,7 +446,7 @@ class TransformerEncoder(d2l.Encoder):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 class TransformerEncoder(d2l.Encoder):
@@ -477,7 +477,7 @@ class TransformerEncoder(d2l.Encoder):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class TransformerEncoder(d2l.Encoder):
@@ -512,13 +512,13 @@ class TransformerEncoder(d2l.Encoder):
 下面我们指定了超参数来[**创建一个两层的Transformer编码器**]。
 Transformer编码器输出的形状是（批量大小，时间步数目，`num_hiddens`）。
 
-```{.python .input}
+```python
 encoder = TransformerEncoder(200, 24, 48, 8, 2, 0.5)
 encoder.initialize()
 encoder(np.ones((2, 100)), valid_lens).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 encoder = TransformerEncoder(
     200, 24, 24, 24, 24, [100, 24], 24, 48, 8, 2, 0.5)
@@ -526,13 +526,13 @@ encoder.eval()
 encoder(d2l.ones((2, 100), dtype=torch.long), valid_lens).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 encoder = TransformerEncoder(200, 24, 24, 24, 24, [1, 2], 48, 8, 2, 0.5)
 encoder(tf.ones((2, 100)), valid_lens, training=False).shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 encoder = TransformerEncoder(
     200, 24, 24, 24, 24, [100, 24], 24, 48, 8, 2, 0.5)
@@ -546,7 +546,7 @@ encoder(d2l.ones((2, 100), dtype=paddle.int64), valid_lens).shape
 
 正如在本节前面所述，在掩蔽多头解码器自注意力层（第一个子层）中，查询、键和值都来自上一个解码器层的输出。关于*序列到序列模型*（sequence-to-sequence model），在训练阶段，其输出序列的所有位置（时间步）的词元都是已知的；然而，在预测阶段，其输出序列的词元是逐个生成的。因此，在任何解码器时间步中，只有生成的词元才能用于解码器的自注意力计算中。为了在解码器中保留自回归的属性，其掩蔽自注意力设定了参数`dec_valid_lens`，以便任何查询都只会与解码器中所有已经生成词元的位置（即直到该查询位置为止）进行注意力计算。
 
-```{.python .input}
+```python
 class DecoderBlock(nn.Block):
     """解码器中第i个块"""
     def __init__(self, num_hiddens, ffn_num_hiddens, num_heads,
@@ -593,7 +593,7 @@ class DecoderBlock(nn.Block):
         return self.addnorm3(Z, self.ffn(Z)), state
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class DecoderBlock(nn.Module):
     """解码器中第i个块"""
@@ -642,7 +642,7 @@ class DecoderBlock(nn.Module):
         return self.addnorm3(Z, self.ffn(Z)), state
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class DecoderBlock(tf.keras.layers.Layer):
     """解码器中第i个块"""
@@ -688,7 +688,7 @@ class DecoderBlock(tf.keras.layers.Layer):
         return self.addnorm3(Z, self.ffn(Z), **kwargs), state
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class DecoderBlock(nn.Layer):
     """解码器中第i个块"""
@@ -739,7 +739,7 @@ class DecoderBlock(nn.Layer):
 
 为了便于在“编码器－解码器”注意力中进行缩放点积计算和残差连接中进行加法计算，[**编码器和解码器的特征维度都是`num_hiddens`。**]
 
-```{.python .input}
+```python
 decoder_blk = DecoderBlock(24, 48, 8, 0.5, 0)
 decoder_blk.initialize()
 X = np.ones((2, 100, 24))
@@ -747,7 +747,7 @@ state = [encoder_blk(X, valid_lens), valid_lens, [None]]
 decoder_blk(X, state)[0].shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 decoder_blk = DecoderBlock(24, 24, 24, 24, [100, 24], 24, 48, 8, 0.5, 0)
 decoder_blk.eval()
@@ -756,7 +756,7 @@ state = [encoder_blk(X, valid_lens), valid_lens, [None]]
 decoder_blk(X, state)[0].shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 decoder_blk = DecoderBlock(24, 24, 24, 24, [1, 2], 48, 8, 0.5, 0)
 X = tf.ones((2, 100, 24))
@@ -766,7 +766,7 @@ decoder_blk(X, state, training=False)[0].shape
 
 现在我们构建了由`num_layers`个`DecoderBlock`实例组成的完整的[**Transformer解码器**]。最后，通过一个全连接层计算所有`vocab_size`个可能的输出词元的预测值。解码器的自注意力权重和编码器解码器注意力权重都被存储下来，方便日后可视化的需要。
 
-```{.python .input}
+```python
 class TransformerDecoder(d2l.AttentionDecoder):
     def __init__(self, vocab_size, num_hiddens, ffn_num_hiddens,
                  num_heads, num_layers, dropout, **kwargs):
@@ -803,7 +803,7 @@ class TransformerDecoder(d2l.AttentionDecoder):
         return self._attention_weights
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class TransformerDecoder(d2l.AttentionDecoder):
     def __init__(self, vocab_size, key_size, query_size, value_size,
@@ -843,7 +843,7 @@ class TransformerDecoder(d2l.AttentionDecoder):
         return self._attention_weights
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class TransformerDecoder(d2l.AttentionDecoder):
     def __init__(self, vocab_size, key_size, query_size, value_size,
@@ -876,7 +876,7 @@ class TransformerDecoder(d2l.AttentionDecoder):
         return self._attention_weights
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class TransformerDecoder(d2l.AttentionDecoder):
     def __init__(self, vocab_size, key_size, query_size, value_size,
@@ -920,7 +920,7 @@ class TransformerDecoder(d2l.AttentionDecoder):
 
 依照Transformer架构来实例化编码器－解码器模型。在这里，指定Transformer的编码器和解码器都是2层，都使用4头注意力。与 :numref:`sec_seq2seq_training`类似，为了进行序列到序列的学习，下面在“英语－法语”机器翻译数据集上训练Transformer模型。
 
-```{.python .input}
+```python
 num_hiddens, num_layers, dropout, batch_size, num_steps = 32, 2, 0.1, 64, 10
 lr, num_epochs, device = 0.005, 200, d2l.try_gpu()
 ffn_num_hiddens, num_heads = 64, 4
@@ -937,7 +937,7 @@ net = d2l.EncoderDecoder(encoder, decoder)
 d2l.train_seq2seq(net, train_iter, lr, num_epochs, tgt_vocab, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_hiddens, num_layers, dropout, batch_size, num_steps = 32, 2, 0.1, 64, 10
 lr, num_epochs, device = 0.005, 200, d2l.try_gpu()
@@ -959,7 +959,7 @@ net = d2l.EncoderDecoder(encoder, decoder)
 d2l.train_seq2seq(net, train_iter, lr, num_epochs, tgt_vocab, device)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_hiddens, num_layers, dropout, batch_size, num_steps = 32, 2, 0.1, 64, 10
 lr, num_epochs, device = 0.005, 200, d2l.try_gpu()
@@ -978,7 +978,7 @@ net = d2l.EncoderDecoder(encoder, decoder)
 d2l.train_seq2seq(net, train_iter, lr, num_epochs, tgt_vocab, device)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_hiddens, num_layers, dropout, batch_size, num_steps = 32, 2, 0.1, 64, 10
 lr, num_epochs, device = 0.005, 200, d2l.try_gpu()
@@ -1002,7 +1002,7 @@ d2l.train_seq2seq(net, train_iter, lr, num_epochs, tgt_vocab, device)
 
 训练结束后，使用Transformer模型[**将一些英语句子翻译成法语**]，并且计算它们的BLEU分数。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 engs = ['go .', "i lost .", 'he\'s calm .', 'i\'m home .']
 fras = ['va !', 'j\'ai perdu .', 'il est calme .', 'je suis chez moi .']
@@ -1013,7 +1013,7 @@ for eng, fra in zip(engs, fras):
           f'bleu {d2l.bleu(translation, fra, k=2):.3f}')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 engs = ['go .', "i lost .", 'he\'s calm .', 'i\'m home .']
 fras = ['va !', 'j\'ai perdu .', 'il est calme .', 'je suis chez moi .']
@@ -1026,7 +1026,7 @@ for eng, fra in zip(engs, fras):
 
 当进行最后一个英语到法语的句子翻译工作时，让我们[**可视化Transformer的注意力权重**]。编码器自注意力权重的形状为（编码器层数，注意力头数，`num_steps`或查询的数目，`num_steps`或“键－值”对的数目）。
 
-```{.python .input}
+```python
 #@tab all
 enc_attention_weights = d2l.reshape(
     d2l.concat(net.encoder.attention_weights, 0),
@@ -1036,14 +1036,14 @@ enc_attention_weights.shape
 
 在编码器的自注意力中，查询和键都来自相同的输入序列。因为填充词元是不携带信息的，因此通过指定输入序列的有效长度可以避免查询与使用填充词元的位置计算注意力。接下来，将逐行呈现两层多头注意力的权重。每个注意力头都根据查询、键和值的不同的表示子空间来表示不同的注意力。
 
-```{.python .input}
+```python
 #@tab mxnet, tensorflow
 d2l.show_heatmaps(
     enc_attention_weights, xlabel='Key positions', ylabel='Query positions',
     titles=['Head %d' % i for i in range(1, 5)], figsize=(7, 3.5))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 d2l.show_heatmaps(
     enc_attention_weights.cpu(), xlabel='Key positions',
@@ -1053,7 +1053,7 @@ d2l.show_heatmaps(
 
 [**为了可视化解码器的自注意力权重和“编码器－解码器”的注意力权重，我们需要完成更多的数据操作工作。**]例如用零填充被掩蔽住的注意力权重。值得注意的是，解码器的自注意力权重和“编码器－解码器”的注意力权重都有相同的查询：即以*序列开始词元*（beginning-of-sequence,BOS）打头，再与后续输出的词元共同组成序列。
 
-```{.python .input}
+```python
 dec_attention_weights_2d = [d2l.tensor(head[0]).tolist()
                             for step in dec_attention_weight_seq
                             for attn in step for blk in attn for head in blk]
@@ -1066,7 +1066,7 @@ dec_self_attention_weights, dec_inter_attention_weights = \
 dec_self_attention_weights.shape, dec_inter_attention_weights.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 dec_attention_weights_2d = [head[0].tolist()
                             for step in dec_attention_weight_seq
@@ -1080,7 +1080,7 @@ dec_self_attention_weights, dec_inter_attention_weights = \
 dec_self_attention_weights.shape, dec_inter_attention_weights.shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 dec_attention_weights_2d = [head[0] for step in dec_attention_weight_seq
                             for attn in step 
@@ -1095,7 +1095,7 @@ dec_self_attention_weights, dec_inter_attention_weights = tf.transpose(
 print(dec_self_attention_weights.shape, dec_inter_attention_weights.shape)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 dec_attention_weights_2d = [head[0].tolist()
                             for step in dec_attention_weight_seq
@@ -1111,7 +1111,7 @@ dec_self_attention_weights.shape, dec_inter_attention_weights.shape
 
 由于解码器自注意力的自回归属性，查询不会对当前位置之后的“键－值”对进行注意力计算。
 
-```{.python .input}
+```python
 #@tab all
 # Plusonetoincludethebeginning-of-sequencetoken
 d2l.show_heatmaps(
@@ -1122,7 +1122,7 @@ d2l.show_heatmaps(
 
 与编码器的自注意力的情况类似，通过指定输入序列的有效长度，[**输出序列的查询不会与输入序列中填充位置的词元进行注意力计算**]。
 
-```{.python .input}
+```python
 #@tab all
 d2l.show_heatmaps(
     dec_inter_attention_weights, xlabel='Key positions',

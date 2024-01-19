@@ -97,7 +97,7 @@ $$\mathbf{h} = \phi(\mathrm{BN}(\mathbf{W}\mathbf{x} + \mathbf{b}) ).$$
 
 下面，我们从头开始实现一个具有张量的批量规范化层。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, np, npx, init
 from mxnet.gluon import nn
@@ -128,7 +128,7 @@ def batch_norm(X, gamma, beta, moving_mean, moving_var, eps, momentum):
     return Y, moving_mean, moving_var
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -159,7 +159,7 @@ def batch_norm(X, gamma, beta, moving_mean, moving_var, eps, momentum):
     return Y, moving_mean.data, moving_var.data
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -173,7 +173,7 @@ def batch_norm(X, gamma, beta, moving_mean, moving_var, eps):
     return Y
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -216,7 +216,7 @@ def batch_norm(X, gamma, beta, moving_mean, moving_var, eps, momentum, is_traini
 为了方便起见，我们并不担心在这里自动推断输入形状，因此我们需要指定整个特征的数量。
 不用担心，深度学习框架中的批量规范化API将为我们解决上述问题，我们稍后将展示这一点。
 
-```{.python .input}
+```python
 class BatchNorm(nn.Block):
     # num_features：完全连接层的输出数量或卷积层的输出通道数。
     # num_dims：2表示完全连接层，4表示卷积层
@@ -246,7 +246,7 @@ class BatchNorm(nn.Block):
         return Y
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class BatchNorm(nn.Module):
     # num_features：完全连接层的输出数量或卷积层的输出通道数。
@@ -277,7 +277,7 @@ class BatchNorm(nn.Module):
         return Y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class BatchNorm(tf.keras.layers.Layer):
     def __init__(self, **kwargs):
@@ -327,7 +327,7 @@ class BatchNorm(tf.keras.layers.Layer):
         return output
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class BatchNorm(nn.Layer):
     def __init__(self, num_features, num_dims=4):
@@ -365,7 +365,7 @@ class BatchNorm(nn.Layer):
 为了更好理解如何[**应用`BatchNorm`**]，下面我们将其应用(**于LeNet模型**)（ :numref:`sec_lenet`）。
 回想一下，批量规范化是在卷积层或全连接层之后、相应的激活函数之前应用的。
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nn.Conv2D(6, kernel_size=5),
         BatchNorm(6, num_dims=4),
@@ -384,7 +384,7 @@ net.add(nn.Conv2D(6, kernel_size=5),
         nn.Dense(10))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(
     nn.Conv2d(1, 6, kernel_size=5), BatchNorm(6, num_dims=4), nn.Sigmoid(),
@@ -396,7 +396,7 @@ net = nn.Sequential(
     nn.Linear(84, 10))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # 回想一下，这个函数必须传递给d2l.train_ch6。
 # 或者说为了利用我们现有的CPU/GPU设备，需要在strategy.scope()建立模型
@@ -422,7 +422,7 @@ def net():
     )
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = nn.Sequential(
     nn.Conv2D(1, 6, kernel_size=5), BatchNorm(6, num_dims=4), nn.Sigmoid(), 
@@ -437,14 +437,14 @@ net = nn.Sequential(
 和以前一样，我们将[**在Fashion-MNIST数据集上训练网络**]。
 这个代码与我们第一次训练LeNet（ :numref:`sec_lenet`）时几乎完全相同，主要区别在于学习率大得多。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 lr, num_epochs, batch_size = 1.0, 10, 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
 d2l.train_ch6(net, train_iter, test_iter, num_epochs, lr, d2l.try_gpu())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 lr, num_epochs, batch_size = 1.0, 10, 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
@@ -453,21 +453,21 @@ net = d2l.train_ch6(net, train_iter, test_iter, num_epochs, lr, d2l.try_gpu())
 
 让我们来看看从第一个批量规范化层中学到的[**拉伸参数`gamma`和偏移参数`beta`**]。
 
-```{.python .input}
+```python
 net[1].gamma.data().reshape(-1,), net[1].beta.data().reshape(-1,)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net[1].gamma.reshape((-1,)), net[1].beta.reshape((-1,))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 tf.reshape(net.layers[1].gamma, (-1,)), tf.reshape(net.layers[1].beta, (-1,))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 param = net.parameters()
 print('gamma:', param[2].numpy().reshape(-1))
@@ -479,7 +479,7 @@ print('beta:', param[3].numpy().reshape(-1))
 除了使用我们刚刚定义的`BatchNorm`，我们也可以直接使用深度学习框架中定义的`BatchNorm`。
 该代码看起来几乎与我们上面的代码相同。
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nn.Conv2D(6, kernel_size=5),
         nn.BatchNorm(),
@@ -498,7 +498,7 @@ net.add(nn.Conv2D(6, kernel_size=5),
         nn.Dense(10))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(
     nn.Conv2d(1, 6, kernel_size=5), nn.BatchNorm2d(6), nn.Sigmoid(),
@@ -510,7 +510,7 @@ net = nn.Sequential(
     nn.Linear(84, 10))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def net():
     return tf.keras.models.Sequential([
@@ -534,7 +534,7 @@ def net():
     ])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = nn.Sequential(
     nn.Conv2D(1, 6, kernel_size=5), nn.BatchNorm2D(6, momentum=0.1), nn.Sigmoid(), 
@@ -550,7 +550,7 @@ net = nn.Sequential(
 下面，我们[**使用相同超参数来训练模型**]。
 请注意，通常高级API变体运行速度快得多，因为它的代码已编译为C++或CUDA，而我们的自定义代码由Python实现。
 
-```{.python .input}
+```python
 #@tab all
 d2l.train_ch6(net, train_iter, test_iter, num_epochs, lr, d2l.try_gpu())
 ```

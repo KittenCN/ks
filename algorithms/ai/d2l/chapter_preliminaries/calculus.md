@@ -49,7 +49,7 @@
 为了更好地解释导数，让我们做一个实验。
 (**定义$u=f(x)=3x^2-4x$**)如下：
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from matplotlib_inline import backend_inline
@@ -60,7 +60,7 @@ def f(x):
     return 3 * x ** 2 - 4 * x
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -71,7 +71,7 @@ def f(x):
     return 3 * x ** 2 - 4 * x
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -82,7 +82,7 @@ def f(x):
     return 3 * x ** 2 - 4 * x
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -96,7 +96,7 @@ def f(x):
 [**通过令$x=1$并让$h$接近$0$，**] :eqref:`eq_derivative`中(**$\frac{f(x+h)-f(x)}{h}$的数值结果接近$2$**)。
 虽然这个实验不是一个数学证明，但稍后会看到，当$x=1$时，导数$u'$是$2$。
 
-```{.python .input}
+```python
 #@tab all
 def numerical_lim(f, x, h):
     return (f(x + h) - f(x)) / h
@@ -151,7 +151,7 @@ $$\frac{d}{dx} \left[\frac{f(x)}{g(x)}\right] = \frac{g(x) \frac{d}{dx} [f(x)] -
 注意，注释`#@save`是一个特殊的标记，会将对应的函数、类或语句保存在`d2l`包中。
 因此，以后无须重新定义就可以直接调用它们（例如，`d2l.use_svg_display()`）。
 
-```{.python .input}
+```python
 #@tab all
 def use_svg_display():  #@save
     """使用svg格式在Jupyter中显示绘图"""
@@ -162,7 +162,7 @@ def use_svg_display():  #@save
 注意，这里可以直接使用`d2l.plt`，因为导入语句
 `from matplotlib import pyplot as plt`已标记为保存到`d2l`包中。
 
-```{.python .input}
+```python
 #@tab all
 def set_figsize(figsize=(3.5, 2.5)):  #@save
     """设置matplotlib的图表大小"""
@@ -172,7 +172,7 @@ def set_figsize(figsize=(3.5, 2.5)):  #@save
 
 下面的`set_axes`函数用于设置由`matplotlib`生成图表的轴的属性。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def set_axes(axes, xlabel, ylabel, xlim, ylim, xscale, yscale, legend):
@@ -191,7 +191,7 @@ def set_axes(axes, xlabel, ylabel, xlim, ylim, xscale, yscale, legend):
 通过这三个用于图形配置的函数，定义一个`plot`函数来简洁地绘制多条曲线，
 因为我们需要在整个书中可视化许多曲线。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def plot(X, Y=None, xlabel=None, ylabel=None, legend=None, xlim=None,
@@ -229,7 +229,7 @@ def plot(X, Y=None, xlabel=None, ylabel=None, legend=None, xlim=None,
 现在我们可以[**绘制函数$u=f(x)$及其在$x=1$处的切线$y=2x-3$**]，
 其中系数$2$是切线的斜率。
 
-```{.python .input}
+```python
 #@tab all
 x = np.arange(0, 3, 0.1)
 plot(x, [f(x), 2 * x - 3], 'x', 'f(x)', legend=['f(x)', 'Tangent line (x=1)'])

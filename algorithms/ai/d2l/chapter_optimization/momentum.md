@@ -64,7 +64,7 @@ $$f(\mathbf{x}) = 0.1 x_1^2 + 2 x_2^2.$$
 该函数在$x_1$的方向上*非常*平坦。
 让我们看看在这个新函数上执行梯度下降时会发生什么。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import np, npx
@@ -79,7 +79,7 @@ def gd_2d(x1, x2, s1, s2):
 d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -94,7 +94,7 @@ def gd_2d(x1, x2, s1, s2):
 d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -109,7 +109,7 @@ def gd_2d(x1, x2, s1, s2):
 d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -131,7 +131,7 @@ d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
 下面的例子说明了即使学习率从$0.4$略微提高到$0.6$，也会发生变化。
 $x_1$方向上的收敛有所改善，但整体来看解的质量更差了。
 
-```{.python .input}
+```python
 #@tab all
 eta = 0.6
 d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
@@ -155,7 +155,7 @@ $$
 请注意，对于$\beta = 0$，我们恢复常规的梯度下降。
 在深入研究它的数学属性之前，让我们快速看一下算法在实验中的表现如何。
 
-```{.python .input}
+```python
 #@tab all
 def momentum_2d(x1, x2, v1, v2):
     v1 = beta * v1 + 0.2 * x1
@@ -171,7 +171,7 @@ d2l.show_trace_2d(f_2d, d2l.train_2d(momentum_2d))
 将其减半至$\beta = 0.25$会导致一条几乎没有收敛的轨迹。
 尽管如此，它比没有动量时解将会发散要好得多。
 
-```{.python .input}
+```python
 #@tab all
 eta, beta = 0.6, 0.25
 d2l.show_trace_2d(f_2d, d2l.train_2d(momentum_2d))
@@ -189,7 +189,7 @@ d2l.show_trace_2d(f_2d, d2l.train_2d(momentum_2d))
 这是集两种好处于一身的做法。
 为了说明$\beta$的不同选择的权重效果如何，请参考下面的图表。
 
-```{.python .input}
+```python
 #@tab all
 d2l.set_figsize()
 betas = [0.95, 0.9, 0.6, 0]
@@ -211,7 +211,7 @@ d2l.plt.legend();
 它与梯度以及优化问题的变量具有相同的形状。
 在下面的实现中，我们称这些变量为`states`。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def init_momentum_states(feature_dim):
     v_w = d2l.zeros((feature_dim, 1))
@@ -219,7 +219,7 @@ def init_momentum_states(feature_dim):
     return (v_w, v_b)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def init_momentum_states(features_dim):
     v_w = tf.Variable(d2l.zeros((features_dim, 1)))
@@ -227,7 +227,7 @@ def init_momentum_states(features_dim):
     return (v_w, v_b)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def init_momentum_states(feature_dim):
     v_w = d2l.zeros((feature_dim, 1))
@@ -235,14 +235,14 @@ def init_momentum_states(feature_dim):
     return (v_w, v_b)
 ```
 
-```{.python .input}
+```python
 def sgd_momentum(params, states, hyperparams):
     for p, v in zip(params, states):
         v[:] = hyperparams['momentum'] * v + p.grad
         p[:] -= hyperparams['lr'] * v
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def sgd_momentum(params, states, hyperparams):
     for p, v in zip(params, states):
@@ -252,7 +252,7 @@ def sgd_momentum(params, states, hyperparams):
         p.grad.data.zero_()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def sgd_momentum(params, grads, states, hyperparams):
     for p, v, g in zip(params, states, grads):
@@ -260,7 +260,7 @@ def sgd_momentum(params, grads, states, hyperparams):
             p[:].assign(p - hyperparams['lr'] * v)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def sgd_momentum(params, states, hyperparams):
     a = []
@@ -275,7 +275,7 @@ def sgd_momentum(params, states, hyperparams):
 
 让我们看看它在实验中是如何运作的。
 
-```{.python .input}
+```python
 #@tab all
 def train_momentum(lr, momentum, num_epochs=2):
     d2l.train_ch11(sgd_momentum, init_momentum_states(feature_dim),
@@ -289,14 +289,14 @@ train_momentum(0.02, 0.5)
 当我们将动量超参数`momentum`增加到0.9时，它相当于有效样本数量增加到$\frac{1}{1 - 0.9} = 10$。
 我们将学习率略微降至$0.01$，以确保可控。
 
-```{.python .input}
+```python
 #@tab all
 train_momentum(0.01, 0.9)
 ```
 
 降低学习率进一步解决了任何非平滑优化问题的困难，将其设置为$0.005$会产生良好的收敛性能。
 
-```{.python .input}
+```python
 #@tab all
 train_momentum(0.005, 0.9)
 ```
@@ -305,25 +305,25 @@ train_momentum(0.005, 0.9)
 
 由于深度学习框架中的优化求解器早已构建了动量法，设置匹配参数会产生非常类似的轨迹。
 
-```{.python .input}
+```python
 d2l.train_concise_ch11('sgd', {'learning_rate': 0.005, 'momentum': 0.9},
                        data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 trainer = torch.optim.SGD
 d2l.train_concise_ch11(trainer, {'lr': 0.005, 'momentum': 0.9}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 trainer = tf.keras.optimizers.SGD
 d2l.train_concise_ch11(trainer, {'learning_rate': 0.005, 'momentum': 0.9},
                        data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 trainer = paddle.optimizer.Momentum
 d2l.train_concise_ch11(trainer, {'learning_rate': 0.005, 'momentum': 0.9}, data_iter)
@@ -384,7 +384,7 @@ $$x_{t+1} = x_t - \eta \lambda x_t = (1 - \eta \lambda) x_t.$$
 这显示了在我们将学习率$\eta$提高到$\eta \lambda = 1$之前，收敛率最初是如何提高的。
 超过该数值之后，梯度开始发散，对于$\eta \lambda > 2$而言，优化问题将会发散。
 
-```{.python .input}
+```python
 #@tab all
 lambdas = [0.1, 1, 10, 19]
 eta = 0.1

@@ -9,7 +9,7 @@
 它们也经常在局部极小值附近表现出一些凸性。
 这可能会产生一些像 :cite:`Izmailov.Podoprikhin.Garipov.ea.2018`这样比较有意思的新优化变体。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mpl_toolkits import mplot3d
@@ -17,7 +17,7 @@ from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -26,7 +26,7 @@ from mpl_toolkits import mplot3d
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -35,7 +35,7 @@ from mpl_toolkits import mplot3d
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -99,7 +99,7 @@ $$\lambda f(x) + (1-\lambda) f(x') \geq f(\lambda x + (1-\lambda) x').$$
 为了说明这一点，让我们绘制一些函数并检查哪些函数满足要求。
 下面我们定义一些函数，包括凸函数和非凸函数。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, tensorflow
 f = lambda x: 0.5 * x**2  # 凸函数
 g = lambda x: d2l.cos(np.pi * x)  # 非凸函数
@@ -112,7 +112,7 @@ for ax, func in zip(axes, [f, g, h]):
     d2l.plot([x, segment], [func(x), func(segment)], axes=ax)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 f = lambda x: 0.5 * x**2  # 凸函数
 g = lambda x: d2l.cos(np.pi * x)  # 非凸函数
@@ -180,7 +180,7 @@ $$\begin{aligned}
 
 例如，对于凸函数$f(x) = (x-1)^2$，有一个局部最小值$x=1$，它也是全局最小值。
 
-```{.python .input}
+```python
 #@tab all
 f = lambda x: (x - 1) ** 2
 d2l.set_figsize()

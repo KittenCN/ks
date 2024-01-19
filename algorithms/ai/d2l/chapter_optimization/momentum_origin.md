@@ -41,7 +41,7 @@ $$f(\mathbf{x}) = 0.1 x_1^2 + 2 x_2^2.$$
 
 As before $f$ has its minimum at $(0, 0)$. This function is *very* flat in the direction of $x_1$. Let's see what happens when we perform gradient descent as before on this new function. We pick a learning rate of $0.4$.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import np, npx
@@ -56,7 +56,7 @@ def gd_2d(x1, x2, s1, s2):
 d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -71,7 +71,7 @@ def gd_2d(x1, x2, s1, s2):
 d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -88,7 +88,7 @@ d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
 
 By construction, the gradient in the $x_2$ direction is *much* higher and changes much more rapidly than in the horizontal $x_1$ direction. Thus we are stuck between two undesirable choices: if we pick a small learning rate we ensure that the solution does not diverge in the $x_2$ direction but we are saddled with slow convergence in the $x_1$ direction. Conversely, with a large learning rate we progress rapidly in the $x_1$ direction but diverge in $x_2$. The example below illustrates what happens even after a slight increase in learning rate from $0.4$ to $0.6$. Convergence in the $x_1$ direction improves but the overall solution quality is much worse.
 
-```{.python .input}
+```python
 #@tab all
 eta = 0.6
 d2l.show_trace_2d(f_2d, d2l.train_2d(gd_2d))
@@ -109,7 +109,7 @@ $$
 
 Note that for $\beta = 0$ we recover regular gradient descent. Before delving deeper into the mathematical properties let's have a quick look at how the algorithm behaves in practice.
 
-```{.python .input}
+```python
 #@tab all
 def momentum_2d(x1, x2, v1, v2):
     v1 = beta * v1 + 0.2 * x1
@@ -122,7 +122,7 @@ d2l.show_trace_2d(f_2d, d2l.train_2d(momentum_2d))
 
 As we can see, even with the same learning rate that we used before, momentum still converges well. Let's see what happens when we decrease the momentum parameter. Halving it to $\beta = 0.25$ leads to a trajectory that barely converges at all. Nonetheless, it is a lot better than without momentum (when the solution diverges).
 
-```{.python .input}
+```python
 #@tab all
 eta, beta = 0.6, 0.25
 d2l.show_trace_2d(f_2d, d2l.train_2d(momentum_2d))
@@ -134,7 +134,7 @@ Note that we can combine momentum with stochastic gradient descent and in partic
 
 Recall that $\mathbf{v}_t = \sum_{\tau = 0}^{t-1} \beta^{\tau} \mathbf{g}_{t-\tau, t-\tau-1}$. In the limit the terms add up to $\sum_{\tau=0}^\infty \beta^\tau = \frac{1}{1-\beta}$. In other words, rather than taking a step of size $\eta$ in gradient descent or stochastic gradient descent we take a step of size $\frac{\eta}{1-\beta}$ while at the same time, dealing with a potentially much better behaved descent direction. These are two benefits in one. To illustrate how weighting behaves for different choices of $\beta$ consider the diagram below.
 
-```{.python .input}
+```python
 #@tab all
 d2l.set_figsize()
 betas = [0.95, 0.9, 0.6, 0]
@@ -153,7 +153,7 @@ Let's see how momentum works in practice, i.e., when used within the context of 
 
 Compared with (minibatch) stochastic gradient descent the momentum method needs to maintain a set of  auxiliary variables, i.e., velocity. It has the same shape as the gradients (and variables of the optimization problem). In the implementation below we call these variables `states`.
 
-```{.python .input}
+```python
 #@tab mxnet,pytorch
 def init_momentum_states(feature_dim):
     v_w = d2l.zeros((feature_dim, 1))
@@ -161,7 +161,7 @@ def init_momentum_states(feature_dim):
     return (v_w, v_b)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def init_momentum_states(features_dim):
     v_w = tf.Variable(d2l.zeros((features_dim, 1)))
@@ -169,14 +169,14 @@ def init_momentum_states(features_dim):
     return (v_w, v_b)
 ```
 
-```{.python .input}
+```python
 def sgd_momentum(params, states, hyperparams):
     for p, v in zip(params, states):
         v[:] = hyperparams['momentum'] * v + p.grad
         p[:] -= hyperparams['lr'] * v
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def sgd_momentum(params, states, hyperparams):
     for p, v in zip(params, states):
@@ -186,7 +186,7 @@ def sgd_momentum(params, states, hyperparams):
         p.grad.data.zero_()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def sgd_momentum(params, grads, states, hyperparams):
     for p, v, g in zip(params, states, grads):
@@ -196,7 +196,7 @@ def sgd_momentum(params, grads, states, hyperparams):
 
 Let's see how this works in practice.
 
-```{.python .input}
+```python
 #@tab all
 def train_momentum(lr, momentum, num_epochs=2):
     d2l.train_ch11(sgd_momentum, init_momentum_states(feature_dim),
@@ -209,14 +209,14 @@ train_momentum(0.02, 0.5)
 
 When we increase the momentum hyperparameter `momentum` to 0.9, it amounts to a significantly larger effective sample size of $\frac{1}{1 - 0.9} = 10$. We reduce the learning rate slightly to $0.01$ to keep matters under control.
 
-```{.python .input}
+```python
 #@tab all
 train_momentum(0.01, 0.9)
 ```
 
 Reducing the learning rate further addresses any issue of non-smooth optimization problems. Setting it to $0.005$ yields good convergence properties.
 
-```{.python .input}
+```python
 #@tab all
 train_momentum(0.005, 0.9)
 ```
@@ -225,18 +225,18 @@ train_momentum(0.005, 0.9)
 
 There is very little to do in Gluon since the standard `sgd` solver already had momentum built in. Setting matching parameters yields a very similar trajectory.
 
-```{.python .input}
+```python
 d2l.train_concise_ch11('sgd', {'learning_rate': 0.005, 'momentum': 0.9},
                        data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 trainer = torch.optim.SGD
 d2l.train_concise_ch11(trainer, {'lr': 0.005, 'momentum': 0.9}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 trainer = tf.keras.optimizers.SGD
 d2l.train_concise_ch11(trainer, {'learning_rate': 0.005, 'momentum': 0.9},
@@ -285,7 +285,7 @@ $$x_{t+1} = x_t - \eta \lambda x_t = (1 - \eta \lambda) x_t.$$
 
 Whenever $|1 - \eta \lambda| < 1$ this optimization converges at an exponential rate since after $t$ steps we have $x_t = (1 - \eta \lambda)^t x_0$. This shows how the rate of convergence improves initially as we increase the learning rate $\eta$ until $\eta \lambda = 1$. Beyond that things diverge and for $\eta \lambda > 2$ the optimization problem diverges.
 
-```{.python .input}
+```python
 #@tab all
 lambdas = [0.1, 1, 10, 19]
 eta = 0.1

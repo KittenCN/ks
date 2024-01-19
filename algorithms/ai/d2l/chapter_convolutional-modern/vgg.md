@@ -27,7 +27,7 @@
 和输出通道的数量`out_channels`.
 :end_tab:
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
@@ -42,7 +42,7 @@ def vgg_block(num_convs, num_channels):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -59,7 +59,7 @@ def vgg_block(num_convs, in_channels, out_channels):
     return nn.Sequential(*layers)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -73,7 +73,7 @@ def vgg_block(num_convs, num_channels):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -105,14 +105,14 @@ VGG神经网络连接 :numref:`fig_vgg`的几个VGG块（在`vgg_block`函数中
 原始VGG网络有5个卷积块，其中前两个块各有一个卷积层，后三个块各包含两个卷积层。
 第一个模块有64个输出通道，每个后续模块将输出通道数量翻倍，直到该数字达到512。由于该网络使用8个卷积层和3个全连接层，因此它通常被称为VGG-11。
 
-```{.python .input}
+```python
 #@tab all
 conv_arch = ((1, 64), (1, 128), (2, 256), (2, 512), (2, 512))
 ```
 
 下面的代码实现了VGG-11。可以通过在`conv_arch`上执行for循环来简单实现。
 
-```{.python .input}
+```python
 def vgg(conv_arch):
     net = nn.Sequential()
     # 卷积层部分
@@ -127,7 +127,7 @@ def vgg(conv_arch):
 net = vgg(conv_arch)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def vgg(conv_arch):
     conv_blks = []
@@ -147,7 +147,7 @@ def vgg(conv_arch):
 net = vgg(conv_arch)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def vgg(conv_arch):
     net = tf.keras.models.Sequential()
@@ -167,7 +167,7 @@ def vgg(conv_arch):
 net = vgg(conv_arch)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def vgg(conv_arch):
     conv_blks = []
@@ -188,7 +188,7 @@ net = vgg(conv_arch)
 
 接下来，我们将构建一个高度和宽度为224的单通道数据样本，以[**观察每个层输出的形状**]。
 
-```{.python .input}
+```python
 net.initialize()
 X = np.random.uniform(size=(1, 1, 224, 224))
 for blk in net:
@@ -196,7 +196,7 @@ for blk in net:
     print(blk.name, 'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.randn(size=(1, 1, 224, 224))
 for blk in net:
@@ -204,7 +204,7 @@ for blk in net:
     print(blk.__class__.__name__,'output shape:\t',X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.uniform((1, 224, 224, 1))
 for blk in net.layers:
@@ -212,7 +212,7 @@ for blk in net.layers:
     print(blk.__class__.__name__,'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = paddle.randn(shape=(1, 1, 224, 224))
 for blk in net:
@@ -226,14 +226,14 @@ for blk in net:
 
 [**由于VGG-11比AlexNet计算量更大，因此我们构建了一个通道数较少的网络**]，足够用于训练Fashion-MNIST数据集。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 ratio = 4
 small_conv_arch = [(pair[0], pair[1] // ratio) for pair in conv_arch]
 net = vgg(small_conv_arch)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 ratio = 4
 small_conv_arch = [(pair[0], pair[1] // ratio) for pair in conv_arch]
@@ -243,7 +243,7 @@ net = lambda: vgg(small_conv_arch)
 
 除了使用略高的学习率外，[**模型训练**]过程与 :numref:`sec_alexnet`中的AlexNet类似。
 
-```{.python .input}
+```python
 #@tab all
 lr, num_epochs, batch_size = 0.05, 10, 128
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=224)

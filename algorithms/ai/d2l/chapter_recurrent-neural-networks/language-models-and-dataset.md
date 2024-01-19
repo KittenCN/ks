@@ -127,28 +127,28 @@ $$
 根据 :numref:`sec_text_preprocessing`中介绍的时光机器数据集构建词表，
 并打印前$10$个最常用的（频率最高的）单词。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 import random
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 import random
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 import random
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -157,7 +157,7 @@ import paddle
 import random
 ```
 
-```{.python .input}
+```python
 #@tab all
 tokens = d2l.tokenize(d2l.read_time_machine())
 # 因为每个文本行不一定是一个句子或一个段落，因此我们把所有文本行拼接到一起
@@ -173,7 +173,7 @@ vocab.token_freqs[:10]
 例如，最常用单词的词频对比，第$10$个还不到第$1$个的$1/5$。
 为了更好地理解，我们可以[**画出的词频图**]：
 
-```{.python .input}
+```python
 #@tab all
 freqs = [freq for token, freq in vocab.token_freqs]
 d2l.plot(freqs, xlabel='token: x', ylabel='frequency: n(x)',
@@ -198,7 +198,7 @@ $$\log n_i = -\alpha \log i + c,$$
 那么[**其他的词元组合，比如二元语法、三元语法等等，又会如何呢？**]
 我们来看看二元语法的频率是否与一元语法的频率表现出相同的行为方式。
 
-```{.python .input}
+```python
 #@tab all
 bigram_tokens = [pair for pair in zip(corpus[:-1], corpus[1:])]
 bigram_vocab = d2l.Vocab(bigram_tokens)
@@ -209,7 +209,7 @@ bigram_vocab.token_freqs[:10]
 只有一个与“the time”有关。
 我们再进一步看看三元语法的频率是否表现出相同的行为方式。
 
-```{.python .input}
+```python
 #@tab all
 trigram_tokens = [triple for triple in zip(
     corpus[:-2], corpus[1:-1], corpus[2:])]
@@ -219,7 +219,7 @@ trigram_vocab.token_freqs[:10]
 
 最后，我们[**直观地对比三种模型中的词元频率**]：一元语法、二元语法和三元语法。
 
-```{.python .input}
+```python
 #@tab all
 bigram_freqs = [freq for token, freq in bigram_vocab.token_freqs]
 trigram_freqs = [freq for token, freq in trigram_vocab.token_freqs]
@@ -284,7 +284,7 @@ d2l.plot([freqs, bigram_freqs, trigram_freqs], xlabel='token: x',
 在这里，参数`batch_size`指定了每个小批量中子序列样本的数目，
 参数`num_steps`是每个子序列中预定义的时间步数。
 
-```{.python .input}
+```python
 #@tab all
 def seq_data_iter_random(corpus, batch_size, num_steps):  #@save
     """使用随机抽样生成一个小批量子序列"""
@@ -316,7 +316,7 @@ def seq_data_iter_random(corpus, batch_size, num_steps):  #@save
 $\lfloor (35 - 1) / 5 \rfloor= 6$个“特征－标签”子序列对。
 如果设置小批量大小为$2$，我们只能得到$3$个小批量。
 
-```{.python .input}
+```python
 #@tab all
 my_seq = list(range(35))
 for X, Y in seq_data_iter_random(my_seq, batch_size=2, num_steps=5):
@@ -329,7 +329,7 @@ for X, Y in seq_data_iter_random(my_seq, batch_size=2, num_steps=5):
 我们还可以[**保证两个相邻的小批量中的子序列在原始序列上也是相邻的**]。
 这种策略在基于小批量的迭代过程中保留了拆分的子序列的顺序，因此称为顺序分区。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def seq_data_iter_sequential(corpus, batch_size, num_steps):  #@save
     """使用顺序分区生成一个小批量子序列"""
@@ -346,7 +346,7 @@ def seq_data_iter_sequential(corpus, batch_size, num_steps):  #@save
         yield X, Y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def seq_data_iter_sequential(corpus, batch_size, num_steps):  #@save
     """使用顺序分区生成一个小批量子序列"""
@@ -364,7 +364,7 @@ def seq_data_iter_sequential(corpus, batch_size, num_steps):  #@save
         yield X, Y
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def seq_data_iter_sequential(corpus, batch_size, num_steps):  #@save
     """使用顺序分区生成一个小批量子序列"""
@@ -385,7 +385,7 @@ def seq_data_iter_sequential(corpus, batch_size, num_steps):  #@save
 通过将它们打印出来可以发现：
 迭代期间来自两个相邻的小批量中的子序列在原始序列中确实是相邻的。
 
-```{.python .input}
+```python
 #@tab all
 for X, Y in seq_data_iter_sequential(my_seq, batch_size=2, num_steps=5):
     print('X: ', X, '\nY:', Y)
@@ -394,7 +394,7 @@ for X, Y in seq_data_iter_sequential(my_seq, batch_size=2, num_steps=5):
 现在，我们[**将上面的两个采样函数包装到一个类中**]，
 以便稍后可以将其用作数据迭代器。
 
-```{.python .input}
+```python
 #@tab all
 class SeqDataLoader:  #@save
     """加载序列数据的迭代器"""
@@ -416,7 +416,7 @@ class SeqDataLoader:  #@save
 （如 :numref:`sec_fashion_mnist`中定义的
 `d2l.load_data_fashion_mnist`）类似地使用。
 
-```{.python .input}
+```python
 #@tab all
 def load_data_time_machine(batch_size, num_steps,  #@save
                            use_random_iter=False, max_tokens=10000):

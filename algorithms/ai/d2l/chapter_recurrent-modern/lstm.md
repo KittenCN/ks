@@ -123,7 +123,7 @@ $$\mathbf{H}_t = \mathbf{O}_t \odot \tanh(\mathbf{C}_t).$$
 与 :numref:`sec_rnn_scratch`中的实验相同，
 我们首先加载时光机器数据集。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import rnn
@@ -133,7 +133,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -143,7 +143,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -151,7 +151,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -170,7 +170,7 @@ train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 如前所述，超参数`num_hiddens`定义隐藏单元的数量。
 我们按照标准差$0.01$的高斯分布初始化权重，并将偏置项设为$0$。
 
-```{.python .input}
+```python
 def get_lstm_params(vocab_size, num_hiddens, device):
     num_inputs = num_outputs = vocab_size
 
@@ -197,7 +197,7 @@ def get_lstm_params(vocab_size, num_hiddens, device):
     return params
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_lstm_params(vocab_size, num_hiddens, device):
     num_inputs = num_outputs = vocab_size
@@ -225,7 +225,7 @@ def get_lstm_params(vocab_size, num_hiddens, device):
     return params
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def get_lstm_params(vocab_size, num_hiddens):
     num_inputs = num_outputs = vocab_size
@@ -251,7 +251,7 @@ def get_lstm_params(vocab_size, num_hiddens):
     return params
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def get_lstm_params(vocab_size, num_hiddens):
     num_inputs = num_outputs = vocab_size
@@ -286,27 +286,27 @@ def get_lstm_params(vocab_size, num_hiddens):
 单元的值为0，形状为（批量大小，隐藏单元数）。
 因此，我们得到以下的状态初始化。
 
-```{.python .input}
+```python
 def init_lstm_state(batch_size, num_hiddens, device):
     return (np.zeros((batch_size, num_hiddens), ctx=device),
             np.zeros((batch_size, num_hiddens), ctx=device))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_lstm_state(batch_size, num_hiddens, device):
     return (torch.zeros((batch_size, num_hiddens), device=device),
             torch.zeros((batch_size, num_hiddens), device=device))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def init_lstm_state(batch_size, num_hiddens):
     return (tf.zeros(shape=(batch_size, num_hiddens)),
             tf.zeros(shape=(batch_size, num_hiddens)))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def init_lstm_state(batch_size, num_hiddens):
     return (paddle.zeros([batch_size, num_hiddens]),
@@ -318,7 +318,7 @@ def init_lstm_state(batch_size, num_hiddens):
 请注意，只有隐状态才会传递到输出层，
 而记忆元$\mathbf{C}_t$不直接参与输出计算。
 
-```{.python .input}
+```python
 def lstm(inputs, state, params):
     [W_xi, W_hi, b_i, W_xf, W_hf, b_f, W_xo, W_ho, b_o, W_xc, W_hc, b_c,
      W_hq, b_q] = params
@@ -336,7 +336,7 @@ def lstm(inputs, state, params):
     return np.concatenate(outputs, axis=0), (H, C)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def lstm(inputs, state, params):
     [W_xi, W_hi, b_i, W_xf, W_hf, b_f, W_xo, W_ho, b_o, W_xc, W_hc, b_c,
@@ -355,7 +355,7 @@ def lstm(inputs, state, params):
     return torch.cat(outputs, dim=0), (H, C)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def lstm(inputs, state, params):
     W_xi, W_hi, b_i, W_xf, W_hf, b_f, W_xo, W_ho, b_o, W_xc, W_hc, b_c, W_hq, b_q = params
@@ -374,7 +374,7 @@ def lstm(inputs, state, params):
     return tf.concat(outputs, axis=0), (H,C)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def lstm(inputs, state, params):
     [W_xi, W_hi, b_i, W_xf, W_hf, b_f, W_xo, W_ho, b_o, W_xc, W_hc, b_c,
@@ -399,7 +399,7 @@ def lstm(inputs, state, params):
 引入的`RNNModelScratch`类来训练一个长短期记忆网络，
 就如我们在 :numref:`sec_gru`中所做的一样。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 vocab_size, num_hiddens, device = len(vocab), 256, d2l.try_gpu()
 num_epochs, lr = 500, 1
@@ -408,7 +408,7 @@ model = d2l.RNNModelScratch(len(vocab), num_hiddens, device, get_lstm_params,
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 vocab_size, num_hiddens, device_name = len(vocab), 256, d2l.try_gpu()._device_name
 num_epochs, lr = 500, 1
@@ -418,7 +418,7 @@ with strategy.scope():
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, strategy)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 vocab_size, num_hiddens, device = len(vocab), 256, d2l.try_gpu()
 num_epochs, lr = 500, 1.0
@@ -434,13 +434,13 @@ d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 这段代码的运行速度要快得多，
 因为它使用的是编译好的运算符而不是Python来处理之前阐述的许多细节。
 
-```{.python .input}
+```python
 lstm_layer = rnn.LSTM(num_hiddens)
 model = d2l.RNNModel(lstm_layer, len(vocab))
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_inputs = vocab_size
 lstm_layer = nn.LSTM(num_inputs, num_hiddens)
@@ -449,7 +449,7 @@ model = model.to(device)
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 lstm_cell = tf.keras.layers.LSTMCell(num_hiddens,
     kernel_initializer='glorot_uniform')
@@ -462,7 +462,7 @@ with strategy.scope():
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, strategy)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_inputs = vocab_size
 lstm_layer = nn.LSTM(num_inputs, num_hiddens, time_major=True)

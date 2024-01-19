@@ -155,7 +155,7 @@ $$\mathbf{H}_t = \mathbf{Z}_t \odot \mathbf{H}_{t-1}  + (1 - \mathbf{Z}_t) \odot
 为了更好地理解门控循环单元模型，我们从零开始实现它。
 首先，我们读取 :numref:`sec_rnn_scratch`中使用的时间机器数据集：
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import rnn
@@ -165,7 +165,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -175,7 +175,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -184,7 +184,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -204,7 +204,7 @@ train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 并将偏置项设为$0$，超参数`num_hiddens`定义隐藏单元的数量，
 实例化与更新门、重置门、候选隐状态和输出层相关的所有权重和偏置。
 
-```{.python .input}
+```python
 def get_params(vocab_size, num_hiddens, device):
     num_inputs = num_outputs = vocab_size
 
@@ -229,7 +229,7 @@ def get_params(vocab_size, num_hiddens, device):
     return params
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_params(vocab_size, num_hiddens, device):
     num_inputs = num_outputs = vocab_size
@@ -255,7 +255,7 @@ def get_params(vocab_size, num_hiddens, device):
     return params
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def get_params(vocab_size, num_hiddens):
     num_inputs = num_outputs = vocab_size
@@ -278,7 +278,7 @@ def get_params(vocab_size, num_hiddens):
     return params
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def get_params(vocab_size, num_hiddens):
     num_inputs = num_outputs = vocab_size
@@ -310,24 +310,24 @@ def get_params(vocab_size, num_hiddens):
 与 :numref:`sec_rnn_scratch`中定义的`init_rnn_state`函数一样，
 此函数返回一个形状为（批量大小，隐藏单元个数）的张量，张量的值全部为零。
 
-```{.python .input}
+```python
 def init_gru_state(batch_size, num_hiddens, device):
     return (np.zeros(shape=(batch_size, num_hiddens), ctx=device), )
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_gru_state(batch_size, num_hiddens, device):
     return (torch.zeros((batch_size, num_hiddens), device=device), )
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def init_gru_state(batch_size, num_hiddens):
     return (d2l.zeros((batch_size, num_hiddens)), )
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def init_gru_state(batch_size, num_hiddens):
     return (paddle.zeros([batch_size, num_hiddens]), )
@@ -337,7 +337,7 @@ def init_gru_state(batch_size, num_hiddens):
 模型的架构与基本的循环神经网络单元是相同的，
 只是权重更新公式更为复杂。
 
-```{.python .input}
+```python
 def gru(inputs, state, params):
     W_xz, W_hz, b_z, W_xr, W_hr, b_r, W_xh, W_hh, b_h, W_hq, b_q = params
     H, = state
@@ -352,7 +352,7 @@ def gru(inputs, state, params):
     return np.concatenate(outputs, axis=0), (H,)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def gru(inputs, state, params):
     W_xz, W_hz, b_z, W_xr, W_hr, b_r, W_xh, W_hh, b_h, W_hq, b_q = params
@@ -368,7 +368,7 @@ def gru(inputs, state, params):
     return torch.cat(outputs, dim=0), (H,)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def gru(inputs, state, params):
     W_xz, W_hz, b_z, W_xr, W_hr, b_r, W_xh, W_hh, b_h, W_hq, b_q = params
@@ -385,7 +385,7 @@ def gru(inputs, state, params):
     return tf.concat(outputs, axis=0), (H,)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def gru(inputs, state, params):
     W_xz, W_hz, b_z, W_xr, W_hr, b_r, W_xh, W_hh, b_h, W_hq, b_q = params
@@ -407,7 +407,7 @@ def gru(inputs, state, params):
 训练结束后，我们分别打印输出训练集的困惑度，
 以及前缀“time traveler”和“traveler”的预测序列上的困惑度。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 vocab_size, num_hiddens, device = len(vocab), 256, d2l.try_gpu()
 num_epochs, lr = 500, 1
@@ -416,7 +416,7 @@ model = d2l.RNNModelScratch(len(vocab), num_hiddens, device, get_params,
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 vocab_size, num_hiddens, device_name = len(vocab), 256, d2l.try_gpu()._device_name
 # 定义训练策略
@@ -428,7 +428,7 @@ with strategy.scope():
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, strategy)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 vocab_size, num_hiddens, device = len(vocab), 256, d2l.try_gpu()
 num_epochs, lr = 500, 1.0
@@ -444,13 +444,13 @@ d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 这段代码的运行速度要快得多，
 因为它使用的是编译好的运算符而不是Python来处理之前阐述的许多细节。
 
-```{.python .input}
+```python
 gru_layer = rnn.GRU(num_hiddens)
 model = d2l.RNNModel(gru_layer, len(vocab))
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_inputs = vocab_size
 gru_layer = nn.GRU(num_inputs, num_hiddens)
@@ -459,7 +459,7 @@ model = model.to(device)
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 gru_cell = tf.keras.layers.GRUCell(num_hiddens,
     kernel_initializer='glorot_uniform')
@@ -474,7 +474,7 @@ with strategy.scope():
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, strategy)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_inputs = vocab_size
 gru_layer = nn.GRU(num_inputs, num_hiddens, time_major=True)

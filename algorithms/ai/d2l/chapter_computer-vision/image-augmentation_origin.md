@@ -23,7 +23,7 @@ that image augmentation was indispensable
 for the success of AlexNet at that time.
 In this section we will discuss this widely used technique in computer vision.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, image, init, np, npx
@@ -32,7 +32,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -45,13 +45,13 @@ from torch import nn
 
 In our investigation of common image augmentation methods, we will use the following $400\times 500$ image an example.
 
-```{.python .input}
+```python
 d2l.set_figsize()
 img = image.imread('../img/cat1.jpg')
 d2l.plt.imshow(img.asnumpy());
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 d2l.set_figsize()
 img = d2l.Image.open('../img/cat1.jpg')
@@ -60,7 +60,7 @@ d2l.plt.imshow(img);
 
 Most image augmentation methods have a certain degree of randomness. To make it easier for us to observe the effect of image augmentation, next we define an auxiliary function `apply`. This function runs the image augmentation method `aug` multiple times on the input image `img` and shows all the results.
 
-```{.python .input}
+```python
 #@tab all
 def apply(img, aug, num_rows=2, num_cols=4, scale=1.5):
     Y = [aug(img) for _ in range(num_rows * num_cols)]
@@ -75,11 +75,11 @@ Next, we use the `transforms` module to create the `RandomFlipLeftRight` instanc
 an image left and right with a 50% chance.
 
 
-```{.python .input}
+```python
 apply(img, gluon.data.vision.transforms.RandomFlipLeftRight())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 apply(img, torchvision.transforms.RandomHorizontalFlip())
 ```
@@ -88,11 +88,11 @@ Flipping up and down is not as common as flipping left and right. But at least f
 Next, we create a `RandomFlipTopBottom` instance to flip
 an image up and down with a 50% chance.
 
-```{.python .input}
+```python
 apply(img, gluon.data.vision.transforms.RandomFlipTopBottom())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 apply(img, torchvision.transforms.RandomVerticalFlip())
 ```
@@ -105,13 +105,13 @@ In the code below, we randomly crop an area with an area of $10\% \sim 100\%$ of
 Unless otherwise specified, the random number between $a$ and $b$ in this section refers to a continuous value obtained by random and uniform sampling from the interval $[a, b]$.
 
 
-```{.python .input}
+```python
 shape_aug = gluon.data.vision.transforms.RandomResizedCrop(
     (200, 200), scale=(0.1, 1), ratio=(0.5, 2))
 apply(img, shape_aug)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 shape_aug = torchvision.transforms.RandomResizedCrop(
     (200, 200), scale=(0.1, 1), ratio=(0.5, 2))
@@ -122,11 +122,11 @@ apply(img, shape_aug)
 
 Another augmentation method is changing colors. We can change four aspects of the image color: brightness, contrast, saturation, and hue. In the example below, we randomly change the brightness of the image to a value between 50% ($1-0.5$) and 150% ($1+0.5$) of the original image.
 
-```{.python .input}
+```python
 apply(img, gluon.data.vision.transforms.RandomBrightness(0.5))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 apply(img, torchvision.transforms.ColorJitter(
     brightness=0.5, contrast=0, saturation=0, hue=0))
@@ -134,11 +134,11 @@ apply(img, torchvision.transforms.ColorJitter(
 
 Similarly, we can randomly change the hue of the image.
 
-```{.python .input}
+```python
 apply(img, gluon.data.vision.transforms.RandomHue(0.5))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 apply(img, torchvision.transforms.ColorJitter(
     brightness=0, contrast=0, saturation=0, hue=0.5))
@@ -146,13 +146,13 @@ apply(img, torchvision.transforms.ColorJitter(
 
 We can also create a `RandomColorJitter` instance and set how to randomly change the `brightness`, `contrast`, `saturation`, and `hue` of the image at the same time.
 
-```{.python .input}
+```python
 color_aug = gluon.data.vision.transforms.RandomColorJitter(
     brightness=0.5, contrast=0.5, saturation=0.5, hue=0.5)
 apply(img, color_aug)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 color_aug = torchvision.transforms.ColorJitter(
     brightness=0.5, contrast=0.5, saturation=0.5, hue=0.5)
@@ -165,13 +165,13 @@ In practice, we will combine multiple image augmentation methods.
 For example,
 we can combine the different image augmentation methods defined above and apply them to each image via a `Compose` instance.
 
-```{.python .input}
+```python
 augs = gluon.data.vision.transforms.Compose([
     gluon.data.vision.transforms.RandomFlipLeftRight(), color_aug, shape_aug])
 apply(img, augs)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 augs = torchvision.transforms.Compose([
     torchvision.transforms.RandomHorizontalFlip(), color_aug, shape_aug])
@@ -186,12 +186,12 @@ This is because the position and size of the objects in the Fashion-MNIST datase
 The first 32 training images in the CIFAR-10 dataset are shown below.
 
 
-```{.python .input}
+```python
 d2l.show_images(gluon.data.vision.CIFAR10(
     train=True)[0:32][0], 4, 8, scale=0.8);
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 all_images = torchvision.datasets.CIFAR10(train=True, root="../data",
                                           download=True)
@@ -206,7 +206,7 @@ Here we only use the simplest random left-right flipping method. In addition, we
 32-bit floating point numbers between 0 and 1 with the shape of (batch size, number of channels, height, width).
 
 
-```{.python .input}
+```python
 train_augs = gluon.data.vision.transforms.Compose([
     gluon.data.vision.transforms.RandomFlipLeftRight(),
     gluon.data.vision.transforms.ToTensor()])
@@ -215,7 +215,7 @@ test_augs = gluon.data.vision.transforms.Compose([
     gluon.data.vision.transforms.ToTensor()])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train_augs = torchvision.transforms.Compose([
      torchvision.transforms.RandomHorizontalFlip(),
@@ -244,7 +244,7 @@ For
 a detailed introduction to `DataLoader`, please refer to :numref:`sec_fashion_mnist`.
 :end_tab:
 
-```{.python .input}
+```python
 def load_cifar10(is_train, augs, batch_size):
     return gluon.data.DataLoader(
         gluon.data.vision.CIFAR10(train=is_train).transform_first(augs),
@@ -252,7 +252,7 @@ def load_cifar10(is_train, augs, batch_size):
         num_workers=d2l.get_dataloader_workers())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def load_cifar10(is_train, augs, batch_size):
     dataset = torchvision.datasets.CIFAR10(root="../data", train=is_train,
@@ -272,7 +272,7 @@ multi-GPU training in :numref:`sec_multi_gpu_concise`.
 In the following,
 we define a function to train and evaluate the model using multiple GPUs.
 
-```{.python .input}
+```python
 #@save
 def train_batch_ch13(net, features, labels, loss, trainer, devices,
                      split_f=d2l.split_batch):
@@ -292,7 +292,7 @@ def train_batch_ch13(net, features, labels, loss, trainer, devices,
     return train_loss_sum, train_acc_sum
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def train_batch_ch13(net, X, y, loss, trainer, devices):
@@ -313,7 +313,7 @@ def train_batch_ch13(net, X, y, loss, trainer, devices):
     return train_loss_sum, train_acc_sum
 ```
 
-```{.python .input}
+```python
 #@save
 def train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs,
                devices=d2l.try_all_gpus(), split_f=d2l.split_batch):
@@ -342,7 +342,7 @@ def train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs,
           f'{str(devices)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs,
@@ -379,7 +379,7 @@ uses Adam as the optimization algorithm,
 applies image augmentation to the training dataset,
 and finally calls the `train_ch13` function just defined to train and evaluate the model.
 
-```{.python .input}
+```python
 batch_size, devices, net = 256, d2l.try_all_gpus(), d2l.resnet18(10)
 net.initialize(init=init.Xavier(), ctx=devices)
 
@@ -392,7 +392,7 @@ def train_with_data_aug(train_augs, test_augs, net, lr=0.001):
     train_ch13(net, train_iter, test_iter, loss, trainer, 10, devices)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 batch_size, devices, net = 256, d2l.try_all_gpus(), d2l.resnet18(10, 3)
 
@@ -412,7 +412,7 @@ def train_with_data_aug(train_augs, test_augs, net, lr=0.001):
 
 Let us train the model using image augmentation based on random left-right flipping.
 
-```{.python .input}
+```python
 #@tab all
 train_with_data_aug(train_augs, test_augs, net)
 ```

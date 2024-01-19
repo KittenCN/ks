@@ -179,7 +179,7 @@ We can illustrate the benefits of
 weight decay
 through a simple synthetic example.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, init, np, npx
@@ -187,7 +187,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -195,7 +195,7 @@ import torch
 import torch.nn as nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -213,7 +213,7 @@ To make the effects of overfitting pronounced,
 we can increase the dimensionality of our problem to $d = 200$
 and work with a small training set containing only 20 examples.
 
-```{.python .input}
+```python
 #@tab all
 n_train, n_test, num_inputs, batch_size = 20, 100, 200, 5
 true_w, true_b = d2l.ones((num_inputs, 1)) * 0.01, 0.05
@@ -234,7 +234,7 @@ to the original target function.
 First, we will define a function
 to randomly initialize our model parameters.
 
-```{.python .input}
+```python
 def init_params():
     w = np.random.normal(scale=1, size=(num_inputs, 1))
     b = np.zeros(1)
@@ -243,7 +243,7 @@ def init_params():
     return [w, b]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_params():
     w = torch.normal(0, 1, size=(num_inputs, 1), requires_grad=True)
@@ -251,7 +251,7 @@ def init_params():
     return [w, b]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def init_params():
     w = tf.Variable(tf.random.normal(mean=1, shape=(num_inputs, 1)))
@@ -264,18 +264,18 @@ def init_params():
 Perhaps the most convenient way to implement this penalty
 is to square all terms in place and sum them up.
 
-```{.python .input}
+```python
 def l2_penalty(w):
     return (w**2).sum() / 2
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def l2_penalty(w):
     return torch.sum(w.pow(2)) / 2
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def l2_penalty(w):
     return tf.reduce_sum(tf.pow(w, 2)) / 2
@@ -290,7 +290,7 @@ have not changed since :numref:`chap_linear`,
 so we will just import them via `d2l.linreg` and `d2l.squared_loss`.
 The only change here is that our loss now includes the penalty term.
 
-```{.python .input}
+```python
 def train(lambd):
     w, b = init_params()
     net, loss = lambda X: d2l.linreg(X, w, b), d2l.squared_loss
@@ -311,7 +311,7 @@ def train(lambd):
     print('L2 norm of w:', np.linalg.norm(w))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(lambd):
     w, b = init_params()
@@ -333,7 +333,7 @@ def train(lambd):
     print('L2 norm of w:', torch.norm(w).item())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def train(lambd):
     w, b = init_params()
@@ -363,7 +363,7 @@ Note that we overfit badly,
 decreasing the training error but not the
 test error---a textook case of overfitting.
 
-```{.python .input}
+```python
 #@tab all
 train(lambd=0)
 ```
@@ -376,7 +376,7 @@ but the test error decreases.
 This is precisely the effect
 we expect from regularization.
 
-```{.python .input}
+```python
 #@tab all
 train(lambd=3)
 ```
@@ -423,7 +423,7 @@ the weight decay hyperparameter `wd` and apply it to the layer
 through the `kernel_regularizer` argument.
 :end_tab:
 
-```{.python .input}
+```python
 def train_concise(wd):
     net = nn.Sequential()
     net.add(nn.Dense(1))
@@ -448,7 +448,7 @@ def train_concise(wd):
     print('L2 norm of w:', np.linalg.norm(net[0].weight.data()))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train_concise(wd):
     net = nn.Sequential(nn.Linear(num_inputs, 1))
@@ -475,7 +475,7 @@ def train_concise(wd):
     print('L2 norm of w:', net[0].weight.norm().item())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def train_concise(wd):
     net = tf.keras.models.Sequential()
@@ -509,12 +509,12 @@ and are easier to implement,
 a benefit that will become more
 pronounced for larger problems.
 
-```{.python .input}
+```python
 #@tab all
 train_concise(0)
 ```
 
-```{.python .input}
+```python
 #@tab all
 train_concise(3)
 ```

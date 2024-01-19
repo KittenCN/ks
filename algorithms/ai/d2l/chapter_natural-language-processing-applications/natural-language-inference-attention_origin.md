@@ -26,7 +26,7 @@ can be neatly accomplished by attention mechanisms.
 At a high level, it consists of three jointly trained steps: attending, comparing, and aggregating.
 We will illustrate them step by step in the following.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, init, np, npx
 from mxnet.gluon import nn
@@ -34,7 +34,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -68,7 +68,7 @@ $$e_{ij} = f(\mathbf{a}_i)^\top f(\mathbf{b}_j),$$
 where the function $f$ is an MLP defined in the following `mlp` function.
 The output dimension of $f$ is specified by the `num_hiddens` argument of `mlp`.
 
-```{.python .input}
+```python
 def mlp(num_hiddens, flatten):
     net = nn.Sequential()
     net.add(nn.Dropout(0.2))
@@ -78,7 +78,7 @@ def mlp(num_hiddens, flatten):
     return net
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def mlp(num_inputs, num_hiddens, flatten):
     net = []
@@ -117,7 +117,7 @@ $$
 
 Below we define the `Attend` class to compute the soft alignment of hypotheses (`beta`) with input premises `A` and soft alignment of premises (`alpha`) with input hypotheses `B`.
 
-```{.python .input}
+```python
 class Attend(nn.Block):
     def __init__(self, num_hiddens, **kwargs):
         super(Attend, self).__init__(**kwargs)
@@ -144,7 +144,7 @@ class Attend(nn.Block):
         return beta, alpha
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class Attend(nn.Module):
     def __init__(self, num_inputs, num_hiddens, **kwargs):
@@ -190,7 +190,7 @@ In :eqref:`eq_nli_v_ab`, $\mathbf{v}_{A,i}$ is the comparison between token $i$ 
 while $\mathbf{v}_{B,j}$ is the comparison between token $j$ in the hypothesis and all the premise tokens that are softly aligned with token $j$.
 The following `Compare` class defines such as comparing step.
 
-```{.python .input}
+```python
 class Compare(nn.Block):
     def __init__(self, num_hiddens, **kwargs):
         super(Compare, self).__init__(**kwargs)
@@ -202,7 +202,7 @@ class Compare(nn.Block):
         return V_A, V_B
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class Compare(nn.Module):
     def __init__(self, num_inputs, num_hiddens, **kwargs):
@@ -233,7 +233,7 @@ $$
 
 The aggregation step is defined in the following `Aggregate` class.
 
-```{.python .input}
+```python
 class Aggregate(nn.Block):
     def __init__(self, num_hiddens, num_outputs, **kwargs):
         super(Aggregate, self).__init__(**kwargs)
@@ -249,7 +249,7 @@ class Aggregate(nn.Block):
         return Y_hat
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class Aggregate(nn.Module):
     def __init__(self, num_inputs, num_hiddens, num_outputs, **kwargs):
@@ -271,7 +271,7 @@ class Aggregate(nn.Module):
 By putting the attending, comparing, and aggregating steps together,
 we define the decomposable attention model to jointly train these three steps.
 
-```{.python .input}
+```python
 class DecomposableAttention(nn.Block):
     def __init__(self, vocab, embed_size, num_hiddens, **kwargs):
         super(DecomposableAttention, self).__init__(**kwargs)
@@ -291,7 +291,7 @@ class DecomposableAttention(nn.Block):
         return Y_hat
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class DecomposableAttention(nn.Module):
     def __init__(self, vocab, embed_size, num_hiddens, num_inputs_attend=100,
@@ -323,7 +323,7 @@ We begin by reading the dataset.
 
 We download and read the SNLI dataset using the function defined in :numref:`sec_natural-language-inference-and-dataset`. The batch size and sequence length are set to $256$ and $50$, respectively.
 
-```{.python .input}
+```python
 #@tab all
 batch_size, num_steps = 256, 50
 train_iter, test_iter, vocab = d2l.load_data_snli(batch_size, num_steps)
@@ -337,7 +337,7 @@ The output dimension of functions $f$ in :eqref:`eq_nli_e` and $g$ in :eqref:`eq
 Then we create a model instance, initialize its parameters,
 and load the GloVe embedding to initialize vectors of input tokens.
 
-```{.python .input}
+```python
 embed_size, num_hiddens, devices = 100, 200, d2l.try_all_gpus()
 net = DecomposableAttention(vocab, embed_size, num_hiddens)
 net.initialize(init.Xavier(), ctx=devices)
@@ -346,7 +346,7 @@ embeds = glove_embedding[vocab.idx_to_token]
 net.embedding.weight.set_data(embeds)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 embed_size, num_hiddens, devices = 100, 200, d2l.try_all_gpus()
 net = DecomposableAttention(vocab, embed_size, num_hiddens)
@@ -360,7 +360,7 @@ net.embedding.weight.data.copy_(embeds);
 In contrast to the `split_batch` function in :numref:`sec_multi_gpu` that takes single inputs such as text sequences (or images),
 we define a `split_batch_multi_inputs` function to take multiple inputs such as premises and hypotheses in minibatches.
 
-```{.python .input}
+```python
 #@save
 def split_batch_multi_inputs(X, y, devices):
     """Split multi-input `X` and `y` into multiple devices."""
@@ -371,7 +371,7 @@ def split_batch_multi_inputs(X, y, devices):
 
 Now we can train and evaluate the model on the SNLI dataset.
 
-```{.python .input}
+```python
 lr, num_epochs = 0.001, 4
 trainer = gluon.Trainer(net.collect_params(), 'adam', {'learning_rate': lr})
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
@@ -379,7 +379,7 @@ d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs, devices,
                split_batch_multi_inputs)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 lr, num_epochs = 0.001, 4
 trainer = torch.optim.Adam(net.parameters(), lr=lr)
@@ -391,7 +391,7 @@ d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs, devices)
 
 Finally, define the prediction function to output the logical relationship between a pair of premise and hypothesis.
 
-```{.python .input}
+```python
 #@save
 def predict_snli(net, vocab, premise, hypothesis):
     """Predict the logical relationship between the premise and hypothesis."""
@@ -403,7 +403,7 @@ def predict_snli(net, vocab, premise, hypothesis):
             else 'neutral'
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def predict_snli(net, vocab, premise, hypothesis):
@@ -419,7 +419,7 @@ def predict_snli(net, vocab, premise, hypothesis):
 
 We can use the trained model to obtain the natural language inference result for a sample pair of sentences.
 
-```{.python .input}
+```python
 #@tab all
 predict_snli(net, vocab, ['he', 'is', 'good', '.'], ['he', 'is', 'bad', '.'])
 ```

@@ -41,32 +41,32 @@ Generally, we can ignore functions that start and end with `__` (special objects
 
 For more specific instructions on how to use a given function or class, we can invoke the  `help` function. As an example, let us [**explore the usage instructions for tensors' `ones` function**].
 
-```{.python .input}
+```python
 help(np.ones)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 help(torch.ones)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 help(tf.ones)
 ```
 
 From the documentation, we can see that the `ones` function creates a new tensor with the specified shape and sets all the elements to the value of 1. Whenever possible, you should (**run a quick test**) to confirm your interpretation:
 
-```{.python .input}
+```python
 np.ones(4)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 torch.ones(4)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 tf.ones(4)
 ```

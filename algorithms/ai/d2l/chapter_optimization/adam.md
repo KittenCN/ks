@@ -60,7 +60,7 @@ $$\mathbf{x}_t \leftarrow \mathbf{x}_{t-1} - \mathbf{g}_t'.$$
 为方便起见，我们将时间步$t$存储在`hyperparams`字典中。
 除此之外，一切都很简单。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import np, npx
@@ -82,7 +82,7 @@ def adam(params, states, hyperparams):
     hyperparams['t'] += 1
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -107,7 +107,7 @@ def adam(params, states, hyperparams):
     hyperparams['t'] += 1
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -131,7 +131,7 @@ def adam(params, grads, states, hyperparams):
                     / tf.math.sqrt(s_bias_corr) + eps)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -163,7 +163,7 @@ def adam(params, states, hyperparams):
 
 现在，我们用以上Adam算法来训练模型，这里我们使用$\eta = 0.01$的学习率。
 
-```{.python .input}
+```python
 #@tab all
 data_iter, feature_dim = d2l.get_data_ch11(batch_size=10)
 d2l.train_ch11(adam, init_adam_states(feature_dim),
@@ -172,23 +172,23 @@ d2l.train_ch11(adam, init_adam_states(feature_dim),
 
 此外，我们可以用深度学习框架自带算法应用Adam算法，这里我们只需要传递配置参数。
 
-```{.python .input}
+```python
 d2l.train_concise_ch11('adam', {'learning_rate': 0.01}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 trainer = torch.optim.Adam
 d2l.train_concise_ch11(trainer, {'lr': 0.01}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 trainer = tf.keras.optimizers.Adam
 d2l.train_concise_ch11(trainer, {'learning_rate': 0.01}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 trainer = paddle.optimizer.Adam
 d2l.train_concise_ch11(trainer, {'learning_rate': 0.01}, data_iter)
@@ -211,7 +211,7 @@ $$\mathbf{s}_t \leftarrow \mathbf{s}_{t-1} + (1 - \beta_2) \mathbf{g}_t^2 \odot 
 
 论文中，作者还进一步建议用更大的初始批量来初始化动量，而不仅仅是初始的逐点估计。
 
-```{.python .input}
+```python
 def yogi(params, states, hyperparams):
     beta1, beta2, eps = 0.9, 0.999, 1e-3
     for p, (v, s) in zip(params, states):
@@ -228,7 +228,7 @@ d2l.train_ch11(yogi, init_adam_states(feature_dim),
                {'lr': 0.01, 't': 1}, data_iter, feature_dim);
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def yogi(params, states, hyperparams):
     beta1, beta2, eps = 0.9, 0.999, 1e-3
@@ -249,7 +249,7 @@ d2l.train_ch11(yogi, init_adam_states(feature_dim),
                {'lr': 0.01, 't': 1}, data_iter, feature_dim);
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def yogi(params, grads, states, hyperparams):
     beta1, beta2, eps = 0.9, 0.999, 1e-6
@@ -268,7 +268,7 @@ d2l.train_ch11(yogi, init_adam_states(feature_dim),
                {'lr': 0.01, 't': 1}, data_iter, feature_dim);
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def yogi(params, states, hyperparams):
     beta1, beta2, eps = 0.9, 0.999, 1e-3

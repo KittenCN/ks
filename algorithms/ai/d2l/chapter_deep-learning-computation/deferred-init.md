@@ -23,7 +23,7 @@
 
 首先，让我们实例化一个多层感知机。
 
-```{.python .input}
+```python
 from mxnet import np, npx
 from mxnet.gluon import nn
 npx.set_np()
@@ -37,7 +37,7 @@ def get_net():
 net = get_net()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -50,12 +50,12 @@ net = tf.keras.models.Sequential([
 此时，因为输入维数是未知的，所以网络不可能知道输入层权重的维数。
 因此，框架尚未初始化任何参数，我们通过尝试访问以下参数进行确认。
 
-```{.python .input}
+```python
 print(net.collect_params)
 print(net.collect_params())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 [net.layers[i].get_weights() for i in range(len(net.layers))]
 ```
@@ -73,7 +73,7 @@ MXNet使用特殊值-1表示参数维度仍然未知。
 使用`net.get_weights()`将抛出一个错误，因为权重尚未初始化。
 :end_tab:
 
-```{.python .input}
+```python
 net.initialize()
 net.collect_params()
 ```
@@ -86,14 +86,14 @@ net.collect_params()
 
 接下来让我们将数据通过网络，最终使框架初始化参数。
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(2, 20))
 net(X)
 
 net.collect_params()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.uniform((2, 20))
 net(X)

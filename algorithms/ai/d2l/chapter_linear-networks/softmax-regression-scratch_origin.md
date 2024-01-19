@@ -8,28 +8,28 @@ the gory details of how to implement it yourself.
 We will work with the Fashion-MNIST dataset, just introduced in :numref:`sec_fashion_mnist`,
 setting up a data iterator with batch size 256.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, np, npx, gluon
 from IPython import display
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from IPython import display
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 from IPython import display
 ```
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
@@ -55,7 +55,7 @@ and the biases will constitute a $1 \times 10$ row vector.
 As with linear regression, we will initialize our weights `W`
 with Gaussian noise and our biases to take the initial value 0.
 
-```{.python .input}
+```python
 num_inputs = 784
 num_outputs = 10
 
@@ -65,7 +65,7 @@ W.attach_grad()
 b.attach_grad()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_inputs = 784
 num_outputs = 10
@@ -74,7 +74,7 @@ W = torch.normal(0, 0.01, size=(num_inputs, num_outputs), requires_grad=True)
 b = torch.zeros(num_outputs, requires_grad=True)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_inputs = 784
 num_outputs = 10
@@ -101,13 +101,13 @@ we can specify to keep the number of axes in the original tensor,
 rather than collapsing out the dimension that we summed over.
 This will result in a two-dimensional tensor with shape (1, 3).
 
-```{.python .input}
+```python
 #@tab pytorch
 X = d2l.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
 d2l.reduce_sum(X, 0, keepdim=True), d2l.reduce_sum(X, 1, keepdim=True)
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, tensorflow
 X = d2l.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
 d2l.reduce_sum(X, 0, keepdims=True), d2l.reduce_sum(X, 1, keepdims=True)
@@ -134,7 +134,7 @@ The origins of that name are in [statistical physics](https://en.wikipedia.org/w
 where a related equation models the distribution
 over an ensemble of particles.
 
-```{.python .input}
+```python
 #@tab mxnet, tensorflow
 def softmax(X):
     X_exp = d2l.exp(X)
@@ -142,7 +142,7 @@ def softmax(X):
     return X_exp / partition  # The broadcasting mechanism is applied here
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def softmax(X):
     X_exp = d2l.exp(X)
@@ -155,14 +155,14 @@ we turn each element into a non-negative number.
 Moreover, each row sums up to 1,
 as is required for a probability.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 X = d2l.normal(0, 1, (2, 5))
 X_prob = softmax(X)
 X_prob, d2l.reduce_sum(X_prob, 1)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.normal((2, 5), 0, 1)
 X_prob = softmax(X)
@@ -183,7 +183,7 @@ Note that we flatten each original image in the batch
 into a vector using the `reshape` function
 before passing the data through our model.
 
-```{.python .input}
+```python
 #@tab all
 def net(X):
     return softmax(d2l.matmul(d2l.reshape(X, (-1, W.shape[0])), W) + b)
@@ -207,14 +207,14 @@ with 2 examples of predicted probabilities over 3 classes.
 Then we pick the probability of the first class in the first example
 and the probability of the third class in the second example.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 y = d2l.tensor([0, 2])
 y_hat = d2l.tensor([[0.1, 0.3, 0.6], [0.3, 0.2, 0.5]])
 y_hat[[0, 1], y]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 y_hat = tf.constant([[0.1, 0.3, 0.6], [0.3, 0.2, 0.5]])
 y = tf.constant([0, 2])
@@ -223,7 +223,7 @@ tf.boolean_mask(y_hat, tf.one_hot(y, depth=y_hat.shape[-1]))
 
 Now we can implement the cross-entropy loss function efficiently with just one line of code.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def cross_entropy(y_hat, y):
     return - d2l.log(y_hat[range(len(y_hat)), y])
@@ -231,7 +231,7 @@ def cross_entropy(y_hat, y):
 cross_entropy(y_hat, y)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def cross_entropy(y_hat, y):
     return -tf.math.log(tf.boolean_mask(
@@ -266,7 +266,7 @@ we convert `y_hat`'s data type to match that of `y`.
 The result is a tensor containing entries of 0 (false) and 1 (true).
 Taking the sum yields the number of correct predictions.
 
-```{.python .input}
+```python
 #@tab all
 def accuracy(y_hat, y):  #@save
     """Compute the number of correct predictions."""
@@ -287,7 +287,7 @@ The second example's prediction class is 2
 which is consistent with the actual label, 2.
 Therefore, the classification accuracy rate for these two examples is 0.5.
 
-```{.python .input}
+```python
 #@tab all
 accuracy(y_hat, y) / len(y)
 ```
@@ -295,7 +295,7 @@ accuracy(y_hat, y) / len(y)
 Similarly, we can evaluate the accuracy for any model `net` on a dataset
 that is accessed via the data iterator `data_iter`.
 
-```{.python .input}
+```python
 #@tab mxnet, tensorflow
 def evaluate_accuracy(net, data_iter):  #@save
     """Compute the accuracy for a model on a dataset."""
@@ -305,7 +305,7 @@ def evaluate_accuracy(net, data_iter):  #@save
     return metric[0] / metric[1]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def evaluate_accuracy(net, data_iter):  #@save
     """Compute the accuracy for a model on a dataset."""
@@ -323,7 +323,7 @@ we create 2 variables in the `Accumulator` instance for storing both
 the number of correct predictions and the number of predictions, respectively.
 Both will be accumulated over time as we iterate over the dataset.
 
-```{.python .input}
+```python
 #@tab all
 class Accumulator:  #@save
     """For accumulating sums over `n` variables."""
@@ -344,7 +344,7 @@ Because we initialized the `net` model with random weights,
 the accuracy of this model should be close to random guessing,
 i.e., 0.1 for 10 classes.
 
-```{.python .input}
+```python
 #@tab all
 evaluate_accuracy(net, test_iter)
 ```
@@ -361,7 +361,7 @@ which accepts the batch size as an argument.
 It can be either a wrapper of the `d2l.sgd` function
 or a framework's built-in optimization function.
 
-```{.python .input}
+```python
 def train_epoch_ch3(net, train_iter, loss, updater):  #@save
     """Train a model within one epoch (defined in Chapter 3)."""
     # Sum of training loss, sum of training accuracy, no. of examples
@@ -380,7 +380,7 @@ def train_epoch_ch3(net, train_iter, loss, updater):  #@save
     return metric[0] / metric[2], metric[1] / metric[2]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train_epoch_ch3(net, train_iter, loss, updater):  #@save
     """The training loop defined in Chapter 3."""
@@ -407,7 +407,7 @@ def train_epoch_ch3(net, train_iter, loss, updater):  #@save
     return metric[0] / metric[2], metric[1] / metric[2]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def train_epoch_ch3(net, train_iter, loss, updater):  #@save
     """The training loop defined in Chapter 3."""
@@ -442,7 +442,7 @@ Before showing the implementation of the training function,
 we define a utility class that plot data in animation.
 Again, it aims to simplify code in the rest of the book.
 
-```{.python .input}
+```python
 #@tab all
 class Animator:  #@save
     """For plotting data in animation."""
@@ -493,7 +493,7 @@ the model is evaluated on a testing dataset accessed via `test_iter`.
 We will leverage the `Animator` class to visualize
 the training progress.
 
-```{.python .input}
+```python
 #@tab all
 def train_ch3(net, train_iter, test_iter, loss, num_epochs, updater):  #@save
     """Train a model (defined in Chapter 3)."""
@@ -513,7 +513,7 @@ As an implementation from scratch,
 we use the minibatch stochastic gradient descent defined in :numref:`sec_linear_scratch`
 to optimize the loss function of the model with a learning rate 0.1.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 lr = 0.1
 
@@ -521,7 +521,7 @@ def updater(batch_size):
     return d2l.sgd([W, b], lr, batch_size)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class Updater():  #@save
     """For updating parameters using minibatch stochastic gradient descent."""
@@ -541,7 +541,7 @@ and learning rate (`lr`) are adjustable hyperparameters.
 By changing their values, we may be able
 to increase the classification accuracy of the model.
 
-```{.python .input}
+```python
 #@tab all
 num_epochs = 10
 train_ch3(net, train_iter, test_iter, cross_entropy, num_epochs, updater)
@@ -557,7 +557,7 @@ we will compare their actual labels
 and the predictions from the model
 (second line of text output).
 
-```{.python .input}
+```python
 #@tab all
 def predict_ch3(net, test_iter, n=6):  #@save
     """Predict labels (defined in Chapter 3)."""

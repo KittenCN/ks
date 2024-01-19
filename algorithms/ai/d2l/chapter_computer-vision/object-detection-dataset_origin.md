@@ -17,7 +17,7 @@ In the end, we labeled bounding boxes for those bananas on the images.
 The banana detection dataset with all the image and
 csv label files can be downloaded directly from the Internet.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import gluon, image, np, npx
@@ -27,7 +27,7 @@ import pandas as pd
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -37,7 +37,7 @@ import os
 import pandas as pd
 ```
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['banana-detection'] = (
@@ -54,7 +54,7 @@ object class labels and
 ground-truth bounding box coordinates
 at the upper-left and lower-right corners.
 
-```{.python .input}
+```python
 #@save
 def read_data_bananas(is_train=True):
     """Read the banana detection dataset images and labels."""
@@ -75,7 +75,7 @@ def read_data_bananas(is_train=True):
     return images, np.expand_dims(np.array(targets), 1) / 256
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def read_data_bananas(is_train=True):
@@ -102,7 +102,7 @@ the following `BananasDataset` class
 will allow us to create a customized `Dataset` instance
 for loading the banana detection dataset.
 
-```{.python .input}
+```python
 #@save
 class BananasDataset(gluon.data.Dataset):
     """A customized dataset to load the banana detection dataset."""
@@ -119,7 +119,7 @@ class BananasDataset(gluon.data.Dataset):
         return len(self.features)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class BananasDataset(torch.utils.data.Dataset):
@@ -142,7 +142,7 @@ data loader instances for both the training and test sets.
 For the test dataset,
 there is no need to read it in random order.
 
-```{.python .input}
+```python
 #@save
 def load_data_bananas(batch_size):
     """Load the banana detection dataset."""
@@ -153,7 +153,7 @@ def load_data_bananas(batch_size):
     return train_iter, val_iter
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def load_data_bananas(batch_size):
@@ -197,7 +197,7 @@ For the banana dataset,
 since there is only one bounding box on each image,
 we have $m=1$.
 
-```{.python .input}
+```python
 #@tab all
 batch_size, edge_size = 32, 256
 train_iter, _ = load_data_bananas(batch_size)
@@ -212,14 +212,14 @@ We can see that the rotations, sizes, and positions of bananas vary across all t
 Of course, this is just a simple artificial dataset.
 In practice, real-world datasets are usually much more complicated.
 
-```{.python .input}
+```python
 imgs = (batch[0][0:10].transpose(0, 2, 3, 1)) / 255
 axes = d2l.show_images(imgs, 2, 5, scale=2)
 for ax, label in zip(axes, batch[1][0:10]):
     d2l.show_bboxes(ax, [label[0][1:5] * edge_size], colors=['w'])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 imgs = (batch[0][0:10].permute(0, 2, 3, 1)) / 255
 axes = d2l.show_images(imgs, 2, 5, scale=2)

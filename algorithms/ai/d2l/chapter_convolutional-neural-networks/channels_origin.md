@@ -57,19 +57,19 @@ we can implement cross-correlation operations with multiple input channels ourse
 Notice that all we are doing is performing one cross-correlation operation
 per channel and then adding up the results.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def corr2d_multi_in(X, K):
     # First, iterate through the 0th dimension (channel dimension) of `X` and
@@ -77,7 +77,7 @@ def corr2d_multi_in(X, K):
     return sum(d2l.corr2d(x, k) for x, k in zip(X, K))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -92,7 +92,7 @@ We can construct the input tensor `X` and the kernel tensor `K`
 corresponding to the values in :numref:`fig_conv_multi_in`
 to validate the output of the cross-correlation operation.
 
-```{.python .input}
+```python
 #@tab all
 X = d2l.tensor([[[0.0, 1.0, 2.0], [3.0, 4.0, 5.0], [6.0, 7.0, 8.0]],
                [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]])
@@ -136,7 +136,7 @@ and takes input from all channels in the input tensor.
 We implement a cross-correlation function
 to calculate the output of multiple channels as shown below.
 
-```{.python .input}
+```python
 #@tab all
 def corr2d_multi_in_out(X, K):
     # Iterate through the 0th dimension of `K`, and each time, perform
@@ -149,7 +149,7 @@ We construct a convolution kernel with 3 output channels
 by concatenating the kernel tensor `K` with `K+1`
 (plus one for each element in `K`) and `K+2`.
 
-```{.python .input}
+```python
 #@tab all
 K = d2l.stack((K, K + 1, K + 2), 0)
 K.shape
@@ -163,7 +163,7 @@ with the result of the previous input tensor `X`
 and the multi-input channel,
 single-output channel kernel.
 
-```{.python .input}
+```python
 #@tab all
 corr2d_multi_in_out(X, K)
 ```
@@ -211,7 +211,7 @@ using a fully-connected layer.
 The only thing is that we need to make some adjustments
 to the data shape before and after the matrix multiplication.
 
-```{.python .input}
+```python
 #@tab all
 def corr2d_multi_in_out_1x1(X, K):
     c_i, h, w = X.shape
@@ -226,19 +226,19 @@ When performing $1\times 1$ convolution,
 the above function is equivalent to the previously implemented cross-correlation function `corr2d_multi_in_out`.
 Let us check this with some sample data.
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 X = d2l.normal(0, 1, (3, 3, 3))
 K = d2l.normal(0, 1, (2, 3, 1, 1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = d2l.normal((3, 3, 3), 0, 1)
 K = d2l.normal((2, 3, 1, 1), 0, 1)
 ```
 
-```{.python .input}
+```python
 #@tab all
 Y1 = corr2d_multi_in_out_1x1(X, K)
 Y2 = corr2d_multi_in_out(X, K)

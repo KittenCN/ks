@@ -14,7 +14,7 @@
 并按照提示设置适当的路径。
 当这些准备工作完成，就可以使用`nvidia-smi`命令来(**查看显卡信息。**)
 
-```{.python .input}
+```python
 #@tab all
 !nvidia-smi
 ```
@@ -110,7 +110,7 @@
 另外，`gpu:0`和`gpu`是等价的。
 :end_tab:
 
-```{.python .input}
+```python
 from mxnet import np, npx
 from mxnet.gluon import nn
 npx.set_np()
@@ -118,7 +118,7 @@ npx.set_np()
 npx.cpu(), npx.gpu(), npx.gpu(1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 from torch import nn
@@ -126,14 +126,14 @@ from torch import nn
 torch.device('cpu'), torch.device('cuda'), torch.device('cuda:1')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
 tf.device('/CPU:0'), tf.device('/GPU:0'), tf.device('/GPU:1')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 import paddle
 from paddle import nn
@@ -143,21 +143,21 @@ paddle.device.set_device("cpu"), paddle.CUDAPlace(0), paddle.CUDAPlace(1)
 
 我们可以(**查询可用gpu的数量。**)
 
-```{.python .input}
+```python
 npx.num_gpus()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 torch.cuda.device_count()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 len(tf.config.experimental.list_physical_devices('GPU'))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 paddle.device.cuda.device_count()
 ```
@@ -165,7 +165,7 @@ paddle.device.cuda.device_count()
 现在我们定义了两个方便的函数，
 [**这两个函数允许我们在不存在所需所有GPU的情况下运行代码。**]
 
-```{.python .input}
+```python
 def try_gpu(i=0):  #@save
     """如果存在，则返回gpu(i)，否则返回cpu()"""
     return npx.gpu(i) if npx.num_gpus() >= i + 1 else npx.cpu()
@@ -178,7 +178,7 @@ def try_all_gpus():  #@save
 try_gpu(), try_gpu(10), try_all_gpus()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def try_gpu(i=0):  #@save
     """如果存在，则返回gpu(i)，否则返回cpu()"""
@@ -195,7 +195,7 @@ def try_all_gpus():  #@save
 try_gpu(), try_gpu(10), try_all_gpus()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def try_gpu(i=0):  #@save
     """如果存在，则返回gpu(i)，否则返回cpu()"""
@@ -212,7 +212,7 @@ def try_all_gpus():  #@save
 try_gpu(), try_gpu(10), try_all_gpus()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def try_gpu(i=0):  
@@ -236,24 +236,24 @@ try_gpu(),try_gpu(10),try_all_gpus()
 我们可以[**查询张量所在的设备。**]
 默认情况下，张量是在CPU上创建的。
 
-```{.python .input}
+```python
 x = np.array([1, 2, 3])
 x.ctx
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x = torch.tensor([1, 2, 3])
 x.device
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 x = tf.constant([1, 2, 3])
 x.device
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 x = paddle.to_tensor([1, 2, 3])
 x.place
@@ -274,25 +274,25 @@ x.place
 我们可以使用`nvidia-smi`命令查看显存使用情况。
 一般来说，我们需要确保不创建超过GPU显存限制的数据。
 
-```{.python .input}
+```python
 X = np.ones((2, 3), ctx=try_gpu())
 X
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.ones(2, 3, device=try_gpu())
 X
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 with try_gpu():
     X = tf.ones((2, 3))
 X
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = paddle.to_tensor(paddle.ones(shape=[2, 3]), place=try_gpu())
 X
@@ -300,25 +300,25 @@ X
 
 假设我们至少有两个GPU，下面的代码将在(**第二个GPU上创建一个随机张量。**)
 
-```{.python .input}
+```python
 Y = np.random.uniform(size=(2, 3), ctx=try_gpu(1))
 Y
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 Y = torch.rand(2, 3, device=try_gpu(1))
 Y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 with try_gpu(1):
     Y = tf.random.uniform((2, 3))
 Y
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 Y = paddle.to_tensor(paddle.rand([2, 3]), place=try_gpu(1))
 Y
@@ -337,20 +337,20 @@ Y
 ![复制数据以在同一设备上执行操作](../img/copyto.svg)
 :label:`fig_copyto`
 
-```{.python .input}
+```python
 Z = X.copyto(try_gpu(1))
 print(X)
 print(Z)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 Z = X.cuda(1)
 print(X)
 print(Z)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 with try_gpu(1):
     Z = X
@@ -360,7 +360,7 @@ print(Z)
 
 [**现在数据在同一个GPU上（`Z`和`Y`都在），我们可以将它们相加。**]
 
-```{.python .input}
+```python
 #@tab all
 Y + Z
 ```
@@ -388,16 +388,16 @@ Y + Z
 它将返回`Z`，而不会复制并分配新内存。
 :end_tab:
 
-```{.python .input}
+```python
 Z.as_in_ctx(try_gpu(1)) is Z
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 Z.cuda(1) is Z
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 with try_gpu(1):
     Z2 = Z
@@ -428,19 +428,19 @@ Z2 is Z
 类似地，神经网络模型可以指定设备。
 下面的代码将模型参数放在GPU上。
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nn.Dense(1))
 net.initialize(ctx=try_gpu())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(nn.Linear(3, 1))
 net = net.to(device=try_gpu())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
@@ -448,7 +448,7 @@ with strategy.scope():
         tf.keras.layers.Dense(1)])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = nn.Sequential(nn.Linear(3, 1))
 net=net.to(try_gpu())
@@ -460,28 +460,28 @@ net=net.to(try_gpu())
 
 当输入为GPU上的张量时，模型将在同一GPU上计算结果。
 
-```{.python .input}
+```python
 #@tab all
 net(X)
 ```
 
 让我们(**确认模型参数存储在同一个GPU上。**)
 
-```{.python .input}
+```python
 net[0].weight.data().ctx
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net[0].weight.data.device
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net.layers[0].weights[0].device, net.layers[0].weights[1].device
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net[0].weight.place
 ```

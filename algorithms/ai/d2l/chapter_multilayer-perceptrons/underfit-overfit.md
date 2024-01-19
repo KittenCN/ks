@@ -260,7 +260,7 @@ $$\hat{y}= \sum_{i=0}^d x^i w_i$$
 
 我们现在可以(**通过多项式拟合来探索这些概念**)。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, np, npx
 from mxnet.gluon import nn
@@ -268,7 +268,7 @@ import math
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -277,7 +277,7 @@ import numpy as np
 import math
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -285,7 +285,7 @@ import numpy as np
 import math
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -309,7 +309,7 @@ import math
 这样可以避免很大的$i$带来的特别大的指数值。
 我们将为训练集和测试集各生成100个样本。
 
-```{.python .input}
+```python
 #@tab all
 max_degree = 20  # 多项式的最大阶数
 n_train, n_test = 100, 100  # 训练和测试数据集大小
@@ -331,14 +331,14 @@ labels += np.random.normal(scale=0.1, size=labels.shape)
 从生成的数据集中[**查看一下前2个样本**]，
 第一个值是与偏置相对应的常量特征。
 
-```{.python .input}
+```python
 #@tab pytorch, tensorflow, paddle
 # NumPy ndarray转换为tensor
 true_w, features, poly_features, labels = [d2l.tensor(x, dtype=
     d2l.float32) for x in [true_w, features, poly_features, labels]]
 ```
 
-```{.python .input}
+```python
 #@tab all
 features[:2], poly_features[:2, :], labels[:2]
 ```
@@ -347,7 +347,7 @@ features[:2], poly_features[:2, :], labels[:2]
 
 首先让我们[**实现一个函数来评估模型在给定数据集上的损失**]。
 
-```{.python .input}
+```python
 #@tab mxnet, tensorflow
 def evaluate_loss(net, data_iter, loss):  #@save
     """评估给定数据集上模型的损失"""
@@ -358,7 +358,7 @@ def evaluate_loss(net, data_iter, loss):  #@save
     return metric[0] / metric[1]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def evaluate_loss(net, data_iter, loss):  #@save
     """评估给定数据集上模型的损失"""
@@ -371,7 +371,7 @@ def evaluate_loss(net, data_iter, loss):  #@save
     return metric[0] / metric[1]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def evaluate_loss(net, data_iter, loss):  #@save
     """评估给定数据集上模型的损失。"""
@@ -386,7 +386,7 @@ def evaluate_loss(net, data_iter, loss):  #@save
 
 现在[**定义训练函数**]。
 
-```{.python .input}
+```python
 def train(train_features, test_features, train_labels, test_labels,
           num_epochs=400):
     loss = gluon.loss.L2Loss()
@@ -411,7 +411,7 @@ def train(train_features, test_features, train_labels, test_labels,
     print('weight:', net[0].weight.data().asnumpy())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(train_features, test_features, train_labels, test_labels,
           num_epochs=400):
@@ -436,7 +436,7 @@ def train(train_features, test_features, train_labels, test_labels,
     print('weight:', net[0].weight.data.numpy())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def train(train_features, test_features, train_labels, test_labels,
           num_epochs=400):
@@ -461,7 +461,7 @@ def train(train_features, test_features, train_labels, test_labels,
     print('weight:', net.get_weights()[0].T)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train(train_features, test_features, train_labels, test_labels,
           num_epochs=400):
@@ -493,7 +493,7 @@ def train(train_features, test_features, train_labels, test_labels,
 结果表明，该模型能有效降低训练损失和测试损失。
 学习到的模型参数也接近真实值$w = [5, 1.2, -3.4, 5.6]$。
 
-```{.python .input}
+```python
 #@tab all
 # 从多项式特征中选择前4个维度，即1,x,x^2/2!,x^3/3!
 train(poly_features[:n_train, :4], poly_features[n_train:, :4],
@@ -506,7 +506,7 @@ train(poly_features[:n_train, :4], poly_features[n_train:, :4],
 在最后一个迭代周期完成后，训练损失仍然很高。
 当用来拟合非线性模式（如这里的三阶多项式函数）时，线性模型容易欠拟合。
 
-```{.python .input}
+```python
 #@tab all
 # 从多项式特征中选择前2个维度，即1和x
 train(poly_features[:n_train, :2], poly_features[n_train:, :2],
@@ -521,7 +521,7 @@ train(poly_features[:n_train, :2], poly_features[n_train:, :2],
 虽然训练损失可以有效地降低，但测试损失仍然很高。
 结果表明，复杂模型对数据造成了过拟合。
 
-```{.python .input}
+```python
 #@tab all
 # 从多项式特征中选取所有维度
 train(poly_features[:n_train, :], poly_features[n_train:, :],

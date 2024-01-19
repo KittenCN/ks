@@ -163,7 +163,7 @@ In summary, GRUs have the following two distinguishing features:
 
 To gain a better understanding of the GRU model, let us implement it from scratch. We begin by reading the time machine dataset that we used in :numref:`sec_rnn_scratch`. The code for reading the dataset is given below.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import rnn
@@ -173,7 +173,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -191,7 +191,7 @@ with standard deviation to be 0.01 and set the bias to 0. The hyperparameter `nu
 We instantiate all weights and biases relating to the update gate, the reset gate, the candidate hidden state,
 and the output layer.
 
-```{.python .input}
+```python
 def get_params(vocab_size, num_hiddens, device):
     num_inputs = num_outputs = vocab_size
 
@@ -216,7 +216,7 @@ def get_params(vocab_size, num_hiddens, device):
     return params
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_params(vocab_size, num_hiddens, device):
     num_inputs = num_outputs = vocab_size
@@ -246,12 +246,12 @@ def get_params(vocab_size, num_hiddens, device):
 
 Now we will define the hidden state initialization function `init_gru_state`. Just like the `init_rnn_state` function defined in :numref:`sec_rnn_scratch`, this function returns a tensor with a shape (batch size, number of hidden units) whose values are all zeros.
 
-```{.python .input}
+```python
 def init_gru_state(batch_size, num_hiddens, device):
     return (np.zeros(shape=(batch_size, num_hiddens), ctx=device), )
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_gru_state(batch_size, num_hiddens, device):
     return (torch.zeros((batch_size, num_hiddens), device=device), )
@@ -260,7 +260,7 @@ def init_gru_state(batch_size, num_hiddens, device):
 Now we are ready to define the GRU model.
 Its structure is the same as that of the basic RNN cell, except that the update equations are more complex.
 
-```{.python .input}
+```python
 def gru(inputs, state, params):
     W_xz, W_hz, b_z, W_xr, W_hr, b_r, W_xh, W_hh, b_h, W_hq, b_q = params
     H, = state
@@ -275,7 +275,7 @@ def gru(inputs, state, params):
     return np.concatenate(outputs, axis=0), (H,)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def gru(inputs, state, params):
     W_xz, W_hz, b_z, W_xr, W_hr, b_r, W_xh, W_hh, b_h, W_hq, b_q = params
@@ -299,7 +299,7 @@ we print out the perplexity on the training set
 and the predicted sequence following
 the provided prefixes "time traveller" and "traveller", respectively.
 
-```{.python .input}
+```python
 #@tab all
 vocab_size, num_hiddens, device = len(vocab), 256, d2l.try_gpu()
 num_epochs, lr = 500, 1
@@ -316,13 +316,13 @@ instantiate a GPU model.
 This encapsulates all the configuration detail that we made explicit above.
 The code is significantly faster as it uses compiled operators rather than Python for many details that we spelled out before.
 
-```{.python .input}
+```python
 gru_layer = rnn.GRU(num_hiddens)
 model = d2l.RNNModel(gru_layer, len(vocab))
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_inputs = vocab_size
 gru_layer = nn.GRU(num_inputs, num_hiddens)

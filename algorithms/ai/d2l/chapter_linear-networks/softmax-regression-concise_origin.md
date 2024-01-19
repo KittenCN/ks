@@ -8,27 +8,27 @@ we will find it similarly (or possibly more)
 convenient for implementing classification models. Let us stick with the Fashion-MNIST dataset
 and keep the batch size at 256 as in :numref:`sec_softmax_scratch`.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, init, npx
 from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
@@ -48,13 +48,13 @@ when implementing deep models.
 Again, we initialize the weights at random
 with zero mean and standard deviation 0.01.
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nn.Dense(10))
 net.initialize(init.Normal(sigma=0.01))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # PyTorch does not implicitly reshape the inputs. Thus we define a layer to
 # reshape the inputs in our network
@@ -71,7 +71,7 @@ def init_weights(m):
 net.apply(init_weights)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = tf.keras.models.Sequential()
 net.add(tf.keras.layers.Flatten(input_shape=(28, 28)))
@@ -143,16 +143,16 @@ we will just pass the logits and compute the softmax and its log
 all at once inside the cross entropy loss function,
 which does smart things like the ["LogSumExp trick"](https://en.wikipedia.org/wiki/LogSumExp).
 
-```{.python .input}
+```python
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 loss = nn.CrossEntropyLoss()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 ```
@@ -164,16 +164,16 @@ with a learning rate of 0.1 as the optimization algorithm.
 Note that this is the same as we applied in the linear regression example
 and it illustrates the general applicability of the optimizers.
 
-```{.python .input}
+```python
 trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': 0.1})
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 trainer = torch.optim.SGD(net.parameters(), lr=0.1)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 trainer = tf.keras.optimizers.SGD(learning_rate=.1)
 ```
@@ -182,7 +182,7 @@ trainer = tf.keras.optimizers.SGD(learning_rate=.1)
 
 Next we call the training function defined in :numref:`sec_softmax_scratch` to train the model.
 
-```{.python .input}
+```python
 #@tab all
 num_epochs = 10
 d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)

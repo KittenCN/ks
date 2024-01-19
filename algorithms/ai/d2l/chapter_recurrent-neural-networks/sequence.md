@@ -162,7 +162,7 @@ $$P(x_1, \ldots, x_T) = \prod_{t=T}^1 P(x_t \mid x_{t+1}, \ldots, x_T).$$
 首先，我们生成一些数据：(**使用正弦函数和一些可加性噪声来生成序列数据，
 时间步为$1, 2, \ldots, 1000$。**)
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, np, npx, gluon, init
@@ -170,7 +170,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -178,14 +178,14 @@ import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -195,7 +195,7 @@ import paddle
 from paddle import nn
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 T = 1000  # 总共产生1000个点
 time = d2l.arange(1, T + 1, dtype=d2l.float32)
@@ -203,7 +203,7 @@ x = d2l.sin(0.01 * time) + d2l.normal(0, 0.2, (T,))
 d2l.plot(time, [x], 'time', 'x', xlim=[1, 1000], figsize=(6, 3))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 T = 1000  # 总共产生1000个点
 time = d2l.arange(1, T + 1, dtype=d2l.float32)
@@ -220,7 +220,7 @@ d2l.plot(time, [x], 'time', 'x', xlim=[1, 1000], figsize=(6, 3))
 另一个方法是用零填充序列。
 在这里，我们仅使用前600个“特征－标签”对进行训练。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 tau = 4
 features = d2l.zeros((T - tau, tau))
@@ -229,7 +229,7 @@ for i in range(tau):
 labels = d2l.reshape(x[tau:], (-1, 1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 tau = 4
 features = tf.Variable(d2l.zeros((T - tau, tau)))
@@ -238,7 +238,7 @@ for i in range(tau):
 labels = d2l.reshape(x[tau:], (-1, 1))
 ```
 
-```{.python .input}
+```python
 #@tab all
 batch_size, n_train = 16, 600
 # 只有前n_train个样本用于训练
@@ -249,7 +249,7 @@ train_iter = d2l.load_array((features[:n_train], labels[:n_train]),
 在这里，我们[**使用一个相当简单的架构训练模型：
 一个拥有两个全连接层的多层感知机**]，ReLU激活函数和平方损失。
 
-```{.python .input}
+```python
 # 一个简单的多层感知机
 def get_net():
     net = nn.Sequential()
@@ -262,7 +262,7 @@ def get_net():
 loss = gluon.loss.L2Loss()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # 初始化网络权重的函数
 def init_weights(m):
@@ -281,7 +281,7 @@ def get_net():
 loss = nn.MSELoss(reduction='none')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # 一个简单的多层感知机
 def get_net():
@@ -293,7 +293,7 @@ def get_net():
 loss = tf.keras.losses.MeanSquaredError()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def init_weights(m):
     if type(m) == nn.Linear:
@@ -313,7 +313,7 @@ loss = nn.MSELoss(reduction='none')
 
 现在，准备[**训练模型**]了。实现下面的训练代码的方式与前面几节（如 :numref:`sec_linear_concise`）中的循环训练基本相同。因此，我们不会深入探讨太多细节。
 
-```{.python .input}
+```python
 def train(net, train_iter, loss, epochs, lr):
     trainer = gluon.Trainer(net.collect_params(), 'adam',
                             {'learning_rate': lr})
@@ -330,7 +330,7 @@ net = get_net()
 train(net, train_iter, loss, 5, 0.01)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(net, train_iter, loss, epochs, lr):
     trainer = torch.optim.Adam(net.parameters(), lr)
@@ -347,7 +347,7 @@ net = get_net()
 train(net, train_iter, loss, 5, 0.01)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def train(net, train_iter, loss, epochs, lr):
     trainer = tf.keras.optimizers.Adam()
@@ -366,7 +366,7 @@ net = get_net()
 train(net, train_iter, loss, 5, 0.01)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train(net, train_iter, loss, epochs, lr):
     trainer = paddle.optimizer.Adam(learning_rate=lr, parameters=net.parameters())
@@ -390,7 +390,7 @@ train(net, train_iter, loss, 5, 0.01)
 首先是检查[**模型预测下一个时间步**]的能力，
 也就是*单步预测*（one-step-ahead prediction）。
 
-```{.python .input}
+```python
 #@tab all
 onestep_preds = net(features)
 d2l.plot([time, time[tau:]], 
@@ -419,7 +419,7 @@ $$
 换句话说，我们必须使用我们自己的预测（而不是原始数据）来[**进行多步预测**]。
 让我们看看效果如何。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 multistep_preds = d2l.zeros(T)
 multistep_preds[: n_train + tau] = x[: n_train + tau]
@@ -428,7 +428,7 @@ for i in range(n_train + tau, T):
         d2l.reshape(multistep_preds[i - tau: i], (1, -1)))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 multistep_preds = tf.Variable(d2l.zeros(T))
 multistep_preds[:n_train + tau].assign(x[:n_train + tau])
@@ -437,7 +437,7 @@ for i in range(n_train + tau, T):
         d2l.reshape(multistep_preds[i - tau: i], (1, -1))), ()))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 multistep_preds = d2l.zeros([T])
 multistep_preds[: n_train + tau] = x[: n_train + tau]
@@ -446,7 +446,7 @@ for i in range(n_train + tau, T):
         d2l.reshape(multistep_preds[i - tau: i], (1, -1)))
 ```
 
-```{.python .input}
+```python
 #@tab all
 d2l.plot([time, time[tau:], time[n_train + tau:]],
          [d2l.numpy(x), d2l.numpy(onestep_preds),
@@ -470,12 +470,12 @@ d2l.plot([time, time[tau:], time[n_train + tau:]],
 基于$k = 1, 4, 16, 64$，通过对整个序列预测的计算，
 让我们[**更仔细地看一下$k$步预测**]的困难。
 
-```{.python .input}
+```python
 #@tab all
 max_steps = 64
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 features = d2l.zeros((T - tau - max_steps + 1, tau + max_steps))
 # 列i（i<tau）是来自x的观测，其时间步从（i）到（i+T-tau-max_steps+1）
@@ -487,7 +487,7 @@ for i in range(tau, tau + max_steps):
     features[:, i] = d2l.reshape(net(features[:, i - tau: i]), -1)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 features = tf.Variable(d2l.zeros((T - tau - max_steps + 1, tau + max_steps)))
 # 列i（i<tau）是来自x的观测，其时间步从（i）到（i+T-tau-max_steps+1）
@@ -499,7 +499,7 @@ for i in range(tau, tau + max_steps):
     features[:, i].assign(d2l.reshape(net((features[:, i - tau: i])), -1))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 features = d2l.zeros((T - tau - max_steps + 1, tau + max_steps))
 # 列i（i<tau）是来自x的观测，其时间步从（i+1）到（i+T-tau-max_steps+1）
@@ -511,7 +511,7 @@ for i in range(tau, tau + max_steps):
     features[:, i] = d2l.reshape(net(features[:, i - tau: i]), [-1])
 ```
 
-```{.python .input}
+```python
 #@tab all
 steps = (1, 4, 16, 64)
 d2l.plot([time[tau + i - 1: T - max_steps + i] for i in steps],

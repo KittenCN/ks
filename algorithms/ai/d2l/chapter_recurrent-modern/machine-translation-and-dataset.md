@@ -30,28 +30,28 @@
 而不是复用语言模型的预处理程序。
 下面，我们看一下如何将预处理后的数据加载到小批量中用于训练。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 import os
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 import os
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 import os
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -71,7 +71,7 @@ import os
 英语是*源语言*（source language），
 法语是*目标语言*（target language）。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['fra-eng'] = (d2l.DATA_URL + 'fra-eng.zip',
@@ -93,7 +93,7 @@ print(raw_text[:75])
 例如，我们用空格代替*不间断空格*（non-breaking space），
 使用小写字母替换大写字母，并在单词和标点符号之间插入空格。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def preprocess_nmt(text):
@@ -124,7 +124,7 @@ print(text[:80])
 `source[i]`是源语言（这里是英语）第$i$个文本序列的词元列表，
 `target[i]`是目标语言（这里是法语）第$i$个文本序列的词元列表。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def tokenize_nmt(text, num_examples=None):
@@ -146,7 +146,7 @@ source[:6], target[:6]
 让我们[**绘制每个文本序列所包含的词元数量的直方图**]。
 在这个简单的“英－法”数据集中，大多数文本序列的词元数量少于$20$个。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def show_list_len_pair_hist(legend, xlabel, ylabel, xlist, ylist):
@@ -176,7 +176,7 @@ show_list_len_pair_hist(['source', 'target'], '# tokens per sequence',
 以及序列的开始词元（“&lt;bos&gt;”）和结束词元（“&lt;eos&gt;”）。
 这些特殊词元在自然语言处理任务中比较常用。
 
-```{.python .input}
+```python
 #@tab all
 src_vocab = d2l.Vocab(source, min_freq=2,
                       reserved_tokens=['<pad>', '<bos>', '<eos>'])
@@ -205,7 +205,7 @@ len(src_vocab)
 
 如前所述，下面的`truncate_pad`函数将(**截断或填充文本序列**)。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def truncate_pad(line, num_steps, padding_token):
@@ -227,7 +227,7 @@ truncate_pad(src_vocab[source[0]], 10, src_vocab['<pad>'])
 统计长度时排除了填充词元，
 在稍后将要介绍的一些模型会需要这个长度信息。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def build_array_nmt(lines, vocab, num_steps):
@@ -246,7 +246,7 @@ def build_array_nmt(lines, vocab, num_steps):
 最后，我们定义`load_data_nmt`函数来返回数据迭代器，
 以及源语言和目标语言的两种词表。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def load_data_nmt(batch_size, num_steps, num_examples=600):
@@ -266,7 +266,7 @@ def load_data_nmt(batch_size, num_steps, num_examples=600):
 
 下面我们[**读出“英语－法语”数据集中的第一个小批量数据**]。
 
-```{.python .input}
+```python
 #@tab all
 train_iter, src_vocab, tgt_vocab = load_data_nmt(batch_size=2, num_steps=8)
 for X, X_valid_len, Y, Y_valid_len in train_iter:

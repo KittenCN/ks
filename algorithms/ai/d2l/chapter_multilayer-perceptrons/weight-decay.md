@@ -111,7 +111,7 @@ $$
 
 我们通过一个简单的例子来演示权重衰减。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, init, np, npx
@@ -119,7 +119,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -127,14 +127,14 @@ import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -154,7 +154,7 @@ from paddle import nn
 为了使过拟合的效果更加明显，我们可以将问题的维数增加到$d = 200$，
 并使用一个只包含20个样本的小训练集。
 
-```{.python .input}
+```python
 #@tab all
 n_train, n_test, num_inputs, batch_size = 20, 100, 200, 5
 true_w, true_b = d2l.ones((num_inputs, 1)) * 0.01, 0.05
@@ -172,7 +172,7 @@ test_iter = d2l.load_array(test_data, batch_size, is_train=False)
 
 首先，我们将定义一个函数来随机初始化模型参数。
 
-```{.python .input}
+```python
 def init_params():
     w = np.random.normal(scale=1, size=(num_inputs, 1))
     b = np.zeros(1)
@@ -181,7 +181,7 @@ def init_params():
     return [w, b]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_params():
     w = torch.normal(0, 1, size=(num_inputs, 1), requires_grad=True)
@@ -189,7 +189,7 @@ def init_params():
     return [w, b]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def init_params():
     w = tf.Variable(tf.random.normal(mean=1, shape=(num_inputs, 1)))
@@ -197,7 +197,7 @@ def init_params():
     return [w, b]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def init_params():
     w = paddle.normal(0, 1, shape=(num_inputs, 1))
@@ -211,24 +211,24 @@ def init_params():
 
 实现这一惩罚最方便的方法是对所有项求平方后并将它们求和。
 
-```{.python .input}
+```python
 def l2_penalty(w):
     return (w**2).sum() / 2
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def l2_penalty(w):
     return torch.sum(w.pow(2)) / 2
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def l2_penalty(w):
     return tf.reduce_sum(tf.pow(w, 2)) / 2
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def l2_penalty(w):
     return paddle.sum(w.pow(2)) / 2
@@ -241,7 +241,7 @@ def l2_penalty(w):
 所以我们通过`d2l.linreg`和`d2l.squared_loss`导入它们。
 唯一的变化是损失现在包括了惩罚项。
 
-```{.python .input}
+```python
 def train(lambd):
     w, b = init_params()
     net, loss = lambda X: d2l.linreg(X, w, b), d2l.squared_loss
@@ -262,7 +262,7 @@ def train(lambd):
     print('w的L2范数是：', np.linalg.norm(w))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(lambd):
     w, b = init_params()
@@ -283,7 +283,7 @@ def train(lambd):
     print('w的L2范数是：', torch.norm(w).item())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def train(lambd):
     w, b = init_params()
@@ -305,7 +305,7 @@ def train(lambd):
     print('w的L2范数是：', tf.norm(w).numpy())
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train(lambd):
     w, b = init_params()
@@ -332,7 +332,7 @@ def train(lambd):
 注意，这里训练误差有了减少，但测试误差没有减少，
 这意味着出现了严重的过拟合。
 
-```{.python .input}
+```python
 #@tab all
 train(lambd=0)
 ```
@@ -343,7 +343,7 @@ train(lambd=0)
 注意，在这里训练误差增大，但测试误差减小。
 这正是我们期望从正则化中得到的效果。
 
-```{.python .input}
+```python
 #@tab all
 train(lambd=3)
 ```
@@ -376,7 +376,7 @@ train(lambd=3)
 并通过`kernel_regularizer`参数将其应用于网络层。
 :end_tab:
 
-```{.python .input}
+```python
 def train_concise(wd):
     net = nn.Sequential()
     net.add(nn.Dense(1))
@@ -401,7 +401,7 @@ def train_concise(wd):
     print('w的L2范数：', np.linalg.norm(net[0].weight.data()))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train_concise(wd):
     net = nn.Sequential(nn.Linear(num_inputs, 1))
@@ -428,7 +428,7 @@ def train_concise(wd):
     print('w的L2范数：', net[0].weight.norm().item())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def train_concise(wd):
     net = tf.keras.models.Sequential()
@@ -454,7 +454,7 @@ def train_concise(wd):
     print('w的L2范数：', tf.norm(net.get_weights()[0]).numpy())
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train_concise(wd):
     weight_attr = paddle.framework.ParamAttr(initializer=paddle.nn.initializer.Normal(mean=0.0, std=1.0))
@@ -482,12 +482,12 @@ def train_concise(wd):
 然而，它们运行得更快，更容易实现。
 对于更复杂的问题，这一好处将变得更加明显。
 
-```{.python .input}
+```python
 #@tab all
 train_concise(0)
 ```
 
-```{.python .input}
+```python
 #@tab all
 train_concise(3)
 ```

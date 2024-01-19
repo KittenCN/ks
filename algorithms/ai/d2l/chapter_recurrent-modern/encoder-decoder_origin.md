@@ -45,7 +45,7 @@ the encoder takes variable-length sequences as the input `X`.
 The implementation will be provided 
 by any model that inherits this base `Encoder` class.
 
-```{.python .input}
+```python
 from mxnet.gluon import nn
 
 #@save
@@ -58,7 +58,7 @@ class Encoder(nn.Block):
         raise NotImplementedError
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from torch import nn
 
@@ -89,7 +89,7 @@ may map an input (e.g., the generated token at the previous time step)
 and the encoded state
 into an output token at the current time step.
 
-```{.python .input}
+```python
 #@save
 class Decoder(nn.Block):
     """The base decoder interface for the encoder-decoder architecture."""
@@ -103,7 +103,7 @@ class Decoder(nn.Block):
         raise NotImplementedError
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class Decoder(nn.Module):
@@ -130,7 +130,7 @@ is used to produce the encoded state,
 and this state
 will be further used by the decoder as one of its input.
 
-```{.python .input}
+```python
 #@save
 class EncoderDecoder(nn.Block):
     """The base class for the encoder-decoder architecture."""
@@ -145,7 +145,7 @@ class EncoderDecoder(nn.Block):
         return self.decoder(dec_X, dec_state)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class EncoderDecoder(nn.Module):

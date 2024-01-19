@@ -9,14 +9,14 @@
 
 由于情感可以被分类为离散的极性或尺度（例如，积极的和消极的），我们可以将情感分析看作一项文本分类任务，它将可变长度的文本序列转换为固定长度的文本类别。在本章中，我们将使用斯坦福大学的[大型电影评论数据集（large movie review dataset）](https://ai.stanford.edu/~amaas/data/sentiment/)进行情感分析。它由一个训练集和一个测试集组成，其中包含从IMDb下载的25000个电影评论。在这两个数据集中，“积极”和“消极”标签的数量相同，表示不同的情感极性。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 import os
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -24,7 +24,7 @@ from torch import nn
 import os
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -38,7 +38,7 @@ import os
 
 首先，下载并提取路径`../data/aclImdb`中的IMDb评论数据集。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['aclImdb'] = (
@@ -50,7 +50,7 @@ data_dir = d2l.download_extract('aclImdb', 'aclImdb')
 
 接下来，读取训练和测试数据集。每个样本都是一个评论及其标签：1表示“积极”，0表示“消极”。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def read_imdb(data_dir, is_train):
@@ -76,7 +76,7 @@ for x, y in zip(train_data[0][:3], train_data[1][:3]):
 
 将每个单词作为一个词元，过滤掉出现不到5次的单词，我们从训练数据集中创建一个词表。
 
-```{.python .input}
+```python
 #@tab all
 train_tokens = d2l.tokenize(train_data[0], token='word')
 vocab = d2l.Vocab(train_tokens, min_freq=5, reserved_tokens=['<pad>'])
@@ -84,7 +84,7 @@ vocab = d2l.Vocab(train_tokens, min_freq=5, reserved_tokens=['<pad>'])
 
 在词元化之后，让我们绘制评论词元长度的直方图。
 
-```{.python .input}
+```python
 #@tab all
 d2l.set_figsize()
 d2l.plt.xlabel('# tokens per review')
@@ -94,7 +94,7 @@ d2l.plt.hist([len(line) for line in train_tokens], bins=range(0, 1000, 50));
 
 正如我们所料，评论的长度各不相同。为了每次处理一小批量这样的评论，我们通过截断和填充将每个评论的长度设置为500。这类似于 :numref:`sec_machine_translation`中对机器翻译数据集的预处理步骤。
 
-```{.python .input}
+```python
 #@tab all
 num_steps = 500  # 序列长度
 train_features = d2l.tensor([d2l.truncate_pad(
@@ -106,7 +106,7 @@ print(train_features.shape)
 
 现在我们可以创建数据迭代器了。在每次迭代中，都会返回一小批量样本。
 
-```{.python .input}
+```python
 train_iter = d2l.load_array((train_features, train_data[1]), 64)
 
 for X, y in train_iter:
@@ -115,7 +115,7 @@ for X, y in train_iter:
 print('小批量数目：', len(train_iter))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train_iter = d2l.load_array((train_features, 
     torch.tensor(train_data[1])), 64)
@@ -126,7 +126,7 @@ for X, y in train_iter:
 print('小批量数目：', len(train_iter))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 train_iter = d2l.load_array((train_features,
     d2l.tensor(train_data[1])), 64)
@@ -141,7 +141,7 @@ print('小批量数目：', len(train_iter))
 
 最后，我们将上述步骤封装到`load_data_imdb`函数中。它返回训练和测试数据迭代器以及IMDb评论数据集的词表。
 
-```{.python .input}
+```python
 #@save
 def load_data_imdb(batch_size, num_steps=500):
     """返回数据迭代器和IMDb评论数据集的词表"""
@@ -161,7 +161,7 @@ def load_data_imdb(batch_size, num_steps=500):
     return train_iter, test_iter, vocab
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def load_data_imdb(batch_size, num_steps=500):
@@ -184,7 +184,7 @@ def load_data_imdb(batch_size, num_steps=500):
     return train_iter, test_iter, vocab
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def load_data_imdb(batch_size, num_steps=500):

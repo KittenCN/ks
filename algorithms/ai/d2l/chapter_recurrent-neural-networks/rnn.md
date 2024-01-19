@@ -147,25 +147,25 @@ $\mathbf{X}_t \mathbf{W}_{xh} + \mathbf{H}_{t-1} \mathbf{W}_{hh}$的计算，
 分别将`X`乘以`W_xh`，将`H`乘以`W_hh`，
 然后将这两个乘法相加，我们得到一个形状为$(3，4)$的矩阵。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -173,14 +173,14 @@ warnings.filterwarnings("ignore")
 import paddle
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 X, W_xh = d2l.normal(0, 1, (3, 1)), d2l.normal(0, 1, (1, 4))
 H, W_hh = d2l.normal(0, 1, (3, 4)), d2l.normal(0, 1, (4, 4))
 d2l.matmul(X, W_xh) + d2l.matmul(H, W_hh)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X, W_xh = d2l.normal((3, 1), 0, 1), d2l.normal((1, 4), 0, 1)
 H, W_hh = d2l.normal((3, 4), 0, 1), d2l.normal((4, 4), 0, 1)
@@ -193,7 +193,7 @@ d2l.matmul(X, W_xh) + d2l.matmul(H, W_hh)
 再将这两个拼接的矩阵相乘，
 我们得到与上面相同形状$(3, 4)$的输出矩阵。
 
-```{.python .input}
+```python
 #@tab all
 d2l.matmul(d2l.concat((X, H), 1), d2l.concat((W_xh, W_hh), 0))
 ```

@@ -110,7 +110,7 @@ we will dive into the pretraining of BERT.
 When natural language processing applications are explained in :numref:`chap_nlp_app`,
 we will illustrate fine-tuning of BERT for downstream applications.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, np, npx
 from mxnet.gluon import nn
@@ -118,7 +118,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -155,7 +155,7 @@ The following `get_tokens_and_segments` takes either one sentence or two sentenc
 as the input, then returns tokens of the BERT input sequence
 and their corresponding segment IDs.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def get_tokens_and_segments(tokens_a, tokens_b=None):
@@ -187,7 +187,7 @@ as implemented in :numref:`sec_transformer`.
 Different from `TransformerEncoder`, `BERTEncoder` uses
 segment embeddings and learnable positional embeddings.
 
-```{.python .input}
+```python
 #@save
 class BERTEncoder(nn.Block):
     """BERT encoder."""
@@ -215,7 +215,7 @@ class BERTEncoder(nn.Block):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class BERTEncoder(nn.Module):
@@ -251,7 +251,7 @@ Suppose that the vocabulary size is 10000.
 To demonstrate forward inference of `BERTEncoder`,
 let us create an instance of it and initialize its parameters.
 
-```{.python .input}
+```python
 vocab_size, num_hiddens, ffn_num_hiddens, num_heads = 10000, 768, 1024, 4
 num_layers, dropout = 2, 0.2
 encoder = BERTEncoder(vocab_size, num_hiddens, ffn_num_hiddens, num_heads,
@@ -259,7 +259,7 @@ encoder = BERTEncoder(vocab_size, num_hiddens, ffn_num_hiddens, num_heads,
 encoder.initialize()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 vocab_size, num_hiddens, ffn_num_hiddens, num_heads = 10000, 768, 1024, 4
 norm_shape, ffn_num_input, num_layers, dropout = [768], 768, 2, 0.2
@@ -275,14 +275,14 @@ whose length is predefined by the hyperparameter `num_hiddens`.
 This hyperparameter is usually referred to as the *hidden size*
 (number of hidden units) of the transformer encoder.
 
-```{.python .input}
+```python
 tokens = np.random.randint(0, vocab_size, (2, 8))
 segments = np.array([[0, 0, 0, 0, 1, 1, 1, 1], [0, 0, 0, 1, 1, 1, 1, 1]])
 encoded_X = encoder(tokens, segments, None)
 encoded_X.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 tokens = torch.randint(0, vocab_size, (2, 8))
 segments = torch.tensor([[0, 0, 0, 0, 1, 1, 1, 1], [0, 0, 0, 1, 1, 1, 1, 1]])
@@ -335,7 +335,7 @@ In forward inference, it takes two inputs:
 the encoded result of `BERTEncoder` and the token positions for prediction.
 The output is the prediction results at these positions.
 
-```{.python .input}
+```python
 #@save
 class MaskLM(nn.Block):
     """The masked language model task of BERT."""
@@ -361,7 +361,7 @@ class MaskLM(nn.Block):
         return mlm_Y_hat
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class MaskLM(nn.Module):
@@ -396,7 +396,7 @@ The forward inference of `mlm` returns prediction results `mlm_Y_hat`
 at all the masked positions `mlm_positions` of `encoded_X`.
 For each prediction, the size of the result is equal to the vocabulary size.
 
-```{.python .input}
+```python
 mlm = MaskLM(vocab_size, num_hiddens)
 mlm.initialize()
 mlm_positions = np.array([[1, 5, 2], [6, 1, 5]])
@@ -404,7 +404,7 @@ mlm_Y_hat = mlm(encoded_X, mlm_positions)
 mlm_Y_hat.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 mlm = MaskLM(vocab_size, num_hiddens)
 mlm_positions = torch.tensor([[1, 5, 2], [6, 1, 5]])
@@ -415,14 +415,14 @@ mlm_Y_hat.shape
 With the ground truth labels `mlm_Y` of the predicted tokens `mlm_Y_hat` under masks,
 we can calculate the cross-entropy loss of the masked language model task in BERT pretraining.
 
-```{.python .input}
+```python
 mlm_Y = np.array([[7, 8, 9], [10, 20, 30]])
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 mlm_l = loss(mlm_Y_hat.reshape((-1, vocab_size)), mlm_Y.reshape(-1))
 mlm_l.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 mlm_Y = torch.tensor([[7, 8, 9], [10, 20, 30]])
 loss = nn.CrossEntropyLoss(reduction='none')
@@ -451,7 +451,7 @@ encodes both the two sentences from the input.
 Hence, the output layer (`self.output`) of the MLP classifier takes `X` as the input,
 where `X` is the output of the MLP hidden layer whose input is the encoded “&lt;cls&gt;” token.
 
-```{.python .input}
+```python
 #@save
 class NextSentencePred(nn.Block):
     """The next sentence prediction task of BERT."""
@@ -464,7 +464,7 @@ class NextSentencePred(nn.Block):
         return self.output(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class NextSentencePred(nn.Module):
@@ -481,14 +481,14 @@ class NextSentencePred(nn.Module):
 We can see that the forward inference of an `NextSentencePred` instance
 returns binary predictions for each BERT input sequence.
 
-```{.python .input}
+```python
 nsp = NextSentencePred()
 nsp.initialize()
 nsp_Y_hat = nsp(encoded_X)
 nsp_Y_hat.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # PyTorch by default won't flatten the tensor as seen in mxnet where, if
 # flatten=True, all but the first axis of input data are collapsed together
@@ -501,13 +501,13 @@ nsp_Y_hat.shape
 
 The cross-entropy loss of the 2 binary classifications can also be computed.
 
-```{.python .input}
+```python
 nsp_y = np.array([0, 1])
 nsp_l = loss(nsp_Y_hat, nsp_y)
 nsp_l.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 nsp_y = torch.tensor([0, 1])
 nsp_l = loss(nsp_Y_hat, nsp_y)
@@ -532,7 +532,7 @@ The forward inference returns the encoded BERT representations `encoded_X`,
 predictions of masked language modeling `mlm_Y_hat`,
 and next sentence predictions `nsp_Y_hat`.
 
-```{.python .input}
+```python
 #@save
 class BERTModel(nn.Block):
     """The BERT model."""
@@ -557,7 +557,7 @@ class BERTModel(nn.Block):
         return encoded_X, mlm_Y_hat, nsp_Y_hat
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class BERTModel(nn.Module):

@@ -106,7 +106,7 @@ AlexNet通过暂退法（ :numref:`sec_dropout`）控制全连接层的模型复
 这使得模型更健壮，更大的样本量有效地减少了过拟合。
 在 :numref:`sec_image_augmentation`中更详细地讨论数据扩增。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
@@ -137,7 +137,7 @@ net.add(
     nn.Dense(10))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -169,7 +169,7 @@ net = nn.Sequential(
     nn.Linear(4096, 10))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -207,7 +207,7 @@ def net():
     ])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -242,7 +242,7 @@ net = nn.Sequential(
 [**我们构造一个**]高度和宽度都为224的(**单通道数据，来观察每一层输出的形状**)。
 它与 :numref:`fig_alexnet`中的AlexNet架构相匹配。
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(1, 1, 224, 224))
 net.initialize()
 for layer in net:
@@ -250,7 +250,7 @@ for layer in net:
     print(layer.name, 'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.randn(1, 1, 224, 224)
 for layer in net:
@@ -258,7 +258,7 @@ for layer in net:
     print(layer.__class__.__name__,'output shape:\t',X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.uniform((1, 224, 224, 1))
 for layer in net().layers:
@@ -266,7 +266,7 @@ for layer in net().layers:
     print(layer.__class__.__name__, 'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = paddle.randn(shape=(1, 1, 224, 224))
 for layer in net:
@@ -281,7 +281,7 @@ for layer in net:
 为了解决这个问题，(**我们将它们增加到$224 \times 224$**)（通常来讲这不是一个明智的做法，但在这里这样做是为了有效使用AlexNet架构）。
 这里需要使用`d2l.load_data_fashion_mnist`函数中的`resize`参数执行此调整。
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 128
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=224)
@@ -291,7 +291,7 @@ train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=224)
 
 现在AlexNet可以开始被训练了。与 :numref:`sec_lenet`中的LeNet相比，这里的主要变化是使用更小的学习速率训练，这是因为网络更深更广、图像分辨率更高，训练卷积神经网络就更昂贵。
 
-```{.python .input}
+```python
 #@tab all
 lr, num_epochs = 0.01, 10
 d2l.train_ch6(net, train_iter, test_iter, num_epochs, lr, d2l.try_gpu())

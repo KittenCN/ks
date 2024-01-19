@@ -43,27 +43,27 @@ $$\mathbf{c}_{t'} = \sum_{t=1}^T \alpha(\mathbf{s}_{t' - 1}, \mathbf{h}_t) \math
 ![一个带有Bahdanau注意力的循环神经网络编码器-解码器模型](../img/seq2seq-attention-details.svg)
 :label:`fig_s2s_attention_details`
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import rnn, nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -79,7 +79,7 @@ from paddle import nn
 为了更方便地显示学习的注意力权重，
 以下`AttentionDecoder`类定义了[**带有注意力机制解码器的基本接口**]。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 class AttentionDecoder(d2l.Decoder):
@@ -103,7 +103,7 @@ class AttentionDecoder(d2l.Decoder):
 在每个解码时间步骤中，解码器上一个时间步的最终层隐状态将用作查询。
 因此，注意力输出和输入嵌入都连结为循环神经网络解码器的输入。
 
-```{.python .input}
+```python
 class Seq2SeqAttentionDecoder(AttentionDecoder):
     def __init__(self, vocab_size, embed_size, num_hiddens, num_layers,
                  dropout=0, **kwargs):
@@ -150,7 +150,7 @@ class Seq2SeqAttentionDecoder(AttentionDecoder):
         return self._attention_weights
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class Seq2SeqAttentionDecoder(AttentionDecoder):
     def __init__(self, vocab_size, embed_size, num_hiddens, num_layers,
@@ -201,7 +201,7 @@ class Seq2SeqAttentionDecoder(AttentionDecoder):
         return self._attention_weights
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class Seq2SeqAttentionDecoder(AttentionDecoder):
     def __init__(self, vocab_size, embed_size, num_hiddens, num_layers,
@@ -253,7 +253,7 @@ class Seq2SeqAttentionDecoder(AttentionDecoder):
         return self._attention_weights
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class Seq2SeqAttentionDecoder(AttentionDecoder):
     def __init__(self, vocab_size, embed_size, num_hiddens, num_layers,
@@ -305,7 +305,7 @@ class Seq2SeqAttentionDecoder(AttentionDecoder):
 
 接下来，使用包含7个时间步的4个序列输入的小批量[**测试Bahdanau注意力解码器**]。
 
-```{.python .input}
+```python
 encoder = d2l.Seq2SeqEncoder(vocab_size=10, embed_size=8, num_hiddens=16,
                              num_layers=2)
 encoder.initialize()
@@ -318,7 +318,7 @@ output, state = decoder(X, state)
 output.shape, len(state), state[0].shape, len(state[1]), state[1][0].shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 encoder = d2l.Seq2SeqEncoder(vocab_size=10, embed_size=8, num_hiddens=16,
                              num_layers=2)
@@ -332,7 +332,7 @@ output, state = decoder(X, state)
 output.shape, len(state), state[0].shape, len(state[1]), state[1][0].shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 encoder = d2l.Seq2SeqEncoder(vocab_size=10, embed_size=8, num_hiddens=16,
                              num_layers=2)
@@ -344,7 +344,7 @@ output, state = decoder(X, state, training=False)
 output.shape, len(state), state[0].shape, len(state[1]), state[1][0].shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 encoder = d2l.Seq2SeqEncoder(vocab_size=10, embed_size=8, num_hiddens=16,
                              num_layers=2)
@@ -366,7 +366,7 @@ output.shape, len(state), state[0].shape, len(state[1]), state[1][0].shape
 由于新增的注意力机制，训练要比没有注意力机制的
  :numref:`sec_seq2seq_training`慢得多。
 
-```{.python .input}
+```python
 #@tab all
 embed_size, num_hiddens, num_layers, dropout = 32, 32, 2, 0.1
 batch_size, num_steps = 64, 10
@@ -383,7 +383,7 @@ d2l.train_seq2seq(net, train_iter, lr, num_epochs, tgt_vocab, device)
 
 模型训练后，我们用它[**将几个英语句子翻译成法语**]并计算它们的BLEU分数。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 engs = ['go .', "i lost .", 'he\'s calm .', 'i\'m home .']
 fras = ['va !', 'j\'ai perdu .', 'il est calme .', 'je suis chez moi .']
@@ -394,7 +394,7 @@ for eng, fra in zip(engs, fras):
           f'bleu {d2l.bleu(translation, fra, k=2):.3f}')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 engs = ['go .', "i lost .", 'he\'s calm .', 'i\'m home .']
 fras = ['va !', 'j\'ai perdu .', 'il est calme .', 'je suis chez moi .']
@@ -405,7 +405,7 @@ for eng, fra in zip(engs, fras):
           f'bleu {d2l.bleu(translation, fra, k=2):.3f}')
 ```
 
-```{.python .input}
+```python
 #@tab all
 attention_weights = d2l.reshape(
     d2l.concat([step[0][0][0] for step in dec_attention_weight_seq], 0),
@@ -416,14 +416,14 @@ attention_weights = d2l.reshape(
 会发现，每个查询都会在键值对上分配不同的权重，这说明
 在每个解码步中，输入序列的不同部分被选择性地聚集在注意力池中。
 
-```{.python .input}
+```python
 # 加上一个包含序列结束词元
 d2l.show_heatmaps(
     attention_weights[:, :, :, :len(engs[-1].split()) + 1],
     xlabel='Key positions', ylabel='Query positions')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 # 加上一个包含序列结束词元
 d2l.show_heatmaps(
@@ -431,7 +431,7 @@ d2l.show_heatmaps(
     xlabel='Key positions', ylabel='Query positions')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # 加上一个包含序列结束词元
 d2l.show_heatmaps(attention_weights[:, :, :, :len(engs[-1].split()) + 1],

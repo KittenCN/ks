@@ -45,14 +45,14 @@ $$x \leftarrow x - \eta f'(x)$$
 尽管我们知道$x=0$时$f(x)$能取得最小值，
 但我们仍然使用这个简单的函数来观察$x$的变化。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -60,7 +60,7 @@ import numpy as np
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -68,7 +68,7 @@ import numpy as np
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -78,7 +78,7 @@ import numpy as np
 import paddle
 ```
 
-```{.python .input}
+```python
 #@tab all
 def f(x):  # 目标函数
     return x ** 2
@@ -90,7 +90,7 @@ def f_grad(x):  # 目标函数的梯度(导数)
 接下来，我们使用$x=10$作为初始值，并假设$\eta=0.2$。
 使用梯度下降法迭代$x$共10次，我们可以看到，$x$的值最终将接近最优解。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, tensorflow
 def gd(eta, f_grad):
     x = 10.0
@@ -104,7 +104,7 @@ def gd(eta, f_grad):
 results = gd(0.2, f_grad)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def gd(eta, f_grad):
     x = 10.0
@@ -120,7 +120,7 @@ results = gd(0.2, f_grad)
 
 对进行$x$优化的过程可以绘制如下。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, tensorflow
 def show_trace(results, f):
     n = max(abs(min(results)), abs(max(results)))
@@ -132,7 +132,7 @@ def show_trace(results, f):
 show_trace(results, f)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def show_trace(results, f):
     n = max(abs(min(results)), abs(max(results)))
@@ -153,7 +153,7 @@ show_trace(results, f)
 例如，考虑同一优化问题中$\eta = 0.05$的进度。
 如下所示，尽管经过了10个步骤，我们仍然离最优解很远。
 
-```{.python .input}
+```python
 #@tab all
 show_trace(gd(0.05, f_grad), f)
 ```
@@ -163,7 +163,7 @@ show_trace(gd(0.05, f_grad), f)
 在这种情况下，$x$的迭代不能保证降低$f(x)$的值。
 例如，当学习率为$\eta=1.1$时，$x$超出了最优解$x=0$并逐渐发散。
 
-```{.python .input}
+```python
 #@tab all
 show_trace(gd(1.1, f_grad), f)
 ```
@@ -175,7 +175,7 @@ show_trace(gd(1.1, f_grad), f)
 根据我们选择的学习率，我们最终可能只会得到许多解的一个。
 下面的例子说明了（不切实际的）高学习率如何导致较差的局部最小值。
 
-```{.python .input}
+```python
 #@tab all
 c = d2l.tensor(0.15 * np.pi)
 
@@ -220,7 +220,7 @@ $$\mathbf{x} \leftarrow \mathbf{x} - \eta \nabla f(\mathbf{x}).$$
 第一个是update函数，并将其应用于初始值20次；
 第二个函数会显示$\mathbf{x}$的轨迹。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, tensorflow
 def train_2d(trainer, steps=20, f_grad=None):  #@save
     """用定制的训练机优化2D目标函数"""
@@ -237,7 +237,7 @@ def train_2d(trainer, steps=20, f_grad=None):  #@save
     return results
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, tensorflow
 def show_trace_2d(f, results):  #@save
     """显示优化过程中2D变量的轨迹"""
@@ -250,7 +250,7 @@ def show_trace_2d(f, results):  #@save
     d2l.plt.ylabel('x2')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def show_trace_2d(f, results):  #@save
     """显示优化过程中2D变量的轨迹"""
@@ -263,7 +263,7 @@ def show_trace_2d(f, results):  #@save
     d2l.plt.ylabel('x2')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train_2d(trainer, steps=20, f_grad=None):  #@save
     """用定制的训练机优化2D目标函数"""
@@ -294,7 +294,7 @@ def show_trace_2d(f, results):  #@save
 可以看到，经过20步之后，$\mathbf{x}$的值接近其位于$[0, 0]$的最小值。
 虽然进展相当顺利，但相当缓慢。
 
-```{.python .input}
+```python
 #@tab all
 def f_2d(x1, x2):  # 目标函数
     return x1 ** 2 + 2 * x2 ** 2
@@ -351,7 +351,7 @@ $$\nabla f(\mathbf{x}) + \mathbf{H} \boldsymbol{\epsilon} = 0 \text{ and hence }
 给定一个凸双曲余弦函数$c$，其中$c$为某些常数，
 我们可以看到经过几次迭代后，得到了$x=0$处的全局最小值。
 
-```{.python .input}
+```python
 #@tab all
 c = d2l.tensor(0.5)
 
@@ -382,7 +382,7 @@ show_trace(newton(), f)
 这是这个算法的致命缺陷！
 让我们看看实践中会发生什么。
 
-```{.python .input}
+```python
 #@tab all
 c = d2l.tensor(0.15 * np.pi)
 
@@ -404,7 +404,7 @@ show_trace(newton(), f)
 让我们看看在学习率稍小的情况下它是如何生效的，比如$\eta = 0.5$。
 如我们所见，我们有了一个相当高效的算法。
 
-```{.python .input}
+```python
 #@tab all
 show_trace(newton(0.5), f)
 ```

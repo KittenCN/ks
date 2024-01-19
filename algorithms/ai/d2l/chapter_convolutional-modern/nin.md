@@ -23,7 +23,7 @@ NiN块以一个普通卷积层开始，后面是两个$1 \times 1$的卷积层�
 :width:`600px`
 :label:`fig_nin`
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
@@ -38,7 +38,7 @@ def nin_block(num_channels, kernel_size, strides, padding):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -52,7 +52,7 @@ def nin_block(in_channels, out_channels, kernel_size, strides, padding):
         nn.Conv2d(out_channels, out_channels, kernel_size=1), nn.ReLU())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -67,7 +67,7 @@ def nin_block(num_channels, kernel_size, strides, padding):
                                activation='relu')])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -94,7 +94,7 @@ NiN使用窗口形状为$11\times 11$、$5\times 5$和$3\times 3$的卷积层，
 NiN和AlexNet之间的一个显著区别是NiN完全取消了全连接层。
 相反，NiN使用一个NiN块，其输出通道数等于标签类别的数量。最后放一个*全局平均汇聚层*（global average pooling layer），生成一个对数几率	（logits）。NiN设计的一个优点是，它显著减少了模型所需参数的数量。然而，在实践中，这种设计有时会增加训练模型的时间。
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nin_block(96, kernel_size=11, strides=4, padding=0),
         nn.MaxPool2D(pool_size=3, strides=2),
@@ -111,7 +111,7 @@ net.add(nin_block(96, kernel_size=11, strides=4, padding=0),
         nn.Flatten())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(
     nin_block(1, 96, kernel_size=11, strides=4, padding=0),
@@ -128,7 +128,7 @@ net = nn.Sequential(
     nn.Flatten())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def net():
     return tf.keras.models.Sequential([
@@ -148,7 +148,7 @@ def net():
         ])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = nn.Sequential(
     nin_block(1, 96, kernel_size=11, strides=4, padding=0),
@@ -166,7 +166,7 @@ net = nn.Sequential(
 
 我们创建一个数据样本来[**查看每个块的输出形状**]。
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(1, 1, 224, 224))
 net.initialize()
 for layer in net:
@@ -174,7 +174,7 @@ for layer in net:
     print(layer.name, 'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.rand(size=(1, 1, 224, 224))
 for layer in net:
@@ -182,7 +182,7 @@ for layer in net:
     print(layer.__class__.__name__,'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.uniform((1, 224, 224, 1))
 for layer in net().layers:
@@ -190,7 +190,7 @@ for layer in net().layers:
     print(layer.__class__.__name__,'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = paddle.rand(shape=(1, 1, 224, 224))
 for layer in net:
@@ -202,7 +202,7 @@ for layer in net:
 
 和以前一样，我们使用Fashion-MNIST来训练模型。训练NiN与训练AlexNet、VGG时相似。
 
-```{.python .input}
+```python
 #@tab all
 lr, num_epochs, batch_size = 0.1, 10, 128
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=224)

@@ -19,7 +19,7 @@
 为了演示如何在多个尺度下生成锚框，让我们先读取一张图像。
 它的高度和宽度分别为561和728像素。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import image, np, npx
@@ -31,7 +31,7 @@ h, w = img.shape[:2]
 h, w
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -42,7 +42,7 @@ h, w = img.shape[:2]
 h, w
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -66,7 +66,7 @@ h, w
 更具体地说，给定特征图的宽度和高度`fmap_w`和`fmap_h`，以下函数将*均匀地*对任何输入图像中`fmap_h`行和`fmap_w`列中的像素进行采样。
 以这些均匀采样的像素为中心，将会生成大小为`s`（假设列表`s`的长度为1）且宽高比（`ratios`）不同的锚框。
 
-```{.python .input}
+```python
 def display_anchors(fmap_w, fmap_h, s):
     d2l.set_figsize()
     # 前两个维度上的值不影响输出
@@ -77,7 +77,7 @@ def display_anchors(fmap_w, fmap_h, s):
                     anchors[0] * bbox_scale)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def display_anchors(fmap_w, fmap_h, s):
     d2l.set_figsize()
@@ -89,7 +89,7 @@ def display_anchors(fmap_w, fmap_h, s):
                     anchors[0] * bbox_scale)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def display_anchors(fmap_w, fmap_h, s):
     d2l.set_figsize()
@@ -106,7 +106,7 @@ def display_anchors(fmap_w, fmap_h, s):
 锚框的尺度设置为0.15，特征图的高度和宽度设置为4。
 我们可以看到，图像上4行和4列的锚框的中心是均匀分布的。
 
-```{.python .input}
+```python
 #@tab all
 display_anchors(fmap_w=4, fmap_h=4, s=[0.15])
 ```
@@ -114,7 +114,7 @@ display_anchors(fmap_w=4, fmap_h=4, s=[0.15])
 然后，我们[**将特征图的高度和宽度减小一半，然后使用较大的锚框来检测较大的目标**]。
 当尺度设置为0.4时，一些锚框将彼此重叠。
 
-```{.python .input}
+```python
 #@tab all
 display_anchors(fmap_w=2, fmap_h=2, s=[0.4])
 ```
@@ -122,7 +122,7 @@ display_anchors(fmap_w=2, fmap_h=2, s=[0.4])
 最后，我们进一步[**将特征图的高度和宽度减小一半，然后将锚框的尺度增加到0.8**]。
 此时，锚框的中心即是图像的中心。
 
-```{.python .input}
+```python
 #@tab all
 display_anchors(fmap_w=1, fmap_h=1, s=[0.8])
 ```

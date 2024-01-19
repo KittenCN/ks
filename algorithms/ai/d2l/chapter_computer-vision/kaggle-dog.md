@@ -13,7 +13,7 @@ ImageNet数据集中的图像更高更宽，且尺寸不一。
 :width:`400px`
 :label:`fig_kaggle_dog`
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, init, npx
 from mxnet.gluon import nn
@@ -22,7 +22,7 @@ import os
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -31,7 +31,7 @@ from torch import nn
 import os
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -62,7 +62,7 @@ import os
 同样，为了便于入门，[**我们提供完整数据集的小规模样本**]：`train_valid_test_tiny.zip`。
 如果要在Kaggle比赛中使用完整的数据集，则需要将下面的`demo`变量更改为`False`。
 
-```{.python .input}
+```python
 #@tab all
 #@save 
 d2l.DATA_HUB['dog_tiny'] = (d2l.DATA_URL + 'kaggle_dog_tiny.zip',
@@ -82,7 +82,7 @@ else:
 
 下面的`reorg_dog_data`函数读取训练数据标签、拆分验证集并整理训练集。
 
-```{.python .input}
+```python
 #@tab all
 def reorg_dog_data(data_dir, valid_ratio):
     labels = d2l.read_csv_labels(os.path.join(data_dir, 'labels.csv'))
@@ -100,7 +100,7 @@ reorg_dog_data(data_dir, valid_ratio)
 回想一下，这个狗品种数据集是ImageNet数据集的子集，其图像大于 :numref:`sec_kaggle_cifar10`中CIFAR-10数据集的图像。
 下面我们看一下如何在相对较大的图像上使用图像增广。
 
-```{.python .input}
+```python
 transform_train = gluon.data.vision.transforms.Compose([
     # 随机裁剪图像，所得图像为原始面积的0.08～1之间，高宽比在3/4和4/3之间。
     # 然后，缩放图像以创建224x224的新图像
@@ -119,7 +119,7 @@ transform_train = gluon.data.vision.transforms.Compose([
                                            [0.229, 0.224, 0.225])])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 transform_train = torchvision.transforms.Compose([
     # 随机裁剪图像，所得图像为原始面积的0.08～1之间，高宽比在3/4和4/3之间。
@@ -138,7 +138,7 @@ transform_train = torchvision.transforms.Compose([
                                      [0.229, 0.224, 0.225])])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 transform_train = paddlevision.transforms.Compose([
     # 随机裁剪图像，所得图像为原始面积的0.08到1之间，高宽比在3/4和4/3之间。
@@ -159,7 +159,7 @@ transform_train = paddlevision.transforms.Compose([
 
 测试时，我们只使用确定性的图像预处理操作。
 
-```{.python .input}
+```python
 transform_test = gluon.data.vision.transforms.Compose([
     gluon.data.vision.transforms.Resize(256),
     # 从图像中心裁切224x224大小的图片
@@ -169,7 +169,7 @@ transform_test = gluon.data.vision.transforms.Compose([
                                            [0.229, 0.224, 0.225])])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 transform_test = torchvision.transforms.Compose([
     torchvision.transforms.Resize(256),
@@ -180,7 +180,7 @@ transform_test = torchvision.transforms.Compose([
                                      [0.229, 0.224, 0.225])])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 transform_test = paddlevision.transforms.Compose([
     paddlevision.transforms.Resize(256),
@@ -195,14 +195,14 @@ transform_test = paddlevision.transforms.Compose([
 
 与 :numref:`sec_kaggle_cifar10`一样，我们可以读取整理后的含原始图像文件的数据集。
 
-```{.python .input}
+```python
 train_ds, valid_ds, train_valid_ds, test_ds = [
     gluon.data.vision.ImageFolderDataset(
         os.path.join(data_dir, 'train_valid_test', folder))
     for folder in ('train', 'valid', 'train_valid', 'test')]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train_ds, train_valid_ds = [torchvision.datasets.ImageFolder(
     os.path.join(data_dir, 'train_valid_test', folder),
@@ -213,7 +213,7 @@ valid_ds, test_ds = [torchvision.datasets.ImageFolder(
     transform=transform_test) for folder in ['valid', 'test']]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 train_ds, train_valid_ds = [paddlevision.datasets.DatasetFolder(
     os.path.join(data_dir, 'train_valid_test', folder),
@@ -226,7 +226,7 @@ valid_ds, test_ds = [paddlevision.datasets.DatasetFolder(
 
 下面我们创建数据加载器实例的方式与 :numref:`sec_kaggle_cifar10`相同。
 
-```{.python .input}
+```python
 train_iter, train_valid_iter = [gluon.data.DataLoader(
     dataset.transform_first(transform_train), batch_size, shuffle=True, 
     last_batch='discard') for dataset in (train_ds, train_valid_ds)]
@@ -240,7 +240,7 @@ test_iter = gluon.data.DataLoader(
     last_batch='keep')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train_iter, train_valid_iter = [torch.utils.data.DataLoader(
     dataset, batch_size, shuffle=True, drop_last=True)
@@ -253,7 +253,7 @@ test_iter = torch.utils.data.DataLoader(test_ds, batch_size, shuffle=False,
                                         drop_last=False)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 train_iter, train_valid_iter = [paddle.io.DataLoader(
     dataset, batch_size=batch_size, shuffle=True, drop_last=True)
@@ -278,7 +278,7 @@ test_iter = paddle.io.DataLoader(test_ds, batch_size=batch_size, shuffle=False,
 回想一下，我们使用三个RGB通道的均值和标准差来对完整的ImageNet数据集进行图像标准化。
 事实上，这也符合ImageNet上预训练模型的标准化操作。
 
-```{.python .input}
+```python
 def get_net(devices):
     finetune_net = gluon.model_zoo.vision.resnet34_v2(pretrained=True)
     # 定义一个新的输出网络
@@ -293,7 +293,7 @@ def get_net(devices):
     return finetune_net
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_net(devices):
     finetune_net = nn.Sequential()
@@ -310,7 +310,7 @@ def get_net(devices):
     return finetune_net
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def get_net(devices):
     finetune_net = nn.Sequential()
@@ -328,7 +328,7 @@ def get_net(devices):
 在[**计算损失**]之前，我们首先获取预训练模型的输出层的输入，即提取的特征。
 然后我们使用此特征作为我们小型自定义输出网络的输入来计算损失。
 
-```{.python .input}
+```python
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 
 def evaluate_loss(data_iter, net, devices):
@@ -344,7 +344,7 @@ def evaluate_loss(data_iter, net, devices):
     return l_sum / n
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 loss = nn.CrossEntropyLoss(reduction='none')
 
@@ -359,7 +359,7 @@ def evaluate_loss(data_iter, net, devices):
     return (l_sum / n).to('cpu')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 loss = nn.CrossEntropyLoss(reduction='none')
 
@@ -378,7 +378,7 @@ def evaluate_loss(data_iter, net, devices):
 我们将根据模型在验证集上的表现选择模型并调整超参数。
 模型训练函数`train`只迭代小型自定义输出网络的参数。
 
-```{.python .input}
+```python
 def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           lr_decay):
     # 只训练小型自定义输出网络
@@ -421,7 +421,7 @@ def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           f' examples/sec on {str(devices)}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           lr_decay):
@@ -463,7 +463,7 @@ def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           f' examples/sec on {str(devices)}')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
           lr_decay):
@@ -512,7 +512,7 @@ def train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
 另外，由于`lr_period`和`lr_decay`分别设置为2和0.9，
 因此优化算法的学习速率将在每2个迭代后乘以0.9。
 
-```{.python .input}
+```python
 devices, num_epochs, lr, wd = d2l.try_all_gpus(), 10, 5e-3, 1e-4
 lr_period, lr_decay, net = 2, 0.9, get_net(devices)
 net.hybridize()
@@ -520,7 +520,7 @@ train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
       lr_decay)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 devices, num_epochs, lr, wd = d2l.try_all_gpus(), 10, 1e-4, 1e-4
 lr_period, lr_decay, net = 2, 0.9, get_net(devices)
@@ -528,7 +528,7 @@ train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
       lr_decay)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 devices, num_epochs, lr, wd = d2l.try_all_gpus(), 10, 1e-4, 1e-4
 lr_period, lr_decay, net = 2, 0.9, get_net(devices)
@@ -541,7 +541,7 @@ train(net, train_iter, valid_iter, num_epochs, lr, wd, devices, lr_period,
 与 :numref:`sec_kaggle_cifar10`中的最后一步类似，最终所有标记的数据（包括验证集）都用于训练模型和对测试集进行分类。
 我们将使用训练好的自定义输出网络进行分类。
 
-```{.python .input}
+```python
 net = get_net(devices)
 net.hybridize()
 train(net, train_valid_iter, None, num_epochs, lr, wd, devices, lr_period,
@@ -561,7 +561,7 @@ with open('submission.csv', 'w') as f:
             [str(num) for num in output]) + '\n')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = get_net(devices)
 train(net, train_valid_iter, None, num_epochs, lr, wd, devices, lr_period,
@@ -580,7 +580,7 @@ with open('submission.csv', 'w') as f:
             [str(num) for num in output]) + '\n')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = get_net(devices)
 train(net, train_valid_iter, None, num_epochs, lr, wd, devices, lr_period,

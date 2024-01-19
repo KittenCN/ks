@@ -28,7 +28,7 @@ BERT进一步改进了11种自然语言处理任务的技术水平，这些任�
 
 在本章的其余部分，我们将深入了解BERT的训练前准备。当在 :numref:`chap_nlp_app`中解释自然语言处理应用时，我们将说明针对下游应用的BERT微调。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, np, npx
 from mxnet.gluon import nn
@@ -36,14 +36,14 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -61,7 +61,7 @@ from paddle import nn
 
 下面的`get_tokens_and_segments`将一个句子或两个句子作为输入，然后返回BERT输入序列的标记及其相应的片段索引。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def get_tokens_and_segments(tokens_a, tokens_b=None):
@@ -83,7 +83,7 @@ BERT选择Transformer编码器作为其双向架构。在Transformer编码器中
 
 下面的`BERTEncoder`类类似于 :numref:`sec_transformer`中实现的`TransformerEncoder`类。与`TransformerEncoder`不同，`BERTEncoder`使用片段嵌入和可学习的位置嵌入。
 
-```{.python .input}
+```python
 #@save
 class BERTEncoder(nn.Block):
     """BERT编码器"""
@@ -109,7 +109,7 @@ class BERTEncoder(nn.Block):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class BERTEncoder(nn.Module):
@@ -139,7 +139,7 @@ class BERTEncoder(nn.Module):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class BERTEncoder(nn.Layer):
@@ -172,7 +172,7 @@ class BERTEncoder(nn.Layer):
 
 假设词表大小为10000，为了演示`BERTEncoder`的前向推断，让我们创建一个实例并初始化它的参数。
 
-```{.python .input}
+```python
 vocab_size, num_hiddens, ffn_num_hiddens, num_heads = 10000, 768, 1024, 4
 num_layers, dropout = 2, 0.2
 encoder = BERTEncoder(vocab_size, num_hiddens, ffn_num_hiddens, num_heads,
@@ -180,7 +180,7 @@ encoder = BERTEncoder(vocab_size, num_hiddens, ffn_num_hiddens, num_heads,
 encoder.initialize()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 vocab_size, num_hiddens, ffn_num_hiddens, num_heads = 10000, 768, 1024, 4
 norm_shape, ffn_num_input, num_layers, dropout = [768], 768, 2, 0.2
@@ -190,14 +190,14 @@ encoder = BERTEncoder(vocab_size, num_hiddens, norm_shape, ffn_num_input,
 
 我们将`tokens`定义为长度为8的2个输入序列，其中每个词元是词表的索引。使用输入`tokens`的`BERTEncoder`的前向推断返回编码结果，其中每个词元由向量表示，其长度由超参数`num_hiddens`定义。此超参数通常称为Transformer编码器的*隐藏大小*（隐藏单元数）。
 
-```{.python .input}
+```python
 tokens = np.random.randint(0, vocab_size, (2, 8))
 segments = np.array([[0, 0, 0, 0, 1, 1, 1, 1], [0, 0, 0, 1, 1, 1, 1, 1]])
 encoded_X = encoder(tokens, segments, None)
 encoded_X.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 tokens = torch.randint(0, vocab_size, (2, 8))
 segments = torch.tensor([[0, 0, 0, 0, 1, 1, 1, 1], [0, 0, 0, 1, 1, 1, 1, 1]])
@@ -205,7 +205,7 @@ encoded_X = encoder(tokens, segments, None)
 encoded_X.shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 tokens = paddle.randint(0, vocab_size, (2, 8))
 segments = paddle.to_tensor([[0, 0, 0, 0, 1, 1, 1, 1], [0, 0, 0, 1, 1, 1, 1, 1]])
@@ -233,7 +233,7 @@ encoded_X.shape
 
 我们实现了下面的`MaskLM`类来预测BERT预训练的掩蔽语言模型任务中的掩蔽标记。预测使用单隐藏层的多层感知机（`self.mlp`）。在前向推断中，它需要两个输入：`BERTEncoder`的编码结果和用于预测的词元位置。输出是这些位置的预测结果。
 
-```{.python .input}
+```python
 #@save
 class MaskLM(nn.Block):
     """BERT的掩蔽语言模型任务"""
@@ -259,7 +259,7 @@ class MaskLM(nn.Block):
         return mlm_Y_hat
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class MaskLM(nn.Module):
@@ -285,7 +285,7 @@ class MaskLM(nn.Module):
         return mlm_Y_hat
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class MaskLM(nn.Layer):
@@ -313,7 +313,7 @@ class MaskLM(nn.Layer):
 
 为了演示`MaskLM`的前向推断，我们创建了其实例`mlm`并对其进行了初始化。回想一下，来自`BERTEncoder`的正向推断`encoded_X`表示2个BERT输入序列。我们将`mlm_positions`定义为在`encoded_X`的任一输入序列中预测的3个指示。`mlm`的前向推断返回`encoded_X`的所有掩蔽位置`mlm_positions`处的预测结果`mlm_Y_hat`。对于每个预测，结果的大小等于词表的大小。
 
-```{.python .input}
+```python
 mlm = MaskLM(vocab_size, num_hiddens)
 mlm.initialize()
 mlm_positions = np.array([[1, 5, 2], [6, 1, 5]])
@@ -321,7 +321,7 @@ mlm_Y_hat = mlm(encoded_X, mlm_positions)
 mlm_Y_hat.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 mlm = MaskLM(vocab_size, num_hiddens)
 mlm_positions = torch.tensor([[1, 5, 2], [6, 1, 5]])
@@ -329,7 +329,7 @@ mlm_Y_hat = mlm(encoded_X, mlm_positions)
 mlm_Y_hat.shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 mlm = MaskLM(vocab_size, num_hiddens)
 mlm_positions = paddle.to_tensor([[1, 5, 2], [6, 1, 5]])
@@ -339,14 +339,14 @@ mlm_Y_hat.shape
 
 通过掩码下的预测词元`mlm_Y`的真实标签`mlm_Y_hat`，我们可以计算在BERT预训练中的遮蔽语言模型任务的交叉熵损失。
 
-```{.python .input}
+```python
 mlm_Y = np.array([[7, 8, 9], [10, 20, 30]])
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 mlm_l = loss(mlm_Y_hat.reshape((-1, vocab_size)), mlm_Y.reshape(-1))
 mlm_l.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 mlm_Y = torch.tensor([[7, 8, 9], [10, 20, 30]])
 loss = nn.CrossEntropyLoss(reduction='none')
@@ -354,7 +354,7 @@ mlm_l = loss(mlm_Y_hat.reshape((-1, vocab_size)), mlm_Y.reshape(-1))
 mlm_l.shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 mlm_Y = paddle.to_tensor([[7, 8, 9], [10, 20, 30]])
 loss = nn.CrossEntropyLoss(reduction='none')
@@ -369,7 +369,7 @@ mlm_l.shape
 
 下面的`NextSentencePred`类使用单隐藏层的多层感知机来预测第二个句子是否是BERT输入序列中第一个句子的下一个句子。由于Transformer编码器中的自注意力，特殊词元“&lt;cls&gt;”的BERT表示已经对输入的两个句子进行了编码。因此，多层感知机分类器的输出层（`self.output`）以`X`作为输入，其中`X`是多层感知机隐藏层的输出，而MLP隐藏层的输入是编码后的“&lt;cls&gt;”词元。
 
-```{.python .input}
+```python
 #@save
 class NextSentencePred(nn.Block):
     """BERT的下一句预测任务"""
@@ -382,7 +382,7 @@ class NextSentencePred(nn.Block):
         return self.output(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class NextSentencePred(nn.Module):
@@ -396,7 +396,7 @@ class NextSentencePred(nn.Module):
         return self.output(X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class NextSentencePred(nn.Layer):
@@ -412,14 +412,14 @@ class NextSentencePred(nn.Layer):
 
 我们可以看到，`NextSentencePred`实例的前向推断返回每个BERT输入序列的二分类预测。
 
-```{.python .input}
+```python
 nsp = NextSentencePred()
 nsp.initialize()
 nsp_Y_hat = nsp(encoded_X)
 nsp_Y_hat.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 encoded_X = torch.flatten(encoded_X, start_dim=1)
 # NSP的输入形状:(batchsize，num_hiddens)
@@ -428,7 +428,7 @@ nsp_Y_hat = nsp(encoded_X)
 nsp_Y_hat.shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 encoded_X = paddle.flatten(encoded_X, start_axis=1)
 # NSP的输入形状:(batchsize，num_hiddens)
@@ -439,20 +439,20 @@ nsp_Y_hat.shape
 
 还可以计算两个二元分类的交叉熵损失。
 
-```{.python .input}
+```python
 nsp_y = np.array([0, 1])
 nsp_l = loss(nsp_Y_hat, nsp_y)
 nsp_l.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 nsp_y = torch.tensor([0, 1])
 nsp_l = loss(nsp_Y_hat, nsp_y)
 nsp_l.shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 nsp_y = paddle.to_tensor([0, 1])
 nsp_l = loss(nsp_Y_hat, nsp_y)
@@ -465,7 +465,7 @@ nsp_l.shape
 
 在预训练BERT时，最终的损失函数是掩蔽语言模型损失函数和下一句预测损失函数的线性组合。现在我们可以通过实例化三个类`BERTEncoder`、`MaskLM`和`NextSentencePred`来定义`BERTModel`类。前向推断返回编码后的BERT表示`encoded_X`、掩蔽语言模型预测`mlm_Y_hat`和下一句预测`nsp_Y_hat`。
 
-```{.python .input}
+```python
 #@save
 class BERTModel(nn.Block):
     """BERT模型"""
@@ -490,7 +490,7 @@ class BERTModel(nn.Block):
         return encoded_X, mlm_Y_hat, nsp_Y_hat
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class BERTModel(nn.Module):
@@ -522,7 +522,7 @@ class BERTModel(nn.Module):
         return encoded_X, mlm_Y_hat, nsp_Y_hat
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class BERTModel(nn.Layer):

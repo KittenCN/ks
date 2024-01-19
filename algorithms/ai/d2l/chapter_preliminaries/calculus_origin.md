@@ -75,7 +75,7 @@ To illustrate derivatives,
 let us experiment with an example.
 (**Define $u = f(x) = 3x^2-4x$.**)
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from IPython import display
@@ -86,7 +86,7 @@ def f(x):
     return 3 * x ** 2 - 4 * x
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -97,7 +97,7 @@ def f(x):
     return 3 * x ** 2 - 4 * x
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -115,7 +115,7 @@ in :eqref:`eq_derivative`
 Though this experiment is not a mathematical proof,
 we will see later that the derivative $u'$ is $2$ when $x=1$.
 
-```{.python .input}
+```python
 #@tab all
 def numerical_lim(f, x, h):
     return (f(x + h) - f(x)) / h
@@ -178,7 +178,7 @@ Note that the comment `#@save` is a special mark where the following function,
 class, or statements are saved in the `d2l` package
 so later they can be directly invoked (e.g., `d2l.use_svg_display()`) without being redefined.
 
-```{.python .input}
+```python
 #@tab all
 def use_svg_display():  #@save
     """Use the svg format to display a plot in Jupyter."""
@@ -187,7 +187,7 @@ def use_svg_display():  #@save
 
 We define the `set_figsize` function to specify the figure sizes. Note that here we directly use `d2l.plt` since the import statement `from matplotlib import pyplot as plt` has been marked for being saved in the `d2l` package in the preface.
 
-```{.python .input}
+```python
 #@tab all
 def set_figsize(figsize=(3.5, 2.5)):  #@save
     """Set the figure size for matplotlib."""
@@ -197,7 +197,7 @@ def set_figsize(figsize=(3.5, 2.5)):  #@save
 
 The following `set_axes` function sets properties of axes of figures produced by `matplotlib`.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def set_axes(axes, xlabel, ylabel, xlim, ylim, xscale, yscale, legend):
@@ -218,7 +218,7 @@ we define the `plot` function
 to plot multiple curves succinctly
 since we will need to visualize many curves throughout the book.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def plot(X, Y=None, xlabel=None, ylabel=None, legend=None, xlim=None,
@@ -255,7 +255,7 @@ def plot(X, Y=None, xlabel=None, ylabel=None, legend=None, xlim=None,
 
 Now we can [**plot the function $u = f(x)$ and its tangent line $y = 2x - 3$ at $x=1$**], where the coefficient $2$ is the slope of the tangent line.
 
-```{.python .input}
+```python
 #@tab all
 x = np.arange(0, 3, 0.1)
 plot(x, [f(x), 2 * x - 3], 'x', 'f(x)', legend=['f(x)', 'Tangent line (x=1)'])

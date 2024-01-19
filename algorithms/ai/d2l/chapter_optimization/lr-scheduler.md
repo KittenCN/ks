@@ -19,7 +19,7 @@
 此外，我们混合网络以提高性能。
 由于大多数代码都是标准的，我们只介绍基础知识，而不做进一步的详细讨论。如果需要，请参阅 :numref:`chap_cnn`进行复习。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, init, lr_scheduler, np, npx
@@ -67,7 +67,7 @@ def train(net, train_iter, test_iter, num_epochs, loss, trainer, device):
           f'test acc {test_acc:.3f}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -136,7 +136,7 @@ def train(net, train_iter, test_iter, num_epochs, loss, trainer, device,
           f'test acc {test_acc:.3f}')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -182,7 +182,7 @@ def train(net_fn, train_iter, test_iter, num_epochs, lr,
     return net
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -253,14 +253,14 @@ def train(net, train_iter, test_iter, num_epochs, loss, trainer, device,
 留意在超过了某点、测试准确度方面的进展停滞时，训练准确度将如何继续提高。
 两条曲线之间的间隙表示过拟合。
 
-```{.python .input}
+```python
 lr, num_epochs = 0.3, 30
 net.initialize(force_reinit=True, ctx=device, init=init.Xavier())
 trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': lr})
 train(net, train_iter, test_iter, num_epochs, loss, trainer, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 lr, num_epochs = 0.3, 30
 net = net_fn()
@@ -268,13 +268,13 @@ trainer = torch.optim.SGD(net.parameters(), lr=lr)
 train(net, train_iter, test_iter, num_epochs, loss, trainer, device)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 lr, num_epochs = 0.3, 30
 train(net, train_iter, test_iter, num_epochs, lr)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 lr, num_epochs = 0.3, 30
 net = net_fn()
@@ -287,19 +287,19 @@ train(net, train_iter, test_iter, num_epochs, loss, trainer, device)
 我们可以在每个迭代轮数（甚至在每个小批量）之后向下调整学习率。
 例如，以动态的方式来响应优化的进展情况。
 
-```{.python .input}
+```python
 trainer.set_learning_rate(0.1)
 print(f'learning rate is now {trainer.learning_rate:.2f}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 lr = 0.1
 trainer.param_groups[0]["lr"] = lr
 print(f'learning rate is now {trainer.param_groups[0]["lr"]:.2f}')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 lr = 0.1
 dummy_model = tf.keras.models.Sequential([tf.keras.layers.Dense(10)])
@@ -307,7 +307,7 @@ dummy_model.compile(tf.keras.optimizers.SGD(learning_rate=lr), loss='mse')
 print(f'learning rate is now ,', dummy_model.optimizer.lr.numpy())
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 lr = 0.1
 trainer.set_lr(lr)
@@ -318,7 +318,7 @@ print(f'learning rate is now {trainer.get_lr():.2f}')
 当调用更新次数时，它将返回学习率的适当值。
 让我们定义一个简单的方法，将学习率设置为$\eta = \eta_0 (t + 1)^{-\frac{1}{2}}$。
 
-```{.python .input}
+```python
 #@tab all
 class SquareRootScheduler:
     def __init__(self, lr=0.1):
@@ -330,7 +330,7 @@ class SquareRootScheduler:
 
 让我们在一系列值上绘制它的行为。
 
-```{.python .input}
+```python
 #@tab all
 scheduler = SquareRootScheduler(lr=0.1)
 d2l.plot(d2l.arange(num_epochs), [scheduler(t) for t in range(num_epochs)])
@@ -339,13 +339,13 @@ d2l.plot(d2l.arange(num_epochs), [scheduler(t) for t in range(num_epochs)])
 现在让我们来看看这对在Fashion-MNIST数据集上的训练有何影响。
 我们只是提供调度器作为训练算法的额外参数。
 
-```{.python .input}
+```python
 trainer = gluon.Trainer(net.collect_params(), 'sgd',
                         {'lr_scheduler': scheduler})
 train(net, train_iter, test_iter, num_epochs, loss, trainer, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = net_fn()
 trainer = torch.optim.SGD(net.parameters(), lr)
@@ -353,13 +353,13 @@ train(net, train_iter, test_iter, num_epochs, loss, trainer, device,
       scheduler)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 train(net, train_iter, test_iter, num_epochs, lr,
       custom_callback=LearningRateScheduler(scheduler))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = net_fn()
 trainer = paddle.optimizer.SGD(learning_rate=lr , parameters=net.parameters())
@@ -383,7 +383,7 @@ train(net, train_iter, test_iter, num_epochs, loss, trainer, device,
 为了防止学习率衰减到一个合理的下界之下，
 更新方程经常修改为$\eta_{t+1} \leftarrow \mathop{\mathrm{max}}(\eta_{\mathrm{min}}, \eta_t \cdot \alpha)$。
 
-```{.python .input}
+```python
 #@tab all
 class FactorScheduler:
     def __init__(self, factor=1, stop_factor_lr=1e-7, base_lr=0.1):
@@ -408,13 +408,13 @@ d2l.plot(d2l.arange(50), [scheduler(t) for t in range(50)])
 每当$t \in s$时，降低$\eta_{t+1} \leftarrow \eta_t \cdot \alpha$。
 假设每步中的值减半，我们可以按如下方式实现这一点。
 
-```{.python .input}
+```python
 scheduler = lr_scheduler.MultiFactorScheduler(step=[15, 30], factor=0.5,
                                               base_lr=0.5)
 d2l.plot(d2l.arange(num_epochs), [scheduler(t) for t in range(num_epochs)])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = net_fn()
 trainer = torch.optim.SGD(net.parameters(), lr=0.5)
@@ -430,7 +430,7 @@ d2l.plot(d2l.arange(num_epochs), [get_lr(trainer, scheduler)
                                   for t in range(num_epochs)])
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class MultiFactorScheduler:
     def __init__(self, step, factor, base_lr):
@@ -449,7 +449,7 @@ scheduler = MultiFactorScheduler(step=[15, 30], factor=0.5, base_lr=0.5)
 d2l.plot(d2l.arange(num_epochs), [scheduler(t) for t in range(num_epochs)])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = net_fn()
 scheduler =paddle.optimizer.lr.MultiStepDecay(learning_rate=0.5, milestones=[15,30], gamma=0.5)
@@ -468,25 +468,25 @@ d2l.plot(paddle.arange(num_epochs), [get_lr(trainer, scheduler)
 此时，我们才将学习率降低，以获得更高质量的代理来达到一个良好的局部最小值。
 下面的例子展示了如何使用这种方法产生更好的解决方案。
 
-```{.python .input}
+```python
 trainer = gluon.Trainer(net.collect_params(), 'sgd',
                         {'lr_scheduler': scheduler})
 train(net, train_iter, test_iter, num_epochs, loss, trainer, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 train(net, train_iter, test_iter, num_epochs, loss, trainer, device,
       scheduler)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 train(net, train_iter, test_iter, num_epochs, lr,
       custom_callback=LearningRateScheduler(scheduler))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 train(net, train_iter, test_iter, num_epochs, loss, trainer, device,
       scheduler)
@@ -504,13 +504,13 @@ $$\eta_t = \eta_T + \frac{\eta_0 - \eta_T}{2} \left(1 + \cos(\pi t/T)\right)$$
 此外，对于$t > T$，我们只需将值固定到$\eta_T$而不再增加它。
 在下面的示例中，我们设置了最大更新步数$T = 20$。
 
-```{.python .input}
+```python
 scheduler = lr_scheduler.CosineScheduler(max_update=20, base_lr=0.3,
                                          final_lr=0.01)
 d2l.plot(d2l.arange(num_epochs), [scheduler(t) for t in range(num_epochs)])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, tensorflow, paddle
 class CosineScheduler:
     def __init__(self, max_update, base_lr=0.01, final_lr=0,
@@ -543,13 +543,13 @@ d2l.plot(d2l.arange(num_epochs), [scheduler(t) for t in range(num_epochs)])
 在计算机视觉的背景下，这个调度方式可能产生改进的结果。
 但请注意，如下所示，这种改进并不一定成立。
 
-```{.python .input}
+```python
 trainer = gluon.Trainer(net.collect_params(), 'sgd',
                         {'lr_scheduler': scheduler})
 train(net, train_iter, test_iter, num_epochs, loss, trainer, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = net_fn()
 trainer = torch.optim.SGD(net.parameters(), lr=0.3)
@@ -557,13 +557,13 @@ train(net, train_iter, test_iter, num_epochs, loss, trainer, device,
       scheduler)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 train(net, train_iter, test_iter, num_epochs, lr,
       custom_callback=LearningRateScheduler(scheduler))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = net_fn()
 trainer = paddle.optimizer.SGD(learning_rate=0.3, parameters=net.parameters())
@@ -583,13 +583,13 @@ train(net, train_iter, test_iter, num_epochs, loss, trainer, device,
 为了简单起见，通常使用线性递增。
 这引出了如下表所示的时间表。
 
-```{.python .input}
+```python
 scheduler = lr_scheduler.CosineScheduler(20, warmup_steps=5, base_lr=0.3,
                                          final_lr=0.01)
 d2l.plot(np.arange(num_epochs), [scheduler(t) for t in range(num_epochs)])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, tensorflow, paddle
 scheduler = CosineScheduler(20, warmup_steps=5, base_lr=0.3, final_lr=0.01)
 d2l.plot(d2l.arange(num_epochs), [scheduler(t) for t in range(num_epochs)])
@@ -597,13 +597,13 @@ d2l.plot(d2l.arange(num_epochs), [scheduler(t) for t in range(num_epochs)])
 
 注意，观察前5个迭代轮数的性能，网络最初收敛得更好。
 
-```{.python .input}
+```python
 trainer = gluon.Trainer(net.collect_params(), 'sgd',
                         {'lr_scheduler': scheduler})
 train(net, train_iter, test_iter, num_epochs, loss, trainer, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = net_fn()
 trainer = torch.optim.SGD(net.parameters(), lr=0.3)
@@ -611,13 +611,13 @@ train(net, train_iter, test_iter, num_epochs, loss, trainer, device,
       scheduler)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 train(net, train_iter, test_iter, num_epochs, lr,
       custom_callback=LearningRateScheduler(scheduler))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = net_fn()
 trainer = paddle.optimizer.SGD(learning_rate=0.3, parameters=net.parameters())

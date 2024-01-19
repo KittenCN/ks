@@ -40,21 +40,21 @@ $$
 这类似于 :numref:`sec_conv_layer`中的`corr2d`函数。
 然而，这里我们没有卷积核，输出为输入中每个区域的最大值或平均值。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -63,7 +63,7 @@ import paddle
 from paddle import nn
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 def pool2d(X, pool_size, mode='max'):
     p_h, p_w = pool_size
@@ -77,7 +77,7 @@ def pool2d(X, pool_size, mode='max'):
     return Y
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -95,7 +95,7 @@ def pool2d(X, pool_size, mode='max'):
 
 我们可以构建 :numref:`fig_pooling`中的输入张量`X`，[**验证二维最大汇聚层的输出**]。
 
-```{.python .input}
+```python
 #@tab all
 X = d2l.tensor([[0.0, 1.0, 2.0], [3.0, 4.0, 5.0], [6.0, 7.0, 8.0]])
 pool2d(X, (2, 2))
@@ -103,7 +103,7 @@ pool2d(X, (2, 2))
 
 此外，我们还可以(**验证平均汇聚层**)。
 
-```{.python .input}
+```python
 #@tab all
 pool2d(X, (2, 2), 'avg')
 ```
@@ -119,19 +119,19 @@ pool2d(X, (2, 2), 'avg')
 （即Tensorflow中输入的最后维度是通道）。
 :end_tab:
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 X = d2l.reshape(d2l.arange(16, dtype=d2l.float32), (1, 1, 4, 4))
 X
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = d2l.reshape(d2l.arange(16, dtype=d2l.float32), (1, 4, 4, 1))
 X
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = paddle.arange(16, dtype="float32").reshape((1, 1, 4, 4))
 X
@@ -140,25 +140,25 @@ X
 默认情况下，(**深度学习框架中的步幅与汇聚窗口的大小相同**)。
 因此，如果我们使用形状为`(3, 3)`的汇聚窗口，那么默认情况下，我们得到的步幅形状为`(3, 3)`。
 
-```{.python .input}
+```python
 pool2d = nn.MaxPool2D(3)
 # 由于汇聚层中没有参数，所以不需要调用初始化函数
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 pool2d = nn.MaxPool2d(3)
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 pool2d = tf.keras.layers.MaxPool2D(pool_size=[3, 3])
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 pool2d = nn.MaxPool2D(3, stride=3)
 pool2d(X)
@@ -166,18 +166,18 @@ pool2d(X)
 
 [**填充和步幅可以手动设定**]。
 
-```{.python .input}
+```python
 pool2d = nn.MaxPool2D(3, padding=1, strides=2)
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 pool2d = nn.MaxPool2d(3, padding=1, stride=2)
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 paddings = tf.constant([[0, 0], [1,0], [1,0], [0,0]])
 X_padded = tf.pad(X, paddings, "CONSTANT")
@@ -186,7 +186,7 @@ pool2d = tf.keras.layers.MaxPool2D(pool_size=[3, 3], padding='valid',
 pool2d(X_padded)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 pool2d = nn.MaxPool2D(3, padding=1, stride=2)
 pool2d(X)
@@ -208,18 +208,18 @@ pool2d(X)
 当然，我们可以设定一个任意大小的矩形汇聚窗口，并分别设定填充和步幅的高度和宽度。
 :end_tab:
 
-```{.python .input}
+```python
 pool2d = nn.MaxPool2D((2, 3), padding=(0, 1), strides=(2, 3))
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 pool2d = nn.MaxPool2d((2, 3), stride=(2, 3), padding=(0, 1))
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 paddings = tf.constant([[0, 0], [0, 0], [1, 1], [0, 0]])
 X_padded = tf.pad(X, paddings, "CONSTANT")
@@ -228,7 +228,7 @@ pool2d = tf.keras.layers.MaxPool2D(pool_size=[2, 3], padding='valid',
 pool2d(X_padded)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 pool2d = nn.MaxPool2D((2, 3), padding=(0, 1), stride=(2, 3))
 pool2d(X)
@@ -245,31 +245,31 @@ pool2d(X)
 我们需要沿输入的最后一个维度进行串联。
 :end_tab:
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 X = d2l.concat((X, X + 1), 1)
 X
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.concat([X, X + 1], 3)
 ```
 
 如下所示，汇聚后输出通道的数量仍然是2。
 
-```{.python .input}
+```python
 pool2d = nn.MaxPool2D(3, padding=1, strides=2)
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 pool2d = nn.MaxPool2d(3, padding=1, stride=2)
 pool2d(X)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 paddings = tf.constant([[0, 0], [1,0], [1,0], [0,0]])
 X_padded = tf.pad(X, paddings, "CONSTANT")
@@ -278,7 +278,7 @@ pool2d = tf.keras.layers.MaxPool2D(pool_size=[3, 3], padding='valid',
 pool2d(X_padded)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 pool2d = paddle.nn.MaxPool2D(3, padding=1, stride=2)
 pool2d(X)

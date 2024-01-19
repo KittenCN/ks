@@ -10,7 +10,7 @@
 *转置卷积*（transposed convolution） :cite:`Dumoulin.Visin.2016`，
 用于逆转下采样导致的空间尺寸减小。
 
-```{.python .input}
+```python
 from mxnet import np, npx, init
 from mxnet.gluon import nn
 from d2l import mxnet as d2l
@@ -18,14 +18,14 @@ from d2l import mxnet as d2l
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 from torch import nn
 from d2l import torch as d2l
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import paddle
@@ -49,7 +49,7 @@ from paddle import nn
 
 我们可以对输入矩阵`X`和卷积核矩阵`K`(**实现基本的转置卷积运算**)`trans_conv`。
 
-```{.python .input}
+```python
 #@tab all
 def trans_conv(X, K):
     h, w = K.shape
@@ -64,7 +64,7 @@ def trans_conv(X, K):
 我们可以通过 :numref:`fig_trans_conv`来构建输入张量`X`和卷积核张量`K`从而[**验证上述实现输出**]。
 此实现是基本的二维转置卷积运算。
 
-```{.python .input}
+```python
 #@tab all
 X = d2l.tensor([[0.0, 1.0], [2.0, 3.0]])
 K = d2l.tensor([[0.0, 1.0], [2.0, 3.0]])
@@ -73,14 +73,14 @@ trans_conv(X, K)
 
 或者，当输入`X`和卷积核`K`都是四维张量时，我们可以[**使用高级API获得相同的结果**]。
 
-```{.python .input}
+```python
 X, K = X.reshape(1, 1, 2, 2), K.reshape(1, 1, 2, 2)
 tconv = nn.Conv2DTranspose(1, kernel_size=2)
 tconv.initialize(init.Constant(K))
 tconv(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X, K = X.reshape(1, 1, 2, 2), K.reshape(1, 1, 2, 2)
 tconv = nn.ConvTranspose2d(1, 1, kernel_size=2, bias=False)
@@ -88,7 +88,7 @@ tconv.weight.data = K
 tconv(X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X, K = X.reshape([1, 1, 2, 2]), K.reshape([1, 1, 2, 2])
 tconv = nn.Conv2DTranspose(1, 1, kernel_size=2, bias_attr=False)
@@ -103,20 +103,20 @@ tconv(X)
 与常规卷积不同，在转置卷积中，填充被应用于的输出（常规卷积将填充应用于输入）。
 例如，当将高和宽两侧的填充数指定为1时，转置卷积的输出中将删除第一和最后的行与列。
 
-```{.python .input}
+```python
 tconv = nn.Conv2DTranspose(1, kernel_size=2, padding=1)
 tconv.initialize(init.Constant(K))
 tconv(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 tconv = nn.ConvTranspose2d(1, 1, kernel_size=2, padding=1, bias=False)
 tconv.weight.data = K
 tconv(X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 tconv = nn.Conv2DTranspose(1, 1, kernel_size=2, padding=1, bias_attr=False)
 tconv.weight = K
@@ -131,20 +131,20 @@ tconv(X)
 
 以下代码可以验证 :numref:`fig_trans_conv_stride2`中步幅为2的转置卷积的输出。
 
-```{.python .input}
+```python
 tconv = nn.Conv2DTranspose(1, kernel_size=2, strides=2)
 tconv.initialize(init.Constant(K))
 tconv(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 tconv = nn.ConvTranspose2d(1, 1, kernel_size=2, stride=2, bias=False)
 tconv.weight.data = K
 tconv(X)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 tconv = nn.Conv2DTranspose(1, 1, kernel_size=2, stride=2, bias_attr=False)
 tconv.weight = K
@@ -158,7 +158,7 @@ tconv(X)
 同样，如果我们将$\mathsf{X}$代入卷积层$f$来输出$\mathsf{Y}=f(\mathsf{X})$，并创建一个与$f$具有相同的超参数、但输出通道数量是$\mathsf{X}$中通道数的转置卷积层$g$，那么$g(Y)$的形状将与$\mathsf{X}$相同。
 下面的示例可以解释这一点。
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(1, 10, 16, 16))
 conv = nn.Conv2D(20, kernel_size=5, padding=2, strides=3)
 tconv = nn.Conv2DTranspose(10, kernel_size=5, padding=2, strides=3)
@@ -167,7 +167,7 @@ tconv.initialize()
 tconv(conv(X)).shape == X.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.rand(size=(1, 10, 16, 16))
 conv = nn.Conv2d(10, 20, kernel_size=5, padding=2, stride=3)
@@ -175,7 +175,7 @@ tconv = nn.ConvTranspose2d(20, 10, kernel_size=5, padding=2, stride=3)
 tconv(conv(X)).shape == X.shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = paddle.rand(shape=(1, 10, 16, 16))
 conv = nn.Conv2D(10, 20, kernel_size=5, padding=2, stride=3)
@@ -190,7 +190,7 @@ tconv(conv(X)).shape == X.shape
 让我们首先看看如何使用矩阵乘法来实现卷积。
 在下面的示例中，我们定义了一个$3\times 3$的输入`X`和$2\times 2$卷积核`K`，然后使用`corr2d`函数计算卷积输出`Y`。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 X = d2l.arange(9.0).reshape(3, 3)
 K = d2l.tensor([[1.0, 2.0], [3.0, 4.0]])
@@ -198,7 +198,7 @@ Y = d2l.corr2d(X, K)
 Y
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = d2l.arange(9.0, dtype="float32").reshape((3, 3))
 K = d2l.tensor([[1.0, 2.0], [3.0, 4.0]])
@@ -209,7 +209,7 @@ Y
 接下来，我们将卷积核`K`重写为包含大量0的稀疏权重矩阵`W`。
 权重矩阵的形状是（$4$，$9$），其中非0元素来自卷积核`K`。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 def kernel2matrix(K):
     k, W = d2l.zeros(5), d2l.zeros((4, 9))
@@ -221,7 +221,7 @@ W = kernel2matrix(K)
 W
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def kernel2matrix(K):
     k, W = d2l.zeros([5]), d2l.zeros((4, 9))
@@ -237,12 +237,12 @@ W
 然后，`W`的矩阵乘法和向量化的`X`给出了一个长度为4的向量。
 重塑它之后，可以获得与上面的原始卷积操作所得相同的结果`Y`：我们刚刚使用矩阵乘法实现了卷积。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 Y == d2l.matmul(W, d2l.reshape(X, -1)).reshape(2, 2)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 Y == d2l.matmul(W, d2l.reshape(X, [-1])).reshape((2, 2))
 ```
@@ -251,13 +251,13 @@ Y == d2l.matmul(W, d2l.reshape(X, [-1])).reshape((2, 2))
 在下面的示例中，我们将上面的常规卷积$2 \times 2$的输出`Y`作为转置卷积的输入。
 想要通过矩阵相乘来实现它，我们只需要将权重矩阵`W`的形状转置为$(9, 4)$。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 Z = trans_conv(Y, K)
 Z == d2l.matmul(W.T, d2l.reshape(Y, -1)).reshape(3, 3)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 Z = trans_conv(Y, K)
 Z == d2l.matmul(W.T, d2l.reshape(Y, [-1])).reshape((3, 3))

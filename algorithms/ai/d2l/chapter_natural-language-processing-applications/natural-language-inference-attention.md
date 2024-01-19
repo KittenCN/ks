@@ -15,7 +15,7 @@
 
  :numref:`fig_nli_attention`描述了使用注意力机制的自然语言推断方法。从高层次上讲，它由三个联合训练的步骤组成：对齐、比较和汇总。我们将在下面一步一步地对它们进行说明。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, init, np, npx
 from mxnet.gluon import nn
@@ -23,7 +23,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -31,7 +31,7 @@ from torch import nn
 from torch.nn import functional as F
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -52,7 +52,7 @@ $$e_{ij} = f(\mathbf{a}_i)^\top f(\mathbf{b}_j),$$
 
 其中函数$f$是在下面的`mlp`函数中定义的多层感知机。输出维度$f$由`mlp`的`num_hiddens`参数指定。
 
-```{.python .input}
+```python
 def mlp(num_hiddens, flatten):
     net = nn.Sequential()
     net.add(nn.Dropout(0.2))
@@ -62,7 +62,7 @@ def mlp(num_hiddens, flatten):
     return net
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def mlp(num_inputs, num_hiddens, flatten):
     net = []
@@ -79,7 +79,7 @@ def mlp(num_inputs, num_hiddens, flatten):
     return nn.Sequential(*net)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def mlp(num_inputs, num_hiddens, flatten):
     net = []
@@ -112,7 +112,7 @@ $$
 
 下面，我们定义`Attend`类来计算假设（`beta`）与输入前提`A`的软对齐以及前提（`alpha`）与输入假设`B`的软对齐。
 
-```{.python .input}
+```python
 class Attend(nn.Block):
     def __init__(self, num_hiddens, **kwargs):
         super(Attend, self).__init__(**kwargs)
@@ -134,7 +134,7 @@ class Attend(nn.Block):
         return beta, alpha
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class Attend(nn.Module):
     def __init__(self, num_inputs, num_hiddens, **kwargs):
@@ -157,7 +157,7 @@ class Attend(nn.Module):
         return beta, alpha
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class Attend(nn.Layer):
     def __init__(self, num_inputs, num_hiddens, **kwargs):
@@ -192,7 +192,7 @@ $$\mathbf{v}_{A,i} = g([\mathbf{a}_i, \boldsymbol{\beta}_i]), i = 1, \ldots, m\\
 
 在 :eqref:`eq_nli_v_ab`中，$\mathbf{v}_{A,i}$是指，所有假设中的词元与前提中词元$i$软对齐，再与词元$i$的比较；而$\mathbf{v}_{B,j}$是指，所有前提中的词元与假设中词元$i$软对齐，再与词元$i$的比较。下面的`Compare`个类定义了比较步骤。
 
-```{.python .input}
+```python
 class Compare(nn.Block):
     def __init__(self, num_hiddens, **kwargs):
         super(Compare, self).__init__(**kwargs)
@@ -204,7 +204,7 @@ class Compare(nn.Block):
         return V_A, V_B
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class Compare(nn.Module):
     def __init__(self, num_inputs, num_hiddens, **kwargs):
@@ -217,7 +217,7 @@ class Compare(nn.Module):
         return V_A, V_B
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class Compare(nn.Layer):
     def __init__(self, num_inputs, num_hiddens, **kwargs):
@@ -246,7 +246,7 @@ $$
 
 聚合步骤在以下`Aggregate`类中定义。
 
-```{.python .input}
+```python
 class Aggregate(nn.Block):
     def __init__(self, num_hiddens, num_outputs, **kwargs):
         super(Aggregate, self).__init__(**kwargs)
@@ -262,7 +262,7 @@ class Aggregate(nn.Block):
         return Y_hat
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class Aggregate(nn.Module):
     def __init__(self, num_inputs, num_hiddens, num_outputs, **kwargs):
@@ -279,7 +279,7 @@ class Aggregate(nn.Module):
         return Y_hat
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class Aggregate(nn.Layer):
     def __init__(self, num_inputs, num_hiddens, num_outputs, **kwargs):
@@ -300,7 +300,7 @@ class Aggregate(nn.Layer):
 
 通过将注意步骤、比较步骤和聚合步骤组合在一起，我们定义了可分解注意力模型来联合训练这三个步骤。
 
-```{.python .input}
+```python
 class DecomposableAttention(nn.Block):
     def __init__(self, vocab, embed_size, num_hiddens, **kwargs):
         super(DecomposableAttention, self).__init__(**kwargs)
@@ -320,7 +320,7 @@ class DecomposableAttention(nn.Block):
         return Y_hat
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class DecomposableAttention(nn.Module):
     def __init__(self, vocab, embed_size, num_hiddens, num_inputs_attend=100,
@@ -342,7 +342,7 @@ class DecomposableAttention(nn.Module):
         return Y_hat
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class DecomposableAttention(nn.Layer):
     def __init__(self, vocab, embed_size, num_hiddens, num_inputs_attend=100,
@@ -372,13 +372,13 @@ class DecomposableAttention(nn.Layer):
 
 我们使用 :numref:`sec_natural-language-inference-and-dataset`中定义的函数下载并读取SNLI数据集。批量大小和序列长度分别设置为$256$和$50$。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch
 batch_size, num_steps = 256, 50
 train_iter, test_iter, vocab = d2l.load_data_snli(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def load_data_snli(batch_size, num_steps=50):
     """下载SNLI数据集并返回数据迭代器和词表
@@ -408,7 +408,7 @@ train_iter, test_iter, vocab = load_data_snli(batch_size, num_steps)
 
 我们使用预训练好的100维GloVe嵌入来表示输入词元。我们将向量$\mathbf{a}_i$和$\mathbf{b}_j$在 :eqref:`eq_nli_e`中的维数预定义为100。 :eqref:`eq_nli_e`中的函数$f$和 :eqref:`eq_nli_v_ab`中的函数$g$的输出维度被设置为200.然后我们创建一个模型实例，初始化它的参数，并加载GloVe嵌入来初始化输入词元的向量。
 
-```{.python .input}
+```python
 embed_size, num_hiddens, devices = 100, 200, d2l.try_all_gpus()
 net = DecomposableAttention(vocab, embed_size, num_hiddens)
 net.initialize(init.Xavier(), ctx=devices)
@@ -417,7 +417,7 @@ embeds = glove_embedding[vocab.idx_to_token]
 net.embedding.weight.set_data(embeds)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 embed_size, num_hiddens, devices = 100, 200, d2l.try_all_gpus()
 net = DecomposableAttention(vocab, embed_size, num_hiddens)
@@ -426,7 +426,7 @@ embeds = glove_embedding[vocab.idx_to_token]
 net.embedding.weight.data.copy_(embeds);
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 embed_size, num_hiddens, devices = 100, 200, d2l.try_all_gpus()
 net = DecomposableAttention(vocab, embed_size, num_hiddens)
@@ -439,7 +439,7 @@ net.embedding.weight.set_value(embeds);
 
 与 :numref:`sec_multi_gpu`中接受单一输入（如文本序列或图像）的`split_batch`函数不同，我们定义了一个`split_batch_multi_inputs`函数以小批量接受多个输入，如前提和假设。
 
-```{.python .input}
+```python
 #@save
 def split_batch_multi_inputs(X, y, devices):
     """将多输入'X'和'y'拆分到多个设备"""
@@ -450,7 +450,7 @@ def split_batch_multi_inputs(X, y, devices):
 
 现在我们可以在SNLI数据集上训练和评估模型。
 
-```{.python .input}
+```python
 lr, num_epochs = 0.001, 4
 trainer = gluon.Trainer(net.collect_params(), 'adam', {'learning_rate': lr})
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
@@ -458,7 +458,7 @@ d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs,
     devices, split_batch_multi_inputs)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 lr, num_epochs = 0.001, 4
 trainer = torch.optim.Adam(net.parameters(), lr=lr)
@@ -467,7 +467,7 @@ d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs,
     devices)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 lr, num_epochs = 0.001, 4
 trainer = paddle.optimizer.Adam(learning_rate=lr, parameters=net.parameters())
@@ -480,7 +480,7 @@ d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs,
 
 最后，定义预测函数，输出一对前提和假设之间的逻辑关系。
 
-```{.python .input}
+```python
 #@save
 def predict_snli(net, vocab, premise, hypothesis):
     """预测前提和假设之间的逻辑关系"""
@@ -492,7 +492,7 @@ def predict_snli(net, vocab, premise, hypothesis):
             else 'neutral'
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def predict_snli(net, vocab, premise, hypothesis):
@@ -506,7 +506,7 @@ def predict_snli(net, vocab, premise, hypothesis):
             else 'neutral'
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def predict_snli(net, vocab, premise, hypothesis):
@@ -523,7 +523,7 @@ def predict_snli(net, vocab, premise, hypothesis):
 
 我们可以使用训练好的模型来获得对示例句子的自然语言推断结果。
 
-```{.python .input}
+```python
 #@tab all
 predict_snli(net, vocab, ['he', 'is', 'good', '.'], ['he', 'is', 'bad', '.'])
 ```

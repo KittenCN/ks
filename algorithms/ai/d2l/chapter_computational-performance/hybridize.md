@@ -5,7 +5,7 @@
 命令式编程使用诸如`print`、“`+`”和`if`之类的语句来更改程序的状态。
 考虑下面这段简单的命令式程序：
 
-```{.python .input}
+```python
 #@tab all
 def add(a, b):
     return a + b
@@ -36,7 +36,7 @@ Python是一种*解释型语言*（interpreted language）。因此，当对上�
 
 这将允许进行大量的优化。首先，在大多数情况下，我们可以跳过Python解释器。从而消除因为多个更快的GPU与单个CPU上的单个Python线程搭配使用时产生的性能瓶颈。其次，编译器可以将上述代码优化和重写为`print((1 + 2) + (3 + 4))`甚至`print(10)`。因为编译器在将其转换为机器指令之前可以看到完整的代码，所以这种优化是可以实现的。例如，只要某个变量不再需要，编译器就可以释放内存（或者从不分配内存），或者将代码转换为一个完全等价的片段。下面，我们将通过模拟命令式编程来进一步了解符号式编程的概念。
 
-```{.python .input}
+```python
 #@tab all
 def add_():
     return '''
@@ -93,7 +93,7 @@ exec(y)
 
 要了解混合式编程的工作原理，最简单的方法是考虑具有多层的深层网络。按照惯例，Python解释器需要执行所有层的代码来生成一条指令，然后将该指令转发到CPU或GPU。对于单个的（快速的）计算设备，这不会导致任何重大问题。另一方面，如果我们使用先进的8-GPU服务器，比如AWS P3dn.24xlarge实例，Python将很难让所有的GPU都保持忙碌。在这里，瓶颈是单线程的Python解释器。让我们看看如何通过将`Sequential`替换为`HybridSequential`来解决代码中这个瓶颈。首先，我们定义一个简单的多层感知机。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
@@ -113,7 +113,7 @@ net = get_net()
 net(x)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -133,7 +133,7 @@ net = get_net()
 net(x)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -152,7 +152,7 @@ net = get_net()
 net(x)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -195,24 +195,24 @@ net(x)
 通过使用`paddle.jit.to_static`函数来转换模型，我们就有能力编译和优化多层感知机中的计算，而模型的计算结果保持不变。
 :end_tab:
 
-```{.python .input}
+```python
 net.hybridize()
 net(x)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = torch.jit.script(net)
 net(x)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = tf.function(net)
 net(x)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = paddle.jit.to_static(net)
 net(x)
@@ -238,7 +238,7 @@ net(x)
 
 为了证明通过编译获得了性能改进，我们比较了混合编程前后执行`net(x)`所需的时间。让我们先定义一个度量时间的类，它在本章中在衡量（和改进）模型性能时将非常有用。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 class Benchmark:
@@ -270,7 +270,7 @@ class Benchmark:
 现在我们可以调用网络两次，一次使用动态图命令式编程，一次使用静态图符号式编程。
 :end_tab:
 
-```{.python .input}
+```python
 net = get_net()
 with Benchmark('无混合式'):
     for i in range(1000): net(x)
@@ -282,7 +282,7 @@ with Benchmark('混合式'):
     npx.waitall()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = get_net()
 with Benchmark('无torchscript'):
@@ -293,7 +293,7 @@ with Benchmark('有torchscript'):
     for i in range(1000): net(x)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = get_net()
 with Benchmark('Eager模式'):
@@ -304,7 +304,7 @@ with Benchmark('Graph模式'):
     for i in range(1000): net(x)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = get_net()
 with Benchmark('飞桨动态图命令式编程'):
@@ -351,25 +351,25 @@ with Benchmark('飞桨静态图符号式编程'):
 编译模型的好处之一是我们可以将模型及其参数序列化（保存）到磁盘。这允许这些训练好的模型部署到其他设备上，并且还能方便地使用其他前端编程语言。同时，通常编译模型的代码执行速度也比命令式编程更快。让我们看看`paddle.jit.save`的实际功能。
 :end_tab:
 
-```{.python .input}
+```python
 net.export('my_mlp')
 !ls -lh my_mlp*
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net.save('my_mlp')
 !ls -lh my_mlp*
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = get_net()
 tf.saved_model.save(net, 'my_mlp')
 !ls -lh my_mlp*
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 paddle.jit.save(net, './my_mlp')
 !ls -lh my_mlp*
@@ -379,7 +379,7 @@ paddle.jit.save(net, './my_mlp')
 模型被分解成两个文件，一个是大的二进制参数文件，一个是执行模型计算所需要的程序的JSON描述文件。这些文件可以被其他前端语言读取，例如C++、R、Scala和Perl，只要这些语言能够被Python或者MXNet支持。让我们看看模型描述中的前几行。
 :end_tab:
 
-```{.python .input}
+```python
 !head my_mlp-symbol.json
 ```
 
@@ -389,7 +389,7 @@ paddle.jit.save(net, './my_mlp')
 此外，与`Block`实例需要使用`forward`函数不同的是`HybridBlock`实例需要使用`hybrid_forward`函数。
 :end_tab:
 
-```{.python .input}
+```python
 class HybridNet(nn.HybridBlock):
     def __init__(self, **kwargs):
         super(HybridNet, self).__init__(**kwargs)
@@ -408,7 +408,7 @@ class HybridNet(nn.HybridBlock):
 上述代码实现了一个具有$4$个隐藏单元和$2$个输出的简单网络。`hybrid_forward`函数增加了一个必需的参数`F`，因为是否采用混合模式将影响代码使用稍微不同的库（`ndarray`或`symbol`）进行处理。这两个类执行了非常相似的函数，于是MXNet将自动确定这个参数。为了理解发生了什么，我们将打印参数作为了函数调用的一部分。
 :end_tab:
 
-```{.python .input}
+```python
 net = HybridNet()
 net.initialize()
 x = np.random.normal(size=(1, 3))
@@ -419,7 +419,7 @@ net(x)
 重复的前向传播将导致相同的输出（细节已被省略）。现在看看调用`hybridize`函数会发生什么。
 :end_tab:
 
-```{.python .input}
+```python
 net.hybridize()
 net(x)
 ```
@@ -428,7 +428,7 @@ net(x)
 程序使用`symbol`模块替换了`ndarray`模块来表示`F`。而且，即使输入是`ndarray`类型，流过网络的数据现在也转换为`symbol`类型，这种转换正是编译过程的一部分。再次的函数调用产生了令人惊讶的结果：
 :end_tab:
 
-```{.python .input}
+```python
 net(x)
 ```
 

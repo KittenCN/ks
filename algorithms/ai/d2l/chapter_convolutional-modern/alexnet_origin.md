@@ -277,7 +277,7 @@ such as flipping, clipping, and color changes.
 This makes the model more robust and the larger sample size effectively reduces overfitting.
 We will discuss data augmentation in greater detail in :numref:`sec_image_augmentation`.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
@@ -313,7 +313,7 @@ net.add(nn.Conv2D(96, kernel_size=11, strides=4, activation='relu'),
         nn.Dense(10))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -352,7 +352,7 @@ net = nn.Sequential(
     nn.Linear(4096, 10))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -400,7 +400,7 @@ def net():
 
 We construct a single-channel data example with both height and width of 224 to observe the output shape of each layer. It matches the AlexNet architecture in :numref:`fig_alexnet`.
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(1, 1, 224, 224))
 net.initialize()
 for layer in net:
@@ -408,7 +408,7 @@ for layer in net:
     print(layer.name, 'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.randn(1, 1, 224, 224)
 for layer in net:
@@ -416,7 +416,7 @@ for layer in net:
     print(layer.__class__.__name__,'Output shape:\t',X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.uniform((1, 224, 224, 1))
 for layer in net().layers:
@@ -437,7 +437,7 @@ To make things work, we upsample them to $224 \times 224$
 but we do it here to be faithful to the AlexNet architecture).
 We perform this resizing with the `resize` argument in the `d2l.load_data_fashion_mnist` function.
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 128
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=224)
@@ -451,7 +451,7 @@ the main change here is the use of a smaller learning rate
 and much slower training due to the deeper and wider network,
 the higher image resolution, and the more costly convolutions.
 
-```{.python .input}
+```python
 #@tab all
 lr, num_epochs = 0.01, 10
 d2l.train_ch6(net, train_iter, test_iter, num_epochs, lr)

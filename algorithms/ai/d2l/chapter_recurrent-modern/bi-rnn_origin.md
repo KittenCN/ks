@@ -176,7 +176,7 @@ we will get estimates with acceptable perplexity. Nonetheless, the ability of th
 Despite reasonable perplexity, it only generates gibberish even after many iterations.
 We include the code below as a cautionary example against using them in the wrong context.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import npx
 from mxnet.gluon import rnn
@@ -194,7 +194,7 @@ num_epochs, lr = 500, 1
 d2l.train_ch8(model, train_iter, vocab, lr, num_epochs, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch

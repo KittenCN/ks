@@ -38,7 +38,7 @@ the choice of the architecture.
 ![This section feeds pretrained GloVe to a CNN-based architecture for sentiment analysis.](../img/nlp-map-sa-cnn.svg)
 :label:`fig_nlp-map-sa-cnn`
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, init, np, npx
 from mxnet.gluon import nn
@@ -48,7 +48,7 @@ batch_size = 64
 train_iter, test_iter, vocab = d2l.load_data_imdb(batch_size)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -87,7 +87,7 @@ Given an input tensor `X`
 and a kernel tensor `K`,
 it returns the output tensor `Y`.
 
-```{.python .input}
+```python
 #@tab all
 def corr1d(X, K):
     w = K.shape[0]
@@ -99,7 +99,7 @@ def corr1d(X, K):
 
 We can construct the input tensor `X` and the kernel tensor `K` from :numref:`fig_conv1d` to validate the output of the above one-dimensional cross-correlation implementation.
 
-```{.python .input}
+```python
 #@tab all
 X, K = d2l.tensor([0, 1, 2, 3, 4, 5, 6]), d2l.tensor([1, 2])
 corr1d(X, K)
@@ -122,7 +122,7 @@ to produce the one-dimensional output tensor.
 We can implement the one-dimensional cross-correlation operation for multiple input channels
 and validate the results in :numref:`fig_conv1d_channel`.
 
-```{.python .input}
+```python
 #@tab all
 def corr1d_multi_in(X, K):
     # First, iterate through the 0th dimension (channel dimension) of `X` and
@@ -245,7 +245,7 @@ we also use two embedding layers:
 one with trainable weights and the other 
 with fixed weights.
 
-```{.python .input}
+```python
 class TextCNN(nn.Block):
     def __init__(self, vocab_size, embed_size, kernel_sizes, num_channels,
                  **kwargs):
@@ -281,7 +281,7 @@ class TextCNN(nn.Block):
         return outputs
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class TextCNN(nn.Module):
     def __init__(self, vocab_size, embed_size, kernel_sizes, num_channels,
@@ -322,14 +322,14 @@ class TextCNN(nn.Module):
 Let's create a textCNN instance. 
 It has 3 convolutional layers with kernel widths of 3, 4, and 5, all with 100 output channels.
 
-```{.python .input}
+```python
 embed_size, kernel_sizes, nums_channels = 100, [3, 4, 5], [100, 100, 100]
 devices = d2l.try_all_gpus()
 net = TextCNN(len(vocab), embed_size, kernel_sizes, nums_channels)
 net.initialize(init.Xavier(), ctx=devices)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 embed_size, kernel_sizes, nums_channels = 100, [3, 4, 5], [100, 100, 100]
 devices = d2l.try_all_gpus()
@@ -352,7 +352,7 @@ will be trained in `embedding`
 and fixed in `constant_embedding`.
 
 
-```{.python .input}
+```python
 glove_embedding = d2l.TokenEmbedding('glove.6b.100d')
 embeds = glove_embedding[vocab.idx_to_token]
 net.embedding.weight.set_data(embeds)
@@ -360,7 +360,7 @@ net.constant_embedding.weight.set_data(embeds)
 net.constant_embedding.collect_params().setattr('grad_req', 'null')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 glove_embedding = d2l.TokenEmbedding('glove.6b.100d')
 embeds = glove_embedding[vocab.idx_to_token]
@@ -373,14 +373,14 @@ net.constant_embedding.weight.requires_grad = False
 
 Now we can train the textCNN model for sentiment analysis.
 
-```{.python .input}
+```python
 lr, num_epochs = 0.001, 5
 trainer = gluon.Trainer(net.collect_params(), 'adam', {'learning_rate': lr})
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs, devices)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 lr, num_epochs = 0.001, 5
 trainer = torch.optim.Adam(net.parameters(), lr=lr)
@@ -390,12 +390,12 @@ d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs, devices)
 
 Below we use the trained model to predict the sentiment for two simple sentences.
 
-```{.python .input}
+```python
 #@tab all
 d2l.predict_sentiment(net, vocab, 'this movie is so great')
 ```
 
-```{.python .input}
+```python
 #@tab all
 d2l.predict_sentiment(net, vocab, 'this movie is so bad')
 ```

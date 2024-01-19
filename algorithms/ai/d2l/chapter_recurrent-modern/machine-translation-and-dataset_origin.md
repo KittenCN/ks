@@ -58,21 +58,21 @@ we show how to
 load the preprocessed data
 into minibatches for training.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 import os
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 import os
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -95,7 +95,7 @@ where English is translated into French,
 English is the *source language*
 and French is the *target language*.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['fra-eng'] = (d2l.DATA_URL + 'fra-eng.zip',
@@ -120,7 +120,7 @@ we replace non-breaking space with space,
 convert uppercase letters to lowercase ones,
 and insert space between words and punctuation marks.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def preprocess_nmt(text):
@@ -157,7 +157,7 @@ Specifically,
 `source[i]` is a list of tokens from the
 $i^\mathrm{th}$ text sequence in the source language (English here) and `target[i]` is that in the target language (French here).
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def tokenize_nmt(text, num_examples=None):
@@ -180,7 +180,7 @@ Let us plot the histogram of the number of tokens per text sequence.
 In this simple English-French dataset,
 most of the text sequences have fewer than 20 tokens.
 
-```{.python .input}
+```python
 #@tab all
 d2l.set_figsize()
 _, _, patches = d2l.plt.hist(
@@ -212,7 +212,7 @@ and for marking the beginning ("&lt;bos&gt;") or end ("&lt;eos&gt;") of sequence
 Such special tokens are commonly used in
 natural language processing tasks.
 
-```{.python .input}
+```python
 #@tab all
 src_vocab = d2l.Vocab(source, min_freq=2,
                       reserved_tokens=['<pad>', '<bos>', '<eos>'])
@@ -253,7 +253,7 @@ to be loaded in minibatches of the same shape.
 The following `truncate_pad` function
 truncates or pads text sequences as described before.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def truncate_pad(line, num_steps, padding_token):
@@ -284,7 +284,7 @@ This information will be needed by
 some models that
 we will cover later.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def build_array_nmt(lines, vocab, num_steps):
@@ -304,7 +304,7 @@ Finally, we define the `load_data_nmt` function
 to return the data iterator, together with
 the vocabularies for both the source language and the target language.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def load_data_nmt(batch_size, num_steps, num_examples=600):
@@ -324,7 +324,7 @@ def load_data_nmt(batch_size, num_steps, num_examples=600):
 
 Let us read the first minibatch from the English-French dataset.
 
-```{.python .input}
+```python
 #@tab all
 train_iter, src_vocab, tgt_vocab = load_data_nmt(batch_size=2, num_steps=8)
 for X, X_valid_len, Y, Y_valid_len in train_iter:

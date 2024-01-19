@@ -39,7 +39,7 @@
 首先，我们读取内容和风格图像。
 从打印出的图像坐标轴可以看出，它们的尺寸并不一样。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, image, init, np, npx
@@ -52,7 +52,7 @@ content_img = image.imread('../img/rainier.jpg')
 d2l.plt.imshow(content_img.asnumpy());
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -65,7 +65,7 @@ content_img = d2l.Image.open('../img/rainier.jpg')
 d2l.plt.imshow(content_img);
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -78,12 +78,12 @@ content_img = d2l.Image.open('../img/rainier.jpg')
 d2l.plt.imshow(content_img);
 ```
 
-```{.python .input}
+```python
 style_img = image.imread('../img/autumn-oak.jpg')
 d2l.plt.imshow(style_img.asnumpy());
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 style_img = d2l.Image.open('../img/autumn-oak.jpg')
 d2l.plt.imshow(style_img);
@@ -96,7 +96,7 @@ d2l.plt.imshow(style_img);
 后处理函数`postprocess`则将输出图像中的像素值还原回标准化之前的值。
 由于图像打印函数要求每个像素的浮点数值在0～1之间，我们对小于0和大于1的值分别取0和1。
 
-```{.python .input}
+```python
 rgb_mean = np.array([0.485, 0.456, 0.406])
 rgb_std = np.array([0.229, 0.224, 0.225])
 
@@ -110,7 +110,7 @@ def postprocess(img):
     return (img.transpose(1, 2, 0) * rgb_std + rgb_mean).clip(0, 1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 rgb_mean = torch.tensor([0.485, 0.456, 0.406])
 rgb_std = torch.tensor([0.229, 0.224, 0.225])
@@ -128,7 +128,7 @@ def postprocess(img):
     return torchvision.transforms.ToPILImage()(img.permute(2, 0, 1))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 rgb_mean = paddle.to_tensor([0.485, 0.456, 0.406])
 rgb_std = paddle.to_tensor([0.229, 0.224, 0.225])
@@ -150,16 +150,16 @@ def postprocess(img):
 
 我们使用基于ImageNet数据集预训练的VGG-19模型来抽取图像特征 :cite:`Gatys.Ecker.Bethge.2016`。
 
-```{.python .input}
+```python
 pretrained_net = gluon.model_zoo.vision.vgg19(pretrained=True)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 pretrained_net = torchvision.models.vgg19(pretrained=True)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 pretrained_net = paddlevision.models.vgg19(pretrained=True)
 ```
@@ -172,7 +172,7 @@ pretrained_net = paddlevision.models.vgg19(pretrained=True)
 实验中，我们选择第四卷积块的最后一个卷积层作为内容层，选择每个卷积块的第一个卷积层作为风格层。
 这些层的索引可以通过打印`pretrained_net`实例获取。
 
-```{.python .input}
+```python
 #@tab all
 style_layers, content_layers = [0, 5, 10, 19, 28], [25]
 ```
@@ -180,13 +180,13 @@ style_layers, content_layers = [0, 5, 10, 19, 28], [25]
 使用VGG层抽取特征时，我们只需要用到从输入层到最靠近输出层的内容层或风格层之间的所有层。
 下面构建一个新的网络`net`，它只保留需要用到的VGG的所有层。
 
-```{.python .input}
+```python
 net = nn.Sequential()
 for i in range(max(content_layers + style_layers) + 1):
     net.add(pretrained_net.features[i])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 net = nn.Sequential(*[pretrained_net.features[i] for i in
                       range(max(content_layers + style_layers) + 1)])
@@ -195,7 +195,7 @@ net = nn.Sequential(*[pretrained_net.features[i] for i in
 给定输入`X`，如果我们简单地调用前向传播`net(X)`，只能获得最后一层的输出。
 由于我们还需要中间层的输出，因此这里我们逐层计算，并保留内容层和风格层的输出。
 
-```{.python .input}
+```python
 #@tab all
 def extract_features(X, content_layers, style_layers):
     contents = []
@@ -214,7 +214,7 @@ def extract_features(X, content_layers, style_layers):
 因为在训练时无须改变预训练的VGG的模型参数，所以我们可以在训练开始之前就提取出内容特征和风格特征。
 由于合成图像是风格迁移所需迭代的模型参数，我们只能在训练过程中通过调用`extract_features`函数来抽取合成图像的内容特征和风格特征。
 
-```{.python .input}
+```python
 def get_contents(image_shape, device):
     content_X = preprocess(content_img, image_shape).copyto(device)
     contents_Y, _ = extract_features(content_X, content_layers, style_layers)
@@ -226,7 +226,7 @@ def get_styles(image_shape, device):
     return style_X, styles_Y
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_contents(image_shape, device):
     content_X = preprocess(content_img, image_shape).to(device)
@@ -239,7 +239,7 @@ def get_styles(image_shape, device):
     return style_X, styles_Y
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def get_contents(image_shape):
     content_X = preprocess(content_img, image_shape)
@@ -262,12 +262,12 @@ def get_styles(image_shape):
 与线性回归中的损失函数类似，内容损失通过平方误差函数衡量合成图像与内容图像在内容特征上的差异。
 平方误差函数的两个输入均为`extract_features`函数计算所得到的内容层的输出。
 
-```{.python .input}
+```python
 def content_loss(Y_hat, Y):
     return np.square(Y_hat - Y).mean()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def content_loss(Y_hat, Y):
     # 我们从动态计算梯度的树中分离目标：
@@ -275,7 +275,7 @@ def content_loss(Y_hat, Y):
     return torch.square(Y_hat - Y.detach()).mean()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def content_loss(Y_hat, Y):
     # 我们从动态计算梯度的树中分离目标：
@@ -295,7 +295,7 @@ def content_loss(Y_hat, Y):
 此外，格拉姆矩阵的高和宽皆为通道数$c$。
 为了让风格损失不受这些值的大小影响，下面定义的`gram`函数将格拉姆矩阵除以了矩阵中元素的个数，即$chw$。
 
-```{.python .input}
+```python
 #@tab all
 def gram(X):
     num_channels, n = X.shape[1], d2l.size(X) // X.shape[1]
@@ -305,18 +305,18 @@ def gram(X):
 
 自然地，风格损失的平方误差函数的两个格拉姆矩阵输入分别基于合成图像与风格图像的风格层输出。这里假设基于风格图像的格拉姆矩阵`gram_Y`已经预先计算好了。
 
-```{.python .input}
+```python
 def style_loss(Y_hat, gram_Y):
     return np.square(gram(Y_hat) - gram_Y).mean()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def style_loss(Y_hat, gram_Y):
     return torch.square(gram(Y_hat) - gram_Y.detach()).mean()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def style_loss(Y_hat, gram_Y):
     return paddle.square(gram(Y_hat) - gram_Y.detach()).mean()
@@ -332,7 +332,7 @@ $$\sum_{i, j} \left|x_{i, j} - x_{i+1, j}\right| + \left|x_{i, j} - x_{i, j+1}\r
 
 能够尽可能使邻近的像素值相似。
 
-```{.python .input}
+```python
 #@tab all
 def tv_loss(Y_hat):
     return 0.5 * (d2l.abs(Y_hat[:, :, 1:, :] - Y_hat[:, :, :-1, :]).mean() +
@@ -344,7 +344,7 @@ def tv_loss(Y_hat):
 [**风格转移的损失函数是内容损失、风格损失和总变化损失的加权和**]。
 通过调节这些权重超参数，我们可以权衡合成图像在保留内容、迁移风格以及去噪三方面的相对重要性。
 
-```{.python .input}
+```python
 #@tab all
 content_weight, style_weight, tv_weight = 1, 1e3, 10
 
@@ -364,7 +364,7 @@ def compute_loss(X, contents_Y_hat, styles_Y_hat, contents_Y, styles_Y_gram):
 
 在风格迁移中，合成的图像是训练期间唯一需要更新的变量。因此，我们可以定义一个简单的模型`SynthesizedImage`，并将合成的图像视为模型参数。模型的前向传播只需返回模型参数即可。
 
-```{.python .input}
+```python
 class SynthesizedImage(nn.Block):
     def __init__(self, img_shape, **kwargs):
         super(SynthesizedImage, self).__init__(**kwargs)
@@ -374,7 +374,7 @@ class SynthesizedImage(nn.Block):
         return self.weight.data()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class SynthesizedImage(nn.Module):
     def __init__(self, img_shape, **kwargs):
@@ -385,7 +385,7 @@ class SynthesizedImage(nn.Module):
         return self.weight
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class SynthesizedImage(nn.Layer):
     def __init__(self, img_shape, **kwargs):
@@ -399,7 +399,7 @@ class SynthesizedImage(nn.Layer):
 
 下面，我们定义`get_inits`函数。该函数创建了合成图像的模型实例，并将其初始化为图像`X`。风格图像在各个风格层的格拉姆矩阵`styles_Y_gram`将在训练前预先计算好。
 
-```{.python .input}
+```python
 def get_inits(X, device, lr, styles_Y):
     gen_img = SynthesizedImage(X.shape)
     gen_img.initialize(init.Constant(X), ctx=device, force_reinit=True)
@@ -409,7 +409,7 @@ def get_inits(X, device, lr, styles_Y):
     return gen_img(), styles_Y_gram, trainer
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def get_inits(X, device, lr, styles_Y):
     gen_img = SynthesizedImage(X.shape).to(device)
@@ -419,7 +419,7 @@ def get_inits(X, device, lr, styles_Y):
     return gen_img(), styles_Y_gram, trainer
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def get_inits(X, lr, styles_Y):
     gen_img = SynthesizedImage(X.shape)
@@ -433,7 +433,7 @@ def get_inits(X, lr, styles_Y):
 
 在训练模型进行风格迁移时，我们不断抽取合成图像的内容特征和风格特征，然后计算损失函数。下面定义了训练循环。
 
-```{.python .input}
+```python
 def train(X, contents_Y, styles_Y, device, lr, num_epochs, lr_decay_epoch):
     X, styles_Y_gram, trainer = get_inits(X, device, lr, styles_Y)
     animator = d2l.Animator(xlabel='epoch', ylabel='loss',
@@ -457,7 +457,7 @@ def train(X, contents_Y, styles_Y, device, lr, num_epochs, lr_decay_epoch):
     return X
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def train(X, contents_Y, styles_Y, device, lr, num_epochs, lr_decay_epoch):
     X, styles_Y_gram, trainer = get_inits(X, device, lr, styles_Y)
@@ -482,7 +482,7 @@ def train(X, contents_Y, styles_Y, device, lr, num_epochs, lr_decay_epoch):
     return X
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def train(X, contents_Y, styles_Y, lr, num_epochs, step_size):
     scheduler = paddle.optimizer.lr.StepDecay(learning_rate=lr, gamma=0.8, step_size=step_size)
@@ -510,7 +510,7 @@ def train(X, contents_Y, styles_Y, lr, num_epochs, step_size):
 现在我们[**训练模型**]：
 首先将内容图像和风格图像的高和宽分别调整为300和450像素，用内容图像来初始化合成图像。
 
-```{.python .input}
+```python
 device, image_shape = d2l.try_gpu(), (450, 300)
 net.collect_params().reset_ctx(device)
 content_X, contents_Y = get_contents(image_shape, device)
@@ -518,7 +518,7 @@ _, styles_Y = get_styles(image_shape, device)
 output = train(content_X, contents_Y, styles_Y, device, 0.9, 500, 50)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 device, image_shape = d2l.try_gpu(), (300, 450)
 net = net.to(device)
@@ -527,7 +527,7 @@ _, styles_Y = get_styles(image_shape, device)
 output = train(content_X, contents_Y, styles_Y, device, 0.3, 500, 50)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 device, image_shape = d2l.try_gpu(),(300, 450)
 content_X, contents_Y = get_contents(image_shape)

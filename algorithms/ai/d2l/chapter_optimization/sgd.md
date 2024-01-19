@@ -3,7 +3,7 @@
 
 在前面的章节中，我们一直在训练过程中使用随机梯度下降，但没有解释它为什么起作用。为了澄清这一点，我们刚在 :numref:`sec_gd`中描述了梯度下降的基本原则。本节继续更详细地说明*随机梯度下降*（stochastic gradient descent）。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 import math
@@ -11,7 +11,7 @@ from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -19,7 +19,7 @@ import math
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -27,7 +27,7 @@ import math
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -61,7 +61,7 @@ $$\mathbb{E}_i \nabla f_i(\mathbf{x}) = \frac{1}{n} \sum_{i = 1}^n \nabla f_i(\m
 
 现在，我们将把它与梯度下降进行比较，方法是向梯度添加均值为0、方差为1的随机噪声，以模拟随机梯度下降。
 
-```{.python .input}
+```python
 #@tab all
 def f(x1, x2):  # 目标函数
     return x1 ** 2 + 2 * x2 ** 2
@@ -70,7 +70,7 @@ def f_grad(x1, x2):  # 目标函数的梯度
     return 2 * x1, 4 * x2
 ```
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, paddle
 def sgd(x1, x2, s1, s2, f_grad):
     g1, g2 = f_grad(x1, x2)
@@ -81,7 +81,7 @@ def sgd(x1, x2, s1, s2, f_grad):
     return (x1 - eta_t * g1, x2 - eta_t * g2, 0, 0)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def sgd(x1, x2, s1, s2, f_grad):
     g1, g2 = f_grad(x1, x2)
@@ -92,7 +92,7 @@ def sgd(x1, x2, s1, s2, f_grad):
     return (x1 - eta_t * g1, x2 - eta_t * g2, 0, 0)
 ```
 
-```{.python .input}
+```python
 #@tab all
 def constant_lr():
     return 1
@@ -122,7 +122,7 @@ $$
 
 让我们看看指数衰减在实践中是什么样子。
 
-```{.python .input}
+```python
 #@tab all
 def exponential_lr():
     # 在函数外部定义，而在内部更新的全局变量
@@ -137,7 +137,7 @@ d2l.show_trace_2d(f, d2l.train_2d(sgd, steps=1000, f_grad=f_grad))
 
 正如预期的那样，参数的方差大大减少。但是，这是以未能收敛到最优解$\mathbf{x} = (0, 0)$为代价的。即使经过1000个迭代步骤，我们仍然离最优解很远。事实上，该算法根本无法收敛。另一方面，如果我们使用多项式衰减，其中学习率随迭代次数的平方根倒数衰减，那么仅在50次迭代之后，收敛就会更好。
 
-```{.python .input}
+```python
 #@tab all
 def polynomial_lr():
     # 在函数外部定义，而在内部更新的全局变量

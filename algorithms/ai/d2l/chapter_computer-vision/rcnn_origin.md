@@ -132,7 +132,7 @@ and 10.
 
 Below we demonstrate the computation of the region of interest pooling layer. Suppose that the height and width of the CNN-extracted features `X` are both 4, and there is only a single channel.
 
-```{.python .input}
+```python
 from mxnet import np, npx
 
 npx.set_np()
@@ -141,7 +141,7 @@ X = np.arange(16).reshape(1, 1, 4, 4)
 X
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 import torchvision
@@ -156,11 +156,11 @@ Each region proposal
 is expressed as five elements:
 its object class followed by the $(x, y)$-coordinates of its upper-left and lower-right corners.
 
-```{.python .input}
+```python
 rois = np.array([[0, 0, 0, 20, 20], [0, 0, 10, 30, 30]])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 rois = torch.Tensor([[0, 0, 0, 20, 20], [0, 0, 10, 30, 30]])
 ```
@@ -174,11 +174,11 @@ each region of interest is divided
 into a grid of sub-windows to
 further extract features of the same shape $2\times 2$.
 
-```{.python .input}
+```python
 npx.roi_pooling(X, rois, pooled_size=(2, 2), spatial_scale=0.1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 torchvision.ops.roi_pool(X, rois, output_size=(2, 2), spatial_scale=0.1)
 ```

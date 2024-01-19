@@ -17,13 +17,13 @@
 
 与 :numref:`sec_linear_scratch`中类似，我们首先[**生成数据集**]。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import numpy as np
@@ -31,14 +31,14 @@ import torch
 from torch.utils import data
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import numpy as np
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -47,7 +47,7 @@ import numpy as np
 import paddle
 ```
 
-```{.python .input}
+```python
 #@tab all
 true_w = d2l.tensor([2, -3.4])
 true_b = 4.2
@@ -60,14 +60,14 @@ features, labels = d2l.synthetic_data(true_w, true_b, 1000)
 我们将`features`和`labels`作为API的参数传递，并通过数据迭代器指定`batch_size`。
 此外，布尔值`is_train`表示是否希望数据迭代器对象在每个迭代周期内打乱数据。
 
-```{.python .input}
+```python
 def load_array(data_arrays, batch_size, is_train=True):  #@save
     """构造一个Gluon数据迭代器"""
     dataset = gluon.data.ArrayDataset(*data_arrays)
     return gluon.data.DataLoader(dataset, batch_size, shuffle=is_train)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def load_array(data_arrays, batch_size, is_train=True):  #@save
     """构造一个PyTorch数据迭代器"""
@@ -75,7 +75,7 @@ def load_array(data_arrays, batch_size, is_train=True):  #@save
     return data.DataLoader(dataset, batch_size, shuffle=is_train)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def load_array(data_arrays, batch_size, is_train=True):  #@save
     """构造一个TensorFlow数据迭代器"""
@@ -86,7 +86,7 @@ def load_array(data_arrays, batch_size, is_train=True):  #@save
     return dataset
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def load_array(data_arrays, batch_size, is_train=True):
@@ -97,7 +97,7 @@ def load_array(data_arrays, batch_size, is_train=True):
                                 return_list=True)
 ```
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 10
 data_iter = load_array((features, labels), batch_size)
@@ -106,7 +106,7 @@ data_iter = load_array((features, labels), batch_size)
 使用`data_iter`的方式与我们在 :numref:`sec_linear_scratch`中使用`data_iter`函数的方式相同。为了验证是否正常工作，让我们读取并打印第一个小批量样本。
 与 :numref:`sec_linear_scratch`不同，这里我们使用`iter`构造Python迭代器，并使用`next`从迭代器中获取第一项。
 
-```{.python .input}
+```python
 #@tab all
 next(iter(data_iter))
 ```
@@ -166,28 +166,28 @@ Keras会自动推断每个层输入的形状。
 第一个指定输入特征形状，即2，第二个指定输出特征形状，输出特征形状为单个标量，因此为1。
 :end_tab:
 
-```{.python .input}
+```python
 # nn是神经网络的缩写
 from mxnet.gluon import nn
 net = nn.Sequential()
 net.add(nn.Dense(1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # nn是神经网络的缩写
 from torch import nn
 net = nn.Sequential(nn.Linear(2, 1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # keras是TensorFlow的高级API
 net = tf.keras.Sequential()
 net.add(tf.keras.layers.Dense(1))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # nn是神经网络的缩写
 from paddle import nn
@@ -232,25 +232,25 @@ TensorFlow中的`initializers`模块提供了多种模型参数初始化方法�
 默认情况下，偏置参数初始化为零。
 :end_tab:
 
-```{.python .input}
+```python
 from mxnet import init
 net.initialize(init.Normal(sigma=0.01))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net[0].weight.data.normal_(0, 0.01)
 net[0].bias.data.fill_(0)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 initializer = tf.initializers.RandomNormal(stddev=0.01)
 net = tf.keras.Sequential()
 net.add(tf.keras.layers.Dense(1, kernel_initializer=initializer))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 weight_attr = paddle.ParamAttr(initializer=
                                paddle.nn.initializer.Normal(0, 0.01))
@@ -303,21 +303,21 @@ Keras让我们避免了这个问题，在后端执行时，初始化实际上是
 默认情况下，它返回所有样本损失的平均值。
 :end_tab:
 
-```{.python .input}
+```python
 loss = gluon.loss.L2Loss()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 loss = nn.MSELoss()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 loss = tf.keras.losses.MeanSquaredError()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 loss = nn.MSELoss()
 ```
@@ -353,22 +353,22 @@ PaddlePaddle在`optimizer`模块中实现了该算法的许多变种。
 小批量随机梯度下降只需要设置`learning_rate`值，这里设置为0.03。
 :end_tab:
 
-```{.python .input}
+```python
 from mxnet import gluon
 trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': 0.03})
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 trainer = torch.optim.SGD(net.parameters(), lr=0.03)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 trainer = tf.keras.optimizers.SGD(learning_rate=0.03)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 trainer =  paddle.optimizer.SGD(learning_rate=0.03,
                                 parameters=net.parameters())
@@ -391,7 +391,7 @@ trainer =  paddle.optimizer.SGD(learning_rate=0.03,
 
 为了更好的衡量训练效果，我们计算每个迭代周期后的损失，并打印它来监控训练过程。
 
-```{.python .input}
+```python
 num_epochs = 3
 for epoch in range(num_epochs):
     for X, y in data_iter:
@@ -403,7 +403,7 @@ for epoch in range(num_epochs):
     print(f'epoch {epoch + 1}, loss {l.mean().asnumpy():f}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_epochs = 3
 for epoch in range(num_epochs):
@@ -416,7 +416,7 @@ for epoch in range(num_epochs):
     print(f'epoch {epoch + 1}, loss {l:f}')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_epochs = 3
 for epoch in range(num_epochs):
@@ -429,7 +429,7 @@ for epoch in range(num_epochs):
     print(f'epoch {epoch + 1}, loss {l:f}')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_epochs = 3
 for epoch in range(num_epochs):
@@ -446,14 +446,14 @@ for epoch in range(num_epochs):
 要访问参数，我们首先从`net`访问所需的层，然后读取该层的权重和偏置。
 正如在从零开始实现中一样，我们估计得到的参数与生成数据的真实参数非常接近。
 
-```{.python .input}
+```python
 w = net[0].weight.data()
 print(f'w的估计误差： {true_w - d2l.reshape(w, true_w.shape)}')
 b = net[0].bias.data()
 print(f'b的估计误差： {true_b - b}')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 w = net[0].weight.data
 print('w的估计误差：', true_w - d2l.reshape(w, true_w.shape))
@@ -461,7 +461,7 @@ b = net[0].bias.data
 print('b的估计误差：', true_b - b)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 w = net.get_weights()[0]
 print('w的估计误差：', true_w - d2l.reshape(w, true_w.shape))
@@ -469,7 +469,7 @@ b = net.get_weights()[1]
 print('b的估计误差：', true_b - b)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 w = net[0].weight
 print('w的估计误差：', true_w - w.reshape(true_w.shape))

@@ -7,19 +7,19 @@
 
 请注意，本节中的实验至少需要两个GPU来运行。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -32,7 +32,7 @@ import numpy as np
 
 从定义一个具有参考性的用于测试的工作负载开始：下面的`run`函数将执行$10$次*矩阵－矩阵*乘法时需要使用的数据分配到两个变量（`x_gpu1`和`x_gpu2`）中，这两个变量分别位于选择的不同设备上。
 
-```{.python .input}
+```python
 devices = d2l.try_all_gpus()
 def run(x):
     return [x.dot(x) for _ in range(50)]
@@ -41,7 +41,7 @@ x_gpu1 = np.random.uniform(size=(4000, 4000), ctx=devices[0])
 x_gpu2 = np.random.uniform(size=(4000, 4000), ctx=devices[1])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 devices = d2l.try_all_gpus()
 def run(x):
@@ -51,7 +51,7 @@ x_gpu1 = torch.rand(size=(4000, 4000), device=devices[0])
 x_gpu2 = torch.rand(size=(4000, 4000), device=devices[1])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 devices = d2l.try_all_gpus()
 def run(x, index=0):
@@ -75,7 +75,7 @@ x_gpu2 = paddle.to_tensor(data, place=devices[1])
 现在我们使用函数来数据。我们通过在测量之前预热设备（对设备执行一次传递）来确保缓存的作用不影响最终的结果。`paddle.device.cuda.synchronize()`函数将会等待一个CUDA设备上的所有流中的所有核心的计算完成。函数接受一个`device`参数，代表是哪个设备需要同步。如果device参数是`None`（默认值），它将使用`current_device()`找出的当前设备。
 :end_tab:
 
-```{.python .input}
+```python
 run(x_gpu1)  # 预热设备
 run(x_gpu2)
 npx.waitall()  
@@ -89,7 +89,7 @@ with d2l.Benchmark('GPU2 时间'):
     npx.waitall()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 run(x_gpu1)
 run(x_gpu2)  # 预热设备
@@ -105,7 +105,7 @@ with d2l.Benchmark('GPU2 time'):
     torch.cuda.synchronize(devices[1])
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 run(x_gpu1, 0)
 run(x_gpu2, 1)  # 预热设备
@@ -133,14 +133,14 @@ with d2l.Benchmark('GPU2 time'):
 如果我们删除两个任务之间的`synchronize`语句，系统就可以在两个设备上自动实现并行计算。
 :end_tab:
 
-```{.python .input}
+```python
 with d2l.Benchmark('GPU1 & GPU2'):
     run(x_gpu1)
     run(x_gpu2)
     npx.waitall()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 with d2l.Benchmark('GPU1 & GPU2'):
     run(x_gpu1)
@@ -148,7 +148,7 @@ with d2l.Benchmark('GPU1 & GPU2'):
     torch.cuda.synchronize()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 with d2l.Benchmark('GPU1 & GPU2'):
     run(x_gpu1, 0)
@@ -162,7 +162,7 @@ with d2l.Benchmark('GPU1 & GPU2'):
 
 在许多情况下，我们需要在不同的设备之间移动数据，比如在CPU和GPU之间，或者在不同的GPU之间。例如，当执行分布式优化时，就需要移动数据来聚合多个加速卡上的梯度。让我们通过在GPU上计算，然后将结果复制回CPU来模拟这个过程。
 
-```{.python .input}
+```python
 def copy_to_cpu(x):
     return [y.copyto(npx.cpu()) for y in x]
 
@@ -175,7 +175,7 @@ with d2l.Benchmark('复制到CPU'):
     npx.waitall()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def copy_to_cpu(x, non_blocking=False):
     return [y.to('cpu', non_blocking=non_blocking) for y in x]
@@ -189,7 +189,7 @@ with d2l.Benchmark('复制到CPU'):
     torch.cuda.synchronize()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def copy_to_cpu(x):
     return [paddle.to_tensor(y, place=paddle.CPUPlace()) for y in x]
@@ -215,14 +215,14 @@ with d2l.Benchmark('复制到CPU'):
 这种方式效率不高。注意到当列表中的其余部分还在计算时，我们可能就已经开始将`y`的部分复制到CPU了。例如，当我们计算一个小批量的（反传）梯度时。某些参数的梯度将比其他参数的梯度更早可用。因此，在GPU仍在运行时就开始使用PCI-Express总线带宽来移动数据对我们是有利的。
 :end_tab:
 
-```{.python .input}
+```python
 with d2l.Benchmark('在GPU1上运行并复制到CPU'):
     y = run(x_gpu1)
     y_cpu = copy_to_cpu(y)
     npx.waitall()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 with d2l.Benchmark('在GPU1上运行并复制到CPU'):
     y = run(x_gpu1)
@@ -230,7 +230,7 @@ with d2l.Benchmark('在GPU1上运行并复制到CPU'):
     torch.cuda.synchronize()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 with d2l.Benchmark('在GPU1上运行并复制到CPU'):
     y = run(x_gpu1)

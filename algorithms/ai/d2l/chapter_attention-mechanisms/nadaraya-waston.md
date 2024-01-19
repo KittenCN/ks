@@ -9,7 +9,7 @@
 具体来说，1964年提出的Nadaraya-Watson核回归模型
 是一个简单但完整的例子，可以用于演示具有注意力机制的机器学习。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import autograd, gluon, np, npx
 from mxnet.gluon import nn
@@ -17,21 +17,21 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 tf.random.set_seed(seed=1322)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -56,30 +56,30 @@ $$y_i = 2\sin(x_i) + x_i^{0.8} + \epsilon,$$
 在这里生成了$50$个训练样本和$50$个测试样本。
 为了更好地可视化之后的注意力模式，需要将训练样本进行排序。
 
-```{.python .input}
+```python
 n_train = 50  # 训练样本数
 x_train = np.sort(d2l.rand(n_train) * 5)   # 排序后的训练样本
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 n_train = 50  # 训练样本数
 x_train, _ = torch.sort(d2l.rand(n_train) * 5)   # 排序后的训练样本
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 n_train = 50
 x_train = tf.sort(tf.random.uniform(shape=(n_train,), maxval=5))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 n_train = 50  # 训练样本数
 x_train = paddle.sort(paddle.rand([n_train]) * 5)   # 排序后的训练样本
 ```
 
-```{.python .input}
+```python
 def f(x):
     return 2 * d2l.sin(x) + x**0.8
 
@@ -90,7 +90,7 @@ n_test = len(x_test)  # 测试样本数
 n_test
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def f(x):
     return 2 * d2l.sin(x) + x**0.8
@@ -102,7 +102,7 @@ n_test = len(x_test)  # 测试样本数
 n_test
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def f(x):
     return 2 * d2l.sin(x) + x**0.8
@@ -114,7 +114,7 @@ n_test = len(x_test)  # 测试样本数
 n_test
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def f(x):
     return 2 * paddle.sin(x) + x**0.8
@@ -130,7 +130,7 @@ n_test
 不带噪声项的真实数据生成函数$f$（标记为“Truth”），
 以及学习得到的预测函数（标记为“Pred”）。
 
-```{.python .input}
+```python
 #@tab all
 def plot_kernel_reg(y_hat):
     d2l.plot(x_test, [y_truth, y_hat], 'x', 'y', legend=['Truth', 'Pred'],
@@ -149,24 +149,24 @@ $$f(x) = \frac{1}{n}\sum_{i=1}^n y_i,$$
 如下图所示，这个估计器确实不够聪明。
 真实函数$f$（“Truth”）和预测函数（“Pred”）相差很大。
 
-```{.python .input}
+```python
 y_hat = y_train.mean().repeat(n_test)
 plot_kernel_reg(y_hat)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 y_hat = torch.repeat_interleave(y_train.mean(), n_test)
 plot_kernel_reg(y_hat)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 y_hat = tf.repeat(tf.reduce_mean(y_train), repeats=n_test)
 plot_kernel_reg(y_hat)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 y_hat = paddle.repeat_interleave(y_train.mean(), n_test)
 plot_kernel_reg(y_hat)
@@ -226,7 +226,7 @@ $$\begin{aligned} f(x) &=\sum_{i=1}^n \alpha(x, x_i) y_i\\ &= \sum_{i=1}^n \frac
 接下来，我们将基于这个非参数的注意力汇聚模型来绘制预测结果。
 从绘制的结果会发现新的模型预测线是平滑的，并且比平均汇聚的预测更接近真实。
 
-```{.python .input}
+```python
 # X_repeat的形状:(n_test,n_train),
 # 每一行都包含着相同的测试输入（例如：同样的查询）
 X_repeat = d2l.reshape(x_test.repeat(n_train), (-1, n_train))
@@ -238,7 +238,7 @@ y_hat = d2l.matmul(attention_weights, y_train)
 plot_kernel_reg(y_hat)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # X_repeat的形状:(n_test,n_train),
 # 每一行都包含着相同的测试输入（例如：同样的查询）
@@ -251,7 +251,7 @@ y_hat = d2l.matmul(attention_weights, y_train)
 plot_kernel_reg(y_hat)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # X_repeat的形状:(n_test,n_train),
 # 每一行都包含着相同的测试输入（例如：同样的查询）
@@ -264,7 +264,7 @@ y_hat = tf.matmul(attention_weights, tf.expand_dims(y_train, axis=1))
 plot_kernel_reg(y_hat)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # X_repeat的形状:(n_test,n_train),
 # 每一行都包含着相同的测试输入（例如：同样的查询）
@@ -282,20 +282,20 @@ plot_kernel_reg(y_hat)
 因为两个输入都是经过排序的，因此由观察可知“查询-键”对越接近，
 注意力汇聚的[**注意力权重**]就越高。
 
-```{.python .input}
+```python
 d2l.show_heatmaps(np.expand_dims(np.expand_dims(attention_weights, 0), 0),
                   xlabel='Sorted training inputs',
                   ylabel='Sorted testing inputs')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 d2l.show_heatmaps(attention_weights.unsqueeze(0).unsqueeze(0),
                   xlabel='Sorted training inputs',
                   ylabel='Sorted testing inputs')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 d2l.show_heatmaps(tf.expand_dims(
                       tf.expand_dims(attention_weights, axis=0), axis=0),
@@ -303,7 +303,7 @@ d2l.show_heatmaps(tf.expand_dims(
                   ylabel='Sorted testing inputs')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 d2l.show_heatmaps(attention_weights.unsqueeze(0).unsqueeze(0),
                   xlabel='Sorted training inputs',
@@ -342,27 +342,27 @@ $\mathbf{X}_1\mathbf{Y}_1, \ldots, \mathbf{X}_n\mathbf{Y}_n$，
 因此，[**假定两个张量的形状分别是$(n,a,b)$和$(n,b,c)$，
 它们的批量矩阵乘法输出的形状为$(n,a,c)$**]。
 
-```{.python .input}
+```python
 X = d2l.ones((2, 1, 4))
 Y = d2l.ones((2, 4, 6))
 npx.batch_dot(X, Y).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = d2l.ones((2, 1, 4))
 Y = d2l.ones((2, 4, 6))
 torch.bmm(X, Y).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.ones((2, 1, 4))
 Y = tf.ones((2, 4, 6))
 tf.matmul(X, Y).shape
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 X = paddle.ones((2, 1, 4))
 Y = paddle.ones((2, 4, 6))
@@ -371,27 +371,27 @@ paddle.bmm(X, Y).shape
 
 在注意力机制的背景中，我们可以[**使用小批量矩阵乘法来计算小批量数据中的加权平均值**]。
 
-```{.python .input}
+```python
 weights = d2l.ones((2, 10)) * 0.1
 values = d2l.reshape(d2l.arange(20), (2, 10))
 npx.batch_dot(np.expand_dims(weights, 1), np.expand_dims(values, -1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 weights = d2l.ones((2, 10)) * 0.1
 values = d2l.reshape(d2l.arange(20.0), (2, 10))
 torch.bmm(weights.unsqueeze(1), values.unsqueeze(-1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 weights = tf.ones((2, 10)) * 0.1
 values = tf.reshape(tf.range(20.0), shape = (2, 10))
 tf.matmul(tf.expand_dims(weights, axis=1), tf.expand_dims(values, axis=-1)).numpy()
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 weights = paddle.ones((2, 10)) * 0.1
 values = paddle.arange(20, dtype='float32').reshape((2, 10))
@@ -404,7 +404,7 @@ paddle.bmm(weights.unsqueeze(1), values.unsqueeze(-1))
 [**带参数的注意力汇聚**]，使用小批量矩阵乘法，
 定义Nadaraya-Watson核回归的带参数版本为：
 
-```{.python .input}
+```python
 class NWKernelRegression(nn.Block):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -421,7 +421,7 @@ class NWKernelRegression(nn.Block):
                              np.expand_dims(values, -1)).reshape(-1)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class NWKernelRegression(nn.Module):
     def __init__(self, **kwargs):
@@ -439,7 +439,7 @@ class NWKernelRegression(nn.Module):
                          values.unsqueeze(-1)).reshape(-1)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 class NWKernelRegression(tf.keras.layers.Layer):
     def __init__(self, **kwargs):
@@ -455,7 +455,7 @@ class NWKernelRegression(tf.keras.layers.Layer):
         return tf.squeeze(tf.matmul(tf.expand_dims(self.attention_weights, axis=1), tf.expand_dims(values, axis=-1)))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 class NWKernelRegression(nn.Layer):
     def __init__(self, **kwargs):
@@ -481,7 +481,7 @@ class NWKernelRegression(nn.Layer):
 任何一个训练样本的输入都会和除自己以外的所有训练样本的“键－值”对进行计算，
 从而得到其对应的预测输出。
 
-```{.python .input}
+```python
 # X_tile的形状:(n_train，n_train)，每一行都包含着相同的训练输入
 X_tile = np.tile(x_train, (n_train, 1))
 # Y_tile的形状:(n_train，n_train)，每一行都包含着相同的训练输出
@@ -494,7 +494,7 @@ values = d2l.reshape(Y_tile[(1 - d2l.eye(n_train)).astype('bool')],
                      (n_train, -1))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # X_tile的形状:(n_train，n_train)，每一行都包含着相同的训练输入
 X_tile = x_train.repeat((n_train, 1))
@@ -508,7 +508,7 @@ values = d2l.reshape(Y_tile[(1 - d2l.eye(n_train)).type(torch.bool)],
                      (n_train, -1))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # X_tile的形状:(n_train，n_train)，每一行都包含着相同的训练输入
 X_tile = tf.repeat(tf.expand_dims(x_train, axis=0), repeats=n_train, axis=0)
@@ -520,7 +520,7 @@ keys = tf.reshape(X_tile[tf.cast(1 - tf.eye(n_train), dtype=tf.bool)], shape=(n_
 values = tf.reshape(Y_tile[tf.cast(1 - tf.eye(n_train), dtype=tf.bool)], shape=(n_train, -1))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # X_tile的形状:(n_train，n_train)，每一行都包含着相同的训练输入
 X_tile = x_train.tile([n_train, 1])
@@ -534,7 +534,7 @@ values = Y_tile[(1 - paddle.eye(n_train)).astype(paddle.bool)].reshape((n_train,
 
 [**训练带参数的注意力汇聚模型**]时，使用平方损失函数和随机梯度下降。
 
-```{.python .input}
+```python
 net = NWKernelRegression()
 net.initialize()
 loss = gluon.loss.L2Loss()
@@ -550,7 +550,7 @@ for epoch in range(5):
     animator.add(epoch + 1, float(l.sum()))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = NWKernelRegression()
 loss = nn.MSELoss(reduction='none')
@@ -566,7 +566,7 @@ for epoch in range(5):
     animator.add(epoch + 1, float(l.sum()))
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = NWKernelRegression()
 loss_object = tf.keras.losses.MeanSquaredError()
@@ -583,7 +583,7 @@ for epoch in range(5):
     animator.add(epoch + 1, float(loss))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = NWKernelRegression()
 loss = nn.MSELoss(reduction='none')
@@ -603,7 +603,7 @@ for epoch in range(5):
 在尝试拟合带噪声的训练数据时，
 [**预测结果绘制**]的线不如之前非参数模型的平滑。
 
-```{.python .input}
+```python
 # keys的形状:(n_test，n_train)，每一行包含着相同的训练输入（例如，相同的键）
 keys = np.tile(x_train, (n_test, 1))
 # value的形状:(n_test，n_train)
@@ -612,7 +612,7 @@ y_hat = net(x_test, keys, values)
 plot_kernel_reg(y_hat)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # keys的形状:(n_test，n_train)，每一行包含着相同的训练输入（例如，相同的键）
 keys = x_train.repeat((n_test, 1))
@@ -622,7 +622,7 @@ y_hat = net(x_test, keys, values).unsqueeze(1).detach()
 plot_kernel_reg(y_hat)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # keys的形状:(n_test，n_train)，每一行包含着相同的训练输入（例如，相同的键）
 keys = tf.repeat(tf.expand_dims(x_train, axis=0), repeats=n_test, axis=0)
@@ -632,7 +632,7 @@ y_hat = net(x_test, keys, values)
 plot_kernel_reg(y_hat)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # keys的形状:(n_test，n_train)，每一行包含着相同的训练输入（例如，相同的键）
 keys = x_train.tile([n_test, 1])
@@ -648,21 +648,21 @@ plot_kernel_reg(y_hat)
 带参数的模型加入可学习的参数后，
 [**曲线在注意力权重较大的区域变得更不平滑**]。
 
-```{.python .input}
+```python
 d2l.show_heatmaps(np.expand_dims(
                       np.expand_dims(net.attention_weights, 0), 0),
                   xlabel='Sorted training inputs',
                   ylabel='Sorted testing inputs')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 d2l.show_heatmaps(net.attention_weights.unsqueeze(0).unsqueeze(0),
                   xlabel='Sorted training inputs',
                   ylabel='Sorted testing inputs')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 d2l.show_heatmaps(tf.expand_dims(
                       tf.expand_dims(net.attention_weights, axis=0), axis=0),
@@ -670,7 +670,7 @@ d2l.show_heatmaps(tf.expand_dims(
                   ylabel='Sorted testing inputs')
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 d2l.show_heatmaps(net.attention_weight.unsqueeze(0).unsqueeze(0),
                   xlabel='Sorted training inputs',

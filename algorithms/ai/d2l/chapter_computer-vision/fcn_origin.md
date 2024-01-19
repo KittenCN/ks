@@ -26,7 +26,7 @@ the channel dimension at any output pixel
 holds the classification results
 for the input pixel at the same spatial position.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import gluon, image, init, np, npx
@@ -35,7 +35,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -75,12 +75,12 @@ and a fully-connected layer:
 they are not needed
 in the fully convolutional network.
 
-```{.python .input}
+```python
 pretrained_net = gluon.model_zoo.vision.resnet18_v2(pretrained=True)
 pretrained_net.features[-3:], pretrained_net.output
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 pretrained_net = torchvision.models.resnet18(pretrained=True)
 list(pretrained_net.children())[-3:]
@@ -92,13 +92,13 @@ except for the final global average pooling layer
 and the fully-connected layer that are closest
 to the output.
 
-```{.python .input}
+```python
 net = nn.HybridSequential()
 for layer in pretrained_net.features[:-2]:
     net.add(layer)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(*list(pretrained_net.children())[:-2])
 ```
@@ -107,12 +107,12 @@ Given an input with height and width of 320 and 480 respectively,
 the forward propagation of `net`
 reduces the input height and width to 1/32 of the original, namely 10 and 15.
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(1, 3, 320, 480))
 net(X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.rand(size=(1, 3, 320, 480))
 net(X).shape
@@ -134,14 +134,14 @@ and the height and width of the kernel $2s$,
 the transposed convolution will increase
 the height and width of the input by $s$ times.
 
-```{.python .input}
+```python
 num_classes = 21
 net.add(nn.Conv2D(num_classes, kernel_size=1),
         nn.Conv2DTranspose(
             num_classes, kernel_size=64, padding=16, strides=32))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_classes = 21
 net.add_module('final_conv', nn.Conv2d(512, num_classes, kernel_size=1))
@@ -183,7 +183,7 @@ with the kernel constructed by the following `bilinear_kernel` function.
 Due to space limitations, we only provide the implementation of the `bilinear_kernel` function below
 without discussions on its algorithm design.
 
-```{.python .input}
+```python
 def bilinear_kernel(in_channels, out_channels, kernel_size):
     factor = (kernel_size + 1) // 2
     if kernel_size % 2 == 1:
@@ -199,7 +199,7 @@ def bilinear_kernel(in_channels, out_channels, kernel_size):
     return np.array(weight)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def bilinear_kernel(in_channels, out_channels, kernel_size):
     factor = (kernel_size + 1) // 2
@@ -223,12 +223,12 @@ We construct a transposed convolutional layer that
 doubles the height and weight,
 and initialize its kernel with the `bilinear_kernel` function.
 
-```{.python .input}
+```python
 conv_trans = nn.Conv2DTranspose(3, kernel_size=4, padding=1, strides=2)
 conv_trans.initialize(init.Constant(bilinear_kernel(3, 3, 4)))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 conv_trans = nn.ConvTranspose2d(3, 3, kernel_size=4, padding=1, stride=2,
                                 bias=False)
@@ -237,14 +237,14 @@ conv_trans.weight.data.copy_(bilinear_kernel(3, 3, 4));
 
 Read the image `X` and assign the upsampling output to `Y`. In order to print the image, we need to adjust the position of the channel dimension.
 
-```{.python .input}
+```python
 img = image.imread('../img/catdog.jpg')
 X = np.expand_dims(img.astype('float32').transpose(2, 0, 1), axis=0) / 255
 Y = conv_trans(X)
 out_img = Y[0].transpose(1, 2, 0)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 img = torchvision.transforms.ToTensor()(d2l.Image.open('../img/catdog.jpg'))
 X = img.unsqueeze(0)
@@ -256,7 +256,7 @@ As we can see, the transposed convolutional layer increases both the height and 
 Except for the different scales in coordinates,
 the image scaled up by bilinear interpolation and the original image printed in :numref:`sec_bbox` look the same.
 
-```{.python .input}
+```python
 d2l.set_figsize()
 print('input image shape:', img.shape)
 d2l.plt.imshow(img.asnumpy());
@@ -264,7 +264,7 @@ print('output image shape:', out_img.shape)
 d2l.plt.imshow(out_img.asnumpy());
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 d2l.set_figsize()
 print('input image shape:', img.permute(1, 2, 0).shape)
@@ -275,13 +275,13 @@ d2l.plt.imshow(out_img);
 
 In a fully convolutional network, we [**initialize the transposed convolutional layer with upsampling of bilinear interpolation. For the $1\times 1$ convolutional layer, we use Xavier initialization.**]
 
-```{.python .input}
+```python
 W = bilinear_kernel(num_classes, num_classes, 64)
 net[-1].initialize(init.Constant(W))
 net[-2].initialize(init=init.Xavier())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 W = bilinear_kernel(num_classes, num_classes, 64)
 net.transpose_conv.weight.data.copy_(W);
@@ -295,7 +295,7 @@ as introduced in :numref:`sec_semantic_segmentation`.
 The output image shape of random cropping is
 specified as $320\times 480$: both the height and width are divisible by $32$.
 
-```{.python .input}
+```python
 #@tab all
 batch_size, crop_size = 32, (320, 480)
 train_iter, test_iter = d2l.load_data_voc(batch_size, crop_size)
@@ -316,7 +316,7 @@ In addition, the accuracy is calculated
 based on correctness
 of the predicted class for all the pixels.
 
-```{.python .input}
+```python
 num_epochs, lr, wd, devices = 5, 0.1, 1e-3, d2l.try_all_gpus()
 loss = gluon.loss.SoftmaxCrossEntropyLoss(axis=1)
 net.collect_params().reset_ctx(devices)
@@ -325,7 +325,7 @@ trainer = gluon.Trainer(net.collect_params(), 'sgd',
 d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs, devices)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def loss(inputs, targets):
     return F.cross_entropy(inputs, targets, reduction='none').mean(1).mean(1)
@@ -342,7 +342,7 @@ When predicting, we need to standardize the input image
 in each channel and transform the image into the four-dimensional input format required by the CNN.
 
 
-```{.python .input}
+```python
 def predict(img):
     X = test_iter._dataset.normalize_image(img)
     X = np.expand_dims(X.transpose(2, 0, 1), axis=0)
@@ -350,7 +350,7 @@ def predict(img):
     return pred.reshape(pred.shape[1], pred.shape[2])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def predict(img):
     X = test_iter.dataset.normalize_image(img).unsqueeze(0)
@@ -360,14 +360,14 @@ def predict(img):
 
 To [**visualize the predicted class**] of each pixel, we map the predicted class back to its label color in the dataset.
 
-```{.python .input}
+```python
 def label2image(pred):
     colormap = np.array(d2l.VOC_COLORMAP, ctx=devices[0], dtype='uint8')
     X = pred.astype('int32')
     return colormap[X, :]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def label2image(pred):
     colormap = torch.tensor(d2l.VOC_COLORMAP, device=devices[0])
@@ -401,7 +401,7 @@ print their cropped areas,
 prediction results,
 and ground-truth row by row.
 
-```{.python .input}
+```python
 voc_dir = d2l.download_extract('voc2012', 'VOCdevkit/VOC2012')
 test_images, test_labels = d2l.read_voc_images(voc_dir, False)
 n, imgs = 4, []
@@ -413,7 +413,7 @@ for i in range(n):
 d2l.show_images(imgs[::3] + imgs[1::3] + imgs[2::3], 3, n, scale=2);
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 voc_dir = d2l.download_extract('voc2012', 'VOCdevkit/VOC2012')
 test_images, test_labels = d2l.read_voc_images(voc_dir, False)

@@ -65,7 +65,7 @@ $$f(\mathbf{x}) = 0.1 x_1^2 + 2 x_2^2.$$
 
 We are going to implement Adagrad using the same learning rate previously, i.e., $\eta = 0.4$. As we can see, the iterative trajectory of the independent variable is smoother. However, due to the cumulative effect of $\boldsymbol{s}_t$, the learning rate continuously decays, so the independent variable does not move as much during later stages of iteration.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 import math
@@ -73,7 +73,7 @@ from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -81,7 +81,7 @@ import math
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -89,7 +89,7 @@ import math
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab all
 def adagrad_2d(x1, x2, s1, s2):
     eps = 1e-6
@@ -109,7 +109,7 @@ d2l.show_trace_2d(f_2d, d2l.train_2d(adagrad_2d))
 
 As we increase the learning rate to $2$ we see much better behavior. This already indicates that the decrease in learning rate might be rather aggressive, even in the noise-free case and we need to ensure that parameters converge appropriately.
 
-```{.python .input}
+```python
 #@tab all
 eta = 2
 d2l.show_trace_2d(f_2d, d2l.train_2d(adagrad_2d))
@@ -119,7 +119,7 @@ d2l.show_trace_2d(f_2d, d2l.train_2d(adagrad_2d))
 
 Just like the momentum method, Adagrad needs to maintain a state variable of the same shape as the parameters.
 
-```{.python .input}
+```python
 def init_adagrad_states(feature_dim):
     s_w = d2l.zeros((feature_dim, 1))
     s_b = d2l.zeros(1)
@@ -132,7 +132,7 @@ def adagrad(params, states, hyperparams):
         p[:] -= hyperparams['lr'] * p.grad / np.sqrt(s + eps)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_adagrad_states(feature_dim):
     s_w = d2l.zeros((feature_dim, 1))
@@ -148,7 +148,7 @@ def adagrad(params, states, hyperparams):
         p.grad.data.zero_()
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def init_adagrad_states(feature_dim):
     s_w = tf.Variable(d2l.zeros((feature_dim, 1)))
@@ -165,7 +165,7 @@ def adagrad(params, grads, states, hyperparams):
 Compared to the experiment in :numref:`sec_minibatch_sgd` we use a
 larger learning rate to train the model.
 
-```{.python .input}
+```python
 #@tab all
 data_iter, feature_dim = d2l.get_data_ch11(batch_size=10)
 d2l.train_ch11(adagrad, init_adagrad_states(feature_dim),
@@ -176,17 +176,17 @@ d2l.train_ch11(adagrad, init_adagrad_states(feature_dim),
 
 Using the `Trainer` instance of the algorithm `adagrad`, we can invoke the Adagrad algorithm in Gluon.
 
-```{.python .input}
+```python
 d2l.train_concise_ch11('adagrad', {'learning_rate': 0.1}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 trainer = torch.optim.Adagrad
 d2l.train_concise_ch11(trainer, {'lr': 0.1}, data_iter)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 trainer = tf.keras.optimizers.Adagrad
 d2l.train_concise_ch11(trainer, {'learning_rate' : 0.1}, data_iter)

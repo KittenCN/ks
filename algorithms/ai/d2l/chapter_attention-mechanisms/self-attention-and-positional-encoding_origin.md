@@ -20,7 +20,7 @@ In this section,
 we will discuss sequence encoding using self-attention,
 including using additional information for the sequence order.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 import math
 from mxnet import autograd, np, npx
@@ -28,7 +28,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import math
@@ -55,13 +55,13 @@ computes the self-attention of a tensor
 with shape (batch size, number of time steps or sequence length in tokens, $d$).
 The output tensor has the same shape.
 
-```{.python .input}
+```python
 num_hiddens, num_heads = 100, 5
 attention = d2l.MultiHeadAttention(num_hiddens, num_heads, 0.5)
 attention.initialize()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_hiddens, num_heads = 100, 5
 attention = d2l.MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
@@ -69,7 +69,7 @@ attention = d2l.MultiHeadAttention(num_hiddens, num_hiddens, num_hiddens,
 attention.eval()
 ```
 
-```{.python .input}
+```python
 #@tab all
 batch_size, num_queries, valid_lens = 2, 4, d2l.tensor([3, 2])
 X = d2l.ones((batch_size, num_queries, num_hiddens))
@@ -196,7 +196,7 @@ design looks weird.
 Before explanations of this design,
 let us first implement it in the following `PositionalEncoding` class.
 
-```{.python .input}
+```python
 #@save
 class PositionalEncoding(nn.Block):
     def __init__(self, num_hiddens, dropout, max_len=1000):
@@ -214,7 +214,7 @@ class PositionalEncoding(nn.Block):
         return self.dropout(X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class PositionalEncoding(nn.Module):
@@ -248,7 +248,7 @@ The offset between
 the $6^{\mathrm{th}}$ and the $7^{\mathrm{th}}$ (same for the $8^{\mathrm{th}}$ and the $9^{\mathrm{th}}$) columns
 is due to the alternation of sine and cosine functions.
 
-```{.python .input}
+```python
 encoding_dim, num_steps = 32, 60
 pos_encoding = PositionalEncoding(encoding_dim, 0)
 pos_encoding.initialize()
@@ -258,7 +258,7 @@ d2l.plot(d2l.arange(num_steps), P[0, :, 6:10].T, xlabel='Row (position)',
          figsize=(6, 2.5), legend=["Col %d" % d for d in d2l.arange(6, 10)])
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 encoding_dim, num_steps = 32, 60
 pos_encoding = PositionalEncoding(encoding_dim, 0)
@@ -277,7 +277,7 @@ let us print out the binary representations of $0, 1, \ldots, 7$.
 As we can see,
 the lowest bit, the second-lowest bit, and the third-lowest bit alternate on every number, every two numbers, and every four numbers, respectively.
 
-```{.python .input}
+```python
 #@tab all
 for i in range(8):
     print(f'{i} in binary is {i:>03b}')
@@ -295,13 +295,13 @@ such continuous representations
 are more space-efficient
 than binary representations.
 
-```{.python .input}
+```python
 P = np.expand_dims(np.expand_dims(P[0, :, :], 0), 0)
 d2l.show_heatmaps(P, xlabel='Column (encoding dimension)',
                   ylabel='Row (position)', figsize=(3.5, 4), cmap='Blues')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 P = P[0, :, :].unsqueeze(0).unsqueeze(0)
 d2l.show_heatmaps(P, xlabel='Column (encoding dimension)',

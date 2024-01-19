@@ -5,7 +5,7 @@
 
 与 :numref:`sec_word2vec_data`中用于预训练word2vec的PTB数据集相比，WikiText-2（1）保留了原来的标点符号，适合于下一句预测；（2）保留了原来的大小写和数字；（3）大了一倍以上。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, np, npx
 import os
@@ -14,7 +14,7 @@ import random
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import os
@@ -22,7 +22,7 @@ import random
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -34,7 +34,7 @@ import paddle
 
 在WikiText-2数据集中，每行代表一个段落，其中在任意标点符号及其前面的词元之间插入空格。保留至少有两句话的段落。为了简单起见，我们仅使用句号作为分隔符来拆分句子。我们将更复杂的句子拆分技术的讨论留在本节末尾的练习中。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['wikitext-2'] = (
@@ -61,7 +61,7 @@ def _read_wiki(data_dir):
 
 根据 :numref:`subsec_nsp`的描述，`_get_next_sentence`函数生成二分类任务的训练样本。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def _get_next_sentence(sentence, next_sentence, paragraphs):
@@ -76,7 +76,7 @@ def _get_next_sentence(sentence, next_sentence, paragraphs):
 
 下面的函数通过调用`_get_next_sentence`函数从输入`paragraph`生成用于下一句预测的训练样本。这里`paragraph`是句子列表，其中每个句子都是词元列表。自变量`max_len`指定预训练期间的BERT输入序列的最大长度。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def _get_nsp_data_from_paragraph(paragraph, paragraphs, vocab, max_len):
@@ -97,7 +97,7 @@ def _get_nsp_data_from_paragraph(paragraph, paragraphs, vocab, max_len):
 
 为了从BERT输入序列生成遮蔽语言模型的训练样本，我们定义了以下`_replace_mlm_tokens`函数。在其输入中，`tokens`是表示BERT输入序列的词元的列表，`candidate_pred_positions`是不包括特殊词元的BERT输入序列的词元索引的列表（特殊词元在遮蔽语言模型任务中不被预测），以及`num_mlm_preds`指示预测的数量（选择15%要预测的随机词元）。在 :numref:`subsec_mlm`中定义遮蔽语言模型任务之后，在每个预测位置，输入可以由特殊的“掩码”词元或随机词元替换，或者保持不变。最后，该函数返回可能替换后的输入词元、发生预测的词元索引和这些预测的标签。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def _replace_mlm_tokens(tokens, candidate_pred_positions, num_mlm_preds,
@@ -129,7 +129,7 @@ def _replace_mlm_tokens(tokens, candidate_pred_positions, num_mlm_preds,
 
 通过调用前述的`_replace_mlm_tokens`函数，以下函数将BERT输入序列（`tokens`）作为输入，并返回输入词元的索引（在 :numref:`subsec_mlm`中描述的可能的词元替换之后）、发生预测的词元索引以及这些预测的标签索引。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 def _get_mlm_data_from_tokens(tokens, vocab):
@@ -155,7 +155,7 @@ def _get_mlm_data_from_tokens(tokens, vocab):
 
 现在我们几乎准备好为BERT预训练定制一个`Dataset`类。在此之前，我们仍然需要定义辅助函数`_pad_bert_inputs`来将特殊的“&lt;mask&gt;”词元附加到输入。它的参数`examples`包含来自两个预训练任务的辅助函数`_get_nsp_data_from_paragraph`和`_get_mlm_data_from_tokens`的输出。
 
-```{.python .input}
+```python
 #@save
 def _pad_bert_inputs(examples, max_len, vocab):
     max_num_mlm_preds = round(max_len * 0.15)
@@ -183,7 +183,7 @@ def _pad_bert_inputs(examples, max_len, vocab):
             all_mlm_weights, all_mlm_labels, nsp_labels)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def _pad_bert_inputs(examples, max_len, vocab):
@@ -213,7 +213,7 @@ def _pad_bert_inputs(examples, max_len, vocab):
             all_mlm_weights, all_mlm_labels, nsp_labels)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def _pad_bert_inputs(examples, max_len, vocab):
@@ -247,7 +247,7 @@ def _pad_bert_inputs(examples, max_len, vocab):
 
 最初的BERT模型使用词表大小为30000的WordPiece嵌入 :cite:`Wu.Schuster.Chen.ea.2016`。WordPiece的词元化方法是对 :numref:`subsec_Byte_Pair_Encoding`中原有的字节对编码算法稍作修改。为简单起见，我们使用`d2l.tokenize`函数进行词元化。出现次数少于5次的不频繁词元将被过滤掉。
 
-```{.python .input}
+```python
 #@save
 class _WikiTextDataset(gluon.data.Dataset):
     def __init__(self, paragraphs, max_len):
@@ -284,7 +284,7 @@ class _WikiTextDataset(gluon.data.Dataset):
         return len(self.all_token_ids)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class _WikiTextDataset(torch.utils.data.Dataset):
@@ -322,7 +322,7 @@ class _WikiTextDataset(torch.utils.data.Dataset):
         return len(self.all_token_ids)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class _WikiTextDataset(paddle.io.Dataset):
@@ -362,7 +362,7 @@ class _WikiTextDataset(paddle.io.Dataset):
 
 通过使用`_read_wiki`函数和`_WikiTextDataset`类，我们定义了下面的`load_data_wiki`来下载并生成WikiText-2数据集，并从中生成预训练样本。
 
-```{.python .input}
+```python
 #@save
 def load_data_wiki(batch_size, max_len):
     """加载WikiText-2数据集"""
@@ -375,7 +375,7 @@ def load_data_wiki(batch_size, max_len):
     return train_iter, train_set.vocab
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def load_data_wiki(batch_size, max_len):
@@ -389,7 +389,7 @@ def load_data_wiki(batch_size, max_len):
     return train_iter, train_set.vocab
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def load_data_wiki(batch_size, max_len):
@@ -405,7 +405,7 @@ def load_data_wiki(batch_size, max_len):
 
 将批量大小设置为512，将BERT输入序列的最大长度设置为64，我们打印出小批量的BERT预训练样本的形状。注意，在每个BERT输入序列中，为遮蔽语言模型任务预测$10$（$64 \times 0.15$）个位置。
 
-```{.python .input}
+```python
 #@tab all
 batch_size, max_len = 512, 64
 train_iter, vocab = load_data_wiki(batch_size, max_len)
@@ -420,7 +420,7 @@ for (tokens_X, segments_X, valid_lens_x, pred_positions_X, mlm_weights_X,
 
 最后，我们来看一下词量。即使在过滤掉不频繁的词元之后，它仍然比PTB数据集的大两倍以上。
 
-```{.python .input}
+```python
 #@tab all
 len(vocab)
 ```

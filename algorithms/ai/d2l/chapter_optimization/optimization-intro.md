@@ -6,7 +6,7 @@
 
 尽管优化提供了一种最大限度地减少深度学习损失函数的方法，但本质上，优化和深度学习的目标是根本不同的。前者主要关注的是最小化目标，后者则关注在给定有限数据量的情况下寻找合适的模型。在 :numref:`sec_model_selection`中，我们详细讨论了这两个目标之间的区别。例如，训练误差和泛化误差通常不同：由于优化算法的目标函数通常是基于训练数据集的损失函数，因此优化的目标是减少训练误差。但是，深度学习（或更广义地说，统计推断）的目标是减少泛化误差。为了实现后者，除了使用优化算法来减少训练误差之外，我们还需要注意过拟合。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mpl_toolkits import mplot3d
@@ -14,7 +14,7 @@ from mxnet import np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -23,7 +23,7 @@ from mpl_toolkits import mplot3d
 import torch
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 %matplotlib inline
 from d2l import tensorflow as d2l
@@ -32,7 +32,7 @@ from mpl_toolkits import mplot3d
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -45,7 +45,7 @@ import paddle
 
 为了说明上述不同的目标，引入两个概念*风险*和*经验风险*。如 :numref:`subsec_empirical-risk-and-risk`所述，经验风险是训练数据集的平均损失，而风险则是整个数据群的预期损失。下面我们定义了两个函数：风险函数`f`和经验风险函数`g`。假设我们只有有限的训练数据。因此，这里的`g`不如`f`平滑。
 
-```{.python .input}
+```python
 #@tab all
 def f(x):
     return x * d2l.cos(np.pi * x)
@@ -56,7 +56,7 @@ def g(x):
 
 下图说明，训练数据集的最低经验风险可能与最低风险（泛化误差）不同。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, tensorflow
 def annotate(text, xy, xytext):  #@save
     d2l.plt.gca().annotate(text, xy=xy, xytext=xytext,
@@ -69,7 +69,7 @@ annotate('min of\nempirical risk', (1.0, -1.2), (0.5, -1.1))
 annotate('min of risk', (1.1, -1.05), (0.95, -0.5))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def annotate(text, xy, xytext):  #@save
     d2l.plt.gca().annotate(text, xy=xy, xytext=xytext,
@@ -98,7 +98,7 @@ $$f(x) = x \cdot \text{cos}(\pi x) \text{ for } -1.0 \leq x \leq 2.0,$$
 
 我们可以近似该函数的局部最小值和全局最小值。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, tensorflow
 x = d2l.arange(-1.0, 2.0, 0.01)
 d2l.plot(x, [f(x), ], 'x', 'f(x)')
@@ -106,7 +106,7 @@ annotate('local minimum', (-0.3, -0.25), (-0.77, -1.0))
 annotate('global minimum', (1.1, -0.95), (0.6, 0.8))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 x = d2l.arange(-1.0, 2.0, 0.01, dtype='float32')
 d2l.plot(x, [f(x), ], 'x', 'f(x)')
@@ -120,14 +120,14 @@ annotate('global minimum', (1.1, -0.95), (0.6, 0.8))
 
 除了局部最小值之外，鞍点是梯度消失的另一个原因。*鞍点*（saddle point）是指函数的所有梯度都消失但既不是全局最小值也不是局部最小值的任何位置。考虑这个函数$f(x) = x^3$。它的一阶和二阶导数在$x=0$时消失。这时优化可能会停止，尽管它不是最小值。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, tensorflow
 x = d2l.arange(-2.0, 2.0, 0.01)
 d2l.plot(x, [x**3], 'x', 'f(x)')
 annotate('saddle point', (0, -0.2), (-0.52, -5.0))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 x = d2l.arange(-2.0, 2.0, 0.01, dtype='float32')
 d2l.plot(x, [x**3], 'x', 'f(x)')
@@ -136,7 +136,7 @@ annotate('saddle point', (0, -0.2), (-0.52, -5.0))
 
 如下例所示，较高维度的鞍点甚至更加隐蔽。考虑这个函数$f(x, y) = x^2 - y^2$。它的鞍点为$(0, 0)$。这是关于$y$的最大值，也是关于$x$的最小值。此外，它看起来像个马鞍，这就是鞍点的名字由来。
 
-```{.python .input}
+```python
 #@tab mxnet
 x, y = d2l.meshgrid(
     d2l.linspace(-1.0, 1.0, 101), d2l.linspace(-1.0, 1.0, 101))
@@ -153,7 +153,7 @@ d2l.plt.xlabel('x')
 d2l.plt.ylabel('y');
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, tensorflow, paddle
 x, y = d2l.meshgrid(
     d2l.linspace(-1.0, 1.0, 101), d2l.linspace(-1.0, 1.0, 101))
@@ -182,14 +182,14 @@ d2l.plt.ylabel('y');
 
 可能遇到的最隐蔽问题是梯度消失。回想一下我们在 :numref:`subsec_activation_functions`中常用的激活函数及其衍生函数。例如，假设我们想最小化函数$f(x) = \tanh(x)$，然后我们恰好从$x = 4$开始。正如我们所看到的那样，$f$的梯度接近零。更具体地说，$f'(x) = 1 - \tanh^2(x)$，因此是$f'(4) = 0.0013$。因此，在我们取得进展之前，优化将会停滞很长一段时间。事实证明，这是在引入ReLU激活函数之前训练深度学习模型相当棘手的原因之一。
 
-```{.python .input}
+```python
 #@tab mxnet, pytorch, tensorflow
 x = d2l.arange(-2.0, 5.0, 0.01)
 d2l.plot(x, [d2l.tanh(x)], 'x', 'f(x)')
 annotate('vanishing gradient', (4, 1), (2, 0.0))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 x = d2l.arange(-2.0, 5.0, 0.01, dtype='float32')
 d2l.plot(x, [d2l.tanh(x)], 'x', 'f(x)')

@@ -86,14 +86,14 @@ with Bahdanau attention is depicted in
 ![Layers in an RNN encoder-decoder model with Bahdanau attention.](../img/seq2seq-attention-details.svg)
 :label:`fig_s2s_attention_details`
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import rnn, nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -110,7 +110,7 @@ the following `AttentionDecoder` class
 defines the base interface for 
 decoders with attention mechanisms.
 
-```{.python .input}
+```python
 #@tab all
 #@save
 class AttentionDecoder(d2l.Decoder):
@@ -137,7 +137,7 @@ As a result, both the attention output
 and the input embedding are concatenated
 as the input of the RNN decoder.
 
-```{.python .input}
+```python
 class Seq2SeqAttentionDecoder(AttentionDecoder):
     def __init__(self, vocab_size, embed_size, num_hiddens, num_layers,
                  dropout=0, **kwargs):
@@ -185,7 +185,7 @@ class Seq2SeqAttentionDecoder(AttentionDecoder):
         return self._attention_weights
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class Seq2SeqAttentionDecoder(AttentionDecoder):
     def __init__(self, vocab_size, embed_size, num_hiddens, num_layers,
@@ -242,7 +242,7 @@ decoder with Bahdanau attention
 using a minibatch of 4 sequence inputs
 of 7 time steps.
 
-```{.python .input}
+```python
 encoder = d2l.Seq2SeqEncoder(vocab_size=10, embed_size=8, num_hiddens=16,
                              num_layers=2)
 encoder.initialize()
@@ -255,7 +255,7 @@ output, state = decoder(X, state)
 output.shape, len(state), state[0].shape, len(state[1]), state[1][0].shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 encoder = d2l.Seq2SeqEncoder(vocab_size=10, embed_size=8, num_hiddens=16,
                              num_layers=2)
@@ -281,7 +281,7 @@ Due to the newly added attention mechanism,
 this training is much slower than
 that in :numref:`sec_seq2seq_training` without attention mechanisms.
 
-```{.python .input}
+```python
 #@tab all
 embed_size, num_hiddens, num_layers, dropout = 32, 32, 2, 0.1
 batch_size, num_steps = 64, 10
@@ -300,7 +300,7 @@ After the model is trained,
 we use it to translate a few English sentences
 into French and compute their BLEU scores.
 
-```{.python .input}
+```python
 #@tab all
 engs = ['go .', "i lost .", 'he\'s calm .', 'i\'m home .']
 fras = ['va !', 'j\'ai perdu .', 'il est calme .', 'je suis chez moi .']
@@ -311,7 +311,7 @@ for eng, fra in zip(engs, fras):
           f'bleu {d2l.bleu(translation, fra, k=2):.3f}')
 ```
 
-```{.python .input}
+```python
 #@tab all
 attention_weights = d2l.reshape(
     d2l.concat([step[0][0][0] for step in dec_attention_weight_seq], 0),
@@ -326,14 +326,14 @@ It shows that at each decoding step,
 different parts of the input sequences 
 are selectively aggregated in the attention pooling.
 
-```{.python .input}
+```python
 # Plus one to include the end-of-sequence token
 d2l.show_heatmaps(
     attention_weights[:, :, :, :len(engs[-1].split()) + 1],
     xlabel='Key posistions', ylabel='Query posistions')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # Plus one to include the end-of-sequence token
 d2l.show_heatmaps(

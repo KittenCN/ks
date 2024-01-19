@@ -31,7 +31,7 @@
 在编码器接口中，我们只指定长度可变的序列作为编码器的输入`X`。
 任何继承这个`Encoder`基类的模型将完成代码实现。
 
-```{.python .input}
+```python
 from mxnet.gluon import nn
 
 #@save
@@ -44,7 +44,7 @@ class Encoder(nn.Block):
         raise NotImplementedError
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from torch import nn
 
@@ -58,7 +58,7 @@ class Encoder(nn.Module):
         raise NotImplementedError
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -72,7 +72,7 @@ class Encoder(tf.keras.layers.Layer):
         raise NotImplementedError
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 import warnings
 warnings.filterwarnings("ignore")
@@ -99,7 +99,7 @@ class Encoder(nn.Layer):
 （例如：在前一时间步生成的词元）和编码后的状态
 映射成当前时间步的输出词元。
 
-```{.python .input}
+```python
 #@save
 class Decoder(nn.Block):
     """编码器-解码器架构的基本解码器接口"""
@@ -113,7 +113,7 @@ class Decoder(nn.Block):
         raise NotImplementedError
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class Decoder(nn.Module):
@@ -128,7 +128,7 @@ class Decoder(nn.Module):
         raise NotImplementedError
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 class Decoder(tf.keras.layers.Layer):
@@ -143,7 +143,7 @@ class Decoder(tf.keras.layers.Layer):
         raise NotImplementedError
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class Decoder(nn.Layer):
@@ -165,7 +165,7 @@ class Decoder(nn.Layer):
 在前向传播中，编码器的输出用于生成编码状态，
 这个状态又被解码器作为其输入的一部分。
 
-```{.python .input}
+```python
 #@save
 class EncoderDecoder(nn.Block):
     """编码器-解码器架构的基类"""
@@ -180,7 +180,7 @@ class EncoderDecoder(nn.Block):
         return self.decoder(dec_X, dec_state)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class EncoderDecoder(nn.Module):
@@ -196,7 +196,7 @@ class EncoderDecoder(nn.Module):
         return self.decoder(dec_X, dec_state)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 #@save
 class EncoderDecoder(tf.keras.Model):
@@ -212,7 +212,7 @@ class EncoderDecoder(tf.keras.Model):
         return self.decoder(dec_X, dec_state, **kwargs)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class EncoderDecoder(nn.Layer):

@@ -104,7 +104,7 @@ and apply 1 pixel of padding on all sides.
 Given an input with a height and width of 8,
 we find that the height and width of the output is also 8.
 
-```{.python .input}
+```python
 from mxnet import np, npx
 from mxnet.gluon import nn
 npx.set_np()
@@ -130,7 +130,7 @@ X = np.random.uniform(size=(8, 8))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 import torch
 from torch import nn
@@ -154,7 +154,7 @@ X = torch.rand(size=(8, 8))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 import tensorflow as tf
 
@@ -181,7 +181,7 @@ When the height and width of the convolution kernel are different,
 we can make the output and input have the same height and width
 by setting different padding numbers for height and width.
 
-```{.python .input}
+```python
 # Here, we use a convolution kernel with a height of 5 and a width of 3. The
 # padding numbers on either side of the height and width are 2 and 1,
 # respectively
@@ -189,7 +189,7 @@ conv2d = nn.Conv2D(1, kernel_size=(5, 3), padding=(2, 1))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # Here, we use a convolution kernel with a height of 5 and a width of 3. The
 # padding numbers on either side of the height and width are 2 and 1,
@@ -198,7 +198,7 @@ conv2d = nn.Conv2d(1, 1, kernel_size=(5, 3), padding=(2, 1))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 # Here, we use a convolution kernel with a height of 5 and a width of 3. The
 # padding numbers on either side of the height and width are 2 and 1,
@@ -251,18 +251,18 @@ then the output shape will be $(n_h/s_h) \times (n_w/s_w)$.
 Below, we set the strides on both the height and width to 2,
 thus halving the input height and width.
 
-```{.python .input}
+```python
 conv2d = nn.Conv2D(1, kernel_size=3, padding=1, strides=2)
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 conv2d = nn.Conv2d(1, 1, kernel_size=3, padding=1, stride=2)
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 conv2d = tf.keras.layers.Conv2D(1, kernel_size=3, padding='same', strides=2)
 comp_conv2d(conv2d, X).shape
@@ -270,18 +270,18 @@ comp_conv2d(conv2d, X).shape
 
 Next, we will look at a slightly more complicated example.
 
-```{.python .input}
+```python
 conv2d = nn.Conv2D(1, kernel_size=(3, 5), padding=(0, 1), strides=(3, 4))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 conv2d = nn.Conv2d(1, 1, kernel_size=(3, 5), padding=(0, 1), stride=(3, 4))
 comp_conv2d(conv2d, X).shape
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 conv2d = tf.keras.layers.Conv2D(1, kernel_size=(3,5), padding='valid',
                                 strides=(3, 4))

@@ -5,7 +5,7 @@
 
 因此，了解异步编程是如何工作的，通过主动地减少计算需求和相互依赖，有助于我们开发更高效的程序。这能够减少内存开销并提高处理器利用率。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 import numpy, os, subprocess
 from mxnet import autograd, gluon, np, npx
@@ -13,7 +13,7 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import numpy, os, subprocess
@@ -21,7 +21,7 @@ import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import numpy, os, subprocess
@@ -46,7 +46,7 @@ d2l.try_gpu()
 作为热身，考虑一个简单问题：我们要生成一个随机矩阵并将其相乘。让我们在NumPy和飞桨张量中都这样做，看看它们的区别。请注意，飞桨的`tensor`是在GPU上定义的。
 :end_tab:
 
-```{.python .input}
+```python
 with d2l.Benchmark('numpy'):
     for _ in range(10):
         a = numpy.random.normal(size=(1000, 1000))
@@ -58,7 +58,7 @@ with d2l.Benchmark('mxnet.np'):
         b = np.dot(a, a)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # GPU计算热身
 device = d2l.try_gpu()
@@ -76,7 +76,7 @@ with d2l.Benchmark('torch'):
         b = torch.mm(a, a)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 # GPU计算热身
 a = paddle.randn(shape=(1000, 1000))
@@ -105,7 +105,7 @@ with d2l.Benchmark('paddle'):
 通过飞桨的基准输出比较快了几个数量级。NumPy点积是在CPU上执行的，而飞桨矩阵乘法是在GPU上执行的，后者的速度要快得多。但巨大的时间差距表明一定还有其他原因。默认情况下，GPU操作在飞桨中是异步的。强制飞桨在返回之前完成所有计算，这种强制说明了之前发生的情况：计算是由后端执行，而前端将控制权返回给了Python。
 :end_tab:
 
-```{.python .input}
+```python
 with d2l.Benchmark():
     for _ in range(10):
         a = np.random.normal(size=(1000, 1000))
@@ -113,7 +113,7 @@ with d2l.Benchmark():
     npx.waitall()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 with d2l.Benchmark():
     for _ in range(10):
@@ -122,7 +122,7 @@ with d2l.Benchmark():
     torch.cuda.synchronize(device)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 with d2l.Benchmark():
     for _ in range(10):
@@ -149,14 +149,14 @@ with d2l.Benchmark():
 
 接下来看看另一个简单例子，以便更好地理解依赖关系图。
 
-```{.python .input}
+```python
 x = np.ones((1, 2))
 y = np.ones((1, 2))
 z = x * y + 2
 z
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 x = torch.ones((1, 2), device=device)
 y = torch.ones((1, 2), device=device)
@@ -164,7 +164,7 @@ z = x * y + 2
 z
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 x = paddle.ones((1, 2))
 y = paddle.ones((1, 2))
@@ -191,7 +191,7 @@ z
 接下来看看这在实践中是如何运作的。
 :end_tab:
 
-```{.python .input}
+```python
 with d2l.Benchmark('waitall'):
     b = np.dot(a, a)
     npx.waitall()
@@ -207,7 +207,7 @@ with d2l.Benchmark('wait_to_read'):
 频繁地将少量数据从MXNet的作用域复制到NumPy，可能会破坏原本高效代码的性能，因为每一个这样的操作都需要使用计算图来求得所有的中间结果，从而获得相关项，然后才能做其他事情。
 :end_tab:
 
-```{.python .input}
+```python
 with d2l.Benchmark('numpy conversion'):
     b = np.dot(a, a)
     b.asnumpy()
@@ -223,7 +223,7 @@ with d2l.Benchmark('scalar conversion'):
 在重度多线程的系统中（即使普通笔记本电脑也有4个或更多线程，然而在多插槽服务器上这个数字可能超过256），调度操作的开销可能会变得非常大。这也是极度希望计算和调度是异步和并行的原因。为了说明这样做的好处，让我们看看按顺序（同步执行）或异步执行多次将变量递增$1$会发生什么情况。这里通过在每个加法之间插入`wait_to_read`障碍器来模拟同步执行。
 :end_tab:
 
-```{.python .input}
+```python
 with d2l.Benchmark('synchronous'):
     for _ in range(10000):
         y = x + 1

@@ -8,26 +8,26 @@
 我们将继续使用Fashion-MNIST图像分类数据集
 （ :numref:`sec_fashion_mnist`）。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, np, npx
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -36,7 +36,7 @@ import paddle
 from paddle import nn
 ```
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
@@ -60,7 +60,7 @@ $28 \times 28 = 784$个灰度像素值组成。
 注意，对于每一层我们都要记录一个权重矩阵和一个偏置向量。
 跟以前一样，我们要为损失关于这些参数的梯度分配内存。
 
-```{.python .input}
+```python
 num_inputs, num_outputs, num_hiddens = 784, 10, 256
 
 W1 = np.random.normal(scale=0.01, size=(num_inputs, num_hiddens))
@@ -73,7 +73,7 @@ for param in params:
     param.attach_grad()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_inputs, num_outputs, num_hiddens = 784, 10, 256
 
@@ -87,7 +87,7 @@ b2 = nn.Parameter(torch.zeros(num_outputs, requires_grad=True))
 params = [W1, b1, W2, b2]
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_inputs, num_outputs, num_hiddens = 784, 10, 256
 
@@ -101,7 +101,7 @@ b2 = tf.Variable(tf.zeros(num_outputs))
 params = [W1, b1, W2, b2]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_inputs, num_outputs, num_hiddens = 784, 10, 256
 
@@ -123,25 +123,25 @@ params = [W1, b1, W2, b2]
 我们将[**实现ReLU激活函数**]，
 而不是直接调用内置的`relu`函数。
 
-```{.python .input}
+```python
 def relu(X):
     return np.maximum(X, 0)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def relu(X):
     a = torch.zeros_like(X)
     return torch.max(X, a)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def relu(X):
     return tf.math.maximum(X, 0)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def relu(X):
     a = paddle.zeros_like(X)
@@ -154,14 +154,14 @@ def relu(X):
 所以我们使用`reshape`将每个二维图像转换为一个长度为`num_inputs`的向量。
 只需几行代码就可以(**实现我们的模型**)。
 
-```{.python .input}
+```python
 def net(X):
     X = d2l.reshape(X, (-1, num_inputs))
     H = relu(np.dot(X, W1) + b1)
     return np.dot(H, W2) + b2
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def net(X):
     X = d2l.reshape(X, (-1, num_inputs))
@@ -169,7 +169,7 @@ def net(X):
     return (H@W2 + b2)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def net(X):
     X = d2l.reshape(X, (-1, num_inputs))
@@ -177,7 +177,7 @@ def net(X):
     return tf.matmul(H, W2) + b2
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 def net(X):
     X = X.reshape((-1, num_inputs))
@@ -193,16 +193,16 @@ def net(X):
 对这些复杂问题的讨论。
 我们鼓励感兴趣的读者查看损失函数的源代码，以加深对实现细节的了解。
 
-```{.python .input}
+```python
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 loss = nn.CrossEntropyLoss(reduction='none')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def loss(y_hat, y):
     return tf.losses.sparse_categorical_crossentropy(
@@ -215,27 +215,27 @@ def loss(y_hat, y):
 可以直接调用`d2l`包的`train_ch3`函数（参见 :numref:`sec_softmax_scratch` ），
 将迭代周期数设置为10，并将学习率设置为0.1.
 
-```{.python .input}
+```python
 num_epochs, lr = 10, 0.1
 d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs,
               lambda batch_size: d2l.sgd(params, lr, batch_size))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_epochs, lr = 10, 0.1
 updater = torch.optim.SGD(params, lr=lr)
 d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, updater)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 num_epochs, lr = 10, 0.1
 updater = d2l.Updater([W1, W2, b1, b2], lr)
 d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, updater)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 num_epochs, lr = 10, 0.1
 updater = paddle.optimizer.SGD(learning_rate=lr, parameters=params)
@@ -244,7 +244,7 @@ d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, updater)
 
 为了对学习到的模型进行评估，我们将[**在一些测试数据上应用这个模型**]。
 
-```{.python .input}
+```python
 #@tab all
 d2l.predict_ch3(net, test_iter)
 ```

@@ -104,7 +104,7 @@ and positional encoding in :numref:`subsec_positional-encoding`.
 In the following,
 we will implement the rest of the Transformer model.
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 import math
 from mxnet import autograd, np, npx
@@ -113,7 +113,7 @@ import pandas as pd
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import math
@@ -136,7 +136,7 @@ will be transformed by a two-layer MLP into
 an output tensor of shape
 (batch size, number of time steps, `ffn_num_outputs`).
 
-```{.python .input}
+```python
 #@save
 class PositionWiseFFN(nn.Block):
     def __init__(self, ffn_num_hiddens, ffn_num_outputs, **kwargs):
@@ -149,7 +149,7 @@ class PositionWiseFFN(nn.Block):
         return self.dense2(self.dense1(X))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class PositionWiseFFN(nn.Module):
@@ -174,13 +174,13 @@ at all the positions,
 when the inputs at all these positions are the same,
 their outputs are also identical.
 
-```{.python .input}
+```python
 ffn = PositionWiseFFN(4, 8)
 ffn.initialize()
 ffn(np.ones((2, 3, 4)))[0]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 ffn = PositionWiseFFN(4, 4, 8)
 ffn.eval()
@@ -217,7 +217,7 @@ The following code snippet
 compares the normalization across different dimensions
 by layer normalization and batch normalization.
 
-```{.python .input}
+```python
 ln = nn.LayerNorm()
 ln.initialize()
 bn = nn.BatchNorm()
@@ -228,7 +228,7 @@ with autograd.record():
     print('layer norm:', ln(X), '\nbatch norm:', bn(X))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 ln = nn.LayerNorm(2)
 bn = nn.BatchNorm1d(2)
@@ -241,7 +241,7 @@ Now we can implement the `AddNorm` class
 using a residual connection followed by layer normalization.
 Dropout is also applied for regularization.
 
-```{.python .input}
+```python
 #@save
 class AddNorm(nn.Block):
     def __init__(self, dropout, **kwargs):
@@ -253,7 +253,7 @@ class AddNorm(nn.Block):
         return self.ln(self.dropout(Y) + X)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class AddNorm(nn.Module):
@@ -270,13 +270,13 @@ The residual connection requires that
 the two inputs are of the same shape
 so that the output tensor also has the same shape after the addition operation.
 
-```{.python .input}
+```python
 add_norm = AddNorm(0.5)
 add_norm.initialize()
 add_norm(d2l.ones((2, 3, 4)), d2l.ones((2, 3, 4))).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 add_norm = AddNorm([3, 4], 0.5) # Normalized_shape is input.size()[1:]
 add_norm.eval()
@@ -294,7 +294,7 @@ contains two sublayers: multi-head self-attention and positionwise feed-forward 
 where a residual connection followed by layer normalization is employed
 around both sublayers.
 
-```{.python .input}
+```python
 #@save
 class EncoderBlock(nn.Block):
     def __init__(self, num_hiddens, ffn_num_hiddens, num_heads, dropout,
@@ -311,7 +311,7 @@ class EncoderBlock(nn.Block):
         return self.addnorm2(Y, self.ffn(Y))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class EncoderBlock(nn.Module):
@@ -336,7 +336,7 @@ As we can see,
 any layer in the Transformer encoder
 does not change the shape of its input.
 
-```{.python .input}
+```python
 X = d2l.ones((2, 100, 24))
 valid_lens = d2l.tensor([3, 2])
 encoder_blk = EncoderBlock(24, 48, 8, 0.5)
@@ -344,7 +344,7 @@ encoder_blk.initialize()
 encoder_blk(X, valid_lens).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = d2l.ones((2, 100, 24))
 valid_lens = d2l.tensor([3, 2])
@@ -361,7 +361,7 @@ we multiply values of the learnable input embeddings
 by the square root of the embedding dimension
 to rescale before summing up the input embedding and the positional encoding.
 
-```{.python .input}
+```python
 #@save
 class TransformerEncoder(d2l.Encoder):
     def __init__(self, vocab_size, num_hiddens, ffn_num_hiddens,
@@ -389,7 +389,7 @@ class TransformerEncoder(d2l.Encoder):
         return X
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class TransformerEncoder(d2l.Encoder):
@@ -424,13 +424,13 @@ Below we specify hyperparameters to create a two-layer Transformer encoder.
 The shape of the Transformer encoder output
 is (batch size, number of time steps, `num_hiddens`).
 
-```{.python .input}
+```python
 encoder = TransformerEncoder(200, 24, 48, 8, 2, 0.5)
 encoder.initialize()
 encoder(np.ones((2, 100)), valid_lens).shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 encoder = TransformerEncoder(
     200, 24, 24, 24, 24, [100, 24], 24, 48, 8, 2, 0.5)
@@ -478,7 +478,7 @@ only attends to
 all positions in the decoder
 up to the query position.
 
-```{.python .input}
+```python
 class DecoderBlock(nn.Block):
     # The `i`-th block in the decoder
     def __init__(self, num_hiddens, ffn_num_hiddens, num_heads,
@@ -526,7 +526,7 @@ class DecoderBlock(nn.Block):
         return self.addnorm3(Z, self.ffn(Z)), state
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class DecoderBlock(nn.Module):
     # The `i`-th block in the decoder
@@ -582,7 +582,7 @@ and addition operations in the residual connections,
 the feature dimension (`num_hiddens`) of the decoder is
 the same as that of the encoder.
 
-```{.python .input}
+```python
 decoder_blk = DecoderBlock(24, 48, 8, 0.5, 0)
 decoder_blk.initialize()
 X = np.ones((2, 100, 24))
@@ -590,7 +590,7 @@ state = [encoder_blk(X, valid_lens), valid_lens, [None]]
 decoder_blk(X, state)[0].shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 decoder_blk = DecoderBlock(24, 24, 24, 24, [100, 24], 24, 48, 8, 0.5, 0)
 decoder_blk.eval()
@@ -608,7 +608,7 @@ Both of the decoder self-attention weights
 and the encoder-decoder attention weights
 are stored for later visualization.
 
-```{.python .input}
+```python
 class TransformerDecoder(d2l.AttentionDecoder):
     def __init__(self, vocab_size, num_hiddens, ffn_num_hiddens,
                  num_heads, num_layers, dropout, **kwargs):
@@ -645,7 +645,7 @@ class TransformerDecoder(d2l.AttentionDecoder):
         return self._attention_weights
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class TransformerDecoder(d2l.AttentionDecoder):
     def __init__(self, vocab_size, key_size, query_size, value_size,
@@ -696,7 +696,7 @@ Similar to :numref:`sec_seq2seq_training`,
 we train the Transformer model
 for sequence to sequence learning on the English-French machine translation dataset.
 
-```{.python .input}
+```python
 num_hiddens, num_layers, dropout, batch_size, num_steps = 32, 2, 0.1, 64, 10
 lr, num_epochs, device = 0.005, 200, d2l.try_gpu()
 ffn_num_hiddens, num_heads = 64, 4
@@ -713,7 +713,7 @@ net = d2l.EncoderDecoder(encoder, decoder)
 d2l.train_seq2seq(net, train_iter, lr, num_epochs, tgt_vocab, device)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 num_hiddens, num_layers, dropout, batch_size, num_steps = 32, 2, 0.1, 64, 10
 lr, num_epochs, device = 0.005, 200, d2l.try_gpu()
@@ -739,7 +739,7 @@ After training,
 we use the Transformer model
 to translate a few English sentences into French and compute their BLEU scores.
 
-```{.python .input}
+```python
 #@tab all
 engs = ['go .', "i lost .", 'he\'s calm .', 'i\'m home .']
 fras = ['va !', 'j\'ai perdu .', 'il est calme .', 'je suis chez moi .']
@@ -754,7 +754,7 @@ Let us visualize the Transformer attention weights when translating the last Eng
 The shape of the encoder self-attention weights
 is (number of encoder layers, number of attention heads, `num_steps` or number of queries, `num_steps` or number of key-value pairs).
 
-```{.python .input}
+```python
 #@tab all
 enc_attention_weights = d2l.reshape(
     d2l.concat(net.encoder.attention_weights, 0),
@@ -773,13 +773,13 @@ are presented row by row.
 Each head independently attends
 based on a separate representation subspaces of queries, keys, and values.
 
-```{.python .input}
+```python
 d2l.show_heatmaps(
     enc_attention_weights, xlabel='Key positions', ylabel='Query positions',
     titles=['Head %d' % i for i in range(1, 5)], figsize=(7, 3.5))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 d2l.show_heatmaps(
     enc_attention_weights.cpu(), xlabel='Key positions',
@@ -798,7 +798,7 @@ both have the same queries:
 the beginning-of-sequence token followed by
 the output tokens.
 
-```{.python .input}
+```python
 dec_attention_weights_2d = [d2l.tensor(head[0]).tolist()
                             for step in dec_attention_weight_seq
                             for attn in step for blk in attn for head in blk]
@@ -811,7 +811,7 @@ dec_self_attention_weights, dec_inter_attention_weights = \
 dec_self_attention_weights.shape, dec_inter_attention_weights.shape
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 dec_attention_weights_2d = [head[0].tolist()
                             for step in dec_attention_weight_seq
@@ -828,7 +828,7 @@ dec_self_attention_weights.shape, dec_inter_attention_weights.shape
 Due to the auto-regressive property of the decoder self-attention,
 no query attends to key-value pairs after the query position.
 
-```{.python .input}
+```python
 #@tab all
 # Plus one to include the beginning-of-sequence token
 d2l.show_heatmaps(
@@ -842,7 +842,7 @@ via the specified valid length of the input sequence,
 no query from the output sequence
 attends to those padding tokens from the input sequence.
 
-```{.python .input}
+```python
 #@tab all
 d2l.show_heatmaps(
     dec_inter_attention_weights, xlabel='Key positions',

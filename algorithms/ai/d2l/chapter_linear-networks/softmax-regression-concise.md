@@ -9,27 +9,27 @@
 本节如在 :numref:`sec_softmax_scratch`中一样，
 继续使用Fashion-MNIST数据集，并保持批量大小为256。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, init, npx
 from mxnet.gluon import nn
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
 from torch import nn
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -38,7 +38,7 @@ import paddle
 from paddle import nn
 ```
 
-```{.python .input}
+```python
 #@tab all
 batch_size = 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
@@ -54,13 +54,13 @@ train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
 但它是实现深度模型的基础。
 我们仍然以均值0和标准差0.01随机初始化权重。
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nn.Dense(10))
 net.initialize(init.Normal(sigma=0.01))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 # PyTorch不会隐式地调整输入的形状。因此，
 # 我们在线性层前定义了展平层（flatten），来调整网络输入的形状
@@ -73,7 +73,7 @@ def init_weights(m):
 net.apply(init_weights);
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 net = tf.keras.models.Sequential()
 net.add(tf.keras.layers.Flatten(input_shape=(28, 28)))
@@ -81,7 +81,7 @@ weight_initializer = tf.keras.initializers.RandomNormal(mean=0.0, stddev=0.01)
 net.add(tf.keras.layers.Dense(10, kernel_initializer=weight_initializer))
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 net = nn.Sequential(nn.Flatten(), nn.Linear(784, 10))
 
@@ -145,16 +145,16 @@ $$
 而是[**在交叉熵损失函数中传递未规范化的预测，并同时计算softmax及其对数**]，
 这是一种类似["LogSumExp技巧"](https://en.wikipedia.org/wiki/LogSumExp)的聪明方式。
 
-```{.python .input}
+```python
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch, paddle
 loss = nn.CrossEntropyLoss(reduction='none')
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 ```
@@ -164,21 +164,21 @@ loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 在这里，我们(**使用学习率为0.1的小批量随机梯度下降作为优化算法**)。
 这与我们在线性回归例子中的相同，这说明了优化器的普适性。
 
-```{.python .input}
+```python
 trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': 0.1})
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 trainer = torch.optim.SGD(net.parameters(), lr=0.1)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 trainer = tf.keras.optimizers.SGD(learning_rate=.1)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 trainer = paddle.optimizer.SGD(learning_rate=0.1, parameters=net.parameters())
 ```
@@ -188,7 +188,7 @@ trainer = paddle.optimizer.SGD(learning_rate=0.1, parameters=net.parameters())
 接下来我们[**调用**] :numref:`sec_softmax_scratch`中(~~之前~~)
 (**定义的训练函数来训练模型**)。
 
-```{.python .input}
+```python
 #@tab all
 num_epochs = 10
 d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, trainer)

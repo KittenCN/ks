@@ -23,7 +23,7 @@
 [**最重要的语义分割数据集之一是[Pascal VOC2012](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/)。**]
 下面我们深入了解一下这个数据集。
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import gluon, image, np, npx
@@ -32,7 +32,7 @@ import os
 npx.set_np()
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -41,7 +41,7 @@ import torchvision
 import os
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 %matplotlib inline
 from d2l import paddle as d2l
@@ -55,7 +55,7 @@ import os
 数据集的tar文件大约为2GB，所以下载可能需要一段时间。
 提取出的数据集位于`../data/VOCdevkit/VOC2012`。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 d2l.DATA_HUB['voc2012'] = (d2l.DATA_URL + 'VOCtrainval_11-May-2012.tar',
@@ -70,7 +70,7 @@ voc_dir = d2l.download_extract('voc2012', 'VOCdevkit/VOC2012')
 此外，标签中颜色相同的像素属于同一个语义类别。
 下面将`read_voc_images`函数定义为[**将所有输入的图像和标签读入内存**]。
 
-```{.python .input}
+```python
 #@save
 def read_voc_images(voc_dir, is_train=True):
     """读取所有VOC图像并标注"""
@@ -89,7 +89,7 @@ def read_voc_images(voc_dir, is_train=True):
 train_features, train_labels = read_voc_images(voc_dir, True)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def read_voc_images(voc_dir, is_train=True):
@@ -110,7 +110,7 @@ def read_voc_images(voc_dir, is_train=True):
 train_features, train_labels = read_voc_images(voc_dir, True)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def read_voc_images(voc_dir, is_train=True):
@@ -137,13 +137,13 @@ train_features, train_labels = read_voc_images(voc_dir, True)
 下面我们[**绘制前5个输入图像及其标签**]。
 在标签图像中，白色和黑色分别表示边框和背景，而其他颜色则对应不同的类别。
 
-```{.python .input}
+```python
 n = 5
 imgs = train_features[0:n] + train_labels[0:n]
 d2l.show_images(imgs, 2, n);
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 n = 5
 imgs = train_features[0:n] + train_labels[0:n]
@@ -151,7 +151,7 @@ imgs = [img.permute(1,2,0) for img in imgs]
 d2l.show_images(imgs, 2, n);
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 n = 5
 imgs = train_features[0:n] + train_labels[0:n]
@@ -161,7 +161,7 @@ d2l.show_images(imgs, 2, n);
 
 接下来，我们[**列举RGB颜色值和类名**]。
 
-```{.python .input}
+```python
 #@tab all
 #@save
 VOC_COLORMAP = [[0, 0, 0], [128, 0, 0], [0, 128, 0], [128, 128, 0],
@@ -181,7 +181,7 @@ VOC_CLASSES = ['background', 'aeroplane', 'bicycle', 'bird', 'boat',
 通过上面定义的两个常量，我们可以方便地[**查找标签中每个像素的类索引**]。
 我们定义了`voc_colormap2label`函数来构建从上述RGB颜色值到类别索引的映射，而`voc_label_indices`函数将RGB值映射到在Pascal VOC2012数据集中的类别索引。
 
-```{.python .input}
+```python
 #@save
 def voc_colormap2label():
     """构建从RGB到VOC类别索引的映射"""
@@ -200,7 +200,7 @@ def voc_label_indices(colormap, colormap2label):
     return colormap2label[idx]
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def voc_colormap2label():
@@ -220,7 +220,7 @@ def voc_label_indices(colormap, colormap2label):
     return colormap2label[idx]
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def voc_colormap2label():
@@ -242,7 +242,7 @@ def voc_label_indices(colormap, colormap2label):
 
 [**例如**]，在第一张样本图像中，飞机头部区域的类别索引为1，而背景索引为0。
 
-```{.python .input}
+```python
 #@tab all
 y = voc_label_indices(train_labels[0], voc_colormap2label())
 y[105:115, 130:140], VOC_CLASSES[1]
@@ -256,7 +256,7 @@ y[105:115, 130:140], VOC_CLASSES[1]
 为了避免这个问题，我们将图像裁剪为固定尺寸，而不是再缩放。
 具体来说，我们[**使用图像增广中的随机裁剪，裁剪输入图像和标签的相同区域**]。
 
-```{.python .input}
+```python
 #@save
 def voc_rand_crop(feature, label, height, width):
     """随机裁剪特征和标签图像"""
@@ -265,7 +265,7 @@ def voc_rand_crop(feature, label, height, width):
     return feature, label
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def voc_rand_crop(feature, label, height, width):
@@ -277,7 +277,7 @@ def voc_rand_crop(feature, label, height, width):
     return feature, label
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def voc_rand_crop(feature, label, height, width):
@@ -289,14 +289,14 @@ def voc_rand_crop(feature, label, height, width):
     return feature, label
 ```
 
-```{.python .input}
+```python
 imgs = []
 for _ in range(n):
     imgs += voc_rand_crop(train_features[0], train_labels[0], 200, 300)
 d2l.show_images(imgs[::2] + imgs[1::2], 2, n);
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 imgs = []
 for _ in range(n):
@@ -306,7 +306,7 @@ imgs = [img.permute(1, 2, 0) for img in imgs]
 d2l.show_images(imgs[::2] + imgs[1::2], 2, n);
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 imgs = []
 for _ in range(n):
@@ -323,7 +323,7 @@ d2l.show_images(imgs[::2] + imgs[1::2], 2, n);
 由于数据集中有些图像的尺寸可能小于随机裁剪所指定的输出尺寸，这些样本可以通过自定义的`filter`函数移除掉。
 此外，我们还定义了`normalize_image`函数，从而对输入图像的RGB三个通道的值分别做标准化。
 
-```{.python .input}
+```python
 #@save
 class VOCSegDataset(gluon.data.Dataset):
     """一个用于加载VOC数据集的自定义数据集"""
@@ -356,7 +356,7 @@ class VOCSegDataset(gluon.data.Dataset):
         return len(self.features)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 class VOCSegDataset(torch.utils.data.Dataset):
@@ -390,7 +390,7 @@ class VOCSegDataset(torch.utils.data.Dataset):
         return len(self.features)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 class VOCSegDataset(paddle.io.Dataset):
@@ -433,7 +433,7 @@ class VOCSegDataset(paddle.io.Dataset):
 假设我们指定随机裁剪的输出图像的形状为$320\times 480$，
 下面我们可以查看训练集和测试集所保留的样本个数。
 
-```{.python .input}
+```python
 #@tab all
 crop_size = (320, 480)
 voc_train = VOCSegDataset(True, crop_size, voc_dir)
@@ -443,7 +443,7 @@ voc_test = VOCSegDataset(False, crop_size, voc_dir)
 设批量大小为64，我们定义训练集的迭代器。
 打印第一个小批量的形状会发现：与图像分类或目标检测不同，这里的标签是一个三维数组。
 
-```{.python .input}
+```python
 batch_size = 64
 train_iter = gluon.data.DataLoader(voc_train, batch_size, shuffle=True,
                                    last_batch='discard',
@@ -454,7 +454,7 @@ for X, Y in train_iter:
     break
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 batch_size = 64
 train_iter = torch.utils.data.DataLoader(voc_train, batch_size, shuffle=True,
@@ -466,7 +466,7 @@ for X, Y in train_iter:
     break
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 batch_size = 64
 train_iter = paddle.io.DataLoader(voc_train, batch_size=batch_size, shuffle=True,
@@ -484,7 +484,7 @@ for X, Y in train_iter:
 最后，我们定义以下`load_data_voc`函数来下载并读取Pascal VOC2012语义分割数据集。
 它返回训练集和测试集的数据迭代器。
 
-```{.python .input}
+```python
 #@save
 def load_data_voc(batch_size, crop_size):
     """加载VOC语义分割数据集"""
@@ -500,7 +500,7 @@ def load_data_voc(batch_size, crop_size):
     return train_iter, test_iter
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def load_data_voc(batch_size, crop_size):
@@ -517,7 +517,7 @@ def load_data_voc(batch_size, crop_size):
     return train_iter, test_iter
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 #@save
 def load_data_voc(batch_size, crop_size):

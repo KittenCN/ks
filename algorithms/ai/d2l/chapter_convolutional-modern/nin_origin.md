@@ -45,7 +45,7 @@ The subsequent window shapes are fixed to $1 \times 1$.
 :width:`600px`
 :label:`fig_nin`
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import np, npx
 from mxnet.gluon import nn
@@ -60,7 +60,7 @@ def nin_block(num_channels, kernel_size, strides, padding):
     return blk
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -74,7 +74,7 @@ def nin_block(in_channels, out_channels, kernel_size, strides, padding):
         nn.Conv2d(out_channels, out_channels, kernel_size=1), nn.ReLU())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 from d2l import tensorflow as d2l
 import tensorflow as tf
@@ -107,7 +107,7 @@ reduces the number of required model parameters.
 However, in practice, this design sometimes requires
 increased model training time.
 
-```{.python .input}
+```python
 net = nn.Sequential()
 net.add(nin_block(96, kernel_size=11, strides=4, padding=0),
         nn.MaxPool2D(pool_size=3, strides=2),
@@ -126,7 +126,7 @@ net.add(nin_block(96, kernel_size=11, strides=4, padding=0),
         nn.Flatten())
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net = nn.Sequential(
     nin_block(1, 96, kernel_size=11, strides=4, padding=0),
@@ -144,7 +144,7 @@ net = nn.Sequential(
     nn.Flatten())
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 def net():
     return tf.keras.models.Sequential([
@@ -167,7 +167,7 @@ def net():
 
 We create a data example to see the output shape of each block.
 
-```{.python .input}
+```python
 X = np.random.uniform(size=(1, 1, 224, 224))
 net.initialize()
 for layer in net:
@@ -175,7 +175,7 @@ for layer in net:
     print(layer.name, 'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 X = torch.rand(size=(1, 1, 224, 224))
 for layer in net:
@@ -183,7 +183,7 @@ for layer in net:
     print(layer.__class__.__name__,'output shape:\t', X.shape)
 ```
 
-```{.python .input}
+```python
 #@tab tensorflow
 X = tf.random.uniform((1, 224, 224, 1))
 for layer in net().layers:
@@ -196,7 +196,7 @@ for layer in net().layers:
 As before we use Fashion-MNIST to train the model.
 NiN's training is similar to that for AlexNet and VGG.
 
-```{.python .input}
+```python
 #@tab all
 lr, num_epochs, batch_size = 0.1, 10, 128
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=224)

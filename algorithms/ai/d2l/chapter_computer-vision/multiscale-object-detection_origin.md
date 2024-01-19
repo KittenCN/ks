@@ -41,7 +41,7 @@ To demonstrate how to generate anchor boxes
 at multiple scales, let us read an image.
 Its height and width are 561 and 728 pixels, respectively.
 
-```{.python .input}
+```python
 %matplotlib inline
 from d2l import mxnet as d2l
 from mxnet import image, np, npx
@@ -53,7 +53,7 @@ h, w = img.shape[:2]
 h, w
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
@@ -93,7 +93,7 @@ Centered on these uniformly sampled pixels,
 anchor boxes of size `s` (assuming the length of the list `s` is 1) and different aspect ratios (`ratios`)
 will be generated.
 
-```{.python .input}
+```python
 def display_anchors(fmap_w, fmap_h, s):
     d2l.set_figsize()
     # Values on the first two dimensions do not affect the output
@@ -104,7 +104,7 @@ def display_anchors(fmap_w, fmap_h, s):
                     anchors[0] * bbox_scale)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def display_anchors(fmap_w, fmap_h, s):
     d2l.set_figsize()
@@ -123,7 +123,7 @@ the anchor box scale is set to 0.15
 and the height and width of the feature map are set to 4. We can see
 that the centers of the anchor boxes in 4 rows and 4 columns on the image are uniformly distributed.
 
-```{.python .input}
+```python
 #@tab all
 display_anchors(fmap_w=4, fmap_h=4, s=[0.15])
 ```
@@ -131,14 +131,14 @@ display_anchors(fmap_w=4, fmap_h=4, s=[0.15])
 We move on to reduce the height and width of the feature map by half and use larger anchor boxes to detect larger objects. When the scale is set to 0.4, 
 some anchor boxes will overlap with each other.
 
-```{.python .input}
+```python
 #@tab all
 display_anchors(fmap_w=2, fmap_h=2, s=[0.4])
 ```
 
 Finally, we further reduce the height and width of the feature map by half and increase the anchor box scale to 0.8. Now the center of the anchor box is the center of the image.
 
-```{.python .input}
+```python
 #@tab all
 display_anchors(fmap_w=1, fmap_h=1, s=[0.8])
 ```

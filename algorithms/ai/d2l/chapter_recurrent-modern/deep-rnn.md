@@ -71,7 +71,7 @@ $$\mathbf{O}_t = \mathbf{H}_t^{(L)} \mathbf{W}_{hq} + \mathbf{b}_q,$$
 而不是使用单一层这个默认值。
 像往常一样，我们从加载数据集开始。
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import npx
 from mxnet.gluon import rnn
@@ -81,7 +81,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -91,7 +91,7 @@ batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 from d2l import paddle as d2l
 import warnings
@@ -108,14 +108,14 @@ train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 隐藏单元的数量仍然是$256$。
 唯一的区别是，我们现在(**通过`num_layers`的值来设定隐藏层数**)。
 
-```{.python .input}
+```python
 vocab_size, num_hiddens, num_layers = len(vocab), 256, 2
 device = d2l.try_gpu()
 lstm_layer = rnn.LSTM(num_hiddens, num_layers)
 model = d2l.RNNModel(lstm_layer, len(vocab))
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 vocab_size, num_hiddens, num_layers = len(vocab), 256, 2
 num_inputs = vocab_size
@@ -125,7 +125,7 @@ model = d2l.RNNModel(lstm_layer, len(vocab))
 model = model.to(device)
 ```
 
-```{.python .input}
+```python
 #@tab paddle
 vocab_size, num_hiddens, num_layers = len(vocab), 256, 2
 num_inputs = vocab_size
@@ -138,7 +138,7 @@ model = d2l.RNNModel(lstm_layer, len(vocab))
 
 由于使用了长短期记忆网络模型来实例化两个层，因此训练速度被大大降低了。
 
-```{.python .input}
+```python
 #@tab all
 num_epochs, lr = 500, 2
 d2l.train_ch8(model, train_iter, vocab, lr*1.0, num_epochs, device)

@@ -29,7 +29,7 @@ choice later.
 ![This section feeds pretrained GloVe to an RNN-based architecture for sentiment analysis.](../img/nlp-map-sa-rnn.svg)
 :label:`fig_nlp-map-sa-rnn`
 
-```{.python .input}
+```python
 from d2l import mxnet as d2l
 from mxnet import gluon, init, np, npx
 from mxnet.gluon import nn, rnn
@@ -39,7 +39,7 @@ batch_size = 64
 train_iter, test_iter, vocab = d2l.load_data_imdb(batch_size)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 from d2l import torch as d2l
 import torch
@@ -74,7 +74,7 @@ is then transformed into output categories
 by a fully connected layer (`self.decoder`)
 with two outputs ("positive" and "negative").
 
-```{.python .input}
+```python
 class BiRNN(nn.Block):
     def __init__(self, vocab_size, embed_size, num_hiddens,
                  num_layers, **kwargs):
@@ -104,7 +104,7 @@ class BiRNN(nn.Block):
         return outs
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 class BiRNN(nn.Module):
     def __init__(self, vocab_size, embed_size, num_hiddens,
@@ -141,17 +141,17 @@ class BiRNN(nn.Module):
 
 Let's construct a bidirectional RNN with two hidden layers to represent single text for sentiment analysis.
 
-```{.python .input}
+```python
 #@tab all
 embed_size, num_hiddens, num_layers, devices = 100, 100, 2, d2l.try_all_gpus()
 net = BiRNN(len(vocab), embed_size, num_hiddens, num_layers)
 ```
 
-```{.python .input}
+```python
 net.initialize(init.Xavier(), ctx=devices)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 def init_weights(m):
     if type(m) == nn.Linear:
@@ -167,7 +167,7 @@ net.apply(init_weights);
 
 Below we load the pretrained 100-dimensional (needs to be consistent with `embed_size`) GloVe embeddings for tokens in the vocabulary.
 
-```{.python .input}
+```python
 #@tab all
 glove_embedding = d2l.TokenEmbedding('glove.6b.100d')
 ```
@@ -175,7 +175,7 @@ glove_embedding = d2l.TokenEmbedding('glove.6b.100d')
 Print the shape of the vectors
 for all the tokens in the vocabulary.
 
-```{.python .input}
+```python
 #@tab all
 embeds = glove_embedding[vocab.idx_to_token]
 embeds.shape
@@ -187,12 +187,12 @@ to represent tokens in the reviews
 and will not update
 these vectors during training.
 
-```{.python .input}
+```python
 net.embedding.weight.set_data(embeds)
 net.embedding.collect_params().setattr('grad_req', 'null')
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 net.embedding.weight.data.copy_(embeds)
 net.embedding.weight.requires_grad = False
@@ -202,14 +202,14 @@ net.embedding.weight.requires_grad = False
 
 Now we can train the bidirectional RNN for sentiment analysis.
 
-```{.python .input}
+```python
 lr, num_epochs = 0.01, 5
 trainer = gluon.Trainer(net.collect_params(), 'adam', {'learning_rate': lr})
 loss = gluon.loss.SoftmaxCrossEntropyLoss()
 d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs, devices)
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 lr, num_epochs = 0.01, 5
 trainer = torch.optim.Adam(net.parameters(), lr=lr)
@@ -219,7 +219,7 @@ d2l.train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs, devices)
 
 We define the following function to predict the sentiment of a text sequence using the trained model `net`.
 
-```{.python .input}
+```python
 #@save
 def predict_sentiment(net, vocab, sequence):
     """Predict the sentiment of a text sequence."""
@@ -228,7 +228,7 @@ def predict_sentiment(net, vocab, sequence):
     return 'positive' if label == 1 else 'negative'
 ```
 
-```{.python .input}
+```python
 #@tab pytorch
 #@save
 def predict_sentiment(net, vocab, sequence):
@@ -240,12 +240,12 @@ def predict_sentiment(net, vocab, sequence):
 
 Finally, let's use the trained model to predict the sentiment for two simple sentences.
 
-```{.python .input}
+```python
 #@tab all
 predict_sentiment(net, vocab, 'this movie is so great')
 ```
 
-```{.python .input}
+```python
 #@tab all
 predict_sentiment(net, vocab, 'this movie is so bad')
 ```
