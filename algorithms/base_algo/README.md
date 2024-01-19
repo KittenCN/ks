@@ -1,8 +1,8 @@
 # algorithms
   
 -   [算法系统](/algorithms/base_algo.md)
-    -   [Hello 算法](/algorithms/hello_algo/)
-    -   [算法笔记](/algorithms/Algorithms_note.md)
+    -   [Hello 算法](/algorithms/base_algo/hello_algo/)
+    -   [算法笔记](/algorithms/base_algo/Algorithms_note.md)
 -   [人工智能](/algorithms/ai.md)
 -   [算法杂谈](/algorithms/other_algo.md)
 
