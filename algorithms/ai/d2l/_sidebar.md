@@ -4,7 +4,7 @@
         -   [前言](/algorithms/ai/d2l/chapter_preface/index)
         -   [安装](/algorithms/ai/d2l/chapter_installation/index)
         -   [符号](/algorithms/ai/d2l/chapter_notation/index)
-        -   [1. 引言](/algorithms//ai/d2l/chapter_introduction/index)
+        -   [1. 引言](/algorithms/ai/d2l/chapter_introduction/index)
         -   [2. 预备知识](/algorithms/ai/d2l/chapter_preliminaries/index)
             -   [2.1. 数据操作](/algorithms/ai/d2l/chapter_preliminaries/ndarray)
             -   [2.2. 数据预处理](/algorithms/ai/d2l/chapter_preliminaries/pandas)
