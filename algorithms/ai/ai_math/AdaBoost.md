@@ -1,0 +1,85 @@
+
+# AdaBoost
+**约定：**
+- <font color=F66A65>红色：</font>对名词进行解释的重点
+- <font color=FDA63E>黄色：</font>各部分总结中的重点
+- <font color=62D257>绿色：</font>算法基本假设与解释
+
+**摘要：**
+1. 详细介绍了算法的各个步骤（[算法过程](#32-算法过程)）
+
+**原理实现：**
+[AdaBoost的决策过程](./Extra6.md)
+
+**目录：**
+[AdaBoost](#AdaBoost)
+
+&emsp;&emsp;[一、一句话概括](#一一句话概括)
+
+&emsp;&emsp;[二、Boosting](#二Boosting)
+
+&emsp;&emsp;&emsp;&emsp;[2.1&nbsp;Boosting类算法发展](#21-Boosting类算法发展)
+
+&emsp;&emsp;&emsp;&emsp;[2.2&nbsp;Boosting的本质](#22-Boosting的本质)
+
+&emsp;&emsp;[三、AdaBoost](#三AdaBoost)
+
+&emsp;&emsp;&emsp;&emsp;[3.1&nbsp;ada的含义](#31-ada的含义)
+
+&emsp;&emsp;&emsp;&emsp;[3.2&nbsp;算法过程](#32-算法过程)
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[3.2.1&nbsp;初始化权重](#321-初始化权重)
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[3.2.2&nbsp;找到最佳分类器](#322-找到最佳分类器)
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[3.2.3&nbsp;计算该分类器权重](#323-计算该分类器权重)
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[3.2.4&nbsp;查看模型总效果](#324-查看模型总效果)
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[3.2.5&nbsp;重新计算数据集中样本的权重](#325-重新计算数据集中样本的权重)
+
+&emsp;&emsp;[四、效率证明](#四效率证明)
+
+&emsp;&emsp;[五、总结](#五总结)
+
+----
+
+## 一、一句话概括
+1995年提出（和作者同龄）的AdaBoost是指：每一轮算法的任务重点关注之前错误比较多的哪些样本。通过赋予样本权重来衡量「之前错误比较多」这件事，错误次数越多，权重越高。
+## 二、Boosting
+### 2.1 Boosting类算法发展
+1. 1990 Schapire
+2. 1993 Drunker 和 Schapire 应用Boosting解决OCR问题
+3. 1995 Freund 和 Schapire 提出AdaBoost
+### 2.2 Boosting的本质
+Boosting意为提升：每个个体学习器都在弥补集成学习器的欠缺
+## 三、AdaBoost
+### 3.1 ada的含义
+ada指的是：样本的权重在不断变化，每一轮重点关注权重比较大的样本（分错了的惩罚会比较高）。这样做的好处是，即使权重低（意味着之前很多模型都分对了）的样本分错了，最后加权的时候，通过其他模型也能把结果拉回来。
+### 3.2 算法过程
+#### 3.2.1 初始化权重
+最开始各样本的权重都是一样的（之后每一轮都会重新计算所有样本的权重）
+$$w_i = \frac{1}{样本数}$$
+#### 3.2.2 找到最佳分类器
+每一轮分类器的目标都是一样的：使得分类错误的样本的权重和最小（这样会使得每一轮的分类器都有一些重点关注的样本）
+#### 3.2.3 计算该分类器权重
+简单粗暴，错的多的话权重低，错的少的话权重高(err是分类错误样本的权重和)
+$$\alpha_i = \frac{1}{2}ln(\frac{1-err}{err})$$
+#### 3.2.4 查看模型总效果
+看一下当前模型（累计的弱分类器）的正确率是否已经达标了（可以提前停止）其中
+$sign(x) = \frac{x}{|x|}$ 也就是说只取最后结果的符号作为分类的依据
+$$predict = sign(w_i * predict_i)$$
+#### 3.2.5 重新计算数据集中样本的权重
+如果不用继续计算，算法停止，如果还需要计算下一轮，重新计算数据的分布
+1. 和之前的权重有关
+2. 和这次的对错有关
+3. 和当前算法的权重有关
+$$sample_i(正确) = w_i * e^{alpha_i * 1}$$  
+$$sample_i(错误) = w_i * e^{alpha_i * (-1)}$$  
+
+计算完成后重新寻找最佳分类器（3.2.3）
+## 四、效率证明
+这部分见《统计学习方法》 目前把这部分用自己的话吃透，先挖个坑。
+## 五、总结
+> 1. AdaBoost提出：可以<font color=FDA63E>给样本以权重，从而随着训练的进行改变了样本的分布</font>
+> 2. 虽然每个模型都能看到所有数据，但<font color=FDA63E>看到的数据的分布不同</font>
