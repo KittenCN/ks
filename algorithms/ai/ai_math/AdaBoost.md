@@ -9,7 +9,7 @@
 1. 详细介绍了算法的各个步骤（[算法过程](#32-算法过程)）
 
 **原理实现：**
-[AdaBoost的决策过程](./Extra6.md)
+[AdaBoost的决策过程](/algorithms/ai/ai_math/Extra6.md)
 
 **目录：**
 [AdaBoost](#AdaBoost)

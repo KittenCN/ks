@@ -13,7 +13,7 @@
 > 1. 集成学习：表示一类算法，该算法并不强调某种算法，而是某种思想：<font color=F66A65>通过将多个弱分类器组合成为一个较强的分类器</font>
 > 2. Bagging/Stacking/Boosting：三种集成学习的「组装」思想，通过将<font color=F66A65>弱分类器怎样的架构排列得到最终的结果</font>的三种方法
 > 3. OOB：Out of Bag，对于Bagging算法特有的一种<font color=F66A65>选取样本做测试的方法</font>（选那些未被选取作为训练数据的样本）
-* 注：Bagging、Stacking和Boosting都是集成学习中组合若分类器的一种方式在[番外-集成学习的讨论](./Extra5.md)中详细解释了三种思想的对比。
+* 注：Bagging、Stacking和Boosting都是集成学习中组合若分类器的一种方式在[番外-集成学习的讨论](/algorithms/ai/ai_math/Extra5.md)中详细解释了三种思想的对比。
 
 **目录：**
 [随机森林](#随机森林)
