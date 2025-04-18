@@ -8,11 +8,11 @@
     -   [图的遍历和图的连通性](/algorithms/other_algo/Graph_traversal_and_graph_connectivity.md)
 
 <br />
-<img  src='./img/bjkb.PNG' width="600" alt="logo">
+<img  src='/img/bjkb.PNG' width="600" alt="logo">
 <br />
 <br />
 <div align="center">
-<img  src='./img/01.jpeg' width="600" alt="logo" />
+<img  src='/img/01.jpeg' width="600" alt="logo" />
 </div>
 <br />
 <br />
