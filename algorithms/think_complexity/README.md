@@ -1,7 +1,7 @@
 # algorithms
 
 <br />
-<img  src='./cover.jpg' width="600" alt="logo">
+<img  src='/algorithms/think_complexity/cover.jpg' width="600" alt="logo">
 <br />
 
 -   [算法系统](/algorithms/base_algo/)
