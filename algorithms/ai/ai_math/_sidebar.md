@@ -12,3 +12,4 @@
         -   [梯度提升树](/algorithms/ai/ai_math/GBDT.md)
         -   [XGBoost](/algorithms/ai/ai_math/XGBoost.md)
 -   [算法杂谈](/algorithms/other_algo/)
+-   [复杂性思维](/algorithms/think_complexity/)

@@ -142,3 +142,4 @@
             -   [16.6. d2l API 文档](/algorithms/ai/d2l/chapter_appendix-tools-for-deep-learning/d2l)
         -   [参考文献](/algorithms/ai/d2l/chapter_references/zreferences)
 -   [算法杂谈](/algorithms/other_algo/)
+-   [复杂性思维](/algorithms/think_complexity/)
