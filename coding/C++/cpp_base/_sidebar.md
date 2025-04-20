@@ -1,5 +1,5 @@
 -   [C++](/coding/C++.md)
-    -   [C++ 基础](/coding/cpp_base/README.md)
+    -   [C++ 基础](/coding/C++/cpp_base/README.md)
         -   [ch00. C++ 基础](/coding/C++/cpp_base/ch00.md)
         -   [ch01. C++ 指针](/coding/C++/cpp_base/ch01.md)  
         -   [ch02. C++ 函数指针与回调函数](/coding/C++/cpp_base/ch02.md)
