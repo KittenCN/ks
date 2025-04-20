@@ -1,0 +1,76 @@
+# coding
+<img  src='/coding/Python/Learn_More_Python_3_The_Hard_Way/cover.jpg' width="600" alt="logo">
+
+- [笨办法学 Python · 续 中文版](/coding/Python/Learn_More_Python_3_The_Hard_Way/READ_ME.md)
+- [引言](/coding/Python/Learn_More_Python_3_The_Hard_Way/intro.md)
+- [第一部分：预备知识](/coding/Python/Learn_More_Python_3_The_Hard_Way/part1.md)
+- [练习 0：起步](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex0.md)
+- [练习 1：流程](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex1.md)
+- [练习 2：创造力](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex2.md)
+- [练习 3：质量](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex3.md)
+- [第二部分：简单的黑魔法](/coding/Python/Learn_More_Python_3_The_Hard_Way/part2.md)
+- [练习 4：处理命令行参数](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex4.md)
+- [练习 5：`cat`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex5.md)
+- [练习 6：`find`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex6.md)
+- [练习 7：`grep`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex7.md)
+- [练习 8：`cut`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex8.md)
+- [练习 9：`sed`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex9.md)
+- [练习 10：`sort`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex10.md)
+- [练习 11：`uniq`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex11.md)
+- [练习 12：复习](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex12.md)
+- [第三部分：数据结构](/coding/Python/Learn_More_Python_3_The_Hard_Way/part3.md)
+- [练习 13：单链表](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex13.md)
+- [练习 14：双链表](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex14.md)
+- [练习 15：栈和队列](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex15.md)
+- [练习 16：冒泡、快速和归并排序](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex16.md)
+- [练习 17：字典](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex17.md)
+- [练习 18：性能测量](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex18.md)
+- [练习 19：改善性能](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex19.md)
+- [练习 20：二叉搜索树](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex20.md)
+- [练习 21：二分搜索](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex21.md)
+- [练习 22：后缀数组](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex22.md)
+- [练习 23：三叉搜索树](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex23.md)
+- [练习 24：URL 快速路由](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex24.md)
+- [第四部分：进阶项目](/coding/Python/Learn_More_Python_3_The_Hard_Way/part4.md)
+- [练习 25：`xargs`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex25.md)
+- [练习 26：`hexdump`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex26.md)
+- [练习 27：`tr`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex27.md)
+- [练习 28：`sh`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex28.md)
+- [练习 29：`diff`和`patch`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex29.md)
+- [第五部分：文本解析](/coding/Python/Learn_More_Python_3_The_Hard_Way/part5.md)
+- [练习 30：有限状态机](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex30.md)
+- [练习 31：正则表达式](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex31.md)
+- [练习 32：扫描器](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex32.md)
+- [练习 33：解析器](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex33.md)
+- [练习 34：分析器](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex34.md)
+- [练习 35：解释器](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex35.md)
+- [练习 36：简单的计算器](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex36.md)
+- [练习 37：小型 BASIC](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex37.md)
+- [第六部分：SQL 和对象关系映射](/coding/Python/Learn_More_Python_3_The_Hard_Way/part6.md)
+- [练习 38：SQL 简介](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex38.md)
+- [练习 39：SQL 创建](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex39.md)
+- [练习 40：SQL 读取](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex40.md)
+- [练习 41：SQL 更新](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex41.md)
+- [练习 42：SQL 删除](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex42.md)
+- [练习 43：SQL 管理](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex43.md)
+- [练习 44：使用 Python 的数据库 API](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex44.md)
+- [练习 45：创建 ORM](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex45.md)
+- [第七部分：大作业](/coding/Python/Learn_More_Python_3_The_Hard_Way/part7.md)
+- [练习 46：`blog`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex46.md)
+- [练习 47：`bc`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex47.md)
+- [练习 48：`ed`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex48.md)
+- [练习 49：`sed`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex49.md)
+- [练习 50：`vi`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex50.md)
+- [练习 51：`lessweb`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex51.md)
+- [练习 52：`moreweb`](/coding/Python/Learn_More_Python_3_The_Hard_Way/ex52.md)
+
+
+<br />
+<img  src='/img/bjkb.PNG' width="600" alt="logo">
+<br />
+<br />
+<div align="center">
+<img  src='/img/01.jpeg' width="600" alt="logo" />
+</div>
+<br />
+<br />

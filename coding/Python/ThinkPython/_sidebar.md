@@ -23,3 +23,4 @@
         - [第十七章 类和方法](/coding/Python/ThinkPython/chapter17.md)
         - [第十八章 继承](/coding/Python/ThinkPython/chapter18.md)
         - [第十九章 更多功能](/coding/Python/ThinkPython/chapter19.md)
+    -   [Learn More Python 3 The Hard Way](/coding/Python/Learn_More_Python_3_The_Hard_Way/README.md)
