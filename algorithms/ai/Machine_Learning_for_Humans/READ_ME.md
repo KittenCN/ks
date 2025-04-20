@@ -1,6 +1,6 @@
 # 写给人类的机器学习
 
-原书：[Machine Learning for Humans](https://medium.com/machine-learning-for-humans/)
+原书：[Machine_Learning_for_Humans](https://medium.com/machine-learning-for-humans/)
 
 译者：[飞龙](https://github.com/wizardforcel)（等）
 

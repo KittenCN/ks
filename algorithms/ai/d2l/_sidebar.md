@@ -141,6 +141,6 @@
             -   [16.5. 为本书做贡献](/algorithms/ai/d2l/chapter_appendix-tools-for-deep-learning/contributing)
             -   [16.6. d2l API 文档](/algorithms/ai/d2l/chapter_appendix-tools-for-deep-learning/d2l)
         -   [参考文献](/algorithms/ai/d2l/chapter_references/zreferences)
-    -   [写给人类的机器学习](/algorithms/ai/Machine%20Learning%20for%20Humans/README.md)
+    -   [写给人类的机器学习](/algorithms/ai/Machine_Learning_for_Humans/README.md)
 -   [算法杂谈](/algorithms/other_algo/)
 -   [复杂性思维](/algorithms/think_complexity/)
