@@ -1,6 +1,7 @@
 # coding
 
 - [Python基础](/coding/Python/python_base/README.md)
+- [ThinkPython](/coding/Python/ThinkPython/README.md)
 
 <br />
 <img  src='/img/bjkb.PNG' width="600" alt="logo">
