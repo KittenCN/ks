@@ -14,5 +14,5 @@
         -   [ch11. CPP 学习笔记](/coding/CPP/cpp_base/ch11.md)
         -   [ch12. CPP 核心编程](/coding/CPP/cpp_base/ch12.md)
         -   [ch13. CPP 深入理解](/coding/CPP/cpp_base/ch13.md)
--   [Java](/coding/java.md)
--   [Python](/coding/python.md)
+-   [Java](/coding/Java.md)
+-   [Python](/coding/Python.md)

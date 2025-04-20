@@ -1,4 +1,4 @@
 -   [CPP](/coding/CPP.md)
--   [Java](/coding/java.md)
--   [Python](/coding/python.md)
+-   [Java](/coding/Java.md)
+-   [Python](/coding/Python.md)
     - [Python基础](/coding/Python/python_base/README.md)

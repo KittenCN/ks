@@ -1,5 +1,5 @@
 -   [CPP](/coding/CPP.md)
--   [Java](/coding/java.md)
+-   [Java](/coding/Java.md)
     -   [Java基础](/coding/Java/java_base/README.md)
         -   [ch01. Java概述](/coding/Java/java_base/ch01.md)
         -   [ch02. Java关键字和保留字](/coding/Java/java_base/ch02.md)
@@ -14,4 +14,4 @@
         -   [ch11. Java面向对象（下）](/coding/Java/java_base/ch11.md)
         -   [ch12. Java异常处理](/coding/Java/java_base/ch12.md)
         -   [ch00. 易错点](/coding/Java/java_base/ch00.md)
--   [Python](/coding/python.md)
+-   [Python](/coding/Python.md)
