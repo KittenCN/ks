@@ -1,4 +1,4 @@
--   [C++](/coding/C++.md)
+-   [CPP](/coding/CPP.md)
 -   [Java](/coding/java.md)
     -   [Java基础](/coding/Java/java_base/README.md)
         -   [ch01. Java概述](/coding/Java/java_base/ch01.md)

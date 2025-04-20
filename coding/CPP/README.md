@@ -1,6 +1,6 @@
 # coding
 
--   [C++基础](/coding/C++/cpp_base/README.md)
+-   [CPP基础](/coding/CPP/cpp_base/README.md)
 
 <br />
 <img  src='/img/bjkb.PNG' width="600" alt="logo">

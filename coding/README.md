@@ -1,6 +1,6 @@
 # coding
   
--   [C++](/coding/C++.md)
+-   [CPP](/coding/CPP.md)
 -   [Java](/coding/java.md)
 -   [Python](/coding/python.md)
 
