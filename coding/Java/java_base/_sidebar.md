@@ -1,6 +1,6 @@
--   [C++](/coding/c++.md)
+-   [C++](/coding/C++.md)
 -   [Java](/coding/java.md)
-    -   [Java基础](/coding/Java/java_base/ReadMe.md)
+    -   [Java基础](/coding/Java/java_base/README.md)
         -   [ch01. Java概述](/coding/Java/java_base/ch01.md)
         -   [ch02. Java关键字和保留字](/coding/Java/java_base/ch02.md)
         -   [ch03. 运算符](/coding/Java/java_base/ch03.md)
