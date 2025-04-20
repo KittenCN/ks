@@ -2,5 +2,6 @@
 -   [人工智能](/algorithms/ai/)
     -   [动手学深度学习](/algorithms/ai/d2l.md)
     -   [常见机器学习算法的数学推导](/algorithms/ai/ai_math/)
+    -   [写给人类的机器学习](/algorithms/ai/Machine_Learning_for_Humans/README.md)
 -   [算法杂谈](/algorithms/other_algo/)
 -   [复杂性思维](/algorithms/think_complexity/)
