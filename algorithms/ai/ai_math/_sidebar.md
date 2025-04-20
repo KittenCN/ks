@@ -11,5 +11,6 @@
         -   [AdaBoost](/algorithms/ai/ai_math/AdaBoost.md)
         -   [梯度提升树](/algorithms/ai/ai_math/GBDT.md)
         -   [XGBoost](/algorithms/ai/ai_math/XGBoost.md)
+    -   [写给人类的机器学习](/algorithms/ai/Machine%20Learning%20for%20Humans/README.md)
 -   [算法杂谈](/algorithms/other_algo/)
 -   [复杂性思维](/algorithms/think_complexity/)
