@@ -16,29 +16,6 @@
 **原理实现：**
 [KNN的手写实现]()
 
-**目录：**
-[K近邻](#K近邻)
-
-&emsp;&emsp;[一、一句话概括](#一一句话概括)
-
-&emsp;&emsp;[二、K近邻计算过程](#二K近邻计算过程)
-
-&emsp;&emsp;&emsp;&emsp;[2.1&nbsp;K值选择](#21-K值选择)
-
-&emsp;&emsp;&emsp;&emsp;[2.2&nbsp;距离计算](#22-距离计算)
-
-&emsp;&emsp;&emsp;&emsp;[2.3&nbsp;决策过程](#23-决策过程)
-
-&emsp;&emsp;[三、空间优化方法](#三空间优化方法)
-
-&emsp;&emsp;&emsp;&emsp;[3.1&nbsp;KD树](#31-KD树)
-
-&emsp;&emsp;&emsp;&emsp;[3.2&nbsp;R树](#32-R树)
-
-&emsp;&emsp;[四、总结](#四总结)
-
-----
-
 ## 一、一句话概括
 基于距离的计算找到最像（距离最近）的k个，在这k个中通过投票进行决策得到结果
 

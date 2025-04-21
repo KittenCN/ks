@@ -1,31 +1,5 @@
 # 决策树计算示例
 > 付尧 PKU 机器学习决策树示例
-## 目录
-[决策树计算示例](#决策树计算示例)
-
-&emsp;&emsp;[一、数据集](#一数据集)
-
-&emsp;&emsp;[二、ID3过程](#二ID3过程)
-
-&emsp;&emsp;&emsp;&emsp;[2.1&nbsp;第一轮计算](#21-第一轮计算)
-
-&emsp;&emsp;&emsp;&emsp;[2.2&nbsp;第一轮计算后的结果](#22-第一轮计算后的结果)
-
-&emsp;&emsp;&emsp;&emsp;[2.3&nbsp;第二轮计算](#23-第二轮计算)
-
-&emsp;&emsp;&emsp;&emsp;[2.4&nbsp;构建树](#24-构建树)
-
-&emsp;&emsp;[三、CART过程](#三CART过程)
-
-&emsp;&emsp;&emsp;&emsp;[3.1&nbsp;第一轮计算](#31-第一轮计算)
-
-&emsp;&emsp;&emsp;&emsp;[3.2&nbsp;第一轮计算后的结果](#32-第一轮计算后的结果)
-
-&emsp;&emsp;&emsp;&emsp;[3.3&nbsp;第二轮计算](#33-第二轮计算)
-
-&emsp;&emsp;&emsp;&emsp;[3.4&nbsp;第三轮计算](#34-第三轮计算)
-
-&emsp;&emsp;&emsp;&emsp;[3.5&nbsp;构建树](#35-构建树)
 ## 一、数据集
 Day     | Weather   |  Temperature | Humidity  |  Wind | Play?
 ----     | ----     | ----     | ----     | --- | ---

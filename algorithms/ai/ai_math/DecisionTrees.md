@@ -23,44 +23,6 @@
 **原理实现：**
 [决策树的实现ID3、C4.5](/algorithms/ai/ai_math/Extra1.md)
 
-**目录：**
-[决策树](#决策树)
-
-&emsp;&emsp;[零、熵](#零熵)
-
-&emsp;&emsp;&emsp;&emsp;[0.0&nbsp;“entropy”与“熵”](#00-“entropy”与“熵”)
-
-&emsp;&emsp;&emsp;&emsp;[0.1&nbsp;熵概念的发展](#01-熵概念的发展)
-
-&emsp;&emsp;&emsp;&emsp;[0.2&nbsp;信息熵的公式](#02-信息熵的公式)
-
-&emsp;&emsp;[一、一句话概括](#一一句话概括)
-
-&emsp;&emsp;[二、特征选择标准与决策树发展](#二特征选择标准与决策树发展)
-
-&emsp;&emsp;&emsp;&emsp;[2.1&nbsp;信息增益与ID3](#21-信息增益与ID3)
-
-&emsp;&emsp;&emsp;&emsp;[2.2&nbsp;信息增益率与C4.5](#22-信息增益率与C45)
-
-&emsp;&emsp;&emsp;&emsp;[2.3&nbsp;GINI系数与CART](#23-GINI系数与CART)
-
-&emsp;&emsp;[三、特征最佳切分点](#三特征最佳切分点)
-
-&emsp;&emsp;[四、工程优化总结](#四工程优化总结)
-
-&emsp;&emsp;[五、剪枝](#五剪枝)
-
-&emsp;&emsp;&emsp;&emsp;[5.1&nbsp;前剪枝](#51-前剪枝)
-
-&emsp;&emsp;&emsp;&emsp;[5.2&nbsp;后剪枝](#52-后剪枝)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[5.2.1&nbsp;C4.5：剪坏了就撤销](#521-C45：剪坏了就撤销)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[5.2.2&nbsp;CART：边剪边保存](#522-CART：边剪边保存)
-
-&emsp;&emsp;[六、总结](#六总结)
-
-----
 ## 零、熵
 > 在开始决策树的部分之前，我决定先花一定篇幅将明白「熵」的概念，这是一个很熟悉但又有些陌生的概念（至少对于我来说），所以把第零章的内容祭奠给这个一直说不清道不明的概念。
 ### 0.0 “entropy”与“熵”

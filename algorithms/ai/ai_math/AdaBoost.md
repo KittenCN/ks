@@ -11,39 +11,6 @@
 **原理实现：**
 [AdaBoost的决策过程](/algorithms/ai/ai_math/Extra6.md)
 
-**目录：**
-[AdaBoost](#AdaBoost)
-
-&emsp;&emsp;[一、一句话概括](#一一句话概括)
-
-&emsp;&emsp;[二、Boosting](#二Boosting)
-
-&emsp;&emsp;&emsp;&emsp;[2.1&nbsp;Boosting类算法发展](#21-Boosting类算法发展)
-
-&emsp;&emsp;&emsp;&emsp;[2.2&nbsp;Boosting的本质](#22-Boosting的本质)
-
-&emsp;&emsp;[三、AdaBoost](#三AdaBoost)
-
-&emsp;&emsp;&emsp;&emsp;[3.1&nbsp;ada的含义](#31-ada的含义)
-
-&emsp;&emsp;&emsp;&emsp;[3.2&nbsp;算法过程](#32-算法过程)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[3.2.1&nbsp;初始化权重](#321-初始化权重)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[3.2.2&nbsp;找到最佳分类器](#322-找到最佳分类器)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[3.2.3&nbsp;计算该分类器权重](#323-计算该分类器权重)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[3.2.4&nbsp;查看模型总效果](#324-查看模型总效果)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[3.2.5&nbsp;重新计算数据集中样本的权重](#325-重新计算数据集中样本的权重)
-
-&emsp;&emsp;[四、效率证明](#四效率证明)
-
-&emsp;&emsp;[五、总结](#五总结)
-
-----
-
 ## 一、一句话概括
 1995年提出（和作者同龄）的AdaBoost是指：每一轮算法的任务重点关注之前错误比较多的哪些样本。通过赋予样本权重来衡量「之前错误比较多」这件事，错误次数越多，权重越高。
 ## 二、Boosting

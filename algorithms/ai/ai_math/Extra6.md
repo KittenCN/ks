@@ -1,25 +1,5 @@
 # AdaBoost计算示例
 > 付尧 PKU 机器学习AdaBoost示例
-## 目录
-[AdaBoost计算示例](#AdaBoost计算示例)
-
-&emsp;&emsp;[目录](#目录)
-
-&emsp;&emsp;[一、数据集](#一数据集)
-
-&emsp;&emsp;[二、AdaBoost过程](#二AdaBoost过程)
-
-&emsp;&emsp;&emsp;&emsp;[2.1&nbsp;初始化权重](#21-初始化权重)
-
-&emsp;&emsp;&emsp;&emsp;[2.2&nbsp;训练第一个分类器](#22-训练第一个分类器)
-
-&emsp;&emsp;&emsp;&emsp;[2.3&nbsp;训练第二个分类器](#23-训练第二个分类器)
-
-&emsp;&emsp;&emsp;&emsp;[2.4&nbsp;训练第三个分类器](#24-训练第三个分类器)
-
-&emsp;&emsp;[三、代码附录](#三代码附录)
-
----
 ## 一、数据集
 Index     | X1   |  X2 | Y  
 ----     | ----     | ----     | ----     

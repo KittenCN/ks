@@ -20,33 +20,6 @@
 **原理实现：**
 [基于梯度下降的线性回归]()
 
-**目录：**
-[线性回归](#线性回归)
-
-&emsp;&emsp;[一、线性回归目的](#一线性回归目的)
-
-&emsp;&emsp;[二、线性回归损失函数](#二线性回归损失函数)
-
-&emsp;&emsp;&emsp;&emsp;[2.1&nbsp;最小二乘法&nbsp;LMS](#21-最小二乘法-LMS)
-
-&emsp;&emsp;&emsp;&emsp;[2.2&nbsp;极大似然估计](#22-极大似然估计)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[2.2.1&nbsp;背景补充：似然函数&nbsp;likelyhood&nbsp;function](#221-背景补充：似然函数-likelyhood-function)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[2.2.2&nbsp;背景补充：极大似然估计假设](#222-背景补充：极大似然估计假设)
-
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;[2.2.3&nbsp;极大似然估计过程](#223-极大似然估计过程)
-
-&emsp;&emsp;[三、损失函数求解](#三损失函数求解)
-
-&emsp;&emsp;&emsp;&emsp;[3.1&nbsp;正规解](#31-正规解)
-
-&emsp;&emsp;&emsp;&emsp;[3.2&nbsp;梯度下降](#32-梯度下降)
-
-&emsp;&emsp;[四、总结](#四总结)
-
-----
-
 ## 一、线性回归目的
 找到一个线性模型对已知数据进行线性拟合，并期望能很好的泛化到未知的数据上
 ## 二、线性回归损失函数

@@ -15,28 +15,6 @@
 > 3. OOB：Out of Bag，对于Bagging算法特有的一种<font color=F66A65>选取样本做测试的方法</font>（选那些未被选取作为训练数据的样本）
 * 注：Bagging、Stacking和Boosting都是集成学习中组合若分类器的一种方式在[番外-集成学习的讨论](/algorithms/ai/ai_math/Extra5.md)中详细解释了三种思想的对比。
 
-**目录：**
-[随机森林](#随机森林)
-
-&emsp;&emsp;[一、一句话概括](#一一句话概括)
-
-&emsp;&emsp;[二、随机森林](#二随机森林)
-
-&emsp;&emsp;&emsp;&emsp;[2.1&nbsp;随机](#21-随机)
-
-&emsp;&emsp;&emsp;&emsp;[2.2&nbsp;森林](#22-森林)
-
-&emsp;&emsp;&emsp;&emsp;[2.3&nbsp;算法过程](#23-算法过程)
-
-&emsp;&emsp;[三、算法评价（OOB）](#三算法评价（OOB）)
-
-&emsp;&emsp;&emsp;&emsp;[3.1&nbsp;OOB问题](#31-OOB问题)
-
-&emsp;&emsp;&emsp;&emsp;[3.2&nbsp;通过OOB挑选“测试集”](#32-通过OOB挑选“测试集”)
-
-&emsp;&emsp;[四、总结](#四总结)
-
-----
 ## 一、一句话概括
 集成学习中最出名的算法，也是一种典型的bagging方法：通过随机的方法构建多个决策树组成森林，进行投票表决的方法得到最终的结果。有放回抽样随机选择样本数据，随机选择特征，通过这两种随机保证各个基础的弱分类器之间的差异。
 
