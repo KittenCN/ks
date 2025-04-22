@@ -76,16 +76,18 @@ $$g(D, Wind) = g(D, Humidity) = g(D, Temperature)$$
 
 ### 2.4 构建树
 经过两轮划分后，得到最终树，逻辑如下：
+
 1. Weather==Cloudy -> Yes
-2. (Weather==Sunny && Temperature==Hot) -> No
-3. (Weather==Sunny && Temperature==Mild) -> Yes
-4. (Weather==Rainy && Wind==Strong) -> No
-5. (Weather==Rainy && Wind==Weak) -> Yes
+2. (Weather\==Sunny && Temperature==Hot) -> No
+3. (Weather\==Sunny && Temperature==Mild) -> Yes
+4. (Weather\==Rainy && Wind==Strong) -> No
+5. (Weather\==Rainy && Wind==Weak) -> Yes
 
 ## 三、CART过程
 > 指导思想：通过「GINI系数进行维度排序」(找最小的)，需要「对维度项寻找合适切分点」构建二叉树（离散值用OVR思想，连续值排序后用均值思想），直到不可再分或GINI系数低于阈值
 ### 3.1 第一轮计算
 1. Weather维度GINI系数
+
 $$GINI(D,Weather=Sunny)=\frac{3}{10} * [2*\frac{1}{3}(1-\frac{1}{3})] + \frac{7}{10} * [2*\frac{4}{7}(1-\frac{4}{7})]=0.476$$
 
 $$GINI(D,Weather=Cloudy)=\frac{3}{10} * [2*\frac{3}{3}(1-\frac{3}{3})] + \frac{7}{10} * [2*\frac{2}{7}(1-\frac{2}{7})]=0.286$$
@@ -94,6 +96,7 @@ $$GINI(D,Weather=Rainy)=\frac{4}{10} * [2*\frac{1}{4}(1-\frac{1}{4})] + \frac{6}
 > 总结：比较后以Cloudy（0.286）作为 Weather的GINI系数
 
 2. 其他维度基尼系数同理（Humidity和Wind不用考虑切分点）：
+
 $$GINI(D,Temperature)=(D,Temperature=Cool)=0.444（其他两项为0.5和0.48）$$
 $$GINI(D,Humidity)=0.476$$
 $$GINI(D,Wind)=0.417$$
@@ -151,7 +154,7 @@ $$GINI(D,Wind)=0.333$$
 
 > 总结1：此时，选择Humidity 或 Wind均可，无须再讨论最优切分点\
 > 总结2：本例中选择 Humidity 作为最优特征
-> 总结3：Humidity==Normal 标签为yes，Humidity!=Normal  Wind==Strong 标签为yes，Wind!=Strong 标签为No
+> 总结3：Humidity\==Normal 标签为yes，Humidity!=Normal  Wind==Strong 标签为yes，Wind!=Strong 标签为No
 
 ### 3.5 构建树
 经过三轮划分后，得到最终树，逻辑如下：
