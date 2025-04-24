@@ -18,6 +18,7 @@
         -   [贪心](/algorithms/base_algo/hello_algo/chapter_greedy/index.md)
         -   [附录](/algorithms/base_algo/hello_algo/chapter_appendix/index.md)
     -   [算法笔记](/algorithms/base_algo/Algorithms_note.md)
+    -   [ACM算法指南](/algorithms/base_algo/acm-md/README.md)
 -   [人工智能](/algorithms/ai.md)
 -   [算法杂谈](/algorithms/other_algo.md)
 -   [复杂性思维](/algorithms/think_complexity/)
