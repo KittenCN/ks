@@ -2,37 +2,42 @@ name: Build Docs
 
 on:
   push:
-    branches: [ main ]          
-  workflow_dispatch:            
+    branches: [ main ]        # 或 master
+  workflow_dispatch:
+
+permissions:
+  contents: write             # 允许 Action 写入代码库
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+    # 1. 拉代码
+    - uses: actions/checkout@v4
 
-      - name: Use Node.js 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "npm"
+    # 2. Node 环境 & 缓存
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: npm
 
-      - name: Install dependencies
-        run: |
-          npm ci
-          npm install -g honkit            
+    # 3. 安装依赖
+    - run: npm ci
 
-      - name: Build HonKit site
-        env:
-          NODE_OPTIONS: --max-old-space-size=6144 
-        run: |
-          npx honkit build . output
-          ls -R output | head
+    # 4. 生成到 output/
+    - name: Build HonKit
+      env:
+        NODE_OPTIONS: --max-old-space-size=4096
+      run: |
+        npx honkit build . output
+        echo "Built size:"
+        du -sh output
 
-      - name: Upload output artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: site
-          path: output
+    # 5. 把 output/ 变化提交回 main
+    - name: Commit and push output
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "docs: update built site 📚"
+        add_options: "-f output"       
+        branch: ${{ github.ref_name }} 
