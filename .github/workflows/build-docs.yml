@@ -33,15 +33,15 @@ jobs:
           # 给 Node 4 GB 堆，防止大型书 OOM
           NODE_OPTIONS: --max-old-space-size=6144 
         run: |
-          npx honkit build . _book       # <── 关键：-o _book
-          ls -R _book | head               # 看一下目录
+          npx honkit build . output       # <── 关键：-o output
+          ls -R output | head               # 看一下目录
 
       # ---------- 5A. 上传产物（如需人工下载或下游 Job 用） ----------
-      - name: Upload _book artifact
+      - name: Upload output artifact
         uses: actions/upload-artifact@v4
         with:
           name: site
-          path: _book
+          path: output
 
       # ---------- 5B. 自动发布到 GitHub Pages ----------
       # 如果你想用 GitHub Pages，请先在仓库设置里启用 Pages → “Deploy from branch: gh-pages”
@@ -51,7 +51,7 @@ jobs:
       #   uses: peaceiris/actions-gh-pages@v4
       #   with:
       #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: _book
+      #     publish_dir: output
       #     publish_branch: gh-pages   # 目标分支
 
       # ---------- 5C. (可选) 同步到宝塔服务器 ----------
@@ -67,7 +67,7 @@ jobs:
       #     KEY:  ${{ secrets.SCP_KEY }}
       #     # 或使用 PASSWORD 并加 -o PubkeyAuthentication=no
       #   run: |
-      #     tar czf site.tgz _book
+      #     tar czf site.tgz output
       #     scp -P $PORT -i $KEY site.tgz $USER@$HOST:/www/wwwroot/your-site/
       #     ssh -i $KEY -p $PORT $USER@$HOST "cd /www/wwwroot/your-site && tar xzf site.tgz && rm site.tgz"
 
