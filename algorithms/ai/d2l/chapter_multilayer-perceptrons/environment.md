@@ -174,7 +174,7 @@ $P(y \mid \mathbf{x})$的分布可能会因我们的位置不同而得到不同�
 的特征和相关的标签经过迭代，在每一个小批量之后更新模型$f$的参数。
 为了简单起见，我们不考虑正则化，因此极大地降低了训练损失：
 
-$$\mathop{\mathrm{minimize}}_f \frac{1}{n} \sum_{i=1}^n l(f(\mathbf{x}_i), y_i),$$
+$$\mathop{\mathrm{minimize} }_f \frac{1}{n} \sum_{i=1}^n l(f(\mathbf{x}_i), y_i),$$
 :eqlabel:`eq_empirical-risk-min`
 
 其中$l$是损失函数，用来度量：
@@ -213,12 +213,12 @@ $$
 换句话说，我们需要根据数据来自正确分布与来自错误分布的概率之比，
 来重新衡量每个数据样本的权重：
 
-$$\beta_i \stackrel{\mathrm{def}}{=} \frac{p(\mathbf{x}_i)}{q(\mathbf{x}_i)}.$$
+$$\beta_i \stackrel{\mathrm{def} }{=} \frac{p(\mathbf{x}_i)}{q(\mathbf{x}_i)}.$$
 
 将权重$\beta_i$代入到每个数据样本$(\mathbf{x}_i, y_i)$中，
 我们可以使用”加权经验风险最小化“来训练模型：
 
-$$\mathop{\mathrm{minimize}}_f \frac{1}{n} \sum_{i=1}^n \beta_i l(f(\mathbf{x}_i), y_i).$$
+$$\mathop{\mathrm{minimize} }_f \frac{1}{n} \sum_{i=1}^n \beta_i l(f(\mathbf{x}_i), y_i).$$
 :eqlabel:`eq_weighted-empirical-risk-min`
 
 由于不知道这个比率，我们需要估计它。
@@ -295,7 +295,7 @@ $$
 
 这里，重要性权重将对应于标签似然比率
 
-$$\beta_i \stackrel{\mathrm{def}}{=} \frac{p(y_i)}{q(y_i)}.$$
+$$\beta_i \stackrel{\mathrm{def} }{=} \frac{p(y_i)}{q(y_i)}.$$
 
 标签偏移的一个好处是，如果我们在源分布上有一个相当好的模型，
 那么我们可以得到对这些权重的一致估计，而不需要处理周边的其他维度。
@@ -312,7 +312,7 @@ $$\beta_i \stackrel{\mathrm{def}}{=} \frac{p(y_i)}{q(y_i)}.$$
 因为我们无法看到真实环境下的样本的标签，
 除非我们再搭建一个复杂的实时标注流程。
 然而，我们所能做的是将所有模型在测试时的预测取平均数，
-得到平均模型输出$\mu(\hat{\mathbf{y}}) \in \mathbb{R}^k$，
+得到平均模型输出$\mu(\hat{\mathbf{y} }) \in \mathbb{R}^k$，
 其中第$i$个元素$\mu(\hat{y}_i)$是我们模型预测测试集中$i$的总预测分数。
 
 结果表明，如果我们的分类器一开始就相当准确，
@@ -320,13 +320,13 @@ $$\beta_i \stackrel{\mathrm{def}}{=} \frac{p(y_i)}{q(y_i)}.$$
 以及如果标签偏移假设成立（这里最强的假设），
 我们就可以通过求解一个简单的线性系统来估计测试集的标签分布
 
-$$\mathbf{C} p(\mathbf{y}) = \mu(\hat{\mathbf{y}}),$$
+$$\mathbf{C} p(\mathbf{y}) = \mu(\hat{\mathbf{y} }),$$
 
 因为作为一个估计，$\sum_{j=1}^k c_{ij} p(y_j) = \mu(\hat{y}_i)$
 对所有$1 \leq i \leq k$成立，
 其中$p(y_j)$是$k$维标签分布向量$p(\mathbf{y})$的第$j^\mathrm{th}$元素。
 如果我们的分类器一开始就足够精确，那么混淆矩阵$\mathbf{C}$将是可逆的，
-进而我们可以得到一个解$p(\mathbf{y}) = \mathbf{C}^{-1} \mu(\hat{\mathbf{y}})$。
+进而我们可以得到一个解$p(\mathbf{y}) = \mathbf{C}^{-1} \mu(\hat{\mathbf{y} })$。
 
 因为我们观测源数据上的标签，所以很容易估计分布$q(y)$。
 那么对于标签为$y_i$的任何训练样本$i$，

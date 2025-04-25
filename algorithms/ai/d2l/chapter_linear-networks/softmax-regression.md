@@ -121,11 +121,11 @@ softmax函数能够将未规范化的预测变换为非负数并且总和为1，
 为了完成这一目标，我们首先对每个未规范化的预测求幂，这样可以确保输出非负。
 为了确保最终输出的概率值总和为1，我们再让每个求幂后的结果除以它们的总和。如下式：
 
-$$\hat{\mathbf{y}} = \mathrm{softmax}(\mathbf{o})\quad \text{其中}\quad \hat{y}_j = \frac{\exp(o_j)}{\sum_k \exp(o_k)}$$
+$$\hat{\mathbf{y} } = \mathrm{softmax}(\mathbf{o})\quad \text{其中}\quad \hat{y}_j = \frac{\exp(o_j)}{\sum_k \exp(o_k)}$$
 :eqlabel:`eq_softmax_y_and_o`
 
 这里，对于所有的$j$总有$0 \leq \hat{y}_j \leq 1$。
-因此，$\hat{\mathbf{y}}$可以视为一个正确的概率分布。
+因此，$\hat{\mathbf{y} }$可以视为一个正确的概率分布。
 softmax运算不会改变未规范化的预测$\mathbf{o}$之间的大小次序，只会确定分配给每个类别的概率。
 因此，在预测过程中，我们仍然可以用下式来选择最有可能的类别。
 
@@ -148,7 +148,7 @@ $$
 偏置为$\mathbf{b} \in \mathbb{R}^{1\times q}$。
 softmax回归的矢量计算表达式为：
 
-$$ \begin{aligned} \mathbf{O} &= \mathbf{X} \mathbf{W} + \mathbf{b}, \\ \hat{\mathbf{Y}} & = \mathrm{softmax}(\mathbf{O}). \end{aligned} $$
+$$ \begin{aligned} \mathbf{O} &= \mathbf{X} \mathbf{W} + \mathbf{b}, \\ \hat{\mathbf{Y} } & = \mathrm{softmax}(\mathbf{O}). \end{aligned} $$
 :eqlabel:`eq_minibatch_softmax_reg`
 
 相对于一次处理一个样本，
@@ -158,7 +158,7 @@ $$ \begin{aligned} \mathbf{O} &= \mathbf{X} \mathbf{W} + \mathbf{b}, \\ \hat{\ma
 对于$\mathbf{O}$的每一行，我们先对所有项进行幂运算，然后通过求和对它们进行标准化。
 在 :eqref:`eq_minibatch_softmax_reg`中，
 $\mathbf{X} \mathbf{W} + \mathbf{b}$的求和会使用广播机制，
-小批量的未规范化预测$\mathbf{O}$和输出概率$\hat{\mathbf{Y}}$
+小批量的未规范化预测$\mathbf{O}$和输出概率$\hat{\mathbf{Y} }$
 都是形状为$n \times q$的矩阵。
 
 ## 损失函数
@@ -170,7 +170,7 @@ $\mathbf{X} \mathbf{W} + \mathbf{b}$的求和会使用广播机制，
 
 ### 对数似然
 
-softmax函数给出了一个向量$\hat{\mathbf{y}}$，
+softmax函数给出了一个向量$\hat{\mathbf{y} }$，
 我们可以将其视为“对给定任意输入$\mathbf{x}$的每个类的条件概率”。
 例如，$\hat{y}_1$=$P(y=\text{猫} \mid \mathbf{x})$。
 假设整个数据集$\{\mathbf{X}, \mathbf{Y}\}$具有$n$个样本，
@@ -185,12 +185,12 @@ $$
 
 $$
 -\log P(\mathbf{Y} \mid \mathbf{X}) = \sum_{i=1}^n -\log P(\mathbf{y}^{(i)} \mid \mathbf{x}^{(i)})
-= \sum_{i=1}^n l(\mathbf{y}^{(i)}, \hat{\mathbf{y}}^{(i)}),
+= \sum_{i=1}^n l(\mathbf{y}^{(i)}, \hat{\mathbf{y} }^{(i)}),
 $$
 
-其中，对于任何标签$\mathbf{y}$和模型预测$\hat{\mathbf{y}}$，损失函数为：
+其中，对于任何标签$\mathbf{y}$和模型预测$\hat{\mathbf{y} }$，损失函数为：
 
-$$ l(\mathbf{y}, \hat{\mathbf{y}}) = - \sum_{j=1}^q y_j \log \hat{y}_j. $$
+$$ l(\mathbf{y}, \hat{\mathbf{y} }) = - \sum_{j=1}^q y_j \log \hat{y}_j. $$
 :eqlabel:`eq_l_cross_entropy`
 
 在本节稍后的内容会讲到， :eqref:`eq_l_cross_entropy`中的损失函数
@@ -214,7 +214,7 @@ $$ l(\mathbf{y}, \hat{\mathbf{y}}) = - \sum_{j=1}^q y_j \log \hat{y}_j. $$
 
 $$
 \begin{aligned}
-l(\mathbf{y}, \hat{\mathbf{y}}) &=  - \sum_{j=1}^q y_j \log \frac{\exp(o_j)}{\sum_{k=1}^q \exp(o_k)} \\
+l(\mathbf{y}, \hat{\mathbf{y} }) &=  - \sum_{j=1}^q y_j \log \frac{\exp(o_j)}{\sum_{k=1}^q \exp(o_k)} \\
 &= \sum_{j=1}^q y_j \log \sum_{k=1}^q \exp(o_k) - \sum_{j=1}^q y_j o_j\\
 &= \log \sum_{k=1}^q \exp(o_k) - \sum_{j=1}^q y_j o_j.
 \end{aligned}
@@ -223,7 +223,7 @@ $$
 考虑相对于任何未规范化的预测$o_j$的导数，我们得到：
 
 $$
-\partial_{o_j} l(\mathbf{y}, \hat{\mathbf{y}}) = \frac{\exp(o_j)}{\sum_{k=1}^q \exp(o_k)} - y_j = \mathrm{softmax}(\mathbf{o})_j - y_j.
+\partial_{o_j} l(\mathbf{y}, \hat{\mathbf{y} }) = \frac{\exp(o_j)}{\sum_{k=1}^q \exp(o_k)} - y_j = \mathrm{softmax}(\mathbf{o})_j - y_j.
 $$
 
 换句话说，导数是我们softmax模型分配的概率与实际发生的情况（由独热标签向量表示）之间的差异。
@@ -309,7 +309,7 @@ $$H[P] = \sum_j - P(j) \log P(j).$$
 ## 练习
 
 1. 我们可以更深入地探讨指数族与softmax之间的联系。
-    1. 计算softmax交叉熵损失$l(\mathbf{y},\hat{\mathbf{y}})$的二阶导数。
+    1. 计算softmax交叉熵损失$l(\mathbf{y},\hat{\mathbf{y} })$的二阶导数。
     1. 计算$\mathrm{softmax}(\mathbf{o})$给出的分布方差，并与上面计算的二阶导数匹配。
 1. 假设我们有三个类发生的概率相等，即概率向量是$(\frac{1}{3}, \frac{1}{3}, \frac{1}{3})$。
     1. 如果我们尝试为它设计二进制代码，有什么问题？

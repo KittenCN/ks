@@ -117,7 +117,7 @@ import {Consumer} from '../context.js';
                 {state => {
                     state.history.push(this.props.to);
                     return <div>hello world</div>;
-                }}
+                } }
             </Consumer>
         );
     }

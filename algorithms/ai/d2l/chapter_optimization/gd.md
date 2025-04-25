@@ -200,7 +200,7 @@ $$\nabla f(\mathbf{x}) = \bigg[\frac{\partial f(\mathbf{x})}{\partial x_1}, \fra
 和先前单变量的情况一样，我们可以对多变量函数使用相应的泰勒近似来思考。
 具体来说，
 
-$$f(\mathbf{x} + \boldsymbol{\epsilon}) = f(\mathbf{x}) + \mathbf{\boldsymbol{\epsilon}}^\top \nabla f(\mathbf{x}) + \mathcal{O}(\|\boldsymbol{\epsilon}\|^2).$$
+$$f(\mathbf{x} + \boldsymbol{\epsilon}) = f(\mathbf{x}) + \mathbf{\boldsymbol{\epsilon} }^\top \nabla f(\mathbf{x}) + \mathcal{O}(\|\boldsymbol{\epsilon}\|^2).$$
 :eqlabel:`gd-multi-taylor`
 
 换句话说，在$\boldsymbol{\epsilon}$的二阶项中，
@@ -325,7 +325,7 @@ show_trace_2d(f_2d, train_2d(gd_2d, f_grad=f_2d_grad))
 $$f(\mathbf{x} + \boldsymbol{\epsilon}) = f(\mathbf{x}) + \boldsymbol{\epsilon}^\top \nabla f(\mathbf{x}) + \frac{1}{2} \boldsymbol{\epsilon}^\top \nabla^2 f(\mathbf{x}) \boldsymbol{\epsilon} + \mathcal{O}(\|\boldsymbol{\epsilon}\|^3).$$
 :eqlabel:`gd-hot-taylor`
 
-为了避免繁琐的符号，我们将$\mathbf{H} \stackrel{\mathrm{def}}{=} \nabla^2 f(\mathbf{x})$定义为$f$的Hessian，是$d \times d$矩阵。
+为了避免繁琐的符号，我们将$\mathbf{H} \stackrel{\mathrm{def} }{=} \nabla^2 f(\mathbf{x})$定义为$f$的Hessian，是$d \times d$矩阵。
 当$d$的值很小且问题很简单时，$\mathbf{H}$很容易计算。
 但是对于深度神经网络而言，考虑到$\mathbf{H}$可能非常大，
 $\mathcal{O}(d^2)$个条目的存储代价会很高，
@@ -416,7 +416,7 @@ show_trace(newton(0.5), f)
 由于多变量情况下的证明是对以下一维参数情况证明的直接拓展，对我们理解这个问题不能提供更多帮助，因此我们省略了多变量情况的证明。
 
 用$x^{(k)}$表示$x$在第$k^\mathrm{th}$次迭代时的值，
-令$e^{(k)} \stackrel{\mathrm{def}}{=} x^{(k)} - x^*$表示$k^\mathrm{th}$迭代时与最优性的距离。
+令$e^{(k)} \stackrel{\mathrm{def} }{=} x^{(k)} - x^*$表示$k^\mathrm{th}$迭代时与最优性的距离。
 通过泰勒展开，我们得到条件$f'(x^*) = 0$可以写成
 
 $$0 = f'(x^{(k)} - e^{(k)}) = f'(x^{(k)}) - e^{(k)} f''(x^{(k)}) + \frac{1}{2} (e^{(k)})^2 f'''(\xi^{(k)}),$$

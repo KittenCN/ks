@@ -66,17 +66,17 @@ $$H=\frac{1}{2}\sum^N_{i=0}(Xw-y)^2$$
 
 3. 带入  $\epsilon^{(i)} = y^{(i)}-\theta^Tx^{(i)} $   得
 
-   $p\left(y^{(i)} \mid x^{(i)} ; \theta\right)=\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2}}{2 \sigma^{2}}\right)​$     也就是说找到一组 $\theta​$ 和 $x^{(i)}​$  组合可以使得 $y^{i}​$ 的概率最大
+   $p\left(y^{(i)} \mid x^{(i)} ; \theta\right)=\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2} }{2 \sigma^{2} }\right)​$     也就是说找到一组 $\theta​$ 和 $x^{(i)}​$  组合可以使得 $y^{i}​$ 的概率最大
 
 4. 引入似然函数
 
-   $L(\theta) = \prod_{i=1}^mp(y^{(i)}|x^{(i)};\theta)=\prod_{i=1}^m\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2}}{2 \sigma^{2}}\right)​$
+   $L(\theta) = \prod_{i=1}^mp(y^{(i)}|x^{(i)};\theta)=\prod_{i=1}^m\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2} }{2 \sigma^{2} }\right)​$
 
 5. 对似然函数取对数：方便求最大值
 
-   $logL(\theta)=\sum_{i=1}^mlog\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2}}{2 \sigma^{2}}\right)$
+   $logL(\theta)=\sum_{i=1}^mlog\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2} }{2 \sigma^{2} }\right)$
 
-   $logL(\theta) = m \log \frac{1}{\sqrt{2 \pi} \sigma}-\frac{1}{\sigma^{2}} \cdot \frac{1}{2} \sum_{i=1}^{m}\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2}$          去掉前面的常数项
+   $logL(\theta) = m \log \frac{1}{\sqrt{2 \pi} \sigma}-\frac{1}{\sigma^{2} } \cdot \frac{1}{2} \sum_{i=1}^{m}\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2}$          去掉前面的常数项
 
    $logL(\theta)=\frac{1}{2}\sum_{i=1}^m(h_{\theta}(x^{(i)})-y^{(i)})^2$                                      得到最终损失函数
 
@@ -90,7 +90,7 @@ $$H=\frac{1}{2}\sum^N_{i=0}(Xw-y)^2$$
 
 2. 求导：令导函数为零                              复合函数求导
 
-   $\frac{H}{\partial{w}} = 2(Xw-y)X=====0$
+   $\frac{H}{\partial{w} } = 2(Xw-y)X=====0$
 
 3. 想要同乘$x^{-1}​$ ：消掉左侧的X                 $XX^{-1}=0​$       注意$X^{-1}​$不一定存在  必须满秩矩阵才有逆矩阵
 

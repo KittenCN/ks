@@ -92,9 +92,9 @@ $\mathbf{b}_r, \mathbf{b}_z \in \mathbb{R}^{1 \times h}$是偏置参数。
 与 :eqref:`rnn_h_with_state`
 中的常规隐状态更新机制集成，
 得到在时间步$t$的*候选隐状态*（candidate hidden state）
-$\tilde{\mathbf{H}}_t \in \mathbb{R}^{n \times h}$。
+$\tilde{\mathbf{H} }_t \in \mathbb{R}^{n \times h}$。
 
-$$\tilde{\mathbf{H}}_t = \tanh(\mathbf{X}_t \mathbf{W}_{xh} + \left(\mathbf{R}_t \odot \mathbf{H}_{t-1}\right) \mathbf{W}_{hh} + \mathbf{b}_h),$$
+$$\tilde{\mathbf{H} }_t = \tanh(\mathbf{X}_t \mathbf{W}_{xh} + \left(\mathbf{R}_t \odot \mathbf{H}_{t-1}\right) \mathbf{W}_{hh} + \mathbf{b}_h),$$
 :eqlabel:`gru_tilde_H`
 
 其中$\mathbf{W}_{xh} \in \mathbb{R}^{d \times h}$
@@ -122,19 +122,19 @@ $\mathbf{b}_h \in \mathbb{R}^{1 \times h}$是偏置项，
 上述的计算结果只是候选隐状态，我们仍然需要结合更新门$\mathbf{Z}_t$的效果。
 这一步确定新的隐状态$\mathbf{H}_t \in \mathbb{R}^{n \times h}$
 在多大程度上来自旧的状态$\mathbf{H}_{t-1}$和
-新的候选状态$\tilde{\mathbf{H}}_t$。
+新的候选状态$\tilde{\mathbf{H} }_t$。
 更新门$\mathbf{Z}_t$仅需要在
-$\mathbf{H}_{t-1}$和$\tilde{\mathbf{H}}_t$
+$\mathbf{H}_{t-1}$和$\tilde{\mathbf{H} }_t$
 之间进行按元素的凸组合就可以实现这个目标。
 这就得出了门控循环单元的最终更新公式：
 
-$$\mathbf{H}_t = \mathbf{Z}_t \odot \mathbf{H}_{t-1}  + (1 - \mathbf{Z}_t) \odot \tilde{\mathbf{H}}_t.$$
+$$\mathbf{H}_t = \mathbf{Z}_t \odot \mathbf{H}_{t-1}  + (1 - \mathbf{Z}_t) \odot \tilde{\mathbf{H} }_t.$$
 
 每当更新门$\mathbf{Z}_t$接近$1$时，模型就倾向只保留旧状态。
 此时，来自$\mathbf{X}_t$的信息基本上被忽略，
 从而有效地跳过了依赖链条中的时间步$t$。
 相反，当$\mathbf{Z}_t$接近$0$时，
-新的隐状态$\mathbf{H}_t$就会接近候选隐状态$\tilde{\mathbf{H}}_t$。
+新的隐状态$\mathbf{H}_t$就会接近候选隐状态$\tilde{\mathbf{H} }_t$。
 这些设计可以帮助我们处理循环神经网络中的梯度消失问题，
 并更好地捕获时间步距离很长的序列的依赖关系。
 例如，如果整个子序列的所有时间步的更新门都接近于$1$，

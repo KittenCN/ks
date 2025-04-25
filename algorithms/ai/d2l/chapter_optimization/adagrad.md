@@ -6,7 +6,7 @@
 ## 稀疏特征和学习率
 
 假设我们正在训练一个语言模型。
-为了获得良好的准确性，我们大多希望在训练的过程中降低学习率，速度通常为$\mathcal{O}(t^{-\frac{1}{2}})$或更低。
+为了获得良好的准确性，我们大多希望在训练的过程中降低学习率，速度通常为$\mathcal{O}(t^{-\frac{1}{2} })$或更低。
 现在讨论关于稀疏特征（即只在偶尔出现的特征）的模型训练，这对自然语言来说很常见。
 例如，我们看到“预先条件”这个词比“学习”这个词的可能性要小得多。
 但是，它在计算广告学和个性化协同过滤等其他领域也很常见。
@@ -16,7 +16,7 @@
 换句话说，学习率要么对于常见特征而言降低太慢，要么对于不常见特征而言降低太快。
 
 解决此问题的一个方法是记录我们看到特定特征的次数，然后将其用作调整学习率。
-即我们可以使用大小为$\eta_i = \frac{\eta_0}{\sqrt{s(i, t) + c}}$的学习率，而不是$\eta = \frac{\eta_0}{\sqrt{t + c}}$。
+即我们可以使用大小为$\eta_i = \frac{\eta_0}{\sqrt{s(i, t) + c} }$的学习率，而不是$\eta = \frac{\eta_0}{\sqrt{t + c} }$。
 在这里$s(i, t)$计下了我们截至$t$时观察到功能$i$的次数。
 这其实很容易实施且不产生额外损耗。
 
@@ -35,15 +35,15 @@ AdaGrad算法 :cite:`Duchi.Hazan.Singer.2011`通过将粗略的计数器$s(i, t)
 
 正如在 :numref:`sec_momentum`中那样，我们可以根据其特征分解$\mathbf{Q} = \mathbf{U}^\top \boldsymbol{\Lambda} \mathbf{U}$重写这个问题，来得到一个简化得多的问题，使每个坐标都可以单独解出：
 
-$$f(\mathbf{x}) = \bar{f}(\bar{\mathbf{x}}) = \frac{1}{2} \bar{\mathbf{x}}^\top \boldsymbol{\Lambda} \bar{\mathbf{x}} + \bar{\mathbf{c}}^\top \bar{\mathbf{x}} + b.$$
+$$f(\mathbf{x}) = \bar{f}(\bar{\mathbf{x} }) = \frac{1}{2} \bar{\mathbf{x} }^\top \boldsymbol{\Lambda} \bar{\mathbf{x} } + \bar{\mathbf{c} }^\top \bar{\mathbf{x} } + b.$$
 
 在这里我们使用了$\mathbf{x} = \mathbf{U} \mathbf{x}$，且因此$\mathbf{c} = \mathbf{U} \mathbf{c}$。
-修改后优化器为$\bar{\mathbf{x}} = -\boldsymbol{\Lambda}^{-1} \bar{\mathbf{c}}$且最小值为$-\frac{1}{2} \bar{\mathbf{c}}^\top \boldsymbol{\Lambda}^{-1} \bar{\mathbf{c}} + b$。
+修改后优化器为$\bar{\mathbf{x} } = -\boldsymbol{\Lambda}^{-1} \bar{\mathbf{c} }$且最小值为$-\frac{1}{2} \bar{\mathbf{c} }^\top \boldsymbol{\Lambda}^{-1} \bar{\mathbf{c} } + b$。
 这样更容易计算，因为$\boldsymbol{\Lambda}$是一个包含$\mathbf{Q}$特征值的对角矩阵。
 
 如果稍微扰动$\mathbf{c}$，我们会期望在$f$的最小化器中只产生微小的变化。
 遗憾的是，情况并非如此。
-虽然$\mathbf{c}$的微小变化导致了$\bar{\mathbf{c}}$同样的微小变化，但$f$的（以及$\bar{f}$的）最小化器并非如此。
+虽然$\mathbf{c}$的微小变化导致了$\bar{\mathbf{c} }$同样的微小变化，但$f$的（以及$\bar{f}$的）最小化器并非如此。
 每当特征值$\boldsymbol{\Lambda}_i$很大时，我们只会看到$\bar{x}_i$和$\bar{f}$的最小值发声微小变化。
 相反，对小的$\boldsymbol{\Lambda}_i$来说，$\bar{x}_i$的变化可能是剧烈的。
 最大和最小的特征值之比称为优化问题的*条件数*（condition number）。
@@ -52,7 +52,7 @@ $$\kappa = \frac{\boldsymbol{\Lambda}_1}{\boldsymbol{\Lambda}_d}.$$
 
 如果条件编号$\kappa$很大，准确解决优化问题就会很难。
 我们需要确保在获取大量动态的特征值范围时足够谨慎：难道我们不能简单地通过扭曲空间来“修复”这个问题，从而使所有特征值都是$1$？
-理论上这很容易：我们只需要$\mathbf{Q}$的特征值和特征向量即可将问题从$\mathbf{x}$整理到$\mathbf{z} := \boldsymbol{\Lambda}^{\frac{1}{2}} \mathbf{U} \mathbf{x}$中的一个。
+理论上这很容易：我们只需要$\mathbf{Q}$的特征值和特征向量即可将问题从$\mathbf{x}$整理到$\mathbf{z} := \boldsymbol{\Lambda}^{\frac{1}{2} } \mathbf{U} \mathbf{x}$中的一个。
 在新的坐标系中，$\mathbf{x}^\top \mathbf{Q} \mathbf{x}$可以被简化为$\|\mathbf{z}\|^2$。
 可惜，这是一个相当不切实际的想法。
 一般而言，计算特征值和特征向量要比解决实际问题“贵”得多。
@@ -61,24 +61,24 @@ $$\kappa = \frac{\boldsymbol{\Lambda}_1}{\boldsymbol{\Lambda}_d}.$$
 特别是，我们可以使用$\mathbf{Q}$的对角线条目并相应地重新缩放它。
 这比计算特征值开销小的多。
 
-$$\tilde{\mathbf{Q}} = \mathrm{diag}^{-\frac{1}{2}}(\mathbf{Q}) \mathbf{Q} \mathrm{diag}^{-\frac{1}{2}}(\mathbf{Q}).$$
+$$\tilde{\mathbf{Q} } = \mathrm{diag}^{-\frac{1}{2} }(\mathbf{Q}) \mathbf{Q} \mathrm{diag}^{-\frac{1}{2} }(\mathbf{Q}).$$
 
-在这种情况下，我们得到了$\tilde{\mathbf{Q}}_{ij} = \mathbf{Q}_{ij} / \sqrt{\mathbf{Q}_{ii} \mathbf{Q}_{jj}}$，特别注意对于所有$i$，$\tilde{\mathbf{Q}}_{ii} = 1$。
+在这种情况下，我们得到了$\tilde{\mathbf{Q} }_{ij} = \mathbf{Q}_{ij} / \sqrt{\mathbf{Q}_{ii} \mathbf{Q}_{jj} }$，特别注意对于所有$i$，$\tilde{\mathbf{Q} }_{ii} = 1$。
 在大多数情况下，这大大简化了条件数。
 例如我们之前讨论的案例，它将完全消除眼下的问题，因为问题是轴对齐的。
 
 遗憾的是，我们还面临另一个问题：在深度学习中，我们通常情况甚至无法计算目标函数的二阶导数：对于$\mathbf{x} \in \mathbb{R}^d$，即使只在小批量上，二阶导数可能也需要$\mathcal{O}(d^2)$空间来计算，导致几乎不可行。
 AdaGrad算法巧妙的思路是，使用一个代理来表示黑塞矩阵（Hessian）的对角线，既相对易于计算又高效。
 
-为了了解它是如何生效的，让我们来看看$\bar{f}(\bar{\mathbf{x}})$。
+为了了解它是如何生效的，让我们来看看$\bar{f}(\bar{\mathbf{x} })$。
 我们有
 
-$$\partial_{\bar{\mathbf{x}}} \bar{f}(\bar{\mathbf{x}}) = \boldsymbol{\Lambda} \bar{\mathbf{x}} + \bar{\mathbf{c}} = \boldsymbol{\Lambda} \left(\bar{\mathbf{x}} - \bar{\mathbf{x}}_0\right),$$
+$$\partial_{\bar{\mathbf{x} } } \bar{f}(\bar{\mathbf{x} }) = \boldsymbol{\Lambda} \bar{\mathbf{x} } + \bar{\mathbf{c} } = \boldsymbol{\Lambda} \left(\bar{\mathbf{x} } - \bar{\mathbf{x} }_0\right),$$
 
-其中$\bar{\mathbf{x}}_0$是$\bar{f}$的优化器。
+其中$\bar{\mathbf{x} }_0$是$\bar{f}$的优化器。
 因此，梯度的大小取决于$\boldsymbol{\Lambda}$和与最佳值的差值。
-如果$\bar{\mathbf{x}} - \bar{\mathbf{x}}_0$没有改变，那这就是我们所求的。
-毕竟在这种情况下，梯度$\partial_{\bar{\mathbf{x}}} \bar{f}(\bar{\mathbf{x}})$的大小就足够了。
+如果$\bar{\mathbf{x} } - \bar{\mathbf{x} }_0$没有改变，那这就是我们所求的。
+毕竟在这种情况下，梯度$\partial_{\bar{\mathbf{x} } } \bar{f}(\bar{\mathbf{x} })$的大小就足够了。
 由于AdaGrad算法是一种随机梯度下降算法，所以即使是在最佳值中，我们也会看到具有非零方差的梯度。
 因此，我们可以放心地使用梯度的方差作为黑塞矩阵比例的廉价替代。
 详尽的分析（要花几页解释）超出了本节的范围，请读者参考 :cite:`Duchi.Hazan.Singer.2011`。
@@ -89,14 +89,14 @@ $$\partial_{\bar{\mathbf{x}}} \bar{f}(\bar{\mathbf{x}}) = \boldsymbol{\Lambda} \
 我们使用变量$\mathbf{s}_t$来累加过去的梯度方差，如下所示：
 
 $$\begin{aligned}
-    \mathbf{g}_t & = \partial_{\mathbf{w}} l(y_t, f(\mathbf{x}_t, \mathbf{w})), \\
+    \mathbf{g}_t & = \partial_{\mathbf{w} } l(y_t, f(\mathbf{x}_t, \mathbf{w})), \\
     \mathbf{s}_t & = \mathbf{s}_{t-1} + \mathbf{g}_t^2, \\
-    \mathbf{w}_t & = \mathbf{w}_{t-1} - \frac{\eta}{\sqrt{\mathbf{s}_t + \epsilon}} \cdot \mathbf{g}_t.
+    \mathbf{w}_t & = \mathbf{w}_{t-1} - \frac{\eta}{\sqrt{\mathbf{s}_t + \epsilon} } \cdot \mathbf{g}_t.
 \end{aligned}$$
 
 在这里，操作是按照坐标顺序应用。
 也就是说，$\mathbf{v}^2$有条目$v_i^2$。
-同样，$\frac{1}{\sqrt{v}}$有条目$\frac{1}{\sqrt{v_i}}$，
+同样，$\frac{1}{\sqrt{v} }$有条目$\frac{1}{\sqrt{v_i} }$，
 并且$\mathbf{u} \cdot \mathbf{v}$有条目$u_i v_i$。
 与之前一样，$\eta$是学习率，$\epsilon$是一个为维持数值稳定性而添加的常数，用来确保我们不会除以$0$。
 最后，我们初始化$\mathbf{s}_0 = \mathbf{0}$。
@@ -105,7 +105,7 @@ $$\begin{aligned}
 与SGD算法相比，这并没有明显增加AdaGrad的计算代价，因为主要计算用在$l(y_t, f(\mathbf{x}_t, \mathbf{w}))$及其导数。
 
 请注意，在$\mathbf{s}_t$中累加平方梯度意味着$\mathbf{s}_t$基本上以线性速率增长（由于梯度从最初开始衰减，实际上比线性慢一些）。
-这产生了一个学习率$\mathcal{O}(t^{-\frac{1}{2}})$，但是在单个坐标的层面上进行了调整。
+这产生了一个学习率$\mathcal{O}(t^{-\frac{1}{2} })$，但是在单个坐标的层面上进行了调整。
 对于凸问题，这完全足够了。
 然而，在深度学习中，我们可能希望更慢地降低学习率。
 这引出了许多AdaGrad算法的变体，我们将在后续章节中讨论它们。
@@ -294,7 +294,7 @@ d2l.train_concise_ch11(trainer, {'learning_rate': 0.1}, data_iter)
 1. 证明对于正交矩阵$\mathbf{U}$和向量$\mathbf{c}$，以下等式成立：$\|\mathbf{c} - \mathbf{\delta}\|_2 = \|\mathbf{U} \mathbf{c} - \mathbf{U} \mathbf{\delta}\|_2$。为什么这意味着在变量的正交变化之后，扰动的程度不会改变？
 1. 尝试对函数$f(\mathbf{x}) = 0.1 x_1^2 + 2 x_2^2$、以及它旋转45度后的函数即$f(\mathbf{x}) = 0.1 (x_1 + x_2)^2 + 2 (x_1 - x_2)^2$使用AdaGrad算法。它的表现会不同吗？
 1. 证明[格什戈林圆盘定理](https://en.wikipedia.org/wiki/Gershgorin_circle_theorem)，其中提到，矩阵$\mathbf{M}$的特征值$\lambda_i$在至少一个$j$的选项中满足$|\lambda_i - \mathbf{M}_{jj}| \leq \sum_{k \neq j} |\mathbf{M}_{jk}|$的要求。
-1. 关于对角线预处理矩阵$\mathrm{diag}^{-\frac{1}{2}}(\mathbf{M}) \mathbf{M} \mathrm{diag}^{-\frac{1}{2}}(\mathbf{M})$的特征值，格什戈林的定理告诉了我们什么？
+1. 关于对角线预处理矩阵$\mathrm{diag}^{-\frac{1}{2} }(\mathbf{M}) \mathbf{M} \mathrm{diag}^{-\frac{1}{2} }(\mathbf{M})$的特征值，格什戈林的定理告诉了我们什么？
 1. 尝试对适当的深度网络使用AdaGrad算法，例如，:numref:`sec_lenet`中应用于Fashion-MNIST的深度网络。
 1. 要如何修改AdaGrad算法，才能使其在学习率方面的衰减不那么激进？
 

@@ -75,7 +75,7 @@
 
 在许多工作节点和许多GPU中，梯度$i$的计算可以定义为
 
-$$\mathbf{g}_{i} = \sum_{k \in \text{workers}} \sum_{j \in \text{GPUs}} \mathbf{g}_{ijk},$$
+$$\mathbf{g}_{i} = \sum_{k \in \text{workers} } \sum_{j \in \text{GPUs} } \mathbf{g}_{ijk},$$
 
 其中$\mathbf{g}_{ijk}$是在工作节点$k$的GPU$j$上拆分的梯度$i$的一部分。这个运算的关键在于它是一个*交换归约*（commutative reduction），也就是说，它把许多向量变换成一个向量，而运算顺序在完成向量变换时并不重要。这对实现我们的目标来说是非常好的，因为不需要为何时接收哪个梯度进行细粒度的控制。此外，请注意，这个操作在不同的$i$之间是独立的。
 

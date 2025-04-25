@@ -31,7 +31,7 @@
 
 ## 二、概率函数
 ### 2.1 sigmoid推导过程
-$$P(Y=1 \mid x)=\frac{1}{1+e^{-\left(w^{T} x+b\right)}}$$
+$$P(Y=1 \mid x)=\frac{1}{1+e^{-\left(w^{T} x+b\right)} }$$
 以上是通过sigmoid计算的条件概率，式子中的$w^{T} x+b$就是线性回归的输出值。以下是理解sigmoid函数过程
 1. 想让“线性回归”拟合的空间压缩到0到1，最简单的方案是分段函数$$p(y=1 \mid x)=\left\{\begin{array}{ll}0, & z<0 \\ 0.5, & z=0 \\ 1, & z>0\end{array}, \quad z=w^{T} x+b\right.$$
 2. 上式并不好做求解，所以引入“对数几率”的概念\
@@ -41,10 +41,10 @@ $$P(Y=1 \mid x)=\frac{1}{1+e^{-\left(w^{T} x+b\right)}}$$
 
 > 解释：对数几率的好处：是任阶的凸函数，有很多方式可以优化（引入了e）
 3. 带入$p$为后验概率$p(Y=1|X)$有$$w^{T} x+b=\ln \frac{p(Y=1|X)}{1-p(Y=1|X)}$$
-4. 得到披着sigmoid外衣的线性回归：$$P(Y=1 \mid x)=\frac{1}{1+e^{-\left(w^{T} x+b\right)}}$$
+4. 得到披着sigmoid外衣的线性回归：$$P(Y=1 \mid x)=\frac{1}{1+e^{-\left(w^{T} x+b\right)} }$$
 ### 2.2 sigmoid求导过程
 1. sigmoid函数表达式
-$$g(z) = \frac{1}{1+e^{-z}}=(1+e^{-z})^{-1}$$
+$$g(z) = \frac{1}{1+e^{-z} }=(1+e^{-z})^{-1}$$
 
 2. 求导得到表达式：
 $$g'(z)=(-1)*(1+e^{-z})^{-2}*e^{-z}*(-1)​$$
@@ -52,8 +52,8 @@ $$g'(z)=(-1)*(1+e^{-z})^{-2}*e^{-z}*(-1)​$$
 3. 整理得
 $g'(z) = \frac{1}{(1+e^{-z})^2}*(e^{-z})$
 
-4. 拆出一个 $\frac{1}{1+e^{-z}}$ 得
-$$g'(z)=\frac{1}{1+e^{-z}} * (\frac{1}{1+e^{-z}} * e^{-z}) -> g'(z)=\frac{1}{1+e^{-z}} * \frac{e^{-z}}{1+e^{-z}}$$
+4. 拆出一个 $\frac{1}{1+e^{-z} }$ 得
+$$g'(z)=\frac{1}{1+e^{-z} } * (\frac{1}{1+e^{-z} } * e^{-z}) -> g'(z)=\frac{1}{1+e^{-z} } * \frac{e^{-z} }{1+e^{-z} }$$
 
 5. 整理得
 $$g'(z)=g(z)*(1-g(z))$$
@@ -61,7 +61,7 @@ $$g'(z)=g(z)*(1-g(z))$$
 > 1. 逻辑回归是<font color=FDA63E>线性回归对于对数几率的拟合</font>
 > 2. 选择sigmoid函数的另一个大家耳熟能详的原因是，sigmoid由于引入了e，使得<font color=FDA63E>导函数的形式很优雅</font>：$f'(z) = f(z)(1-f(z))$
 ## 2.2 softmax
-$$S_{i}=\frac{e^{V_{i}}}{\sum_{j} e^{V_{j}}}$$
+$$S_{i}=\frac{e^{V_{i} } }{\sum_{j} e^{V_{j} } }$$
 ### 2.2.1 softmax理解过程
 1. 对于一个多分类的概率函数要求：可以一次得到多分类的概率：每个分类概率0-1，加和为1
 2. 可以使用 每个数除以其总数的方法得到，但是有两个问题：不能拉开差距，不方便求导
@@ -75,7 +75,7 @@ $$S_{i}=\frac{e^{V_{i}}}{\sum_{j} e^{V_{j}}}$$
 > 1. softmax中的soft是指将<font color=FDA63E>取最大这件事情通过概率表达出来</font>（这样取出来的最大就不是严格意义上的最大，有一定概率取别的数字）
 > 2. softmax和sigmoid函数一样选择引入e（方便求导）
 ## 三、损失函数：以二分类为例
-$$J(\mathrm{w}, \mathrm{b})=\frac{1}{\mathrm{~m}} \sum_{\mathrm{i}=1}^{\mathrm{m}}\left(-\mathrm{y^{(\mathrm{i})}log}\left(\hat{\mathrm{y}}^{(\mathrm{i})}\right)-\left(1-\mathrm{y}^{(\mathrm{i})}\right) \log \left(1-\hat{\mathrm{y}}^{(\mathrm{i})}\right)\right)$$
+$$J(\mathrm{w}, \mathrm{b})=\frac{1}{\mathrm{~m} } \sum_{\mathrm{i}=1}^{\mathrm{m} }\left(-\mathrm{y^{(\mathrm{i})}log}\left(\hat{\mathrm{y} }^{(\mathrm{i})}\right)-\left(1-\mathrm{y}^{(\mathrm{i})}\right) \log \left(1-\hat{\mathrm{y} }^{(\mathrm{i})}\right)\right)$$
 以上是逻辑回归的损失函数，我们从两个角度理解一下（推导）
 ### 3.1 交叉熵（基于KL散度）
 1. 数学上KL散度衡量了两个分布之间的距离，尤其是离散值的情况，以下是KL散度公式
@@ -98,7 +98,7 @@ $$y=0: \operatorname{p}(\mathrm{y} \mid \mathrm{x})=1-\hat{y}$$
 $$p(y \mid x)=\hat{y}^{y}(1-\hat{y})^{(1-y)}$$
 > 解释：y=1时$\quad p(y \mid x)=\hat{y}$, y=0时，$\operatorname{p}(\mathrm{y} \mid \mathrm{x})=1-\hat{y}$
 3. 此时在一个独立同分布的数据中，可以连乘每个样本的概率得到似然函数
-$$L(\theta)=\prod_{i=1}^{m} P\left(y^{(i)} \mid x^{(i)} ; \theta\right)=\prod_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)\right)^{y^{(i)}}\left(1-h_{\theta}\left(x^{(i)}\right)\right)^{1-y^{(i)}}$$
+$$L(\theta)=\prod_{i=1}^{m} P\left(y^{(i)} \mid x^{(i)} ; \theta\right)=\prod_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)\right)^{y^{(i)} }\left(1-h_{\theta}\left(x^{(i)}\right)\right)^{1-y^{(i)} }$$
 4. 取对数得到对数似然
 $$l(\theta)=\log L(\theta)=\sum_{i=1}^{m}\left(y^{(i)} \log h_{\theta}\left(x^{(i)}\right)+\left(1-y^{(i)}\right) \log \left(1-h_{\theta}\left(x^{(i)}\right)\right)\right)$$
 5. 此时我们的目标就是最大化上面的表达式，如果我们乘以 $\frac{1}{m}$ 就需要最小化表达式了（损失函数）

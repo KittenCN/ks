@@ -1023,11 +1023,11 @@ BLEU的评估都是这个$n$元语法是否出现在标签序列中。
 
 我们将BLEU定义为：
 
-$$ \exp\left(\min\left(0, 1 - \frac{\mathrm{len}_{\text{label}}}{\mathrm{len}_{\text{pred}}}\right)\right) \prod_{n=1}^k p_n^{1/2^n},$$
+$$ \exp\left(\min\left(0, 1 - \frac{\mathrm{len}_{\text{label} } }{\mathrm{len}_{\text{pred} } }\right)\right) \prod_{n=1}^k p_n^{1/2^n},$$
 :eqlabel:`eq_bleu`
 
-其中$\mathrm{len}_{\text{label}}$表示标签序列中的词元数和
-$\mathrm{len}_{\text{pred}}$表示预测序列中的词元数，
+其中$\mathrm{len}_{\text{label} }$表示标签序列中的词元数和
+$\mathrm{len}_{\text{pred} }$表示预测序列中的词元数，
 $k$是用于匹配的最长的$n$元语法。
 另外，用$p_n$表示$n$元语法的精确度，它是两个数量的比值：
 第一个是预测序列与标签序列中匹配的$n$元语法的数量，

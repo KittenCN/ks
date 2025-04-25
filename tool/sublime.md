@@ -31,7 +31,7 @@
 {
     "cmd": ["node", "$file"],
     "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
-    "working_dir": "${project_path:${folder}}",
+    "working_dir": "${project_path:${folder} }",
     "selector": "source.js",
     "shell": true,
     "encoding": "utf-8",
@@ -158,7 +158,7 @@ body {
 
 ```json
 {
-    "jsdocs_extra_tags": ["@Author manji", "@DateTime {{datetime}}", "@version  1.0"]
+    "jsdocs_extra_tags": ["@Author manji", "@DateTime { {datetime} }", "@version  1.0"]
 }
 ```
 

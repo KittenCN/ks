@@ -28,7 +28,7 @@
 对于输出序列的每一时间步$t'$，
 我们都将基于贪心搜索从$\mathcal{Y}$中找到具有最高条件概率的词元，即：
 
-$$y_{t'} = \operatorname*{argmax}_{y \in \mathcal{Y}} P(y \mid y_1, \ldots, y_{t'-1}, \mathbf{c})$$
+$$y_{t'} = \operatorname*{argmax}_{y \in \mathcal{Y} } P(y \mid y_1, \ldots, y_{t'-1}, \mathbf{c})$$
 
 一旦输出序列包含了“&lt;eos&gt;”或者达到其最大长度$T'$，则输出完成。
 

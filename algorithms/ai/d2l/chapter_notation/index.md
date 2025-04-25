@@ -40,13 +40,13 @@
 * $\langle \mathbf{x}, \mathbf{y} \rangle$：向量$\mathbf{x}$和$\mathbf{y}$的点积
 * $\sum$: 连加
 * $\prod$: 连乘
-* $\stackrel{\mathrm{def}}{=}$：定义
+* $\stackrel{\mathrm{def} }{=}$：定义
 
 ## 微积分
 
 * $\frac{dy}{dx}$：$y$关于$x$的导数
 * $\frac{\partial y}{\partial x}$：$y$关于$x$的偏导数
-* $\nabla_{\mathbf{x}} y$：$y$关于$\mathbf{x}$的梯度
+* $\nabla_{\mathbf{x} } y$：$y$关于$\mathbf{x}$的梯度
 * $\int_a^b f(x) \;dx$: $f$在$a$到$b$区间上关于$x$的定积分
 * $\int f(x) \;dx$: $f$关于$x$的不定积分
 
@@ -64,7 +64,7 @@
 * $\mathrm{Cov}(X, Y)$: 随机变量$X$和$Y$的协方差
 * $\rho(X, Y)$: 随机变量$X$和$Y$的相关性
 * $H(X)$: 随机变量$X$的熵
-* $D_{\mathrm{KL}}(P\|Q)$: $P$和$Q$的KL-散度
+* $D_{\mathrm{KL} }(P\|Q)$: $P$和$Q$的KL-散度
 
 ## 复杂度
 

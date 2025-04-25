@@ -302,7 +302,7 @@ def sgd(params, lr, batch_size):
 
 * 初始化参数
 * 重复以下训练，直到完成
-    * 计算梯度$\mathbf{g} \leftarrow \partial_{(\mathbf{w},b)} \frac{1}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} l(\mathbf{x}^{(i)}, y^{(i)}, \mathbf{w}, b)$
+    * 计算梯度$\mathbf{g} \leftarrow \partial_{(\mathbf{w},b)} \frac{1}{|\mathcal{B}|} \sum_{i \in \mathcal{B} } l(\mathbf{x}^{(i)}, y^{(i)}, \mathbf{w}, b)$
     * 更新参数$(\mathbf{w}, b) \leftarrow (\mathbf{w}, b) - \eta \mathbf{g}$
 
 在每个*迭代周期*（epoch）中，我们使用`data_iter`函数遍历整个数据集，

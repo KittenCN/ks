@@ -250,16 +250,16 @@ print(f'performance in Gigaflops: element {gigaflops[0]:.3f}, '
 这既适用于计算梯度以更新参数时，也适用于用神经网络预测。
 也就是说，每当我们执行$\mathbf{w} \leftarrow \mathbf{w} - \eta_t \mathbf{g}_t$时，消耗巨大。其中
 
-$$\mathbf{g}_t = \partial_{\mathbf{w}} f(\mathbf{x}_{t}, \mathbf{w}).$$
+$$\mathbf{g}_t = \partial_{\mathbf{w} } f(\mathbf{x}_{t}, \mathbf{w}).$$
 
 我们可以通过将其应用于一个小批量观测值来提高此操作的*计算*效率。
 也就是说，我们将梯度$\mathbf{g}_t$替换为一个小批量而不是单个观测值
 
-$$\mathbf{g}_t = \partial_{\mathbf{w}} \frac{1}{|\mathcal{B}_t|} \sum_{i \in \mathcal{B}_t} f(\mathbf{x}_{i}, \mathbf{w}).$$
+$$\mathbf{g}_t = \partial_{\mathbf{w} } \frac{1}{|\mathcal{B}_t|} \sum_{i \in \mathcal{B}_t} f(\mathbf{x}_{i}, \mathbf{w}).$$
 
 让我们看看这对$\mathbf{g}_t$的统计属性有什么影响：由于$\mathbf{x}_t$和小批量$\mathcal{B}_t$的所有元素都是从训练集中随机抽出的，因此梯度的期望保持不变。
 另一方面，方差显著降低。
-由于小批量梯度由正在被平均计算的$b := |\mathcal{B}_t|$个独立梯度组成，其标准差降低了$b^{-\frac{1}{2}}$。
+由于小批量梯度由正在被平均计算的$b := |\mathcal{B}_t|$个独立梯度组成，其标准差降低了$b^{-\frac{1}{2} }$。
 这本身就是一件好事，因为这意味着更新与完整的梯度更接近了。
 
 直观来说，这表明选择大型的小批量$\mathcal{B}_t$将是普遍可行的。

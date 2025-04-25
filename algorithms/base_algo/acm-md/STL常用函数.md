@@ -80,7 +80,7 @@ struct Person {
     string name;
     int age;
 };
-vector<Person> people = {{"Alice", 25}, {"Bob", 20}, {"Charlie", 30}};
+vector<Person> people = { {"Alice", 25}, {"Bob", 20}, {"Charlie", 30} };
 // 使用Lambda表达式作为比较函数，比较两个Person对象的age字段
 // 当a.age < b.age时返回true，这样年龄小的Person将排在前面
 sort(people.begin(), people.end(), [](const Person& a, const Person& b) {
@@ -802,7 +802,7 @@ struct Person {
     string name;
     int age;
 };
-vector<Person> people = {{"Alice", 25}, {"Bob", 20}, {"Charlie", 30}};
+vector<Person> people = { {"Alice", 25}, {"Bob", 20}, {"Charlie", 30} };
 // 查找年龄最大的Person
 auto oldest = max_element(people.begin(), people.end(), 
     [](const Person& a, const Person& b) { return a.age < b.age; });
@@ -860,7 +860,7 @@ string sentence = accumulate(next(words.begin()), words.end(), words[0],
 // 返回 "Hello World C++"
 
 // 更复杂的累积
-vector<pair<string, int>> sales = {{"A", 100}, {"B", 200}, {"C", 150}};
+vector<pair<string, int>> sales = { {"A", 100}, {"B", 200}, {"C", 150} };
 // 计算所有销售额的总和
 int total = accumulate(sales.begin(), sales.end(), 0,
     [](int sum, const pair<string, int>& p) { return sum + p.second; });
@@ -1277,7 +1277,7 @@ transform(v.begin(), v.end(), v2.begin(), result.begin(), plus<int>());
 struct Person { string name; int age; };
 struct PersonView { string display; };
 
-vector<Person> people = {{"Alice", 25}, {"Bob", 30}};
+vector<Person> people = { {"Alice", 25}, {"Bob", 30} };
 vector<PersonView> views(people.size());
 
 transform(people.begin(), people.end(), views.begin(), [](const Person& p) {

@@ -73,7 +73,7 @@ $$J = L + s.$$
 其中输入和输出$\mathsf{X}, \mathsf{Y}, \mathsf{Z}$是任意形状的张量。
 利用链式法则，我们可以计算$\mathsf{Z}$关于$\mathsf{X}$的导数
 
-$$\frac{\partial \mathsf{Z}}{\partial \mathsf{X}} = \text{prod}\left(\frac{\partial \mathsf{Z}}{\partial \mathsf{Y}}, \frac{\partial \mathsf{Y}}{\partial \mathsf{X}}\right).$$
+$$\frac{\partial \mathsf{Z} }{\partial \mathsf{X} } = \text{prod}\left(\frac{\partial \mathsf{Z} }{\partial \mathsf{Y} }, \frac{\partial \mathsf{Y} }{\partial \mathsf{X} }\right).$$
 
 在这里，我们使用$\text{prod}$运算符在执行必要的操作（如换位和交换输入位置）后将其参数相乘。
 对于向量，这很简单，它只是矩阵-矩阵乘法。
@@ -92,32 +92,32 @@ $$\frac{\partial J}{\partial L} = 1 \; \text{and} \; \frac{\partial J}{\partial 
 接下来，我们根据链式法则计算目标函数关于输出层变量$\mathbf{o}$的梯度：
 
 $$
-\frac{\partial J}{\partial \mathbf{o}}
-= \text{prod}\left(\frac{\partial J}{\partial L}, \frac{\partial L}{\partial \mathbf{o}}\right)
-= \frac{\partial L}{\partial \mathbf{o}}
+\frac{\partial J}{\partial \mathbf{o} }
+= \text{prod}\left(\frac{\partial J}{\partial L}, \frac{\partial L}{\partial \mathbf{o} }\right)
+= \frac{\partial L}{\partial \mathbf{o} }
 \in \mathbb{R}^q.
 $$
 
 接下来，我们计算正则化项相对于两个参数的梯度：
 
-$$\frac{\partial s}{\partial \mathbf{W}^{(1)}} = \lambda \mathbf{W}^{(1)}
+$$\frac{\partial s}{\partial \mathbf{W}^{(1)} } = \lambda \mathbf{W}^{(1)}
 \; \text{and} \;
-\frac{\partial s}{\partial \mathbf{W}^{(2)}} = \lambda \mathbf{W}^{(2)}.$$
+\frac{\partial s}{\partial \mathbf{W}^{(2)} } = \lambda \mathbf{W}^{(2)}.$$
 
 现在我们可以计算最接近输出层的模型参数的梯度
 $\partial J/\partial \mathbf{W}^{(2)} \in \mathbb{R}^{q \times h}$。
 使用链式法则得出：
 
-$$\frac{\partial J}{\partial \mathbf{W}^{(2)}}= \text{prod}\left(\frac{\partial J}{\partial \mathbf{o}}, \frac{\partial \mathbf{o}}{\partial \mathbf{W}^{(2)}}\right) + \text{prod}\left(\frac{\partial J}{\partial s}, \frac{\partial s}{\partial \mathbf{W}^{(2)}}\right)= \frac{\partial J}{\partial \mathbf{o}} \mathbf{h}^\top + \lambda \mathbf{W}^{(2)}.$$
+$$\frac{\partial J}{\partial \mathbf{W}^{(2)} }= \text{prod}\left(\frac{\partial J}{\partial \mathbf{o} }, \frac{\partial \mathbf{o} }{\partial \mathbf{W}^{(2)} }\right) + \text{prod}\left(\frac{\partial J}{\partial s}, \frac{\partial s}{\partial \mathbf{W}^{(2)} }\right)= \frac{\partial J}{\partial \mathbf{o} } \mathbf{h}^\top + \lambda \mathbf{W}^{(2)}.$$
 :eqlabel:`eq_backprop-J-h`
 
 为了获得关于$\mathbf{W}^{(1)}$的梯度，我们需要继续沿着输出层到隐藏层反向传播。
 关于隐藏层输出的梯度$\partial J/\partial \mathbf{h} \in \mathbb{R}^h$由下式给出：
 
 $$
-\frac{\partial J}{\partial \mathbf{h}}
-= \text{prod}\left(\frac{\partial J}{\partial \mathbf{o}}, \frac{\partial \mathbf{o}}{\partial \mathbf{h}}\right)
-= {\mathbf{W}^{(2)}}^\top \frac{\partial J}{\partial \mathbf{o}}.
+\frac{\partial J}{\partial \mathbf{h} }
+= \text{prod}\left(\frac{\partial J}{\partial \mathbf{o} }, \frac{\partial \mathbf{o} }{\partial \mathbf{h} }\right)
+= {\mathbf{W}^{(2)} }^\top \frac{\partial J}{\partial \mathbf{o} }.
 $$
 
 由于激活函数$\phi$是按元素计算的，
@@ -125,9 +125,9 @@ $$
 需要使用按元素乘法运算符，我们用$\odot$表示：
 
 $$
-\frac{\partial J}{\partial \mathbf{z}}
-= \text{prod}\left(\frac{\partial J}{\partial \mathbf{h}}, \frac{\partial \mathbf{h}}{\partial \mathbf{z}}\right)
-= \frac{\partial J}{\partial \mathbf{h}} \odot \phi'\left(\mathbf{z}\right).
+\frac{\partial J}{\partial \mathbf{z} }
+= \text{prod}\left(\frac{\partial J}{\partial \mathbf{h} }, \frac{\partial \mathbf{h} }{\partial \mathbf{z} }\right)
+= \frac{\partial J}{\partial \mathbf{h} } \odot \phi'\left(\mathbf{z}\right).
 $$
 
 最后，我们可以得到最接近输入层的模型参数的梯度
@@ -135,9 +135,9 @@ $\partial J/\partial \mathbf{W}^{(1)} \in \mathbb{R}^{h \times d}$。
 根据链式法则，我们得到：
 
 $$
-\frac{\partial J}{\partial \mathbf{W}^{(1)}}
-= \text{prod}\left(\frac{\partial J}{\partial \mathbf{z}}, \frac{\partial \mathbf{z}}{\partial \mathbf{W}^{(1)}}\right) + \text{prod}\left(\frac{\partial J}{\partial s}, \frac{\partial s}{\partial \mathbf{W}^{(1)}}\right)
-= \frac{\partial J}{\partial \mathbf{z}} \mathbf{x}^\top + \lambda \mathbf{W}^{(1)}.
+\frac{\partial J}{\partial \mathbf{W}^{(1)} }
+= \text{prod}\left(\frac{\partial J}{\partial \mathbf{z} }, \frac{\partial \mathbf{z} }{\partial \mathbf{W}^{(1)} }\right) + \text{prod}\left(\frac{\partial J}{\partial s}, \frac{\partial s}{\partial \mathbf{W}^{(1)} }\right)
+= \frac{\partial J}{\partial \mathbf{z} } \mathbf{x}^\top + \lambda \mathbf{W}^{(1)}.
 $$
 
 ## 训练神经网络

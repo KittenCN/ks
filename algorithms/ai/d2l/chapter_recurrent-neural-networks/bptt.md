@@ -76,7 +76,7 @@ $h_t$既依赖于$h_{t-1}$又依赖于$w_h$，
 其中$h_{t-1}$的计算也依赖于$w_h$。
 因此，使用链式法则产生：
 
-$$\frac{\partial h_t}{\partial w_h}= \frac{\partial f(x_{t},h_{t-1},w_h)}{\partial w_h} +\frac{\partial f(x_{t},h_{t-1},w_h)}{\partial h_{t-1}} \frac{\partial h_{t-1}}{\partial w_h}.$$
+$$\frac{\partial h_t}{\partial w_h}= \frac{\partial f(x_{t},h_{t-1},w_h)}{\partial w_h} +\frac{\partial f(x_{t},h_{t-1},w_h)}{\partial h_{t-1} } \frac{\partial h_{t-1} }{\partial w_h}.$$
 :eqlabel:`eq_bptt_partial_ht_wh_recur`
 
 为了导出上述梯度，假设我们有三个序列$\{a_{t}\},\{b_{t}\},\{c_{t}\}$，
@@ -90,14 +90,14 @@ $$a_{t}=b_{t}+\sum_{i=1}^{t-1}\left(\prod_{j=i+1}^{t}c_{j}\right)b_{i}.$$
 
 $$\begin{aligned}a_t &= \frac{\partial h_t}{\partial w_h},\\
 b_t &= \frac{\partial f(x_{t},h_{t-1},w_h)}{\partial w_h}, \\
-c_t &= \frac{\partial f(x_{t},h_{t-1},w_h)}{\partial h_{t-1}},\end{aligned}$$
+c_t &= \frac{\partial f(x_{t},h_{t-1},w_h)}{\partial h_{t-1} },\end{aligned}$$
 
 公式 :eqref:`eq_bptt_partial_ht_wh_recur`中的梯度计算
 满足$a_{t}=b_{t}+c_{t}a_{t-1}$。
 因此，对于每个 :eqref:`eq_bptt_at`，
 我们可以使用下面的公式移除 :eqref:`eq_bptt_partial_ht_wh_recur`中的循环计算
 
-$$\frac{\partial h_t}{\partial w_h}=\frac{\partial f(x_{t},h_{t-1},w_h)}{\partial w_h}+\sum_{i=1}^{t-1}\left(\prod_{j=i+1}^{t} \frac{\partial f(x_{j},h_{j-1},w_h)}{\partial h_{j-1}} \right) \frac{\partial f(x_{i},h_{i-1},w_h)}{\partial w_h}.$$
+$$\frac{\partial h_t}{\partial w_h}=\frac{\partial f(x_{t},h_{t-1},w_h)}{\partial w_h}+\sum_{i=1}^{t-1}\left(\prod_{j=i+1}^{t} \frac{\partial f(x_{j},h_{j-1},w_h)}{\partial h_{j-1} } \right) \frac{\partial f(x_{i},h_{i-1},w_h)}{\partial w_h}.$$
 :eqlabel:`eq_bptt_partial_ht_wh_gen`
 
 虽然我们可以使用链式法则递归地计算$\partial h_t/\partial w_h$，
@@ -139,7 +139,7 @@ $$\frac{\partial h_t}{\partial w_h}=\frac{\partial f(x_{t},h_{t-1},w_h)}{\partia
 我们使用它来替换 :eqref:`eq_bptt_partial_ht_wh_recur`中的
 梯度$\partial h_t/\partial w_h$得到：
 
-$$z_t= \frac{\partial f(x_{t},h_{t-1},w_h)}{\partial w_h} +\xi_t \frac{\partial f(x_{t},h_{t-1},w_h)}{\partial h_{t-1}} \frac{\partial h_{t-1}}{\partial w_h}.$$
+$$z_t= \frac{\partial f(x_{t},h_{t-1},w_h)}{\partial w_h} +\xi_t \frac{\partial f(x_{t},h_{t-1},w_h)}{\partial h_{t-1} } \frac{\partial h_{t-1} }{\partial w_h}.$$
 
 从$\xi_t$的定义中推导出来$E[z_t] = \partial h_t/\partial w_h$。
 每当$\xi_t = 0$时，递归计算终止在这个$t$时间步。
@@ -230,8 +230,8 @@ $\partial L/\partial \mathbf{W}_{qh} \in \mathbb{R}^{q \times h}$。
 依据链式法则，得到
 
 $$
-\frac{\partial L}{\partial \mathbf{W}_{qh}}
-= \sum_{t=1}^T \text{prod}\left(\frac{\partial L}{\partial \mathbf{o}_t}, \frac{\partial \mathbf{o}_t}{\partial \mathbf{W}_{qh}}\right)
+\frac{\partial L}{\partial \mathbf{W}_{qh} }
+= \sum_{t=1}^T \text{prod}\left(\frac{\partial L}{\partial \mathbf{o}_t}, \frac{\partial \mathbf{o}_t}{\partial \mathbf{W}_{qh} }\right)
 = \sum_{t=1}^T \frac{\partial L}{\partial \mathbf{o}_t} \mathbf{h}_t^\top,
 $$
 
@@ -254,12 +254,12 @@ $$\frac{\partial L}{\partial \mathbf{h}_T} = \text{prod}\left(\frac{\partial L}{
 $\partial L/\partial \mathbf{h}_t \in \mathbb{R}^h$
 在任何时间步骤$t < T$时都可以递归地计算为：
 
-$$\frac{\partial L}{\partial \mathbf{h}_t} = \text{prod}\left(\frac{\partial L}{\partial \mathbf{h}_{t+1}}, \frac{\partial \mathbf{h}_{t+1}}{\partial \mathbf{h}_t} \right) + \text{prod}\left(\frac{\partial L}{\partial \mathbf{o}_t}, \frac{\partial \mathbf{o}_t}{\partial \mathbf{h}_t} \right) = \mathbf{W}_{hh}^\top \frac{\partial L}{\partial \mathbf{h}_{t+1}} + \mathbf{W}_{qh}^\top \frac{\partial L}{\partial \mathbf{o}_t}.$$
+$$\frac{\partial L}{\partial \mathbf{h}_t} = \text{prod}\left(\frac{\partial L}{\partial \mathbf{h}_{t+1} }, \frac{\partial \mathbf{h}_{t+1} }{\partial \mathbf{h}_t} \right) + \text{prod}\left(\frac{\partial L}{\partial \mathbf{o}_t}, \frac{\partial \mathbf{o}_t}{\partial \mathbf{h}_t} \right) = \mathbf{W}_{hh}^\top \frac{\partial L}{\partial \mathbf{h}_{t+1} } + \mathbf{W}_{qh}^\top \frac{\partial L}{\partial \mathbf{o}_t}.$$
 :eqlabel:`eq_bptt_partial_L_ht_recur`
 
 为了进行分析，对于任何时间步$1 \leq t \leq T$展开递归计算得
 
-$$\frac{\partial L}{\partial \mathbf{h}_t}= \sum_{i=t}^T {\left(\mathbf{W}_{hh}^\top\right)}^{T-i} \mathbf{W}_{qh}^\top \frac{\partial L}{\partial \mathbf{o}_{T+t-i}}.$$
+$$\frac{\partial L}{\partial \mathbf{h}_t}= \sum_{i=t}^T {\left(\mathbf{W}_{hh}^\top\right)}^{T-i} \mathbf{W}_{qh}^\top \frac{\partial L}{\partial \mathbf{o}_{T+t-i} }.$$
 :eqlabel:`eq_bptt_partial_L_ht`
 
 我们可以从 :eqref:`eq_bptt_partial_L_ht`中看到，
@@ -282,11 +282,11 @@ $\partial L / \partial \mathbf{W}_{hx} \in \mathbb{R}^{h \times d}$和$\partial 
 
 $$
 \begin{aligned}
-\frac{\partial L}{\partial \mathbf{W}_{hx}}
-&= \sum_{t=1}^T \text{prod}\left(\frac{\partial L}{\partial \mathbf{h}_t}, \frac{\partial \mathbf{h}_t}{\partial \mathbf{W}_{hx}}\right)
+\frac{\partial L}{\partial \mathbf{W}_{hx} }
+&= \sum_{t=1}^T \text{prod}\left(\frac{\partial L}{\partial \mathbf{h}_t}, \frac{\partial \mathbf{h}_t}{\partial \mathbf{W}_{hx} }\right)
 = \sum_{t=1}^T \frac{\partial L}{\partial \mathbf{h}_t} \mathbf{x}_t^\top,\\
-\frac{\partial L}{\partial \mathbf{W}_{hh}}
-&= \sum_{t=1}^T \text{prod}\left(\frac{\partial L}{\partial \mathbf{h}_t}, \frac{\partial \mathbf{h}_t}{\partial \mathbf{W}_{hh}}\right)
+\frac{\partial L}{\partial \mathbf{W}_{hh} }
+&= \sum_{t=1}^T \text{prod}\left(\frac{\partial L}{\partial \mathbf{h}_t}, \frac{\partial \mathbf{h}_t}{\partial \mathbf{W}_{hh} }\right)
 = \sum_{t=1}^T \frac{\partial L}{\partial \mathbf{h}_t} \mathbf{h}_{t-1}^\top,
 \end{aligned}
 $$

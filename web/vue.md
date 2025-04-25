@@ -65,7 +65,7 @@ setter 触发消息到 Watcher watcher 帮忙告诉 Directive 更新 DOM DOM 修
 1.全局创建一个vue实例
 <div id="app">
   <input type="text" id="a" v-model="text">
-  {{text}}
+  { {text} }
 </div>
 <script>
     var vm = new Vue({

@@ -434,7 +434,7 @@ $$a(\mathbf q, \mathbf k) = \mathbf{q}^\top \mathbf{k}  /\sqrt{d}.$$
 键$\mathbf K\in\mathbb R^{m\times d}$和
 值$\mathbf V\in\mathbb R^{m\times v}$的缩放点积注意力是：
 
-$$ \mathrm{softmax}\left(\frac{\mathbf Q \mathbf K^\top }{\sqrt{d}}\right) \mathbf V \in \mathbb{R}^{n\times v}.$$
+$$ \mathrm{softmax}\left(\frac{\mathbf Q \mathbf K^\top }{\sqrt{d} }\right) \mathbf V \in \mathbb{R}^{n\times v}.$$
 :eqlabel:`eq_softmax_QK_V`
 
 下面的缩放点积注意力的实现使用了暂退法进行模型正则化。

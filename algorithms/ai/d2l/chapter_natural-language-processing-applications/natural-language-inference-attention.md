@@ -241,7 +241,7 @@ $$
 接下来，我们将两个求和结果的连结提供给函数$h$（一个多层感知机），以获得逻辑关系的分类结果：
 
 $$
-\hat{\mathbf{y}} = h([\mathbf{v}_A, \mathbf{v}_B]).
+\hat{\mathbf{y} } = h([\mathbf{v}_A, \mathbf{v}_B]).
 $$
 
 聚合步骤在以下`Aggregate`类中定义。

@@ -24,7 +24,7 @@ $$\mathbf{h}^{(l)} = f_l (\mathbf{h}^{(l-1)}) \text{ 因此 } \mathbf{o} = f_L \
 如果所有隐藏变量和输入都是向量，
 我们可以将$\mathbf{o}$关于任何一组参数$\mathbf{W}^{(l)}$的梯度写为下式：
 
-$$\partial_{\mathbf{W}^{(l)}} \mathbf{o} = \underbrace{\partial_{\mathbf{h}^{(L-1)}} \mathbf{h}^{(L)}}_{ \mathbf{M}^{(L)} \stackrel{\mathrm{def}}{=}} \cdot \ldots \cdot \underbrace{\partial_{\mathbf{h}^{(l)}} \mathbf{h}^{(l+1)}}_{ \mathbf{M}^{(l+1)} \stackrel{\mathrm{def}}{=}} \underbrace{\partial_{\mathbf{W}^{(l)}} \mathbf{h}^{(l)}}_{ \mathbf{v}^{(l)} \stackrel{\mathrm{def}}{=}}.$$
+$$\partial_{\mathbf{W}^{(l)} } \mathbf{o} = \underbrace{\partial_{\mathbf{h}^{(L-1)} } \mathbf{h}^{(L)} }_{ \mathbf{M}^{(L)} \stackrel{\mathrm{def} }{=} } \cdot \ldots \cdot \underbrace{\partial_{\mathbf{h}^{(l)} } \mathbf{h}^{(l+1)} }_{ \mathbf{M}^{(l+1)} \stackrel{\mathrm{def} }{=} } \underbrace{\partial_{\mathbf{W}^{(l)} } \mathbf{h}^{(l)} }_{ \mathbf{v}^{(l)} \stackrel{\mathrm{def} }{=} }.$$
 
 换言之，该梯度是$L-l$个矩阵
 $\mathbf{M}^{(L)} \cdot \ldots \cdot \mathbf{M}^{(l+1)}$
@@ -206,7 +206,7 @@ $\mathbf{W}^{(1)}$的所有元素仍然采用相同的值。
 让我们看看某些*没有非线性*的全连接层输出（例如，隐藏变量）$o_{i}$的尺度分布。
 对于该层$n_\mathrm{in}$输入$x_j$及其相关权重$w_{ij}$，输出由下式给出
 
-$$o_{i} = \sum_{j=1}^{n_\mathrm{in}} w_{ij} x_j.$$
+$$o_{i} = \sum_{j=1}^{n_\mathrm{in} } w_{ij} x_j.$$
 
 权重$w_{ij}$都是从同一分布中独立抽取的。
 此外，让我们假设该分布具有零均值和方差$\sigma^2$。
@@ -217,10 +217,10 @@ $$o_{i} = \sum_{j=1}^{n_\mathrm{in}} w_{ij} x_j.$$
 
 $$
 \begin{aligned}
-    E[o_i] & = \sum_{j=1}^{n_\mathrm{in}} E[w_{ij} x_j] \\&= \sum_{j=1}^{n_\mathrm{in}} E[w_{ij}] E[x_j] \\&= 0, \\
+    E[o_i] & = \sum_{j=1}^{n_\mathrm{in} } E[w_{ij} x_j] \\&= \sum_{j=1}^{n_\mathrm{in} } E[w_{ij}] E[x_j] \\&= 0, \\
     \mathrm{Var}[o_i] & = E[o_i^2] - (E[o_i])^2 \\
-        & = \sum_{j=1}^{n_\mathrm{in}} E[w^2_{ij} x^2_j] - 0 \\
-        & = \sum_{j=1}^{n_\mathrm{in}} E[w^2_{ij}] E[x^2_j] \\
+        & = \sum_{j=1}^{n_\mathrm{in} } E[w^2_{ij} x^2_j] - 0 \\
+        & = \sum_{j=1}^{n_\mathrm{in} } E[w^2_{ij}] E[x^2_j] \\
         & = n_\mathrm{in} \sigma^2 \gamma^2.
 \end{aligned}
 $$
@@ -235,20 +235,20 @@ $$
 $$
 \begin{aligned}
 \frac{1}{2} (n_\mathrm{in} + n_\mathrm{out}) \sigma^2 = 1 \text{ 或等价于 }
-\sigma = \sqrt{\frac{2}{n_\mathrm{in} + n_\mathrm{out}}}.
+\sigma = \sqrt{\frac{2}{n_\mathrm{in} + n_\mathrm{out} } }.
 \end{aligned}
 $$
 
 这就是现在标准且实用的*Xavier初始化*的基础，
 它以其提出者 :cite:`Glorot.Bengio.2010` 第一作者的名字命名。
 通常，Xavier初始化从均值为零，方差
-$\sigma^2 = \frac{2}{n_\mathrm{in} + n_\mathrm{out}}$
+$\sigma^2 = \frac{2}{n_\mathrm{in} + n_\mathrm{out} }$
 的高斯分布中采样权重。
 我们也可以将其改为选择从均匀分布中抽取权重时的方差。
 注意均匀分布$U(-a, a)$的方差为$\frac{a^2}{3}$。
 将$\frac{a^2}{3}$代入到$\sigma^2$的条件中，将得到初始化值域：
 
-$$U\left(-\sqrt{\frac{6}{n_\mathrm{in} + n_\mathrm{out}}}, \sqrt{\frac{6}{n_\mathrm{in} + n_\mathrm{out}}}\right).$$
+$$U\left(-\sqrt{\frac{6}{n_\mathrm{in} + n_\mathrm{out} } }, \sqrt{\frac{6}{n_\mathrm{in} + n_\mathrm{out} } }\right).$$
 
 尽管在上述数学推理中，“不存在非线性”的假设在神经网络中很容易被违反，
 但Xavier初始化方法在实践中被证明是有效的。

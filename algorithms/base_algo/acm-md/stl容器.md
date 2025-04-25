@@ -627,7 +627,7 @@ ms.insert(10); // 重复元素允许
 ```cpp
 // 多种构造方式
 std::map<int, std::string> m1;                      // 默认构造，空映射
-std::map<int, std::string> m2 = {{1, "one"}, {2, "two"}}; // 使用初始化列表
+std::map<int, std::string> m2 = { {1, "one"}, {2, "two"} }; // 使用初始化列表
 std::map<int, std::string> m3(m2.begin(), m2.end()); // 使用迭代器范围构造
 ```
 
@@ -874,7 +874,7 @@ us1.rehash(20);             // 重新配置哈希桶数量
 ```cpp
 // 多种构造方式
 std::unordered_map<int, std::string> um1;                      // 默认构造，空映射
-std::unordered_map<int, std::string> um2 = {{1, "one"}, {2, "two"}}; // 使用初始化列表
+std::unordered_map<int, std::string> um2 = { {1, "one"}, {2, "two"} }; // 使用初始化列表
 std::unordered_map<int, std::string> um3(um2.begin(), um2.end()); // 使用迭代器范围构造
 ```
 

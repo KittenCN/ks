@@ -207,7 +207,7 @@ $$f(x) = \sum_{i=1}^n \alpha(x, x_i) y_i,$$
 为了更好地理解注意力汇聚，
 下面考虑一个*高斯核*（Gaussian kernel），其定义为：
 
-$$K(u) = \frac{1}{\sqrt{2\pi}} \exp(-\frac{u^2}{2}).$$
+$$K(u) = \frac{1}{\sqrt{2\pi} } \exp(-\frac{u^2}{2}).$$
 
 将高斯核代入 :eqref:`eq_attn-pooling`和
  :eqref:`eq_nadaraya-watson`可以得到：

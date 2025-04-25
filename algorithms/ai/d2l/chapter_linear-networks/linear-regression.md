@@ -40,10 +40,10 @@
 
 线性假设是指目标（房屋价格）可以表示为特征（面积和房龄）的加权和，如下面的式子：
 
-$$\mathrm{price} = w_{\mathrm{area}} \cdot \mathrm{area} + w_{\mathrm{age}} \cdot \mathrm{age} + b.$$
+$$\mathrm{price} = w_{\mathrm{area} } \cdot \mathrm{area} + w_{\mathrm{age} } \cdot \mathrm{age} + b.$$
 :eqlabel:`eq_price-area`
 
- :eqref:`eq_price-area`中的$w_{\mathrm{area}}$和$w_{\mathrm{age}}$
+ :eqref:`eq_price-area`中的$w_{\mathrm{area} }$和$w_{\mathrm{age} }$
 称为*权重*（weight），权重决定了每个特征对我们预测值的影响。
 $b$称为*偏置*（bias）、*偏移量*（offset）或*截距*（intercept）。
 偏置是指当所有特征都取值为0时，预测值应该为多少。
@@ -77,10 +77,10 @@ $$\hat{y} = \mathbf{w}^\top \mathbf{x} + b.$$
 可以很方便地引用我们整个数据集的$n$个样本。
 其中，$\mathbf{X}$的每一行是一个样本，每一列是一种特征。
 
-对于特征集合$\mathbf{X}$，预测值$\hat{\mathbf{y}} \in \mathbb{R}^n$
+对于特征集合$\mathbf{X}$，预测值$\hat{\mathbf{y} } \in \mathbb{R}^n$
 可以通过矩阵-向量乘法表示为：
 
-$${\hat{\mathbf{y}}} = \mathbf{X} \mathbf{w} + b$$
+$${\hat{\mathbf{y} } } = \mathbf{X} \mathbf{w} + b$$
 
 这个过程中的求和将使用广播机制
 （广播机制在 :numref:`subsec_broadcasting`中有详细介绍）。
@@ -171,14 +171,14 @@ $$\mathbf{w}^* = (\mathbf X^\top \mathbf X)^{-1}\mathbf X^\top \mathbf{y}.$$
 
 我们用下面的数学公式来表示这一更新过程（$\partial$表示偏导数）：
 
-$$(\mathbf{w},b) \leftarrow (\mathbf{w},b) - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \partial_{(\mathbf{w},b)} l^{(i)}(\mathbf{w},b).$$
+$$(\mathbf{w},b) \leftarrow (\mathbf{w},b) - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B} } \partial_{(\mathbf{w},b)} l^{(i)}(\mathbf{w},b).$$
 
 总结一下，算法的步骤如下：
 （1）初始化模型参数的值，如随机初始化；
 （2）从数据集中随机抽取小批量样本且在负梯度的方向上更新参数，并不断迭代这一步骤。
 对于平方损失和仿射变换，我们可以明确地写成如下形式:
 
-$$\begin{aligned} \mathbf{w} &\leftarrow \mathbf{w} -   \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \partial_{\mathbf{w}} l^{(i)}(\mathbf{w}, b) = \mathbf{w} - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \mathbf{x}^{(i)} \left(\mathbf{w}^\top \mathbf{x}^{(i)} + b - y^{(i)}\right),\\ b &\leftarrow b -  \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \partial_b l^{(i)}(\mathbf{w}, b)  = b - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \left(\mathbf{w}^\top \mathbf{x}^{(i)} + b - y^{(i)}\right). \end{aligned}$$
+$$\begin{aligned} \mathbf{w} &\leftarrow \mathbf{w} -   \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B} } \partial_{\mathbf{w} } l^{(i)}(\mathbf{w}, b) = \mathbf{w} - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B} } \mathbf{x}^{(i)} \left(\mathbf{w}^\top \mathbf{x}^{(i)} + b - y^{(i)}\right),\\ b &\leftarrow b -  \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B} } \partial_b l^{(i)}(\mathbf{w}, b)  = b - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B} } \left(\mathbf{w}^\top \mathbf{x}^{(i)} + b - y^{(i)}\right). \end{aligned}$$
 :eqlabel:`eq_linreg_batch_update`
 
 公式 :eqref:`eq_linreg_batch_update`中的$\mathbf{w}$和$\mathbf{x}$都是向量。
@@ -192,7 +192,7 @@ $\eta$表示*学习率*（learning rate）。
 而训练迭代结果是在独立的*验证数据集*（validation dataset）上评估得到的。
 
 在训练了预先确定的若干迭代次数后（或者直到满足某些其他停止条件后），
-我们记录下模型参数的估计值，表示为$\hat{\mathbf{w}}, \hat{b}$。
+我们记录下模型参数的估计值，表示为$\hat{\mathbf{w} }, \hat{b}$。
 但是，即使我们的函数确实是线性的且无噪声，这些估计值也不会使损失函数真正地达到最小值。
 因为算法会使得损失向最小值缓慢收敛，但却不能在有限的步数内非常精确地达到最小值。
 
@@ -204,7 +204,7 @@ $\eta$表示*学习率*（learning rate）。
 
 ### 用模型进行预测
 
-给定“已学习”的线性回归模型$\hat{\mathbf{w}}^\top \mathbf{x} + \hat{b}$，
+给定“已学习”的线性回归模型$\hat{\mathbf{w} }^\top \mathbf{x} + \hat{b}$，
 现在我们可以通过房屋面积$x_1$和房龄$x_2$来估计一个（未包含在训练数据中的）新房屋价格。
 给定特征估计目标的过程通常称为*预测*（prediction）或*推断*（inference）。
 
@@ -357,7 +357,7 @@ f'{timer.stop():.5f} sec'
 最早由德国数学家高斯（Gauss）应用于天文学研究。
 简单的说，若随机变量$x$具有均值$\mu$和方差$\sigma^2$（标准差$\sigma$），其正态分布概率密度函数如下：
 
-$$p(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp\left(-\frac{1}{2 \sigma^2} (x - \mu)^2\right).$$
+$$p(x) = \frac{1}{\sqrt{2 \pi \sigma^2} } \exp\left(-\frac{1}{2 \sigma^2} (x - \mu)^2\right).$$
 
 下面[**我们定义一个Python函数来计算正态分布**]。
 
@@ -405,7 +405,7 @@ $$y = \mathbf{w}^\top \mathbf{x} + b + \epsilon,$$
 
 因此，我们现在可以写出通过给定的$\mathbf{x}$观测到特定$y$的*似然*（likelihood）：
 
-$$P(y \mid \mathbf{x}) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp\left(-\frac{1}{2 \sigma^2} (y - \mathbf{w}^\top \mathbf{x} - b)^2\right).$$
+$$P(y \mid \mathbf{x}) = \frac{1}{\sqrt{2 \pi \sigma^2} } \exp\left(-\frac{1}{2 \sigma^2} (y - \mathbf{w}^\top \mathbf{x} - b)^2\right).$$
 
 现在，根据极大似然估计法，参数$\mathbf{w}$和$b$的最优值是使整个数据集的*似然*最大的值：
 

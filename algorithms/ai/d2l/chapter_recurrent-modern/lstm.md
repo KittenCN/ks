@@ -60,12 +60,12 @@ $\mathbf{b}_i, \mathbf{b}_f, \mathbf{b}_o \in \mathbb{R}^{1 \times h}$是偏置�
 ### 候选记忆元
 
 由于还没有指定各种门的操作，所以先介绍*候选记忆元*（candidate memory cell）
-$\tilde{\mathbf{C}}_t \in \mathbb{R}^{n \times h}$。
+$\tilde{\mathbf{C} }_t \in \mathbb{R}^{n \times h}$。
 它的计算与上面描述的三个门的计算类似，
 但是使用$\tanh$函数作为激活函数，函数的值范围为$(-1, 1)$。
 下面导出在时间步$t$处的方程：
 
-$$\tilde{\mathbf{C}}_t = \text{tanh}(\mathbf{X}_t \mathbf{W}_{xc} + \mathbf{H}_{t-1} \mathbf{W}_{hc} + \mathbf{b}_c),$$
+$$\tilde{\mathbf{C} }_t = \text{tanh}(\mathbf{X}_t \mathbf{W}_{xc} + \mathbf{H}_{t-1} \mathbf{W}_{hc} + \mathbf{b}_c),$$
 
 其中$\mathbf{W}_{xc} \in \mathbb{R}^{d \times h}$和
 $\mathbf{W}_{hc} \in \mathbb{R}^{h \times h}$是权重参数，
@@ -80,12 +80,12 @@ $\mathbf{b}_c \in \mathbb{R}^{1 \times h}$是偏置参数。
 
 在门控循环单元中，有一种机制来控制输入和遗忘（或跳过）。
 类似地，在长短期记忆网络中，也有两个门用于这样的目的：
-输入门$\mathbf{I}_t$控制采用多少来自$\tilde{\mathbf{C}}_t$的新数据，
+输入门$\mathbf{I}_t$控制采用多少来自$\tilde{\mathbf{C} }_t$的新数据，
 而遗忘门$\mathbf{F}_t$控制保留多少过去的
 记忆元$\mathbf{C}_{t-1} \in \mathbb{R}^{n \times h}$的内容。
 使用按元素乘法，得出：
 
-$$\mathbf{C}_t = \mathbf{F}_t \odot \mathbf{C}_{t-1} + \mathbf{I}_t \odot \tilde{\mathbf{C}}_t.$$
+$$\mathbf{C}_t = \mathbf{F}_t \odot \mathbf{C}_{t-1} + \mathbf{I}_t \odot \tilde{\mathbf{C} }_t.$$
 
 如果遗忘门始终为$1$且输入门始终为$0$，
 则过去的记忆元$\mathbf{C}_{t-1}$

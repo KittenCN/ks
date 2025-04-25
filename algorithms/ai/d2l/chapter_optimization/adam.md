@@ -32,15 +32,15 @@ $$\begin{aligned}
 我们可以通过使用$\sum_{i=0}^t \beta^i = \frac{1 - \beta^t}{1 - \beta}$来解决这个问题。
 相应地，标准化状态变量由下式获得
 
-$$\hat{\mathbf{v}}_t = \frac{\mathbf{v}_t}{1 - \beta_1^t} \text{ and } \hat{\mathbf{s}}_t = \frac{\mathbf{s}_t}{1 - \beta_2^t}.$$
+$$\hat{\mathbf{v} }_t = \frac{\mathbf{v}_t}{1 - \beta_1^t} \text{ and } \hat{\mathbf{s} }_t = \frac{\mathbf{s}_t}{1 - \beta_2^t}.$$
 
 有了正确的估计，我们现在可以写出更新方程。
 首先，我们以非常类似于RMSProp算法的方式重新缩放梯度以获得
 
-$$\mathbf{g}_t' = \frac{\eta \hat{\mathbf{v}}_t}{\sqrt{\hat{\mathbf{s}}_t} + \epsilon}.$$
+$$\mathbf{g}_t' = \frac{\eta \hat{\mathbf{v} }_t}{\sqrt{\hat{\mathbf{s} }_t} + \epsilon}.$$
 
-与RMSProp不同，我们的更新使用动量$\hat{\mathbf{v}}_t$而不是梯度本身。
-此外，由于使用$\frac{1}{\sqrt{\hat{\mathbf{s}}_t} + \epsilon}$而不是$\frac{1}{\sqrt{\hat{\mathbf{s}}_t + \epsilon}}$进行缩放，两者会略有差异。
+与RMSProp不同，我们的更新使用动量$\hat{\mathbf{v} }_t$而不是梯度本身。
+此外，由于使用$\frac{1}{\sqrt{\hat{\mathbf{s} }_t} + \epsilon}$而不是$\frac{1}{\sqrt{\hat{\mathbf{s} }_t + \epsilon} }$进行缩放，两者会略有差异。
 前者在实践中效果略好一些，因此与RMSProp算法有所区分。
 通常，我们选择$\epsilon = 10^{-6}$，这是为了在数值稳定性和逼真度之间取得良好的平衡。
 
@@ -204,10 +204,10 @@ Adam算法也存在一些问题：
 $$\mathbf{s}_t \leftarrow \mathbf{s}_{t-1} + (1 - \beta_2) \left(\mathbf{g}_t^2 - \mathbf{s}_{t-1}\right).$$
 
 每当$\mathbf{g}_t^2$具有值很大的变量或更新很稀疏时，$\mathbf{s}_t$可能会太快地“忘记”过去的值。
-一个有效的解决方法是将$\mathbf{g}_t^2 - \mathbf{s}_{t-1}$替换为$\mathbf{g}_t^2 \odot \mathop{\mathrm{sgn}}(\mathbf{g}_t^2 - \mathbf{s}_{t-1})$。
+一个有效的解决方法是将$\mathbf{g}_t^2 - \mathbf{s}_{t-1}$替换为$\mathbf{g}_t^2 \odot \mathop{\mathrm{sgn} }(\mathbf{g}_t^2 - \mathbf{s}_{t-1})$。
 这就是Yogi更新，现在更新的规模不再取决于偏差的量。
 
-$$\mathbf{s}_t \leftarrow \mathbf{s}_{t-1} + (1 - \beta_2) \mathbf{g}_t^2 \odot \mathop{\mathrm{sgn}}(\mathbf{g}_t^2 - \mathbf{s}_{t-1}).$$
+$$\mathbf{s}_t \leftarrow \mathbf{s}_{t-1} + (1 - \beta_2) \mathbf{g}_t^2 \odot \mathop{\mathrm{sgn} }(\mathbf{g}_t^2 - \mathbf{s}_{t-1}).$$
 
 论文中，作者还进一步建议用更大的初始批量来初始化动量，而不仅仅是初始的逐点估计。
 

@@ -1,7 +1,7 @@
 # RMSProp算法
 :label:`sec_rmsprop`
 
- :numref:`sec_adagrad`中的关键问题之一，是学习率按预定时间表$\mathcal{O}(t^{-\frac{1}{2}})$显著降低。
+ :numref:`sec_adagrad`中的关键问题之一，是学习率按预定时间表$\mathcal{O}(t^{-\frac{1}{2} })$显著降低。
 虽然这通常适用于凸问题，但对于深度学习中遇到的非凸问题，可能并不理想。
 但是，作为一个预处理器，Adagrad算法按坐标顺序的适应性是非常可取的。
 
@@ -21,7 +21,7 @@
 
 $$\begin{aligned}
     \mathbf{s}_t & \leftarrow \gamma \mathbf{s}_{t-1} + (1 - \gamma) \mathbf{g}_t^2, \\
-    \mathbf{x}_t & \leftarrow \mathbf{x}_{t-1} - \frac{\eta}{\sqrt{\mathbf{s}_t + \epsilon}} \odot \mathbf{g}_t.
+    \mathbf{x}_t & \leftarrow \mathbf{x}_{t-1} - \frac{\eta}{\sqrt{\mathbf{s}_t + \epsilon} } \odot \mathbf{g}_t.
 \end{aligned}$$
 
 常数$\epsilon > 0$通常设置为$10^{-6}$，以确保我们不会因除以零或步长过大而受到影响。

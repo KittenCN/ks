@@ -26,7 +26,7 @@ $$\begin{aligned}
 那么，调整后的梯度$\mathbf{g}_t'$是什么？我们可以按如下方式计算它：
 
 $$\begin{aligned}
-    \mathbf{g}_t' & = \frac{\sqrt{\Delta\mathbf{x}_{t-1} + \epsilon}}{\sqrt{{\mathbf{s}_t + \epsilon}}} \odot \mathbf{g}_t, \\
+    \mathbf{g}_t' & = \frac{\sqrt{\Delta\mathbf{x}_{t-1} + \epsilon} }{\sqrt{ {\mathbf{s}_t + \epsilon} } } \odot \mathbf{g}_t, \\
 \end{aligned}$$
 
 其中$\Delta \mathbf{x}_{t-1}$是重新缩放梯度的平方$\mathbf{g}_t'$的泄漏平均值。我们将$\Delta \mathbf{x}_{0}$初始化为$0$，然后在每个步骤中使用$\mathbf{g}_t'$更新它，即
