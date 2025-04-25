@@ -1,4 +1,4 @@
--   [算法系统](/algorithms/base_algo/)
--   [人工智能](/algorithms/ai/)
--   [算法杂谈](/algorithms/other_algo/)
--   [复杂性思维](/algorithms/think_complexity/)
+-   [算法系统](/algorithms/base_algo/README.md)
+-   [人工智能](/algorithms/ai/README.md)
+-   [算法杂谈](/algorithms/other_algo/README.md)
+-   [复杂性思维](/algorithms/think_complexity/README.md)

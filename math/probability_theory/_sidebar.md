@@ -1,3 +1,4 @@
+-   [Thomas Calculus](/math/Thomas_Calculus/Thomas_Calculus.md)
 -   [calculus](/math/calculus.md)
 -   [probability theory](/math/probability_theory.md)
     -   [概率论](/math/probability_theory/ch01.md)

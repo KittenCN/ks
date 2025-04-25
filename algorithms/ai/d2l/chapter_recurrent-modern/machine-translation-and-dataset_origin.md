@@ -83,7 +83,7 @@ import os
 
 To begin with,
 we download an English-French dataset
-that consists of [bilingual sentence pairs from the Tatoeba Project](http://www.manythings.org/anki/).
+that consists of [bilingual sentence pairs from the Tatoeba Project](http://www.manythings.org/anki/README.md).
 Each line in the dataset
 is a tab-delimited pair
 of an English text sequence

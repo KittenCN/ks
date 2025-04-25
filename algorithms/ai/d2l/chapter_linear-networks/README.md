@@ -1,6 +1,6 @@
 # algorithms
   
--   [动手学深度学习](/algorithms/ai/d2l/)
+-   [动手学深度学习](/algorithms/ai/d2l/README.md)
     -   [前言](/algorithms/ai/d2l/chapter_preface/index)
     -   [安装](/algorithms/ai/d2l/chapter_installation/index)
     -   [符号](/algorithms/ai/d2l/chapter_notation/index)
