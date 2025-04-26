@@ -1,1 +1,1 @@
-nxp honkit build . output
+npx honkit build . output
