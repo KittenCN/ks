@@ -1,2 +1,2 @@
 * **Java SE**
-    *   [Java基础](/coding/Java/java_base/)
+    *   [Java基础](/coding/Java/java_base/README.md)

@@ -1,7 +1,7 @@
 # AP
   
--   [AP 计算机A csa](ap/csa.md)
--   [AP 微积分 calculus](ap/calculus.md)
+-   [AP 计算机A csa](/ap/csa.md)
+-   [AP 微积分 calculus](/ap/calculus.md)
 
 <br />
 <img  src='./img/bjkb.PNG' width="600" alt="logo">
