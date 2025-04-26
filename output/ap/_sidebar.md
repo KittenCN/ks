@@ -1,2 +1,0 @@
--   [AP 计算机A CSA](ap/csa.md)
--   [AP 微积分 calculus](ap/calculus.md)
