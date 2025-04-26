@@ -1,1 +1,1 @@
-npx honkit build . output
+npx honkit build . ../wiki_static
