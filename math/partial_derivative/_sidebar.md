@@ -1,4 +1,3 @@
--   [Thomas Calculus](/math/Thomas_Calculus/Thomas_Calculus.md)
 -   [calculus](/math/calculus.md)
     -   [calculus review](ap/calculus/calculus_review.md)
     -   [CalculusOne](ap/calculus/CalculusOne.md)
