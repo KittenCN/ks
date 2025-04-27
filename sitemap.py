@@ -3,6 +3,11 @@
 
 import os
 import xml.etree.ElementTree as ET
+import argparse
+
+parser = argparse.ArgumentParser(description='Generate a sitemap.xml file.')
+parser.add_argument('--choice', type=int, default = 0)
+args = parser.parse_args()
 
 def indent(elem, level=0):
     i = "\n" + level*"  "
@@ -19,17 +24,23 @@ def indent(elem, level=0):
         if level and (not elem.tail or not elem.tail.strip()):
             elem.tail = i
 
-def create_sitemap(directory, base_url, extensions):
+def create_sitemap(directory, base_url, extensions, exceptions):
     urlset = ET.Element("urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
 
     for subdir, dirs, files in os.walk(directory):
         for file in files:
             if any(file.endswith(ext) for ext in extensions):
+                # 排除指定的文件
+                if any(file.endswith(exc) for exc in exceptions):
+                    continue
                 url = ET.SubElement(urlset, "url")
                 loc = ET.SubElement(url, "loc")
 
                 # 生成文件的完整URL并去掉扩展名
-                file_url = os.path.join(subdir, os.path.splitext(file)[0]).replace("\\", "/")
+                if args.choice == 0:
+                    file_url = os.path.join(subdir, os.path.splitext(file)[0]).replace("\\", "/")
+                else:
+                    file_url = os.path.join(subdir, file).replace("\\", "/")
                 loc.text = base_url + file_url[len(directory):]
 
     indent(urlset)
@@ -38,6 +49,11 @@ def create_sitemap(directory, base_url, extensions):
     tree.write("sitemap.xml", encoding="utf-8", xml_declaration=True)
 
 directory_path = './'
-base_url = 'https://wiki.coderfan.com/#/'
-extensions = ['.html', '.htm', '.md', '.php']
-create_sitemap(directory_path, base_url, extensions)
+exceptions = ['_coverpage.md', '_navbar.md', '_sidebar.md']
+if args.choice == 0:
+    base_url = 'https://demo.coderfan.com/#/'
+    extensions = ['.html', '.htm', '.md']
+else:
+    base_url = 'https://wiki.coderfan.com/'
+    extensions = ['.html', '.htm']
+create_sitemap(directory_path, base_url, extensions, exceptions)
