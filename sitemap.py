@@ -24,7 +24,7 @@ def indent(elem, level=0):
         if level and (not elem.tail or not elem.tail.strip()):
             elem.tail = i
 
-def create_sitemap(directory, base_url, extensions, exceptions):
+def create_sitemap(directory, base_url, extensions, exceptions, exceptions_dir):
     urlset = ET.Element("urlset", xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
 
     for subdir, dirs, files in os.walk(directory):
@@ -32,6 +32,9 @@ def create_sitemap(directory, base_url, extensions, exceptions):
             if any(file.endswith(ext) for ext in extensions):
                 # 排除指定的文件
                 if any(file.endswith(exc) for exc in exceptions):
+                    continue
+                # 排除目录
+                if any(exc in subdir for exc in exceptions_dir):
                     continue
                 url = ET.SubElement(urlset, "url")
                 loc = ET.SubElement(url, "loc")
@@ -50,10 +53,12 @@ def create_sitemap(directory, base_url, extensions, exceptions):
 
 directory_path = './'
 exceptions = ['_coverpage.md', '_navbar.md', '_sidebar.md']
+# 排除目录
+exceptions_dir = ['.git', 'node_modules', 'docs/.vuepress', 'docs/.vuepress/dist']
 if args.choice == 0:
     base_url = 'https://demo.coderfan.com/#/'
     extensions = ['.html', '.htm', '.md']
 else:
     base_url = 'https://wiki.coderfan.com/'
     extensions = ['.html', '.htm']
-create_sitemap(directory_path, base_url, extensions, exceptions)
+create_sitemap(directory_path, base_url, extensions, exceptions, exceptions_dir)
