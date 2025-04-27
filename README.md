@@ -2,6 +2,14 @@
 
 ## 项目简介  
 这里是[CoderFAN](https://www.coderfan.com)的资料库, 主要用于编程学习资料的收集和分享。如需要进一步学习编程知识，可以访问[OJ学习平台](https://www.coderfan.com)。  
+
+>本项目有3个不同的镜像站点，分别是：
+>>[动态主站（更新较快）](https://demo.coderfan.com)
+>>[静态主站（站点稳定）](https://wiki.coderfan.com)
+>>[GitHub镜像站](https://kittencn.github.io/ks/)
+>>请按需要，请自行选择。
+>如有任何问题，请联系[CoderFAN](https://www.coderfan.com)的站长。
+
 本项目主要包括以下内容：  
 1. [开发规范](/standard/) ：包括各种开发过程中应遵守的通用规则  
 2. [前端汇总](/web/) ：包括前端开发过程中常用的各种技术和工具  
