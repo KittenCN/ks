@@ -36,7 +36,7 @@ for VOL in "${VOLUMES[@]}"; do
   LOG="$BUILD_ROOT/${VOL}.log"
   [[ -f "$SRC/book.json" ]] || { echo "skip $VOL (no book.json)"; continue; }
 
-  CMD="echo '▶ Start building [$VOL]' && mkdir -p \"$OUT\" && npx honkit build \"$SRC\" \"$OUT\" 2>&1 | tee \"$LOG\" && if [ \${PIPESTATUS[0]} -eq 0 ]; then echo '✔ Build success [$VOL]'; else echo '✖ Build failed [$VOL]'; fi"
+  CMD="echo '▶ Start building [$VOL]' && mkdir -p \"$OUT\" && npx honkit build --log=debug \"$SRC\" \"$OUT\" 2>&1 | tee \"$LOG\" && if [ \${PIPESTATUS[0]} -eq 0 ]; then echo '✔ Build success [$VOL]'; else echo '✖ Build failed [$VOL]'; fi"
 
   echo "Queueing CMD: $CMD"
   tmux send-keys -t "$SESSION:$WINDOW" "$CMD" 'C-m'
