@@ -1,14 +1,14 @@
-#!/usr/bin/env python3
 import os
 import subprocess
 import sys
 import time
+import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from tqdm import tqdm  # ⭐ 需要提前 pip install tqdm
+from tqdm import tqdm
 
 # --------------------- CONFIGURATION ---------------------
-MAX_PARALLEL = 32    # 最大并发数，根据你的CPU核心数设置
+MAX_PARALLEL = 32    # 最大并发数
 BUILD_ROOT = Path("_book")  # 输出目录
 # ---------------------------------------------------------
 
@@ -20,8 +20,21 @@ def find_valid_volumes(base_dir):
             valid.append(Path(root))
     return valid
 
-def build_volume(volume_path):
-    """build单个卷"""
+def count_md_files(summary_path):
+    """统计SUMMARY.md中链接到的md文件数量"""
+    count = 0
+    md_link_pattern = re.compile(r'\(([^)]+\.md)\)')
+    try:
+        with open(summary_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                if md_link_pattern.search(line):
+                    count += 1
+    except Exception:
+        pass
+    return count
+
+def build_volume(volume_path, pbar):
+    """build单个卷，并根据SUMMARY内容更新进度条"""
     relative_path = volume_path.relative_to(Path.cwd())
     output_path = BUILD_ROOT / relative_path
 
@@ -35,10 +48,16 @@ def build_volume(volume_path):
     log_file = BUILD_ROOT / f"{str(relative_path).replace(os.sep, '_')}.log"
     try:
         with open(log_file, "w", encoding="utf-8") as log:
-            subprocess.run(cmd, stdout=log, stderr=subprocess.STDOUT, check=True)
-        return (str(relative_path), True)
-    except subprocess.CalledProcessError:
-        return (str(relative_path), False)
+            process = subprocess.Popen(cmd, stdout=log, stderr=subprocess.STDOUT)
+            process.wait()
+        result = (str(relative_path), process.returncode == 0)
+    except Exception:
+        result = (str(relative_path), False)
+
+    # 每个md文件编译完一个卷就整体更新一次
+    md_count = count_md_files(volume_path / "SUMMARY.md")
+    pbar.update(md_count)
+    return result
 
 def main():
     base_dir = Path(".").resolve()
@@ -49,21 +68,23 @@ def main():
         print("❗ No valid volumes found.")
         sys.exit(1)
 
-    print(f"✅ Found {len(volumes)} volumes to build.\n")
+    # 先统计总md数量
+    total_md_files = sum(count_md_files(vol / "SUMMARY.md") for vol in volumes)
+
+    print(f"✅ Found {len(volumes)} volumes to build, {total_md_files} md pages in total.\n")
 
     success = []
     failed = []
 
     with ThreadPoolExecutor(max_workers=MAX_PARALLEL) as executor:
-        futures = {executor.submit(build_volume, vol): vol for vol in volumes}
-        with tqdm(total=len(futures), desc="Building volumes", unit="vol") as pbar:
+        with tqdm(total=total_md_files, desc="Building .md files", unit="md") as pbar:
+            futures = {executor.submit(build_volume, vol, pbar): vol for vol in volumes}
             for future in as_completed(futures):
                 vol_name, result = future.result()
                 if result:
                     success.append(vol_name)
                 else:
                     failed.append(vol_name)
-                pbar.update(1)
 
     # Summary
     print("\n=== Build Summary ===")
@@ -80,3 +101,4 @@ if __name__ == "__main__":
     main()
     duration = time.time() - start
     print(f"\n⏱ Build completed in {duration:.2f} seconds.")
+
