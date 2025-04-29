@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
-BUILD_ROOT="$REPO_ROOT/build"
+BUILD_ROOT="$REPO_ROOT/_book"
 SESSION="honkit-build"
 WINDOW="build"
 
