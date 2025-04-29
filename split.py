@@ -9,7 +9,7 @@ from tqdm import tqdm  # ⭐ 需要提前 pip install tqdm
 
 # --------------------- CONFIGURATION ---------------------
 MAX_PARALLEL = 32    # 最大并发数，根据你的CPU核心数设置
-BUILD_ROOT = Path("build")  # 输出目录
+BUILD_ROOT = Path("_book")  # 输出目录
 # ---------------------------------------------------------
 
 def find_valid_volumes(base_dir):
