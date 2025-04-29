@@ -1,6 +1,7 @@
 # coding
 
--   [Java基础](/coding/Java/java_base/README.md)
+-   [Java基础](java_base/README.md)
+-   [Java 中文教程](java/README.md)
 
 <br />
 <img  src='/img/bjkb.PNG' width="600" alt="logo">

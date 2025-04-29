@@ -1,8 +1,8 @@
 # coding
   
--   [CPP](/coding/CPP.md)
--   [Java](/coding/Java.md)
--   [Python](/coding/Python.md)
+-   [CPP](CPP/README.mdCPP.md)
+-   [Java](Java/README.md)
+-   [Python](Python/README.md)
 
 <br />
 <img  src='/img/bjkb.PNG' width="600" alt="logo">
