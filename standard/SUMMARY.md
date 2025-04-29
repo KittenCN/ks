@@ -1,9 +1,9 @@
 # 目录
 
--   [开发规范](/standard/README.md)
-    -   [书写规范](/standard/standard.md)
-    -   [组件规范](/standard/component.md)
-    -   [Eslint](/standard/eslint.md)
-    -   [Jsdoc](/standard/jsdoc.md)
-    -   [雅虎军规](/standard/yooha.md)
-    -   [git](/standard/git.md)
+-   [开发规范](README.md)
+    -   [书写规范](standard.md)
+    -   [组件规范](component.md)
+    -   [Eslint](eslint.md)
+    -   [Jsdoc](jsdoc.md)
+    -   [雅虎军规](yooha.md)
+    -   [git](git.md)

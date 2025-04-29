@@ -9,7 +9,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
-BUILD_ROOT="$REPO_ROOT/build"
+BUILD_ROOT="$REPO_ROOT/_book"
 SESSION="honkit-build"            # tmux 会话名，可自行修改
 WINDOW="build"                    # 会话内用于执行任务的窗口名
 
