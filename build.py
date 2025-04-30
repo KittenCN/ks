@@ -10,12 +10,18 @@ from tqdm import tqdm
 # --------------------- CONFIGURATION ---------------------
 MAX_PARALLEL = 32    # 最大并发数
 BUILD_ROOT = Path("_book")  # 输出目录
+EXCLUDED_DIRS = {'_archive', 'drafts', '.git', '.github', 'node_modules', \
+                 'build', 'dist' , '_book', '_layouts', 'lib', 'img', 'imgs'}
 # ---------------------------------------------------------
 
 def find_valid_volumes(base_dir):
     """递归查找同时有 book.json 和 SUMMARY.md 的目录"""
     valid = []
     for root, dirs, files in os.walk(base_dir):
+        rel_path = Path(root).relative_to(base_dir)
+        parts = set(rel_path.parts)
+        if parts & EXCLUDED_DIRS:
+            continue  # 如果路径中任何一层属于排除目录，则跳过
         if "book.json" in files and "SUMMARY.md" in files:
             valid.append(Path(root))
     return valid
@@ -50,6 +56,14 @@ def build_volume(volume_path, pbar):
         with open(log_file, "w", encoding="utf-8") as log:
             process = subprocess.Popen(cmd, stdout=log, stderr=subprocess.STDOUT)
             process.wait()
+            success = (process.returncode == 0)
+            if not success:
+                with open(log_file, encoding='utf-8', errors='ignore') as l:
+                    tail = l.readlines()[-10:]  # 获取最后10行
+                print(f"\n❌ 构建失败：{relative_path}")
+                print("最后 10 行日志：")
+                print("".join(tail).rstrip())
+                print("--------------------------")
         result = (str(relative_path), process.returncode == 0)
     except Exception:
         result = (str(relative_path), False)
@@ -83,6 +97,9 @@ def main():
                 vol_name, result = future.result()
                 if result:
                     success.append(vol_name)
+                    log_path = BUILD_ROOT / f"{vol_name.replace(os.sep, '_')}.log"
+                    if log_path.exists():
+                        log_path.unlink()  # 删除日志文件
                 else:
                     failed.append(vol_name)
 
