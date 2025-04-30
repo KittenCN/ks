@@ -32,7 +32,7 @@ except Exception as e:
     exit(1)
 
 # 用于非法文件名字符的模式，Windows 不允许以下字符&#8203;:contentReference[oaicite:3]{index=3}
-illegal_pattern = re.compile(r'[<>:"/\\|?*]')  # 替换为下划线的字符: < > : " / \ | ? *
+# illegal_pattern = re.compile(r'[<>:"/\\|?*]')  # 替换为下划线的字符: < > : " / \ | ? *
 # 初始化变量
 books = []                # 存储所有书籍的信息
 collection_line = None    # 合集名（第一级）的行内容
@@ -124,6 +124,8 @@ for book in books:
     moved_chapters = []
     for chap in chapters:
         src_file = Path(chap["file"])
+        if not src_file.exists():
+            src_file = Path(src_file.name)  # 尝试只用文件名查找    
         if not src_file.exists():
             print(f"警告：章节文件 {chap['file']} 不存在，跳过")
             continue
