@@ -16,7 +16,7 @@
         -   [分治搜索策略](/algorithms/base_algo/hello_algo/chapter_divide_and_conquer/binary_search_recur.md)
         -   [构建二叉树问题](/algorithms/base_algo/hello_algo/chapter_divide_and_conquer/build_binary_tree_problem.md)
         -   [汉诺塔问题](/algorithms/base_algo/hello_algo/chapter_divide_and_conquer/hanota_problem.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_divide_and_conquer/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_divide_and_conquer/README.md)
     -   [回溯](/algorithms/base_algo/hello_algo/chapter_backtracking/index.md)
     -   [动态规划](/algorithms/base_algo/hello_algo/chapter_dynamic_programming/index.md)
     -   [贪心](/algorithms/base_algo/hello_algo/chapter_greedy/index.md)

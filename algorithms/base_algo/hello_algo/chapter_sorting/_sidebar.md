@@ -21,7 +21,7 @@
         -   [桶排序](/algorithms/base_algo/hello_algo/chapter_sorting/bucket_sort.md)
         -   [计数排序](/algorithms/base_algo/hello_algo/chapter_sorting/counting_sort.md)
         -   [基数排序](/algorithms/base_algo/hello_algo/chapter_sorting/radix_sort.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_sorting/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_sorting/README.md)
     -   [分治](/algorithms/base_algo/hello_algo/chapter_divide_and_conquer/index.md)
     -   [回溯](/algorithms/base_algo/hello_algo/chapter_backtracking/index.md)
     -   [动态规划](/algorithms/base_algo/hello_algo/chapter_dynamic_programming/index.md)

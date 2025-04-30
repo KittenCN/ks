@@ -2,7 +2,7 @@
     -   [前言](/algorithms/base_algo/hello_algo/chapter_preface/index.md)
         -   [关于本书](/algorithms/base_algo/hello_algo/chapter_preface/about_the_book.md)
         -   [如何使用本书](/algorithms/base_algo/hello_algo/chapter_preface/suggestions.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_preface/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_preface/README.md)
     -   [初识算法](/algorithms/base_algo/hello_algo/chapter_introduction/index.md)
     -   [复杂度分析](/algorithms/base_algo/hello_algo/chapter_computational_complexity/index.md)
     -   [数据结构](/algorithms/base_algo/hello_algo/chapter_data_structure/index.md)

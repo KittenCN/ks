@@ -11,7 +11,7 @@
         -   [堆](/algorithms/base_algo/hello_algo/chapter_heap/heap.md)
         -   [建堆操作](/algorithms/base_algo/hello_algo/chapter_heap/build_heap.md)
         -   [Top-k 问题](/algorithms/base_algo/hello_algo/chapter_heap/top_k.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_heap/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_heap/README.md)
     -   [图](/algorithms/base_algo/hello_algo/chapter_graph/index.md)
     -   [搜索](/algorithms/base_algo/hello_algo/chapter_searching/index.md)
     -   [排序](/algorithms/base_algo/hello_algo/chapter_sorting/index.md)

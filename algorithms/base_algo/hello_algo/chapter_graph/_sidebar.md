@@ -12,7 +12,7 @@
         -   [图](/algorithms/base_algo/hello_algo/chapter_graph/graph.md)
         -   [图基础操作](/algorithms/base_algo/hello_algo/chapter_graph/graph_operations.md)
         -   [图的遍历](/algorithms/base_algo/hello_algo/chapter_graph/graph_traversal.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_graph/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_graph/README.md)
     -   [搜索](/algorithms/base_algo/hello_algo/chapter_searching/index.md)
     -   [排序](/algorithms/base_algo/hello_algo/chapter_sorting/index.md)
     -   [分治](/algorithms/base_algo/hello_algo/chapter_divide_and_conquer/index.md)

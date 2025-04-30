@@ -8,7 +8,7 @@
         -   [链表](/algorithms/base_algo/hello_algo/chapter_array_and_linkedlist/linked_list.md)
         -   [列表](/algorithms/base_algo/hello_algo/chapter_array_and_linkedlist/list.md)
         -   [内存与缓存 *](/algorithms/base_algo/hello_algo/chapter_array_and_linkedlist/ram_and_cache.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_array_and_linkedlist/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_array_and_linkedlist/README.md)
     -   [栈与队列](/algorithms/base_algo/hello_algo/chapter_stack_and_queue/index.md)
     -   [哈希表](/algorithms/base_algo/hello_algo/chapter_hashing/index.md)
     -   [树](/algorithms/base_algo/hello_algo/chapter_tree/index.md)

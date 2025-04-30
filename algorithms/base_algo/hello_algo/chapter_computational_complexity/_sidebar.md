@@ -6,7 +6,7 @@
         -   [迭代与递归](/algorithms/base_algo/hello_algo/chapter_computational_complexity/iteration_and_recursion.md)
         -   [时间复杂度](/algorithms/base_algo/hello_algo/chapter_computational_complexity/time_complexity.md)
         -   [空间复杂度](/algorithms/base_algo/hello_algo/chapter_computational_complexity/space_complexity.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_computational_complexity/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_computational_complexity/README.md)
     -   [数据结构](/algorithms/base_algo/hello_algo/chapter_data_structure/index.md)
     -   [数组与链表](/algorithms/base_algo/hello_algo/chapter_array_and_linkedlist/index.md)
     -   [栈与队列](/algorithms/base_algo/hello_algo/chapter_stack_and_queue/index.md)

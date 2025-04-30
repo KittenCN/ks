@@ -15,7 +15,7 @@
         -   [二分查找边界](/algorithms/base_algo/hello_algo/chapter_searching/binary_search_edge.md)
         -   [哈希优化策略](/algorithms/base_algo/hello_algo/chapter_searching/replace_linear_by_hashing.md)
         -   [重识搜索算法](/algorithms/base_algo/hello_algo/chapter_searching/searching_algorithm_revisited.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_searching/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_searching/README.md)
     -   [排序](/algorithms/base_algo/hello_algo/chapter_sorting/index.md)
     -   [分治](/algorithms/base_algo/hello_algo/chapter_divide_and_conquer/index.md)
     -   [回溯](/algorithms/base_algo/hello_algo/chapter_backtracking/index.md)

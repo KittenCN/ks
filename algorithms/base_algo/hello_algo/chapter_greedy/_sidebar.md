@@ -19,5 +19,5 @@
         -   [分数背包问题](/algorithms/base_algo/hello_algo/chapter_greedy/fractional_knapsack_problem.md)
         -   [最大容量问题](/algorithms/base_algo/hello_algo/chapter_greedy/max_capacity_problem.md)
         -   [最大切分乘积问题](/algorithms/base_algo/hello_algo/chapter_greedy/max_product_cutting_problem.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_greedy/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_greedy/README.md)
     -   [附录](/algorithms/base_algo/hello_algo/chapter_appendix/index.md)

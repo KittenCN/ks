@@ -12,7 +12,7 @@
         -   [二叉树数组表示](/algorithms/base_algo/hello_algo/chapter_tree/array_representation_of_tree.md)
         -   [二叉搜索树](/algorithms/base_algo/hello_algo/chapter_tree/binary_search_tree.md)
         -   [AVL 树 *](/algorithms/base_algo/hello_algo/chapter_tree/avl_tree.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_tree/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_tree/README.md)
     -   [堆](/algorithms/base_algo/hello_algo/chapter_heap/index.md)
     -   [图](/algorithms/base_algo/hello_algo/chapter_graph/index.md)
     -   [搜索](/algorithms/base_algo/hello_algo/chapter_searching/index.md)

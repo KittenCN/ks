@@ -20,6 +20,6 @@
         -   [0-1 背包问题](/algorithms/base_algo/hello_algo/chapter_dynamic_programming/knapsack_problem.md)
         -   [完全背包问题](/algorithms/base_algo/hello_algo/chapter_dynamic_programming/unbounded_knapsack_problem.md)
         -   [编辑距离问题](/algorithms/base_algo/hello_algo/chapter_dynamic_programming/edit_distance_problem.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_dynamic_programming/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_dynamic_programming/README.md)
     -   [贪心](/algorithms/base_algo/hello_algo/chapter_greedy/index.md)
     -   [附录](/algorithms/base_algo/hello_algo/chapter_appendix/index.md)

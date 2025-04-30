@@ -9,7 +9,7 @@
         -   [哈希表](/algorithms/base_algo/hello_algo/chapter_hashing/hash_map.md)
         -   [哈希冲突](/algorithms/base_algo/hello_algo/chapter_hashing/hash_collision.md)
         -   [哈希算法](/algorithms/base_algo/hello_algo/chapter_hashing/hash_algorithm.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_hashing/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_hashing/README.md)
     -   [树](/algorithms/base_algo/hello_algo/chapter_tree/index.md)
     -   [堆](/algorithms/base_algo/hello_algo/chapter_heap/index.md)
     -   [图](/algorithms/base_algo/hello_algo/chapter_graph/index.md)

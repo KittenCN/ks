@@ -8,7 +8,7 @@
         -   [栈](/algorithms/base_algo/hello_algo/chapter_stack_and_queue/stack.md)
         -   [队列](/algorithms/base_algo/hello_algo/chapter_stack_and_queue/queue.md)
         -   [双向队列](/algorithms/base_algo/hello_algo/chapter_stack_and_queue/deque.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_stack_and_queue/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_stack_and_queue/README.md)
     -   [哈希表](/algorithms/base_algo/hello_algo/chapter_hashing/index.md)
     -   [树](/algorithms/base_algo/hello_algo/chapter_tree/index.md)
     -   [堆](/algorithms/base_algo/hello_algo/chapter_heap/index.md)

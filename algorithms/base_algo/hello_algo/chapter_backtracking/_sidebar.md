@@ -17,7 +17,7 @@
         -   [全排列问题](/algorithms/base_algo/hello_algo/chapter_backtracking/permutations_problem.md)
         -   [子集和问题](/algorithms/base_algo/hello_algo/chapter_backtracking/subset_sum_problem.md)
         -   [N 皇后问题](/algorithms/base_algo/hello_algo/chapter_backtracking/n_queens_problem.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_backtracking/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_backtracking/README.md)
     -   [动态规划](/algorithms/base_algo/hello_algo/chapter_dynamic_programming/index.md)
     -   [贪心](/algorithms/base_algo/hello_algo/chapter_greedy/index.md)
     -   [附录](/algorithms/base_algo/hello_algo/chapter_appendix/index.md)

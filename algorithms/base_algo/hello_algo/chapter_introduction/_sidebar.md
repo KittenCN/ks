@@ -3,7 +3,7 @@
     -   [初识算法](/algorithms/base_algo/hello_algo/chapter_introduction/index.md)
         -   [算法无处不在](/algorithms/base_algo/hello_algo/chapter_introduction/algorithms_are_everywhere.md)
         -   [算法是什么](/algorithms/base_algo/hello_algo/chapter_introduction/what_is_dsa.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_introduction/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_introduction/README.md)
     -   [复杂度分析](/algorithms/base_algo/hello_algo/chapter_computational_complexity/index.md)
     -   [数据结构](/algorithms/base_algo/hello_algo/chapter_data_structure/index.md)
     -   [数组与链表](/algorithms/base_algo/hello_algo/chapter_array_and_linkedlist/index.md)

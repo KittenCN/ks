@@ -7,7 +7,7 @@
         -   [基本数据类型](/algorithms/base_algo/hello_algo/chapter_data_structure/basic_data_types.md)
         -   [数字编码 *](/algorithms/base_algo/hello_algo/chapter_data_structure/number_encoding.md)
         -   [字符编码 *](/algorithms/base_algo/hello_algo/chapter_data_structure/character_encoding.md)
-        -   [小结](/algorithms/base_algo/hello_algo/chapter_data_structure/summary.md)
+        -   [小结](/algorithms/base_algo/hello_algo/chapter_data_structure/README.md)
     -   [数组与链表](/algorithms/base_algo/hello_algo/chapter_array_and_linkedlist/index.md)
     -   [栈与队列](/algorithms/base_algo/hello_algo/chapter_stack_and_queue/index.md)
     -   [哈希表](/algorithms/base_algo/hello_algo/chapter_hashing/index.md)
