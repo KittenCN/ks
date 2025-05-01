@@ -3,174 +3,180 @@
 """
 rebuild_nav.py
 
-1. 生成 summary_auto_full.md：合并根 SUMMARY.md 和所有子卷的 SUMMARY.md，任意深度嵌套。
-2. 生成 index_rebuild.html：以 index_model.html 为模板，只替换 <ul class="summary">…</ul>，.md → .html。
+Traverses all subdirectories to find folders containing book.json and SUMMARY.md,
+rebuilds a full SUMMARY.md including all nested SUMMARY.md files (recursively),
+and updates the index HTML navigation menu based on the provided index_model.html template.
+
+Usage:
+    python rebuild_nav.py
 """
+import os
+import re
 
-import os, re, json, sys
-from pathlib import Path
-from html import escape
-
-# =============== 配置 ===============
-EXCLUDE = {
-    '_archive','drafts','.git','.github',
-    'node_modules','build','dist','_book','_layouts',
-    'lib','img','imgs'
+# Directories to skip during traversal
+EXCLUDE_DIRS = {
+    '_archive', 'drafts', '.git', '.github',
+    'node_modules', 'build', 'dist', '_book', '_layouts',
+    'lib', 'img', 'imgs'
 }
-ROOT_SUMMARY = Path('SUMMARY.md')
-INDEX_MODEL  = Path('index_model.html')
-OUT_SUMMARY  = Path('summary_auto_full.md')
-OUT_INDEX    = Path('index_rebuild.html')
+# File names
+ROOT_SUMMARY = 'SUMMARY.md'
+INDEX_TEMPLATE = 'index_model.html'
+OUT_SUMMARY = 'summary_auto_full.md'
+OUT_INDEX = 'index_rebuild.html'
+PROJECT_ROOT = os.getcwd()
 
-# 匹配 Markdown 列表项：[标题](链接)
-MD_LINK = re.compile(r'^(\s*)[-*]\s+\[([^\]]+)]\(([^)]*)\)')
 
-# =============== 工具函数 ===============
-def parse_md(path: Path):
+def adjust_link(link_path, parent_dir):
     """
-    解析一个 SUMMARY.md，返回 [(indent_spaces, text, href), ...]
+    Normalize markdown link path to a relative path (no './').
+    External or absolute links unchanged.
     """
-    res = []
-    text = path.read_text(encoding='utf-8').replace('\t', '    ')
-    for ln in text.splitlines():
-        m = MD_LINK.match(ln)
+    if '://' in link_path or link_path.startswith(('/', '#')):
+        return link_path
+    abs_path = os.path.normpath(os.path.join(parent_dir, link_path))
+    rel = os.path.relpath(abs_path, PROJECT_ROOT).replace('\\', '/')
+    return rel.lstrip('./')
+
+
+def adjust_md_links(text, parent_dir):
+    """Adjust markdown links in a SUMMARY line."""
+    return re.sub(r'\[([^\]]+)\]\(([^)]+)\)',
+                  lambda m: f"[{m.group(1)}]({adjust_link(m.group(2), parent_dir)})",
+                  text)
+
+
+def get_file_depth(summary_path):
+    """
+    Compute directory depth of SUMMARY.md relative to project root.
+    Root directory is depth 0.
+    """
+    dir_path = os.path.dirname(os.path.abspath(summary_path))
+    rel = os.path.relpath(dir_path, PROJECT_ROOT)
+    if rel == '.':
+        return 0
+    return len(rel.split(os.sep))
+
+
+def extract_entries(summary_path, ignore_link=None):
+    """
+    Read SUMMARY.md and return list of (text, link) tuples.
+    """
+    entries = []
+    parent_dir = os.path.dirname(summary_path)
+    with open(summary_path, encoding='utf-8') as f:
+        for line in f:
+            m = re.match(r'^\s*-\s+(.*)', line)
+            if not m:
+                continue
+            raw = m.group(1).strip()
+            adj = adjust_md_links(raw, parent_dir)
+            link_m = re.search(r'\(([^)]+)\)', adj)
+            link = link_m.group(1) if link_m else None
+            if ignore_link and link == ignore_link:
+                continue
+            entries.append((adj, link))
+    return entries
+
+
+def build_entries(summary_path, ignore_link=None, visited=None):
+    """
+    Recursively build list lines using tab indentation per folder depth.
+    """
+    if visited is None:
+        visited = set()
+    real = os.path.realpath(summary_path)
+    if real in visited:
+        return []
+    visited.add(real)
+
+    depth = get_file_depth(summary_path)
+    indent_tabs = '\t' * depth
+    flat = []
+
+    for text, link in extract_entries(summary_path, ignore_link):
+        line = f"{indent_tabs}-\t{text}"
+        flat.append(line)
+        # recurse nested
+        if link and not link.startswith(('http://', 'https://', '/', '#')):
+            dirp = os.path.normpath(os.path.join(PROJECT_ROOT, os.path.dirname(link)))
+            if os.path.basename(dirp) in EXCLUDE_DIRS:
+                continue
+            summary_file = os.path.join(dirp, ROOT_SUMMARY)
+            book_file = os.path.join(dirp, 'book.json')
+            if os.path.isdir(dirp) and os.path.exists(summary_file) and os.path.exists(book_file):
+                flat.extend(build_entries(summary_file, ignore_link=link, visited=visited))
+    return flat
+
+
+def build_full_summary():
+    root = os.path.join(PROJECT_ROOT, ROOT_SUMMARY)
+    if not os.path.exists(root):
+        raise FileNotFoundError(f"Root summary '{ROOT_SUMMARY}' not found.")
+    header = []
+    with open(root, encoding='utf-8') as f:
+        first = f.readline()
+        if first.startswith('#'):
+            header.append(first.rstrip('\n'))
+            header.append('')
+    entries = build_entries(root)
+    return header, entries
+
+
+def convert_md_to_html(md_lines):
+    html = ['<ul class="summary">']
+    depth = 0
+    for line in md_lines:
+        # count leading tabs
+        leading = len(line) - len(line.lstrip('\t'))
+        level = leading
+        while level < depth:
+            html.append('  ' * depth + '</ul>')
+            depth -= 1
+        while level > depth:
+            html.append('  ' * depth + '<ul>')
+            depth += 1
+        content = line.lstrip('\t')
+        if not content.startswith('-\t'):
+            continue
+        content = content[2:]
+        m = re.match(r'\[([^\]]+)\]\(([^)]+)\)', content)
         if m:
-            res.append((len(m.group(1)), m.group(2), m.group(3)))
-    return res
+            title, link = m.group(1), m.group(2)
+            html.append('  ' * (level + 1) + f'<li class="chapter"><a href="{link}">{title}</a></li>')
+    while depth > 0:
+        html.append('  ' * depth + '</ul>')
+        depth -= 1
+    html.append('</ul>')
+    return '\n'.join(html)
 
-def find_volumes(root='.'):
-    """
-    递归查找有 book.json & SUMMARY.md 的子目录，排除 EXCLUDE。
-    """
-    for d, dirs, files in os.walk(root):
-        # 如果路径中包含排除项，就不再深入
-        if any(p in EXCLUDE for p in Path(d).parts):
-            dirs[:] = []
-            continue
-        if 'book.json' in files and 'SUMMARY.md' in files:
-            yield Path(d)
 
-def get_book_title(d: Path):
-    """
-    读取 book.json 中的 title，失败则用目录名。
-    """
-    try:
-        with open(d/'book.json', encoding='utf-8') as f:
-            return json.load(f).get('title') or d.name
-    except:
-        return d.name
+def rebuild_index(template, nav_html):
+    with open(template, encoding='utf-8') as f:
+        content = f.read()
+    start = content.find('<ul class="summary">')
+    if start < 0:
+        raise RuntimeError('No summary block')
+    divider = content.find('<li class="divider"', start)
+    if divider < 0:
+        raise RuntimeError('No divider')
+    end = content.find('</ul>', divider) + len('</ul>')
+    return content[:start] + nav_html + content[end:]
 
-# =============== 构建树结构 ===============
-# 树节点格式：{ 'title': str, 'link': str, 'chapters': [(ind,text,href)...], 'children': { child_link: node, ... } }
-tree = {}
-node_map = {}  # link -> node 引用
-root_order = []
 
-# 1) 先把根 SUMMARY.md 的第一层导入
-if not ROOT_SUMMARY.exists():
-    sys.exit("❌ 找不到根 SUMMARY.md")
-for indent, text, href in parse_md(ROOT_SUMMARY):
-    # 跳过空标题或主页 README
-    if not text and href.lower().endswith('readme.md'):
-        continue
-    node = {
-        'title': text,
-        'link': href,
-        'chapters': [],
-        'children': {}
-    }
-    tree[href] = node
-    node_map[href] = node
-    root_order.append(href)
+def main():
+    header, entries = build_full_summary()
+    with open(OUT_SUMMARY, 'w', encoding='utf-8') as f:
+        for h in header:
+            f.write(h + '\n')
+        for e in entries:
+            f.write(e + '\n')
+    print(f"Generated: {OUT_SUMMARY}")
+    nav_html = convert_md_to_html(entries)
+    new_html = rebuild_index(INDEX_TEMPLATE, nav_html)
+    with open(OUT_INDEX, 'w', encoding='utf-8') as f:
+        f.write(new_html)
+    print(f"Generated: {OUT_INDEX}")
 
-# 2) 递归导入所有子卷
-for vol in find_volumes('.'):
-    if vol == Path('.'):
-        continue
-    rel = vol.as_posix()
-    main_link = f"{rel}/README.md"
-    # 创建或复用节点
-    if main_link in node_map:
-        node = node_map[main_link]
-    elif get_book_title(vol) != '':
-        node = {
-            'title': get_book_title(vol),
-            'link': main_link,
-            'chapters': [],
-            'children': {}
-        }
-        # 确定父节点
-        parent = vol.parent
-        parent_link = None
-        if parent != Path('.'):
-            parent_link = f"{parent.as_posix()}/README.md"
-        if parent_link and parent_link in node_map:
-            node_map[parent_link]['children'][main_link] = node
-        elif node['title'] != '':
-            tree[main_link] = node
-            # root_order.append(main_link)
-            node_map[main_link] = node
-
-        # 解析该卷 SUMMARY.md 中的章节项目，挂到 node['chapters']
-        if node['title'] != '':
-            for ind, txt, href in parse_md(vol/'SUMMARY.md'):
-                if vol.name == node['title']:
-                    node['chapters'].append((ind, txt, f"{rel}/{href}"))
-                else:
-                    print(f"❌ {vol.name} 的章节 {txt} 不在根目录下，跳过")
-                    continue
-
-# =============== 导出 summary_auto_full.md ===============
-lines = []
-
-def emit(node, depth=0):
-    # 当前节点
-    lines.append('    '*depth + f"- [{node['title']}]({node['link']})")
-    # 该页下的章节
-    for _, txt, href in node['chapters']:
-        lines.append('    '*(depth+1) + f"- [{txt}]({href})")
-    # 子节点
-    for child in sorted(node['children'].values(), key=lambda x: x['title']):
-        emit(child, depth+1)
-
-# for root_node in sorted(tree.values(), key=lambda x: x['title']):
-#     emit(root_node, 0)
-for href in root_order:
-    emit(tree[href], 0)
-
-OUT_SUMMARY.write_text("\n".join(lines)+"\n", encoding='utf-8')
-print("✅ 已生成 summary_auto_full.md")
-
-# =============== 生成 index_rebuild.html ===============
-def md_to_nested_ul(md_lines):
-    html = []
-    stack = [-1]
-    for ln in md_lines:
-        m = MD_LINK.match(ln.replace('\t','    '))
-        if not m:
-            continue
-        indent = len(m.group(1))
-        text, href = m.group(2), m.group(3)
-        # 关闭多余层级
-        while indent <= stack[-1]:
-            html.append('    '*len(stack) + '</li></ul>')
-            stack.pop()
-        # 开新层级
-        html.append('    '*len(stack) + '<ul>')
-        stack.append(indent)
-        # .md → .html
-        href_html = str(Path(href).with_suffix('.html'))
-        html.append('    '*len(stack) + f'<li><a href="{escape(href_html)}">{escape(text)}</a>')
-    # 关闭剩余层级
-    while len(stack) > 1:
-        html.append('    '*len(stack) + '</li></ul>')
-        stack.pop()
-    return "\n".join(html)
-
-html_ul = '<ul class="summary">\n' + md_to_nested_ul(lines) + '\n</ul>'
-
-tpl = INDEX_MODEL.read_text(encoding='utf-8')
-# 用回调避免反斜线转义错误
-out = re.sub(r'<ul class="summary">.*?</ul>', lambda m: html_ul, tpl, flags=re.S)
-OUT_INDEX.write_text(out, encoding='utf-8')
-print("✅ 已生成 index_rebuild.html")
+if __name__ == '__main__':
+    main()
