@@ -1,6 +1,6 @@
 # coding
   
--   [CPP](CPP/README.mdCPP.md)
+-   [CPP](CPP/README.md)
 -   [Java](Java/README.md)
 -   [Python](Python/README.md)
 
