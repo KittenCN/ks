@@ -11,13 +11,13 @@
 >如有任何问题，请联系[CoderFAN](https://www.coderfan.com)的站长。  
 
 本项目主要包括以下内容：  
-1. [开发规范](/standard/) ：包括各种开发过程中应遵守的通用规则  
-2. [前端汇总](/web/) ：包括前端开发过程中常用的各种技术和工具  
-3. [后端汇总](/coding/) ：包括后端开发过程中常用的各种技术和工具  
-4. [算法汇总](/algorithms/) ：包括基础算法学习资料,这些都是程序员必备的技能。感谢大佬[krahets](https://github.com/krahets/hello-algo)。  
-5. [AP课程](/ap/) ：包括AP课程学习资料及部分历史真题  
-6. [数学知识](/math/) ：程序员都应该了解的数学知识  
-7. [工具集合](/tool/) ：包括各种开发过程中常用的工具  
-8. [进阶知识](/advance/) ：包括各种进阶知识  
-9. [资料下载](/docs/)   ：包括各种学习资料的下载  
-[![img](./img/coderfan_logo.png)](https://www.coderfan.com)  
+1. [开发规范](standard/README.md) ：包括各种开发过程中应遵守的通用规则  
+2. [前端汇总](web/README.md) ：包括前端开发过程中常用的各种技术和工具  
+3. [后端汇总](coding/README.md) ：包括后端开发过程中常用的各种技术和工具  
+4. [算法汇总](algorithms/README.md) ：包括基础算法学习资料,这些都是程序员必备的技能。感谢大佬[krahets](https://github.com/krahets/hello-algo)。  
+5. [AP课程](ap/README.md) ：包括AP课程学习资料及部分历史真题  
+6. [数学知识](math/README.md) ：程序员都应该了解的数学知识  
+7. [工具集合](tool/README.md) ：包括各种开发过程中常用的工具  
+8. [进阶知识](advance/README.md) ：包括各种进阶知识  
+9. [资料下载](docs/README.md)   ：包括各种学习资料的下载  
+[![img](img/coderfan_logo.png)](https://www.coderfan.com)  

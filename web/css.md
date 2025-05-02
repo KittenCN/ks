@@ -1,7 +1,8 @@
 # CSS
 
 <div align="center">
-<a href="../index.html"><p style="font-size:24px"><b>&#128512;&#128512;回到上一层&#128512;&#128512;</b></p></a>
+<a href="/index.html"><p style="font-size:24px"><b>&#128512;回到首页&#128512;</b></p></a>
+<a href="../index.html"><p style="font-size:24px"><b>&#128512;回到上一层&#128512;</b></p></a>
   <img src="./web/img/css.jpg" width="200" alt="logo" align="center">
 </div>
 
