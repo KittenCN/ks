@@ -1,4 +1,4 @@
--   [CPP](/coding/CPP.md)
+-   [CPP](/coding/CPP/README.md)
     -   [CPP 基础](/coding/CPP/cpp_base/README.md)
         -   [ch00. CPP 基础](/coding/CPP/cpp_base/ch00.md)
         -   [ch01. CPP 指针](/coding/CPP/cpp_base/ch01.md)  
@@ -15,5 +15,5 @@
         -   [ch12. CPP 核心编程](/coding/CPP/cpp_base/ch12.md)
         -   [ch13. CPP 深入理解](/coding/CPP/cpp_base/ch13.md)
     -   [StudyTonight C/C++ 中文教程](/coding/CPP/c-cpp/README.md)
--   [Java](/coding/Java.md)
--   [Python](/coding/Python.md)
+-   [Java](/coding/Java/README.md)
+-   [Python](/coding/Python/README.md)

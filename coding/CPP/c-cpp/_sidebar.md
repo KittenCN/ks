@@ -1,4 +1,4 @@
--   [CPP](/coding/CPP.md)
+-   [CPP](/coding/CPP/README.md)
     -   [CPP基础](/coding/CPP/cpp_base/README.md)
     -   [StudyTonight C/C++ 中文教程](/coding/CPP/c-cpp/README.md)
         -   [C](/coding/CPP/c-cpp/001.md)
@@ -391,5 +391,5 @@
             -   [图表示——邻接矩阵和列表](/coding/CPP/c-cpp/388.md)
             -   [其他](/coding/CPP/c-cpp/389.md)
             -   [哈希表数据结构](/coding/CPP/c-cpp/390.md)
--   [Java](/coding/Java.md)
--   [Python](/coding/Python.md)
+-   [Java](/coding/Java/README.md)
+-   [Python](/coding/Python/README.md)

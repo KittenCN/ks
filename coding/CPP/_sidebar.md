@@ -1,5 +1,5 @@
--   [CPP](/coding/CPP.md)
+-   [CPP](/coding/CPP/README.md)
     -   [CPP基础](/coding/CPP/cpp_base/README.md)
     -   [StudyTonight C/C++ 中文教程](/coding/CPP/c-cpp/README.md)
--   [Java](/coding/Java.md)
--   [Python](/coding/Python.md)
+-   [Java](/coding/Java/README.md)
+-   [Python](/coding/Python/README.md)
