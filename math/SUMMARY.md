@@ -1,6 +1,6 @@
 # 目录
 
--   [Thomas Calculus](Thomas_Calculus/README.md.md)
+-   [Thomas Calculus](Thomas_Calculus/README.md)
 -   [partial_derivative](partial_derivative/README.md)
 -   [probability theory](probability_theory/README.md)
 -   [Discrete_Mathematics_Explained_in_Detail-master](Discrete_Mathematics_Explained_in_Detail-master/README.md)

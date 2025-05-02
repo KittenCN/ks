@@ -1,3 +1,3 @@
--   [CPP](/coding/CPP.md)
--   [Java](/coding/Java.md)
--   [Python](/coding/Python.md)
+-   [CPP](/coding/CPP/README.md)
+-   [Java](/coding/Java/README.md)
+-   [Python](/coding/Python/README.md)

@@ -1,2 +1,2 @@
--   [AP 计算机A CSA](ap/csa.md)
--   [AP 微积分 calculus](ap/calculus.md)
+-   [AP 计算机A CSA](/ap/csa/README.md)
+-   [AP 微积分 calculus](/ap/calculus/README.md)
