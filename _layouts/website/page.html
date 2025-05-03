@@ -117,6 +117,16 @@
 <div class="book honkit-cloak">
     <div class="book-summary">
         {% block book_sidebar %}
+            <div class="navigation-extra">
+                {# 返回主页，假设你的根目录就是 / #}
+                <a href="{{ '/'|resolveFile }}" class="btn btn-home">返回主页</a>
+            
+                {# 返回上层：取当前 page.path 去除最后一节作为父级目录 #}
+                {% set parts = page.path.rsplit('/', 1) %}
+                {% if parts|length > 1 and parts[0] != '' %}
+                    <a href="{{ parts[0]|resolveFile }}" class="btn btn-up">返回上层</a>
+                {% endif %}
+            </div>
             {% block search_input %}{% endblock %}
             {% block book_summary %}
                 <nav role="navigation">
