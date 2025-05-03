@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import os
 import subprocess
 import sys
@@ -10,6 +7,8 @@ import shutil
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from tqdm import tqdm
+
+# -*- coding: utf-8 -*-
 
 # --------------------- CONFIGURATION ---------------------
 MAX_PARALLEL = 32
@@ -73,28 +72,53 @@ def build_volume(volume_path, pbar):
 
 def merge_all_outputs(volumes, base_dir):
     print("\n📦 正在从根向深一层层合并构建内容...")
-
-    # 按层级排序：路径越短越靠前
     sorted_volumes = sorted(volumes, key=lambda v: len(v.relative_to(base_dir).parts))
+    total_to_merge = sum(
+        1 for vol in sorted_volumes
+        if (vol / TEMP_BUILD_NAME / vol.relative_to(base_dir)).exists()
+    )
 
-    for vol in sorted_volumes:
-        relative_path = vol.relative_to(base_dir)
-        temp_path = vol / TEMP_BUILD_NAME / relative_path
-        target_path = BUILD_ROOT / relative_path
+    with tqdm(total=total_to_merge, desc="Merging volumes", unit="卷") as pbar:
+        for vol in sorted_volumes:
+            relative_path = vol.relative_to(base_dir)
+            temp_path = vol / TEMP_BUILD_NAME / relative_path
+            target_path = BUILD_ROOT / relative_path
 
-        if temp_path.exists():
-            if target_path.exists():
-                shutil.rmtree(target_path)
-            shutil.copytree(temp_path, target_path)
-            shutil.rmtree(vol / TEMP_BUILD_NAME, ignore_errors=True)
+            if temp_path.exists():
+                if target_path.exists():
+                    shutil.rmtree(target_path)
+                shutil.copytree(temp_path, target_path)
+                shutil.rmtree(vol / TEMP_BUILD_NAME, ignore_errors=True)
+                pbar.update(1)
 
-    # 删除 _book 目录下所有 *.md 文件
     print("🧹 正在清理 _book 中的 .md 文件...")
     for md in BUILD_ROOT.rglob("*.md"):
         try:
             md.unlink()
         except Exception:
             pass
+
+def fix_md_links_in_html():
+    print("\n🔗 正在修复 HTML 文件中的 .md 链接为 .html ...")
+    html_files = list(BUILD_ROOT.rglob("*.html"))
+    md_link_pattern = re.compile(r'href="([^"]+?\.md)(#[^"]*)?"')
+    updated_count = 0
+
+    with tqdm(total=len(html_files), desc="Fixing links", unit="文件") as pbar:
+        for html_path in html_files:
+            try:
+                with open(html_path, "r", encoding="utf-8") as f:
+                    content = f.read()
+                new_content, count = md_link_pattern.subn(lambda m: f'href="{m.group(1).rsplit(".", 1)[0]}.html{m.group(2) or ""}"', content)
+                if count > 0:
+                    with open(html_path, "w", encoding="utf-8") as f:
+                        f.write(new_content)
+                    updated_count += 1
+            except Exception:
+                pass
+            pbar.update(1)
+
+    print(f"✅ 链接修复完成，共更新了 {updated_count} 个 HTML 文件。")
 
 def main():
     base_dir = Path(".").resolve()
@@ -126,6 +150,7 @@ def main():
                     failed.append(vol_name)
 
     merge_all_outputs(volumes, base_dir)
+    fix_md_links_in_html()
 
     print("\n=== Build Summary ===")
     print(f"Total volumes: {len(volumes)}")
