@@ -1,8 +1,7 @@
 # 雅虎军规
 
 <div align="center">
-<a href="/index.html"><p style="font-size:24px"><b>&#128512;回到首页&#128512;</b></p></a>
-<a href="../index.html"><p style="font-size:24px"><b>&#128512;回到上一层&#128512;</b></p></a>
+
   <img src="./standard/img/yooha.jpeg" width="300" alt="logo" align="center">
 </div>
 
