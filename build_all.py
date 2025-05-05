@@ -1,21 +1,33 @@
-import os
-import subprocess
-import sys
-import time
-import re
-import shutil
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from pathlib import Path
-from tqdm import tqdm
-
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""
+并行编译 Honkit 各卷（跨平台 Windows/Linux 兼容）
+- 递归查找所有同时包含 book.json 与 SUMMARY.md 或 summary.md 的目录
+- 跳过指定的无关目录
+- 使用最多 MAX_PARALLEL 线程并行执行 npx honkit build
+- 将输出统一写入根目录 _book/<relative_path>（通过临时 _book_temp 合并）
+- 错误日志汇总至 build_errors.log
+- 合并与链接修复阶段增加进度条
+"""
+import os
+import sys
+import shutil
+import subprocess
+import time
+import re
+from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from tqdm import tqdm
+
 # --------------------- CONFIGURATION ---------------------
-MAX_PARALLEL = 4
-BUILD_ROOT = Path("_book")  # 最终合并输出目录
-EXCLUDED_DIRS = {'_archive', 'drafts', '.git', '.github', 'node_modules',
-                 'build', 'dist', '_book', '_layouts', 'lib', 'img', 'imgs'}
-TEMP_BUILD_NAME = "_book_temp"
+MAX_PARALLEL = 2
+BUILD_ROOT = Path("_book")           # 最终输出目录
+TEMP_BUILD_NAME = TEMP_DIR_NAME = "_book_temp"         # 临时构建目录名
+EXCLUDED_DIRS = {d.lower() for d in (
+    '_archive', 'drafts', '.git', '.github', 'node_modules',
+    'build', 'dist', '_book', '_layouts', 'lib', 'img', 'imgs'
+)}
 # ---------------------------------------------------------
 
 def find_valid_volumes(base_dir):
@@ -41,34 +53,35 @@ def count_md_files(summary_path):
         pass
     return count
 
-def build_volume(volume_path, pbar):
-    relative_path = volume_path.relative_to(Path.cwd())
-    temp_output = volume_path / TEMP_BUILD_NAME / relative_path
 
-    os.makedirs(temp_output, exist_ok=True)
+def build_volume(src: Path, errors_log: Path):
+    rel = src.relative_to(Path.cwd())
+    temp_output = src / TEMP_DIR_NAME / rel
+    temp_output.mkdir(parents=True, exist_ok=True)
 
-    cmd = ["npx", "honkit", "build", str(volume_path), str(temp_output)]
-    log_file = BUILD_ROOT / f"{str(relative_path).replace(os.sep, '_')}.log"
+    if os.name == 'nt':
+        cmd = f'npx honkit build "{src}" "{temp_output}"'
+        shell_flag = True
+    else:
+        cmd = ['npx', 'honkit', 'build', str(src), str(temp_output)]
+        shell_flag = False
 
     try:
-        with open(log_file, "w", encoding="utf-8") as log:
-            process = subprocess.Popen(cmd, stdout=log, stderr=subprocess.STDOUT)
-            process.wait()
-            success = (process.returncode == 0)
-            if not success:
-                with open(log_file, encoding='utf-8', errors='ignore') as l:
-                    tail = l.readlines()[-10:]
-                print(f"\n❌ 构建失败：{relative_path}")
-                print("最后 10 行日志：")
-                print("".join(tail).rstrip())
-                print("--------------------------")
-        result = (volume_path, success)
-    except Exception:
-        result = (volume_path, False)
+        subprocess.run(
+            cmd,
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
+            shell=shell_flag
+        )
+        return True
+    except subprocess.CalledProcessError as e:
+        with errors_log.open('a', encoding='utf-8') as log:
+            log.write(f"--- Error building {rel} ---\n")
+            log.write(e.stderr.decode('utf-8', errors='ignore'))
+            log.write("\n")
+        return False
 
-    md_count = count_md_files(volume_path / "SUMMARY.md")
-    pbar.update(md_count)
-    return result
 
 def merge_all_outputs(volumes, base_dir):
     print("\n📦 正在从根向深一层层合并构建内容...")
@@ -120,36 +133,36 @@ def fix_md_links_in_html():
 
     print(f"✅ 链接修复完成，共更新了 {updated_count} 个 HTML 文件。")
 
-def main():
-    base_dir = Path(".").resolve()
-    BUILD_ROOT.mkdir(parents=True, exist_ok=True)
 
-    volumes = find_valid_volumes(base_dir)
+def main():
+    start = time.time()
+    base = Path.cwd()
+    if BUILD_ROOT.exists(): shutil.rmtree(BUILD_ROOT)
+    BUILD_ROOT.mkdir()
+    errors_log = base / 'build_errors.log'
+    if errors_log.exists(): errors_log.unlink()
+
+    volumes = find_valid_volumes(base)
     if not volumes:
-        print("❗ No valid volumes found.")
+        print("❗ 未找到有效卷目录，请检查配置。")
         sys.exit(1)
 
-    total_md_files = sum(count_md_files(vol / "SUMMARY.md") for vol in volumes)
-    print(f"✅ Found {len(volumes)} volumes to build, {total_md_files} md pages in total.\n")
+    total_md = sum(count_md_files(vol / "SUMMARY.md") for vol in volumes)
+    print(f"✅ 共 {len(volumes)} 卷，约 {total_md} 页待编译。\n")
 
-    success = []
-    failed = []
+    success, failed = [], []
+    with ThreadPoolExecutor(max_workers=MAX_PARALLEL) as exe:
+        futures = {exe.submit(build_volume, vol, errors_log): vol for vol in volumes}
+        for fut in tqdm(as_completed(futures), total=len(futures), desc="Building volumes", unit="卷"):
+            vol = futures[fut]
+            rel = vol.relative_to(base)
+            try:
+                ok = fut.result()
+            except:
+                ok = False
+            (success if ok else failed).append(rel)
 
-    with ThreadPoolExecutor(max_workers=MAX_PARALLEL) as executor:
-        with tqdm(total=total_md_files, desc="Building .md files", unit="md") as pbar:
-            futures = {executor.submit(build_volume, vol, pbar): vol for vol in volumes}
-            for future in as_completed(futures):
-                vol_path, result = future.result()
-                vol_name = str(vol_path.relative_to(Path.cwd()))
-                if result:
-                    success.append(vol_name)
-                    log_path = BUILD_ROOT / f"{vol_name.replace(os.sep, '_')}.log"
-                    if log_path.exists():
-                        log_path.unlink()
-                else:
-                    failed.append(vol_name)
-
-    merge_all_outputs(volumes, base_dir)
+    merge_all_outputs(volumes, base)
     fix_md_links_in_html()
 
     print("\n=== Build Summary ===")
@@ -158,12 +171,13 @@ def main():
     print(f"Failed: {len(failed)}")
     if failed:
         print("❗ Failed volumes:")
-        for f in failed:
-            print(f"  - {f}")
+        for v in failed: print(f"  - {v}")
+    if errors_log.exists() and errors_log.stat().st_size > 0:
+        print(f"\n❗ 查看错误日志：{errors_log}")
+    else:
+        print("✅ 全部卷编译成功，无错误日志。")
 
-if __name__ == "__main__":
-    start = time.time()
+    print(f"\n⏱ 耗时 {time.time() - start:.2f} 秒。")
+
+if __name__ == '__main__':
     main()
-    duration = time.time() - start
-    print(f"\n⏱ Build completed in {duration:.2f} seconds.")
-
