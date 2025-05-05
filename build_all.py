@@ -11,7 +11,7 @@ from tqdm import tqdm
 # -*- coding: utf-8 -*-
 
 # --------------------- CONFIGURATION ---------------------
-MAX_PARALLEL = 32
+MAX_PARALLEL = 4
 BUILD_ROOT = Path("_book")  # 最终合并输出目录
 EXCLUDED_DIRS = {'_archive', 'drafts', '.git', '.github', 'node_modules',
                  'build', 'dist', '_book', '_layouts', 'lib', 'img', 'imgs'}
