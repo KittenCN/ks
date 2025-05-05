@@ -1,0 +1,475 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>CH05_01_Induction · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="CH05_02_Recursive.html" />
+    
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    --CH05_Induction_and_Recursion--
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.1" data-path="CH05_01_Induction.html">
+            
+                <a href="CH05_01_Induction.html">
+            
+                    
+                    CH05_01_Induction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="CH05_02_Recursive.html">
+            
+                <a href="CH05_02_Recursive.html">
+            
+                    
+                    CH05_02_Recursive
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >CH05_01_Induction</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <font size="6"> Chaptcer 05 Induction and Recursion 归纳与递归</font>
+
+<p>Part 01 Induction</p>
+<p>covering 5.1~5.2</p>
+<hr></hr>
+<h1 id="mathematical-induction-数学归纳法">Mathematical Induction 数学归纳法</h1>
+<h2 id="framework-基本框架">Framework 基本框架</h2>
+<p>Prove $\forall nP(n)$ by mathematical induction:</p>
+<ol>
+<li><p><strong>Basis step</strong> : Establish P(1)</p>
+</li>
+<li><p><strong>Inductive step</strong> : Prove that $P(k)\to P(k+1) \text{for}\ k\geq1$</p>
+</li>
+<li><p><strong>Conclusion</strong>:  $\forall nP(n)$, where the domain is the set of positive integers </p>
+</li>
+</ol>
+<p>Express this in the proposition form:</p>
+<p>$P(1)\wedge\forall k(P(k)\to P(k+1))\to\forall nP(n)$</p>
+<p>This is the (first) principle of Mathematical Induction, and it also has the following form
+$P(1)\\underline{\forall k(P(k)\to P(k+1))}\\therefore\forall nP(n)$</p>
+<h2 id="the-validity-of-mathematical-induction-数学归纳法的有效性">The Validity of Mathematical Induction 数学归纳法的有效性</h2>
+<p>The validity of mathematical induction follows from <strong>the well-ordering property</strong>（<strong>良序性公理</strong>） for the set of positive integers.</p>
+<h2 id="the-well-ordering-property-良序性公理">the Well-Ordering Property 良序性公理</h2>
+<p>A set S is well ordered  if every nonempty subset of S has a least element.</p>
+<p>For example, </p>
+<ol>
+<li><p>N is well ordered</p>
+</li>
+<li><p>Z is not well ordered under the $\leq$ relation (Z has no smallest element).</p>
+</li>
+<li><p>(0, 1) is not well ordered since (0,1) does not have a least element. </p>
+</li>
+</ol>
+<p><strong>The well-ordering property</strong> : Every nonempty set of nonnegative integers has a least element. </p>
+<h3 id="proofs-using-the-well-ordering-property">Proofs Using the Well-ordering property</h3>
+<h4 id="eg1">e.g.1</h4>
+<p>Use the well-ordering property to prove the division algorithm. The division algorithm states that if a is an integer and d  is a positive integer, then there are unique integers q and r, with $0\leq r&lt;d$ such that $a=dq+r$.</p>
+<blockquote>
+<p><strong>The existence part</strong></p>
+<p>Let S be the set of nonnegative integers of the form a-dq, where q is an integer. This set is nonempty.</p>
+<p>By the well-ordering property, S has a least element r=a-dq0.</p>
+<p>The integer r is nonnegative. It is also the case that r&lt;d. If it were not, then there would be a smaller nonnegative element in S, namely, $s=a-d(q_0+1)$.</p>
+<p>Consequently, there exist integers q and r with 0≤r&lt;d.</p>
+</blockquote>
+<h4 id="eg2">e.g.2</h4>
+<p>In a round-robin tournament every player plays every other player exactly once and each match has a winner and loser. We say that the players $p<em>1,p_2,…,p_m$ form a cycle if $p_1$ beats $p_2$, $p_2$ beats $p_3$, …, $p</em>{m-1}$ beats $p_m$, and $p_m$ beats $p_1$.
+Using the well-ordering principle to show that if there is a cycle of length m ($m\geq 3$) among the players in a round-robin tournament, there must be a cycle of three of these players</p>
+<blockquote>
+<p><strong>Solution</strong></p>
+<p>We assume that there is no cycle of three players. Because there is at least one cycle in the round-robin tournament, the set of all positive integers n for which there is a cycle of length n is nonempty. By the well-ordering property, this set of positive integers has a least element k, which by assumption must be greater than three. Consequently, there exists a cycle of players $p_1,p_2,…,p_k$ and no shorter cycle exists.</p>
+<p>Because there is no cycle of three players, we know that k &gt; 3. Consider the first three elements of this cycle, $p_1$, $p_2$, and $p_3$. There are two possible outcomes of the match between $p_1$ and $p_3$. </p>
+<ol>
+<li>If $p_3$ beats $p_1$, it follows that $p_1$, $p_2$, $p_3$ is a cycle of length three, contradicting our assumption that there is no cycle of three players. </li>
+<li><p>If it is the case that $p_1$ beats $p_3$, this means that we can omit $p_2$ from the cycle $p_1$, $p_2$, $p_3$, . . . , $p_k$ to obtain the cycle $p_1,p_3,p_4,...,p_k$ of length k − 1, contradicting the assumption that the smallest cycle has length k. </p>
+</li>
+<li><p>We conclude that there must be a cycle of length three.</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="why-mathematical-induction-is-valid">Why Mathematical Induction is Valid</h2>
+<p>Proof:</p>
+<p>Assume that there is at least one positive integer for which <em>P</em>(<em>n</em>) is false.</p>
+<p><em>S</em>: the set of positive integers for which <em>P</em>(<em>n</em>) is false.</p>
+<p>Then <em>S</em> is nonempty.</p>
+<p>By the well-ordering property, <em>S</em> has a least element, which will be denoted by <em>m</em>.</p>
+<p>Then $m\ne1$, <em>m</em>-1 is a positive integer. <em>m-1</em> is not in <em>S.</em> So <em>P</em>(<em>m</em> -1) is true.</p>
+<p>Since the implication $P(m-1)\to P(m)$ is also true, <em>P</em>(<em>m</em>) must be true. </p>
+<p>By contradiction, $\forall nP(n)$ </p>
+<h2 id="the-good-and-bad-of-mathematical-induction">The Good and Bad of Mathematical Induction</h2>
+<h3 id="the-good">The Good</h3>
+<ul>
+<li>can be used to prove a conjecture once it is has been made and is true</li>
+</ul>
+<h3 id="the-bad">The Bad</h3>
+<ul>
+<li><p>Proofs do not provide insights as to why theorems are true</p>
+<blockquote>
+<p>You can prove a theorem by M.I. even if you do not have the slightest idea why it is true!</p>
+</blockquote>
+</li>
+<li><p>Cannot be used to find new theorems</p>
+</li>
+</ul>
+<h2 id="more-general-form-广义形式">More General Form 广义形式</h2>
+<p>$\forall n\geq b(P(n))$</p>
+<blockquote>
+<p>The usage only differs at the basic step, we need to establish <strong>P(b)</strong> here!</p>
+</blockquote>
+<h1 id="strong-induction-强归纳法">Strong Induction 强归纳法</h1>
+<h2 id="framework-基本框架">Framework 基本框架</h2>
+<ol>
+<li><strong>Basis Step</strong>: We verify that the proposition P(1) is true.</li>
+<li><p><strong>Inductive Step</strong>: We show that the conditional statement $[P(1)\wedge P(2)\wedge...\wedge P(k)]\to P(k+1)$ is true for all positive integers k.</p>
+</li>
+<li><p><strong>Conclusion</strong>: $\forall n\geq n_0P(n)$</p>
+</li>
+</ol>
+<p>This is also the second principle of Mathematical Induction</p>
+<p>$(P(n_0)\wedge\forall k\geq n_0(P(n_0)\wedge P(n_0+1)\wedge...\wedge P(k)\to P(k+1)))\to\forall n\geq n_0(P(n))$</p>
+<h1 id="comparison-between-mi-and-si-两种归纳法的对比">Comparison Between M.I and S.I 两种归纳法的对比</h1>
+<p>Take a problem as an example.</p>
+<p>Prove that every amount of postage of 12 cents or more can be formed using just 4-cent and 5-cent stamps</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Method</th>
+<th style="text-align:center">Mathematical Induction</th>
+<th style="text-align:center">Strong Induction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Basis Step</td>
+<td style="text-align:center">P(12) is true because postage of 12 cents can be formed using three 4-cent stamps</td>
+<td style="text-align:center">P(12), P(13), P(14), and P(15) hold</td>
+</tr>
+<tr>
+<td style="text-align:center">Inductive Step</td>
+<td style="text-align:center">The inductive hypothesis P(k) for any positive integer k.Then to show P(k + 1) where k ≥ 12, we consider two cases a) <br></br>a) If at least one 4-cent stamp has been used, then a 4-cent stamp can be replaced with a 5-cent stamp to yield a total of k + 1 cents.<br></br>b)Otherwise, no  4-cent stamp have been used and at least three 5-cent stamps were used. Three 5-cent stamps can be replaced by four 4-cent stamps to yield a total of k + 1 cents.</td>
+<td style="text-align:center">Assume that P(j) is true for all positive integers j with 12 ≤ j ≤ k, where k ≥ 15. Show that P(k+1) is true under the assumption.<br></br>Using the inductive hypothesis, $P(k-3)$ holds since k − 3 ≥ 12.  To form postage of  k + 1 cents, add a 4-cent stamp to the postage for k − 3 cents</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note</strong>:</p>
+<ol>
+<li><p>The validities of both mathematical induction and strong induction follow from the well-ordering property.</p>
+</li>
+<li><p>In fact, mathematical induction, strong induction, and  well-ordering are all equivalent principles.</p>
+</li>
+</ol>
+</blockquote>
+<h1 id="connection-between-the-three-things-三者关系">Connection Between the Three Things 三者关系</h1>
+<p>The Mathematical Induction, the Strong Induction, and the well-ordering property is actually the same thing!</p>
+<h2 id="1-from-wp-to-mi">1. From W.P to M.I</h2>
+<p>See the validity of M.I, where the proof from W.P to M.I is given. We will omit the proof here.</p>
+<h2 id="2-from-wp-to-si">2. From W.P to S.I</h2>
+<blockquote>
+<p>Show that strong induction is a valid method of proof by showing that it follows from the well-ordering property</p>
+</blockquote>
+<p>Assume that the well-ordering property holds. Suppose that P(1) is true and that the conditional statement $[P(1)\wedge P(2)\wedge· · ·\wedge P(n)]\to P(n+1)$ is true fore very positive integer n. Let S be the set of positive integers n for which P(n) is false.We will show S = ∅. Assume that $S\neq \emptyset$. Then by the well-ordering property there is a least integer m in S.We know that m cannot be 1 because P(1) is true. Because n = m is the least integer such that P(n) is false, P(1), P(2), . . . , P (m−1) are true, and m−1 ≥ 1. Because $[P(1)\wedge P(2)\wedge· · ·\wedge P(m-1)]\to P(m)$ is true, it follows that P(m) must also be true, which is a contradiction. Hence, S = ∅.</p>
+<h2 id="3-from-mi-to-wp">3. From M.I to W.P</h2>
+<blockquote>
+<p> Show that the well-ordering property can be proved when the principle of mathematical induction is taken as an axiom.</p>
+</blockquote>
+<p>Suppose that the well-ordering property were false. Let S be a nonempty set of nonnegative integers that has no least element. Let P(n) be the statement “$i\notin S\ for\ i=0,1,...,n$” P(0) is true because if 0 ∈ S then S has a least element, namely, 0. Now suppose that P(n) is true. Thus, $0\notin S,1\notin S,...,n\notin S$. Clearly, n+1 cannot be in S, for if it were, it would be its least element. Thus P(n+1) is true. So by the principle of mathematical induction, $n\notin S$ for all nonnegative integers n. Thus, S = ∅, a contradiction.</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+                <a href="CH05_02_Recursive.html" class="navigation navigation-next navigation-unique" aria-label="Next page: CH05_02_Recursive">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"CH05_01_Induction","level":"1.2.1","depth":2,"next":{"title":"CH05_02_Recursive","level":"1.2.2","depth":2,"path":"CH05_02_Recursive.md","ref":"CH05_02_Recursive.md","articles":[]},"previous":{"title":"--CH05_Induction_and_Recursion--","level":"1.2","depth":1,"ref":"","articles":[{"title":"CH05_01_Induction","level":"1.2.1","depth":2,"path":"CH05_01_Induction.md","ref":"CH05_01_Induction.md","articles":[]},{"title":"CH05_02_Recursive","level":"1.2.2","depth":2,"path":"CH05_02_Recursive.md","ref":"CH05_02_Recursive.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"CH05_01_Induction.md","mtime":"2025-04-22T02:47:58.166Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:18:46.246Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

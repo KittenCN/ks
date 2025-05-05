@@ -1,0 +1,691 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 8 Lambda 表达式 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0809.html" />
+    
+    
+    <link rel="prev" href="0807.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0807.html">
+            
+                <a href="0807.html">
+            
+                    
+                    Java 8 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.2" data-path="0808.html">
+            
+                <a href="0808.html">
+            
+                    
+                    Java 8 Lambda 表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0809.html">
+            
+                <a href="0809.html">
+            
+                    
+                    Java 反射 API——Parameter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0810.html">
+            
+                <a href="0810.html">
+            
+                    
+                    Java 8 Base64类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0811.html">
+            
+                <a href="0811.html">
+            
+                    
+                    Java 8 Collectors类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0812.html">
+            
+                <a href="0812.html">
+            
+                    
+                    Java 8 并行数组排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0813.html">
+            
+                <a href="0813.html">
+            
+                    
+                    Java 8 方法引用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0814.html">
+            
+                <a href="0814.html">
+            
+                    
+                    Java 8 forEach()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0815.html">
+            
+                <a href="0815.html">
+            
+                    
+                    Java 8 StringJoiner类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0816.html">
+            
+                <a href="0816.html">
+            
+                    
+                    Java 接口默认和静态方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0817.html">
+            
+                <a href="0817.html">
+            
+                    
+                    Java 8 函数式接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0818.html">
+            
+                <a href="0818.html">
+            
+                    
+                    Java Optional类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0819.html">
+            
+                <a href="0819.html">
+            
+                    
+                    Java 8 流 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0820.html">
+            
+                <a href="0820.html">
+            
+                    
+                    Java 8 改进的类型推断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0821.html">
+            
+                <a href="0821.html">
+            
+                    
+                    Java 8 日期和时间 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0822.html">
+            
+                <a href="0822.html">
+            
+                    
+                    Java 谓词
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 8 Lambda 表达式</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-8-lambda-表达式">Java 8 Lambda 表达式</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-8/java-8-lambda-expression" target="_blank">https://www.studytonight.com/java-8/java-8-lambda-expression</a></p>
+</blockquote>
+<p>Lambda 表达式是 Java 8 版本中引入的 Java 语言的一个特性。<strong>是一个没有名字</strong>的函数<strong>，使用函数方式执行代码。lambda 表达式也被称为</strong>匿名函数<strong>。</strong></p>
+<p> <strong>它旨在提供函数式接口的实现。只有一个抽象方法的接口称为函数接口。Java 提供了一个注解</strong>@<em>functional interface**</em>，用来声明一个接口为函数接口。关于函数式接口的更多信息，请阅读我们在 <a href="https://www.studytonight.com/java-8/java-8-functional-interface" target="_blank">Java 函数式接口</a>上的帖子。</p>
+<p>它使用<strong>较少的代码</strong>，并提供了一种<strong>清晰简洁的</strong>方式来表示一个方法接口。在集合库中，从集合中迭代、过滤和提取数据非常有用。</p>
+<h2 id="lambda-表达式的优点">Lambda 表达式的优点</h2>
+<ul>
+<li><p>lambda 表达式的主体可以有一个或多个语句。</p>
+</li>
+<li><p>如果只有一条语句，花括号是可选的。</p>
+</li>
+<li><p>return 语句是可选的，仅当方法签名具有返回类型时使用。</p>
+</li>
+<li><p>我们可以向 lambda 表达式传递零个、一个或多个参数。</p>
+</li>
+<li><p>参数的类型可以显式声明，也可以从上下文中推断出来。</p>
+</li>
+<li><p>当有单个参数时，不一定要使用括号。括号是可选的。</p>
+</li>
+</ul>
+<h2 id="句法">句法</h2>
+<pre><code class="lang-java">(list of arguments) -&gt; { expression body}
+</code></pre>
+<p><strong>参数列表</strong>可以是零、一或多个。</p>
+<p><strong>表达体</strong>可以有一个或多个语句。</p>
+<h3 id="lambda-表达式的简短示例">Lambda 表达式的简短示例</h3>
+<p>我们可以认为 lambda 表达式是定义函数的一种聪明而简单的方法。如果您是初学者，那么我们建议您首先阅读 Java 中的<a href="https://www.studytonight.com/java/methods-in-java.php" target="_blank">函数</a>和<a href="https://www.studytonight.com/java-8/java-8-functional-interface" target="_blank">函数接口</a>。</p>
+<p>借助给定的基本示例，您可以获得 lambda 表达式的概念:</p>
+<pre><code class="lang-java">() -&gt; System.out.println(<span class="hljs-string">"executing lambda expression."</span>); <span class="hljs-comment">// zero argument, lambda expression</span>
+
+(String str) -&gt; System.out.print(str); <span class="hljs-comment">// single argumment, lambda expression</span>
+
+(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b) -&gt; a+b; <span class="hljs-comment">// multiple arguments, sum of two values</span>
+
+(a,b) -&gt; a+b <span class="hljs-comment">// parameters without types, can be used to sum and concat two strings as well.</span>
+
+(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b) -&gt; <span class="hljs-keyword">return</span> (a+b); <span class="hljs-comment">// lambda expression with return statement</span>
+
+(<span class="hljs-keyword">int</span>[]) -&gt; { multiple statments; <span class="hljs-keyword">return</span> index; }   <span class="hljs-comment">// it can have multiple statements</span>
+</code></pre>
+<p>在这些示例中，我们有各种各样的 lambda 表达式，如<strong>零参数</strong>和<strong>单语句</strong>、<strong>多参数</strong>、 <strong>lambda 带返回语句</strong>等。虽然<strong>返回语句是可选的</strong>，也可以有<strong>多个语句</strong>。</p>
+<p>还有一点，<strong>类型的参数是可选的</strong>这意味着如果我们不提供它，那么编译器会自动干预参数的类型，这被称为<strong>类型推断</strong>。</p>
+<p>现在让我们创建一些有趣的例子来理解 lambda 函数的用法。</p>
+<h2 id="java-8-之前的场景">Java 8 之前的场景</h2>
+<p>假设我们有一个包含单个抽象方法的接口，如果我们使用以前的 Java 8 提供它的实现，那么我们必须使用匿名类概念，代码看起来太乱了。请参见下面使用匿名类的示例</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Runnable</span></span>{  
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span>;  
+}  
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> </span>{  
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{  
+        <span class="hljs-keyword">int</span> speed=<span class="hljs-number">100</span>;  
+
+        <span class="hljs-comment">// old approach to implement   </span>
+        Runnable r=<span class="hljs-keyword">new</span> Runnable(){  
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span>{System.out.println(<span class="hljs-string">"Running at the speed of "</span>+speed);}  
+        };  
+        r.run();  
+    }  
+}
+</code></pre>
+<h2 id="示例场景-java-8-及更高版本">示例:场景 Java 8 及更高版本</h2>
+<p>从 Java 8 和更高版本，我们可以使用 lambda 表达式实现这样的抽象方法。这就是 lambda 表达式的优势，请注意它没有任何名称，这就是它也被称为匿名函数的原因。</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Runnable</span></span>{  
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span>;  
+}  
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> </span>{  
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{  
+        <span class="hljs-keyword">int</span> speed=<span class="hljs-number">100</span>;  
+
+        <span class="hljs-comment">// new approach (lambda expression) to implement   </span>
+        Runnable r=()-&gt;{  
+            System.out.println(<span class="hljs-string">"Running at the speed of "</span>+speed);  
+        };  
+        r.run();  
+    }  
+}
+</code></pre>
+<p>以 100 的速度奔跑</p>
+<h2 id="示例带参数的-lambda-表达式">示例:带参数的 Lambda 表达式</h2>
+<p>Lambda 表达式可以有零个、一个或多个参数，就像我们使用方法一样。参数的类型是由 lambda 推断出来的，所以它是可选的，我们可能会也可能不会提到参数。请看例子，其中第二个 Lambda 表达式我们提到了参数的类型。</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Runnable</span></span>{  
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">(<span class="hljs-keyword">int</span> speed)</span></span>;  
+}  
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> </span>{  
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{  
+        <span class="hljs-keyword">int</span> speed=<span class="hljs-number">100</span>;  
+
+        <span class="hljs-comment">// lambda expression:   </span>
+        Runnable r=(carSpeed)-&gt;{  
+            System.out.println(<span class="hljs-string">"Running at the speed of "</span>+carSpeed);  
+        };  
+        r.run(speed);
+        <span class="hljs-comment">// specifying type of parameters</span>
+        Runnable r1=(<span class="hljs-keyword">int</span> carSpeed)-&gt;{  
+            System.out.println(<span class="hljs-string">"Running at the speed of "</span>+carSpeed);  
+        }; 
+        r1.run(speed);
+    }  
+}
+</code></pre>
+<p>以 100 的速度奔跑</p>
+<h2 id="示例使用返回语句的-lambda-表达式">示例:使用返回语句的 Lambda 表达式</h2>
+<p>return 语句是可选的，带有 lambda 表达式。我们可以使用它向调用者返回一个值，在这个例子中，我们使用了两个 lambda 表达式，其中第一个不使用 return 语句，而第二个使用 return 语句。</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Runnable</span></span>{  
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">run</span><span class="hljs-params">(<span class="hljs-keyword">int</span> speed, <span class="hljs-keyword">int</span> distance)</span></span>;
+}  
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> </span>{  
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{    
+
+        <span class="hljs-comment">// lambda expression: without return   </span>
+        Runnable r = (carSpeed,distance)-&gt;  
+            (<span class="hljs-string">"Distance covered "</span>+ distance +<span class="hljs-string">"Km at the speed of "</span>+carSpeed);
+        <span class="hljs-comment">// calling</span>
+        String r15 = r.run(<span class="hljs-number">80</span>,<span class="hljs-number">150</span>);
+        System.out.println(r15);
+        <span class="hljs-comment">// lambda expression: with return statement</span>
+        Runnable r1 = (<span class="hljs-keyword">int</span> carSpeed, <span class="hljs-keyword">int</span> distance)-&gt;{ 
+            <span class="hljs-keyword">return</span> (<span class="hljs-string">"Distance covered "</span>+ distance +<span class="hljs-string">"Km at the speed of "</span>+carSpeed);
+        };
+        String fz = r1.run(<span class="hljs-number">100</span>,<span class="hljs-number">200</span>);
+        System.out.println(fz);
+
+    }  
+}
+</code></pre>
+<p>以 80 的速度行驶 150 公里
+以 100 的速度行驶 200 公里</p>
+<h2 id="示例集合中的-lambda-表达式">示例:集合中的 Lambda 表达式</h2>
+<p>虽然我们可以在任何地方使用 lambda 表达式来实现一个函数接口，但是这里我们使用它来迭代集合元素。这里我们使用了迭代器接口的 forEach()方法。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> </span>{  
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{    
+
+        List&lt;Integer&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        list.add(<span class="hljs-number">10</span>);
+        list.add(<span class="hljs-number">20</span>);
+        list.add(<span class="hljs-number">30</span>);
+        list.add(<span class="hljs-number">40</span>);
+        <span class="hljs-comment">// Traversing using foreach</span>
+        System.out.println(<span class="hljs-string">"Traversing using foreach"</span>);
+        <span class="hljs-keyword">for</span>(Integer element: list) {
+            System.out.println(element);
+        }
+        <span class="hljs-comment">// lambda expression</span>
+        System.out.println(<span class="hljs-string">"Traversing using lambda expression"</span>);
+        list.forEach(element-&gt;System.out.println(element));
+    }  
+}
+</code></pre>
+<p>使用 foreach 进行穿越
+10
+20
+30
+40
+使用 lambda 表达式进行穿越
+10
+20
+30
+40</p>
+<h2 id="示例使用-lambda-的线程实现">示例:使用 Lambda 的线程实现</h2>
+<p>Java Runnable 接口是一个包含单个抽象方法的函数式接口。我们可以使用 lambda 表达式实现它的 run()方法，并创建线程实例，就像我们在下面的示例中所做的那样。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> </span>{  
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{    
+
+        <span class="hljs-comment">// Thread Implementation using anonymous class</span>
+        Runnable run = <span class="hljs-keyword">new</span> Runnable() {
+            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{
+                System.out.println(<span class="hljs-string">"Thread running..."</span>);
+            }
+        };
+        <span class="hljs-keyword">new</span> Thread(run).start();
+
+        <span class="hljs-comment">// Thread Implementation using lambda expression</span>
+        Runnable run1 = ()-&gt;System.out.println(<span class="hljs-string">"Thread Running using lambda..."</span>);
+        <span class="hljs-keyword">new</span> Thread(run1).start();
+
+    }  
+}
+</code></pre>
+<p>线程运行...
+使用λ运行线程...</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0807.html" class="navigation navigation-prev " aria-label="Previous page: Java 8 特性">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0809.html" class="navigation navigation-next " aria-label="Next page: Java 反射 API——Parameter类">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 8 Lambda 表达式","level":"1.1.2","depth":2,"next":{"title":"Java 反射 API——Parameter类","level":"1.1.3","depth":2,"path":"0809.md","ref":"0809.md","articles":[]},"previous":{"title":"Java 8 特性","level":"1.1.1","depth":2,"path":"0807.md","ref":"0807.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0808.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:51.159Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

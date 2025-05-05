@@ -1,0 +1,695 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>实现堆 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="383.html" />
+    
+    
+    <link rel="prev" href="381.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="378.html">
+            
+                <a href="378.html">
+            
+                    
+                    高级树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="379.html">
+            
+                <a href="379.html">
+            
+                    
+                    多维树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="380.html">
+            
+                <a href="380.html">
+            
+                    
+                    树型数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="381.html">
+            
+                <a href="381.html">
+            
+                    
+                    堆数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.5" data-path="382.html">
+            
+                <a href="382.html">
+            
+                    
+                    实现堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="383.html">
+            
+                <a href="383.html">
+            
+                    
+                    TRIE 数据结构示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="384.html">
+            
+                <a href="384.html">
+            
+                    
+                    B 树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="385.html">
+            
+                <a href="385.html">
+            
+                    
+                    B- 树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="386.html">
+            
+                <a href="386.html">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="387.html">
+            
+                <a href="387.html">
+            
+                    
+                    图介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="388.html">
+            
+                <a href="388.html">
+            
+                    
+                    图表示——邻接矩阵和列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="389.html">
+            
+                <a href="389.html">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="390.html">
+            
+                <a href="390.html">
+            
+                    
+                    哈希表数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >实现堆</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="实现堆">实现堆</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/advanced-data-structures/implementing-heaps" target="_blank">https://www.studytonight.com/advanced-data-structures/implementing-heaps</a></p>
+</blockquote>
+<p>在上一篇文章中，我们了解了堆的所有知识。现在是实施它们的时候了。数组是实现堆的首选，因为堆有完整的二叉树属性，我们可以确信不会浪费数组位置。</p>
+<p>让我们考虑如下所示的二进制堆，这个堆可以用一个数组来表示，如下图所示。</p>
+<p><img src="img/2f8bbac7e0e605ab2c3d40ac86dcb179.png" alt="Array Heap"></img></p>
+<h2 id="实现堆">实现堆</h2>
+<p>让我们看看如何实现一个堆数据结构。</p>
+<h3 id="1堆的结构">1.堆的结构</h3>
+<p>我们需要一个数组来存储堆的元素，此外，我们还需要一个变量来表示堆的大小。考虑下面的代码片段:</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] items = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">10</span>];
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> size;
+</code></pre>
+<p>初始容量也可以是动态的，但这里我选择了 10 的固定长度来表示相同的容量。</p>
+<h3 id="2插入到堆中">2.插入到堆中</h3>
+<p>当我们想要将一个项目插入到堆中时，我们将简单地将它插入到数组中，然后如果它不满足任何堆属性，就执行<code>bubbleUp()</code>操作。代码如下所示:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> item)</span></span>{
+        <span class="hljs-keyword">if</span>(isFull()){
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException();
+        }
+        items[size++] = item;
+        bubbleUp();
+}
+</code></pre>
+<p>一个案例可能会到达堆已满的地方，然后如果我们试图向其中插入更多的项目，它应该会返回一个异常。<code>isFull()</code>方法是这样的:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">private</span> boolean <span class="hljs-title">isFull</span><span class="hljs-params">()</span></span>{ <span class="hljs-keyword">return</span> size == items.length; }
+</code></pre>
+<p>在这个<code>isFull()</code>调用返回 false 之后，我们向前移动，将项目插入到我们的堆中，并增加数组的大小。现在，最重要的部分是纠正我们在堆中插入的这个元素的位置。我们用<code>bubbleUp()</code>方法来做。<code>bubbleUp()</code>方法代码如下:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">bubbleUp</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">int</span> index = size - <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span>(index &gt; <span class="hljs-number">0</span> &amp;&amp; items[index] &gt; items[parent(index)]){
+            swap(index,parent(index));
+            index = parent(index);
+        }
+}
+</code></pre>
+<p>在上面的方法中，我们获取刚刚插入的元素的索引，然后在这个元素比父元素大的情况下用父元素交换它，同时我们更新索引，这样我们就不会选择错误的元素。<code>swap()</code>方法是这样的:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left,<span class="hljs-keyword">int</span> right)</span></span>{
+        <span class="hljs-keyword">int</span> temp = items[left];
+        items[left] = items[right];
+        items[right] = temp;
+}
+</code></pre>
+<p>还需要注意的是，我们在<code>bubbleUp()</code>方法中调用的是一个父方法，该父方法返回给我们一个当前索引的父。该方法的代码如下所示:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">parent</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{ <span class="hljs-keyword">return</span> (index - <span class="hljs-number">1</span>)/<span class="hljs-number">2</span>; }
+</code></pre>
+<p>以上方法是我们将元素插入二进制堆所需的全部方法。</p>
+<h4 id="3从堆中移除">3.从堆中移除</h4>
+<p>与插入堆相比，从堆中移除元素是一个有点棘手的过程，因为在这个例子中，我们需要<code>bubbleDown()</code>，这个向下冒泡的过程包括检查父元素的有效性，以及尽可能向左插入树以保持完整的二叉树属性的方法。</p>
+<p><code>remove()</code>方法是这样的:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">if</span>(isEmpty()){
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException();
+        }
+        items[<span class="hljs-number">0</span>] = items[--size];
+        bubbleDown();
+}
+</code></pre>
+<p>第一个检查是确保我们没有试图从空堆中移除任何东西。然后我们在开始处插入元素，然后<code>bubbleDown()</code>将元素放到它的正确位置。<code>bubbleDown()</code>方法是这样的:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">bubbleDown</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">int</span> index = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span>(index &lt;= size &amp;&amp; !isValidParent(index)){
+            <span class="hljs-keyword">int</span> largerChildIndex = largerChildIndex(index);
+            swap(index,largerChildIndex);
+            index = largerChildIndex;
+        }
+}
+</code></pre>
+<p>我们正在检查我们拥有的索引应该小于大小，并确保父节点不应该是有效的(应该小于子值和其他检查)。<code>largerChildIndex()</code>方法返回给我们子项目，我们将在向下冒泡时用它替换当前项目。<code>largerChildIndex()</code>的代码是这样的:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">largerChildIndex</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">if</span>(!hasLeftChild(index)) <span class="hljs-keyword">return</span> index;
+        <span class="hljs-keyword">if</span>(!hasRightChild(index)) <span class="hljs-keyword">return</span> leftChildIndex(index);
+        <span class="hljs-keyword">return</span> (leftChild(index) &gt; rightChild(index)) ? leftChildIndex(index) : rightChildIndex(index);
+}
+</code></pre>
+<p><code>isValidParent()</code>方法代码如下:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">private</span> boolean <span class="hljs-title">isValidParent</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">if</span>(!hasLeftChild(index)) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        var isValid = items[index] &gt;= leftChild(index);
+        <span class="hljs-keyword">if</span>(hasRightChild(index)){
+            isValid &amp;= items[index] &gt;= rightChild(index);
+        }
+        <span class="hljs-keyword">return</span> isValid;
+}
+</code></pre>
+<p>在上面的代码片段中，我们只是确保父级是有效的，并且如果左边的子级是 null，那么我们返回 true。<code>leftChild()</code>、<code>rightChild()</code>、<code>hasLeftChild()</code>、<code>hasRightChild()</code>的方法是这样的:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">leftChild</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> items[leftChildIndex(index)];
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">rightChild</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> items[rightChildIndex(index)];
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> boolean <span class="hljs-title">hasLeftChild</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> leftChildIndex(index) &lt;= size;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> boolean <span class="hljs-title">hasRightChild</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> rightChildIndex(index) &lt;= size;
+}
+</code></pre>
+<p>上面的方法调用方法来获取二进制堆元素的左右子元素，它们是:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">leftChildIndex</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>*index + <span class="hljs-number">1</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">rightChildIndex</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>*index + <span class="hljs-number">2</span>;
+}
+</code></pre>
+<p>现在，我们已经完成了从堆中插入或删除元素所需的所有方法。完整的代码如下:</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> Heap {
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] items = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">10</span>];
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> size;
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> item)</span></span>{
+        <span class="hljs-keyword">if</span>(isFull()){
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException();
+        }
+        items[size++] = item;
+        bubbleUp();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">if</span>(isEmpty()){
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException();
+        }
+        items[<span class="hljs-number">0</span>] = items[--size];
+        bubbleDown();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">largerChildIndex</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">if</span>(!hasLeftChild(index)) <span class="hljs-keyword">return</span> index;
+        <span class="hljs-keyword">if</span>(!hasRightChild(index)) <span class="hljs-keyword">return</span> leftChildIndex(index);
+        <span class="hljs-keyword">return</span> (leftChild(index) &gt; rightChild(index)) ? leftChildIndex(index) : rightChildIndex(index);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> boolean <span class="hljs-title">isValidParent</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">if</span>(!hasLeftChild(index)) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        var isValid = items[index] &gt;= leftChild(index);
+        <span class="hljs-keyword">if</span>(hasRightChild(index)){
+            isValid &amp;= items[index] &gt;= rightChild(index);
+        }
+        <span class="hljs-keyword">return</span> isValid;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">leftChild</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> items[leftChildIndex(index)];
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">rightChild</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> items[rightChildIndex(index)];
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">leftChildIndex</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>*index + <span class="hljs-number">1</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">rightChildIndex</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>*index + <span class="hljs-number">2</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> boolean <span class="hljs-title">hasLeftChild</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> leftChildIndex(index) &lt;= size;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> boolean <span class="hljs-title">hasRightChild</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> rightChildIndex(index) &lt;= size;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> boolean <span class="hljs-title">isFull</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">return</span> size == items.length;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> boolean <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">return</span> size == <span class="hljs-number">0</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">bubbleUp</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">int</span> index = size - <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span>(index &gt; <span class="hljs-number">0</span> &amp;&amp; items[index] &gt; items[parent(index)]){
+            swap(index,parent(index));
+            index = parent(index);
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">bubbleDown</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">int</span> index = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span>(index &lt;= size &amp;&amp; !isValidParent(index)){
+            <span class="hljs-keyword">int</span> largerChildIndex = largerChildIndex(index);
+            swap(index,largerChildIndex);
+            index = largerChildIndex;
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">parent</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>{
+        <span class="hljs-keyword">return</span> (index - <span class="hljs-number">1</span>)/<span class="hljs-number">2</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left,<span class="hljs-keyword">int</span> right)</span></span>{
+        <span class="hljs-keyword">int</span> temp = items[left];
+        items[left] = items[right];
+        items[right] = temp;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getMax</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">return</span> items[<span class="hljs-number">0</span>];
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        Heap heap = <span class="hljs-keyword">new</span> Heap();
+        heap.insert(<span class="hljs-number">10</span>);
+        heap.insert(<span class="hljs-number">5</span>);
+        heap.insert(<span class="hljs-number">17</span>);
+        heap.insert(<span class="hljs-number">4</span>);
+        heap.insert(<span class="hljs-number">22</span>);
+       <span class="hljs-comment">/// heap.remove();</span>
+        System.out.println(<span class="hljs-string">"Done!"</span>);
+    }
+}
+</code></pre>
+<h2 id="结论">结论</h2>
+<ul>
+<li>我们学习了如何实现堆，主要是 <strong>bubbleUp()</strong> 和 <strong>bubbleDown()</strong> 方法。</li>
+</ul>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="381.html" class="navigation navigation-prev " aria-label="Previous page: 堆数据结构">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="383.html" class="navigation navigation-next " aria-label="Next page: TRIE 数据结构示例">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"实现堆","level":"1.1.5","depth":2,"next":{"title":"TRIE 数据结构示例","level":"1.1.6","depth":2,"path":"383.md","ref":"383.md","articles":[]},"previous":{"title":"堆数据结构","level":"1.1.4","depth":2,"path":"381.md","ref":"381.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"382.md","mtime":"2025-04-30T01:08:58.908Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:13.112Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

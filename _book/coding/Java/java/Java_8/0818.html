@@ -1,0 +1,674 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java Optional类 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0819.html" />
+    
+    
+    <link rel="prev" href="0817.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0807.html">
+            
+                <a href="0807.html">
+            
+                    
+                    Java 8 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0808.html">
+            
+                <a href="0808.html">
+            
+                    
+                    Java 8 Lambda 表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0809.html">
+            
+                <a href="0809.html">
+            
+                    
+                    Java 反射 API——Parameter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0810.html">
+            
+                <a href="0810.html">
+            
+                    
+                    Java 8 Base64类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0811.html">
+            
+                <a href="0811.html">
+            
+                    
+                    Java 8 Collectors类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0812.html">
+            
+                <a href="0812.html">
+            
+                    
+                    Java 8 并行数组排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0813.html">
+            
+                <a href="0813.html">
+            
+                    
+                    Java 8 方法引用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0814.html">
+            
+                <a href="0814.html">
+            
+                    
+                    Java 8 forEach()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0815.html">
+            
+                <a href="0815.html">
+            
+                    
+                    Java 8 StringJoiner类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0816.html">
+            
+                <a href="0816.html">
+            
+                    
+                    Java 接口默认和静态方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0817.html">
+            
+                <a href="0817.html">
+            
+                    
+                    Java 8 函数式接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.12" data-path="0818.html">
+            
+                <a href="0818.html">
+            
+                    
+                    Java Optional类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0819.html">
+            
+                <a href="0819.html">
+            
+                    
+                    Java 8 流 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0820.html">
+            
+                <a href="0820.html">
+            
+                    
+                    Java 8 改进的类型推断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0821.html">
+            
+                <a href="0821.html">
+            
+                    
+                    Java 8 日期和时间 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0822.html">
+            
+                <a href="0822.html">
+            
+                    
+                    Java 谓词
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java Optional类</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-optional类">Java <code>Optional</code>类</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-8/java-optional-class" target="_blank">https://www.studytonight.com/java-8/java-optional-class</a></p>
+</blockquote>
+<p>在 Java 8 中，Java 在 <strong>java.util</strong> 包中增加了一个新的类<code>Optional</code>。这个类用于管理和控制 Java 中的 NullPointerException。由于未初始化的对象或空指针，空指针异常是日常编程中最常见的异常。</p>
+<p>由于此异常，我们的程序异常终止，程序导致意外输出。</p>
+<p>为了处理这种情况，Java 提供了<code>Optional</code>类，它是一个容器对象，可以包含也可以不包含非空值。它提供了许多检查空值或非空值的方法，并使我们的程序<code>NullPointerException</code>免费。</p>
+<p>你可以通过这个写在 Java 8 之前的例子来理解这种情况，由于未初始化的变量导致程序终止，抛出<code>NullPointerException</code>。</p>
+<h2 id="示例不带optional类">示例:不带<code>Optional</code>类</h2>
+<p>当我们创建一个变量但忘记初始化它时，但当我们使用它时，这是很常见的。它不起作用并终止程序。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    String name;    <span class="hljs-comment">// uninitialized variable</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        Main m = <span class="hljs-keyword">new</span> Main();
+        <span class="hljs-comment">/*
+         * 
+         * tons of line of code
+         * 
+         */</span>
+        <span class="hljs-comment">// fetching name in somewhere in the code.</span>
+        <span class="hljs-keyword">char</span> ch = m.name.charAt(<span class="hljs-number">0</span>);
+        System.out.println(ch);  <span class="hljs-comment">// NullPointerException</span>
+    }
+}
+</code></pre>
+<p>线程“main”中出现异常 java.lang.NullPointerException</p>
+<h2 id="示例带有optional类">示例:带有<code>Optional</code>类</h2>
+<p>在这个例子中，我们使用<code>Optional</code>类来检查变量是否为空。为了检查，我们使用了<code>isPresent()</code>方法，如果变量不为空，该方法返回真。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Optional;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    String name;    <span class="hljs-comment">// uninitialized variable</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        Main m = <span class="hljs-keyword">new</span> Main();
+        <span class="hljs-comment">/*
+         * 
+         * tons of line of code
+         * 
+         */</span>
+        <span class="hljs-comment">// fetching name in somewhere in the code.</span>
+        <span class="hljs-comment">// Handling null using Optional class</span>
+        Optional&lt;String&gt; isNull = Optional.ofNullable(m.name);  
+        <span class="hljs-keyword">if</span>(isNull.isPresent()) {
+            <span class="hljs-keyword">char</span> ch = m.name.charAt(<span class="hljs-number">0</span>);
+            System.out.println(ch);  <span class="hljs-comment">// No NullPointerException</span>
+        }<span class="hljs-keyword">else</span> {
+            System.out.println(<span class="hljs-string">"Value is null"</span>);
+        }
+    }
+}
+</code></pre>
+<p>值为空</p>
+<h2 id="可选声明">可选声明</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Optional</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">Object</span>
+</span></code></pre>
+<h2 id="可选方法">可选方法</h2>
+<p>下表包含<code>Optional</code>类的方法，如 empty()，of()，offNullable()等。</p>
+<p>| 方法 | 描述 |
+| 公共静态<t>可选<t>空()</t>&lt;/t&gt; | 它返回一个空的可选对象。此可选参数没有值。 |
+| 公共静态<t>可选<t>的(T 值)</t>&lt;/t&gt; | 它返回一个具有指定的当前非空值的可选值。 |
+| 公共静态<t>可选<t>缺省值(T 值)</t>&lt;/t&gt; | 它返回描述指定值的可选值，如果非空，则返回空可选值。 |
+| 公共 T get() | 如果此可选中存在值，则返回该值，否则引发 NoSuchElementException。 |
+| 公共布尔值 isPresent() | 如果存在值，则返回 true，否则返回 false。 |
+| 公共无效 ifPresent(消费者 super T&gt;消费者) | 如果存在值，则使用该值调用指定的使用者，否则不执行任何操作。 |
+| 公共可选<t>过滤器(谓词 super T&gt;谓词)</t> | 如果存在值，并且该值与给定的谓词匹配，则返回描述该值的可选值，否则返回空的可选值。 |
+| 公共<u>可选<u>映射(功能 super T,? extends U&gt;映射器)</u>&lt;/u&gt; | 如果存在值，则将提供的映射函数应用于该值，如果结果为非空，则返回描述结果的可选值。否则，返回空的可选值。 |
+| 公共<u>可选<u>平面图(功能 super T,Optional<u>映射器)</u>&lt;/u&gt;&lt;/u&gt; | 如果存在一个值，将提供的带有可选值的映射函数应用于它，返回该结果，否则返回一个空的可选值。 |
+| 公共信托基金(其他) | 如果存在，则返回该值，否则返回其他值。 |
+| 公共测试或获取(供应商 extends T&gt;其他) | 如果存在，它返回值，否则调用其他并返回该调用的结果。 |
+| 公共 <x extends="" throwable="">T orElseThrow(供应商 extends X&gt;exception Supplier)throw X extends throw able</x> | 它返回包含的值(如果存在)，否则抛出一个由提供的供应商创建的异常。 |
+| 公共布尔等于(对象对象) | 指示某个其他对象是否“等于”此可选对象。另一个对象被认为是相等的，如果:</u></u></u></t></t></t></p>
+<ul>
+<li>It is also optional and.</li>
+<li>The value or does not exist in both instances;</li>
+<li><p>Present values are "equal" to each other through equals ().</p>
+<p>|
+| public int hashCode() | 它返回当前值的哈希代码值(如果有)，如果没有值，则返回 0(零)。 |
+| 公共字符串 toString() | 它返回一个适合调试的非空字符串表示形式。确切的呈现格式未指定，可能因实现和版本而异。 |</p>
+</li>
+</ul>
+<h2 id="示例ispresent和-ifpresent">示例:isPresent()和 ifPresent()</h2>
+<p>让我们创建另一个例子来理解<code>isPresent()</code>和<code>ifPresent()</code>方法。这两种方法都属于<code>Optional</code>类，如果变量不为空，isPresent()方法返回 true，如果变量不为空，ifPresent()方法仅执行，否则不执行任何操作。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Optional;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    String name;    <span class="hljs-comment">// uninitialized variable</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        Main m = <span class="hljs-keyword">new</span> Main();
+        m.name = <span class="hljs-string">"Rohan"</span>; <span class="hljs-comment">// Initializing variable</span>
+        Optional&lt;String&gt; name = Optional.ofNullable(m.name);  
+        <span class="hljs-keyword">if</span>(name.isPresent()) {
+            <span class="hljs-keyword">char</span> ch = m.name.charAt(<span class="hljs-number">0</span>);
+            System.out.println(ch);  <span class="hljs-comment">// No NullPointerException</span>
+        }<span class="hljs-keyword">else</span> {
+            System.out.println(<span class="hljs-string">"Value is null"</span>);
+        }
+        <span class="hljs-comment">// ifPresent()</span>
+        name.ifPresent(n -&gt; {
+                                System.out.println(<span class="hljs-string">"Value is present"</span>);
+                                System.out.println(<span class="hljs-string">"Value start with "</span>+ m.name.charAt(<span class="hljs-number">0</span>));
+                            }
+                        );
+
+    }
+}
+</code></pre>
+<p>R
+值存在
+值以 R 开始</p>
+<h2 id="示例orelse方法">示例:orElse()方法</h2>
+<p>如果变量为空，则使用<code>orElse()</code>方法返回指定值。这个方法用来为变量设置一个替代值，这样如果一个变量是空的，那么我们就可以得到一个指定的值，而不是空值。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Optional;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        Optional&lt;String&gt; name = Optional.of(<span class="hljs-string">"Rohan"</span>);
+        Optional&lt;String&gt; lName = Optional.empty();
+
+        <span class="hljs-comment">// orElse</span>
+        String other = name.orElse(<span class="hljs-string">"Sohan"</span>);
+        System.out.println(other);
+        <span class="hljs-comment">// empty</span>
+        other = lName.orElse(<span class="hljs-string">"Sohan"</span>);
+        System.out.println(other);
+    }
+}
+</code></pre>
+<p>Rohan
+Sohan</p>
+<h2 id="示例orelseget">示例:orElseGet()</h2>
+<p><code>orElseGet()</code>方法类似于<code>orElse()</code>方法，除了它允许调用一个实现，如 lambda 表达式或函数。请看下面的例子。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Optional;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">static</span> String <span class="hljs-title">otherVal</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"Value not Present"</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        Optional&lt;String&gt; name  = Optional.of(<span class="hljs-string">"Rohan"</span>);
+        Optional&lt;String&gt; lName = Optional.empty();
+
+        <span class="hljs-comment">// orElseGet</span>
+        String other = name.orElseGet(() -&gt; otherVal());
+        System.out.println(other);
+        <span class="hljs-comment">// empty</span>
+        other = lName.orElseGet(() -&gt; otherVal());
+        System.out.println(other);
+    }
+}
+</code></pre>
+<p>罗汉
+值不存在</p>
+<h2 id="示例过滤器方法">示例:过滤器()方法</h2>
+<p><code>filter()</code>方法返回一个可选值，并以谓词作为参数。所以我们可以像下面的例子一样，通过一个 lambda 表达式来过滤结果。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Optional;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        Optional&lt;String&gt; name  = Optional.of(<span class="hljs-string">"Rohan"</span>);
+        Optional&lt;String&gt; lName = Optional.empty();
+
+        <span class="hljs-comment">// filter</span>
+        Optional &lt;String&gt; other  = name.filter(n-&gt;n.equals(<span class="hljs-string">"Rohan"</span>));
+        System.out.println(other);
+        other  = name.filter(n-&gt;n.equals(<span class="hljs-string">"rohan"</span>));
+        System.out.println(other);
+    }
+}
+</code></pre>
+<p>可选【罗汉】
+可选。空</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0817.html" class="navigation navigation-prev " aria-label="Previous page: Java 8 函数式接口">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0819.html" class="navigation navigation-next " aria-label="Next page: Java 8 流 API">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java Optional类","level":"1.1.12","depth":2,"next":{"title":"Java 8 流 API","level":"1.1.13","depth":2,"path":"0819.md","ref":"0819.md","articles":[]},"previous":{"title":"Java 8 函数式接口","level":"1.1.11","depth":2,"path":"0817.md","ref":"0817.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0818.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:51.159Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

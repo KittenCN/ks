@@ -1,0 +1,2126 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 程序：使用递归求一个数的阶乘 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0186.html" />
+    
+    
+    <link rel="prev" href="0184.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 程序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0135.html">
+            
+                <a href="0135.html">
+            
+                    
+                    数组程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0136.html">
+            
+                <a href="0136.html">
+            
+                    
+                    Java 程序：显示下三角矩阵
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0137.html">
+            
+                <a href="0137.html">
+            
+                    
+                    Java 程序：在数组中输入元素时检查数组边界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0138.html">
+            
+                <a href="0138.html">
+            
+                    
+                    Java 程序：检查给定整数X在数组中出现次数是否超过N/2次
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0139.html">
+            
+                <a href="0139.html">
+            
+                    
+                    Java 程序：显示矩阵转置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0140.html">
+            
+                <a href="0140.html">
+            
+                    
+                    Java 程序：创建包含两个数组的交错数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0141.html">
+            
+                <a href="0141.html">
+            
+                    
+                    Java 程序：打印数组第k个元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0142.html">
+            
+                <a href="0142.html">
+            
+                    
+                    Java 程序：打印数组中奇数和偶数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0143.html">
+            
+                <a href="0143.html">
+            
+                    
+                    Java 程序：在给定的排序数组中查找元素的上界和下界值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0144.html">
+            
+                <a href="0144.html">
+            
+                    
+                    Java 程序：打印数组中所有重复的数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0145.html">
+            
+                <a href="0145.html">
+            
+                    
+                    Java 程序：计算数组中元素个数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0146.html">
+            
+                <a href="0146.html">
+            
+                    
+                    Java 程序：计算矩阵中奇数和偶数频率
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0147.html">
+            
+                <a href="0147.html">
+            
+                    
+                    Java 程序：交换给定矩阵中任意两行和列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0148.html">
+            
+                <a href="0148.html">
+            
+                    
+                    Java 程序：从用户输入中相加两个M*N矩阵
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0149.html">
+            
+                <a href="0149.html">
+            
+                    
+                    Java 程序：执行矩阵乘法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0150.html">
+            
+                <a href="0150.html">
+            
+                    
+                    Java 程序：成对反转链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="0151.html">
+            
+                <a href="0151.html">
+            
+                    
+                    Java 程序：如何反转链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="0152.html">
+            
+                <a href="0152.html">
+            
+                    
+                    Java 程序：在链表中查找中间元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="0153.html">
+            
+                <a href="0153.html">
+            
+                    
+                    Java 程序：按字母顺序排序数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="0154.html">
+            
+                <a href="0154.html">
+            
+                    
+                    Java 程序：寻找数组中第二大和第二小元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="0155.html">
+            
+                <a href="0155.html">
+            
+                    
+                    Java 程序：寻找数组中最大元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="0156.html">
+            
+                <a href="0156.html">
+            
+                    
+                    Java 程序：将一个数组的偶数和奇数元素放入两个独立的数组中
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="0157.html">
+            
+                <a href="0157.html">
+            
+                    
+                    Java 程序：在数组的指定位置插入一个元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="0158.html">
+            
+                <a href="0158.html">
+            
+                    
+                    Java 程序：从数组中删除指定整数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="0159.html">
+            
+                <a href="0159.html">
+            
+                    
+                    Java 程序：按升序排序数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="0160.html">
+            
+                <a href="0160.html">
+            
+                    
+                    Java 程序：按降序排序数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="0161.html">
+            
+                <a href="0161.html">
+            
+                    
+                    Java 程序：计算数组的和与均值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="0162.html">
+            
+                <a href="0162.html">
+            
+                    
+                    Java 程序：寻找给定数组中最大的两个数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="0163.html">
+            
+                <a href="0163.html">
+            
+                    
+                    Java 程序：循环置换数组元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="0164.html">
+            
+                <a href="0164.html">
+            
+                    
+                    Java 程序：将每个元素递增 1 并打印数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="0165.html">
+            
+                <a href="0165.html">
+            
+                    
+                    Java 程序：从指定位置拆分数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="0166.html">
+            
+                <a href="0166.html">
+            
+                    
+                    Java 程序：识别给定数组中缺失数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="0167.html">
+            
+                <a href="0167.html">
+            
+                    
+                    Java 程序：找到两个差最大的元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="0168.html">
+            
+                <a href="0168.html">
+            
+                    
+                    Java 程序：计算元素出现次数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="0169.html">
+            
+                <a href="0169.html">
+            
+                    
+                    Java 程序：接受数组元素并计算总和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="0170.html">
+            
+                <a href="0170.html">
+            
+                    
+                    Java 程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="0171.html">
+            
+                <a href="0171.html">
+            
+                    
+                    Java 程序：for循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="0172.html">
+            
+                <a href="0172.html">
+            
+                    
+                    Java 程序：从链表末尾查找第n个节点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="0173.html">
+            
+                <a href="0173.html">
+            
+                    
+                    Java 程序：计算数的幂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="0174.html">
+            
+                <a href="0174.html">
+            
+                    
+                    Java 程序：计算数字平方根
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="0175.html">
+            
+                <a href="0175.html">
+            
+                    
+                    Java 程序：计算一个数的阶乘
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="0176.html">
+            
+                <a href="0176.html">
+            
+                    
+                    Java 程序：交换两个数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="0177.html">
+            
+                <a href="0177.html">
+            
+                    
+                    Java 程序：打印 ASCII 值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="0178.html">
+            
+                <a href="0178.html">
+            
+                    
+                    Java 程序：检查阿姆斯特朗数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="0179.html">
+            
+                <a href="0179.html">
+            
+                    
+                    Java 程序：寻找完美数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.46" data-path="0180.html">
+            
+                <a href="0180.html">
+            
+                    
+                    Java 程序：使用条件运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.47" data-path="0181.html">
+            
+                <a href="0181.html">
+            
+                    
+                    Java 程序：执行赋值操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.48" data-path="0182.html">
+            
+                <a href="0182.html">
+            
+                    
+                    Java 程序：求商和余数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.49" data-path="0183.html">
+            
+                <a href="0183.html">
+            
+                    
+                    Java 程序：检查偶数和奇数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.50" data-path="0184.html">
+            
+                <a href="0184.html">
+            
+                    
+                    Java 程序：检查字符串是否为空或null
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.51" data-path="0185.html">
+            
+                <a href="0185.html">
+            
+                    
+                    Java 程序：使用递归求一个数的阶乘
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.52" data-path="0186.html">
+            
+                <a href="0186.html">
+            
+                    
+                    Java 程序：显示上三角矩阵
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.53" data-path="0187.html">
+            
+                <a href="0187.html">
+            
+                    
+                    Java 程序：确定给定矩阵是否为稀疏矩阵
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.54" data-path="0188.html">
+            
+                <a href="0188.html">
+            
+                    
+                    Java 程序：接受M*N阶矩阵并交换对角线
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.55" data-path="0189.html">
+            
+                <a href="0189.html">
+            
+                    
+                    Java 程序：计算给定矩阵的迹和范数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.56" data-path="0190.html">
+            
+                <a href="0190.html">
+            
+                    
+                    Java 程序：计算单利
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.57" data-path="0191.html">
+            
+                <a href="0191.html">
+            
+                    
+                    Java 程序：分离左侧的 0 和右侧的 1
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.58" data-path="0192.html">
+            
+                <a href="0192.html">
+            
+                    
+                    基本程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.59" data-path="0193.html">
+            
+                <a href="0193.html">
+            
+                    
+                    Java 程序：使用递归打印整数的二进制表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.60" data-path="0194.html">
+            
+                <a href="0194.html">
+            
+                    
+                    Java 程序：不使用递归将二进制数转换为格雷码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.61" data-path="0195.html">
+            
+                <a href="0195.html">
+            
+                    
+                    Java 程序：使用递归求数字和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.62" data-path="0196.html">
+            
+                <a href="0196.html">
+            
+                    
+                    Java 程序：使用方法重载求正方形、矩形和圆形面积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.63" data-path="0197.html">
+            
+                <a href="0197.html">
+            
+                    
+                    Java 程序：计算梯形面积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.64" data-path="0198.html">
+            
+                <a href="0198.html">
+            
+                    
+                    Java 程序：计算圆的周长
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.65" data-path="0199.html">
+            
+                <a href="0199.html">
+            
+                    
+                    Java 程序：使用递归求两个数乘积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.66" data-path="0200.html">
+            
+                <a href="0200.html">
+            
+                    
+                    Java 程序：计算长方体表面积和体积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.67" data-path="0201.html">
+            
+                <a href="0201.html">
+            
+                    
+                    Java 程序：计算球体表面积和体积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.68" data-path="0202.html">
+            
+                <a href="0202.html">
+            
+                    
+                    Java 程序：以三角形形式打印乘法表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.69" data-path="0203.html">
+            
+                <a href="0203.html">
+            
+                    
+                    Java 程序：使用递归将一个数的二进制码转换成等价格雷码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.70" data-path="0204.html">
+            
+                <a href="0204.html">
+            
+                    
+                    Java 程序：使用递归求N个数总和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.71" data-path="0205.html">
+            
+                <a href="0205.html">
+            
+                    
+                    Java 程序：计算菱形面积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.72" data-path="0206.html">
+            
+                <a href="0206.html">
+            
+                    
+                    Java 程序：给定半径求圆面积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.73" data-path="0207.html">
+            
+                <a href="0207.html">
+            
+                    
+                    Java 程序：打印空心菱形星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.74" data-path="0208.html">
+            
+                <a href="0208.html">
+            
+                    
+                    Java 程序：打印空心镜像菱形星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.75" data-path="0209.html">
+            
+                <a href="0209.html">
+            
+                    
+                    Java 程序：打印菱形星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.76" data-path="0210.html">
+            
+                <a href="0210.html">
+            
+                    
+                    Java 程序：打印 8 星图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.77" data-path="0211.html">
+            
+                <a href="0211.html">
+            
+                    
+                    Java 程序：打印倒星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.78" data-path="0212.html">
+            
+                <a href="0212.html">
+            
+                    
+                    Java 程序：打印空心直角三角形星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.79" data-path="0213.html">
+            
+                <a href="0213.html">
+            
+                    
+                    Java 程序：打印空心菱形星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.80" data-path="0214.html">
+            
+                <a href="0214.html">
+            
+                    
+                    Java 程序：检测链表中的循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.81" data-path="0215.html">
+            
+                <a href="0215.html">
+            
+                    
+                    Java 程序：打印半菱形星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.82" data-path="0216.html">
+            
+                <a href="0216.html">
+            
+                    
+                    Java 程序：打印空心金字塔星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.83" data-path="0217.html">
+            
+                <a href="0217.html">
+            
+                    
+                    Java 程序：使用关系运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.84" data-path="0218.html">
+            
+                <a href="0218.html">
+            
+                    
+                    Java 程序：打印斐波那契数列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.85" data-path="0219.html">
+            
+                <a href="0219.html">
+            
+                    
+                    Java 程序：while循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.86" data-path="0220.html">
+            
+                <a href="0220.html">
+            
+                    
+                    Java 程序：检查闰年
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.87" data-path="0221.html">
+            
+                <a href="0221.html">
+            
+                    
+                    Java 程序：检查一个数字是正数还是负数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.88" data-path="0222.html">
+            
+                <a href="0222.html">
+            
+                    
+                    Java 程序：检查字符是否是字母
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.89" data-path="0223.html">
+            
+                <a href="0223.html">
+            
+                    
+                    Java 程序：计算自然数总和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.90" data-path="0224.html">
+            
+                <a href="0224.html">
+            
+                    
+                    Java 程序：接受学生分数并计算总分数和百分比
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.91" data-path="0225.html">
+            
+                <a href="0225.html">
+            
+                    
+                    Java 程序：If Else
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.92" data-path="0226.html">
+            
+                <a href="0226.html">
+            
+                    
+                    Java 程序：嵌套If
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.93" data-path="0227.html">
+            
+                <a href="0227.html">
+            
+                    
+                    Java 程序：寻找最大和最小出现字符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.94" data-path="0228.html">
+            
+                <a href="0228.html">
+            
+                    
+                    Java 程序：计算复利
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.95" data-path="0229.html">
+            
+                <a href="0229.html">
+            
+                    
+                    Java 程序：计算二次方程所有根
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.96" data-path="0230.html">
+            
+                <a href="0230.html">
+            
+                    
+                    Java 程序：计算平行四边形面积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.97" data-path="0231.html">
+            
+                <a href="0231.html">
+            
+                    
+                    Java 程序：执行位运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.98" data-path="0232.html">
+            
+                <a href="0232.html">
+            
+                    
+                    Java 程序：计算C(n, r)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.99" data-path="0233.html">
+            
+                <a href="0233.html">
+            
+                    
+                    Java 程序：do-while
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.100" data-path="0234.html">
+            
+                <a href="0234.html">
+            
+                    
+                    Java 程序：for-each循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.101" data-path="0235.html">
+            
+                <a href="0235.html">
+            
+                    
+                    Java 程序：break语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.102" data-path="0236.html">
+            
+                <a href="0236.html">
+            
+                    
+                    Java 程序：continue语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.103" data-path="0237.html">
+            
+                <a href="0237.html">
+            
+                    
+                    Java 程序：检查回文数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.104" data-path="0238.html">
+            
+                <a href="0238.html">
+            
+                    
+                    Java 程序：寻找质数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.105" data-path="0239.html">
+            
+                <a href="0239.html">
+            
+                    
+                    Java 程序：计算两个数的 GCD
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.106" data-path="0240.html">
+            
+                <a href="0240.html">
+            
+                    
+                    Java 程序：计算两个数 LCM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.107" data-path="0241.html">
+            
+                <a href="0241.html">
+            
+                    
+                    图案程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.108" data-path="0242.html">
+            
+                <a href="0242.html">
+            
+                    
+                    Java 程序：生成帕斯卡三角形
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.109" data-path="0243.html">
+            
+                <a href="0243.html">
+            
+                    
+                    Java 程序：打印空心菱形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.110" data-path="0244.html">
+            
+                <a href="0244.html">
+            
+                    
+                    Java 程序：打印加号星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.111" data-path="0245.html">
+            
+                <a href="0245.html">
+            
+                    
+                    Java 程序：打印镜像直角三角形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.112" data-path="0246.html">
+            
+                <a href="0246.html">
+            
+                    
+                    Java 程序：打印镜像半菱形星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.113" data-path="0247.html">
+            
+                <a href="0247.html">
+            
+                    
+                    Java 程序：打印左箭头星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.114" data-path="0248.html">
+            
+                <a href="0248.html">
+            
+                    
+                    Java 程序：打印倒直角三角形星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.115" data-path="0249.html">
+            
+                <a href="0249.html">
+            
+                    
+                    Java 程序：打印空心倒金字塔星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.116" data-path="0250.html">
+            
+                <a href="0250.html">
+            
+                    
+                    Java 程序：打印右箭头星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.117" data-path="0251.html">
+            
+                <a href="0251.html">
+            
+                    
+                    Java 程序：打印方形星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.118" data-path="0252.html">
+            
+                <a href="0252.html">
+            
+                    
+                    Java 程序：打印倒镜像直角三角形
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.119" data-path="0253.html">
+            
+                <a href="0253.html">
+            
+                    
+                    Java 程序：打印空心倒镜像直角三角形星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.120" data-path="0254.html">
+            
+                <a href="0254.html">
+            
+                    
+                    Java 程序：打印 X 星形图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.121" data-path="0255.html">
+            
+                <a href="0255.html">
+            
+                    
+                    字符串程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.122" data-path="0256.html">
+            
+                <a href="0256.html">
+            
+                    
+                    Java 程序：查找字符串中重复字符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.123" data-path="0257.html">
+            
+                <a href="0257.html">
+            
+                    
+                    Java 程序：使用特定字符替换字符串空格
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.124" data-path="0258.html">
+            
+                <a href="0258.html">
+            
+                    
+                    Java 程序：将字符串分成N个相等部分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.125" data-path="0259.html">
+            
+                <a href="0259.html">
+            
+                    
+                    Java 程序：寻找字符串所有子集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.126" data-path="0260.html">
+            
+                <a href="0260.html">
+            
+                    
+                    Java 程序：使用递归检查回文字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.127" data-path="0261.html">
+            
+                <a href="0261.html">
+            
+                    
+                    Java 程序：比较字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.128" data-path="0262.html">
+            
+                <a href="0262.html">
+            
+                    
+                    Java 程序：使用递归反转字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.129" data-path="0263.html">
+            
+                <a href="0263.html">
+            
+                    
+                    Java 程序：计算字符串中字符总数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.130" data-path="0264.html">
+            
+                <a href="0264.html">
+            
+                    
+                    Java 程序：计算字符串中元音和辅音总数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.131" data-path="0265.html">
+            
+                <a href="0265.html">
+            
+                    
+                    Java 程序：从字符串中删除所有空白
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.132" data-path="0266.html">
+            
+                <a href="0266.html">
+            
+                    
+                    Java 程序：计算字符串中字符频率
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 程序：使用递归求一个数的阶乘</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-程序：使用递归求一个数的阶乘">Java 程序：使用递归求一个数的阶乘</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-programs/java-program-to-find-the-factorial-of-a-number-using-recursion" target="_blank">https://www.studytonight.com/java-programs/java-program-to-find-the-factorial-of-a-number-using-recursion</a></p>
+</blockquote>
+<p>在本教程中，我们将学习如何使用递归函数找到一个数的阶乘。递归函数是调用自身的函数。但是在继续之前，如果你不熟悉 java 中方法的基本概念，那么一定要查看主题为 java 中<a href="https://www.studytonight.com/java/methods-in-java.php" target="_blank">方法</a>的文章。</p>
+<p><strong>输入:</strong>输入数字:5</p>
+<p><strong>输出:</strong>输入数字的阶乘为:120</p>
+<h2 id="程序-1用递归求一个数的阶乘">程序 1:用递归求一个数的阶乘</h2>
+<p>在这个程序中，我们将使用带有用户定义值的递归找到一个数的阶乘。这里，我们将要求用户输入一个值，然后通过递归调用函数来计算阶乘。</p>
+<h3 id="算法">算法</h3>
+<ol>
+<li>开始</li>
+<li>声明一个变量来存储一个数字。</li>
+<li>要求用户初始化数字。</li>
+<li>检查是否可以计算阶乘。</li>
+<li>如果数字大于等于 0，则调用递归函数来计算输入数字的阶乘。</li>
+<li>如果数字小于 0，则打印无法计算阶乘的消息。</li>
+<li>如果输入的数字是 0 或 1，则返回 1。</li>
+<li>如果输入的数字不是 0 或 1，则通过递归调用相同的方法计算阶乘。</li>
+<li>返回结果。</li>
+<li>打印输入数字的阶乘。</li>
+<li>停止</li>
+</ol>
+<p>下面是相同的 Java 语言代码。</p>
+<pre><code class="lang-java"><span class="hljs-comment">/*Java Program to find factorial of a number using Recursive Function*/</span>
+<span class="hljs-keyword">import</span> java.util.Scanner;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span>
+</span>{
+    <span class="hljs-comment">//Driver Code</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> 
+    </span>{
+        <span class="hljs-comment">//Take input from the user</span>
+        Scanner sc = <span class="hljs-keyword">new</span> Scanner(System.in);
+        System.out.println(<span class="hljs-string">"Enter the number :"</span>);
+        <span class="hljs-keyword">int</span> num = sc.nextInt();   <span class="hljs-comment">//Input the number</span>
+        <span class="hljs-keyword">if</span>(num&gt;=<span class="hljs-number">0</span>) 
+        {
+           <span class="hljs-comment">//Call a recursive function to find the factorial</span>
+           <span class="hljs-keyword">int</span> factorial=findFactorial(num);
+           System.out.println(<span class="hljs-string">"The factorial of the entered the number is :"</span>+factorial);
+        }        
+        <span class="hljs-keyword">else</span>
+        {
+            System.out.println(<span class="hljs-string">"Factorial not possible."</span>);
+            System.out.println(<span class="hljs-string">"Please enter valid input."</span>);
+        } 
+    }
+    <span class="hljs-comment">//Recursive Function to Find the Factorial of a Number</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findFactorial</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num)</span>
+    </span>{
+        <span class="hljs-keyword">if</span>(num==<span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(num==<span class="hljs-number">1</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">return</span> num*findFactorial(num-<span class="hljs-number">1</span>);        
+    }
+}
+</code></pre>
+<p>输入数字:10
+输入数字的阶乘为:3628800</p>
+<h2 id="程序-2用递归求一个数的阶乘">程序 2:用递归求一个数的阶乘</h2>
+<p>在这个程序中，我们将使用带有预定义值的递归找到一个数的阶乘。这里，要计算阶乘的数字已经在程序中给出，我们的任务是通过递归调用函数来计算阶乘。</p>
+<h3 id="算法">算法</h3>
+<ol>
+<li>开始</li>
+<li>声明一个变量来存储一个数字。</li>
+<li>初始化数字。</li>
+<li>检查是否可以计算阶乘。</li>
+<li>如果数字大于等于 0，则调用递归函数来计算输入数字的阶乘。</li>
+<li>如果数字小于 0，则打印无法计算阶乘的消息。</li>
+<li>如果输入的数字是 0 或 1，则返回 1。</li>
+<li>如果输入的数字不是 0 或 1，则通过递归调用相同的方法计算阶乘。</li>
+<li>返回结果。</li>
+<li>打印输入数字的阶乘。</li>
+<li>停止</li>
+</ol>
+<p>下面是相同的 Java 语言代码。</p>
+<pre><code class="lang-java"><span class="hljs-comment">/*Java Program to find factorial of a number using Recursive Function*/</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span>
+</span>{
+    <span class="hljs-comment">//Driver Code</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> 
+    </span>{
+        <span class="hljs-keyword">int</span> num=<span class="hljs-number">5</span>;
+        System.out.println(<span class="hljs-string">"The entered number is :"</span>+num);
+        <span class="hljs-keyword">if</span>(num&gt;=<span class="hljs-number">0</span>) 
+        {
+           <span class="hljs-comment">//Call a recursive function to find the factorial</span>
+           <span class="hljs-keyword">int</span> factorial=findFactorial(num);
+           System.out.println(<span class="hljs-string">"The factorial of the entered number is :"</span>+factorial);
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            System.out.println(<span class="hljs-string">"Factorial not possible."</span>);
+            System.out.println(<span class="hljs-string">"Please enter valid input."</span>);
+        } 
+    }
+    <span class="hljs-comment">//Recursive Function to Find the Factorial of a Number</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findFactorial</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num)</span>
+    </span>{
+        <span class="hljs-keyword">if</span>(num==<span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(num==<span class="hljs-number">1</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">return</span> num*findFactorial(num-<span class="hljs-number">1</span>);        
+    }
+}
+</code></pre>
+<p>输入的数字是:5
+输入的数字的阶乘是:120</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0184.html" class="navigation navigation-prev " aria-label="Previous page: Java 程序：检查字符串是否为空或null">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0186.html" class="navigation navigation-next " aria-label="Next page: Java 程序：显示上三角矩阵">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 程序：使用递归求一个数的阶乘","level":"1.1.51","depth":2,"next":{"title":"Java 程序：显示上三角矩阵","level":"1.1.52","depth":2,"path":"0186.md","ref":"0186.md","articles":[]},"previous":{"title":"Java 程序：检查字符串是否为空或null","level":"1.1.50","depth":2,"path":"0184.md","ref":"0184.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0185.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:22:36.968Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

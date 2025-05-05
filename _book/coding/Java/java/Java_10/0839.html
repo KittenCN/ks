@@ -1,0 +1,463 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>局部变量类型推断 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="0838.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 10
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0837.html">
+            
+                <a href="0837.html">
+            
+                    
+                    Java 10 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0838.html">
+            
+                <a href="0838.html">
+            
+                    
+                    Java 10 特性和更新
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.3" data-path="0839.html">
+            
+                <a href="0839.html">
+            
+                    
+                    局部变量类型推断
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >局部变量类型推断</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="局部变量类型推断">局部变量类型推断</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-10/local-variables-type-inference" target="_blank">https://www.studytonight.com/java-10/local-variables-type-inference</a></p>
+</blockquote>
+<p>Java 增加了一种使用<code>var</code> 关键字声明和初始化 Java 变量的新方法。它减少了在变量声明期间指定类型的工作量。通过使用 var，我们不需要使用<code>int</code>、<code>float</code>等类型。它根据赋值自动推断变量的类型。这个特性在 Java 中被称为<strong>局部变量类型推断</strong>或 <strong>LVTI</strong> 。让我们比较一下新版本和旧版本的方法。</p>
+<pre><code class="lang-java"><span class="hljs-comment">// Java 9 or older</span>
+
+<span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>; 
+
+<span class="hljs-comment">// Java 10 or higher</span>
+
+var a = <span class="hljs-number">10</span>;
+</code></pre>
+<p><u><strong>注意:</strong></u> 声明时需要初始化变量，否则编译器无法推断类型，会产生错误。</p>
+<pre><code class="lang-java"><span class="hljs-comment">// Java 10 or higher</span>
+
+var a; <span class="hljs-comment">// error: not allowed (must be initialized)</span>
+</code></pre>
+<p>此功能仅限于–<strong>局部变量</strong>，包含初始值设定项、增强的 <strong>for 循环</strong>中的索引以及在传统 for 循环中声明的局部变量。它<strong>将不能用于</strong>方法形式<strong>、</strong>构造器形式<strong>、</strong>方法返回类型<strong>、</strong>字段<strong>、 </strong>catch 形式<strong>或任何其他类型的变量声明。</strong></p>
+<h2 id="它可以在以下上下文中使用">它可以在以下上下文中使用:</h2>
+<ul>
+<li><p>带有初始值设定项的局部变量</p>
+</li>
+<li><p>增强 for 循环中的索引</p>
+</li>
+<li><p>本地人用传统的 for 循环声明</p>
+</li>
+</ul>
+<h2 id="示例带初始值设定项的局部变量">示例:带初始值设定项的局部变量</h2>
+<p>这个例子解释了<code>var</code>作为局部变量的用法。注意，我们创建了两个字符串变量，一个是通过使用<code>String</code>类型，另一个是通过使用<code>var</code>类型。两者在 Java 10 中都可以正常工作。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span>
+</span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span>
+    </span>{  
+        String s = <span class="hljs-string">"StudyTonight"</span>;
+        var s2 = <span class="hljs-string">"StudyTonight"</span>;  
+        System.out.println(s);  
+        System.out.println(s2);
+    }
+}
+</code></pre>
+<p>今晚学习
+今晚学习</p>
+<h2 id="示例变量必须初始化">示例:变量必须初始化</h2>
+<p>这个例子解释了变量在用<code>var</code>声明时必须初始化，否则编译器会产生错误。请看下面的例子。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CoreJava</span>
+</span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span>
+    </span>{  
+        String s = <span class="hljs-string">"StudyTonight"</span>;
+        var s2 ;
+        System.out.println(s);  
+        System.out.println(s2);
+    }
+}
+</code></pre>
+<p>错误:在没有初始值设定项的变量上不能使用“var”</p>
+<p>使用 var 时，必须在同一位置初始化变量。不能将声明和初始化放在不同的地方。如果您没有在适当的位置初始化变量，那么您将会得到一个编译错误——没有初始化器就不能在变量上使用“var”。</p>
+<pre><code class="lang-java">var str;
+
+str = <span class="hljs-string">"Studytonight"</span> <span class="hljs-comment">// not valid : error</span>
+</code></pre>
+<h2 id="集合中的局部变量推断示例">集合中的局部变量推断示例</h2>
+<p>在这个例子中，我们使用<code>var</code>创建了一个列表类型的变量，并看到它运行良好，并保存了列表元素。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.Arrays;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{  
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        List&lt;Integer&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        list = Arrays.asList(<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>,<span class="hljs-number">4</span>,<span class="hljs-number">7</span>);
+
+        <span class="hljs-comment">// using var</span>
+
+        var list2 = Arrays.asList(<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>,<span class="hljs-number">4</span>,<span class="hljs-number">7</span>);
+        System.out.println(list2);
+    }
+}
+</code></pre>
+<p>【2，5，6，8，4，7】</p>
+<h2 id="示例for-循环中的类型推断">示例:For 循环中的类型推断</h2>
+<p>Java 允许在 for 循环中使用 <strong>var</strong> 来创建局部变量。在这里，我们使用<strong>变量</strong>来声明一个<strong>变量</strong>来保存列表的元素。请看下面的例子。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{  
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        var list = Arrays.asList(<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>,<span class="hljs-number">4</span>,<span class="hljs-number">7</span>);
+        <span class="hljs-keyword">for</span> (var val : list) {
+            System.out.println(val);
+        }
+    }
+}
+</code></pre>
+<p>2
+5
+6
+8
+4
+7</p>
+<h2 id="它不能在以下上下文中使用">它不能在以下上下文中使用:</h2>
+<p>在使用本地类型推断时，我们必须意识到它的范围有限，并且可以在有限的场景中使用。以下是 Java 不允许使用 <strong>var</strong> 的场景。</p>
+<ul>
+<li><p>不允许作为类字段</p>
+</li>
+<li><p>不允许作为参数</p>
+</li>
+<li><p>不允许作为正式捕获</p>
+</li>
+<li><p>方法返回类型中不允许</p>
+</li>
+<li><p>方法参数中不允许</p>
+</li>
+</ul>
+<h2 id="例无法使用var的地方">例:无法使用<code>var</code>的地方</h2>
+<p>让我们举一个不使用<code>var</code>的例子:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{  
+    <span class="hljs-keyword">static</span> var price = <span class="hljs-number">10</span>; <span class="hljs-comment">// Not allowed as instance variable</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        var list = Arrays.asList(<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>,<span class="hljs-number">4</span>,<span class="hljs-number">7</span>);
+        <span class="hljs-keyword">for</span> (var val : list) {
+            System.out.println(add(val, price)); <span class="hljs-comment">// no return infered</span>
+        }
+    }
+    <span class="hljs-comment">// Not allowed in return type</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> var <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, var b)</span> <span class="hljs-comment">// not allowed as parameter {</span>
+        <span class="hljs-title">return</span> <span class="hljs-params">(a+b)</span></span>;
+    }
+}
+</code></pre>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0838.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Java 10 特性和更新">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"局部变量类型推断","level":"1.1.3","depth":2,"previous":{"title":"Java 10 特性和更新","level":"1.1.2","depth":2,"path":"0838.md","ref":"0838.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0839.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:35.656Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

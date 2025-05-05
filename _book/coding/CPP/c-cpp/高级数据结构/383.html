@@ -1,0 +1,684 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>TRIE 数据结构示例 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="384.html" />
+    
+    
+    <link rel="prev" href="382.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="378.html">
+            
+                <a href="378.html">
+            
+                    
+                    高级树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="379.html">
+            
+                <a href="379.html">
+            
+                    
+                    多维树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="380.html">
+            
+                <a href="380.html">
+            
+                    
+                    树型数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="381.html">
+            
+                <a href="381.html">
+            
+                    
+                    堆数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="382.html">
+            
+                <a href="382.html">
+            
+                    
+                    实现堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.6" data-path="383.html">
+            
+                <a href="383.html">
+            
+                    
+                    TRIE 数据结构示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="384.html">
+            
+                <a href="384.html">
+            
+                    
+                    B 树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="385.html">
+            
+                <a href="385.html">
+            
+                    
+                    B- 树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="386.html">
+            
+                <a href="386.html">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="387.html">
+            
+                <a href="387.html">
+            
+                    
+                    图介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="388.html">
+            
+                <a href="388.html">
+            
+                    
+                    图表示——邻接矩阵和列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="389.html">
+            
+                <a href="389.html">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="390.html">
+            
+                <a href="390.html">
+            
+                    
+                    哈希表数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >TRIE 数据结构示例</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="trie-数据结构示例">TRIE 数据结构示例</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/advanced-data-structures/trie-data-structure-explained-with-examples" target="_blank">https://www.studytonight.com/advanced-data-structures/trie-data-structure-explained-with-examples</a></p>
+</blockquote>
+<p>A <strong>Trie 是一种高级数据结构</strong>，有时也被称为<strong>前缀树或数字树</strong>。它是以有序和高效的方式存储数据的树。我们通常使用“T4”来存储字符串。trie 的每个节点可以有多达 26 个引用(指针)。</p>
+<p>trie 的每个节点由两件事组成:</p>
+<ul>
+<li><p>一个角色</p>
+</li>
+<li><p>布尔值用于实现该字符是否代表单词的结尾。</p>
+</li>
+</ul>
+<p>一般来说，try 用于存储英文字符，因此每个字符可以有 26 个引用。trie 中的节点不存储整个键，而是存储键的一部分(通常是字符串的一个字符)。当我们从根节点向下遍历到叶节点时，我们可以从密钥的这些小部分构建密钥。</p>
+<p>让我们通过插入一些单词来建立一个 trie。下面是同样的图示，我们有 5 个单词，然后我们把这些单词一个接一个地插入我们的 trie。</p>
+<p><img src="img/27f6b15c3a6a20f289b9e8223c45564c.png" alt="TRIE data structure"></img></p>
+<p>如上图所示，当我们从根节点向下遍历到叶节点时，可以形成关键字(单词)。可以注意到，绿色突出显示的节点代表单词的<code>endOfWord</code>布尔值，这又意味着该特定单词在该节点完成。此外，trie 的根节点是空的，因此它可以引用 trie 用来存储的字母表的所有成员，并且 trie 的任何节点的子节点最多可以有 26 个引用。尝试在本质上是不平衡的，不像 AVL 树。</p>
+<h2 id="为什么要使用-trie-数据结构？">为什么要使用 Trie 数据结构？</h2>
+<p>当我们谈论从数据结构中检索值的最快方法时，<strong>散列表通常会出现在我们的脑海中</strong>。虽然本质上非常高效，但与散列表相比，仍然很少被提及， <strong>trie 比散列表</strong>高效得多，而且它们还具有几个优势。主要是:</p>
+<ul>
+<li><p>不会有任何冲突，从而使最差的性能优于没有正确实现的哈希表。</p>
+</li>
+<li><p>不需要散列函数。</p>
+</li>
+<li><p>trie 中字符串的查找时间为<code>O(k)</code>，其中 <strong>k =单词</strong>的长度。</p>
+</li>
+<li><p>当单词不在一个 trie 中时，它可能需要更少的时间。</p>
+</li>
+</ul>
+<h2 id="实施尝试">实施尝试:</h2>
+<p>我们将用 <a href="https://www.studytonight.com/java/" target="_blank">Java 语言</a>实现 Trie 数据结构。</p>
+<h3 id="三节点声明">三节点声明:</h3>
+<pre><code class="lang-cpp"><span class="hljs-keyword">class</span> TrieNode {
+    boolean isEndOfWord;
+    TrieNode children[];
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TrieNode</span><span class="hljs-params">()</span></span>{
+        isEndOfWord = <span class="hljs-literal">false</span>;
+        children = <span class="hljs-keyword">new</span> TrieNode[<span class="hljs-number">26</span>];
+    }
+}
+</code></pre>
+<p>请注意，我们在上面的 <strong>TrieNode</strong> 类中有两个字段，如前所述，布尔 isEndOfWord 关键字和一个名为 children 的 Trie 节点数组。现在让我们初始化 trie 类的根节点。</p>
+<pre><code class="lang-cpp">TrieNode root;
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Trie</span><span class="hljs-params">()</span> </span>{
+    root = <span class="hljs-keyword">new</span> TrieNode();
+}
+</code></pre>
+<p>trie 数据结构中有两个关键功能，它们是:</p>
+<ul>
+<li><p><strong>搜索</strong></p>
+</li>
+<li><p><strong>插入</strong></p>
+</li>
+</ul>
+<h3 id="在三中插入">在三中插入:</h3>
+<p>当我们在 trie 中插入一个字符(键的一部分)时，我们从根节点开始，然后搜索一个引用，该引用对应于我们试图在 trie 中插入其字符的字符串的第一个键字符。两种情况是可能的:</p>
+<ul>
+<li><p>如果存在一个引用，那么我们沿着树向下遍历引用到下一个子级。</p>
+</li>
+<li><p>引用不存在，然后我们创建一个新节点，并使用与当前关键字符匹配的父引用来引用它。我们重复这个步骤，直到我们到达密钥的最后一个字符，然后我们将当前节点标记为结束节点，算法完成。</p>
+</li>
+</ul>
+<p>考虑下面的代码片段:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(String word)</span> </span>{
+    TrieNode node = root;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : word.toCharArray()) {
+        <span class="hljs-keyword">if</span> (node.children[c-<span class="hljs-string">'a'</span>] == null) {
+            node.children[c-<span class="hljs-string">'a'</span>] = <span class="hljs-keyword">new</span> TrieNode();
+        }
+        node = node.children[c-<span class="hljs-string">'a'</span>];
+    }
+    node.isEndOfWord = <span class="hljs-literal">true</span>;
+}
+</code></pre>
+<h3 id="在-trie-中搜索">在 trie 中搜索:</h3>
+<p>trie 中的一个键被存储为从根节点开始的路径，它可能一直到叶节点或某个中间节点。如果我们想在 trie 中搜索一个关键字，我们从根节点开始，然后向下遍历。如果我们找到了要搜索的关键字的下一个字符的引用匹配，那么有两种情况:</p>
+<ol>
+<li><p>存在下一个字符的引用，因此我们沿着这个链接向下移动，并继续搜索下一个关键字符。</p>
+</li>
+<li><p>下一个字符不存在引用。如果钥匙没有其他字符存在，并且该字符被标记为<code>isEndOfWord = true</code>，那么我们返回 <strong>true</strong> ，这意味着我们找到了钥匙。否则，还有两种情况是可能的，在每种情况下，我们都返回 <strong>false</strong> 。这些是:</p>
+<ol>
+<li><p>键中还有一些关键字符，但是由于路径终止，我们无法向下遍历，因此键不存在。</p>
+</li>
+<li><p>键中没有剩余字符，但最后一个字符没有标记为<code>isEndOfWord = false</code>。因此，搜索关键字只是我们试图在 trie 中搜索的关键字的前缀。</p>
+</li>
+</ol>
+</li>
+</ol>
+<p>考虑下面的代码片段:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">public</span> boolean <span class="hljs-title">search</span><span class="hljs-params">(String word)</span> </span>{
+    <span class="hljs-keyword">return</span> isMatch(word, root, <span class="hljs-number">0</span>, <span class="hljs-literal">true</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> boolean <span class="hljs-title">startsWith</span><span class="hljs-params">(String prefix)</span> </span>{
+    <span class="hljs-keyword">return</span> isMatch(prefix, root, <span class="hljs-number">0</span>, <span class="hljs-literal">false</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> boolean <span class="hljs-title">isMatch</span><span class="hljs-params">( String s, TrieNode node, <span class="hljs-keyword">int</span> index, boolean isFullMatch)</span> </span>{
+    <span class="hljs-keyword">if</span> (node == null)
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+
+    <span class="hljs-keyword">if</span> (index == s.length())
+        <span class="hljs-keyword">return</span> !isFullMatch || node.isEndOfWord;
+
+    <span class="hljs-keyword">return</span> isMatch(s, node.children[s.charAt(index) - <span class="hljs-string">'a'</span>], index + <span class="hljs-number">1</span>, isFullMatch);      
+}
+</code></pre>
+<p>方法<code>startsWith()</code>用于查找 trie 中是否存在所需的密钥前缀。还有，无论是<code>search()</code>还是<code>startsWith()</code> 的方法都利用了<code>isMatch()</code> 的方法。</p>
+<h3 id="整个代码">整个代码:</h3>
+<pre><code class="lang-cpp"><span class="hljs-keyword">class</span> Trie {
+    <span class="hljs-keyword">class</span> TrieNode {
+        boolean isEndOfWord;
+        TrieNode children[];
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TrieNode</span><span class="hljs-params">()</span></span>{
+            isEndOfWord = <span class="hljs-literal">false</span>;
+            children = <span class="hljs-keyword">new</span> TrieNode[<span class="hljs-number">26</span>];
+        }
+    }
+
+    TrieNode root;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Trie</span><span class="hljs-params">()</span> </span>{
+        root = <span class="hljs-keyword">new</span> TrieNode();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(String word)</span> </span>{
+        TrieNode node = root;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : word.toCharArray()) {
+            <span class="hljs-keyword">if</span> (node.children[c-<span class="hljs-string">'a'</span>] == null) {
+                node.children[c-<span class="hljs-string">'a'</span>] = <span class="hljs-keyword">new</span> TrieNode();
+            }
+            node = node.children[c-<span class="hljs-string">'a'</span>];
+        }
+        node.isEndOfWord = <span class="hljs-literal">true</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> boolean <span class="hljs-title">search</span><span class="hljs-params">(String word)</span> </span>{
+        <span class="hljs-keyword">return</span> isMatch(word, root, <span class="hljs-number">0</span>, <span class="hljs-literal">true</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> boolean <span class="hljs-title">startsWith</span><span class="hljs-params">(String prefix)</span> </span>{
+        <span class="hljs-keyword">return</span> isMatch(prefix, root, <span class="hljs-number">0</span>, <span class="hljs-literal">false</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> boolean <span class="hljs-title">isMatch</span><span class="hljs-params">( String s, TrieNode node, <span class="hljs-keyword">int</span> index, boolean isFullMatch)</span> </span>{
+        <span class="hljs-keyword">if</span> (node == null)
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+
+        <span class="hljs-keyword">if</span> (index == s.length())
+            <span class="hljs-keyword">return</span> !isFullMatch || node.isEndOfWord;
+
+        <span class="hljs-keyword">return</span> isMatch(s, node.children[s.charAt(index) - <span class="hljs-string">'a'</span>], index + <span class="hljs-number">1</span>, isFullMatch);      
+    }    
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        Trie trie = <span class="hljs-keyword">new</span> Trie();
+        trie.insert(<span class="hljs-string">"cat"</span>);
+        trie.insert(<span class="hljs-string">"car"</span>);
+        trie.insert(<span class="hljs-string">"dog"</span>);
+        trie.insert(<span class="hljs-string">"pick"</span>);
+        trie.insert(<span class="hljs-string">"pickle"</span>);
+        boolean isPresent = trie.search(<span class="hljs-string">"cat"</span>);
+        System.out.println(isPresent);
+        isPresent = trie.search(<span class="hljs-string">"picky"</span>);
+        System.out.println(isPresent);
+        isPresent = trie.startsWith(<span class="hljs-string">"ca"</span>);
+        System.out.println(isPresent);
+        isPresent = trie.startsWith(<span class="hljs-string">"pen"</span>);
+        System.out.println(isPresent);
+
+    }
+}
+</code></pre>
+<p>上面的输出如下所示:</p>
+<p>真</p>
+<p>错误的</p>
+<p>真实的</p>
+<p>错误的</p>
+<h2 id="排序应用程序">排序应用程序</h2>
+<ul>
+<li><p>现实世界中最常见的尝试是我们在搜索引擎上获得的<strong>自动完成功能</strong>(现在其他地方也是)。在搜索栏中键入内容后，我们可能输入的潜在单词的树会大大减少，这反过来又允许程序为我们键入的单词列举可能的字符串类型。</p>
+</li>
+<li><p>Trie 在我们想要存储一个词的附加信息的情况下也有帮助，比如这个词的流行度，这使得它如此强大。你可能已经看到了，当你在搜索栏上输入<strong>【脚】</strong>时，你会在说<strong>【步道】</strong>之前得到<strong>【足球】</strong>。因为<strong>“足球”</strong>是一个非常流行的词。</p>
+</li>
+<li><p>Trie 还帮助检查一个单词的正确拼写，因为一个稍微拼错的单词的路径是相似的。</p>
+</li>
+<li><p><strong>字符串匹配</strong>是另一种尝试大量超越的情况。</p>
+</li>
+</ul>
+<h2 id="要点">要点</h2>
+<ul>
+<li><p>创建 trie 的时间复杂度是<code>O(m*n)</code> ，其中 m = trie 中的字数，n =每个单词的平均长度。</p>
+</li>
+<li><p>在 trie 中插入节点的时间复杂度为<code>O(n)</code> ，其中 n =我们试图插入的单词的长度。</p>
+</li>
+<li><p>在 trie 中插入节点的空间复杂度为<code>O(n)</code> ，其中 n =我们试图插入的单词的长度。</p>
+</li>
+<li><p>在 trie 中搜索关键字(单词)的时间复杂度是<code>O(n)</code> ，其中 n =我们正在搜索的单词的长度。</p>
+</li>
+<li><p>在 trie 中搜索关键字(词)的空间复杂度是<code>O(1)</code>。</p>
+</li>
+<li><p>搜索一个关键字(词)的前缀也有<code>O(n)</code> 的时间复杂度和<code>O(1)</code>的空间复杂度。</p>
+</li>
+</ul>
+<h2 id="结论">结论</h2>
+<ul>
+<li><p>我们了解了什么是特里，为什么我们需要特里。</p>
+</li>
+<li><p>我们还在 Java 中实现了 trie，其中插入和搜索是实现的主要方法。</p>
+</li>
+<li><p>然后我们讨论了 trie 数据结构在现实世界中的应用，接下来是我们还应该记住的关于 Trie 的几个关键点。</p>
+</li>
+</ul>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="382.html" class="navigation navigation-prev " aria-label="Previous page: 实现堆">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="384.html" class="navigation navigation-next " aria-label="Next page: B 树数据结构">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"TRIE 数据结构示例","level":"1.1.6","depth":2,"next":{"title":"B 树数据结构","level":"1.1.7","depth":2,"path":"384.md","ref":"384.md","articles":[]},"previous":{"title":"实现堆","level":"1.1.5","depth":2,"path":"382.md","ref":"382.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"383.md","mtime":"2025-04-30T01:08:58.910Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:13.112Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

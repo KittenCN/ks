@@ -1,0 +1,1616 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>C 程序：打印数组的反转 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="081.html" />
+    
+    
+    <link rel="prev" href="079.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    C 程序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="047.html">
+            
+                <a href="047.html">
+            
+                    
+                    从基本程序开始
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="048.html">
+            
+                <a href="048.html">
+            
+                    
+                    C 程序：你好世界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="049.html">
+            
+                <a href="049.html">
+            
+                    
+                    C 程序：接受各种数据类型输入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="050.html">
+            
+                <a href="050.html">
+            
+                    
+                    C 程序：字符的 ASCII 值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="051.html">
+            
+                <a href="051.html">
+            
+                    
+                    C 程序：如何使用get()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="052.html">
+            
+                <a href="052.html">
+            
+                    
+                    C 程序：基本if-else条件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="053.html">
+            
+                <a href="053.html">
+            
+                    
+                    C 程序：带有break的switch-case
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="054.html">
+            
+                <a href="054.html">
+            
+                    
+                    C 程序：使用switch-case检查输入字符是否为元音
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="055.html">
+            
+                <a href="055.html">
+            
+                    
+                    C 程序：反转输入字符大小写
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="056.html">
+            
+                <a href="056.html">
+            
+                    
+                    C 程序：使用临时变量交换两个数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="057.html">
+            
+                <a href="057.html">
+            
+                    
+                    C 程序：使用全局声明打印最大和最小
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="058.html">
+            
+                <a href="058.html">
+            
+                    
+                    循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="059.html">
+            
+                <a href="059.html">
+            
+                    
+                    C 程序：for循环的基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="060.html">
+            
+                <a href="060.html">
+            
+                    
+                    C 程序：简单的while循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="061.html">
+            
+                <a href="061.html">
+            
+                    
+                    C 程序：do-while循环基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="062.html">
+            
+                <a href="062.html">
+            
+                    
+                    C 程序：显示嵌套for循环用法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="063.html">
+            
+                <a href="063.html">
+            
+                    
+                    C 程序：打印数字阶乘
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="064.html">
+            
+                <a href="064.html">
+            
+                    
+                    C 程序：打印斐波那契数列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="065.html">
+            
+                <a href="065.html">
+            
+                    
+                    C 程序：检查数字是否是回文
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="066.html">
+            
+                <a href="066.html">
+            
+                    
+                    C 程序：求一个数的位数和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="067.html">
+            
+                <a href="067.html">
+            
+                    
+                    C 程序：反转字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="068.html">
+            
+                <a href="068.html">
+            
+                    
+                    数字处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="069.html">
+            
+                <a href="069.html">
+            
+                    
+                    C 程序：求N个数平均值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="070.html">
+            
+                <a href="070.html">
+            
+                    
+                    C 程序：寻找 1 到 500 之间的阿姆斯特朗数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="071.html">
+            
+                <a href="071.html">
+            
+                    
+                    C 程序：使用按位运算符检查奇数和偶数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="072.html">
+            
+                <a href="072.html">
+            
+                    
+                    C 程序：寻找数字因数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="073.html">
+            
+                <a href="073.html">
+            
+                    
+                    C 程序：求N个输入数之和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="074.html">
+            
+                <a href="074.html">
+            
+                    
+                    C 程序：寻找前N个质数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="075.html">
+            
+                <a href="075.html">
+            
+                    
+                    C 程序：在n个输入数字中找出最大数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="076.html">
+            
+                <a href="076.html">
+            
+                    
+                    C 程序：不用pow()方法求指数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="077.html">
+            
+                <a href="077.html">
+            
+                    
+                    C 程序：检查输入数字是整数还是浮点数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="078.html">
+            
+                <a href="078.html">
+            
+                    
+                    C 程序：打印任意数字的乘法表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="079.html">
+            
+                <a href="079.html">
+            
+                    
+                    数组的概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.34" data-path="080.html">
+            
+                <a href="080.html">
+            
+                    
+                    C 程序：打印数组的反转
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="081.html">
+            
+                <a href="081.html">
+            
+                    
+                    C 程序：在数组中插入元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="082.html">
+            
+                <a href="082.html">
+            
+                    
+                    C 程序：从数组中删除元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="083.html">
+            
+                <a href="083.html">
+            
+                    
+                    C 程序：寻找数组中最大和最小元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="084.html">
+            
+                <a href="084.html">
+            
+                    
+                    C 程序：使用数组求N个输入数之和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="085.html">
+            
+                <a href="085.html">
+            
+                    
+                    C 程序：排序数组元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="086.html">
+            
+                <a href="086.html">
+            
+                    
+                    C 程序：删除数组中重复元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="087.html">
+            
+                <a href="087.html">
+            
+                    
+                    C 程序：检查二维数组是否为稀疏矩阵
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="088.html">
+            
+                <a href="088.html">
+            
+                    
+                    C 程序：检查给定方阵是否对称
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="089.html">
+            
+                <a href="089.html">
+            
+                    
+                    C 程序：2x2矩阵的行列式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="090.html">
+            
+                <a href="090.html">
+            
+                    
+                    C 程序：求方阵的范数和迹
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="091.html">
+            
+                <a href="091.html">
+            
+                    
+                    C 程序：执行矩阵加减
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.46" data-path="092.html">
+            
+                <a href="092.html">
+            
+                    
+                    C 程序：矩阵乘法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.47" data-path="093.html">
+            
+                <a href="093.html">
+            
+                    
+                    指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.48" data-path="094.html">
+            
+                <a href="094.html">
+            
+                    
+                    C 程序：指针基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.49" data-path="095.html">
+            
+                <a href="095.html">
+            
+                    
+                    C 程序：将malloc()用于动态内存分配
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.50" data-path="096.html">
+            
+                <a href="096.html">
+            
+                    
+                    C 程序：访问整型指针数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.51" data-path="097.html">
+            
+                <a href="097.html">
+            
+                    
+                    C 程序：通过递增指针来访问数组元素（遍历数组）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.52" data-path="098.html">
+            
+                <a href="098.html">
+            
+                    
+                    C 程序：指针比较
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.53" data-path="099.html">
+            
+                <a href="099.html">
+            
+                    
+                    C 程序：指向指针的指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.54" data-path="100.html">
+            
+                <a href="100.html">
+            
+                    
+                    C 程序：使用指针连接字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.55" data-path="101.html">
+            
+                <a href="101.html">
+            
+                    
+                    C 程序：使用指针反转字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.56" data-path="102.html">
+            
+                <a href="102.html">
+            
+                    
+                    C 程序：使用指针交换两个数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.57" data-path="103.html">
+            
+                <a href="103.html">
+            
+                    
+                    C 程序：指向函数的指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.58" data-path="104.html">
+            
+                <a href="104.html">
+            
+                    
+                    C 程序：空指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.59" data-path="105.html">
+            
+                <a href="105.html">
+            
+                    
+                    递归的概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.60" data-path="106.html">
+            
+                <a href="106.html">
+            
+                    
+                    C 程序：递归相加两个数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.61" data-path="107.html">
+            
+                <a href="107.html">
+            
+                    
+                    C 程序：使用递归求一个数的阶乘
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.62" data-path="108.html">
+            
+                <a href="108.html">
+            
+                    
+                    C 程序：使用递归打印斐波那契数列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.63" data-path="109.html">
+            
+                <a href="109.html">
+            
+                    
+                    C 程序：计算前N个数和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.64" data-path="110.html">
+            
+                <a href="110.html">
+            
+                    
+                    C 程序：使用递归求数字和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.65" data-path="111.html">
+            
+                <a href="111.html">
+            
+                    
+                    C 程序：使用递归检查回文
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.66" data-path="112.html">
+            
+                <a href="112.html">
+            
+                    
+                    C 程序：使用递归计算N的幂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.67" data-path="113.html">
+            
+                <a href="113.html">
+            
+                    
+                    C 程序：使用递归寻找数组中最大元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.68" data-path="114.html">
+            
+                <a href="114.html">
+            
+                    
+                    C 程序：使用递归求一个数是质数还是合数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.69" data-path="115.html">
+            
+                <a href="115.html">
+            
+                    
+                    C 程序：使用递归求两个数的 LCM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.70" data-path="116.html">
+            
+                <a href="116.html">
+            
+                    
+                    C 程序：使用递归求两个数的 GCD
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.71" data-path="117.html">
+            
+                <a href="117.html">
+            
+                    
+                    C 程序：使用递归反转字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.72" data-path="118.html">
+            
+                <a href="118.html">
+            
+                    
+                    文件和流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.73" data-path="119.html">
+            
+                <a href="119.html">
+            
+                    
+                    C 程序：打印目录中所有文件名称
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.74" data-path="120.html">
+            
+                <a href="120.html">
+            
+                    
+                    C 程序：查找任何文件大小
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.75" data-path="121.html">
+            
+                <a href="121.html">
+            
+                    
+                    C 程序：创建文件并在其中写入数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.76" data-path="122.html">
+            
+                <a href="122.html">
+            
+                    
+                    C 程序：反转文件内容
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.77" data-path="123.html">
+            
+                <a href="123.html">
+            
+                    
+                    C 程序：将一个文件的内容复制到另一个文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.78" data-path="124.html">
+            
+                <a href="124.html">
+            
+                    
+                    杂项 I
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.79" data-path="125.html">
+            
+                <a href="125.html">
+            
+                    
+                    C 程序：识别闰年
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.80" data-path="126.html">
+            
+                <a href="126.html">
+            
+                    
+                    C 程序：求三个数中最大值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.81" data-path="127.html">
+            
+                <a href="127.html">
+            
+                    
+                    C 程序：在三个用户输入数字中找出第二大数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.82" data-path="128.html">
+            
+                <a href="128.html">
+            
+                    
+                    C 程序：使用指针相加两个用户输入数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.83" data-path="129.html">
+            
+                <a href="129.html">
+            
+                    
+                    C 程序：求圆的面积和周长
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.84" data-path="130.html">
+            
+                <a href="130.html">
+            
+                    
+                    C 程序：使用底和高求三角形面积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.85" data-path="131.html">
+            
+                <a href="131.html">
+            
+                    
+                    C 程序：展示基本算术运算和类型转换作用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.86" data-path="132.html">
+            
+                <a href="132.html">
+            
+                    
+                    C 程序：展示各种数字系统之间转换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.87" data-path="133.html">
+            
+                <a href="133.html">
+            
+                    
+                    C 程序：将摄氏温度转换成华氏温度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.88" data-path="134.html">
+            
+                <a href="134.html">
+            
+                    
+                    C 程序：计算单利
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.89" data-path="135.html">
+            
+                <a href="135.html">
+            
+                    
+                    C 程序：求N个数的 GCD
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.90" data-path="136.html">
+            
+                <a href="136.html">
+            
+                    
+                    杂项 II
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.91" data-path="137.html">
+            
+                <a href="137.html">
+            
+                    
+                    C 程序：求二次方程根
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.92" data-path="138.html">
+            
+                <a href="138.html">
+            
+                    
+                    C 程序：检查完全平方
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.93" data-path="139.html">
+            
+                <a href="139.html">
+            
+                    
+                    C 程序：计算排列组合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.94" data-path="140.html">
+            
+                <a href="140.html">
+            
+                    
+                    C 程序：关闭 Windows/Linux 机器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.95" data-path="141.html">
+            
+                <a href="141.html">
+            
+                    
+                    C 程序：没有main()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.96" data-path="142.html">
+            
+                <a href="142.html">
+            
+                    
+                    C 程序：使用switch-case创建菜单驱动软件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.97" data-path="143.html">
+            
+                <a href="143.html">
+            
+                    
+                    C 程序：改变文本背景颜色
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.98" data-path="144.html">
+            
+                <a href="144.html">
+            
+                    
+                    C 程序：显示当前日期和时间
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >C 程序：打印数组的反转</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="c-程序：打印数组的反转">C 程序：打印数组的反转</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/c/programs/array/reverse-an-array" target="_blank">https://www.studytonight.com/c/programs/array/reverse-an-array</a></p>
+</blockquote>
+<p>下面是一个反转数组的简单程序。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n\n\t\tStudytonight - Best place to learn\n\n\n"</span>);
+
+    <span class="hljs-keyword">int</span> c, d, n, a[<span class="hljs-number">100</span>], b[<span class="hljs-number">100</span>];
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n\nEnter number of elements in array :"</span>);
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>, &amp;n);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n\nEnter %d elements\n"</span>, n);
+
+    <span class="hljs-keyword">for</span>(c = <span class="hljs-number">0</span>; c &lt; n; c++)
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>, &amp;a[c]);
+
+    <span class="hljs-comment">/*
+        temporarily storing elements into array b 
+        starting from end of array a
+    */</span>
+    <span class="hljs-keyword">for</span>(c = n-<span class="hljs-number">1</span>, d = <span class="hljs-number">0</span>; c &gt;= <span class="hljs-number">0</span>; c--, d++)
+        b[d] = a[c];
+
+    <span class="hljs-comment">/*
+        copying reversed array into original.
+        Here we are modifying original array to reverse it.
+    */</span>
+
+    <span class="hljs-keyword">for</span>(c = <span class="hljs-number">0</span>; c &lt; n; c++)
+        a[c] = b[c];
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n\n Resultant array is: "</span>);
+    <span class="hljs-keyword">for</span>(c = <span class="hljs-number">0</span>; c &lt; n; c++)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d"</span>, a[c]);
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n\n\t\t\tCoding is Fun !\n\n\n"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3 id="输出">输出:</h3>
+<p><img src="img/39523770d7616ffb6364bd500b7973e4.png" alt="Program to reverse an Array in C"></img></p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="079.html" class="navigation navigation-prev " aria-label="Previous page: 数组的概念">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="081.html" class="navigation navigation-next " aria-label="Next page: C 程序：在数组中插入元素">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"C 程序：打印数组的反转","level":"1.1.34","depth":2,"next":{"title":"C 程序：在数组中插入元素","level":"1.1.35","depth":2,"path":"081.md","ref":"081.md","articles":[]},"previous":{"title":"数组的概念","level":"1.1.33","depth":2,"path":"079.md","ref":"079.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"080.md","mtime":"2025-04-30T01:08:58.434Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:23:48.537Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

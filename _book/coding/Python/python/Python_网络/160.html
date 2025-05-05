@@ -1,0 +1,989 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>beautifulsoup模块简介 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="161.html" />
+    
+    
+    <link rel="prev" href="159.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Python 网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="124.html">
+            
+                <a href="124.html">
+            
+                    
+                    简介和基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="125.html">
+            
+                <a href="125.html">
+            
+                    
+                    网络编程导论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="126.html">
+            
+                <a href="126.html">
+            
+                    
+                    常见网络术语
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="127.html">
+            
+                <a href="127.html">
+            
+                    
+                    安装 Python 第三方库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="128.html">
+            
+                <a href="128.html">
+            
+                    
+                    解释和交互式 Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="129.html">
+            
+                <a href="129.html">
+            
+                    
+                    套接字基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="130.html">
+            
+                <a href="130.html">
+            
+                    
+                    Python 套接字——SOCK_STREAM和SOCK_DGRAM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="131.html">
+            
+                <a href="131.html">
+            
+                    
+                    使用 TCP 套接字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="132.html">
+            
+                <a href="132.html">
+            
+                    
+                    使用 UDP 套接字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="133.html">
+            
+                <a href="133.html">
+            
+                    
+                    通过 TCP 套接字处理接收的客户端数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="134.html">
+            
+                <a href="134.html">
+            
+                    
+                    阻塞和非阻塞套接字输入/输出
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="135.html">
+            
+                <a href="135.html">
+            
+                    
+                    通过 TSL/SSL 保护套接字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="136.html">
+            
+                <a href="136.html">
+            
+                    
+                    从网络分析开始
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="137.html">
+            
+                <a href="137.html">
+            
+                    
+                    使用套接字构建自定义端口扫描器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="138.html">
+            
+                <a href="138.html">
+            
+                    
+                    在 Python 中使用 Nmap 端口扫描器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="139.html">
+            
+                <a href="139.html">
+            
+                    
+                    使用命令行输入的 Nmap 端口扫描脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="140.html">
+            
+                <a href="140.html">
+            
+                    
+                    什么是横幅抓取？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="141.html">
+            
+                <a href="141.html">
+            
+                    
+                    Wireshark 网络流量分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="142.html">
+            
+                <a href="142.html">
+            
+                    
+                    Wireshark 数据包分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="143.html">
+            
+                <a href="143.html">
+            
+                    
+                    使用dpkt库分析网络流量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="144.html">
+            
+                <a href="144.html">
+            
+                    
+                    scapy 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="145.html">
+            
+                <a href="145.html">
+            
+                    
+                    实际应用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="146.html">
+            
+                <a href="146.html">
+            
+                    
+                    是时候干活了
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="147.html">
+            
+                <a href="147.html">
+            
+                    
+                    从 PDF 文件中提取元数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="148.html">
+            
+                <a href="148.html">
+            
+                    
+                    使用pyGeoIP模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="149.html">
+            
+                <a href="149.html">
+            
+                    
+                    什么是网页抓取？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="150.html">
+            
+                <a href="150.html">
+            
+                    
+                    实现网页抓取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="151.html">
+            
+                <a href="151.html">
+            
+                    
+                    什么是 API？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="152.html">
+            
+                <a href="152.html">
+            
+                    
+                    使用脸书 GraphAPI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="153.html">
+            
+                <a href="153.html">
+            
+                    
+                    挖掘自己的脸书账户
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="154.html">
+            
+                <a href="154.html">
+            
+                    
+                    Python 的mechanize库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="155.html">
+            
+                <a href="155.html">
+            
+                    
+                    使用mechanize库更改浏览器的用户代理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="156.html">
+            
+                <a href="156.html">
+            
+                    
+                    Web 爬取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="157.html">
+            
+                <a href="157.html">
+            
+                    
+                    入门指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="158.html">
+            
+                <a href="158.html">
+            
+                    
+                    网页抓取简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="159.html">
+            
+                <a href="159.html">
+            
+                    
+                    requests模块简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.37" data-path="160.html">
+            
+                <a href="160.html">
+            
+                    
+                    beautifulsoup模块简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="161.html">
+            
+                <a href="161.html">
+            
+                    
+                    进阶
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="162.html">
+            
+                <a href="162.html">
+            
+                    
+                    探索 BeautifulSoap 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="163.html">
+            
+                <a href="163.html">
+            
+                    
+                    使用 BeautifulSoap 查找 HTML 标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="164.html">
+            
+                <a href="164.html">
+            
+                    
+                    从消费者报告网站抓取产品名称
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="165.html">
+            
+                <a href="165.html">
+            
+                    
+                    高级
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="166.html">
+            
+                <a href="166.html">
+            
+                    
+                    网页抓取：将数据写入文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="167.html">
+            
+                <a href="167.html">
+            
+                    
+                    网页抓取：抓取多个网址
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="168.html">
+            
+                <a href="168.html">
+            
+                    
+                    从 StudyTonight 教程网页中抓取主题名称
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >beautifulsoup模块简介</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="beautifulsoup模块简介"><code>beautifulsoup</code>模块简介</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/python/web-scraping/introduction-to-beautifulsoup" target="_blank">https://www.studytonight.com/python/web-scraping/introduction-to-beautifulsoup</a></p>
+</blockquote>
+<p>在本教程中，我们将学习如何使用 python 的<strong>模块解析网页的源代码(我们可以使用 <a href="python/web-scraping/introduction-to-requests-module"><code>requests</code>模块</a>获得)，并从源代码中找到各种有用的信息，如所有的 HTML 表格标题，或网页上的所有链接等。</strong></p>
+<p> **如果我们向它提供了关于 HTML 标签的所有信息，美化程序可以搜索并返回所有出现的 HTML 标签。</p>
+<p>在我们开始搜索 HTML 标签和从网页访问信息之前，让我们看看如何格式化收到的 HTTP 响应内容，使其更具可读性。</p>
+<hr></hr>
+<h2 id="美化组美化内容">美化组:美化内容</h2>
+<p>在<code>beautifulsoup</code>模块中可用的方法<code>prettify</code>可用于格式化使用<code>requests</code>模块接收的 HTTP 响应。</p>
+<p>下面是代码示例，它是对上一个教程的扩展:</p>
+<pre><code class="lang-py"><span class="hljs-comment">## import modules</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">from</span> fake_useragent <span class="hljs-keyword">import</span> UserAgent
+<span class="hljs-comment">## importing the beautifulsoup module</span>
+<span class="hljs-keyword">import</span> bs4
+
+<span class="hljs-comment">## send a request and receive the information from https://www.google.com</span>
+response = requests.get(<span class="hljs-string">"https://www.google.com"</span>)
+
+<span class="hljs-comment">## creating BeautifulSoup object</span>
+soup = bs4.BeautifulSoup(response.content, <span class="hljs-string">"html.parser"</span>)
+
+<span class="hljs-comment">## using 'prettify' method to print the content</span>
+print(soup.prettify())
+</code></pre>
+<p>在上面的代码中，我们执行了以下操作:</p>
+<ul>
+<li>导入模块:<strong>请求</strong>、<strong>假用户代理</strong>和 <strong>bs4</strong> 。</li>
+<li>从任何你喜欢的网址获取回复。</li>
+<li>使用<code>BeautifulSoup</code>类创建一个<strong>美化组</strong>对象。</li>
+<li>使用<code>prettify</code>方法打印响应，方法是使用美丽的输出对象。</li>
+</ul>
+<p>如果您在阅读了前面的教程后来到这里，您一定已经看到了使用<code>requests</code>模块做出的 GET 请求的响应是什么样子的。</p>
+<p>当我们使用<code>prettify</code>方法格式化该响应时，它看起来像是 <a href="resources/bs4-prettify-response.txt"><strong>这个</strong></a> (点击<em>这个</em>下载文件)。</p>
+<p>现在响应已经格式化了，让我们学习如何使用美丽的输出来访问 HTTP 响应中的各种 HTML 标签和相关信息(源代码)。</p>
+<hr></hr>
+<h2 id="beautifulsoap访问-html-标签">BeautifulSoap:访问 HTML 标签</h2>
+<p>使用“美化”模块，我们可以轻松找到并访问各种 HTML 标签的内容，如<strong>标题</strong>、<strong>标题</strong>、 <strong>div</strong> 、 <strong>p</strong> 、 <strong>h1</strong> 等。让我们看一个简单的例子，我们将打印网页的标题标签。</p>
+<pre><code class="lang-py"><span class="hljs-comment">## import modules</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">from</span> fake_useragent <span class="hljs-keyword">import</span> UserAgent
+<span class="hljs-comment">## importing the beautifulsoup module</span>
+<span class="hljs-keyword">import</span> bs4
+
+<span class="hljs-comment">## send a request and receive the information from https://www.google.com</span>
+response = requests.get(<span class="hljs-string">"https://www.google.com"</span>)
+
+<span class="hljs-comment">## creating BeautifulSoup object</span>
+soup = bs4.BeautifulSoup(response.content, <span class="hljs-string">"html.parser"</span>)
+
+<span class="hljs-comment">## getting 'title' tag from the google BeautifulSoup -&gt; 'soup'</span>
+title_tag = soup.title
+print(title_tag)
+</code></pre>
+<title>谷歌</title>
+
+<p>我们还可以只获得包含在开始和结束<strong>标题</strong>标签中的文本:</p>
+<pre><code class="lang-py"><span class="hljs-comment">## import modules</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">from</span> fake_useragent <span class="hljs-keyword">import</span> UserAgent
+<span class="hljs-comment">## importing the beautifulsoup module</span>
+<span class="hljs-keyword">import</span> bs4
+
+<span class="hljs-comment">## send a request and receive the information from https://www.google.com</span>
+response = requests.get(<span class="hljs-string">"https://www.google.com"</span>)
+
+<span class="hljs-comment">## creating BeautifulSoup object</span>
+soup = bs4.BeautifulSoup(response.content, <span class="hljs-string">"html.parser"</span>)
+
+<span class="hljs-comment">## getting 'title' tag from the google BeautifulSoup -&gt; 'soup'</span>
+title_text = soup.title.text
+print(title_text)
+</code></pre>
+<p>谷歌</p>
+<p>这是所有 HTML 标签的标准，比如获取<strong>头</strong>标签，我们可以这样使用<code>soup.head</code>，</p>
+<pre><code class="lang-py"><span class="hljs-comment">## import modules</span>
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">from</span> fake_useragent <span class="hljs-keyword">import</span> UserAgent
+<span class="hljs-comment">## importing the beautifulsoup module</span>
+<span class="hljs-keyword">import</span> bs4
+
+<span class="hljs-comment">## send a request and receive the information from https://www.google.com</span>
+response = requests.get(<span class="hljs-string">"https://www.google.com"</span>)
+
+<span class="hljs-comment">## creating BeautifulSoup object</span>
+soup = bs4.BeautifulSoup(response.content, <span class="hljs-string">"html.parser"</span>)
+
+<span class="hljs-comment">## getting 'head' tag from the google BeautifulSoup -&gt; 'soup'</span>
+print(soup.head)
+</code></pre>
+<p>这将从页面的源代码中返回完整的<strong>头</strong>标签。</p>
+<p> &lt; meta content="/images/branding/googleg/1x/googleg_standard_color_128dp.png" itemprop="image"/&gt; <title>谷歌</title> </p>
+<p>我们没有在输出中添加完整的代码，因为它非常庞大。但是可以看到<strong>标题</strong>标签在<strong>头</strong>标签里面，里面也有<strong>风格</strong>标签。</p>
+<p>我们还可以通过<strong>头</strong>标签获取<strong>标题</strong>标签内容:</p>
+<pre><code class="lang-py"><span class="hljs-comment">## getting 'title' tag from the google BeautifulSoup -&gt; 'soup'</span>
+print(soup.head.title.text)
+</code></pre>
+<p>谷歌</p>
+<p>这只是为了向您展示，当美丽组遵循<strong>树遍历</strong>技术来解析 HTML 代码时，我们也可以通过遵循标签的层次结构来访问它们。</p>
+<p>同样，让我们访问<strong>样式</strong>标签:</p>
+<pre><code class="lang-py"><span class="hljs-comment">## getting 'title' tag from the google BeautifulSoup -&gt; 'soup'</span>
+print(soup.head.style.text)
+</code></pre>
+<h1 id="gbar，-guser--font-size13px；填充-顶部1px！重要；--gbar-高度22px---guser-填充-底部7px！重要；文本对齐向右。gbh，。gbd-边框-顶部1px-实心-c9d-7-f1；字体大小1px。gbh-高度0；位置绝对；top24px；宽度100---media-all---gb1-高度22px-右边距-5em-垂直对齐topgbarfloatleftagb1，agb4text-decoration下划线！重要agb1，agb4color00c！重要。gbi-gb4colordd8e27！重要。gbf-gb4color900！重要">gbar，# guser { font-size:13px；填充-顶部:1px！重要；} # gbar {高度:22px } # guser {填充-底部:7px！重要；文本对齐:向右}。gbh，。gbd {边框-顶部:1px 实心# c9d 7 f1；字体大小:1px}。gbh {高度:0；位置:绝对；top:24px；宽度:100% } @ media all { . gb1 {高度:22px 右边距:. 5em 垂直对齐:top}#gbar{float:left}}a.gb1，a.gb4{text-decoration:下划线！重要}a.gb1，a.gb4{color:#00c！重要}。gbi .gb4{color:#dd8e27！重要}。gbf .gb4{color:#900！重要}</h1>
+<p>到目前为止，我们已经介绍了基本的 HTML 解析和访问标签。在下一个教程中，我们将看到更多的方法和一些方法来浏览任何网页的 HTML 源代码来收集有用的数据。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="159.html" class="navigation navigation-prev " aria-label="Previous page: requests模块简介">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="161.html" class="navigation navigation-next " aria-label="Next page: 进阶">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"beautifulsoup模块简介","level":"1.1.37","depth":2,"next":{"title":"进阶","level":"1.1.38","depth":2,"path":"161.md","ref":"161.md","articles":[]},"previous":{"title":"requests模块简介","level":"1.1.36","depth":2,"path":"159.md","ref":"159.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"160.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:16.781Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

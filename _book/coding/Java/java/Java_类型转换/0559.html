@@ -1,0 +1,759 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>如何将 Java 十六进制转换为十进制 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0560.html" />
+    
+    
+    <link rel="prev" href="0558.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 类型转换
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0532.html">
+            
+                <a href="0532.html">
+            
+                    
+                    类型转换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0533.html">
+            
+                <a href="0533.html">
+            
+                    
+                    如何将 Java int转换为String
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0534.html">
+            
+                <a href="0534.html">
+            
+                    
+                    如何将 Java 字符串转换为int
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0535.html">
+            
+                <a href="0535.html">
+            
+                    
+                    如何将 Java 字符串转换为long
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0536.html">
+            
+                <a href="0536.html">
+            
+                    
+                    如何将 Java long转换为String
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0537.html">
+            
+                <a href="0537.html">
+            
+                    
+                    如何将 Java 字符串转换为float
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0538.html">
+            
+                <a href="0538.html">
+            
+                    
+                    如何将 Java float转换为字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0539.html">
+            
+                <a href="0539.html">
+            
+                    
+                    如何将 Java 字符串转换为double
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0540.html">
+            
+                <a href="0540.html">
+            
+                    
+                    如何将 Java double转换为字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0541.html">
+            
+                <a href="0541.html">
+            
+                    
+                    如何将 Java 字符串转换为日期对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0542.html">
+            
+                <a href="0542.html">
+            
+                    
+                    如何将 Java 日期转换为字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0543.html">
+            
+                <a href="0543.html">
+            
+                    
+                    如何将 Java 字符串转换为字符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0544.html">
+            
+                <a href="0544.html">
+            
+                    
+                    如何将 Java 字符转换为字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0545.html">
+            
+                <a href="0545.html">
+            
+                    
+                    如何将 Java 字符串转换为对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0546.html">
+            
+                <a href="0546.html">
+            
+                    
+                    如何将 Java 对象转换为字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0547.html">
+            
+                <a href="0547.html">
+            
+                    
+                    如何将 Java int转换为long
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="0548.html">
+            
+                <a href="0548.html">
+            
+                    
+                    如何将 Java long转换为int
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="0549.html">
+            
+                <a href="0549.html">
+            
+                    
+                    如何将 Java int转换为double
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="0550.html">
+            
+                <a href="0550.html">
+            
+                    
+                    如何将 Java double转换为int
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="0551.html">
+            
+                <a href="0551.html">
+            
+                    
+                    如何将 Java 字符转换为int
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="0552.html">
+            
+                <a href="0552.html">
+            
+                    
+                    如何将 Java int转换为char
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="0553.html">
+            
+                <a href="0553.html">
+            
+                    
+                    如何将 Java 字符串转换为布尔值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="0554.html">
+            
+                <a href="0554.html">
+            
+                    
+                    如何将 Java 布尔值转换为字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="0555.html">
+            
+                <a href="0555.html">
+            
+                    
+                    如何将 Java 日期转换为时间戳
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="0556.html">
+            
+                <a href="0556.html">
+            
+                    
+                    如何将 Java 时间戳转换为日期
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="0557.html">
+            
+                <a href="0557.html">
+            
+                    
+                    如何将 Java 二进制转换为十进制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="0558.html">
+            
+                <a href="0558.html">
+            
+                    
+                    如何将 Java 十进制转换为二进制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.28" data-path="0559.html">
+            
+                <a href="0559.html">
+            
+                    
+                    如何将 Java 十六进制转换为十进制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="0560.html">
+            
+                <a href="0560.html">
+            
+                    
+                    如何将 Java 十进制转换为十六进制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="0561.html">
+            
+                <a href="0561.html">
+            
+                    
+                    如何将 Java 八进制转换成十进制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="0562.html">
+            
+                <a href="0562.html">
+            
+                    
+                    如何将 Java 十进制转换为八进制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >如何将 Java 十六进制转换为十进制</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="如何将-java-十六进制转换为十进制">如何将 Java 十六进制转换为十进制</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-type-conversion/how-to-convert-java-hexadecimal-to-decimal" target="_blank">https://www.studytonight.com/java-type-conversion/how-to-convert-java-hexadecimal-to-decimal</a></p>
+</blockquote>
+<p>在 Java 中，十六进制可以通过<a href="https://www.studytonight.com/java-wrapper-class/java-integer-parseint-string-int-method" target="_blank">integer . parsent()</a>方法或者自定义 Logic 转换成十进制。</p>
+<h2 id="1integerparseint方法">1.<code>Integer.parseInt()</code>方法</h2>
+<p><a href="https://www.studytonight.com/java-wrapper-class/java-integer-parseint-string-int-method" target="_blank">parseInt()</a> 方法是 <a href="https://www.studytonight.com/java/wrapper-class.php" target="_blank">Integer</a> 类的一部分，该类根据指定的基数将字符串转换为 Int。</p>
+<h2 id="例-1">例 1:</h2>
+<p>这里，十六进制字符串被转换成十进制值。当我们有字符串格式的数据时，这个方法很有用。意思是如果要用<code>parseInt()</code>方法，那么先把数据转换成字符串，然后得到十进制值。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span>
+</span>{    
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span>
+    </span>{    
+        String b1 = <span class="hljs-string">"78F"</span>;
+        String b2 = <span class="hljs-string">"-56578D"</span>;
+        String b3 = <span class="hljs-string">"996B"</span>;
+
+        <span class="hljs-keyword">int</span> d1 = Integer.parseInt(b1,<span class="hljs-number">16</span>);
+        <span class="hljs-keyword">int</span> d2 = Integer.parseInt(b2,<span class="hljs-number">16</span>);
+        <span class="hljs-keyword">int</span> d3 = Integer.parseInt(b3,<span class="hljs-number">16</span>);
+
+        System.out.println(<span class="hljs-string">"Decimal value is : "</span> +d1);
+        System.out.println(<span class="hljs-string">"Decimal value is : "</span> +d2);
+        System.out.println(<span class="hljs-string">"Decimal value is : "</span> +d3);
+    }    
+}
+</code></pre>
+<p>小数值为:1935
+小数值为:-5658509
+小数值为:39275</p>
+<h2 id="例-2">例 2:</h2>
+<p>如果您不想使用任何内置方法，请使用此自定义代码，使用自定义逻辑将十六进制值转换为小数。请看下面的例子。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span>
+</span>{    
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">decimalconvt</span><span class="hljs-params">(String hexadec)</span>
+    </span>{  
+        String seq = <span class="hljs-string">"0123456789ABCDEF"</span>;  
+        hexadec = hexadec.toUpperCase();  
+        <span class="hljs-keyword">int</span> val = <span class="hljs-number">0</span>;  
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; hexadec.length(); i++)  
+        {  
+            <span class="hljs-keyword">char</span> ch = hexadec.charAt(i);  
+            <span class="hljs-keyword">int</span> d = seq.indexOf(ch);  
+            val = <span class="hljs-number">16</span>*val + d;  
+        }  
+        <span class="hljs-keyword">return</span> val;  
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span>
+    </span>{    
+        System.out.println(<span class="hljs-string">"Decimal of 101D is: "</span> +decimalconvt(<span class="hljs-string">"101D"</span>));  
+        System.out.println(<span class="hljs-string">"Decimal of 156F is: "</span> +decimalconvt(<span class="hljs-string">"17856D"</span>)); 
+        System.out.println(<span class="hljs-string">"Decimal of -17BAED is: "</span> +decimalconvt(<span class="hljs-string">"-17BAED"</span>)); 
+    }    
+}
+</code></pre>
+<p>101D 的小数为:4125
+156F 的小数为:1541485
+的小数为-17BAED 的小数为:-15222035</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0558.html" class="navigation navigation-prev " aria-label="Previous page: 如何将 Java 十进制转换为二进制">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0560.html" class="navigation navigation-next " aria-label="Next page: 如何将 Java 十进制转换为十六进制">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"如何将 Java 十六进制转换为十进制","level":"1.1.28","depth":2,"next":{"title":"如何将 Java 十进制转换为十六进制","level":"1.1.29","depth":2,"path":"0560.md","ref":"0560.md","articles":[]},"previous":{"title":"如何将 Java 十进制转换为二进制","level":"1.1.27","depth":2,"path":"0558.md","ref":"0558.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0559.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:23:05.016Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,1463 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Python 中的文件处理 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="046.html" />
+    
+    
+    <link rel="prev" href="044.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Python
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="002.html">
+            
+                <a href="002.html">
+            
+                    
+                    基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="003.html">
+            
+                <a href="003.html">
+            
+                    
+                    了解 Python 并设置 Python 开发环境
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="004.html">
+            
+                <a href="004.html">
+            
+                    
+                    IDLE 默认 Python 集成开发环境简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="005.html">
+            
+                <a href="005.html">
+            
+                    
+                    Python 2 和 Python 3
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="006.html">
+            
+                <a href="006.html">
+            
+                    
+                    Python 中的基本语法和你好世界程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="007.html">
+            
+                <a href="007.html">
+            
+                    
+                    NumPy 和内置数学函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="008.html">
+            
+                <a href="008.html">
+            
+                    
+                    Python 中的运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="009.html">
+            
+                <a href="009.html">
+            
+                    
+                    Python 中的变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="010.html">
+            
+                <a href="010.html">
+            
+                    
+                    在 Python 中使用模块和相关函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="011.html">
+            
+                <a href="011.html">
+            
+                    
+                    Python 中的输入和输出
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="012.html">
+            
+                <a href="012.html">
+            
+                    
+                    Python 中的数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="013.html">
+            
+                <a href="013.html">
+            
+                    
+                    Python 中的字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="014.html">
+            
+                <a href="014.html">
+            
+                    
+                    Python 中内置的字符串函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="015.html">
+            
+                <a href="015.html">
+            
+                    
+                    复杂数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="016.html">
+            
+                <a href="016.html">
+            
+                    
+                    Python 中的列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="017.html">
+            
+                <a href="017.html">
+            
+                    
+                    利用 python 中的列表元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="018.html">
+            
+                <a href="018.html">
+            
+                    
+                    从列表中删除元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="019.html">
+            
+                <a href="019.html">
+            
+                    
+                    Python 中的字典
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="020.html">
+            
+                <a href="020.html">
+            
+                    
+                    Python 中的字典函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="021.html">
+            
+                <a href="021.html">
+            
+                    
+                    Python 中的元组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="022.html">
+            
+                <a href="022.html">
+            
+                    
+                    Python 关系和逻辑运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="023.html">
+            
+                <a href="023.html">
+            
+                    
+                    Python If、Else和Elif条件语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="024.html">
+            
+                <a href="024.html">
+            
+                    
+                    Python 中的循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="025.html">
+            
+                <a href="025.html">
+            
+                    
+                    OOPS 概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="026.html">
+            
+                <a href="026.html">
+            
+                    
+                    使用 Python 编写用户定义函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="027.html">
+            
+                <a href="027.html">
+            
+                    
+                    面向对象编程基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="028.html">
+            
+                <a href="028.html">
+            
+                    
+                    Python 中的面向对象概念——更多示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="029.html">
+            
+                <a href="029.html">
+            
+                    
+                    Python 类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="030.html">
+            
+                <a href="030.html">
+            
+                    
+                    创建类对象的 Python 构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="031.html">
+            
+                <a href="031.html">
+            
+                    
+                    Python 析构器——销毁对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="032.html">
+            
+                <a href="032.html">
+            
+                    
+                    Python 中的继承
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="033.html">
+            
+                <a href="033.html">
+            
+                    
+                    Python 访问修饰符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="034.html">
+            
+                <a href="034.html">
+            
+                    
+                    Python 中的继承类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="035.html">
+            
+                <a href="035.html">
+            
+                    
+                    Python 中的方法覆盖
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="036.html">
+            
+                <a href="036.html">
+            
+                    
+                    Python 中的多态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="037.html">
+            
+                <a href="037.html">
+            
+                    
+                    Python 中的静态变量和方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="038.html">
+            
+                <a href="038.html">
+            
+                    
+                    Python 中的运算符重载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="039.html">
+            
+                <a href="039.html">
+            
+                    
+                    错误处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="040.html">
+            
+                <a href="040.html">
+            
+                    
+                    Python 错误和内置异常
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="041.html">
+            
+                <a href="041.html">
+            
+                    
+                    Python 异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="042.html">
+            
+                <a href="042.html">
+            
+                    
+                    Python finally
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="043.html">
+            
+                <a href="043.html">
+            
+                    
+                    Python 异常处理：raise关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="044.html">
+            
+                <a href="044.html">
+            
+                    
+                    文件处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.44" data-path="045.html">
+            
+                <a href="045.html">
+            
+                    
+                    Python 中的文件处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="046.html">
+            
+                <a href="046.html">
+            
+                    
+                    Python 文件处理操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.46" data-path="047.html">
+            
+                <a href="047.html">
+            
+                    
+                    多线程操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.47" data-path="048.html">
+            
+                <a href="048.html">
+            
+                    
+                    Python 多线程介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.48" data-path="049.html">
+            
+                <a href="049.html">
+            
+                    
+                    Python 中的threading模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.49" data-path="050.html">
+            
+                <a href="050.html">
+            
+                    
+                    Thread类及其对象——Python 多线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.50" data-path="051.html">
+            
+                <a href="051.html">
+            
+                    
+                    Python 中的锁对象——线程同步
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.51" data-path="052.html">
+            
+                <a href="052.html">
+            
+                    
+                    Python 中的锁对象——可重入锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.52" data-path="053.html">
+            
+                <a href="053.html">
+            
+                    
+                    使用事件对象的线程同步
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.53" data-path="054.html">
+            
+                <a href="054.html">
+            
+                    
+                    计时器对象——Python 多线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.54" data-path="055.html">
+            
+                <a href="055.html">
+            
+                    
+                    Python 中的条件对象——线程同步
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.55" data-path="056.html">
+            
+                <a href="056.html">
+            
+                    
+                    屏障对象——Python 多线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.56" data-path="057.html">
+            
+                <a href="057.html">
+            
+                    
+                    Python 日志记录
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.57" data-path="058.html">
+            
+                <a href="058.html">
+            
+                    
+                    在 Python logging模块中打印日志
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.58" data-path="059.html">
+            
+                <a href="059.html">
+            
+                    
+                    Python 日志记录基本配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.59" data-path="060.html">
+            
+                <a href="060.html">
+            
+                    
+                    使用 Python 在文件中打印日志
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.60" data-path="061.html">
+            
+                <a href="061.html">
+            
+                    
+                    Python 日志变量数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.61" data-path="062.html">
+            
+                <a href="062.html">
+            
+                    
+                    Python 日志类和函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.62" data-path="063.html">
+            
+                <a href="063.html">
+            
+                    
+                    Python 和 MySQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.63" data-path="064.html">
+            
+                <a href="064.html">
+            
+                    
+                    Python 支持的 MySQL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.64" data-path="065.html">
+            
+                <a href="065.html">
+            
+                    
+                    Python MySQL——创建数据库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.65" data-path="066.html">
+            
+                <a href="066.html">
+            
+                    
+                    Python MySQL——创建和列出表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.66" data-path="067.html">
+            
+                <a href="067.html">
+            
+                    
+                    Python MySQL——在表中插入数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.67" data-path="068.html">
+            
+                <a href="068.html">
+            
+                    
+                    Python MySQL——从表中选择数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.68" data-path="069.html">
+            
+                <a href="069.html">
+            
+                    
+                    Python MySQL——更新表数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.69" data-path="070.html">
+            
+                <a href="070.html">
+            
+                    
+                    Python MySQL——删除表数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.70" data-path="071.html">
+            
+                <a href="071.html">
+            
+                    
+                    Python MySQL——删除表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.71" data-path="072.html">
+            
+                <a href="072.html">
+            
+                    
+                    Python MySQL——WHERE子句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.72" data-path="073.html">
+            
+                <a href="073.html">
+            
+                    
+                    Python MySQL——ORDER BY子句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.73" data-path="074.html">
+            
+                <a href="074.html">
+            
+                    
+                    Python MySQL——LIMIT子句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.74" data-path="075.html">
+            
+                <a href="075.html">
+            
+                    
+                    Python MySQL——连接表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.75" data-path="076.html">
+            
+                <a href="076.html">
+            
+                    
+                    杂项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.76" data-path="077.html">
+            
+                <a href="077.html">
+            
+                    
+                    Python __name__变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.77" data-path="078.html">
+            
+                <a href="078.html">
+            
+                    
+                    Python 中的可迭代对象和迭代器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.78" data-path="079.html">
+            
+                <a href="079.html">
+            
+                    
+                    Python 中的yield关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.79" data-path="080.html">
+            
+                <a href="080.html">
+            
+                    
+                    Python 中的生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.80" data-path="081.html">
+            
+                <a href="081.html">
+            
+                    
+                    Python 闭包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.81" data-path="082.html">
+            
+                <a href="082.html">
+            
+                    
+                    Python 装饰器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.82" data-path="083.html">
+            
+                <a href="083.html">
+            
+                    
+                    Python 中的@property装饰器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.83" data-path="084.html">
+            
+                <a href="084.html">
+            
+                    
+                    Python 中的assert语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.84" data-path="085.html">
+            
+                <a href="085.html">
+            
+                    
+                    Python 中的垃圾收集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.85" data-path="087.html">
+            
+                <a href="087.html">
+            
+                    
+                    Python 浅和深复制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Python 中的文件处理</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="python-中的文件处理">Python 中的文件处理</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/python/file-handling" target="_blank">https://www.studytonight.com/python/file-handling</a></p>
+</blockquote>
+<p>并非在所有情况下，数据都应该直接取自用户。当您必须从存储的原始文件中获取数据时，可能会出现这种情况，在这种情况下，您必须将这些文件与程序连接起来，以便程序可以读取、写入或修改数据。</p>
+<p>在本节中，我们将了解如何执行这些任务。</p>
+<hr></hr>
+<h2 id="文件访问模式">文件访问模式</h2>
+<p>由于将文件与 Python 一起使用有各种各样的目的(即读、写、追加)，所以每次都指定 Python 应该对文件进行哪些操作是很重要的。因此，在程序中打开文件时，我们必须指定各种访问模式。</p>
+<p>Python 能够管理两种类型的文件- <strong>文本</strong>(或普通字符)和<strong>二进制</strong>(仅包含 1 和 0 的文本)。除了访问模式之外，还需要指定要打开的文件类型。</p>
+<hr></hr>
+<h2 id="python--打开文件">Python -打开文件</h2>
+<p>为了将我们的程序与所需的文件连接起来，我们需要一个可以在其中读取或写入数据的流。为此，已经有一些内置的类/函数可以用来解决这个问题。我们需要做的第一件事是创建一个文件对象，即文件类的实例，我们可以使用<code>file()</code>或<code>open()</code>函数来完成。为了打开一个文件-</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span>myFile = open([path of file], [access mode], [buffer size])
+</code></pre>
+<p>这里我的文件将是文件的对象，<code>open()</code>方法将打开在【文件路径】中指定的文件。其他两个参数，[访问模式]将提供访问模式，[缓冲区大小]将要求从文件中检索多少数据块。虽然，最后两个参数[访问模式]和[缓冲区大小]完全是可选的。默认情况下，如果没有指定访问模式，则认为是读取模式。[文件路径]可以是文件的完整路径，或者如果它与程序存在于同一文件中，则仅提供名称就足够了。更清楚的是-</p>
+<p><img src="img/efbb77dd5bbcfad7d6f6db56819f343c.png" alt="Opening a file python"></img></p>
+<p>在上述情况下，写作</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span>myFile = open(<span class="hljs-string">"file.txt"</span>)
+</code></pre>
+<p>就足够了。然而，在像这样的情况下-</p>
+<p><img src="img/de1fafed40d249f8d8b612125ad04912.png" alt="Opening a file in python"></img></p>
+<p>请注意，这次您的 <strong>file.txt</strong> 与上述情况不在同一个文件夹中，因此这里您必须指定整个位置。</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span>myFile = open(<span class="hljs-string">"C:/c_code/file.txt"</span>)
+</code></pre>
+<p>一旦文件被打开，就有一个指针指向文件中的某个位置。该指针用于从该位置读取/写入。这个指针非常像一个文本光标，它可以自由移动(使用箭头键)，或者用于从文本中写入或删除文本，除了指针只能通过某些功能移动/读取/写入。</p>
+<p>关于现在的访问模式，以下是将在参数中指定的可用访问模式-</p>
+<ol>
+<li><p><strong>读取模式-</strong>T0 为文本文件，<code>"rb"</code>为二进制文件。文件指针指向文件的开头。</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span>myFile = open(<span class="hljs-string">"file.txt"</span>, <span class="hljs-string">"r"</span>)
+</code></pre>
+</li>
+<li><p><strong>写入模式-</strong> <code>"w"</code>为文本文件，<code>"wb"</code>为二进制文件。文件指针指向文件的开头。</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span>myFile = open(<span class="hljs-string">"file.txt"</span>, <span class="hljs-string">"w"</span>)
+</code></pre>
+</li>
+<li><p><strong>追加模式-</strong> <code>"a"</code>为文本文件，<code>"ab"</code>为二进制文件。文件指针指向文件的末尾。</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span>myFile = open(<span class="hljs-string">"file.txt"</span>, <span class="hljs-string">"a"</span>)
+</code></pre>
+</li>
+<li><p><strong>读/写模式-</strong> <code>"r+"</code>或<code>"w+"</code>提供对同一文件对象进行读和写操作的选项。<code>"rb+"</code>或<code>"wb+"</code>为二进制文件。文件指针指向文件的开头。</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span>myFile = open(<span class="hljs-string">"file.txt"</span>, <span class="hljs-string">"r+"</span>)
+</code></pre>
+</li>
+<li><p><strong>追加/读取-</strong> <code>"a+"</code>启用读取/追加模式，<code>"ab+"</code>为二进制文件的追加/读取模式。文件指针指向文件的末尾。</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span>myFile = open(<span class="hljs-string">"file.txt"</span>, <span class="hljs-string">"a+"</span>)
+</code></pre>
+</li>
+</ol>
+<p>如您所见，以这种方式打开文件非常类似于创建一个文件对象，并对其执行读/写操作。以这种方式打开文件会创建一个数据缓冲区流，在使用文件后，总是建议关闭这个流。这可以使用关闭功能来完成。例如，关闭我的文件流</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span>myFile.close()
+</code></pre>
+<p>使用文件的另一种方式是使用<code>with</code>关键字。查看语法会清楚这是如何工作的-</p>
+<pre><code class="lang-py"><span class="hljs-keyword">with</span> open(<span class="hljs-string">"file.txt"</span>, <span class="hljs-string">"r+"</span>):
+        // operations to perform on <span class="hljs-string">"file.txt"</span>
+        // there can be many
+        // syntax <span class="hljs-keyword">is</span> pretty much like that of methods
+</code></pre>
+<p>通过这种方式，您实际上是在为要使用的文件创建一个范围。一旦程序离开这个范围，文件就会自动关闭。</p>
+<p>下一节将详细介绍如何将数据读写到文件中。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="044.html" class="navigation navigation-prev " aria-label="Previous page: 文件处理">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="046.html" class="navigation navigation-next " aria-label="Next page: Python 文件处理操作">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Python 中的文件处理","level":"1.1.44","depth":2,"next":{"title":"Python 文件处理操作","level":"1.1.45","depth":2,"path":"046.md","ref":"046.md","articles":[]},"previous":{"title":"文件处理","level":"1.1.43","depth":2,"path":"044.md","ref":"044.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"045.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:56.573Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

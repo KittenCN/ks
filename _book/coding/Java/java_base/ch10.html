@@ -1,0 +1,699 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ch10. Java面向对象（中） · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch11.html" />
+    
+    
+    <link rel="prev" href="ch09.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    ch01. Java概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    ch02. Java关键字和保留字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    ch03. 运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    ch04. 程序流程控制（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    ch05. 程序流程控制（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    ch06. 数学函数、字符和字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    ch07. 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="ch08.html">
+            
+                <a href="ch08.html">
+            
+                    
+                    ch08. 数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="ch09.html">
+            
+                <a href="ch09.html">
+            
+                    
+                    ch09. Java面向对象（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.10" data-path="ch10.html">
+            
+                <a href="ch10.html">
+            
+                    
+                    ch10. Java面向对象（中）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ch11.html">
+            
+                <a href="ch11.html">
+            
+                    
+                    ch11. Java面向对象（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="ch12.html">
+            
+                <a href="ch12.html">
+            
+                    
+                    ch12. Java异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ch00.html">
+            
+                <a href="ch00.html">
+            
+                    
+                    ch00. 易错点
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ch10. Java面向对象（中）</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java面向对象（中）">Java面向对象（中）</h1>
+<h2 id="1-oop特征二：继承">1. OOP特征二：继承</h2>
+<h3 id="11-继承的好处">1.1 继承的好处</h3>
+<ol>
+<li>减少代码冗余性，提高代码复用性</li>
+<li>便于功能扩展</li>
+<li>为之后多态性的使用，提供了前提</li>
+</ol>
+<h3 id="12-继承的格式">1.2 继承的格式</h3>
+<pre><code class="lang-Java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">B</span>() </span>{}
+</code></pre>
+<ul>
+<li>A: 字类、派生类、subclass、superclass</li>
+<li><p>B: 父类、超类、基类</p>
+</li>
+<li><p>体现: 一旦子类A继承父类B以后，子类A中就获取了父类B中所有的声明的结构: 属性、方法<br></br> 特别的，父类中声明为private的属性或方法，子类继承父类以后，仍然认为获取了父类中私有的结构。只有因为封装性的影响，使得子类不能直接调用父类的结构而已。</p>
+</li>
+<li>子类在继承基础上可以声明自己的属性和方法，实现功能扩展。</li>
+</ul>
+<h3 id="14-关于继承性的规定">1.4 关于继承性的规定</h3>
+<ol>
+<li>一个类可以被多个子类继承</li>
+<li>一个字类只能有一个父类：单继承</li>
+<li>子父类是相对的概念，可以多重继承 C-&gt;B-&gt;A</li>
+<li>子类直接继承的称为直接父类，间接继承的为间接父类</li>
+<li><strong>子类继承父类，就获取了父类以及所有间接父类的属性和方法</strong></li>
+</ol>
+<h2 id="2-object-类">2. Object 类</h2>
+<ol>
+<li>如果我们没有显式的声明-一个类的父类的话，则此类继承于 <code>Java.lang.Object</code> 类</li>
+<li>所有类（除了<code>Java.lang.Object</code>）都直接或间接继承于 Object 类</li>
+</ol>
+<h2 id="3-方法的重写">3. 方法的重写</h2>
+<p>定义: Oerride/Overwrite 在子类中可以根据需要对从父类中继承来的方法进行改造，也称为方法的 <strong>重置、覆盖</strong>。在程序执行时，子类的方法将覆盖父类的方法。</p>
+<p>重写的规定：</p>
+<ol>
+<li>子类重写的方法的方法名和形参列表与父类被重写的方法的方法名和形参列表相同</li>
+<li>子类重写的方法的权限修饰符 <strong>不小于</strong> 父类被重写的方法的权限修饰符</li>
+<li>子类不能重写父类中声明为 <code>private</code> 的方法。</li>
+<li>返回值类型<ul>
+<li>父类 <code>void</code>：子类 <code>void</code></li>
+<li>父类 <code>A</code> 类型：子类 <code>A</code> 类或A的子类</li>
+<li>父类：基本数据类型：子类是相同类型</li>
+</ul>
+</li>
+<li>子类和父类中的同名同参数的方法要么都声明为非static的(考虑重写)，要么都声明为static的(不是重写)。</li>
+</ol>
+<h2 id="4-super">4. super</h2>
+<h3 id="41-super-关键字的作用：">4.1 <code>super</code> 关键字的作用：</h3>
+<ol>
+<li>super 理解为：父类的</li>
+<li>super 可以用来调用：属性、方法、构造器</li>
+</ol>
+<h3 id="42-super-的使用">4.2 <code>super</code> 的使用</h3>
+<ol>
+<li>我们可以在子类的方法或构造器中。通过使用 <code>super.属性</code> 或 <code>super.方法</code> 的方式，显式的调用父类中声明的属性或方法。</li>
+<li>特殊的，当子类和父类中出现了同名的属性，要调用父类中声明的属性，必须显示调用 <code>super.属性</code>。</li>
+<li>父类中的方法被重写，要调用父类的此方法，则需要显示调用：<code>super.方法()</code></li>
+</ol>
+<h3 id="43-super-调用构造器">4.3 super 调用构造器</h3>
+<ol>
+<li>我们可以在子类的构造器中显式的使用 <code>super(新参列表)</code> 的方式，调用父类中声明的构造器。</li>
+<li><code>super(新参列表)</code> 必须放在首行！</li>
+<li><code>this(形参列表)</code> 和 <code>this(形参列表)</code> 只能二选一。</li>
+<li>构造器没有显式使用 <code>this()</code> 和 <code>super()</code>，则默认使用的是无参构造器。</li>
+</ol>
+<h3 id="44-子类实例化的全过程">4.4 子类实例化的全过程</h3>
+<ol>
+<li>从结果上来看: (继承性)<br></br> 子类继承父类以后，就获取了父类中声明的属性或方法。<br></br> 创建子类的对象，在堆空间中，就会加载所有父类中声明的属性。</li>
+<li>从过程上来看:
+ 当我们通过子类的构造器创建子类对象时，我们一-定会直接或间接的调用其父类的构造器，进而调用父类的父类的构造器，直到调用了java. lang. Object类中空参的构造器为止。正因为加载过所有的父类的结构，所以才可以看到内存中有父类中的结构，子类对象才可以考虑进行调用。</li>
+</ol>
+<h2 id="5-oop特征三：多态">5. OOP特征三：多态</h2>
+<h3 id="51-多态性的理解">5.1 多态性的理解</h3>
+<ol>
+<li>理解多态性：可以理解为：一个事物的多种形态。</li>
+<li>何为多态性<br></br> 对象的多态性是指 <strong>父类的引用指向子类的对象</strong>（或子类的对象赋给父类的引用）</li>
+<li>多态的使用：<strong>虚拟方法调用</strong>
+ 有了对象的多态性以后，我们在编译期，只能调用父类中声明的方法，但在运行期，我们实际执行的是子类重写父类的方法。（虚方法调用）<br></br> <strong>总结：编译，看左边；运行，看右边。</strong></li>
+<li>多态性的使用前提：①类的继承关系 ②方法的重写</li>
+<li>对象的多态性，<strong>只适用于方法，不适用于属性</strong>（编译和运行都看左边）</li>
+</ol>
+<h3 id="52-虚方法与动态绑定">5.2 虚方法与动态绑定</h3>
+<ol>
+<li><strong>虚拟方法调用</strong><br></br> 子类中定义了 <strong>与父类同名同参数的方法</strong>，在多态情况下，将此时 <strong>父类的方法称为虚拟方法</strong>，父类根据赋给它的不同子类对象，动态调用属于子类的该方法。这样的方法调用在编译期是无法确定的。</li>
+<li><strong>动态绑定</strong>
+ 编译时 e 为 Person 类型，而方法的调用是在运行时确定的，所以调用的是 Student 类的 getInfo() 方法。</li>
+</ol>
+<h3 id="53-向下转型">5.3 向下转型</h3>
+<font size="4" color="red">问题1</font>
+
+<p>有了对象的多态性以后，内存中实际上是加载了子类特有的属性和方法的，但是由于 <strong>变量声明为父类类型</strong>，编译时，只能调用父类中声明的属性和方法。<strong>子类特有的属性和方法不能调用</strong>。</p>
+<font size="4" color="blue">解决方法</font>
+
+<ul>
+<li>如何才能调用子类特有的属性和方法?</li>
+<li><strong>向下转型</strong>：使用 <strong>强制类型转换符</strong>。</li>
+</ul>
+<pre><code class="lang-Java">Person p1 = <span class="hljs-keyword">new</span> Man();
+Syatem.out.println(p1.value); <span class="hljs-comment">//value为子类Man的特有属性，编译错误</span>
+<span class="hljs-comment">// 解决：强制类型转换</span>
+System.out.println(((Circle)p1).value);
+</code></pre>
+<font size="4" color="red">问题2</font>
+
+<p>使用强转时，可能出现ClassCastException的异常。<br></br>（编译时提供，运行时不通过）</p>
+<pre><code class="lang-Java">Person p2 = <span class="hljs-keyword">new</span> Man();
+Woman s1 = (Woman) p2;
+</code></pre>
+<font size="4" color="blue">解决方法</font>
+
+<p><code>instanceof</code> 关键字的使用：判断a是否为类A的实例，若是则返回 <code>true</code>，否则返回 <code>false</code>。</p>
+<pre><code class="lang-Java">a <span class="hljs-keyword">instanceof</span> A
+</code></pre>
+<font size="4" color="red">拓展</font>
+
+<p>若 <code>a instanceof A</code> 返回 <code>true</code>，类B是类A的父类，则 <code>a instanceof B</code> 也返回 <code>true</code>。<br></br><code>x instanceof Object</code> 恒为 <code>true</code>。</p>
+<h2 id="6-equals">6. equals</h2>
+<h3 id="61-回顾的使用">6.1 回顾==的使用</h3>
+<ul>
+<li>可以使用在基本数据类型变量和引用数据类型变量中</li>
+<li>如果比较的是基本数据类型变量：比较两个变量保存的 <strong>数据</strong> 是否相等。（不一定类型要相同）
+  如果比较的是引用数据类型变量：比较两个对象的 <strong>地址值</strong> 是否相同。即两个引用是否指向同一个对象实体</li>
+</ul>
+<h3 id="62-equals">6.2 equals</h3>
+<ul>
+<li>Object类中 <code>equals()</code> 的定义：</li>
+</ul>
+<pre><code class="lang-Java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Object anObject)</span> </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span> == anObject) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    }
+}
+</code></pre>
+<p>说明：在 <code>Object</code> 类中定义的 <code>equals()</code> 方法与 <code>==</code> 的作用是相同的：比较两个对象的地址值是否相等，即两个引用是否是否指向相同。</p>
+<ol>
+<li>像 String、Date、File、包装类等都 <strong>重写</strong> 了 Object 类中的 <code>equals()</code> 方法。重写后，比较的不是两个引用的地址值是否相等，而是比较两个对象的 <strong>“实体值”</strong> 是否相同。</li>
+</ol>
+<h2 id="7-包装类-wrapper">7. 包装类 Wrapper</h2>
+<h3 id="71-包装类定义">7.1 包装类定义</h3>
+<ul>
+<li>针对八种 <strong>基本数据类型定义相应的引用类型一包装类（封装类）</strong></li>
+<li>有了类的特点，就可以调用类中的方法，使得基本数据类型的变量具有类的特征</li>
+<li>数值型的包装类的父类都是 <code>Number</code> </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>基本数据类型</th>
+<th>包装类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>byte</td>
+<td>Byte</td>
+</tr>
+<tr>
+<td>short</td>
+<td>Short</td>
+</tr>
+<tr>
+<td><font color="red">int</font></td>
+<td><font color="red">Integer</font></td>
+</tr>
+<tr>
+<td>long</td>
+<td>Long</td>
+</tr>
+<tr>
+<td>float</td>
+<td>Float</td>
+</tr>
+<tr>
+<td>double</td>
+<td>Double</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td><font color="red">char</font></td>
+<td><font color="red">Character</font></td>
+</tr>
+</tbody>
+</table>
+<h3 id="72-包装类使用">7.2 包装类使用</h3>
+<p>使用：关键是 <strong>基本数据类型、包装类、String</strong> 三者之间的 <strong>相互转换</strong></p>
+<ul>
+<li>基本数据类型 --&gt; 包装类<br></br>  使用构造器：<code>new Xxx</code></li>
+</ul>
+<pre><code class="lang-Java">Integer int2 = <span class="hljs-keyword">new</span> Integer(<span class="hljs-string">"123"</span>);
+Float f1 = <span class="hljs-keyword">new</span> Float(<span class="hljs-string">"1234.567"</span>);
+Boolean b1 = <span class="hljs-keyword">new</span> Boolean(<span class="hljs-string">"TrUe"</span>);
+</code></pre>
+<ul>
+<li>包装类 --&gt; 基本数据类型<br></br>  使用 <code>xxxValue()</code></li>
+</ul>
+<pre><code class="lang-Java">Integer in1 = <span class="hljs-keyword">new</span> Integer(<span class="hljs-string">"12345"</span>);
+<span class="hljs-keyword">int</span> i1 = in1.intValue()+<span class="hljs-number">12345</span>; <span class="hljs-comment">// 24690</span>
+</code></pre>
+<ul>
+<li>基本数据类型、包装类 --&gt; String类型<br></br>  使用 <code>String</code> 重载的 <code>ValueOf()</code> 方法</li>
+</ul>
+<pre><code class="lang-Java"><span class="hljs-keyword">float</span> f1 = <span class="hljs-number">12345.67f</span>;
+String s1 = String.valueOf(f1);
+System.out.println(s1 <span class="hljs-keyword">instanceof</span> String); <span class="hljs-comment">//true</span>
+</code></pre>
+<ul>
+<li>String类型 --&gt; 基本数据类型、包装类<br></br>  调用包装类的 <code>parseXxx()</code> 方法<pre><code class="lang-Java">String s1 = <span class="hljs-string">"1234567"</span>;
+<span class="hljs-keyword">int</span> i1 = Integer.parseInt(s1);
+System.out.println(i1 +<span class="hljs-number">1</span>); <span class="hljs-comment">//1234568</span>
+String s2 = <span class="hljs-string">"truE"</span>;
+System.out.println(Boolean.parseBoolean(s2));<span class="hljs-comment">// true</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="73-自动装箱和自动拆箱">7.3 自动装箱和自动拆箱</h3>
+<ul>
+<li>自动装箱：基本数据类型 --&gt; 包装类</li>
+</ul>
+<pre><code class="lang-Java"><span class="hljs-keyword">int</span> num1 = <span class="hljs-number">12345</span>;
+Integer int1 = num1;
+</code></pre>
+<ul>
+<li>自动拆箱：包装类 --&gt; 基本数据类型</li>
+</ul>
+<pre><code class="lang-Java">Integer int1 = <span class="hljs-keyword">new</span> Integer(<span class="hljs-string">"12345"</span>);
+<span class="hljs-keyword">int</span> num1 = int1;
+</code></pre>
+<blockquote>
+<p>P297-P342</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch09.html" class="navigation navigation-prev " aria-label="Previous page: ch09. Java面向对象（上）">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch11.html" class="navigation navigation-next " aria-label="Next page: ch11. Java面向对象（下）">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ch10. Java面向对象（中）","level":"1.1.10","depth":2,"next":{"title":"ch11. Java面向对象（下）","level":"1.1.11","depth":2,"path":"ch11.md","ref":"ch11.md","articles":[]},"previous":{"title":"ch09. Java面向对象（上）","level":"1.1.9","depth":2,"path":"ch09.md","ref":"ch09.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch10.md","mtime":"2025-04-20T02:13:13.210Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:28.596Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

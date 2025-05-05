@@ -1,0 +1,568 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>哈希表数据结构 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="389.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="378.html">
+            
+                <a href="378.html">
+            
+                    
+                    高级树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="379.html">
+            
+                <a href="379.html">
+            
+                    
+                    多维树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="380.html">
+            
+                <a href="380.html">
+            
+                    
+                    树型数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="381.html">
+            
+                <a href="381.html">
+            
+                    
+                    堆数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="382.html">
+            
+                <a href="382.html">
+            
+                    
+                    实现堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="383.html">
+            
+                <a href="383.html">
+            
+                    
+                    TRIE 数据结构示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="384.html">
+            
+                <a href="384.html">
+            
+                    
+                    B 树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="385.html">
+            
+                <a href="385.html">
+            
+                    
+                    B- 树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="386.html">
+            
+                <a href="386.html">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="387.html">
+            
+                <a href="387.html">
+            
+                    
+                    图介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="388.html">
+            
+                <a href="388.html">
+            
+                    
+                    图表示——邻接矩阵和列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="389.html">
+            
+                <a href="389.html">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.13" data-path="390.html">
+            
+                <a href="390.html">
+            
+                    
+                    哈希表数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >哈希表数据结构</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="哈希表数据结构">哈希表数据结构</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/advanced-data-structures/hash-table-data-structure" target="_blank">https://www.studytonight.com/advanced-data-structures/hash-table-data-structure</a></p>
+</blockquote>
+<h3 id="哈希表是一种数据结构，用于存储键值对中的数据。">哈希表是一种数据结构，用于存储键值对中的数据。</h3>
+<ul>
+<li><p>哈希表中的每个键都映射到哈希表中的一个值。</p>
+</li>
+<li><p>哈希表中的键用于索引值，因为我们获取这个键并将其传递给哈希函数，哈希函数又对其执行一些算术运算。操作后得到的结果值是哈希表的索引，我们在该表中存储键-值对。</p>
+</li>
+<li><p>在内部，哈希表包含桶，特定键使用哪个桶的位置由键的哈希函数决定。</p>
+</li>
+</ul>
+<p>考虑下面的视觉表示:</p>
+<p><img src="img/0a2299ab79db1878b82f1de37ad68f39.png" alt="Hash Table data structure"></img></p>
+<h2 id="散列表的组成部分">散列表的组成部分</h2>
+<p>哈希表总共包含两个部分，它们是:</p>
+<h3 id="哈希函数">哈希函数:</h3>
+<ul>
+<li><p>散列函数用于确定键值对的索引。</p>
+</li>
+<li><p>总是建议我们应该选择一个好的哈希函数来创建一个好的哈希表。</p>
+</li>
+<li><p>除了一个好的散列函数之外，它应该是一个单向函数，即我们应该能够从密钥中获得散列值，而不是相反。</p>
+</li>
+<li><p>此外，它应该避免为不同的密钥生成相同的哈希。</p>
+</li>
+</ul>
+<h3 id="数组">数组:</h3>
+<ul>
+<li><p>数组(桶)用于保存键值对。</p>
+</li>
+<li><p>数组的大小应该根据我们将拥有的键值对的数量来设置。</p>
+</li>
+</ul>
+<h2 id="直接定址">直接定址</h2>
+<p>这是一种我们利用直接地址表来映射值和它们的键的技术。它使用关键字作为存储桶的索引，然后将值存储在这些存储桶位置。虽然直接寻址确实有助于快速搜索、快速插入和快速删除操作，但这是有代价的。</p>
+<p>考虑下面的图示:</p>
+<p><img src="img/edd19ffe7192bfa5df5bc222eb798ac1.png" alt="Direct Address Table picture"></img></p>
+<h3 id="直接地址表的优点">直接地址表的优点:</h3>
+<ul>
+<li><p><strong>在<code>O(1)</code>时间</strong>插入 T4:在直接地址表中插入元素与在数组中插入元素相同，因此我们可以在 <strong><code>O(1)</code>时间</strong>插入元素，因为我们已经知道了索引(通过键)。</p>
+</li>
+<li><p><strong>删除于<code>O(1)</code>时间:</strong>从直接地址表中删除一个元素与从数组中删除相同，因此<strong>时间为<code>O(1)</code></strong>。</p>
+</li>
+<li><p><strong>在<code>O(1)</code>时间内搜索:</strong>搜索一个元素需要线性时间 <strong>( <code>O(1)</code> )</strong> 因为如果我们已经知道一个元素的索引，我们可以很容易地在线性时间内访问该元素。</p>
+</li>
+</ul>
+<h3 id="直接地址表的缺点">直接地址表的缺点:</h3>
+<ul>
+<li><p>如果键值<strong>非常大</strong>，不建议使用直接地址表。</p>
+</li>
+<li><p>它不能处理两个键相等并且包含不同数据的情况。</p>
+</li>
+</ul>
+<h2 id="散列表">散列表</h2>
+<p>直接寻址有严重的缺点，使得它不适合当前世界场景的实际使用，这就是为什么我们使用哈希表。与直接地址表不同，在直接地址表中，我们将键作为地址表的索引，我们以不同的方式使用键。我们通过一个散列函数来处理这些密钥，我们从中得到的结果基本上就是存储数据的桶的位置。哈希表在不同的语言中有不同的实现，比如在 Java 中我们有<strong>哈希表</strong>、<strong>哈希表</strong>等等，在 python 中我们有<strong>字典</strong>，但是不管它们是如何实现的，核心功能都是一样的。</p>
+<p>考虑下面的图示:</p>
+<p><img src="img/b2025a946899f8b5e1ec1517c3a64bef.png" alt="Hash Table data structure"></img></p>
+<h3 id="哈希表的优点">哈希表的优点:</h3>
+<ul>
+<li>当我们谈到元素的<strong>插入</strong>、<strong>删除</strong>或<strong>搜索</strong>时，哈希表的优势是相同的，但是哈希表比地址表有一个巨大的优势，那就是它保持了大小约束。让我们考虑一个<strong>键= 7898789</strong> ，这又是一个很大的数字，如果我们将它插入到一个直接地址表中，那么我们就是<strong>浪费了太多的空间</strong>，因为我们将不得不找到这个位置(键)，然后在那个位置插入值，但是在哈希表的情况下，我们可以通过一个哈希函数处理这个<strong>键，假设它产生我们= 17，现在我们只剩下在哈希表的位置(17)插入。</strong></li>
+</ul>
+<h3 id="哈希表的缺点">哈希表的缺点:</h3>
+<ul>
+<li>当我们通过哈希函数为不同的键获取相同的桶位置时，可能会出现一种情况，这种情况称为冲突。虽然我们可以提高哈希质量，但我们不能保证不会发生冲突。</li>
+</ul>
+<h2 id="处理哈希表中的冲突">处理哈希表中的冲突:</h2>
+<p>我们有多种方法可以处理冲突。其中一些是:</p>
+<h3 id="一个好的散列函数">一个好的散列函数:</h3>
+<p>一个好的散列函数可以同时代表许多东西，但是我们可以得出这样的结论:散列函数被认为是一个好的散列函数，如果:</p>
+<ul>
+<li><p>它尽可能减少碰撞的数量。</p>
+</li>
+<li><p>它不应该生成比哈希表更大的桶位置，在这种情况下，我们将浪费太多的空间。</p>
+</li>
+<li><p>生成的铲斗位置既不能相距太远，也不能太近。</p>
+</li>
+</ul>
+<h3 id="线性探测">线性探测:</h3>
+<p>这是一种技术，可以确保如果我们在某个特定的桶上发生了冲突，那么我们会检查下一个可用的桶位置(就在它的下面)，并将我们的数据插入到那个桶中。</p>
+<p>考虑如下所示的图示:</p>
+<p><img src="img/5a501a4e5ab12e55bcf7d8a7662e50dd.png" alt="Linear Probing"></img></p>
+<h3 id="二次探测">二次探测:</h3>
+<p>在二次探测中，使用以下公式确定下一个铲斗位置: <strong>h(k，i) = (h？(k) + x<em>i + y</em>i^2)</strong> 其中<code>x</code>和<code>y</code>是常量。另一种观点认为，下一个位置之间的距离是二次增加的。</p>
+<p>考虑如下所示的图示:</p>
+<p><img src="img/5e25a238dfe5d445362d2d20bc71cf71.png" alt="Quadratic Probing"></img></p>
+<h3 id="链接">链接:</h3>
+<p>在这种冲突处理技术中，如果在一个特定的桶位置发生冲突，那么在该位置我们只需创建一个链表，该值将被添加为该列表的下一个节点。哈希表变成链表的数组。</p>
+<p>考虑如下所示的图示:</p>
+<p><img src="img/692c9793952b076d7484eaa341534143.png" alt="Chaining"></img></p>
+<h2 id="哈希表的应用">哈希表的应用:</h2>
+<h3 id="模式匹配">模式匹配:</h3>
+<p>哈希表搜索时间的复杂度使其成为在字符串池中寻找模式的完美候选。</p>
+<h3 id="编译器">编译器:</h3>
+<p>编译器利用哈希表存储关键字和其他标识符来存储编程语言的值。</p>
+<h3 id="文件系统"><strong>文件系统:</strong></h3>
+<p>我们的文件系统中的文件名和该文件的路径之间的映射是通过一个映射来存储的，该映射利用了一个哈希表。</p>
+<h2 id="结论">结论</h2>
+<ul>
+<li><p>我们了解了哈希表是什么，它的主要组成部分是什么。</p>
+</li>
+<li><p>然后我们学习了直接地址表，接下来是哈希表的详细解释。</p>
+</li>
+<li><p>然后我们讨论了处理哈希表中冲突的不同技术，接着是哈希表的实际应用。</p>
+</li>
+</ul>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="389.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 其他">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"哈希表数据结构","level":"1.1.13","depth":2,"previous":{"title":"其他","level":"1.1.12","depth":2,"path":"389.md","ref":"389.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"390.md","mtime":"2025-04-30T01:08:58.933Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:13.112Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

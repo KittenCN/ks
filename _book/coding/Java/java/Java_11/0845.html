@@ -1,0 +1,494 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 11 中基于嵌套的访问控制 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0846.html" />
+    
+    
+    <link rel="prev" href="0844.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 11
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0841.html">
+            
+                <a href="0841.html">
+            
+                    
+                    Java 11 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0842.html">
+            
+                <a href="0842.html">
+            
+                    
+                    Java 11 字符串新方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0843.html">
+            
+                <a href="0843.html">
+            
+                    
+                    Java 11 文件新方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0844.html">
+            
+                <a href="0844.html">
+            
+                    
+                    在 Java 11 的 Lambda 表达式中使用var
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.5" data-path="0845.html">
+            
+                <a href="0845.html">
+            
+                    
+                    Java 11 中基于嵌套的访问控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0846.html">
+            
+                <a href="0846.html">
+            
+                    
+                    Java 11 HTTP 客户端 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0847.html">
+            
+                <a href="0847.html">
+            
+                    
+                    Java 文件的不编译执行
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 11 中基于嵌套的访问控制</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-11-中基于嵌套的访问控制">Java 11 中基于嵌套的访问控制</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-11/nestbased-access-control-in-java-11" target="_blank">https://www.studytonight.com/java-11/nestbased-access-control-in-java-11</a></p>
+</blockquote>
+<p>Java 11 引入了基于嵌套的访问控制，允许类访问彼此的私有成员，而不需要编译器创建的桥方法。这些方法被称为<strong>可访问性扩展桥接方法</strong>，编译器在程序执行期间将这些方法插入到代码中。</p>
+<p>在 Java 11 之前，如果我们的代码中有私有成员，那么编译器会创建可访问性扩展的桥接方法，这会增加部署的应用的大小，并可能导致混乱。这就是为什么 Java 改进了基于嵌套的访问控制。</p>
+<p>Java 11 允许类和接口相互嵌套。这些嵌套类型可以是<code>private</code>字段、方法和构造器。</p>
+<h2 id="基本示例java-11">基本示例:Java 11</h2>
+<p>在这个例子中，我们在一个嵌套类中调用<code>private</code>方法。如果我们使用比 Java 11 更早的 Java 版本执行这段代码，编译器将创建一个桥方法来调用<code>private</code>方法，但是使用 Java 11 不需要桥方法来调用<code>private</code>成员。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"hello from private method"</span>);
+    }
+
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NestedMain</span></span>{
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">msg</span><span class="hljs-params">()</span> </span>{
+            display();
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        Main m = <span class="hljs-keyword">new</span> Main();
+        Main.NestedMain n = m.new NestedMain();
+        n.msg();
+
+    }   
+}
+</code></pre>
+<p>你好从私法</p>
+<p>这个<strong>输出片段</strong>显示了从终端执行<code>javap -v Main</code>命令后，我们得到了以下嵌套成员的细节。</p>
+<pre><code class="lang-java"> public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=3, args_size=1
+         0: new           #5                  // class myjavaproject/Main
+         3: dup
+         4: invokespecial #6                  // Method "&lt;init&gt;":()V
+         7: astore_1
+         8: new           #7                  // class myjavaproject/Main$NestedMain
+        11: dup
+        12: aload_1
+        13: dup
+        14: invokestatic  #8                  // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+        17: pop
+        18: invokespecial #9                  // Method myjavaproject/Main$NestedMain."&lt;init&gt;":(Lmyjavaproject/Main;)V
+        21: astore_2
+        22: aload_2
+        23: invokevirtual #10                 // Method myjavaproject/Main$NestedMain.msg:()V
+        26: return
+      LineNumberTable:
+        line 17: 0
+        line 18: 8
+        line 19: 22
+        line 21: 26
+}
+SourceFile: "Main.java"
+NestMembers:
+  myjavaproject/Main$NestedMain
+InnerClasses:
+  #12= #7 of #5;                          // NestedMain=class myjavaproject/Main$NestedMain of class myjavaproject/Main
+</code></pre>
+<h2 id="反射-api-新方法">反射 API 新方法</h2>
+<p>Java 给 Java 反射 API 类增加了一些新的方法。我们可以使用这些方法来获取基于嵌套的访问控制的信息。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> Class&lt;?&gt; getNestHost()
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isNestmateOf</span><span class="hljs-params">(Class&lt;?&gt; c)</span>
+<span class="hljs-keyword">public</span> Class&lt;?&gt;[] <span class="hljs-title">getNestMembers</span><span class="hljs-params">()</span>
+</span></code></pre>
+<p><code>getNestHost()</code>方法用于获取巢宿主的名称，而<code>isNestmateOf()</code>方法用于检查一个类是否是巢配偶。</p>
+<p><code>getNestMembers()</code>方法返回包含类和接口的嵌套成员数组。</p>
+<h2 id="示例使用getnesthost">示例:使用<code>getNestHost()</code></h2>
+<p>在 Java 中，每个类都是一个嵌套的成员。我们可以用<code>getNestHost()</code>的方法得到巢穴的巢穴宿主。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"hello from private method"</span>);
+    }
+
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NestedMain</span></span>{
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">msg</span><span class="hljs-params">()</span> </span>{
+            display();
+        }
+    }    
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        Main m = <span class="hljs-keyword">new</span> Main();
+        Main.NestedMain n = m.new NestedMain();
+        n.msg();
+        <span class="hljs-comment">// Get Nest Host Name</span>
+        System.out.println(Main.class.getNestHost());
+        <span class="hljs-comment">// Get Nest Members</span>
+        System.out.println(Arrays.toString(Main.class.getNestMembers()));
+        <span class="hljs-comment">// Check whether a class is nestmateg</span>
+        System.out.println(Main.class.isNestmateOf(NestedMain.class));
+    }   
+}
+</code></pre>
+<p>你好来自私有方法
+类 myjavaproject。主
+【类我的 myjavaproject。Main，类 myjavaproject。Main$NestedMain]
+true</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0844.html" class="navigation navigation-prev " aria-label="Previous page: 在 Java 11 的 Lambda 表达式中使用var">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0846.html" class="navigation navigation-next " aria-label="Next page: Java 11 HTTP 客户端 API">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 11 中基于嵌套的访问控制","level":"1.1.5","depth":2,"next":{"title":"Java 11 HTTP 客户端 API","level":"1.1.6","depth":2,"path":"0846.md","ref":"0846.md","articles":[]},"previous":{"title":"在 Java 11 的 Lambda 表达式中使用var","level":"1.1.4","depth":2,"path":"0844.md","ref":"0844.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0845.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:43.423Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

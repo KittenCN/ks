@@ -1,0 +1,769 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>STL 中的最小和最大操作 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="215.html" />
+    
+    
+    <link rel="prev" href="213.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    STL
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="190.html">
+            
+                <a href="190.html">
+            
+                    
+                    容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="191.html">
+            
+                <a href="191.html">
+            
+                    
+                    STL 简介:标准模板库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="192.html">
+            
+                <a href="192.html">
+            
+                    
+                    什么是 STL 中的容器？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="193.html">
+            
+                <a href="193.html">
+            
+                    
+                    STL 中的偶对模板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="194.html">
+            
+                <a href="194.html">
+            
+                    
+                    STL 中的元组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="195.html">
+            
+                <a href="195.html">
+            
+                    
+                    STL 中的数组容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="196.html">
+            
+                <a href="196.html">
+            
+                    
+                    STL 中的向量容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="197.html">
+            
+                <a href="197.html">
+            
+                    
+                    STL 中的列表容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="198.html">
+            
+                <a href="198.html">
+            
+                    
+                    STL 中的映射容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="199.html">
+            
+                <a href="199.html">
+            
+                    
+                    C++ STL 中的栈容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="200.html">
+            
+                <a href="200.html">
+            
+                    
+                    STL 中的队列容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="201.html">
+            
+                <a href="201.html">
+            
+                    
+                    C++ STL 中的优先级队列容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="202.html">
+            
+                <a href="202.html">
+            
+                    
+                    C++ STL 中的 DEQUE 容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="203.html">
+            
+                <a href="203.html">
+            
+                    
+                    迭代器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="204.html">
+            
+                <a href="204.html">
+            
+                    
+                    C++ STL 中迭代器概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="205.html">
+            
+                <a href="205.html">
+            
+                    
+                    STL 中迭代器的运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="206.html">
+            
+                <a href="206.html">
+            
+                    
+                    STL 中的算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="207.html">
+            
+                <a href="207.html">
+            
+                    
+                    C++ STL 算法概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="208.html">
+            
+                <a href="208.html">
+            
+                    
+                    STL 中的排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="209.html">
+            
+                <a href="209.html">
+            
+                    
+                    STL 中的二分搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="210.html">
+            
+                <a href="210.html">
+            
+                    
+                    STL 中的上界和下界搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="211.html">
+            
+                <a href="211.html">
+            
+                    
+                    C++ STL 中的非修改算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="212.html">
+            
+                <a href="212.html">
+            
+                    
+                    C++ STL 中的修改算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="213.html">
+            
+                <a href="213.html">
+            
+                    
+                    C++ STL 中的数值算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.25" data-path="214.html">
+            
+                <a href="214.html">
+            
+                    
+                    STL 中的最小和最大操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="215.html">
+            
+                <a href="215.html">
+            
+                    
+                    最小最大值和置换运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >STL 中的最小和最大操作</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="stl-中的最小和最大操作">STL 中的最小和最大操作</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/cpp/stl/stl-min-max-operations" target="_blank">https://www.studytonight.com/cpp/stl/stl-min-max-operations</a></p>
+</blockquote>
+<p>以下是我们将要介绍的功能:</p>
+<ul>
+<li>最大方法</li>
+<li>最大元素法</li>
+<li>最小方法</li>
+<li>最小元素法</li>
+<li>最小最大值法</li>
+<li>最小最大元素法</li>
+<li>李氏比较法</li>
+<li>next _ 置换方法</li>
+<li>预排列法</li>
+</ul>
+<hr></hr>
+<h2 id="max和min方法"><code>max</code>和<code>min</code>方法</h2>
+<p><code>max</code>方法的语法是:<code>max(object_type a, object_type b, compare_function)</code></p>
+<p>此方法返回 a 和 b 的较大元素。 <strong>compare_function</strong> 可以省略。如果 max()中没有使用 compare_function，则默认情况下，元素与运算符 <code>&gt;</code> 进行比较。 <strong>compare_function</strong> 用于确定当对象 a 和对象 b 为非数字类型时，哪个对象更大。</p>
+<p><code>min</code>方法的语法是:<code>min(object_type a, object_type b, compare_function)</code></p>
+<p>此方法返回 a 和 b 的较小元素。 <strong>compare_function</strong> 可以省略。如果 min()中没有使用 compare_function，则默认情况下，元素与运算符 <code>&lt;</code> 进行比较。 <strong>compare_function</strong> 用于确定当对象 a 和对象 b 为非数字类型时，哪个对象更小。</p>
+<p>下面是一个演示 max()和 min()方法用法的示例。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+*<span class="hljs-comment">/*compare function for strings*/</span>*
+<span class="hljs-keyword">bool</span> **myMaxCompare**(<span class="hljs-built_in">string</span> a, <span class="hljs-built_in">string</span> b)
+{
+    <span class="hljs-keyword">return</span> (a.size() &gt; b.size());
+}
+
+<span class="hljs-keyword">bool</span> **myMinCompare**(<span class="hljs-built_in">string</span> a, <span class="hljs-built_in">string</span> b)
+{
+    <span class="hljs-keyword">return</span> (a.size() &gt; b.size());
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> x=<span class="hljs-number">4</span>, y=<span class="hljs-number">5</span>;
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; **max**(x,y);   *<span class="hljs-comment">// prints 5*</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; **min**(x,y);   *<span class="hljs-comment">// prints 4*</span>
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; **max**(<span class="hljs-number">2.312</span>, <span class="hljs-number">5.434</span>);     *<span class="hljs-comment">// prints 5.434*</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; **min**(<span class="hljs-number">2.312</span>, <span class="hljs-number">5.434</span>);     *<span class="hljs-comment">// prints 2.312*</span>
+
+    <span class="hljs-built_in">string</span> s = <span class="hljs-string">"smaller srting"</span>;
+    <span class="hljs-built_in">string</span> t = <span class="hljs-string">"longer string---"</span>;
+
+    <span class="hljs-built_in">string</span> s1 = max(s, t, myMaxCompare);
+    <span class="hljs-built_in">cout</span>&lt;&lt; s1 &lt;&lt;endl;  *<span class="hljs-comment">// prints longer string---*</span>
+
+    <span class="hljs-built_in">string</span> s1 = min(s, t, myMinCompare);
+    <span class="hljs-built_in">cout</span>&lt;&lt; s1 &lt;&lt;endl;  *<span class="hljs-comment">// prints smaller string*</span>
+}
+</code></pre>
+<hr></hr>
+<h2 id="maxelement和minelement方法"><code>max_element</code>和<code>min_element</code>方法</h2>
+<p>max_element 方法的语法是:</p>
+<p><code>max_element(iterator first, iterator last, compare_function)</code></p>
+<p>此方法返回范围[第一个，最后一个]中最大的元素。 <strong>compare_function</strong> 可以省略。如果 max_element()中没有使用 compare_function，则默认情况下，元素与运算符 <code>&gt;</code> 进行比较。 <strong>compare_function</strong> 用于确定当对象 a 和对象 b 为非数字类型时，哪个对象更大。</p>
+<p><code>min_element</code>方法的语法是:</p>
+<p><code>min_element(iterator first, iterator last, compare_function)</code></p>
+<p>此方法返回范围[第一个，最后一个]中较小的元素。 <strong>compare_function</strong> 可以省略。如果 min_element()中没有使用 compare_function，则默认情况下，元素与运算符 <code>&lt;</code> 进行比较。 <strong>compare_function</strong> 用于确定当对象 a 和对象 b 为非数字类型时，哪个对象更小。</p>
+<p>下面是一个演示 max_element()和 min_element()方法用法的示例。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;vector&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-keyword">bool</span> **myMaxCompare**(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)
+{
+    <span class="hljs-keyword">return</span> (a &lt; b);
+}
+
+<span class="hljs-keyword">bool</span> **myMinCompare**(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)
+{
+    <span class="hljs-keyword">return</span> (a &lt; b);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> values[] = { <span class="hljs-number">1</span>,<span class="hljs-number">5</span>,<span class="hljs-number">4</span>,<span class="hljs-number">9</span>,<span class="hljs-number">8</span>,<span class="hljs-number">10</span>,<span class="hljs-number">6</span>,<span class="hljs-number">5</span>,<span class="hljs-number">1</span>};
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v(values,values+<span class="hljs-number">9</span>);
+
+    <span class="hljs-built_in">cout</span>&lt;&lt; ***max_element**(v.begin(), v.end());
+    *<span class="hljs-comment">/* prints 10 */</span>*
+
+    <span class="hljs-built_in">cout</span>&lt;&lt; ***min_element**(v.begin(), v.end());
+    *<span class="hljs-comment">/* prints 1 */</span>*
+
+    *<span class="hljs-comment">/* using mycompare function */</span>*
+    <span class="hljs-built_in">cout</span>&lt;&lt; ***max_element**(v.begin(), v.end(), myMaxCompare);
+    *<span class="hljs-comment">/* prints 10 */</span>*
+
+    <span class="hljs-built_in">cout</span>&lt;&lt; ***min_element**(v.begin(), v.end(), myMinCompare);
+    *<span class="hljs-comment">/* prints 1 */</span>*
+}
+</code></pre>
+<hr></hr>
+<h3 id="lexicographicalcompare方法"><code>lexicographical_compare</code>方法</h3>
+<p>此方法的语法是:</p>
+<pre><code class="lang-cpp">**lexicographical_compare**(iterator first1, iterator last1, iterator first2, iterator last2)
+</code></pre>
+<p>它比较范围[第一个 1，最后一个 1]和[第一个 2，最后一个 2]，如果第一个范围在字典上小于后一个范围，则返回 <strong>true</strong> 。</p>
+<p>当我们想要定义如何比较元素时，可以定义和使用自定义比较函数。下面是这个方法的变体的语法。</p>
+<pre><code class="lang-cpp">**lexicographical_compare**(iterator first1, iterator last1, iterator first2, iterator last2, <span class="hljs-keyword">bool</span> compare_function)
+</code></pre>
+<p>下面是演示其用法的程序:</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;vector&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-keyword">bool</span> **myoperator**(<span class="hljs-keyword">char</span> a , <span class="hljs-keyword">char</span> b)
+{
+    <span class="hljs-keyword">return</span> a &gt; b;
+
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">char</span> s[] = <span class="hljs-string">"nkvaio"</span>;
+    <span class="hljs-keyword">char</span> x[] = <span class="hljs-string">"xyzabc"</span>;
+    <span class="hljs-built_in">cout</span> &gt;&gt; **lexicographical_compare**(s, s+<span class="hljs-number">6</span>, x, x+<span class="hljs-number">6</span>, myoperator);
+    *<span class="hljs-comment">/*  prints 0 , Boolean false , since a[4] is not less than b[4]  */</span>*
+}
+</code></pre>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="213.html" class="navigation navigation-prev " aria-label="Previous page: C++ STL 中的数值算法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="215.html" class="navigation navigation-next " aria-label="Next page: 最小最大值和置换运算">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"STL 中的最小和最大操作","level":"1.1.25","depth":2,"next":{"title":"最小最大值和置换运算","level":"1.1.26","depth":2,"path":"215.md","ref":"215.md","articles":[]},"previous":{"title":"C++ STL 中的数值算法","level":"1.1.24","depth":2,"path":"213.md","ref":"213.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"214.md","mtime":"2025-04-30T01:08:58.631Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:05.064Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

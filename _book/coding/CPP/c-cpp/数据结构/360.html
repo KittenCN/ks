@@ -1,0 +1,876 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>什么是栈数据结构？ · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="361.html" />
+    
+    
+    <link rel="prev" href="359.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="343.html">
+            
+                <a href="343.html">
+            
+                    
+                    数据结构和算法基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="344.html">
+            
+                <a href="344.html">
+            
+                    
+                    数据结构和算法导论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="345.html">
+            
+                <a href="345.html">
+            
+                    
+                    渐近符号
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="346.html">
+            
+                <a href="346.html">
+            
+                    
+                    算法的空间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="347.html">
+            
+                <a href="347.html">
+            
+                    
+                    算法的时间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="348.html">
+            
+                <a href="348.html">
+            
+                    
+                    基本算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="349.html">
+            
+                <a href="349.html">
+            
+                    
+                    搜索算法简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="350.html">
+            
+                <a href="350.html">
+            
+                    
+                    线性搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="351.html">
+            
+                <a href="351.html">
+            
+                    
+                    二分搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="352.html">
+            
+                <a href="352.html">
+            
+                    
+                    排序介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="353.html">
+            
+                <a href="353.html">
+            
+                    
+                    冒泡排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="354.html">
+            
+                <a href="354.html">
+            
+                    
+                    插入排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="355.html">
+            
+                <a href="355.html">
+            
+                    
+                    选择排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="356.html">
+            
+                <a href="356.html">
+            
+                    
+                    快速排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="357.html">
+            
+                <a href="357.html">
+            
+                    
+                    归并排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="358.html">
+            
+                <a href="358.html">
+            
+                    
+                    堆排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="359.html">
+            
+                <a href="359.html">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.18" data-path="360.html">
+            
+                <a href="360.html">
+            
+                    
+                    什么是栈数据结构？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="361.html">
+            
+                <a href="361.html">
+            
+                    
+                    什么是队列数据结构？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="362.html">
+            
+                <a href="362.html">
+            
+                    
+                    使用栈实现队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="363.html">
+            
+                <a href="363.html">
+            
+                    
+                    链表介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="364.html">
+            
+                <a href="364.html">
+            
+                    
+                    线性链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="365.html">
+            
+                <a href="365.html">
+            
+                    
+                    循环链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="366.html">
+            
+                <a href="366.html">
+            
+                    
+                    双端队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="367.html">
+            
+                <a href="367.html">
+            
+                    
+                    使用队列实现栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="368.html">
+            
+                <a href="368.html">
+            
+                    
+                    使用链表实现栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="369.html">
+            
+                <a href="369.html">
+            
+                    
+                    双向链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="370.html">
+            
+                <a href="370.html">
+            
+                    
+                    二叉树介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="371.html">
+            
+                <a href="371.html">
+            
+                    
+                    二叉查找树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="372.html">
+            
+                <a href="372.html">
+            
+                    
+                    贪心算法或技巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="373.html">
+            
+                <a href="373.html">
+            
+                    
+                    活动选择问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="374.html">
+            
+                <a href="374.html">
+            
+                    
+                    Prim 最小生成树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="375.html">
+            
+                <a href="375.html">
+            
+                    
+                    霍夫曼编码算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="376.html">
+            
+                <a href="376.html">
+            
+                    
+                    迪克斯特拉算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >什么是栈数据结构？</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="什么是栈数据结构？">什么是栈数据结构？</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/data-structures/stack-data-structure" target="_blank">https://www.studytonight.com/data-structures/stack-data-structure</a></p>
+</blockquote>
+<p><strong>栈</strong>是一种抽象数据类型，容量有限(预定义)。这是一种简单的数据结构，允许以特定的顺序添加和移除元素。每次添加一个元素，它都会出现在栈的<strong>顶部</strong>，唯一可以移除的元素是栈顶部的元素，就像一堆对象一样。</p>
+<p><img src="img/03f05be6836a408a8965218a00a5b6da.png" alt="Stack Data Structure"></img></p>
+<hr></hr>
+<h2 id="栈的基本特征">栈的基本特征</h2>
+<ol>
+<li>栈是<strong>类似数据类型</strong>的<strong>有序列表</strong>。</li>
+<li>栈是一个<strong>后进先出</strong>(后进先出)结构，或者我们可以说<strong>后进先出</strong>(先进先出)。</li>
+<li><code>push()</code>函数用于向栈中插入新元素，<code>pop()</code>函数用于从栈中移除元素。只有称为<strong>顶部</strong>的堆叠一端允许插入和移除。</li>
+<li>当栈完全满时，称其处于<strong>溢出</strong>状态；如果栈完全空，称其处于<strong>下溢</strong>状态。</li>
+</ol>
+<hr></hr>
+<h2 id="栈的应用">栈的应用</h2>
+<p>栈最简单的应用是反转一个单词。你把一个给定的单词一个字母一个字母地推进栈，然后从栈中弹出字母。</p>
+<p>还有其他用途也像:</p>
+<ol>
+<li>从语法上分析</li>
+<li>表达式转换(中缀到后缀、后缀到前缀等)</li>
+</ol>
+<hr></hr>
+<h2 id="栈数据结构的实现">栈数据结构的实现</h2>
+<p>栈可以使用数组或<a href="introduction-to-linked-list">链表</a>轻松实现。数组很快，但大小有限，链表需要开销来分配、链接、取消链接和解除分配，但大小不受限制。这里我们将使用数组实现栈。</p>
+<p><img src="img/beabeef1804cd1c49c745b161b910e20.png" alt="Implementation of Stack"></img></p>
+<hr></hr>
+<h3 id="push-运算的算法">PUSH 运算的算法</h3>
+<ol>
+<li>检查栈是否已满。</li>
+<li>如果栈已满，则打印溢出错误并退出程序。</li>
+<li>如果栈未满，则递增顶部并添加元素。</li>
+</ol>
+<h3 id="pop-操作的算法">POP 操作的算法</h3>
+<ol>
+<li>检查栈是否为空。</li>
+<li>如果栈为空，则打印下溢错误并退出程序。</li>
+<li>如果栈不为空，则在顶部打印元素并递减顶部。</li>
+</ol>
+<p>下面我们有一个简单的 C++ 程序来实现栈数据结构，同时遵循面向对象的编程概念。</p>
+<p>如果不熟悉 C++ 编程概念，可以从<a href="cpp">这里</a>学习。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/*  Below program is written in C++ language  */</span>
+
+<span class="hljs-preprocessor"># <span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-keyword">class</span> Stack
+{
+    <span class="hljs-keyword">int</span> top;
+    <span class="hljs-keyword">public</span>:
+    <span class="hljs-keyword">int</span> a[<span class="hljs-number">10</span>];  <span class="hljs-comment">//Maximum size of Stack</span>
+    Stack()
+    {
+        top = -<span class="hljs-number">1</span>;
+    }
+
+    <span class="hljs-comment">// declaring all the function</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">push</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">pop</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span></span>;
+};
+
+<span class="hljs-comment">// function to insert data into stack</span>
+<span class="hljs-keyword">void</span> Stack::push(<span class="hljs-keyword">int</span> x)
+{
+    <span class="hljs-keyword">if</span>(top &gt;= <span class="hljs-number">10</span>)
+    {
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Stack Overflow \n"</span>;
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        a[++top] = x;
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Element Inserted \n"</span>;
+    }
+}
+
+<span class="hljs-comment">// function to remove data from the top of the stack</span>
+<span class="hljs-keyword">int</span> Stack::pop()
+{
+    <span class="hljs-keyword">if</span>(top &lt; <span class="hljs-number">0</span>)
+    {
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Stack Underflow \n"</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        <span class="hljs-keyword">int</span> d = a[top--];
+        <span class="hljs-keyword">return</span> d;
+    }
+}
+
+<span class="hljs-comment">// function to check if stack is empty</span>
+<span class="hljs-keyword">void</span> Stack::isEmpty()
+{
+    <span class="hljs-keyword">if</span>(top &lt; <span class="hljs-number">0</span>)
+    {
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Stack is empty \n"</span>;
+    }
+    <span class="hljs-keyword">else</span>
+    {
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Stack is not empty \n"</span>;
+    }
+}
+
+<span class="hljs-comment">// main function</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    Stack s1;
+    s1.push(<span class="hljs-number">10</span>);
+    s1.push(<span class="hljs-number">100</span>);
+    <span class="hljs-comment">/*
+        preform whatever operation you want on the stack
+    */</span>
+}
+</code></pre>
+<p>| 顶部位置 | 栈状态 |
+| <code>-1</code> | 栈为空 |
+| <code>0</code> | 栈中只有一个元素 |
+| <code>N-1</code> | 栈已满 |
+| <code>N</code> | 栈溢出状态 |</p>
+<hr></hr>
+<h3 id="栈操作分析">栈操作分析</h3>
+<p>下面提到的是可以在栈数据结构上执行的各种操作的时间复杂度。</p>
+<ul>
+<li><strong>按压操作</strong>:0(1)</li>
+<li><strong>弹出操作</strong>:0(1)</li>
+<li><strong>顶部操作</strong>:0(1)</li>
+<li><strong>搜索操作</strong> : O(n)</li>
+</ul>
+<p><code>push()</code>和<code>pop()</code>函数的时间复杂度是<code>O(1)</code>，因为我们总是要从栈的<strong>顶部</strong>插入或移除数据，这是一个一步到位的过程。</p>
+<p>既然我们已经了解了数据结构中的栈，您也可以查看以下主题:</p>
+<ul>
+<li><a href="queue-data-structure">队列数据结构</a></li>
+<li><a href="queue-using-stack">使用栈排队</a></li>
+</ul>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="359.html" class="navigation navigation-prev " aria-label="Previous page: 数据结构">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="361.html" class="navigation navigation-next " aria-label="Next page: 什么是队列数据结构？">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"什么是栈数据结构？","level":"1.1.18","depth":2,"next":{"title":"什么是队列数据结构？","level":"1.1.19","depth":2,"path":"361.md","ref":"361.md","articles":[]},"previous":{"title":"数据结构","level":"1.1.17","depth":2,"path":"359.md","ref":"359.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"360.md","mtime":"2025-04-30T01:08:58.859Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:10.684Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,617 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>最小生成树 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="拓扑排序.html" />
+    
+    
+    <link rel="prev" href="最短路径算法.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="图论概述.html">
+            
+                <a href="图论概述.html">
+            
+                    
+                    图论算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="图的表示.html">
+            
+                <a href="图的表示.html">
+            
+                    
+                    图的表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="最短路径算法.html">
+            
+                <a href="最短路径算法.html">
+            
+                    
+                    最短路径算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.3" data-path="最小生成树.html">
+            
+                <a href="最小生成树.html">
+            
+                    
+                    最小生成树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="拓扑排序.html">
+            
+                <a href="拓扑排序.html">
+            
+                    
+                    拓扑排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >最小生成树</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="最小生成树">最小生成树</h1>
+<p>最小生成树(Minimum Spanning Tree, MST)是图论中的一个重要概念，在网络设计、电路布线等实际问题中有广泛应用。</p>
+<h2 id="基本概念">基本概念</h2>
+<p>【定义】给定一个带权无向连通图G=(V,E)，图中每条边e都有一个权值w(e)。最小生成树是一个包含G中所有顶点的无环连通子图，且所有边的权值之和最小。</p>
+<p>关键特性：</p>
+<ol>
+<li>MST包含图G的所有顶点</li>
+<li>MST是一棵树（无环连通图）</li>
+<li>MST的边权之和在所有生成树中最小</li>
+</ol>
+<h2 id="kruskal算法">Kruskal算法</h2>
+<p>【算法】Kruskal算法是一种贪心算法，基于边的选择策略：按照边权从小到大的顺序选择边，如果加入该边不会形成环，则将其加入生成树。</p>
+<h3 id="算法步骤">算法步骤</h3>
+<ol>
+<li>将所有边按权值升序排序</li>
+<li>初始时，每个顶点构成一个独立的连通分量</li>
+<li>按排序后的顺序考察每条边(u,v)：<ul>
+<li>如果u和v不在同一连通分量，则将该边加入生成树，并合并u和v所在的连通分量</li>
+<li>否则，丢弃该边</li>
+</ul>
+</li>
+<li>重复步骤3，直到加入n-1条边（n为顶点数）或考察完所有边</li>
+</ol>
+<h3 id="代码实现">代码实现</h3>
+<p>Kruskal算法通常使用<strong>并查集</strong>来判断两个顶点是否在同一连通分量：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> Edge {
+    <span class="hljs-keyword">int</span> u, v, weight;
+
+    Edge(<span class="hljs-keyword">int</span> _u, <span class="hljs-keyword">int</span> _v, <span class="hljs-keyword">int</span> _w) : u(_u), v(_v), weight(_w) {}
+
+    <span class="hljs-comment">// 重载小于运算符，用于边的排序</span>
+    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span> &lt; (<span class="hljs-keyword">const</span> Edge&amp; other) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> weight &lt; other.weight;
+    }
+};
+
+<span class="hljs-built_in">vector</span>&lt;Edge&gt; edges; <span class="hljs-comment">// 存储所有边</span>
+<span class="hljs-built_in">vector</span>&lt;Edge&gt; mst;   <span class="hljs-comment">// 存储最小生成树的边</span>
+
+<span class="hljs-comment">// 并查集数据结构</span>
+<span class="hljs-keyword">int</span> parent[MAXN];
+<span class="hljs-keyword">int</span> rank[MAXN];  <span class="hljs-comment">// 用于按秩合并</span>
+
+<span class="hljs-comment">// 初始化并查集</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        parent[i] = i;   <span class="hljs-comment">// 每个节点的父节点初始为自己</span>
+        rank[i] = <span class="hljs-number">0</span>;     <span class="hljs-comment">// 初始秩为0</span>
+    }
+}
+
+<span class="hljs-comment">// 查找节点所在集合的代表（带路径压缩）</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+    <span class="hljs-keyword">if</span> (parent[x] != x) {
+        parent[x] = find(parent[x]);  <span class="hljs-comment">// 路径压缩</span>
+    }
+    <span class="hljs-keyword">return</span> parent[x];
+}
+
+<span class="hljs-comment">// 合并两个集合（按秩合并）</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unionSets</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>{
+    <span class="hljs-keyword">int</span> rootX = find(x);
+    <span class="hljs-keyword">int</span> rootY = find(y);
+
+    <span class="hljs-keyword">if</span> (rootX == rootY) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-keyword">if</span> (rank[rootX] &lt; rank[rootY]) {
+        parent[rootX] = rootY;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (rank[rootX] &gt; rank[rootY]) {
+        parent[rootY] = rootX;
+    } <span class="hljs-keyword">else</span> {
+        parent[rootY] = rootX;
+        rank[rootX]++;
+    }
+}
+
+<span class="hljs-comment">// Kruskal算法实现</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">kruskal</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-comment">// 初始化并查集</span>
+    init(n);
+
+    <span class="hljs-comment">// 对所有边按权值排序</span>
+    sort(edges.begin(), edges.end());
+
+    <span class="hljs-keyword">int</span> totalWeight = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 最小生成树的总权值</span>
+    <span class="hljs-keyword">int</span> edgeCount = <span class="hljs-number">0</span>;    <span class="hljs-comment">// 已加入生成树的边数</span>
+
+    <span class="hljs-comment">// 按权值从小到大遍历所有边</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> Edge&amp; e : edges) {
+        <span class="hljs-keyword">int</span> rootU = find(e.u);
+        <span class="hljs-keyword">int</span> rootV = find(e.v);
+
+        <span class="hljs-comment">// 如果加入这条边不会形成环</span>
+        <span class="hljs-keyword">if</span> (rootU != rootV) {
+            mst.push_back(e);  <span class="hljs-comment">// 将边加入MST</span>
+            totalWeight += e.weight;
+            unionSets(rootU, rootV);  <span class="hljs-comment">// 合并集合</span>
+            edgeCount++;
+
+            <span class="hljs-comment">// 如果已经有n-1条边，MST构建完成</span>
+            <span class="hljs-keyword">if</span> (edgeCount == n - <span class="hljs-number">1</span>) {
+                <span class="hljs-keyword">break</span>;
+            }
+        }
+    }
+
+    <span class="hljs-comment">// 检查是否形成了一个完整的生成树</span>
+    <span class="hljs-keyword">return</span> (edgeCount == n - <span class="hljs-number">1</span>) ? totalWeight : -<span class="hljs-number">1</span>;  <span class="hljs-comment">// -1表示图不连通</span>
+}
+</code></pre>
+<h3 id="时间复杂度分析">时间复杂度分析</h3>
+<ul>
+<li>排序：O(E log E)</li>
+<li>并查集操作：近似O(E)（使用路径压缩和按秩合并）</li>
+<li>总时间复杂度：O(E log E) 或 O(E log V)，因为E最多为V²，所以log E = O(log V)</li>
+</ul>
+<h2 id="prim算法">Prim算法</h2>
+<p>【算法】Prim算法也是一种贪心算法，但它基于顶点的选择策略：每次选择与已选顶点集合相邻的、权值最小的边所连接的顶点。</p>
+<h3 id="算法步骤">算法步骤</h3>
+<ol>
+<li>选择任意一个顶点作为起点，加入已选顶点集合S</li>
+<li>初始化一个数组key，key[v]表示顶点v与集合S中顶点相连的最小边权</li>
+<li>重复以下步骤直到所有顶点都被选择：<ul>
+<li>在未选择的顶点中找出key值最小的顶点u，将u加入S</li>
+<li>更新所有与u相邻的未选择顶点v的key值</li>
+</ul>
+</li>
+</ol>
+<h3 id="代码实现">代码实现</h3>
+<p>Prim算法有朴素实现和堆优化两个版本，下面是堆优化的实现：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF = <span class="hljs-number">0x3f3f3f3f</span>;
+
+<span class="hljs-keyword">struct</span> Edge {
+    <span class="hljs-keyword">int</span> to, weight;
+    Edge(<span class="hljs-keyword">int</span> _to, <span class="hljs-keyword">int</span> _w) : to(_to), weight(_w) {}
+};
+
+<span class="hljs-built_in">vector</span>&lt;Edge&gt; graph[MAXN];  <span class="hljs-comment">// 邻接表表示的图</span>
+<span class="hljs-keyword">bool</span> visited[MAXN];        <span class="hljs-comment">// 记录顶点是否已加入MST</span>
+<span class="hljs-keyword">int</span> key[MAXN];             <span class="hljs-comment">// key[i]表示顶点i与已选顶点集合相连的最小边权</span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">prim</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-comment">// 初始化</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        key[i] = INF;
+        visited[i] = <span class="hljs-literal">false</span>;
+    }
+
+    <span class="hljs-comment">// 从顶点1开始</span>
+    key[<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// 使用优先队列（小顶堆）</span>
+    priority_queue&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;, <span class="hljs-built_in">vector</span>&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt;, greater&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt;&gt; pq;
+    pq.push({<span class="hljs-number">0</span>, <span class="hljs-number">1</span>});  <span class="hljs-comment">// {key值, 顶点编号}</span>
+
+    <span class="hljs-keyword">int</span> totalWeight = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> vertexCount = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 记录已加入MST的顶点数</span>
+
+    <span class="hljs-keyword">while</span> (!pq.empty() &amp;&amp; vertexCount &lt; n) {
+        <span class="hljs-keyword">int</span> u = pq.top().second;
+        <span class="hljs-keyword">int</span> w = pq.top().first;
+        pq.pop();
+
+        <span class="hljs-keyword">if</span> (visited[u]) <span class="hljs-keyword">continue</span>;
+
+        visited[u] = <span class="hljs-literal">true</span>;
+        totalWeight += w;
+        vertexCount++;
+
+        <span class="hljs-comment">// 更新u的所有邻接点的key值</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> Edge&amp; e : graph[u]) {
+            <span class="hljs-keyword">int</span> v = e.to;
+            <span class="hljs-keyword">int</span> weight = e.weight;
+
+            <span class="hljs-keyword">if</span> (!visited[v] &amp;&amp; weight &lt; key[v]) {
+                key[v] = weight;
+                pq.push({key[v], v});
+            }
+        }
+    }
+
+    <span class="hljs-comment">// 检查是否所有顶点都已加入MST</span>
+    <span class="hljs-keyword">return</span> (vertexCount == n) ? totalWeight : -<span class="hljs-number">1</span>;  <span class="hljs-comment">// -1表示图不连通</span>
+}
+</code></pre>
+<h3 id="时间复杂度分析">时间复杂度分析</h3>
+<ul>
+<li>堆优化的Prim算法时间复杂度：O(E log V)</li>
+<li>朴素Prim算法时间复杂度：O(V²)</li>
+</ul>
+<h2 id="kruskal-vs-prim：算法对比">Kruskal vs Prim：算法对比</h2>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>时间复杂度</th>
+<th>适用情况</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kruskal</td>
+<td>O(E log E)</td>
+<td>适合稀疏图</td>
+<td>实现简单，易于理解</td>
+<td>需要排序所有边</td>
+</tr>
+<tr>
+<td>Prim</td>
+<td>O(E log V)（堆优化）</td>
+<td>适合稠密图</td>
+<td>不需要预先排序所有边</td>
+<td>实现相对复杂</td>
+</tr>
+</tbody>
+</table>
+<h2 id="特殊情况处理">特殊情况处理</h2>
+<h3 id="次小生成树">次小生成树</h3>
+<p>次小生成树是指权值和仅次于最小生成树的生成树。求解次小生成树的步骤：</p>
+<ol>
+<li>找出最小生成树T</li>
+<li>对于T中的每条边e：<ul>
+<li>暂时移除e</li>
+<li>在不考虑e的情况下，找出连接e两端点的最小权边e'（e'不在T中）</li>
+<li>计算T - e + e'的总权值</li>
+</ul>
+</li>
+<li>所有可能替换方案中，权值和最小的即为次小生成树</li>
+</ol>
+<h3 id="最小生成森林">最小生成森林</h3>
+<p>当图不连通时，我们需要求解最小生成森林，即每个连通分量的最小生成树的集合。Kruskal算法自然支持求解最小生成森林。</p>
+<h2 id="应用场景">应用场景</h2>
+<ol>
+<li><strong>网络设计</strong>：设计成本最低的网络连接方案</li>
+<li><strong>电路布线</strong>：寻找最短的布线方式</li>
+<li><strong>聚类算法</strong>：如连通图的单链接聚类</li>
+<li><strong>近似算法</strong>：用于解决旅行商问题的近似算法</li>
+</ol>
+<h2 id="习题推荐">习题推荐</h2>
+<ol>
+<li>POJ 1287 Networking（基础MST练习）</li>
+<li>POJ 1789 Truck History（Kruskal实践）</li>
+<li>POJ 2485 Highways（Prim算法实践）</li>
+<li>POJ 1679 The Unique MST（判断MST是否唯一）</li>
+<li>POJ 3723 Conscription（最大生成树的应用）</li>
+</ol>
+<h2 id="解题技巧">解题技巧</h2>
+<ol>
+<li><strong>预处理</strong>：处理复杂问题时，可能需要先将问题转化为标准MST问题</li>
+<li><strong>完全图构造</strong>：有时需要构建完全图，然后求MST</li>
+<li><strong>离线处理</strong>：当边的信息不同时给出时，可以先存储所有信息再处理</li>
+<li><strong>最大生成树</strong>：只需将所有边权取负，然后求最小生成树即可</li>
+</ol>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="最短路径算法.html" class="navigation navigation-prev " aria-label="Previous page: 最短路径算法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="拓扑排序.html" class="navigation navigation-next " aria-label="Next page: 拓扑排序">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"最小生成树","level":"1.2.3","depth":2,"next":{"title":"拓扑排序","level":"1.2.4","depth":2,"path":"拓扑排序.md","ref":"拓扑排序.md","articles":[]},"previous":{"title":"最短路径算法","level":"1.2.2","depth":2,"path":"最短路径算法.md","ref":"最短路径算法.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"最小生成树.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:17.825Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

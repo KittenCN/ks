@@ -1,0 +1,924 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>在 Matplotlib 中格式化轴域 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="272.html" />
+    
+    
+    <link rel="prev" href="270.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Matplotlib
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="257.html">
+            
+                <a href="257.html">
+            
+                    
+                    Matplotlib 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="258.html">
+            
+                <a href="258.html">
+            
+                    
+                    Matplotlib 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="259.html">
+            
+                <a href="259.html">
+            
+                    
+                    Matplotlib 中的一般概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="260.html">
+            
+                <a href="260.html">
+            
+                    
+                    Jupyter 笔记本中的 Matplotlib
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="261.html">
+            
+                <a href="261.html">
+            
+                    
+                    Matplotlib PyPlot API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="262.html">
+            
+                <a href="262.html">
+            
+                    
+                    Matplotlib 简单折线图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="263.html">
+            
+                <a href="263.html">
+            
+                    
+                    Matplotlib pylab 模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="264.html">
+            
+                <a href="264.html">
+            
+                    
+                    面向对象接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="265.html">
+            
+                <a href="265.html">
+            
+                    
+                    Matplotlib 图形类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="266.html">
+            
+                <a href="266.html">
+            
+                    
+                    Matplotlib Axes类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="267.html">
+            
+                <a href="267.html">
+            
+                    
+                    Matplotlib 使用subplots()函数的多图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="268.html">
+            
+                <a href="268.html">
+            
+                    
+                    Matplotlib subplots()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="269.html">
+            
+                <a href="269.html">
+            
+                    
+                    Matplotlib subplot2grid()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="270.html">
+            
+                <a href="270.html">
+            
+                    
+                    Matplotlib 网格
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.15" data-path="271.html">
+            
+                <a href="271.html">
+            
+                    
+                    在 Matplotlib 中格式化轴域
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="272.html">
+            
+                <a href="272.html">
+            
+                    
+                    在 Matplotlib 中设置轴限制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="273.html">
+            
+                <a href="273.html">
+            
+                    
+                    在 Matplotlib 中设置刻度和刻度标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="274.html">
+            
+                <a href="274.html">
+            
+                    
+                    Matplotlib 双轴
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="275.html">
+            
+                <a href="275.html">
+            
+                    
+                    Matplotlib 绘图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="276.html">
+            
+                <a href="276.html">
+            
+                    
+                    Matplotlib 条形图bar()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="277.html">
+            
+                <a href="277.html">
+            
+                    
+                    Matplotlib 直方图——hist()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="278.html">
+            
+                <a href="278.html">
+            
+                    
+                    Matplotlib 饼图——pie()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="279.html">
+            
+                <a href="279.html">
+            
+                    
+                    Matplotlib 散点图——scatter()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="280.html">
+            
+                <a href="280.html">
+            
+                    
+                    Matplotlib 等高线图——contour()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="281.html">
+            
+                <a href="281.html">
+            
+                    
+                    Matplotlib 抖动图-quiver()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="282.html">
+            
+                <a href="282.html">
+            
+                    
+                    Matplotlib 盒子图-boxplot()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="283.html">
+            
+                <a href="283.html">
+            
+                    
+                    Matplotlib 提琴图——violinplot()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="284.html">
+            
+                <a href="284.html">
+            
+                    
+                    Matplotlib 3D
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="285.html">
+            
+                <a href="285.html">
+            
+                    
+                    Matplotlib 三维绘图——折线和散点图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="286.html">
+            
+                <a href="286.html">
+            
+                    
+                    Matplotlib 3D 等高线图——contour3d()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="287.html">
+            
+                <a href="287.html">
+            
+                    
+                    Matplotlib 三维线框图——plot_wireframe()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="288.html">
+            
+                <a href="288.html">
+            
+                    
+                    Matplotlib 三维曲面图——plot_surface()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="289.html">
+            
+                <a href="289.html">
+            
+                    
+                    杂项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="290.html">
+            
+                <a href="290.html">
+            
+                    
+                    在 Matplotlib 中使用文本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="291.html">
+            
+                <a href="291.html">
+            
+                    
+                    Matplotlib 中的数学表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="292.html">
+            
+                <a href="292.html">
+            
+                    
+                    在 Matplotlib 中使用图像
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >在 Matplotlib 中格式化轴域</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="在-matplotlib-中格式化轴域">在 Matplotlib 中格式化轴域</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/matplotlib/formatting-the-axes-in-matplotlib" target="_blank">https://www.studytonight.com/matplotlib/formatting-the-axes-in-matplotlib</a></p>
+</blockquote>
+<p>在本教程中，我们将介绍如何在 Matplotlib 中格式化轴。让我们先来学习一下 Matplotlib 中什么是 Axes。</p>
+<h2 id="matplotlib-定线">Matplotlib 定线</h2>
+<p>包含<strong>数据空间</strong>的图像区域主要称为轴。</p>
+<ul>
+<li><p>Matplotlib 中的“轴”主要包含双轴(如果是<strong>【2D】</strong>对象)或三轴<strong>(如果是 </strong>3D<strong> 对象)，然后负责数据限制。</strong></p>
+<p>**让我们向您展示包含图表的图的不同部分:</p>
+</li>
+</ul>
+<p><img src="img/09a054bba16ac79528673120c400b88f.png" alt="what is matplotlib axes"></img></p>
+<p>您可以根据自己的需求更改 Axes 的不同方面，在本教程的后续章节中，我们将学习如何做到这一点。</p>
+<h2 id="1x-轴和-y-轴的标签">1.x 轴和 y 轴的标签</h2>
+<p>在本节中，我们将介绍如何在 Matplotlib 中标记 x 轴和 y 轴。</p>
+<p>以下是 x 轴和 y 轴标注的<strong>语法</strong>:</p>
+<h3 id="对于-x-轴">对于 x 轴:</h3>
+<pre><code class="lang-py">Axes.set_xlabel(self, xlabel, fontdict=<span class="hljs-keyword">None</span>, labelpad=<span class="hljs-keyword">None</span>, \*\*kwargs)
+</code></pre>
+<h3 id="对于-y-轴">对于 y 轴:</h3>
+<pre><code class="lang-py">Axes.set_ylabel(self, ylabel, fontdict=<span class="hljs-keyword">None</span>, labelpad=<span class="hljs-keyword">None</span>, \*\*kwargs)
+</code></pre>
+<p>这样，借助上述两个函数，您可以轻松命名 x 轴和 y 轴。</p>
+<h3 id="标记-x-轴和-y-轴示例">标记 x 轴和 y 轴示例:</h3>
+<p>现在让我们看一个例子，我们将利用上面两个函数来命名 x 轴和 y 轴。</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt 
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np 
+
+a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">4</span>, <span class="hljs-number">12</span>] 
+b = [<span class="hljs-number">11</span>, <span class="hljs-number">3</span>, <span class="hljs-number">7</span>, <span class="hljs-number">5</span>, <span class="hljs-number">2</span>] 
+
+<span class="hljs-comment"># below function will create a figure and axes </span>
+fig,ax = plt.subplots() 
+
+<span class="hljs-comment"># setting title to graph </span>
+ax.set_title(<span class="hljs-string">'Sample'</span>) 
+
+<span class="hljs-comment"># label x-axis and y-axis </span>
+ax.set_ylabel(<span class="hljs-string">'Vertical / yaxis'</span>) 
+ax.set_xlabel(<span class="hljs-string">'Horizontal / xaxis'</span>) 
+
+<span class="hljs-comment"># function to plot and show graph </span>
+ax.plot(a, b) 
+plt.show()
+</code></pre>
+<p>而输出:</p>
+<p><img src="img/22c95f415eac73479b3e8a71e4df98df.png" alt="labelling the x-axis and y-axis matplotlib"></img></p>
+<h2 id="2设置-x-轴和-y-轴的极限">2.设置 x 轴和 y 轴的极限</h2>
+<p>在本节中，我们将介绍如何在 Matplotlib 中设置 x 轴和 y 轴的限制。</p>
+<p>以下是 x 轴和 y 轴标注的<strong>语法</strong>:</p>
+<h3 id="对于-x-轴">对于 x 轴:</h3>
+<pre><code class="lang-py">Axes.set_xlim(self, left=<span class="hljs-keyword">None</span>, right=<span class="hljs-keyword">None</span>, emit=<span class="hljs-keyword">True</span>, auto=<span class="hljs-keyword">False</span>, \*, xmin=<span class="hljs-keyword">None</span>, xmax=<span class="hljs-keyword">None</span>)
+</code></pre>
+<p><strong>功能参数:</strong></p>
+<ul>
+<li><p><strong>左**</strong>右**</p>
+<p>这两个参数在<strong>浮动</strong>并且是<strong>可选的</strong></p>
+<p>数据坐标中的<strong>左 xlim</strong> 为起点，<strong>右 xlim</strong> 为终点。如果您将<code>None</code>传递给它，那么它将保持限制不变。</p>
+</li>
+<li><p><strong>自动</strong></p>
+<p>该参数在<code>bool</code>中，也是<strong>可选的</strong>。</p>
+<p>如果要开启 x 轴的<strong>自动缩放，那么这个参数的值应该是</strong>真<strong>，这个参数的</strong>假<strong>值表示关闭自动缩放(这是默认动作)<code>None</code>值保持不变。</strong></p>
+</li>
+<li><p><strong>xmin， xmax</strong></p>
+<p>这两个参数<strong>分别相当于左和右</strong>，如果您将<strong>将值传递给两个</strong> xmin 和 left 或 xmax 和 right，它<strong>会导致错误</strong>。</p>
+</li>
+</ul>
+<p><strong>返回值:</strong></p>
+<p>这将返回<strong>右侧</strong>和<strong>左侧</strong>值，即(浮动，浮动)</p>
+<h3 id="对于-y-轴">对于 y 轴:</h3>
+<pre><code class="lang-py">Axes.set_ylim(self, bottom=<span class="hljs-keyword">None</span>, top=<span class="hljs-keyword">None</span>, emit=<span class="hljs-keyword">True</span>, auto=<span class="hljs-keyword">False</span>, \*, ymin=<span class="hljs-keyword">None</span>, ymax=<span class="hljs-keyword">None</span>)
+</code></pre>
+<p><strong>功能参数:</strong></p>
+<ul>
+<li><p><strong>底部</strong>和<strong>顶部</strong></p>
+<p>这两个参数在<strong>浮动</strong>并且是<strong>可选的</strong>。</p>
+<p>数据坐标中的<strong>底部叶立德</strong>(即起点)和<strong>顶部叶立德</strong>(即终点)。如果您将<code>None</code>传递给它，那么它将保持限制不变。</p>
+</li>
+<li><p><strong>自动</strong></p>
+<p>该参数在<code>bool</code>中，可选。</p>
+<p>如果要打开 y 轴的<strong>自动缩放，那么这个参数的值应该是</strong>真<strong>，这个参数的</strong>假<strong>值意味着关闭自动缩放，<code>None</code>值保持不变。</strong></p>
+</li>
+<li><p><strong>ymin，ymax</strong></p>
+<p>这两个参数<strong>分别相当于底部和顶部</strong>，如果您将值传递给 xmin 和底部或 xmax 和顶部，则会导致错误。</p>
+</li>
+</ul>
+<p><strong>返回值:</strong></p>
+<p>这将返回<strong>底部</strong>和<strong>左侧</strong>值，即(浮动，浮动)</p>
+<h3 id="设置-x-轴和-y-轴的限制示例">设置 x 轴和 y 轴的限制示例:</h3>
+<p>现在让我们看一个例子，我们将利用以上两个函数来设置 x 轴和 y 轴的极限。</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt 
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np 
+
+x = [<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">9</span>, <span class="hljs-number">5</span>, <span class="hljs-number">10</span>] 
+y = [<span class="hljs-number">10</span>, <span class="hljs-number">4</span>, <span class="hljs-number">7</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>] 
+
+<span class="hljs-comment"># create a figure and axes </span>
+fig, ax = plt.subplots() 
+
+ax.set_title(<span class="hljs-string">'Example Graph'</span>) 
+
+ax.set_ylabel(<span class="hljs-string">'y_axis'</span>) 
+ax.set_xlabel(<span class="hljs-string">'x_axis'</span>) 
+
+<span class="hljs-comment"># set x, y-axis limits  </span>
+ax.set_xlim(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>) 
+ax.set_ylim(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>) 
+
+<span class="hljs-comment"># function to plot and show graph </span>
+ax.plot(x, y) 
+plt.show()
+</code></pre>
+<p>以下是输出:</p>
+<h3 id=""><img src="img/be9eb9e2e60205929eee848be40bacfb.png" alt="matplotlib set limit for x-axis and y-axis"></img></h3>
+<h2 id="3主要和次要刻度">3.主要和次要刻度</h2>
+<p>在 Matplotlib 中，<strong>记号</strong>基本上是 x 轴和 y 轴的<strong>值。基本上</strong>次要刻度<strong>是</strong>主要刻度<strong>的划分(像厘米和毫米，其中 CM 可以是主要刻度，MM 可以是次要刻度)。</strong></p>
+<p>我们有两个类<code>Locator</code>和<code>Formatter</code>来控制滴答声:</p>
+<ul>
+<li><p><code>Locator</code>类确定刻度将显示在哪里。</p>
+</li>
+<li><p>而<code>Formatter</code>类主要控制刻度的格式。</p>
+</li>
+</ul>
+<p>您必须从 matplotlib 导入这两个类:</p>
+<p><strong>1 .多重定位符()</strong></p>
+<p>该函数有助于在某个基数的倍数上放置刻度。</p>
+<p><strong>2。格式化器</strong></p>
+<p>它将使用一种<strong>字符串格式</strong>，例如:‘<strong>% d</strong>’或‘<strong>% 1.2f</strong>’或‘<strong>% 1.1f cm</strong>’来格式化刻度标签。</p>
+<p><u><strong>注意:</strong></u> 这里需要注意的是<strong>次要刻度默认为关闭</strong>，它们可以在没有标签的情况下打开，只需设置次要定位器，而次要刻度标签可以在次要格式化程序的帮助下打开。</p>
+<h3 id="主要和次要刻度示例">主要和次要刻度示例:</h3>
+<p>让我们看一个例子，</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> matplotlib.ticker <span class="hljs-keyword">import</span> (MultipleLocator, FormatStrFormatter,
+                               AutoMinorLocator)
+
+t = np.arange(<span class="hljs-number">0.0</span>, <span class="hljs-number">100.0</span>, <span class="hljs-number">0.1</span>)
+s = np.sin(<span class="hljs-number">0.1</span> * np.pi * t) * np.exp(-t * <span class="hljs-number">0.01</span>)
+
+fig, ax = plt.subplots()
+ax.plot(t, s)
+
+<span class="hljs-comment"># Make a plot with major ticks that are multiples of 10 and minor ticks that</span>
+<span class="hljs-comment"># are multiples of 5\.  Label major ticks with '%d' formatting but don't label</span>
+<span class="hljs-comment"># minor ticks.</span>
+ax.xaxis.set_major_locator(MultipleLocator(<span class="hljs-number">10</span>))
+ax.xaxis.set_major_formatter(FormatStrFormatter(<span class="hljs-string">'%d'</span>))
+
+<span class="hljs-comment"># For the minor ticks, use no labels; default NullFormatter.</span>
+ax.xaxis.set_minor_locator(MultipleLocator(<span class="hljs-number">5</span>))
+
+plt.show()
+</code></pre>
+<p>以下是输出:</p>
+<p><img src="img/fd995ae38b10c3435c338a07aa1cf4a4.png" alt="adding minor major ticks to matplotlib chart"></img></p>
+<h2 id="总结">总结:</h2>
+<p>在本教程中，我们介绍了在 matplotlib 图形中格式化坐标轴的各种方法，包括为坐标轴添加标签、为坐标轴设置限制以及添加主要/次要刻度。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="270.html" class="navigation navigation-prev " aria-label="Previous page: Matplotlib 网格">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="272.html" class="navigation navigation-next " aria-label="Next page: 在 Matplotlib 中设置轴限制">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"在 Matplotlib 中格式化轴域","level":"1.1.15","depth":2,"next":{"title":"在 Matplotlib 中设置轴限制","level":"1.1.16","depth":2,"path":"272.md","ref":"272.md","articles":[]},"previous":{"title":"Matplotlib 网格","level":"1.1.14","depth":2,"path":"270.md","ref":"270.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"271.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:36.648Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

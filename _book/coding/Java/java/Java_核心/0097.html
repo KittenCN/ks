@@ -1,0 +1,2480 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 抽象窗口工具包（AWT） · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0098.html" />
+    
+    
+    <link rel="prev" href="0096.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 核心
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0002.html">
+            
+                <a href="0002.html">
+            
+                    
+                    Java 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0003.html">
+            
+                <a href="0003.html">
+            
+                    
+                    Java 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0004.html">
+            
+                <a href="0004.html">
+            
+                    
+                    Java 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0005.html">
+            
+                <a href="0005.html">
+            
+                    
+                    设置 Java 环境和类路径
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0006.html">
+            
+                <a href="0006.html">
+            
+                    
+                    Java JVM、JDK 和 JRE
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0007.html">
+            
+                <a href="0007.html">
+            
+                    
+                    Java HelloWorld 程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0008.html">
+            
+                <a href="0008.html">
+            
+                    
+                    Java 中的变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0009.html">
+            
+                <a href="0009.html">
+            
+                    
+                    Java 中的数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0010.html">
+            
+                <a href="0010.html">
+            
+                    
+                    Java 中的静态块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0011.html">
+            
+                <a href="0011.html">
+            
+                    
+                    Java 中的类型转换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0012.html">
+            
+                <a href="0012.html">
+            
+                    
+                    Java If Else语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0013.html">
+            
+                <a href="0013.html">
+            
+                    
+                    Java switch语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0014.html">
+            
+                <a href="0014.html">
+            
+                    
+                    Java 循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0015.html">
+            
+                <a href="0015.html">
+            
+                    
+                    Java break和continue语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0016.html">
+            
+                <a href="0016.html">
+            
+                    
+                    Java 运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0017.html">
+            
+                <a href="0017.html">
+            
+                    
+                    Java 数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="0018.html">
+            
+                <a href="0018.html">
+            
+                    
+                    在 Java 中创建对象的不同方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="0019.html">
+            
+                <a href="0019.html">
+            
+                    
+                    Java 命令行参数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="0020.html">
+            
+                <a href="0020.html">
+            
+                    
+                    Java OOPS 概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="0021.html">
+            
+                <a href="0021.html">
+            
+                    
+                    什么是 OOPS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="0022.html">
+            
+                <a href="0022.html">
+            
+                    
+                    Java 中的方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="0023.html">
+            
+                <a href="0023.html">
+            
+                    
+                    Java 是严格按值传递的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="0024.html">
+            
+                <a href="0024.html">
+            
+                    
+                    Java 中的构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="0025.html">
+            
+                <a href="0025.html">
+            
+                    
+                    Java 中的访问修饰符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="0026.html">
+            
+                <a href="0026.html">
+            
+                    
+                    Java 中的继承
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="0027.html">
+            
+                <a href="0027.html">
+            
+                    
+                    Java 中的聚合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="0028.html">
+            
+                <a href="0028.html">
+            
+                    
+                    Java 中的方法重载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="0029.html">
+            
+                <a href="0029.html">
+            
+                    
+                    Java 中的方法覆盖
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="0030.html">
+            
+                <a href="0030.html">
+            
+                    
+                    运行时多态性或动态方法分派
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="0031.html">
+            
+                <a href="0031.html">
+            
+                    
+                    Java this关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="0032.html">
+            
+                <a href="0032.html">
+            
+                    
+                    Java 中的垃圾收集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="0033.html">
+            
+                <a href="0033.html">
+            
+                    
+                    Java 中的静态块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="0034.html">
+            
+                <a href="0034.html">
+            
+                    
+                    Java 最终修改
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="0035.html">
+            
+                <a href="0035.html">
+            
+                    
+                    Java instanceof运算符和向下转换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="0036.html">
+            
+                <a href="0036.html">
+            
+                    
+                    Java 包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="0037.html">
+            
+                <a href="0037.html">
+            
+                    
+                    Java 子包和静态导入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="0038.html">
+            
+                <a href="0038.html">
+            
+                    
+                    Java 抽象类和方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="0039.html">
+            
+                <a href="0039.html">
+            
+                    
+                    Java 接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="0040.html">
+            
+                <a href="0040.html">
+            
+                    
+                    Java 嵌套类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="0041.html">
+            
+                <a href="0041.html">
+            
+                    
+                    Java 具体类、抽象类、最终类、接口之间的区别
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="0042.html">
+            
+                <a href="0042.html">
+            
+                    
+                    Java 字符串处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="0043.html">
+            
+                <a href="0043.html">
+            
+                    
+                    Java 字符串处理简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="0044.html">
+            
+                <a href="0044.html">
+            
+                    
+                    Java String类函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="0045.html">
+            
+                <a href="0045.html">
+            
+                    
+                    Java 中的StringBuffer类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="0046.html">
+            
+                <a href="0046.html">
+            
+                    
+                    Java StringBuilder类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.46" data-path="0047.html">
+            
+                <a href="0047.html">
+            
+                    
+                    Java StringTokenizer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.47" data-path="0048.html">
+            
+                <a href="0048.html">
+            
+                    
+                    Java 异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.48" data-path="0049.html">
+            
+                <a href="0049.html">
+            
+                    
+                    Java 异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.49" data-path="0050.html">
+            
+                <a href="0050.html">
+            
+                    
+                    Java try-catch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.50" data-path="0051.html">
+            
+                <a href="0051.html">
+            
+                    
+                    Java 资源试用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.51" data-path="0052.html">
+            
+                <a href="0052.html">
+            
+                    
+                    Java throw、throws和finally
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.52" data-path="0053.html">
+            
+                <a href="0053.html">
+            
+                    
+                    Java 中用户定义的异常子类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.53" data-path="0054.html">
+            
+                <a href="0054.html">
+            
+                    
+                    Java 带有异常处理的方法覆盖
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.54" data-path="0055.html">
+            
+                <a href="0055.html">
+            
+                    
+                    Java 中的链式异常
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.55" data-path="0056.html">
+            
+                <a href="0056.html">
+            
+                    
+                    Java 多线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.56" data-path="0057.html">
+            
+                <a href="0057.html">
+            
+                    
+                    Java 多线程简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.57" data-path="0058.html">
+            
+                <a href="0058.html">
+            
+                    
+                    Java Thread类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.58" data-path="0059.html">
+            
+                <a href="0059.html">
+            
+                    
+                    在 Java 中创建一个线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.59" data-path="0060.html">
+            
+                <a href="0060.html">
+            
+                    
+                    在 Java 中连接线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.60" data-path="0061.html">
+            
+                <a href="0061.html">
+            
+                    
+                    Java 线程休眠
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.61" data-path="0062.html">
+            
+                <a href="0062.html">
+            
+                    
+                    Java 命名线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.62" data-path="0063.html">
+            
+                <a href="0063.html">
+            
+                    
+                    Java 线程优先级
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.63" data-path="0064.html">
+            
+                <a href="0064.html">
+            
+                    
+                    Java 守护线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.64" data-path="0065.html">
+            
+                <a href="0065.html">
+            
+                    
+                    Java 同步
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.65" data-path="0066.html">
+            
+                <a href="0066.html">
+            
+                    
+                    Java 线程间通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.66" data-path="0067.html">
+            
+                <a href="0067.html">
+            
+                    
+                    Java 线程组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.67" data-path="0068.html">
+            
+                <a href="0068.html">
+            
+                    
+                    高级概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.68" data-path="0069.html">
+            
+                <a href="0069.html">
+            
+                    
+                    Java 枚举
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.69" data-path="0070.html">
+            
+                <a href="0070.html">
+            
+                    
+                    Java 中的自动装箱和拆箱
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.70" data-path="0071.html">
+            
+                <a href="0071.html">
+            
+                    
+                    Java 输入输出流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.71" data-path="0072.html">
+            
+                <a href="0072.html">
+            
+                    
+                    Java 序列化和反序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.72" data-path="0073.html">
+            
+                <a href="0073.html">
+            
+                    
+                    Java 中的网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.73" data-path="0074.html">
+            
+                <a href="0074.html">
+            
+                    
+                    Java 泛型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.74" data-path="0075.html">
+            
+                <a href="0075.html">
+            
+                    
+                    集合框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.75" data-path="0076.html">
+            
+                <a href="0076.html">
+            
+                    
+                    Java 集合框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.76" data-path="0077.html">
+            
+                <a href="0077.html">
+            
+                    
+                    Java 集合框架的接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.77" data-path="0078.html">
+            
+                <a href="0078.html">
+            
+                    
+                    Java 中的集合类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.78" data-path="0079.html">
+            
+                <a href="0079.html">
+            
+                    
+                    使用迭代器访问 Java 集合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.79" data-path="0080.html">
+            
+                <a href="0080.html">
+            
+                    
+                    Java 集合框架ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.80" data-path="0081.html">
+            
+                <a href="0081.html">
+            
+                    
+                    Java 集合框架LinkedList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.81" data-path="0082.html">
+            
+                <a href="0082.html">
+            
+                    
+                    Java 集合框架HashSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.82" data-path="0083.html">
+            
+                <a href="0083.html">
+            
+                    
+                    Java 集合框架LinkedHashSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.83" data-path="0084.html">
+            
+                <a href="0084.html">
+            
+                    
+                    Java 集合框架TreeSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.84" data-path="0085.html">
+            
+                <a href="0085.html">
+            
+                    
+                    Java 集合Map接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.85" data-path="0086.html">
+            
+                <a href="0086.html">
+            
+                    
+                    Java 集合框架Hashmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.86" data-path="0087.html">
+            
+                <a href="0087.html">
+            
+                    
+                    Java 集合框架TreeMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.87" data-path="0088.html">
+            
+                <a href="0088.html">
+            
+                    
+                    Java 集合框架Hashtable
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.88" data-path="0089.html">
+            
+                <a href="0089.html">
+            
+                    
+                    Java Collections类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.89" data-path="0090.html">
+            
+                <a href="0090.html">
+            
+                    
+                    Java Comparable接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.90" data-path="0091.html">
+            
+                <a href="0091.html">
+            
+                    
+                    Java 集合Comparator接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.91" data-path="0092.html">
+            
+                <a href="0092.html">
+            
+                    
+                    Java 集合遗留类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.92" data-path="0093.html">
+            
+                <a href="0093.html">
+            
+                    
+                    GUI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.93" data-path="0094.html">
+            
+                <a href="0094.html">
+            
+                    
+                    Java 中的 Applet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.94" data-path="0095.html">
+            
+                <a href="0095.html">
+            
+                    
+                    Java GUI 事件处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.95" data-path="0096.html">
+            
+                <a href="0096.html">
+            
+                    
+                    Java AWT
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.96" data-path="0097.html">
+            
+                <a href="0097.html">
+            
+                    
+                    Java 抽象窗口工具包（AWT）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.97" data-path="0098.html">
+            
+                <a href="0098.html">
+            
+                    
+                    Java Swing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.98" data-path="0099.html">
+            
+                <a href="0099.html">
+            
+                    
+                    Java Swing 组件和容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.99" data-path="0100.html">
+            
+                <a href="0100.html">
+            
+                    
+                    Java Swing 组件和容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.100" data-path="0101.html">
+            
+                <a href="0101.html">
+            
+                    
+                    Java 包装类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.101" data-path="0102.html">
+            
+                <a href="0102.html">
+            
+                    
+                    Java 包装类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.102" data-path="0103.html">
+            
+                <a href="0103.html">
+            
+                    
+                    Java Byte类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.103" data-path="0104.html">
+            
+                <a href="0104.html">
+            
+                    
+                    Java Short类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.104" data-path="0105.html">
+            
+                <a href="0105.html">
+            
+                    
+                    Java Float类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.105" data-path="0106.html">
+            
+                <a href="0106.html">
+            
+                    
+                    Java Double类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.106" data-path="0107.html">
+            
+                <a href="0107.html">
+            
+                    
+                    Java Boolean类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.107" data-path="0108.html">
+            
+                <a href="0108.html">
+            
+                    
+                    Java Character类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.108" data-path="0109.html">
+            
+                <a href="0109.html">
+            
+                    
+                    Java 反射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.109" data-path="0110.html">
+            
+                <a href="0110.html">
+            
+                    
+                    Java 反射 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.110" data-path="0111.html">
+            
+                <a href="0111.html">
+            
+                    
+                    Java Class类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.111" data-path="0112.html">
+            
+                <a href="0112.html">
+            
+                    
+                    数据库编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.112" data-path="0113.html">
+            
+                <a href="0113.html">
+            
+                    
+                    JDBC 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.113" data-path="0114.html">
+            
+                <a href="0114.html">
+            
+                    
+                    JDBC API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.114" data-path="0115.html">
+            
+                <a href="0115.html">
+            
+                    
+                    将 Java 应用连接到数据库的步骤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.115" data-path="0116.html">
+            
+                <a href="0116.html">
+            
+                    
+                    使用 JDBC 类型 1 驱动连接到 Access 数据库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.116" data-path="0117.html">
+            
+                <a href="0117.html">
+            
+                    
+                    Java：使用瘦驱动连接到 Oracle 数据库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.117" data-path="0118.html">
+            
+                <a href="0118.html">
+            
+                    
+                    使用瘦驱动连接到 MySQL 数据库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.118" data-path="0119.html">
+            
+                <a href="0119.html">
+            
+                    
+                    JDBC MongoDB 连接
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.119" data-path="0120.html">
+            
+                <a href="0120.html">
+            
+                    
+                    Java 杂项概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.120" data-path="0121.html">
+            
+                <a href="0121.html">
+            
+                    
+                    Java RMI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.121" data-path="0122.html">
+            
+                <a href="0122.html">
+            
+                    
+                    Java 内部类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.122" data-path="0123.html">
+            
+                <a href="0123.html">
+            
+                    
+                    Java File类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.123" data-path="0124.html">
+            
+                <a href="0124.html">
+            
+                    
+                    Java 中的AbstractList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.124" data-path="0125.html">
+            
+                <a href="0125.html">
+            
+                    
+                    Java AbstractSequentialList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.125" data-path="0126.html">
+            
+                <a href="0126.html">
+            
+                    
+                    Java CopyOnWriteArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.126" data-path="0127.html">
+            
+                <a href="0127.html">
+            
+                    
+                    Java AbstractSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.127" data-path="0128.html">
+            
+                <a href="0128.html">
+            
+                    
+                    EnumSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.128" data-path="0129.html">
+            
+                <a href="0129.html">
+            
+                    
+                    Java IdentityHashMap类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.129" data-path="0130.html">
+            
+                <a href="0130.html">
+            
+                    
+                    Java SortedMap接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.130" data-path="0131.html">
+            
+                <a href="0131.html">
+            
+                    
+                    Queue接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.131" data-path="0132.html">
+            
+                <a href="0132.html">
+            
+                    
+                    Deque接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.132" data-path="0133.html">
+            
+                <a href="0133.html">
+            
+                    
+                    布局管理器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 抽象窗口工具包（AWT）</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-抽象窗口工具包（awt）">Java 抽象窗口工具包（AWT）</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java/java-awt-1.php" target="_blank">https://www.studytonight.com/java/java-awt-1.php</a></p>
+</blockquote>
+<p>在我们之前的主题中，我们讨论了 AWT API 的一些组件，现在这里我们将讨论其余的组件和事件侦听器。</p>
+<h3 id="菜单和菜单">菜单和菜单</h3>
+<p>在 Java 中，AWT 包含一个菜单项和菜单类。菜单项用于在菜单中添加标签。菜单用于创建菜单组件的下拉列表</p>
+<h3 id="menuitem-声明">MenuItem 声明</h3>
+<p>公共类 MenuItem 扩展了 MenuComponent 实现的可访问性</p>
+<h3 id="菜单声明">菜单声明</h3>
+<p>公共类 Menu 扩展 MenuItem 实现 MenuContainer，可访问</p>
+<h3 id="示例">示例:</h3>
+<p>在这个例子中，我们正在创建一个包含子菜单的菜单项。我们使用菜单项和菜单类来创建菜单。</p>
+<pre><code class="lang-java">  <span class="hljs-keyword">import</span> java.awt.*;  
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MenuDemo1</span>  
+</span>{  
+  MenuDemo1()
+  {  
+    Frame menu_f= <span class="hljs-keyword">new</span> Frame(<span class="hljs-string">"studytonight ==&gt; Menu and MenuItem Demo"</span>);  
+    MenuBarmenu_bar=<span class="hljs-keyword">new</span> MenuBar();  
+    Menu menu11=<span class="hljs-keyword">new</span> Menu(<span class="hljs-string">"Menu"</span>);  
+    Menu sub_menu1=<span class="hljs-keyword">new</span> Menu(<span class="hljs-string">"Sub Menu =&gt;"</span>);  
+    MenuItem a1=<span class="hljs-keyword">new</span> MenuItem(<span class="hljs-string">"Red"</span>);  
+    MenuItem a2=<span class="hljs-keyword">new</span> MenuItem(<span class="hljs-string">"Light Red"</span>);  
+    MenuItem a3=<span class="hljs-keyword">new</span> MenuItem(<span class="hljs-string">"Drak Red"</span>);  
+    MenuItem b1=<span class="hljs-keyword">new</span> MenuItem(<span class="hljs-string">"Green"</span>);  
+    MenuItem b2=<span class="hljs-keyword">new</span> MenuItem(<span class="hljs-string">"Light Green"</span>);  
+    MenuItem b3=<span class="hljs-keyword">new</span> MenuItem(<span class="hljs-string">"Dark Green"</span>);
+    menu11.add(a1); 
+    sub_menu1.add(a2);
+    sub_menu1.add(a3); 
+    menu11.add(b1);    
+    sub_menu1.add(b2);  
+    sub_menu1.add(b3);  
+    menu11.add(sub_menu1);  
+    menu_bar.add(menu11);  
+    menu_f.setMenuBar(menu_bar);  
+    menu_f.setSize(<span class="hljs-number">400</span>,<span class="hljs-number">400</span>);  
+    menu_f.setLayout(<span class="hljs-keyword">null</span>);  
+    menu_f.setVisible(<span class="hljs-keyword">true</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span>  
+  </span>{  
+    <span class="hljs-keyword">new</span> MenuDemo1();  
+  }  
+}
+</code></pre>
+<p><img src="img/9ca27f48e0e74e352c73c489535447a7.png" alt="awt-menu"></img> <img src="img/907bbc8a971c4f98febcced89ebe1f3b.png" alt="awt-menu"></img></p>
+<h3 id="awt-弹出菜单">AWT 弹出菜单</h3>
+<p>在 Java 中，AWT 包含一个弹出菜单。这是一个动态的弹出窗口。</p>
+<h3 id="人口数量声明">人口数量声明</h3>
+<p>公共类弹出菜单扩展菜单实现菜单容器，可访问</p>
+<h3 id="示例">示例:</h3>
+<pre><code class="lang-java">  <span class="hljs-keyword">import</span> java.awt.*;  
+<span class="hljs-keyword">import</span> java.awt.event.*;  
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PopupMenuDemo1</span>  
+</span>{  
+  PopupMenuDemo1()
+  {  
+    <span class="hljs-keyword">final</span> Frame pop_menuf= <span class="hljs-keyword">new</span> Frame(<span class="hljs-string">"studytonight ==&gt;PopupMenu Demo"</span>);  
+    <span class="hljs-keyword">final</span> PopupMenupop_menu = <span class="hljs-keyword">new</span> PopupMenu(<span class="hljs-string">"*Edit*"</span>);   
+    MenuItempop_cut = <span class="hljs-keyword">new</span> MenuItem(<span class="hljs-string">"Cut"</span>);  
+    pop_cut.setActionCommand(<span class="hljs-string">"Cut"</span>);  
+    MenuItempop_copy = <span class="hljs-keyword">new</span> MenuItem(<span class="hljs-string">"Copy"</span>);  
+    pop_copy.setActionCommand(<span class="hljs-string">"Copy"</span>);  
+    MenuItempop_paste = <span class="hljs-keyword">new</span> MenuItem(<span class="hljs-string">"Paste"</span>);  
+    pop_paste.setActionCommand(<span class="hljs-string">"Paste"</span>);      
+    pop_menu.add(pop_cut);  
+    pop_menu.add(pop_copy);  
+    pop_menu.add(pop_paste);        
+    pop_menuf.addMouseListener(<span class="hljs-keyword">new</span> MouseAdapter() 
+    {  
+      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">mouseClicked</span><span class="hljs-params">(MouseEvent a)</span> 
+      </span>{              
+        pop_menu.show(pop_menuf , a.getX(), a.getY());  
+      }                 
+    });  
+    pop_menuf.add(pop_menu);   
+    pop_menuf.setSize(<span class="hljs-number">400</span>,<span class="hljs-number">400</span>);  
+    pop_menuf.setLayout(<span class="hljs-keyword">null</span>);  
+    pop_menuf.setVisible(<span class="hljs-keyword">true</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span>  
+  </span>{  
+    <span class="hljs-keyword">new</span> PopupMenuDemo1();  
+  }  
+}
+</code></pre>
+<p><img src="img/961829587698218b42175799a26d6c8a.png" alt="awt-popup"></img> <img src="img/d7bdafe11d8eba37d7349b2461cbafd9.png" alt="awt-popup"></img></p>
+<h3 id="awt-面板">AWT 面板</h3>
+<p>在 Java 中，AWT 包含一个面板。面板提供了一个可以放置组件的自由空间。</p>
+<h3 id="小组声明">小组声明</h3>
+<p>公共类 Panel 扩展了容器实现可访问</p>
+<h3 id="示例">示例:</h3>
+<p>让我们创建一个面板来添加组件，如:按钮，文本框等。面板提供了添加 awt 组件的位置。</p>
+<pre><code class="lang-java">  <span class="hljs-keyword">import</span> java.awt.*;  
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PanelDemo1</span></span>{  
+  PanelDemo1()  
+  {  
+    Frame panel_f= <span class="hljs-keyword">new</span> Frame(<span class="hljs-string">"studytonight ==&gt; Panel Demo"</span>);    
+    Panel panel11=<span class="hljs-keyword">new</span> Panel();  
+    panel11.setBounds(<span class="hljs-number">40</span>,<span class="hljs-number">80</span>,<span class="hljs-number">200</span>,<span class="hljs-number">200</span>);    
+    panel11.setBackground(Color.red);  
+    Button box1=<span class="hljs-keyword">new</span> Button(<span class="hljs-string">"On"</span>);     
+    box1.setBounds(<span class="hljs-number">50</span>,<span class="hljs-number">100</span>,<span class="hljs-number">80</span>,<span class="hljs-number">30</span>);    
+    box1.setBackground(Color.gray);   
+    Button box2=<span class="hljs-keyword">new</span> Button(<span class="hljs-string">"Off"</span>);   
+    box2.setBounds(<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">80</span>,<span class="hljs-number">30</span>);    
+    box2.setBackground(Color.gray);   
+    panel11.add(box1); 
+    panel11.add(box2);  
+    panel_f.add(panel11);  
+    panel_f.setSize(<span class="hljs-number">400</span>,<span class="hljs-number">400</span>);    
+    panel_f.setLayout(<span class="hljs-keyword">null</span>);    
+    panel_f.setVisible(<span class="hljs-keyword">true</span>);    
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span>  
+  </span>{  
+    <span class="hljs-keyword">new</span> PanelDemo1();  
+  }  
+}
+</code></pre>
+<p><img src="img/f2b5c0009c231b7f2b5857db1ee0a8c2.png" alt="awt-panel"></img> <img src="img/25e5c8437c509896793e25bac22c9f94.png" alt="awt-panel"></img></p>
+<h3 id="怎么用">怎么用</h3>
+<p>在 Java 中，AWT 包含一个对话框。这是一种有边框和标题的窗口。但是它没有任何最大化和最小化按钮。</p>
+<h3 id="申报">申报</h3>
+<p>公共类对话框扩展窗口</p>
+<h3 id="示例">示例:</h3>
+<p>在这个例子中，我们正在创建一个对话框。对话框用于向用户提供信息。</p>
+<pre><code class="lang-java">  <span class="hljs-keyword">import</span> java.awt.*;  
+<span class="hljs-keyword">import</span> java.awt.event.*;  
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DialogDemo1</span>
+</span>{  
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Dialog dialog_d;  
+  DialogDemo1() 
+  {  
+    Frame dialog_f= <span class="hljs-keyword">new</span> Frame();  
+    dialog_d = <span class="hljs-keyword">new</span> Dialog(dialog_f , <span class="hljs-string">"studytonight ==&gt; Dialog Demo"</span>, <span class="hljs-keyword">true</span>);  
+    dialog_d.setLayout( <span class="hljs-keyword">new</span> FlowLayout() );  
+    Button dialog_b = <span class="hljs-keyword">new</span> Button (<span class="hljs-string">"OK"</span>);  
+    dialog_b.addActionListener ( <span class="hljs-keyword">new</span> ActionListener()  
+    {  
+      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">actionPerformed</span><span class="hljs-params">( ActionEvent e )</span>  
+      </span>{  
+        DialogDemo1.dialog_d.setVisible(<span class="hljs-keyword">false</span>);  
+      }  
+    });  
+    dialog_d.add( <span class="hljs-keyword">new</span> Label (<span class="hljs-string">"Welcome to studytonight. Click on button to continue."</span>));  
+    dialog_d.add(dialog_b);   
+    dialog_d.setSize(<span class="hljs-number">300</span>,<span class="hljs-number">300</span>);    
+    dialog_d.setVisible(<span class="hljs-keyword">true</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span>  
+  </span>{  
+    <span class="hljs-keyword">new</span> DialogDemo1();  
+  }  
+}
+</code></pre>
+<p><img src="img/032cd9b055ec5ed7395184809c3cf324.png" alt="awt-dialog"></img> <img src="img/77e205f8ab9c8250cc444dda1be04c57.png" alt="awt-dialog"></img></p>
+<h3 id="awt-工具包">AWT 工具包</h3>
+<p>在 Java 中，AWT 包含一个工具包。它是抽象窗口工具包的超类，可以在任何地方实现。</p>
+<h3 id="申报">申报</h3>
+<p>公共抽象类工具包扩展了对象</p>
+<h3 id="示例">示例:</h3>
+<pre><code class="lang-java">  <span class="hljs-keyword">import</span> java.awt.*;  
+<span class="hljs-keyword">import</span> java.awt.event.*;  
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ToolkitDemo1</span> 
+</span>{  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> 
+  </span>{  
+    Frame toolkit_f=<span class="hljs-keyword">new</span> Frame(<span class="hljs-string">"studytonight ==&gt; Toolkit Demo"</span>);  
+    Button toolkit_b=<span class="hljs-keyword">new</span> Button(<span class="hljs-string">"beep"</span>);  
+    toolkit_b.setBounds(<span class="hljs-number">50</span>,<span class="hljs-number">100</span>,<span class="hljs-number">60</span>,<span class="hljs-number">30</span>);  
+    toolkit_f.add(toolkit_b);     
+    toolkit_f.setSize(<span class="hljs-number">300</span>,<span class="hljs-number">300</span>);  
+    toolkit_f.setLayout(<span class="hljs-keyword">null</span>);  
+    toolkit_f.setVisible(<span class="hljs-keyword">true</span>);  
+    toolkit_b.addActionListener(<span class="hljs-keyword">new</span> ActionListener()
+    {  
+      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">actionPerformed</span><span class="hljs-params">(ActionEvent a)</span>
+      </span>{  
+        Toolkit.getDefaultToolkit().beep();  
+      }  
+    });       
+  }  
+}
+</code></pre>
+<p><img src="img/f1327670f6941e561bdc6a5a9636b7e6.png" alt="awt-toolkit"></img> <img src="img/57356e6f3b7a0ee2867e7c3400bf896b.png" alt="awt-toolkit"></img></p>
+<h3 id="动作监听器接口">动作监听器接口</h3>
+<p>在 java 中，ActionListener 接口位于 <strong>java.awt</strong> 下。事件包。当您想要通知按钮或菜单项上的点击操作时，使用此界面。它有<code>actionPeformed()</code>法。</p>
+<h3 id="句法">句法</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">actionPerformed</span><span class="hljs-params">(ActionEvent e)</span>
+</span></code></pre>
+<h3 id="以下是添加操作侦听器接口的三个步骤">以下是添加操作侦听器接口的三个步骤</h3>
+<p><strong>步骤 1:</strong> 在类中实现 ActionListener 接口。</p>
+<h3 id="语法">语法:</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ActionListenerDemo</span> <span class="hljs-title">Implements</span> <span class="hljs-title">ActionListener</span>
+</span></code></pre>
+<p><strong>步骤 2:</strong> 现在向监听器注册所有组件。</p>
+<h3 id="语法">语法:</h3>
+<pre><code class="lang-java">component.addActionListener(instanceOfListenerclass);
+</code></pre>
+<p><strong>步骤 3:</strong> 最后覆盖 actionPerformed()方法。</p>
+<h3 id="语法">语法:</h3>
+<pre><code class="lang-java"> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">actionPerformed</span><span class="hljs-params">(ActionEvent e)</span>
+</span>{  
+           <span class="hljs-comment">//statements</span>
+}
+</code></pre>
+<h3 id="示例">示例:</h3>
+<p>我们可以使用动作监听器在 awt 组件中实现事件。事件可以是任何像:鼠标时钟，鼠标拖动等。在这个例子中，我们实现了 actionlistener。</p>
+<pre><code class="lang-java">  <span class="hljs-keyword">import</span> java.awt.BorderLayout;
+<span class="hljs-keyword">import</span> java.awt.event.ActionEvent;
+<span class="hljs-keyword">import</span> java.awt.event.ActionListener;
+<span class="hljs-keyword">import</span> javax.swing.JButton;
+<span class="hljs-keyword">import</span> javax.swing.JFrame;
+<span class="hljs-keyword">import</span> javax.swing.JTextArea;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ActionListenerDemo1</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ActionListener</span> </span>{
+
+  JButton aL_button;
+  JFrame aL_frame;
+  JTextArea aL_textArea;
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ActionListenerDemo1</span><span class="hljs-params">()</span> </span>{
+    aL_button = <span class="hljs-keyword">new</span> JButton(<span class="hljs-string">"Click Me"</span>);
+    aL_frame = <span class="hljs-keyword">new</span> JFrame(<span class="hljs-string">"studytonight ==&gt;ActionListener Demo"</span>);
+    aL_textArea = <span class="hljs-keyword">new</span> JTextArea(<span class="hljs-number">50</span>, <span class="hljs-number">50</span>);
+
+    aL_button.addActionListener(<span class="hljs-keyword">this</span>);
+    aL_textArea.setLineWrap(<span class="hljs-keyword">true</span>);
+    aL_frame.setLayout(<span class="hljs-keyword">new</span> BorderLayout());
+    aL_frame.add(aL_textArea, BorderLayout.NORTH);
+    aL_frame.add(aL_button, BorderLayout.SOUTH);
+    aL_frame.pack();
+
+    aL_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    aL_frame.setVisible(<span class="hljs-keyword">true</span>);
+  }
+
+  <span class="hljs-annotation">@Override</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">actionPerformed</span><span class="hljs-params">(ActionEvent e)</span> </span>{
+    aL_textArea.setText(aL_textArea.getText().concat(<span class="hljs-string">"Welocme to studytonight.com\n"</span>));
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span> </span>{
+    ActionListenerDemo1 obj= <span class="hljs-keyword">new</span> ActionListenerDemo1();
+  }
+}
+</code></pre>
+<p><img src="img/04e056d1f1e0b108e52c8e20ad203698.png" alt="awt-actionlistener"></img> <img src="img/82709ef917143a9be4f837a899312e25.png" alt="awt-actionlistener"></img></p>
+<h3 id="鼠标监听器接口">鼠标监听器接口</h3>
+<p>在 Java 中，MouseListener 接口在 java.awt.event 包下。当鼠标状态改变时，使用这个接口。它有以下 5 种方法:</p>
+<p>1.公共抽象 void MouseClicked(MouseEvent e)；</p>
+<p>2.公共抽象 void MouseEnTER(MouseEvent e)；</p>
+<p>3.公共抽象 void MouseExIt(MouseEvent e)；</p>
+<p>4.公共抽象 void MousePressed(MouseEvent e)；</p>
+<p>5.公共抽象 void MouseReleased(MouseEvent e)；</p>
+<h3 id="示例">示例:</h3>
+<pre><code class="lang-java">  <span class="hljs-keyword">import</span> java.awt.*;  
+<span class="hljs-keyword">import</span> java.awt.event.*;  
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MouseListenerDemo1</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Frame</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MouseListener</span></span>{
+  Label mL_l;  
+  MouseListenerDemo1(){
+    addMouseListener(<span class="hljs-keyword">this</span>);  
+
+    mL_l=<span class="hljs-keyword">new</span> Label();  
+    mL_l.setBounds(<span class="hljs-number">10</span>,<span class="hljs-number">20</span>,<span class="hljs-number">500</span>,<span class="hljs-number">100</span>);  
+    add(mL_l);  
+    setSize(<span class="hljs-number">300</span>,<span class="hljs-number">300</span>);  
+    setLayout(<span class="hljs-keyword">null</span>);  
+    setVisible(<span class="hljs-keyword">true</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">mouseClicked</span><span class="hljs-params">(MouseEvent e)</span> </span>{  
+    mL_l.setText(<span class="hljs-string">"studytonight ==&gt; Mouse Clicked"</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">mouseEntered</span><span class="hljs-params">(MouseEvent e)</span> </span>{  
+    mL_l.setText(<span class="hljs-string">"studytonight ==&gt; Mouse Entered"</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">mouseExited</span><span class="hljs-params">(MouseEvent e)</span> </span>{  
+    mL_l.setText(<span class="hljs-string">"studytonight ==&gt; Mouse Exited"</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">mousePressed</span><span class="hljs-params">(MouseEvent e)</span> </span>{  
+    mL_l.setText(<span class="hljs-string">"studytonight ==&gt; Mouse Pressed"</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">mouseReleased</span><span class="hljs-params">(MouseEvent e)</span> </span>{  
+    mL_l.setText(<span class="hljs-string">"studytonight ==&gt; Mouse Released"</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{  
+    <span class="hljs-keyword">new</span> MouseListenerDemo1();  
+  }  
+}
+</code></pre>
+<p><img src="img/8be424615a4520173f4f07f980dc1995.png" alt="awt-mouselistner"></img> <img src="img/ba4fcd41b4f0cc4ebc3f6286970a9638.png" alt="awt-mouselistner"></img></p>
+<h3 id="mousemotionlistener-接口">mousemotionlistener 接口</h3>
+<p>在 Java 中，MouseMotionListener 接口在 <strong>java.awt.event</strong> 包下。每当移动或拖动鼠标时，都会使用此界面。它有以下两种方法:</p>
+<p>1.公共抽象 void MouseDrawed(MouseEvent e)；</p>
+<p>2.公共抽象 void Mousemoved(MouseEvent e)；</p>
+<h3 id="示例">示例:</h3>
+<pre><code class="lang-java">  <span class="hljs-keyword">import</span> java.awt.*;  
+<span class="hljs-keyword">import</span> java.awt.event.*;  
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MouseMotionListenerDemo1</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Frame</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MouseMotionListener</span></span>{
+  MouseMotionListenerDemo1(){
+    addMouseMotionListener(<span class="hljs-keyword">this</span>);  
+
+    setSize(<span class="hljs-number">500</span>,<span class="hljs-number">500</span>);  
+    setLayout(<span class="hljs-keyword">null</span>);  
+    setVisible(<span class="hljs-keyword">true</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">mouseDragged</span><span class="hljs-params">(MouseEvent a)</span> </span>{  
+    Graphics mM_g=getGraphics();  
+    mM_g.setColor(Color.ORANGE);  
+    mM_g.fillOval(a.getX(),a.getY(),<span class="hljs-number">10</span>,<span class="hljs-number">10</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">mouseMoved</span><span class="hljs-params">(MouseEvent e)</span> </span>{}  
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{  
+    <span class="hljs-keyword">new</span> MouseMotionListenerDemo1();  
+  }  
+}
+</code></pre>
+<p><img src="img/f691be0df637e906b20cd3c89190c869.png" alt="awt-mousemotion"></img> <img src="img/76c9c7875163dfdd2386c6350516c3a0.png" alt="awt-mousemotion"></img></p>
+<h3 id="项目筛选器接口">项目筛选器接口</h3>
+<p>在 Java 中，ItemListener 接口在 <strong>java.awt.event</strong> 包下。只要点击复选框，就会使用该界面。它有 itemStateChanged()方法。</p>
+<h3 id="语法">语法:</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">itemStateChanged</span><span class="hljs-params">(ItemEvent e)</span>
+</span></code></pre>
+<h3 id="示例">示例:</h3>
+<p>此界面用于处理项目侦听器事件，如:项目已选中或复选框已选中。在这个例子中，我们正在处理复选框选中事件。</p>
+<pre><code class="lang-java">  <span class="hljs-keyword">import</span> java.awt.*;    
+<span class="hljs-keyword">import</span> java.awt.event.*;    
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ItemListenerDemo1</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ItemListener</span></span>{
+  Checkbox iT_checkBox1,iT_checkBox2;  
+  Label iT_label;  
+  ItemListenerDemo1(){
+    Frame iT_f= <span class="hljs-keyword">new</span> Frame(<span class="hljs-string">"studytonight ==&gt;CheckBox Demo"</span>);    
+    iT_label = <span class="hljs-keyword">new</span> Label();            
+    iT_label.setAlignment(Label.CENTER);    
+    iT_label.setSize(<span class="hljs-number">400</span>,<span class="hljs-number">100</span>);    
+    iT_checkBox1 = <span class="hljs-keyword">new</span> Checkbox(<span class="hljs-string">"Core Java"</span>);    
+    iT_checkBox1.setBounds(<span class="hljs-number">100</span>,<span class="hljs-number">100</span>, <span class="hljs-number">100</span>,<span class="hljs-number">40</span>);    
+    iT_checkBox2 = <span class="hljs-keyword">new</span> Checkbox(<span class="hljs-string">"jsp"</span>);    
+    iT_checkBox2.setBounds(<span class="hljs-number">100</span>,<span class="hljs-number">150</span>, <span class="hljs-number">100</span>,<span class="hljs-number">40</span>);    
+    iT_f.add(iT_checkBox1); 
+    iT_f.add(iT_checkBox2); 
+    iT_f.add(iT_label);    
+    iT_checkBox1.addItemListener(<span class="hljs-keyword">this</span>);    
+    iT_checkBox2.addItemListener(<span class="hljs-keyword">this</span>);    
+    iT_f.setSize(<span class="hljs-number">400</span>,<span class="hljs-number">400</span>);    
+    iT_f.setLayout(<span class="hljs-keyword">null</span>);    
+    iT_f.setVisible(<span class="hljs-keyword">true</span>);    
+  }    
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">itemStateChanged</span><span class="hljs-params">(ItemEventiT)</span> </span>{      
+    <span class="hljs-keyword">if</span>(iT.getSource()==iT_checkBox1)  
+      iT_label.setText(<span class="hljs-string">"Core Java Checkbox: "</span>+ (iT.getStateChange()==<span class="hljs-number">1</span>?<span class="hljs-string">"checked"</span>:<span class="hljs-string">"unchecked"</span>));   
+    <span class="hljs-keyword">if</span>(iT.getSource()==iT_checkBox2)  
+      iT_label.setText(<span class="hljs-string">"jsp Checkbox: "</span>+ (iT.getStateChange()==<span class="hljs-number">1</span>?<span class="hljs-string">"checked"</span>:<span class="hljs-string">"unchecked"</span>));    
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span>    
+  </span>{    
+    <span class="hljs-keyword">new</span> ItemListenerDemo1();    
+  }    
+}
+</code></pre>
+<p><img src="img/42ca472abe315214e0369b9222109d6f.png" alt="awt-itemlistener"></img> <img src="img/edbb45aed331f3d6b662ea071a09752d.png" alt="awt-itemlistener"></img></p>
+<h3 id="keylistener-接口">KeyListener 接口</h3>
+<p>在 Java 中，KeyListener 接口在 java.awt.event 包下。当键的状态改变时，使用这个接口。它有以下三种方法:</p>
+<p>1.公共抽象 void KeyPress(KeyEvent e)；</p>
+<p>2.公共抽象 void KeyReleased(KeyEvent e)；</p>
+<p>3.公共抽象 void KeyType(KeyEvent e)；</p>
+<h3 id="示例">示例:</h3>
+<p>在这个例子中，我们使用 keylistener 接口来处理按键事件，可以是按键释放、键入等。请参见下面的示例。</p>
+<pre><code class="lang-java">  <span class="hljs-keyword">import</span> java.awt.*;  
+<span class="hljs-keyword">import</span> java.awt.event.*;  
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KeyListenerDemo1</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Frame</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">KeyListener</span></span>{
+  Label kL_l;  
+  TextArea kL_area;  
+  KeyListenerDemo1(){
+
+    kL_l=<span class="hljs-keyword">new</span> Label();  
+    kL_l.setBounds(<span class="hljs-number">20</span>,<span class="hljs-number">50</span>,<span class="hljs-number">500</span>,<span class="hljs-number">20</span>);  
+    kL_area=<span class="hljs-keyword">new</span> TextArea();  
+    kL_area.setBounds(<span class="hljs-number">20</span>,<span class="hljs-number">80</span>,<span class="hljs-number">300</span>, <span class="hljs-number">300</span>);  
+    kL_area.addKeyListener(<span class="hljs-keyword">this</span>);  
+
+    add(kL_l);
+    add(kL_area);  
+    setSize(<span class="hljs-number">400</span>,<span class="hljs-number">400</span>);  
+    setLayout(<span class="hljs-keyword">null</span>);  
+    setVisible(<span class="hljs-keyword">true</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">keyPressed</span><span class="hljs-params">(KeyEvent e)</span> </span>{  
+    kL_l.setText(<span class="hljs-string">"studytonight ==&gt; Key Pressed"</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">keyReleased</span><span class="hljs-params">(KeyEvent e)</span> </span>{  
+    kL_l.setText(<span class="hljs-string">"studytonight ==&gt; Key Released"</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">keyTyped</span><span class="hljs-params">(KeyEvent e)</span> </span>{  
+    kL_l.setText(<span class="hljs-string">"studytonight ==&gt; Key Typed"</span>);  
+  }  
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{  
+    <span class="hljs-keyword">new</span> KeyListenerDemo1();  
+  }  
+}
+</code></pre>
+<p><img src="img/129bbff7ba4731cc569b555f90cb200c.png" alt="awt-keylistener"></img> <img src="img/d47c9fe0024e8ad71d2ede08090c9bb0.png" alt="awt-keylistener"></img></p>
+<h3 id="窗口侦听器接口">窗口侦听器接口</h3>
+<p>在 Java 中，WindowListener Interface 位于 java.awt.event 包下。当窗口的状态改变时，使用这个接口。它有以下 7 种方法:</p>
+<p>1.公共抽象 void window activated(window event e)；</p>
+<p>2.公共抽象 void window closed(window event e)；</p>
+<p>3.公共抽象 void window closing(window event e)；</p>
+<p>4.公共抽象 void window deactivated(window event e)；</p>
+<p>5.公共抽象 void windowDeiconified(WindowEvent e)；</p>
+<p>6.公共抽象 void windowIconified(WindowEvent e)；</p>
+<p>7.公共抽象 void window open(window event e)；</p>
+<h3 id="示例">示例:</h3>
+<p>在这个例子中，我们正在处理窗口事件，如:窗口打开，关闭等。</p>
+<pre><code class="lang-java">  <span class="hljs-keyword">import</span> java.awt.*;  
+<span class="hljs-keyword">import</span> java.awt.event.WindowEvent;  
+<span class="hljs-keyword">import</span> java.awt.event.WindowListener;  
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WindowDemo1</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Frame</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">WindowListener</span>
+</span>{  
+  WindowDemo1()
+  {  
+    addWindowListener(<span class="hljs-keyword">this</span>);  
+    setSize(<span class="hljs-number">500</span>,<span class="hljs-number">500</span>);  
+    setLayout(<span class="hljs-keyword">null</span>);  
+    setVisible(<span class="hljs-keyword">true</span>);  
+  }  
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> 
+  </span>{  
+    <span class="hljs-keyword">new</span> WindowDemo1();  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">windowActivated</span><span class="hljs-params">(WindowEvent arg0)</span> 
+  </span>{  
+    System.out.println(<span class="hljs-string">"studytonight ==&gt; activated"</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">windowClosed</span><span class="hljs-params">(WindowEvent arg0)</span> 
+  </span>{  
+    System.out.println(<span class="hljs-string">"studytonight ==&gt; closed"</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">windowClosing</span><span class="hljs-params">(WindowEvent arg0)</span> 
+  </span>{  
+    System.out.println(<span class="hljs-string">"studytonight ==&gt; closing"</span>);  
+    dispose();  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">windowDeactivated</span><span class="hljs-params">(WindowEvent arg0)</span> 
+  </span>{  
+    System.out.println(<span class="hljs-string">"studytonight ==&gt; deactivated"</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">windowDeiconified</span><span class="hljs-params">(WindowEvent arg0)</span> 
+  </span>{  
+    System.out.println(<span class="hljs-string">"studytonight ==&gt;deiconified"</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">windowIconified</span><span class="hljs-params">(WindowEvent arg0)</span> 
+  </span>{  
+    System.out.println(<span class="hljs-string">"studytonight ==&gt;iconified"</span>);  
+  }  
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">windowOpened</span><span class="hljs-params">(WindowEvent arg0)</span> 
+  </span>{  
+    System.out.println(<span class="hljs-string">"studytonight ==&gt; opened"</span>);  
+  }  
+}
+</code></pre>
+<p>在控制台中，它会打印如下消息:今晚研究== &gt;已打开研究今晚== &gt;已激活研究今晚== &gt;正在关闭研究今晚== &gt;已停用研究今晚== &gt;已关闭<img src="img/5b4f872994c5b68bcbf189f1a2d98a51.png" alt="awt-windowListener"></img></p>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0096.html" class="navigation navigation-prev " aria-label="Previous page: Java AWT">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0098.html" class="navigation navigation-next " aria-label="Next page: Java Swing">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 抽象窗口工具包（AWT）","level":"1.1.96","depth":2,"next":{"title":"Java Swing","level":"1.1.97","depth":2,"path":"0098.md","ref":"0098.md","articles":[]},"previous":{"title":"Java AWT","level":"1.1.95","depth":2,"path":"0096.md","ref":"0096.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0097.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:21:42.997Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

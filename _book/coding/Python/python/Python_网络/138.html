@@ -1,0 +1,992 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>在 Python 中使用 Nmap 端口扫描器 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="139.html" />
+    
+    
+    <link rel="prev" href="137.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Python 网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="124.html">
+            
+                <a href="124.html">
+            
+                    
+                    简介和基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="125.html">
+            
+                <a href="125.html">
+            
+                    
+                    网络编程导论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="126.html">
+            
+                <a href="126.html">
+            
+                    
+                    常见网络术语
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="127.html">
+            
+                <a href="127.html">
+            
+                    
+                    安装 Python 第三方库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="128.html">
+            
+                <a href="128.html">
+            
+                    
+                    解释和交互式 Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="129.html">
+            
+                <a href="129.html">
+            
+                    
+                    套接字基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="130.html">
+            
+                <a href="130.html">
+            
+                    
+                    Python 套接字——SOCK_STREAM和SOCK_DGRAM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="131.html">
+            
+                <a href="131.html">
+            
+                    
+                    使用 TCP 套接字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="132.html">
+            
+                <a href="132.html">
+            
+                    
+                    使用 UDP 套接字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="133.html">
+            
+                <a href="133.html">
+            
+                    
+                    通过 TCP 套接字处理接收的客户端数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="134.html">
+            
+                <a href="134.html">
+            
+                    
+                    阻塞和非阻塞套接字输入/输出
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="135.html">
+            
+                <a href="135.html">
+            
+                    
+                    通过 TSL/SSL 保护套接字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="136.html">
+            
+                <a href="136.html">
+            
+                    
+                    从网络分析开始
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="137.html">
+            
+                <a href="137.html">
+            
+                    
+                    使用套接字构建自定义端口扫描器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.15" data-path="138.html">
+            
+                <a href="138.html">
+            
+                    
+                    在 Python 中使用 Nmap 端口扫描器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="139.html">
+            
+                <a href="139.html">
+            
+                    
+                    使用命令行输入的 Nmap 端口扫描脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="140.html">
+            
+                <a href="140.html">
+            
+                    
+                    什么是横幅抓取？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="141.html">
+            
+                <a href="141.html">
+            
+                    
+                    Wireshark 网络流量分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="142.html">
+            
+                <a href="142.html">
+            
+                    
+                    Wireshark 数据包分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="143.html">
+            
+                <a href="143.html">
+            
+                    
+                    使用dpkt库分析网络流量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="144.html">
+            
+                <a href="144.html">
+            
+                    
+                    scapy 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="145.html">
+            
+                <a href="145.html">
+            
+                    
+                    实际应用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="146.html">
+            
+                <a href="146.html">
+            
+                    
+                    是时候干活了
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="147.html">
+            
+                <a href="147.html">
+            
+                    
+                    从 PDF 文件中提取元数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="148.html">
+            
+                <a href="148.html">
+            
+                    
+                    使用pyGeoIP模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="149.html">
+            
+                <a href="149.html">
+            
+                    
+                    什么是网页抓取？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="150.html">
+            
+                <a href="150.html">
+            
+                    
+                    实现网页抓取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="151.html">
+            
+                <a href="151.html">
+            
+                    
+                    什么是 API？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="152.html">
+            
+                <a href="152.html">
+            
+                    
+                    使用脸书 GraphAPI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="153.html">
+            
+                <a href="153.html">
+            
+                    
+                    挖掘自己的脸书账户
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="154.html">
+            
+                <a href="154.html">
+            
+                    
+                    Python 的mechanize库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="155.html">
+            
+                <a href="155.html">
+            
+                    
+                    使用mechanize库更改浏览器的用户代理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="156.html">
+            
+                <a href="156.html">
+            
+                    
+                    Web 爬取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="157.html">
+            
+                <a href="157.html">
+            
+                    
+                    入门指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="158.html">
+            
+                <a href="158.html">
+            
+                    
+                    网页抓取简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="159.html">
+            
+                <a href="159.html">
+            
+                    
+                    requests模块简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="160.html">
+            
+                <a href="160.html">
+            
+                    
+                    beautifulsoup模块简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="161.html">
+            
+                <a href="161.html">
+            
+                    
+                    进阶
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="162.html">
+            
+                <a href="162.html">
+            
+                    
+                    探索 BeautifulSoap 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="163.html">
+            
+                <a href="163.html">
+            
+                    
+                    使用 BeautifulSoap 查找 HTML 标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="164.html">
+            
+                <a href="164.html">
+            
+                    
+                    从消费者报告网站抓取产品名称
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="165.html">
+            
+                <a href="165.html">
+            
+                    
+                    高级
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="166.html">
+            
+                <a href="166.html">
+            
+                    
+                    网页抓取：将数据写入文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="167.html">
+            
+                <a href="167.html">
+            
+                    
+                    网页抓取：抓取多个网址
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="168.html">
+            
+                <a href="168.html">
+            
+                    
+                    从 StudyTonight 教程网页中抓取主题名称
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >在 Python 中使用 Nmap 端口扫描器</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="在-python-中使用-nmap-端口扫描器">在 Python 中使用 Nmap 端口扫描器</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/network-programming-in-python/integrating-port-scanner-with-nmap" target="_blank">https://www.studytonight.com/network-programming-in-python/integrating-port-scanner-with-nmap</a></p>
+</blockquote>
+<p>在本教程中，我们将学习如何将 Nmap 安全扫描仪与我们的 Post 扫描仪程序集成。</p>
+<hr></hr>
+<h2 id="什么是-nmap？">什么是 Nmap？</h2>
+<p><strong>Nmap(Network Mapper)</strong> 是一款安全扫描器，最初由戈登·里昂(也以笔名 Fyodor Vaskovich 为人所知)编写，用于发现计算机网络上的主机和服务，从而构建网络地图。为了实现其目标，Nmap 向目标主机发送特制的数据包，然后分析它们的响应。</p>
+<p>一些有用的 Nmap 功能包括:</p>
+<ul>
+<li><strong>主机发现</strong>:这使得能够识别任何网络上的主机。例如，列出响应 TCP 和/或 ICMP 请求或打开特定<strong>端口</strong>的主机。</li>
+<li><strong>端口扫描</strong>:枚举(逐一计数并列出)目标主机上所有打开的端口。</li>
+<li><strong>版本检测</strong>:查询远程设备上的网络服务，确定应用名称和版本号。</li>
+<li><strong>OS 检测</strong>:确定网络设备的操作系统和硬件特性。</li>
+<li><strong>与目标的可脚本化交互</strong>:使用 Nmap 脚本引擎(NSE)和 Lua 编程语言，我们可以轻松编写 sripts 在网络设备上执行操作。</li>
+</ul>
+<p>虽然 Nmap 是命令行界面，但是你可以下载并安装 Nmap 的 GUI 界面，称为 <strong>zenmap</strong> 。</p>
+<p><img src="img/5fa23d528505ca46616da289d38ef2f4.png" alt="Integrating Port Scanner with Nmap"></img></p>
+<p>以上是命令行的截图，当你运行<code>nmap</code>命令时，列出了目标规范和主机发现、扫描技术等所有可用选项，以供你参考。如果您想在机器上安装 nmap，那么:</p>
+<ul>
+<li>运行，<code>sudo apt-get install nmap</code>为 Linux。</li>
+<li>对于 Windows 和 Mac OS X，下载并安装 Nmap:<a href="https://nmap.org/download.html" target="_blank">https://nmap.org/download.html</a></li>
+</ul>
+<p>我们在<a href="building-a-port-scanner">上一篇教程</a>中编写的端口扫描器提供了一个执行 TCP 连接扫描的快速脚本。这是非常有限的，因为我们可能需要执行额外扫描类型的能力，例如由 Nmap 工具包提供的<code>ACK</code>、<code>RST</code>、<code>FIN</code>或<code>SYN-ACK</code>扫描。Nmap 提供了相当广泛的功能。这就引出了一个问题，为什么不直接使用 Nmap 呢？为什么要费心为端口扫描器编写脚本？</p>
+<p>Nmap 是用<strong>C**</strong>LUA**编程语言编写的，很容易集成到 Python 中。Nmap 产生基于 XML 的输出，这为我们提供了从 Python 脚本中利用 Nmap 全部功能的能力。所以我们的端口扫描器脚本只是外壳，在里面我们现在将使用 Nmap。</p>
+<p>因此，在我们开始使用 nmap 之前，让我们首先安装 Nmap 模块:</p>
+<ul>
+<li>使用命令，<code>pip install python-nmap</code></li>
+<li>或者从<a href="http://xael.org/pages/python-nmap-en.html" target="_blank">这里</a>下载软件包安装。</li>
+</ul>
+<hr></hr>
+<h2 id="在-python-脚本中使用-nmap">在 Python 脚本中使用 Nmap</h2>
+<p>以下是可以用来成功扫描所有端口并以 JSON 格式返回结果的命令。</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> nmap
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan = nmap.PortScanner()
+<span class="hljs-prompt">&gt;&gt;&gt; </span>
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan.scan(<span class="hljs-string">'127.0.0.1'</span>, <span class="hljs-string">'21-443'</span>)
+</code></pre>
+<p><img src="img/77f134874edc883c28e7c284d69a7482.png" alt="Using Nmap with Python"></img></p>
+<p>我们都知道，<code>import nmap</code>是干什么的，就是把<code>nmap</code>模块导入到我们的 python 脚本中。然后我们初始化 Nmap 端口扫描器来扫描本地网络上的端口。</p>
+<p>第三行，即<code>nmScan.scan('127.0.0.1', '21-443')</code>返回在本地家庭(127.0.0.1)网络上执行的 21 到 443 之间端口号的扫描字典。您还可以提供任何远程服务器的 IP 地址，以扫描可用的端口。</p>
+<p>如果你想使用命令行运行 Nmap 命令，你可以通过使用<code>command_line()</code>方法很容易地得到相当于<code>nmScan.scan('127.0.0.1', '22-443')</code>行代码的命令行，该方法读取<code>scan</code>方法调用并生成一个相当于命令行运行的命令。</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> nmap
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan = nmap.PortScanner()
+<span class="hljs-prompt">&gt;&gt;&gt; </span>
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan.scan(<span class="hljs-string">'127.0.0.1'</span>, <span class="hljs-string">'21-443'</span>)
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan.command_line()
+</code></pre>
+<p>nmap -oX - -p 21-443 -sV 127.0.0.1</p>
+<p><img src="img/156fa4a35477dc2454868c8eedb66666.png" alt="Integrating Port Scanner with Nmap"></img></p>
+<hr></hr>
+<h3 id="更多-nmap-方法">更多 Nmap 方法</h3>
+<p>现在，让我们看看更多的命令:</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan.scaninfo()
+{<span class="hljs-string">'tcp'</span>: {<span class="hljs-string">'services'</span>: <span class="hljs-string">'22-443'</span>, <span class="hljs-string">'method'</span>: <span class="hljs-string">'connect'</span>}}
+
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan.all_hosts()
+[<span class="hljs-string">'127.0.0.1'</span>]
+
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan[<span class="hljs-string">'127.0.0.1'</span>].hostname()
+<span class="hljs-string">'localhost'</span>
+
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan[<span class="hljs-string">'127.0.0.1'</span>].state()
+<span class="hljs-string">'up'</span>
+
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan[<span class="hljs-string">'127.0.0.1'</span>].all_protocols()
+[<span class="hljs-string">'tcp'</span>]
+
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan[<span class="hljs-string">'127.0.0.1'</span>][<span class="hljs-string">'tcp'</span>].keys()
+[<span class="hljs-number">80</span>, <span class="hljs-number">25</span>, <span class="hljs-number">443</span>, <span class="hljs-number">22</span>, <span class="hljs-number">111</span>]
+
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan[<span class="hljs-string">'127.0.0.1'</span>].has_tcp(<span class="hljs-number">22</span>)
+<span class="hljs-keyword">True</span>
+
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan[<span class="hljs-string">'127.0.0.1'</span>].has_tcp(<span class="hljs-number">23</span>)
+<span class="hljs-keyword">False</span>
+
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan[<span class="hljs-string">'127.0.0.1'</span>][<span class="hljs-string">'tcp'</span>][<span class="hljs-number">22</span>]
+{<span class="hljs-string">'state'</span>: <span class="hljs-string">'open'</span>, <span class="hljs-string">'reason'</span>: <span class="hljs-string">'syn-ack'</span>, <span class="hljs-string">'name'</span>: <span class="hljs-string">'ssh'</span>}
+
+<span class="hljs-prompt">&gt;&gt;&gt; </span>nmScan[<span class="hljs-string">'127.0.0.1'</span>].tcp(<span class="hljs-number">22</span>)
+{<span class="hljs-string">'state'</span>: <span class="hljs-string">'open'</span>, <span class="hljs-string">'reason'</span>: <span class="hljs-string">'syn-ack'</span>, <span class="hljs-string">'name'</span>: <span class="hljs-string">'ssh'</span>}
+</code></pre>
+<p>让我们谈谈上面使用的几种方法。方法<code>all_protocols()</code>返回当前被扫描网络的协议。方法<code>keys()</code>返回指定范围内所有可用的活动端口。</p>
+<p>当我们在本地计算机上使用<code>keys()</code>方法时，只返回端口<code>80</code>，因为指定范围内没有其他端口处于活动状态。</p>
+<p><img src="img/6464bc3f551b47f6816fb0293c7ccf03.png" alt="Integrating Port Scanner with Nmap"></img></p>
+<p><strong>注意:</strong>在最后一个命令中出现错误。这是因为在命令<code>nmScan['127.0.0.1']['tcp'].keys()</code>中，获得的唯一键值是[80]，而在最后一行中，我们指定了[22]。</p>
+<p>下面我们有一个简单的程序，用于扫描和列出给定主机的端口:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> nmap
+<span class="hljs-comment"># initialize the port scanner</span>
+nmScan = nmap.PortScanner()
+
+<span class="hljs-comment"># scan localhost for ports in range 21-443</span>
+nmScan.scan(<span class="hljs-string">'127.0.0.1'</span>, <span class="hljs-string">'21-443'</span>)
+
+<span class="hljs-comment"># run a loop to print all the found result about the ports</span>
+<span class="hljs-keyword">for</span> host <span class="hljs-keyword">in</span> nmScan.all_hosts():
+     print(<span class="hljs-string">'Host : %s (%s)'</span> % (host, nmScan[host].hostname()))
+     print(<span class="hljs-string">'State : %s'</span> % nmScan[host].state())
+     <span class="hljs-keyword">for</span> proto <span class="hljs-keyword">in</span> nmScan[host].all_protocols():
+         print(<span class="hljs-string">'----------'</span>)
+         print(<span class="hljs-string">'Protocol : %s'</span> % proto)
+
+         lport = nmScan[host][proto].keys()
+         lport.sort()
+         <span class="hljs-keyword">for</span> port <span class="hljs-keyword">in</span> lport:
+             <span class="hljs-keyword">print</span> (<span class="hljs-string">'port : %s\tstate : %s'</span> % (port, nmScan[host][proto][port][<span class="hljs-string">'state'</span>])
+</code></pre>
+<p>主机:127.0.0.1 (localhost)状态:up - Protocol : tcp 端口:22 状态:开放端口:25 状态:开放端口:80 状态:开放端口:111 状态:开放端口:443 状态:开放</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="137.html" class="navigation navigation-prev " aria-label="Previous page: 使用套接字构建自定义端口扫描器">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="139.html" class="navigation navigation-next " aria-label="Next page: 使用命令行输入的 Nmap 端口扫描脚本">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"在 Python 中使用 Nmap 端口扫描器","level":"1.1.15","depth":2,"next":{"title":"使用命令行输入的 Nmap 端口扫描脚本","level":"1.1.16","depth":2,"path":"139.md","ref":"139.md","articles":[]},"previous":{"title":"使用套接字构建自定义端口扫描器","level":"1.1.14","depth":2,"path":"137.md","ref":"137.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"138.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:16.781Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

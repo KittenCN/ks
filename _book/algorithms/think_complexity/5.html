@@ -1,0 +1,778 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>五、细胞自动机 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="6.html" />
+    
+    
+    <link rel="prev" href="4.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    复杂性思维
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="1.html">
+            
+                <a href="1.html">
+            
+                    
+                    一、复杂性科学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="2.html">
+            
+                <a href="2.html">
+            
+                    
+                    二、图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="3.html">
+            
+                <a href="3.html">
+            
+                    
+                    三、小世界图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="4.html">
+            
+                <a href="4.html">
+            
+                    
+                    四、无标度网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.5" data-path="5.html">
+            
+                <a href="5.html">
+            
+                    
+                    五、细胞自动机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="6.html">
+            
+                <a href="6.html">
+            
+                    
+                    六、生命游戏
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="7.html">
+            
+                <a href="7.html">
+            
+                    
+                    七、物理建模
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="8.html">
+            
+                <a href="8.html">
+            
+                    
+                    八、自组织临界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="9.html">
+            
+                <a href="9.html">
+            
+                    
+                    九、基于智能体的模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="10.html">
+            
+                <a href="10.html">
+            
+                    
+                    十、兽群、鸟群和交通堵塞
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="11.html">
+            
+                <a href="11.html">
+            
+                    
+                    十一、进化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="12.html">
+            
+                <a href="12.html">
+            
+                    
+                    十二、合作进化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="a.html">
+            
+                <a href="a.html">
+            
+                    
+                    附录 A、算法分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="b.html">
+            
+                <a href="b.html">
+            
+                    
+                    附录 B、阅读列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >五、细胞自动机</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="五、细胞自动机">五、细胞自动机</h1>
+<blockquote>
+<p>原文：<a href="http://greenteapress.com/complexity2/html/thinkcomplexity2006.html" target="_blank">Chapter 5  Cellular Automatons</a></p>
+<p>译者：<a href="https://github.com/wizardforcel" target="_blank">飞龙</a></p>
+<p>协议：<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></p>
+<p>自豪地采用<a href="https://translate.google.cn/" target="_blank">谷歌翻译</a></p>
+</blockquote>
+<p>细胞自动机（CA）是一个世界的模型，带有非常简单的物理。 “细胞”的意思是世界被分成一个大口袋，称为细胞。 “自动机”是一台执行计算的机器 - 它可能是一台真机。 ，但更多时候，“机器”是数学抽象或计算机的模拟。</p>
+<p>本章介绍了史蒂文沃尔夫勒姆（Steven Wolfram）在 20 世纪 80 年代进行的实验，表明一些细胞自动机展示出令人惊讶的复杂行为，包括执行任意计算的能力。</p>
+<p>我讨论了这些结果的含义，在本章的最后，我提出了在 Python 中高效实现 CA 的方法。</p>
+<p>本章的代码位于本书仓库的<code>chap05.ipynb</code>中。 使用代码的更多信息，请参见第？章。</p>
+<h2 id="51-简单的-ca">5.1 简单的 CA</h2>
+<p>细胞自动机 [1] 由规则来管理，它决定系统如何即时演化。 时间分为离散的步骤，规则规定了，如何根据当前状态计算下一个时间步骤中的世界状态。</p>
+<blockquote>
+<p>automaton（自动机）的复数为 automatons 或 automata。</p>
+</blockquote>
+<p>作为一个微不足道的例子，考虑带有单个细胞的细胞自动机（CA）。 细胞状态是用变量<code>xi</code>表示的整数，其中下标<code>i</code>表示<code>xi</code>是时间步骤<code>i</code>期间的系统状态。 作为初始条件，<code>x0 = 0</code>。</p>
+<p>现在我们需要一个规则。 我会任意选择<code>xi = x[i-1] + 1</code>，它表示在每个时间步骤之后，CA 的状态会增加 1。到目前为止，我们有一个简单的 CA ，执行简单的计算：它用于计数。</p>
+<p>但是这个 CA 是不合规则的；可能的状态数通常是有限的。 为了使其成立，我将选择最小的感兴趣的状态数 2，和另一个简单的规则<code>xi = (x[i-1] + 1) % 2</code>，其中<code>%</code>是余数（或模）运算符。</p>
+<p>这个 CA 的行为很简单：闪烁。 也就是说，在每个时间步之后，细胞的状态在 0 和 1 之间切换。</p>
+<p>大多数 CA 是确定性的，这意味着规则没有任何随机元素；给定相同的初始状态，它们总是产生相同的结果。 也有不确定性的 CA，但我不会在这里涉及它们。</p>
+<h2 id="52-wolfram-的实验">5.2 Wolfram 的实验</h2>
+<p>前一节中的 CA 只有一个细胞，所以我们可以将其视为零维，并且它不是很有趣。 在本章的其余部分中，我们将探索一维（1-D）CA，后者会变得非常有趣。</p>
+<p>说 CA 有维度就是说细胞被安排在一个连续的空间中，这样它们中的一些可以看作“邻居”。 在一维中，有三种自然形式：</p>
+<p>有限序列：</p>
+<p>数量有限的细胞排成一排。 除第一个和最后一个之外的所有细胞都有两个邻居。</p>
+<p>环：</p>
+<p>数量有限的细胞排列成一个环。 所有细胞都有两个邻居。</p>
+<p>无限序列：</p>
+<p>数量无限的细胞排列成一排。</p>
+<p>确定系统如何即时演化的规则，基于“邻域”的概念，即“邻域”，即决定给定细胞的下一个状态的一组细胞。</p>
+<p>在二十世纪八十年代初，斯蒂芬沃尔夫勒姆发表了一系列论文，对一维 CA 进行了系统的研究。 他确定了四大类行为，每一类都比上一个更有趣。</p>
+<p>Wolfram 的实验使用了三个细胞的邻域：细胞本身及其左右邻居。</p>
+<p>在这些实验中，这些细胞有两个状态，分别表示为 0 和 1，所以规则可以通过一个表格进行汇总，它将邻域状态（状态的三元组）映射为中心细胞的下一个状态。 下表展示了一个示例：</p>
+<table>
+<thead>
+<tr>
+<th>prev</th>
+<th>111</th>
+<th>110</th>
+<th>101</th>
+<th>100</th>
+<th>011</th>
+<th>010</th>
+<th>001</th>
+<th>000</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>next</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>第一行显示邻居可能拥有的八个状态。第二行显示下一个时间步骤中的中心细胞的状态。 作为该表的简明编码，Wolfram 建议将第二行读作二进制数。 因为二进制 00110010 是十进制的 50，所以 Wolfram 称这个 CA 为“规则 50”。</p>
+<p><img src="img/5-1.png" alt=""></img></p>
+<p>图 5.1：十个时间步骤之后的规则 50</p>
+<p>上图展示了规则 50 在 10 个时间步骤之后的效果。 第一行展示第一个时间步骤内的系统状态; 它起始于一个“开”细胞，其余都是“关”。 第二行展示下一个时间步骤中的系统状态，以此类推。</p>
+<p>图中的三角形是这些 CA 的典型；这是领域形状的结果吗？ 在一个时间步骤中，每个细胞都会影响任一方向上的邻居的状态。 在下一个时间步骤中，该影响可以在每个方向上向一个细胞传播。 因此，过去的每个细胞都有一个“影响三角形”，包括所有可能受其影响的细胞。</p>
+<h2 id="53-ca-的分类">5.3 CA 的分类</h2>
+<p><img src="img/5-2.png" alt=""></img></p>
+<p>图 5.2：64 个步骤之后的规则 18</p>
+<p>有多少种不同的 CA？</p>
+<p>由于每个细胞都处于开或关的状态，我们可以用一位来指定细胞的状态。在三个细胞的邻域中，有 8 种可能的情况，因此规则表中有 8 个条目。由于每个条目都占一个位，我们可以使用 8 位指定一个表。使用 8 位，我们可以指定 256 个不同的规则。</p>
+<p>Wolfram 的第一个 CA 实验就是测试所有 256 种可能性并尝试对它们进行分类。</p>
+<p>在视觉上检查结果时，他提出 CA 的行为可以分为四类。第一类包含最简单（也是最不感兴趣）的 CA，即从几乎任何起始条件演变为相同统一图案的 CA。作为一个简单的例子，规则 0 总是在一个时间步后产生一个空的图案。</p>
+<p>规则 50 是第二类的一个例子。它生成一个带有嵌套结构的简单图案；也就是说，该图案包含许多自身的较小版本。规则 18 使嵌套结构更加清晰；图？显示了 64 步后的样子。</p>
+<p>这种模式类似于谢尔宾斯基三角形，你可以在 <a href="http://en.wikipedia.org/wiki/Sierpinski_triangle" target="_blank">http://en.wikipedia.org/wiki/Sierpinski_triangle</a> 上阅读。</p>
+<p>某些二类 CA 生成的图案复杂而美观，但与第三和第四类相比，它们相对简单。</p>
+<h2 id="54-随机性">5.4 随机性</h2>
+<p><img src="img/5-3.png" alt=""></img></p>
+<p>图 5.3：100 个步骤之后的规则 30</p>
+<p>第三类包含产生随机性的 CA。规则 30 是一个例子；图？显示 100 个时间步后的样子。</p>
+<p>左侧有一个明显的图案，右侧有各种大小的三角形，但中心看起来很随意。 事实上，如果你把中间列看做一个比特序列，就很难将其区分于真正的随机序列。 它通过了许多统计测试，人们用来测试比特序列是否随机。</p>
+<p>产生看起来随机的数字的程序，称为伪随机数字生成器（PRNG）。 他们不被认为是真正的随机，因为：</p>
+<ul>
+<li><p>它们中的许多产生规律性序列，可以通过统计来检测。 例如，C 标准库中的<code>rand</code>的原始实现，使用了线性同余生成器，生成器生成的序列具有易于检测的序列相关性。</p>
+</li>
+<li><p>任何使用有限状态（即存储）的 PRNG 最终都会重复。 生成器的特点之一就是这种重复周期。</p>
+</li>
+<li><p>底层过程基本上是确定性的，不同于一些物理过程，如放射性衰减和热噪声，被认为是基本随机的。</p>
+</li>
+</ul>
+<p>现代 PRNG 产生的序列，在统计上与随机值无法区分，并且它们以很长的周期实现，以至于在重复之前宇宙将崩溃。 这些发生器的存在，提出了一个问题，即质量好的伪随机序列与由“真正的”随机过程产生的序列之间，是否存在真正差异。 在“A New Kind of Science”中，沃尔夫勒姆认为没有（第 315-326 页）。</p>
+<h2 id="55-确定性">5.5 确定性</h2>
+<p>第三类 CA 的存在令人惊讶。 为了解释多么令人惊讶，让我从哲学确定性（决定论）开始（参见<a href="http://en.wikipedia.org/wiki/Determinism" target="_blank">http://en.wikipedia.org/wiki/Determinism</a>）。 许多哲学立场很难准确定义，因为它们有不同的风味。 我经常发现，使用从弱到强排列的陈述列表，来定义它们是有用的：</p>
+<p>D1：</p>
+<p>确定性模型可以对某些物理系统做出准确的预测。</p>
+<p>D2：</p>
+<p>许多物理系统可以用确定性过程建模，但有些系统本质上是随机的。</p>
+<p>D3：</p>
+<p>所有事件都是由先验事件造成的，但许多物理系统基本上是不可预测的。</p>
+<p>D4：</p>
+<p>所有事件都是由先验事件造成的，并且可以（至少原则上）预测。</p>
+<p>我构建这个范围的目标是，让 D1 如此弱以至于几乎每个人都会接受它，D4 如此强以至于几乎没有人会接受它，并且有些人会接受中间的陈述。</p>
+<p>作为对历史发展和科学发现的回应，世界舆论的质心沿着这个范围摆动。 在科学革命之前，许多人认为宇宙的运作基本上是不可预测的，或由超自然力量所控制。 在牛顿力学的胜利之后，一些乐观主义者开始相信像 D4 这样的东西；例如，皮埃尔-西蒙拉普拉斯（Pierre-Simon Laplace）在 1814 年写道：</p>
+<blockquote>
+<p>我们可以把宇宙的现状看作过去的果和未来的因。 一个智能在某个特定的时刻，知道所有使自然运动的力量，以及构成自然的所有物品的所有位置，如果它也足够大，来提交这些数据用于分析，它会将宇宙最大的天体和最小的原子的运动汇总成一个公式； 对于这样的智能来说，没有什么是不确定的，未来就像过去一样会存在于它的眼前。</p>
+</blockquote>
+<p>这种“智能”被称为“拉普拉斯的恶魔”。见 <a href="http://en.wikipedia.org/wiki/Laplace's_demon" target="_blank">http://en.wikipedia.org/wiki/Laplace's_demon</a>。 在这种情况下，“恶魔”这个词具有“精神”的意义，没有邪恶的含义。</p>
+<p>19 世纪和 20 世纪的发现逐渐打破了拉普拉斯的希望。 热力学，放射性和量子力学对强式的决定论构成了连续的挑战。</p>
+<p>在 20 世纪 60 年代，混沌理论表明，在某些确定性系统中，预测只能在短时间尺度上进行，并受初始条件测量精度的限制。</p>
+<p>大多数这些系统，是空间连续（不是时间）和非线性的，所以它们行为的复杂性并不令人惊讶。 沃尔夫勒姆在简单的细胞自动机中展示的复杂行为更令人惊讶，并且令人不安，至少对于确定性的世界观来说。</p>
+<p>到目前为止，我一直关注对确定性的科学挑战，但是最持久的反对意见是确定性与人类自由意志之间的冲突。 复杂性科学为这种明显的冲突提供了可能的解决方案; 我将在第？章中回到这个话题。</p>
+<h2 id="56-飞船">5.6 飞船</h2>
+<p><img src="img/5-4.png" alt=""></img></p>
+<p>图 5.4：100 步之后的规则 110</p>
+<p>第四类 CA 的行为更令人惊讶。 几个一维 CA，最着名的是规则 110，是图灵完备的，这意味着他们可以计算任何可计算的函数。 这个属性也称为普遍性，由 Matthew Cook 在 1998 年证明。请参阅 <a href="http://en.wikipedia.org/wiki/Rule_110" target="_blank">http://en.wikipedia.org/wiki/Rule_110</a>。</p>
+<p>图？展示了初始条件为单个细胞和 100 个时间步骤的规则 110 的样子。 在这个时间尺度上，没有发生什么特别的事情。 有一些有规律的模式，但也有一些难以表述的特征。</p>
+<p>图？展示了更大的图像，它起始于一个随机的初始条件和 600 个时间步骤：</p>
+<p><img src="img/5-4.png" alt=""></img></p>
+<p>图 5.5：初始条件随机和 600 个时间步骤的规则 110</p>
+<p>经过大约 100 个步骤后，背景变成了简单的重复模式，但背景中有一些持久性结构表现为干扰。 其中一些结构是稳定的，所以它们表现为垂直线条。 其他的在空间中平移，表现为不同斜率的对角线，取决于它们移动一列所需的时间步数。 这些结构被称为飞船。</p>
+<p>飞船之间的碰撞产生不同的结果，取决于飞船的类型和它们碰撞时的阶段。 一些碰撞歼灭两艘船，其他船只保持不变；还有一些产生不同类型的一艘或多艘船只。</p>
+<p>这些碰撞是 CA 规则 110 中的计算基础。 如果你将飞船视为通过电线传播的信号，并将碰撞视为计算 AND 和 OR 等逻辑运算的门，那么你可以看到 CA 执行计算的意义。</p>
+<h2 id="57-通用性">5.7 通用性</h2>
+<p>为了理解通用性，我们必须理解可计算性理论，它关于计算模型和计算的东西。</p>
+<p>最通用的计算模型之一是图灵机，它是由艾伦图灵在 1936 年提出的一种抽象计算机。图灵机是一个一维 CA，两个方向上都是无限的，并增加了一个读写头。在任何时候，头部都位于一个细胞上。它可以读取该细胞的状态（通常只有两种状态），并可以将新值写入细胞中。</p>
+<p>此外，该机器还有一个寄存器，用于记录机器的状态（有限数量的状态之一）和一张规则表。对于每个机器状态和细胞状态，表格规定一个操作。操作包括修改头部所在的细胞，并向左或向右移动一个细胞。</p>
+<p>图灵机并不是计算机的实际设计，但它模拟了常见的计算机体系结构。对于在真实计算机上运行的给定程序，（至少原则上）可以构造一个执行等效计算的图灵机。</p>
+<p>图灵机很有用，因为它可以刻画一组图灵机可以计算的函数，这就是图灵所做的事情。 这个集合中的函数被称为图灵可计算的。</p>
+<p>说图灵机可以计算任何图灵可计算函数，是一个赘述：根据定义它是真的。 但图灵可计算性比这更有趣。</p>
+<p>事实证明，任何人提出的每个合理的计算模型都是图灵完备的；也就是说，它可以计算与图灵机完全相同的一组函数。 其中一些模型，如 lamdba 演算，与图灵机非常不同，所以它们的等价性令人惊讶。</p>
+<p>这种观察产生了丘奇-图灵理论，它基本上定义了可计算的含义。 这个“理论”是，图灵可计算性是可计算性的正确，或至少是自然定义，因为它描述了这种计算模型的多样化集合的威力。</p>
+<p>CA 规则 110是另一种计算模型，其简单性非常出色。 它也是通用的，为丘奇-图灵理论提供了支持。</p>
+<p>在“A New Kind of Science”中，沃尔夫勒姆阐述了这个理论的一个变种，他称之为“计算等价性原理”：</p>
+<p>几乎所有不明显的简单过程，都可以看作是具有复杂性相同的计算。
+更具体来说，计算等价性原理表明，在自然界中发现的系统可以执行达到最高（“通用”）级别的计算能力的计算，并且大多数系统实际上实现了这种最高级别的计算能力。 因此，大多数系统在计算上是等效的（参见 <a href="http://mathworld.wolfram.com/PrincipleofComputationalEquivalence.html" target="_blank">http://mathworld.wolfram.com/PrincipleofComputationalEquivalence.html</a>）。</p>
+<p>将这些定义应用于 CA，第一类和第二类“显然很简单”。 第三类可能不那么明显，但在某种程度上，完美的随机性就像完美的顺序一样简单；复杂性存在于中间。 所以 Wolfram 声称第四类行为在自然界中很常见，并且几乎所有表现它的系统在计算上都是等价的。</p>
+<h2 id="58-可证伪性">5.8 可证伪性</h2>
+<p>沃尔夫勒姆认为，他的原则比丘奇图灵理论更强大，因为它是关于自然界的，而不是抽象的计算模型。但是说自然过程“可以看作计算”，使我觉得像理论选择的陈述。而不仅仅是自然世界的假设。</p>
+<p>此外，对于像“几乎”和“明显简单”这样的未定义术语的资格，他的假设可能是不可证伪的。可证伪性是科学哲学的一个观点，由卡尔波普尔（Karl Popper）提出，作为科学假说与伪科学之间的界限。如果一个假设是假的，并且有一个实验，至少在实用性领域，它能反驳这个假设，那么这个假设是可证伪的。</p>
+<p>例如，地球上的所有生命都来自共同祖先的说法是可证伪的，因为它对现代物种（在其他东西中）的基因相似性做出了特定的预测。如果我们发现了一种新物种，它的 DNA 与我们的 DNA 几乎完全不同，那么这就反驳了共同血统理论（或者至少引起质疑）。</p>
+<p>另一方面，所谓“神创论”，即所有物种都是由超自然力量创造出来的，是不可证实的，因为没有任何我们可以观察到的，与自然世界相矛盾的东西。任何实验的结果都可以归因于创作者的意志。</p>
+<p>不可证伪的假设可能有吸引力，因为不可能反驳它们。如果你的目标是永远不会被证明是错误的，你应该尽可能选择不可证伪的假设。</p>
+<p>但是，如果你的目标是对世界做出可靠的预测 - 而这至少是科学的目标之一 - 那么不可证伪的假设是无用的。问题是他们没有结果（如果他们有结果，他们将是可证伪的）。</p>
+<p>例如，如果神创论是真实的，那我知道它有什么好处呢？它不会告诉我任何造物主的事情，除了他有一种“对甲虫的非常喜爱”（归因于 J. B. S. Haldane）。不同于共同血统理论，它通告许多科学和生物工程领域，理解这个世界或者为之行动是没有用的。</p>
+<h2 id="59-这是什么模型？">5.9 这是什么模型？</h2>
+<p><img src="img/5-6.png" alt=""></img></p>
+<p>图 5.6：一个简单物理模型的逻辑结构</p>
+<p>一些细胞自动机主要是数学工艺品。 它们很有趣，因为它们令人惊讶，或者有用，或者漂亮，或者因为它们提供了创建新式数学的工具（比如丘奇图灵定理）。</p>
+<p>但是，它们是不是物理系统的模型还并不清楚。 如果他们是，他们是高度抽象的，也就是说他们并不很详细或现实。</p>
+<p>例如，某些锥螺物种在它们的壳上产生图案，类似于由细胞自动机产生的图案（参见<code>en.wikipedia.org/wiki/Cone_snail</code>）。 所以假设 CA 是随着壳长大而在壳上产生图案的机制的模型，这是很自然的。 但是，至少在最初阶段，模型元素（所谓的细胞，邻居之间的通信，规则）如何对应成长的蜗牛（真实细胞，化学信号，蛋白质交互网络）的元素，还并不清楚。</p>
+<p>对于传统的物理模型，现实是一种优点。如果模型的元素对应物理系统的元素，则模型和系统之间有明显的类比。总的来说，我们期望更现实的模型能够做出更好的预测，并提供更可信的解释。</p>
+<p>当然，这只是一个事实。更详细的模型更难以处理，并且通常不太适合分析。在某些时候，模型变得如此复杂，以至于直接对系统进行实验更容易。</p>
+<p>在另一个极端，简单的模型可以完全引人注目，因为它们很简单。</p>
+<p>简单模型提供了与详细模型不同的解释。使用详细的模型，论述就像这样：“我们对物理系统<code>S</code>感兴趣，所以我们构造了一个详细模型<code>M</code>，并且通过分析和模拟表明<code>M</code>表现出一种行为<code>B</code>，它与实际系统的观察<code>O</code>（定性或定量地）相似。那么为什么<code>O</code>会发生？因为<code>S</code>类似于<code>M</code>，而<code>B</code>类似于<code>O</code>，我们可以证明<code>M</code>导致<code>B</code>。”</p>
+<p>使用简单的模型，我们不能说<code>S</code>与<code>M</code>相似，因为它不是。 相反，论述是这样的：“有一组模型共享一组共同的特征。 任何具有这些特征的模型都表现出行为<code>B</code>。如果我们进行类似于<code>B</code>的观察<code>O</code>，解释它的一种方式是，这表明系统<code>S</code>具有足以产生<code>1</code>的一组特征。”</p>
+<p>对于这种说法，增加更多的特征并没有帮助。 使模型更真实不会使模型更可靠；它只掩盖了导致<code>O</code>的基本特征，和<code>S</code>特有的附带特征之间的差异。</p>
+<p>图？显示了这种模型的逻辑结构。 特征<code>x</code>和<code>y</code>足以产生行为。 增加更多细节，如特征<code>w</code>和<code>z</code>，可能会使模型更加逼真，但是这种现实并没有增加解释力。</p>
+<h2 id="510-ca-的实现">5.10 CA 的实现</h2>
+<p><img src="img/5-7.png" alt=""></img></p>
+<p>图 5.7：列表的列表（左）和 NumPy 数组（右）</p>
+<p>为了生成本章中的图形，我编写了一个名为 CA 的 Python 类，它代表细胞自动机，以及用于绘制结果的类。在接下来的几节中，我会解释他们如何工作。</p>
+<p>为了存储 CA 的状态，我使用了 NumPy 数组，这是一个多维数据结构，其元素类型都相同。它与嵌套列表类似，但通常更小更快。图？说明了原因。左侧的图展示了整数列表的列表；每个点表示一个引用，它占用 4-8 个字节。要访问其中的一个整数，你必须跟随两个引用。</p>
+<p>右图显示了相同整数的数组。因为这些元素大小都相同，所以它们可以连续存储在内存中。这种安排节省了空间，因为它不使用引用，并且节省了时间，因为可以直接从下标计算元素的位置；没有必要跟随一系列的引用。</p>
+<p>为了解释我的代码如何工作，我将以一个 CA 开始，它计算每个邻域中细胞的“奇偶性”。如果数字是偶数，则数字的奇偶性为 0；如果数字为奇数，则奇偶性为 1。</p>
+<p>首先，我在第一行的中间，创建带有单个 1 的零数组。</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span>rows = <span class="hljs-number">5</span>
+<span class="hljs-prompt">&gt;&gt;&gt; </span>cols = <span class="hljs-number">11</span>
+<span class="hljs-prompt">&gt;&gt;&gt; </span>ca = np.zeros((rows, cols))
+<span class="hljs-prompt">&gt;&gt;&gt; </span>ca[<span class="hljs-number">0</span>, <span class="hljs-number">5</span>] = <span class="hljs-number">1</span>
+print(ca)
+[[ <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">1.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>]
+ [ <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>]
+ [ <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>]
+ [ <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>]
+ [ <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>  <span class="hljs-number">0.</span>]]
+</code></pre>
+<p><code>plot_ca</code>用图形展示了结果。</p>
+<pre><code class="lang-py">mport matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">plot_ca</span><span class="hljs-params">(ca, rows, cols)</span>:</span>
+    cmap = plt.get_cmap(<span class="hljs-string">'Blues'</span>)
+    plt.imshow(array, interpolation=<span class="hljs-string">'none'</span>, cmap=cmap)
+</code></pre>
+<p>按照约定，我使用缩写名称<code>plt</code>引入了<code>pyplot</code>。 <code>imshow</code>将数组视为“图像”并显示它。 使用颜色表<code>'Blues'</code>，将“开”细胞绘制为深蓝色，“关”细胞绘制为淡蓝色。</p>
+<p>现在，为了计算下一个时间步中的 CA 状态，我们可以使用<code>step</code>：</p>
+<pre><code class="lang-py">
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">step</span><span class="hljs-params">(array, i)</span>:</span>
+    rows, cols = array.shape
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, cols):
+        array[i, j] = sum(array[i-<span class="hljs-number">1</span>, j-<span class="hljs-number">1</span>:j+<span class="hljs-number">2</span>]) % <span class="hljs-number">2</span>
+</code></pre>
+<p>参数<code>ca</code>是表示 CA 状态的 NumPy 数组。 <code>rows</code>和<code>col</code>是数组的维数，而<code>i</code>是我们应该计算的时间步骤的索引。 我用<code>i</code>来表示数组的行，它们对应于时间，<code>j</code>表示对应于空间的列。</p>
+<p>在<code>step</code>内部，我们遍历第<code>i</code>行的元素。 每个元素是来自上一行的三个元素的总和，并对 2 取余。</p>
+<h2 id="511-互相关">5.11 互相关</h2>
+<p>上一节中的<code>step</code>函数很简单，但速度并不是很快。 一般来说，如果我们用 NumPy 操作替换循环，我们可以加速这样的操作，因为 Python 解释器中的<code>for</code>循环会产生大量开销。 在本节中，我将展示如何使用NumPy函数相关来加快步骤。</p>
+<p>首先，我们可以使用数组乘法来代替切片运算符来选择邻域。 具体来说，我们将数组乘以一个窗口，其中我们想要选择的细胞为一，其余为零。</p>
+<p>例如，以下窗口选择前三个元素：</p>
+<pre><code class="lang-py">
+<span class="hljs-prompt">&gt;&gt;&gt; </span>window = np.zeros(cols, dtype=np.int8)
+<span class="hljs-prompt">&gt;&gt;&gt; </span>window[:<span class="hljs-number">3</span>] = <span class="hljs-number">1</span>
+<span class="hljs-prompt">&gt;&gt;&gt; </span>print(window)
+[<span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>]
+</code></pre>
+<p>如果我们乘以数组的最后一行，我们会得到前三个元素：</p>
+<pre><code class="lang-py"><span class="hljs-prompt">&gt;&gt;&gt; </span>print(array[<span class="hljs-number">4</span>])
+<span class="hljs-prompt">&gt;&gt;&gt; </span>print(window * array[<span class="hljs-number">4</span>])
+[<span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span>]
+[<span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>]
+</code></pre>
+<p>现在我们可以使用<code>sum</code>和模运算符来计算下一行的第一个元素：</p>
+<pre><code class="lang-py">
+<span class="hljs-prompt">&gt;&gt;&gt; </span>sum(window * array[<span class="hljs-number">4</span>]) % <span class="hljs-number">2</span>
+<span class="hljs-number">1</span>
+</code></pre>
+<p>如果我们将窗口向右移动，它会选择接下来的三个元素，以此类推。所以我们可以像这样重写<code>step</code>：</p>
+<pre><code class="lang-py">
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">step2</span><span class="hljs-params">(array, i)</span>:</span>
+    rows, cols = array.shape
+    window = np.zeros(cols)
+    window[:<span class="hljs-number">3</span>] = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, cols):
+        array[i, j] = sum(window * array[i-<span class="hljs-number">1</span>]) % <span class="hljs-number">2</span>
+        window = np.roll(window, <span class="hljs-number">1</span>)
+</code></pre>
+<p><code>roll</code>将窗口向右移动（它也把末尾的补在开头，但不影响这个函数）。</p>
+<p><code>step2</code>产生<code>step</code>的相同结果。 它仍然不是非常快，但是它朝着正确的方向迈出了一步，因为我们刚刚执行的操作（乘以窗口，将结果相加，移动窗口并重复）用于各种应用。 它被称为互相关，而 NumPy 提供了一个称为<code>correlate</code>的函数来计算它。</p>
+<p>我们可以用它来编写更快，更简单的步骤：</p>
+<pre><code class="lang-py">
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">step3</span><span class="hljs-params">(array, i)</span>:</span>
+    window = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>])
+    array[i] = np.correlate(array[i-<span class="hljs-number">1</span>], window, mode=<span class="hljs-string">'same'</span>) % <span class="hljs-number">2</span>
+</code></pre>
+<p>当我们使用<code>np.correlate</code>时，窗口不必与数组大小相同，因此使窗口更简单一些。</p>
+<p><code>mode</code>参数决定结果的大小。 你可以阅读 NumPy 文档中的详细信息，但是当模式为<code>'same'</code>时，结果与输入大小相同。</p>
+<h2 id="512-ca-表">5.12 CA 表</h2>
+<p>现在还差一步。 如果 CA 规则仅取决于邻居的总和，那么我们迄今为止的函数仍然有效，但大多数规则还取决于哪些邻居是开或者关的。 例如，100 和 001 可能会产生不同的结果。</p>
+<p>我们可以使用一个包含元素<code>[4,2,1]</code>的窗口，使<code>step</code>更加通用，它将邻域解释为一个二进制数。 例如，邻域 100 产生 4；010 产生 2，001 产生 1。然后我们可以在规则表中查找这些结果。</p>
+<p>以下是更一般的步骤：</p>
+<pre><code class="lang-py">
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">step4</span><span class="hljs-params">(array, i)</span>:</span>
+    window = np.array([<span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>])
+    corr = np.correlate(array[i-<span class="hljs-number">1</span>], window, mode=<span class="hljs-string">'same'</span>)
+    array[i] = table[corr]
+</code></pre>
+<p>前两行几乎相同。 最后一行在<code>table</code>中查找<code>corr</code>的每个元素，并将结果赋给<code>array[i]</code>。</p>
+<p>最后，这是计算表的函数：</p>
+<pre><code class="lang-py">
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">make_table</span><span class="hljs-params">(rule)</span>:</span>
+    rule = np.array([rule], dtype=np.uint8)
+    table = np.unpackbits(rule)[::-<span class="hljs-number">1</span>]
+    <span class="hljs-keyword">return</span> table
+</code></pre>
+<p>参数<code>rule</code>是一个 0 到 255 的整数。第一行将规则放入单个元素的数组中，以便我们可以使用<code>unpackbits</code>，将规则编号转换为其二进制表示形式。 例如，以下是规则 150 的表：</p>
+<pre><code class="lang-py">
+<span class="hljs-prompt">&gt;&gt;&gt; </span>table = make_table(<span class="hljs-number">150</span>)
+<span class="hljs-prompt">&gt;&gt;&gt; </span>print(table)
+[<span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span>]
+</code></pre>
+<p>在<code>thinkcomplexity.py</code>中，你将找到CA的定义，它封装了本节中的代码，以及两个绘制 CA 的类，<code>PyplotDrawer</code>和<code>EPSDrawer</code>。</p>
+<h2 id="513-练习">5.13 练习</h2>
+<p>练习 1</p>
+<p>本章的代码位于本书仓库的 Jupyter 笔记本<code>chap05.ipynb</code>中。打开这个笔记本，阅读代码，然后运行单元格。你可以使用这个笔记本来做本章的练习。我的解决方案在<code>chap05soln.ipynb</code>中。</p>
+<p>练习 2</p>
+<p>这个练习要求你试验规则 110 以及它的一些飞船。</p>
+<ol>
+<li><p>阅读规则 110 的维基百科页面，其中描述了其背景图案和飞船：<a href="https://en.wikipedia.org/wiki/Rule_110" target="_blank">https://en.wikipedia.org/wiki/Rule_110</a>。</p>
+</li>
+<li><p>使用产生稳定背景图案的初始条件创建 CA 规则 110。</p>
+<p>请注意，CA 类提供了<code>start_string</code>，它允许你使用 1 和 0 的字符串初始化数组的状态。</p>
+</li>
+<li><p>通过在行的中心添加不同的图案来修改初始条件，并查看哪些产生了飞船。对于一些<code>n</code>的合理的值，你可能想列举所有可能的<code>n</code>位图案。对于每个飞船，你能找到平移的时间和速度吗？你能找到的最大的飞船是什么？</p>
+</li>
+<li><p>当宇宙飞船相撞时会发生什么？</p>
+</li>
+</ol>
+<p>练习 3</p>
+<p>这个练习的目标是实现一个图灵机。</p>
+<ol>
+<li>阅读 <a href="http://en.wikipedia.org/wiki/Turing_machine" target="_blank">http://en.wikipedia.org/wiki/Turing_machine</a> 来了解图灵机。</li>
+<li>编写一个名为<code>Turing</code>的类来实现图灵机。对于动作表，使用三个状态的 Busy Beaver 的规则。</li>
+<li>写一个名为<code>TuringDrawer</code>的类，该类生成一个图像，表示磁带状态以及磁头位置和状态。可能的外观的一个示例，请参阅 <a href="http://mathworld.wolfram.com/TuringMachine.html" target="_blank">http://mathworld.wolfram.com/TuringMachine.html</a>。</li>
+</ol>
+<p>练习 4</p>
+<ol>
+<li>本练习要求你执行并测试几个 PRNG。为了进行测试，你需要安装 DieHarder，你可以从 <a href="https://www.phy.duke.edu/~rgb/General/dieharder.php" target="_blank">https://www.phy.duke.edu/~rgb/General/dieharder.php</a> 下载 DieHarder，也可能为你的操作系统作为软件包提供。</li>
+<li>编写一个程序，实现 <a href="http://en.wikipedia.org/wiki/Linear_congruential_generator" target="_blank">http://en.wikipedia.org/wiki/Linear_congruential_generator</a> 中描述的线性同余生成器之一。使用 DieHarder 进行测试。</li>
+<li>阅读 Python<code>random</code>模块的文档。它使用了什么 PRNG？测试它。</li>
+<li>使用几百个细胞实现 CA 规则 30，在合理的时间内以尽可能多的时间步骤运行它，然后将中心列输出为位序列。测试它。</li>
+</ol>
+<p>练习 5</p>
+<p>可证伪性是一个吸引人的和有用的想法，但在科学哲学家中，它并不普遍视为界限的解决方案，正如波普尔所声称的那样。</p>
+<p>阅读 <a href="http://en.wikipedia.org/wiki/Fififiability" target="_blank">http://en.wikipedia.org/wiki/Fififiability</a> 并回答以下问题。</p>
+<ol>
+<li>界限问题是什么？</li>
+<li>根据波普尔的说法，可证伪性是否解决了界限问题？</li>
+<li>给出两个理论示例，一个被认为是科学，另一个被认为是非科学，它们由可证伪性的标准成功地区分开。</li>
+<li>你能总结出科学哲学家和历史学家对波普尔的主张提出的，一个或多个反对意见吗？</li>
+<li>你是否有这样的感觉，即实践哲学家对波普尔的工作给予高度评价？</li>
+</ol>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="4.html" class="navigation navigation-prev " aria-label="Previous page: 四、无标度网络">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="6.html" class="navigation navigation-next " aria-label="Next page: 六、生命游戏">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"五、细胞自动机","level":"1.1.5","depth":2,"next":{"title":"六、生命游戏","level":"1.1.6","depth":2,"path":"6.md","ref":"6.md","articles":[]},"previous":{"title":"四、无标度网络","level":"1.1.4","depth":2,"path":"4.md","ref":"4.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"5.md","mtime":"2018-04-15T08:25:49.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:59.048Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,2220 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 中的构造器 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0025.html" />
+    
+    
+    <link rel="prev" href="0023.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 核心
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0002.html">
+            
+                <a href="0002.html">
+            
+                    
+                    Java 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0003.html">
+            
+                <a href="0003.html">
+            
+                    
+                    Java 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0004.html">
+            
+                <a href="0004.html">
+            
+                    
+                    Java 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0005.html">
+            
+                <a href="0005.html">
+            
+                    
+                    设置 Java 环境和类路径
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0006.html">
+            
+                <a href="0006.html">
+            
+                    
+                    Java JVM、JDK 和 JRE
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0007.html">
+            
+                <a href="0007.html">
+            
+                    
+                    Java HelloWorld 程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0008.html">
+            
+                <a href="0008.html">
+            
+                    
+                    Java 中的变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0009.html">
+            
+                <a href="0009.html">
+            
+                    
+                    Java 中的数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0010.html">
+            
+                <a href="0010.html">
+            
+                    
+                    Java 中的静态块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0011.html">
+            
+                <a href="0011.html">
+            
+                    
+                    Java 中的类型转换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0012.html">
+            
+                <a href="0012.html">
+            
+                    
+                    Java If Else语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0013.html">
+            
+                <a href="0013.html">
+            
+                    
+                    Java switch语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0014.html">
+            
+                <a href="0014.html">
+            
+                    
+                    Java 循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0015.html">
+            
+                <a href="0015.html">
+            
+                    
+                    Java break和continue语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0016.html">
+            
+                <a href="0016.html">
+            
+                    
+                    Java 运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0017.html">
+            
+                <a href="0017.html">
+            
+                    
+                    Java 数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="0018.html">
+            
+                <a href="0018.html">
+            
+                    
+                    在 Java 中创建对象的不同方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="0019.html">
+            
+                <a href="0019.html">
+            
+                    
+                    Java 命令行参数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="0020.html">
+            
+                <a href="0020.html">
+            
+                    
+                    Java OOPS 概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="0021.html">
+            
+                <a href="0021.html">
+            
+                    
+                    什么是 OOPS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="0022.html">
+            
+                <a href="0022.html">
+            
+                    
+                    Java 中的方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="0023.html">
+            
+                <a href="0023.html">
+            
+                    
+                    Java 是严格按值传递的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.23" data-path="0024.html">
+            
+                <a href="0024.html">
+            
+                    
+                    Java 中的构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="0025.html">
+            
+                <a href="0025.html">
+            
+                    
+                    Java 中的访问修饰符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="0026.html">
+            
+                <a href="0026.html">
+            
+                    
+                    Java 中的继承
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="0027.html">
+            
+                <a href="0027.html">
+            
+                    
+                    Java 中的聚合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="0028.html">
+            
+                <a href="0028.html">
+            
+                    
+                    Java 中的方法重载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="0029.html">
+            
+                <a href="0029.html">
+            
+                    
+                    Java 中的方法覆盖
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="0030.html">
+            
+                <a href="0030.html">
+            
+                    
+                    运行时多态性或动态方法分派
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="0031.html">
+            
+                <a href="0031.html">
+            
+                    
+                    Java this关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="0032.html">
+            
+                <a href="0032.html">
+            
+                    
+                    Java 中的垃圾收集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="0033.html">
+            
+                <a href="0033.html">
+            
+                    
+                    Java 中的静态块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="0034.html">
+            
+                <a href="0034.html">
+            
+                    
+                    Java 最终修改
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="0035.html">
+            
+                <a href="0035.html">
+            
+                    
+                    Java instanceof运算符和向下转换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="0036.html">
+            
+                <a href="0036.html">
+            
+                    
+                    Java 包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="0037.html">
+            
+                <a href="0037.html">
+            
+                    
+                    Java 子包和静态导入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="0038.html">
+            
+                <a href="0038.html">
+            
+                    
+                    Java 抽象类和方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="0039.html">
+            
+                <a href="0039.html">
+            
+                    
+                    Java 接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="0040.html">
+            
+                <a href="0040.html">
+            
+                    
+                    Java 嵌套类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="0041.html">
+            
+                <a href="0041.html">
+            
+                    
+                    Java 具体类、抽象类、最终类、接口之间的区别
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="0042.html">
+            
+                <a href="0042.html">
+            
+                    
+                    Java 字符串处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="0043.html">
+            
+                <a href="0043.html">
+            
+                    
+                    Java 字符串处理简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="0044.html">
+            
+                <a href="0044.html">
+            
+                    
+                    Java String类函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="0045.html">
+            
+                <a href="0045.html">
+            
+                    
+                    Java 中的StringBuffer类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="0046.html">
+            
+                <a href="0046.html">
+            
+                    
+                    Java StringBuilder类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.46" data-path="0047.html">
+            
+                <a href="0047.html">
+            
+                    
+                    Java StringTokenizer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.47" data-path="0048.html">
+            
+                <a href="0048.html">
+            
+                    
+                    Java 异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.48" data-path="0049.html">
+            
+                <a href="0049.html">
+            
+                    
+                    Java 异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.49" data-path="0050.html">
+            
+                <a href="0050.html">
+            
+                    
+                    Java try-catch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.50" data-path="0051.html">
+            
+                <a href="0051.html">
+            
+                    
+                    Java 资源试用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.51" data-path="0052.html">
+            
+                <a href="0052.html">
+            
+                    
+                    Java throw、throws和finally
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.52" data-path="0053.html">
+            
+                <a href="0053.html">
+            
+                    
+                    Java 中用户定义的异常子类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.53" data-path="0054.html">
+            
+                <a href="0054.html">
+            
+                    
+                    Java 带有异常处理的方法覆盖
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.54" data-path="0055.html">
+            
+                <a href="0055.html">
+            
+                    
+                    Java 中的链式异常
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.55" data-path="0056.html">
+            
+                <a href="0056.html">
+            
+                    
+                    Java 多线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.56" data-path="0057.html">
+            
+                <a href="0057.html">
+            
+                    
+                    Java 多线程简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.57" data-path="0058.html">
+            
+                <a href="0058.html">
+            
+                    
+                    Java Thread类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.58" data-path="0059.html">
+            
+                <a href="0059.html">
+            
+                    
+                    在 Java 中创建一个线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.59" data-path="0060.html">
+            
+                <a href="0060.html">
+            
+                    
+                    在 Java 中连接线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.60" data-path="0061.html">
+            
+                <a href="0061.html">
+            
+                    
+                    Java 线程休眠
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.61" data-path="0062.html">
+            
+                <a href="0062.html">
+            
+                    
+                    Java 命名线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.62" data-path="0063.html">
+            
+                <a href="0063.html">
+            
+                    
+                    Java 线程优先级
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.63" data-path="0064.html">
+            
+                <a href="0064.html">
+            
+                    
+                    Java 守护线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.64" data-path="0065.html">
+            
+                <a href="0065.html">
+            
+                    
+                    Java 同步
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.65" data-path="0066.html">
+            
+                <a href="0066.html">
+            
+                    
+                    Java 线程间通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.66" data-path="0067.html">
+            
+                <a href="0067.html">
+            
+                    
+                    Java 线程组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.67" data-path="0068.html">
+            
+                <a href="0068.html">
+            
+                    
+                    高级概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.68" data-path="0069.html">
+            
+                <a href="0069.html">
+            
+                    
+                    Java 枚举
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.69" data-path="0070.html">
+            
+                <a href="0070.html">
+            
+                    
+                    Java 中的自动装箱和拆箱
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.70" data-path="0071.html">
+            
+                <a href="0071.html">
+            
+                    
+                    Java 输入输出流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.71" data-path="0072.html">
+            
+                <a href="0072.html">
+            
+                    
+                    Java 序列化和反序列化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.72" data-path="0073.html">
+            
+                <a href="0073.html">
+            
+                    
+                    Java 中的网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.73" data-path="0074.html">
+            
+                <a href="0074.html">
+            
+                    
+                    Java 泛型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.74" data-path="0075.html">
+            
+                <a href="0075.html">
+            
+                    
+                    集合框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.75" data-path="0076.html">
+            
+                <a href="0076.html">
+            
+                    
+                    Java 集合框架
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.76" data-path="0077.html">
+            
+                <a href="0077.html">
+            
+                    
+                    Java 集合框架的接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.77" data-path="0078.html">
+            
+                <a href="0078.html">
+            
+                    
+                    Java 中的集合类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.78" data-path="0079.html">
+            
+                <a href="0079.html">
+            
+                    
+                    使用迭代器访问 Java 集合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.79" data-path="0080.html">
+            
+                <a href="0080.html">
+            
+                    
+                    Java 集合框架ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.80" data-path="0081.html">
+            
+                <a href="0081.html">
+            
+                    
+                    Java 集合框架LinkedList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.81" data-path="0082.html">
+            
+                <a href="0082.html">
+            
+                    
+                    Java 集合框架HashSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.82" data-path="0083.html">
+            
+                <a href="0083.html">
+            
+                    
+                    Java 集合框架LinkedHashSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.83" data-path="0084.html">
+            
+                <a href="0084.html">
+            
+                    
+                    Java 集合框架TreeSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.84" data-path="0085.html">
+            
+                <a href="0085.html">
+            
+                    
+                    Java 集合Map接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.85" data-path="0086.html">
+            
+                <a href="0086.html">
+            
+                    
+                    Java 集合框架Hashmap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.86" data-path="0087.html">
+            
+                <a href="0087.html">
+            
+                    
+                    Java 集合框架TreeMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.87" data-path="0088.html">
+            
+                <a href="0088.html">
+            
+                    
+                    Java 集合框架Hashtable
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.88" data-path="0089.html">
+            
+                <a href="0089.html">
+            
+                    
+                    Java Collections类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.89" data-path="0090.html">
+            
+                <a href="0090.html">
+            
+                    
+                    Java Comparable接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.90" data-path="0091.html">
+            
+                <a href="0091.html">
+            
+                    
+                    Java 集合Comparator接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.91" data-path="0092.html">
+            
+                <a href="0092.html">
+            
+                    
+                    Java 集合遗留类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.92" data-path="0093.html">
+            
+                <a href="0093.html">
+            
+                    
+                    GUI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.93" data-path="0094.html">
+            
+                <a href="0094.html">
+            
+                    
+                    Java 中的 Applet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.94" data-path="0095.html">
+            
+                <a href="0095.html">
+            
+                    
+                    Java GUI 事件处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.95" data-path="0096.html">
+            
+                <a href="0096.html">
+            
+                    
+                    Java AWT
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.96" data-path="0097.html">
+            
+                <a href="0097.html">
+            
+                    
+                    Java 抽象窗口工具包（AWT）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.97" data-path="0098.html">
+            
+                <a href="0098.html">
+            
+                    
+                    Java Swing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.98" data-path="0099.html">
+            
+                <a href="0099.html">
+            
+                    
+                    Java Swing 组件和容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.99" data-path="0100.html">
+            
+                <a href="0100.html">
+            
+                    
+                    Java Swing 组件和容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.100" data-path="0101.html">
+            
+                <a href="0101.html">
+            
+                    
+                    Java 包装类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.101" data-path="0102.html">
+            
+                <a href="0102.html">
+            
+                    
+                    Java 包装类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.102" data-path="0103.html">
+            
+                <a href="0103.html">
+            
+                    
+                    Java Byte类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.103" data-path="0104.html">
+            
+                <a href="0104.html">
+            
+                    
+                    Java Short类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.104" data-path="0105.html">
+            
+                <a href="0105.html">
+            
+                    
+                    Java Float类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.105" data-path="0106.html">
+            
+                <a href="0106.html">
+            
+                    
+                    Java Double类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.106" data-path="0107.html">
+            
+                <a href="0107.html">
+            
+                    
+                    Java Boolean类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.107" data-path="0108.html">
+            
+                <a href="0108.html">
+            
+                    
+                    Java Character类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.108" data-path="0109.html">
+            
+                <a href="0109.html">
+            
+                    
+                    Java 反射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.109" data-path="0110.html">
+            
+                <a href="0110.html">
+            
+                    
+                    Java 反射 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.110" data-path="0111.html">
+            
+                <a href="0111.html">
+            
+                    
+                    Java Class类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.111" data-path="0112.html">
+            
+                <a href="0112.html">
+            
+                    
+                    数据库编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.112" data-path="0113.html">
+            
+                <a href="0113.html">
+            
+                    
+                    JDBC 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.113" data-path="0114.html">
+            
+                <a href="0114.html">
+            
+                    
+                    JDBC API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.114" data-path="0115.html">
+            
+                <a href="0115.html">
+            
+                    
+                    将 Java 应用连接到数据库的步骤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.115" data-path="0116.html">
+            
+                <a href="0116.html">
+            
+                    
+                    使用 JDBC 类型 1 驱动连接到 Access 数据库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.116" data-path="0117.html">
+            
+                <a href="0117.html">
+            
+                    
+                    Java：使用瘦驱动连接到 Oracle 数据库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.117" data-path="0118.html">
+            
+                <a href="0118.html">
+            
+                    
+                    使用瘦驱动连接到 MySQL 数据库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.118" data-path="0119.html">
+            
+                <a href="0119.html">
+            
+                    
+                    JDBC MongoDB 连接
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.119" data-path="0120.html">
+            
+                <a href="0120.html">
+            
+                    
+                    Java 杂项概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.120" data-path="0121.html">
+            
+                <a href="0121.html">
+            
+                    
+                    Java RMI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.121" data-path="0122.html">
+            
+                <a href="0122.html">
+            
+                    
+                    Java 内部类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.122" data-path="0123.html">
+            
+                <a href="0123.html">
+            
+                    
+                    Java File类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.123" data-path="0124.html">
+            
+                <a href="0124.html">
+            
+                    
+                    Java 中的AbstractList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.124" data-path="0125.html">
+            
+                <a href="0125.html">
+            
+                    
+                    Java AbstractSequentialList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.125" data-path="0126.html">
+            
+                <a href="0126.html">
+            
+                    
+                    Java CopyOnWriteArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.126" data-path="0127.html">
+            
+                <a href="0127.html">
+            
+                    
+                    Java AbstractSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.127" data-path="0128.html">
+            
+                <a href="0128.html">
+            
+                    
+                    EnumSet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.128" data-path="0129.html">
+            
+                <a href="0129.html">
+            
+                    
+                    Java IdentityHashMap类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.129" data-path="0130.html">
+            
+                <a href="0130.html">
+            
+                    
+                    Java SortedMap接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.130" data-path="0131.html">
+            
+                <a href="0131.html">
+            
+                    
+                    Queue接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.131" data-path="0132.html">
+            
+                <a href="0132.html">
+            
+                    
+                    Deque接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.132" data-path="0133.html">
+            
+                <a href="0133.html">
+            
+                    
+                    布局管理器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 中的构造器</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-中的构造器">Java 中的构造器</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java/constructor-in-java.php" target="_blank">https://www.studytonight.com/java/constructor-in-java.php</a></p>
+</blockquote>
+<p>构造器是一种用于初始化对象的特殊方法。每个类都有一个隐式或显式的构造器。</p>
+<p>如果我们没有在类中声明一个构造器，那么 JVM 会为这个类构建一个默认的构造器。这就是所谓的<strong>默认构造器</strong>。</p>
+<p>构造器与声明它的类名同名。<strong>构造器必须没有显式返回类型</strong>。Java 中的构造器<strong>不能是</strong>抽象的、静态的、最终的或者同步的。构造器不允许使用这些修饰符。</p>
+<p><strong>声明构造器的语法</strong></p>
+<pre><code class="lang-java">  className (parameter-list){
+  code-statements
+}
+</code></pre>
+<p><strong>类名</strong>是类名，因为<strong>构造器名与类名</strong>相同。</p>
+<p><strong>参数列表</strong>是可选的，因为构造器可以参数化，也可以非参数化。</p>
+<h3 id="构造器示例">构造器示例</h3>
+<p>在 Java 中，构造器在结构上看起来像下面程序中给出的。Car 类有一个为实例变量提供值的构造器。</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span>
+</span>{
+ String name ;
+ String model;
+ Car( )    **<span class="hljs-comment">//Constructor**</span>
+ {
+  name =<span class="hljs-string">""</span>;
+  model=<span class="hljs-string">""</span>;
+ }
+}
+</code></pre>
+<hr></hr>
+<h2 id="构造器的类型">构造器的类型</h2>
+<p>Java 支持两种类型的构造器:</p>
+<ul>
+<li>默认构造器</li>
+<li>参数化构造器</li>
+</ul>
+<p>每次创建新对象时，至少会调用一个构造器。</p>
+<pre><code class="lang-java">Car c = <span class="hljs-keyword">new</span> Car()       **<span class="hljs-comment">//Default constructor invoked**</span>
+Car c = <span class="hljs-keyword">new</span> Car(name); **<span class="hljs-comment">//Parameterized constructor invoked**</span>
+</code></pre>
+<hr></hr>
+<h2 id="默认构造器">默认构造器</h2>
+<p>在 Java 中，如果一个构造器没有任何参数，它就被称为默认构造器。默认构造器可以是用户定义的，也可以由 JVM 提供。</p>
+<p>如果一个类不包含任何构造器，那么在运行时 JVM 会生成一个默认构造器，称为系统定义默认构造器。</p>
+<p>如果一个类包含一个不带参数的构造器，那么它被称为用户定义的默认构造器。在这种情况下，JVM 不会创建默认构造器。</p>
+<p>创建构造器的<strong>目的是初始化对象</strong>的状态。</p>
+<p>下图显示了 JVM 如何在运行时向类添加构造器。</p>
+<p><img src="img/f19277f4bbfe5714befbc10162b4532b.png" alt="default-constructor"></img></p>
+<h3 id="用户定义默认构造器">用户定义默认构造器</h3>
+<p>程序员在类中定义的构造器称为用户定义的默认构造器。</p>
+<p><strong>示例:</strong></p>
+<p>在本例中，我们创建了一个与类名同名的构造器。</p>
+<pre><code class="lang-java">  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AddDemo1</span>
+</span>{  
+  AddDemo1()
+  {
+    <span class="hljs-keyword">int</span> a=<span class="hljs-number">10</span>;
+    <span class="hljs-keyword">int</span> b=<span class="hljs-number">5</span>;
+    <span class="hljs-keyword">int</span> c;
+    c=a+b;
+    System.out.println(<span class="hljs-string">"*****Default Constructor*****"</span>);
+    System.out.println(<span class="hljs-string">"Total of 10 + 5 = "</span>+c);
+  }  
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span>
+  </span>{  
+    AddDemo1 obj=<span class="hljs-keyword">new</span> AddDemo1();  
+  }  
+}
+</code></pre>
+<p><img src="img/d805e4971d03e311e02c3cd631a20843.png" alt="default-constructor"></img></p>
+<h2 id="构造器重载">构造器重载</h2>
+<p>像方法一样，构造器也可以重载。重载构造器根据其<code>Parameter</code>类型或参数数量进行区分。构造器重载与方法重载没有太大区别。在方法重载的情况下，您有多个名称相同但签名不同的方法，而在构造器重载中，您有多个签名不同的构造器，但唯一的区别是<strong>构造器没有返回类型</strong>。</p>
+<hr></hr>
+<h4 id="构造器重载示例">构造器重载示例</h4>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Cricketer</span>
+</span>{
+ String name;
+ String team;
+ <span class="hljs-keyword">int</span> age;
+ Cricketer ()   **<span class="hljs-comment">//default constructor**.</span>
+ {
+  name =<span class="hljs-string">""</span>;
+  team =<span class="hljs-string">""</span>;
+  age = <span class="hljs-number">0</span>;
+ }
+ Cricketer(String n, String t, <span class="hljs-keyword">int</span> a)   **<span class="hljs-comment">//constructor overloaded**</span>
+ {
+  name = n;
+  team = t;
+  age = a;
+ }
+ Cricketer (Cricketer ckt)     **<span class="hljs-comment">//constructor similar to copy constructor of c++** </span>
+ {
+  name = ckt.name;
+  team = ckt.team;
+  age = ckt.age;
+ }
+ <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span>
+ </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-string">"this is "</span> + name + <span class="hljs-string">" of "</span>+team;
+ }
+}
+
+Class test:
+{
+ <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span> <span class="hljs-params">(String[] args)</span>
+ </span>{
+  Cricketer c1 = <span class="hljs-keyword">new</span> Cricketer();
+  Cricketer c2 = <span class="hljs-keyword">new</span> Cricketer(<span class="hljs-string">"sachin"</span>, <span class="hljs-string">"India"</span>, <span class="hljs-number">32</span>);
+  Cricketer c3 = <span class="hljs-keyword">new</span> Cricketer(c2 );
+  System.out.println(c2);
+  System.out.println(c3);
+  c1.name = <span class="hljs-string">"Virat"</span>;
+  c1.team= <span class="hljs-string">"India"</span>;
+  c1.age = <span class="hljs-number">32</span>;
+  System .out. <span class="hljs-function">print <span class="hljs-title">in</span> <span class="hljs-params">(c1)</span></span>;
+ }
+}
+</code></pre>
+<p>这是印度的萨钦这是印度的萨钦这是印度的维拉特</p>
+<hr></hr>
+<h3 id="构造器链接">构造器链接</h3>
+<p>构造器链接是<strong>从同一个类中的另一个构造器</strong>调用一个构造器的过程。由于只能从另一个构造器调用构造器，因此构造器链接用于此目的。</p>
+<p>从另一个构造器<strong>调用构造器时，使用<code>this</code>关键字</strong>。此关键字用于引用当前对象。</p>
+<p>让我们看一个理解构造器链接的例子。</p>
+<pre><code class="lang-java">  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>
+</span>{
+ Test()
+ {
+  <span class="hljs-keyword">this</span>(<span class="hljs-number">10</span>);
+ }
+ Test(<span class="hljs-keyword">int</span> x)
+ {
+  System.out.println(<span class="hljs-string">"x="</span>+x);
+ }
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String arg[])</span>
+</span>{
+Test object = <span class="hljs-keyword">new</span> Test();
+}
+}
+</code></pre>
+<p>x=10</p>
+<p>当我们想要通过创建类的单个对象来执行多个任务时，使用构造器链接。</p>
+<p>在下图中，我们描述了同一类中构造器调用的流程。</p>
+<p><img src="img/be78e195aa4b69f641aee92da9e0e1b9.png" alt="constructor-chaining"></img></p>
+<p><strong>示例:</strong></p>
+<p>让我们再看一个例子来理解构造器链。这里我们已经创建了三个构造器，并通过使用<code>this</code>关键字来调用它们。</p>
+<pre><code class="lang-java">  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">abc</span>
+</span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">abc</span><span class="hljs-params">()</span>
+  </span>{
+    <span class="hljs-keyword">this</span>(<span class="hljs-number">5</span>);
+    System.out.println(<span class="hljs-string">"Default Constructor"</span>);
+  }
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">abc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span>
+  </span>{
+    <span class="hljs-keyword">this</span>(<span class="hljs-number">5</span>, <span class="hljs-number">6</span>);
+    System.out.println(<span class="hljs-string">"Constructor with one Parameter"</span>);
+    System.out.println(<span class="hljs-string">"Value of x ==&gt; "</span>+x);
+  }
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">abc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span>
+  </span>{
+    System.out.println(<span class="hljs-string">"Constructor with two Parameter"</span>);
+    System.out.println(<span class="hljs-string">"Value of x and y ==&gt; "</span>+x+<span class="hljs-string">" "</span>+y);
+  }
+}
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ChainingDemo1</span>
+</span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String as[])</span>
+  </span>{
+    abcobj = <span class="hljs-keyword">new</span> abc();
+  }
+}
+</code></pre>
+<p><img src="img/9d77052b2d9416c47ff93d1bf421414f.png" alt="output-constructor-chaining"></img></p>
+<hr></hr>
+<h3 id="私有构造器">私有构造器</h3>
+<p>在 Java 中，我们可以创建私有构造器来防止类被实例化。这意味着通过声明一个私有构造器，它限制创建该类的对象。</p>
+<p>私有构造器用于创建<strong>单例类</strong>。一个只能有一个对象的类，称为单例类。</p>
+<p>在私有构造器中，只能创建一个对象，该对象是在类中创建的，并且所有方法都是静态的。如果类中存在私有构造器，则无法创建对象。一个有私有构造器并且所有方法都是静态的类叫做<strong>实用类</strong>。</p>
+<p><strong>示例:</strong></p>
+<pre><code class="lang-java">  <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">abc</span>
+</span>{
+  <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">abc</span><span class="hljs-params">()</span>
+  </span>{}
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span>
+  </span>{
+    <span class="hljs-keyword">int</span> z = a+b;
+    System.out.println(<span class="hljs-string">"Addition: "</span>+z);
+  }
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sub</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span>
+  </span>{
+    <span class="hljs-keyword">int</span> z = x-y;
+    System.out.println(<span class="hljs-string">"Subtraction: "</span>+z);
+  }
+
+}
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PrivateConDemo</span>
+</span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String as[])</span>
+  </span>{
+    abc.add(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>);
+    abc.sub(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>);
+  }
+}
+</code></pre>
+<p><img src="img/c3579d4045ba6d749468ff76d4970f7e.png" alt="private-constructor"></img></p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0023.html" class="navigation navigation-prev " aria-label="Previous page: Java 是严格按值传递的">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0025.html" class="navigation navigation-next " aria-label="Next page: Java 中的访问修饰符">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 中的构造器","level":"1.1.23","depth":2,"next":{"title":"Java 中的访问修饰符","level":"1.1.24","depth":2,"path":"0025.md","ref":"0025.md","articles":[]},"previous":{"title":"Java 是严格按值传递的","level":"1.1.22","depth":2,"path":"0023.md","ref":"0023.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0024.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:21:42.997Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

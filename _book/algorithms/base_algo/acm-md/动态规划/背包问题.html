@@ -1,0 +1,743 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>背包问题 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="最长公共子序列.html" />
+    
+    
+    <link rel="prev" href="动态规划基础.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="动态规划概述.html">
+            
+                <a href="动态规划概述.html">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="动态规划基础.html">
+            
+                <a href="动态规划基础.html">
+            
+                    
+                    动态规划基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.2" data-path="背包问题.html">
+            
+                <a href="背包问题.html">
+            
+                    
+                    背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="最长公共子序列.html">
+            
+                <a href="最长公共子序列.html">
+            
+                    
+                    最长公共子序列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="最长递增子序列.html">
+            
+                <a href="最长递增子序列.html">
+            
+                    
+                    最长递增子序列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >背包问题</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="背包问题">背包问题</h1>
+<p>背包问题是动态规划中的经典问题，它有多种变体，是算法竞赛中的常见题型。本章将详细介绍各类背包问题的解题思路和技巧。</p>
+<h2 id="01背包问题">01背包问题</h2>
+<p>【问题定义】有N件物品和一个容量为V的背包，每件物品有且只有一件。第i件物品的重量是w[i]，价值是v[i]。求解将哪些物品装入背包，可使这些物品的总重量不超过背包容量，且总价值最大。</p>
+<h3 id="基本思路">基本思路</h3>
+<p>使用动态规划求解，设dp[i][j]表示考虑前i件物品，背包容量为j时能达到的最大价值。</p>
+<h3 id="状态转移方程">状态转移方程</h3>
+<p>对于第i件物品，有两种选择：不选择该物品或选择该物品。</p>
+<ul>
+<li>不选择第i件物品：dp[i][j] = dp[i-1][j]</li>
+<li>选择第i件物品（前提是能装下）：dp[i][j] = dp[i-1][j-w[i]] + v[i]</li>
+</ul>
+<p>因此，完整的状态转移方程为：</p>
+<pre><code>dp[i][j] = max(dp[i-1][j], dp[i-1][j-w[i]] + v[i])  (if j ≥ w[i])
+dp[i][j] = dp[i-1][j]  (if j &lt; w[i])
+</code></pre><h3 id="代码实现">代码实现</h3>
+<p>二维数组实现：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 01背包问题的二维数组实现</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">knapsack01</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-keyword">int</span> capacity)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-comment">// dp[i][j]: 考虑前i个物品，背包容量j下的最大价值</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; dp(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;= capacity; j++) {
+            <span class="hljs-keyword">if</span> (j &lt; weights[i-<span class="hljs-number">1</span>]) {
+                <span class="hljs-comment">// 背包容量不足，无法放入第i个物品</span>
+                dp[i][j] = dp[i-<span class="hljs-number">1</span>][j];
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-comment">// 可以选择放或不放第i个物品</span>
+                dp[i][j] = max(dp[i-<span class="hljs-number">1</span>][j], dp[i-<span class="hljs-number">1</span>][j-weights[i-<span class="hljs-number">1</span>]] + values[i-<span class="hljs-number">1</span>]);
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[n][capacity];
+}
+</code></pre>
+<h3 id="空间优化">空间优化</h3>
+<p>由于dp[i][j]只与dp[i-1][j]和dp[i-1][j-w[i]]有关，可以使用一维数组优化空间：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 01背包问题的一维数组优化</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">knapsack01_optimized</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-keyword">int</span> capacity)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = capacity; j &gt;= weights[i]; j--) {
+            <span class="hljs-comment">// 注意这里的遍历顺序：从大到小逆序遍历</span>
+            dp[j] = max(dp[j], dp[j-weights[i]] + values[i]);
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[capacity];
+}
+</code></pre>
+<p>【注意】一维数组实现中，必须从大到小逆序遍历容量j，确保每个物品只被考虑一次。</p>
+<h2 id="完全背包问题">完全背包问题</h2>
+<p>【问题定义】有N种物品和一个容量为V的背包，每种物品有无限件。第i种物品的重量是w[i]，价值是v[i]。求解将哪些物品装入背包，可使这些物品的总重量不超过背包容量，且总价值最大。</p>
+<h3 id="状态转移方程">状态转移方程</h3>
+<p>与01背包不同，完全背包问题中每种物品可以选择多次，因此状态转移方程为：</p>
+<pre><code>dp[i][j] = max(dp[i-1][j], dp[i][j-w[i]] + v[i])  (if j ≥ w[i])
+dp[i][j] = dp[i-1][j]  (if j &lt; w[i])
+</code></pre><p>注意区别：01背包中是<code>dp[i-1][j-w[i]] + v[i]</code>，而完全背包中是<code>dp[i][j-w[i]] + v[i]</code>，因为物品i可以被重复选择。</p>
+<h3 id="代码实现">代码实现</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 完全背包问题</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">unboundedKnapsack</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-keyword">int</span> capacity)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; dp(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;= capacity; j++) {
+            <span class="hljs-keyword">if</span> (j &lt; weights[i-<span class="hljs-number">1</span>]) {
+                dp[i][j] = dp[i-<span class="hljs-number">1</span>][j];
+            } <span class="hljs-keyword">else</span> {
+                dp[i][j] = max(dp[i-<span class="hljs-number">1</span>][j], dp[i][j-weights[i-<span class="hljs-number">1</span>]] + values[i-<span class="hljs-number">1</span>]);
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[n][capacity];
+}
+</code></pre>
+<h3 id="空间优化">空间优化</h3>
+<p>完全背包的一维数组优化与01背包类似，但遍历顺序不同：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 完全背包问题的一维数组优化</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">unboundedKnapsack_optimized</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-keyword">int</span> capacity)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = weights[i]; j &lt;= capacity; j++) {
+            <span class="hljs-comment">// 注意这里的遍历顺序：从小到大正序遍历</span>
+            dp[j] = max(dp[j], dp[j-weights[i]] + values[i]);
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[capacity];
+}
+</code></pre>
+<p>【注意】与01背包不同，完全背包需要从小到大正序遍历容量j，确保每个物品可以被多次选择。</p>
+<h2 id="多重背包问题">多重背包问题</h2>
+<p>【问题定义】有N种物品和一个容量为V的背包。第i种物品最多有k[i]件，每件重量为w[i]，价值为v[i]。求解将哪些物品装入背包，可使这些物品的总重量不超过背包容量，且总价值最大。</p>
+<h3 id="基本思路">基本思路</h3>
+<p>多重背包可以看作是01背包和完全背包的混合：每种物品有限定数量。</p>
+<h3 id="朴素解法">朴素解法</h3>
+<p>通过枚举每种物品选择的数量来解决：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 多重背包问题的朴素解法</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">multiplePack</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; counts, <span class="hljs-keyword">int</span> capacity)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = capacity; j &gt;= <span class="hljs-number">0</span>; j--) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">1</span>; k &lt;= counts[i] &amp;&amp; k * weights[i] &lt;= j; k++) {
+                dp[j] = max(dp[j], dp[j - k * weights[i]] + k * values[i]);
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[capacity];
+}
+</code></pre>
+<h3 id="二进制优化">二进制优化</h3>
+<p>当物品数量较大时，可以使用二进制优化来降低时间复杂度：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 多重背包问题的二进制优化</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">multiplePack_binary</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; counts, <span class="hljs-keyword">int</span> capacity)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+
+    <span class="hljs-comment">// 将多个相同物品拆分成二进制组</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; new_weights, new_values;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">int</span> count = counts[i];
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">1</span>; k &lt;= count; k *= <span class="hljs-number">2</span>) {
+            new_weights.push_back(weights[i] * k);
+            new_values.push_back(values[i] * k);
+            count -= k;
+        }
+        <span class="hljs-keyword">if</span> (count &gt; <span class="hljs-number">0</span>) {
+            new_weights.push_back(weights[i] * count);
+            new_values.push_back(values[i] * count);
+        }
+    }
+
+    <span class="hljs-comment">// 转化为01背包问题</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; new_weights.size(); i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = capacity; j &gt;= new_weights[i]; j--) {
+            dp[j] = max(dp[j], dp[j - new_weights[i]] + new_values[i]);
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[capacity];
+}
+</code></pre>
+<h2 id="混合背包问题">混合背包问题</h2>
+<p>【问题定义】有N种物品和一个容量为V的背包。物品有三类：</p>
+<ul>
+<li>第一类物品只能用1次（01背包）</li>
+<li>第二类物品可以用无限次（完全背包）</li>
+<li>第三类物品最多用k次（多重背包）</li>
+</ul>
+<h3 id="解题思路">解题思路</h3>
+<p>根据物品的类型分别处理：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 混合背包问题</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">mixedKnapsack</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; types, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; counts, <span class="hljs-keyword">int</span> capacity)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">if</span> (types[i] == <span class="hljs-number">0</span>) {  <span class="hljs-comment">// 01背包</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = capacity; j &gt;= weights[i]; j--) {
+                dp[j] = max(dp[j], dp[j - weights[i]] + values[i]);
+            }
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (types[i] == <span class="hljs-number">1</span>) {  <span class="hljs-comment">// 完全背包</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = weights[i]; j &lt;= capacity; j++) {
+                dp[j] = max(dp[j], dp[j - weights[i]] + values[i]);
+            }
+        } <span class="hljs-keyword">else</span> {  <span class="hljs-comment">// 多重背包</span>
+            <span class="hljs-comment">// 二进制优化</span>
+            <span class="hljs-keyword">int</span> count = counts[i];
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">1</span>; k &lt;= count; k *= <span class="hljs-number">2</span>) {
+                <span class="hljs-keyword">int</span> new_weight = weights[i] * k;
+                <span class="hljs-keyword">int</span> new_value = values[i] * k;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = capacity; j &gt;= new_weight; j--) {
+                    dp[j] = max(dp[j], dp[j - new_weight] + new_value);
+                }
+                count -= k;
+            }
+            <span class="hljs-keyword">if</span> (count &gt; <span class="hljs-number">0</span>) {
+                <span class="hljs-keyword">int</span> new_weight = weights[i] * count;
+                <span class="hljs-keyword">int</span> new_value = values[i] * count;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = capacity; j &gt;= new_weight; j--) {
+                    dp[j] = max(dp[j], dp[j - new_weight] + new_value);
+                }
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[capacity];
+}
+</code></pre>
+<h2 id="分组背包问题">分组背包问题</h2>
+<p>【问题定义】有N组物品和一个容量为V的背包。每组物品有若干个，同一组内的物品最多只能选一个。每件物品的重量是w[i][j]，价值是v[i][j]，其中i是组号，j是组内编号。求解将哪些物品装入背包，可使物品总重量不超过背包容量，且总价值最大。</p>
+<h3 id="解题思路">解题思路</h3>
+<p>针对每一组物品，枚举该组选择哪件物品：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 分组背包问题</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">groupKnapsack</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; values, <span class="hljs-keyword">int</span> capacity)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();  <span class="hljs-comment">// 组数</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {  <span class="hljs-comment">// 枚举每一组</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = capacity; j &gt;= <span class="hljs-number">0</span>; j--) {  <span class="hljs-comment">// 枚举背包容量</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>; k &lt; weights[i].size(); k++) {  <span class="hljs-comment">// 枚举该组的每个物品</span>
+                <span class="hljs-keyword">if</span> (j &gt;= weights[i][k]) {
+                    dp[j] = max(dp[j], dp[j - weights[i][k]] + values[i][k]);
+                }
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[capacity];
+}
+</code></pre>
+<h2 id="二维背包问题">二维背包问题</h2>
+<p>【问题定义】有N件物品和一个容量为(V,M)的背包，这里有两个限制维度（如体积和重量）。第i件物品需要消耗背包的空间为(v[i],m[i])，价值是w[i]。求解将哪些物品装入背包，可使物品的总体积不超过V，总重量不超过M，且总价值最大。</p>
+<h3 id="解题思路">解题思路</h3>
+<p>扩展到三维DP数组，dp[i][j][k]表示考虑前i个物品，体积不超过j，重量不超过k的最大价值：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 二维费用背包问题</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">twoDimensionKnapsack</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; volumes, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-keyword">int</span> capacity_weight, <span class="hljs-keyword">int</span> capacity_volume)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; dp(capacity_weight + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(capacity_volume + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = capacity_weight; j &gt;= weights[i]; j--) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = capacity_volume; k &gt;= volumes[i]; k--) {
+                dp[j][k] = max(dp[j][k], dp[j - weights[i]][k - volumes[i]] + values[i]);
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[capacity_weight][capacity_volume];
+}
+</code></pre>
+<h2 id="背包问题求方案数">背包问题求方案数</h2>
+<p>【问题变形】除了求最大价值外，还可能需要求达到最大价值的方案数量。</p>
+<h3 id="解题思路">解题思路</h3>
+<p>维护两个DP数组，一个记录最大价值，一个记录达到该价值的方案数：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 背包问题求方案数</span>
+pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; knapsackWithCount(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-keyword">int</span> capacity) {
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-keyword">int</span> mod = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);  <span class="hljs-comment">// 最大价值</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; count(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);  <span class="hljs-comment">// 方案数量</span>
+    count[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;  <span class="hljs-comment">// 初始状态有1种方案</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = capacity; j &gt;= weights[i]; j--) {
+            <span class="hljs-keyword">int</span> new_value = dp[j - weights[i]] + values[i];
+            <span class="hljs-keyword">if</span> (new_value &gt; dp[j]) {
+                <span class="hljs-comment">// 找到更大的价值，更新最大价值和方案数</span>
+                dp[j] = new_value;
+                count[j] = count[j - weights[i]];
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (new_value == dp[j]) {
+                <span class="hljs-comment">// 相同价值，方案数累加</span>
+                count[j] = (count[j] + count[j - weights[i]]) % mod;
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> {dp[capacity], count[capacity]};
+}
+</code></pre>
+<h2 id="背包问题输出方案">背包问题输出方案</h2>
+<p>【问题变形】需要输出具体选择了哪些物品。</p>
+<h3 id="解题思路">解题思路</h3>
+<p>记录每一步的选择，然后回溯：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 背包问题输出方案</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; knapsackWithSolution(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-keyword">int</span> capacity) {
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; dp(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt; selected(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;(capacity + <span class="hljs-number">1</span>, <span class="hljs-literal">false</span>));
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;= capacity; j++) {
+            <span class="hljs-keyword">if</span> (j &lt; weights[i-<span class="hljs-number">1</span>]) {
+                dp[i][j] = dp[i-<span class="hljs-number">1</span>][j];
+                selected[i][j] = <span class="hljs-literal">false</span>;
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">int</span> not_take = dp[i-<span class="hljs-number">1</span>][j];
+                <span class="hljs-keyword">int</span> take = dp[i-<span class="hljs-number">1</span>][j-weights[i-<span class="hljs-number">1</span>]] + values[i-<span class="hljs-number">1</span>];
+                <span class="hljs-keyword">if</span> (take &gt; not_take) {
+                    dp[i][j] = take;
+                    selected[i][j] = <span class="hljs-literal">true</span>;
+                } <span class="hljs-keyword">else</span> {
+                    dp[i][j] = not_take;
+                    selected[i][j] = <span class="hljs-literal">false</span>;
+                }
+            }
+        }
+    }
+
+    <span class="hljs-comment">// 回溯找出选择的物品</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; solution;
+    <span class="hljs-keyword">int</span> i = n, j = capacity;
+    <span class="hljs-keyword">while</span> (i &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">if</span> (selected[i][j]) {
+            solution.push_back(i-<span class="hljs-number">1</span>);  <span class="hljs-comment">// 选择了第i个物品</span>
+            j -= weights[i-<span class="hljs-number">1</span>];
+        }
+        i--;
+    }
+
+    <span class="hljs-keyword">return</span> solution;
+}
+</code></pre>
+<h2 id="多维背包、泛化背包问题">多维背包、泛化背包问题</h2>
+<p>背包问题可以扩展到多个维度，或者添加更多的约束条件。解决这类问题的核心思想是理解状态定义和转移方程，然后根据具体问题调整DP数组的维度和转移方式。</p>
+<h2 id="背包问题变种">背包问题变种</h2>
+<h3 id="恰好装满背包">恰好装满背包</h3>
+<p>当要求恰好装满背包时，初始化方式有所不同：</p>
+<ul>
+<li>dp[0] = 0</li>
+<li>dp[j] = -∞ (j &gt; 0)</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 恰好装满背包的01背包问题</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">knapsack01_exact</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-keyword">int</span> capacity)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(capacity + <span class="hljs-number">1</span>, INT_MIN); <span class="hljs-comment">// 除了dp[0]=0外，其他初始化为负无穷</span>
+    dp[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = capacity; j &gt;= weights[i]; j--) {
+            dp[j] = max(dp[j], dp[j-weights[i]] + values[i]);
+        }
+    }
+
+    <span class="hljs-comment">// 如果结果为负无穷，表示无法恰好装满</span>
+    <span class="hljs-keyword">return</span> dp[capacity] &lt; <span class="hljs-number">0</span> ? -<span class="hljs-number">1</span> : dp[capacity];
+}
+</code></pre>
+<h3 id="最小代价问题">最小代价问题</h3>
+<p>有时背包问题可以反向思考，寻找达到某一目标的最小代价：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 最小代价背包问题</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minCostKnapsack</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; costs, <span class="hljs-keyword">int</span> target_weight)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(target_weight + <span class="hljs-number">1</span>, INT_MAX);
+    dp[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = target_weight; j &gt;= weights[i]; j--) {
+            <span class="hljs-keyword">if</span> (dp[j - weights[i]] != INT_MAX) {
+                dp[j] = min(dp[j], dp[j - weights[i]] + costs[i]);
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[target_weight] == INT_MAX ? -<span class="hljs-number">1</span> : dp[target_weight];
+}
+</code></pre>
+<h2 id="背包问题解题技巧">背包问题解题技巧</h2>
+<ol>
+<li><strong>正确的遍历顺序</strong>：<ul>
+<li>01背包：容量逆序遍历</li>
+<li>完全背包：容量正序遍历</li>
+</ul>
+</li>
+<li><strong>空间优化</strong>：多数背包问题都可以使用一维DP数组优化空间</li>
+<li><strong>初始化</strong>：根据问题要求（是否需要恰好装满）选择合适的初始化方式</li>
+<li><strong>转换思路</strong>：某些变种问题通过转换思路，可以归约为标准背包问题</li>
+</ol>
+<h2 id="练习题目推荐">练习题目推荐</h2>
+<ol>
+<li>POJ 3624: Charm Bracelet (经典01背包)</li>
+<li>POJ 1276: Cash Machine (完全背包)</li>
+<li>POJ 1742: Coins (多重背包)</li>
+<li>POJ 2392: Space Elevator (分组背包变形)</li>
+<li>POJ 1837: Balance (带负重的背包)</li>
+<li>POJ 3260: The Fewest Coins (混合背包)</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>背包问题是算法竞赛中的经典问题，掌握其基本思路和各种变形对于解决动态规划问题非常有帮助。通过不断练习，你可以熟悉各种背包问题的解题模式，并将这些思想迁移到更复杂的问题中。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="动态规划基础.html" class="navigation navigation-prev " aria-label="Previous page: 动态规划基础">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="最长公共子序列.html" class="navigation navigation-next " aria-label="Next page: 最长公共子序列">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"背包问题","level":"1.2.2","depth":2,"next":{"title":"最长公共子序列","level":"1.2.3","depth":2,"path":"最长公共子序列.md","ref":"最长公共子序列.md","articles":[]},"previous":{"title":"动态规划基础","level":"1.2.1","depth":2,"path":"动态规划基础.md","ref":"动态规划基础.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"背包问题.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:12.158Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

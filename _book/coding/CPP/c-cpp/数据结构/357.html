@@ -1,0 +1,901 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>归并排序算法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="358.html" />
+    
+    
+    <link rel="prev" href="356.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="343.html">
+            
+                <a href="343.html">
+            
+                    
+                    数据结构和算法基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="344.html">
+            
+                <a href="344.html">
+            
+                    
+                    数据结构和算法导论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="345.html">
+            
+                <a href="345.html">
+            
+                    
+                    渐近符号
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="346.html">
+            
+                <a href="346.html">
+            
+                    
+                    算法的空间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="347.html">
+            
+                <a href="347.html">
+            
+                    
+                    算法的时间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="348.html">
+            
+                <a href="348.html">
+            
+                    
+                    基本算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="349.html">
+            
+                <a href="349.html">
+            
+                    
+                    搜索算法简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="350.html">
+            
+                <a href="350.html">
+            
+                    
+                    线性搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="351.html">
+            
+                <a href="351.html">
+            
+                    
+                    二分搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="352.html">
+            
+                <a href="352.html">
+            
+                    
+                    排序介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="353.html">
+            
+                <a href="353.html">
+            
+                    
+                    冒泡排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="354.html">
+            
+                <a href="354.html">
+            
+                    
+                    插入排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="355.html">
+            
+                <a href="355.html">
+            
+                    
+                    选择排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="356.html">
+            
+                <a href="356.html">
+            
+                    
+                    快速排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.15" data-path="357.html">
+            
+                <a href="357.html">
+            
+                    
+                    归并排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="358.html">
+            
+                <a href="358.html">
+            
+                    
+                    堆排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="359.html">
+            
+                <a href="359.html">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="360.html">
+            
+                <a href="360.html">
+            
+                    
+                    什么是栈数据结构？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="361.html">
+            
+                <a href="361.html">
+            
+                    
+                    什么是队列数据结构？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="362.html">
+            
+                <a href="362.html">
+            
+                    
+                    使用栈实现队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="363.html">
+            
+                <a href="363.html">
+            
+                    
+                    链表介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="364.html">
+            
+                <a href="364.html">
+            
+                    
+                    线性链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="365.html">
+            
+                <a href="365.html">
+            
+                    
+                    循环链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="366.html">
+            
+                <a href="366.html">
+            
+                    
+                    双端队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="367.html">
+            
+                <a href="367.html">
+            
+                    
+                    使用队列实现栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="368.html">
+            
+                <a href="368.html">
+            
+                    
+                    使用链表实现栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="369.html">
+            
+                <a href="369.html">
+            
+                    
+                    双向链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="370.html">
+            
+                <a href="370.html">
+            
+                    
+                    二叉树介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="371.html">
+            
+                <a href="371.html">
+            
+                    
+                    二叉查找树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="372.html">
+            
+                <a href="372.html">
+            
+                    
+                    贪心算法或技巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="373.html">
+            
+                <a href="373.html">
+            
+                    
+                    活动选择问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="374.html">
+            
+                <a href="374.html">
+            
+                    
+                    Prim 最小生成树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="375.html">
+            
+                <a href="375.html">
+            
+                    
+                    霍夫曼编码算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="376.html">
+            
+                <a href="376.html">
+            
+                    
+                    迪克斯特拉算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >归并排序算法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="归并排序算法">归并排序算法</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/data-structures/merge-sort" target="_blank">https://www.studytonight.com/data-structures/merge-sort</a></p>
+</blockquote>
+<p>归并排序遵循<strong>分而治之</strong>的规则，递归地对给定的一组数字/元素进行排序，因此耗时更少。</p>
+<p>在继续归并排序之前，请先检查以下主题:</p>
+<ul>
+<li><a href="selection-sorting">选择排序</a></li>
+<li><a href="insertion-sorting">插入输出</a></li>
+<li><a href="space-complexity-of-algorithms">算法的空间复杂度</a></li>
+<li><a href="time-complexity-of-algorithms">算法的时间复杂度</a></li>
+</ul>
+<p>在前两个教程中，我们学习了选择排序和插入排序，这两种排序的最坏情况运行时间均为<code>O(n&lt;sup&gt;2&lt;/sup&gt;)</code>。随着输入大小的增加，插入和选择排序可能需要很长时间才能运行。</p>
+<p>另一方面，归并排序在所有情况下都在<code>O(n*log n)</code>时间内运行。</p>
+<p>在继续之前，归并排序如何工作及其实现，首先让我们了解<strong>分治</strong>的规则是什么？</p>
+<hr></hr>
+<h2 id="分治法">分治法</h2>
+<p>如果我们能把单个大问题分解成更小的子问题，解决更小的子问题，并结合它们的解决方案，找到原来大问题的解决方案，那么整个问题就变得更容易解决了。</p>
+<p>举个例子<strong>分而治之</strong>。</p>
+<p>当英国人来到印度时，他们看到了一个不同宗教和谐相处的国家，勤劳但天真的公民，多样性中的团结，他们发现很难建立自己的帝国。于是，他们采取了<strong>分而治之</strong>的政策。在印度人口对他们来说是一个大问题的地方，他们通过煽动当地国王之间的竞争，使他们相互对立，将问题分成更小的问题，这对他们来说非常有效。</p>
+<p>嗯，那是历史，也是社会政治政策(<strong>分而治之</strong>)，但这里的想法是，如果我们能以某种方式将一个问题分成更小的子问题，最终解决整个问题就变得更容易了。</p>
+<p>在<strong>归并排序</strong>中，给定的带有<code>n</code>元素的未排序数组被分成<code>n</code>子数组，每个子数组有<strong>一个</strong>元素，因为单个元素本身总是被排序的。然后，它重复合并这些子数组，以产生新的排序子数组，最后，产生一个完整的排序数组。</p>
+<p>分治的概念包括三个步骤:</p>
+<ol>
+<li><strong>把</strong>的问题分成多个小问题。</li>
+<li><strong>通过解决子问题来征服</strong>。这个想法是将问题分解成原子子问题，在那里它们被实际解决。</li>
+<li><strong>结合</strong>子问题的解找到实际问题的解。</li>
+</ol>
+<p><img src="img/29719fe7d63988246f356b903469e49a.png" alt="Divide and Conquer algorithm"></img></p>
+<hr></hr>
+<h2 id="归并排序是如何工作的？">归并排序是如何工作的？</h2>
+<p>正如我们已经讨论过的，归并排序利用分治规则将问题分解为子问题，在这种情况下的问题是，<strong>排序给定的数组</strong>。</p>
+<p>在归并排序中，我们在中途分解给定的数组，例如，如果原始数组有<code>6</code>个元素，那么归并排序将把它分解成两个子数组，每个子数组有<code>3</code>个元素。</p>
+<p>但是将原始数组分成两个更小的子数组并不能帮助我们对数组进行排序。</p>
+<p>所以我们将这些子数组分解成更小的子数组，直到我们有多个子数组，其中有<strong>单元素</strong>。现在，这里的想法是，具有单个元素的数组已经被排序了，所以一旦我们将原始数组分解为只有单个元素的子数组，我们就成功地将问题分解为基本问题。</p>
+<p>然后我们必须一步一步地合并所有这些排序的子数组，形成一个单一的排序数组。</p>
+<p>让我们考虑一个有值的数组<code>{14, 7, 3, 12, 9, 11, 6, 12}</code></p>
+<p>下面，我们有一个图片表示归并排序将如何排序给定的数组。</p>
+<p><img src="img/7ef5b7e503abf2e57bb9f02561a085e7.png" alt="Working of Merge Sort algorithm"></img></p>
+<p>在归并排序中，我们遵循以下步骤:</p>
+<ol>
+<li>我们取一个变量<code>p</code>并将数组的起始索引存储在这里。我们取另一个变量<code>r</code>并将数组的最后一个索引存储在其中。</li>
+<li>然后我们用公式<code>(p + r)/2</code>找到数组的中间，把中间的索引标记为<code>q</code>，把数组分成两个子数组，从<code>p</code>到<code>q</code>，从<code>q + 1</code>到<code>r</code>索引。</li>
+<li>然后我们再次划分这两个子数组，就像我们划分主数组一样，然后继续。</li>
+<li>一旦我们已经将主数组分成具有单个元素的子数组，那么我们就开始合并子数组。</li>
+</ol>
+<hr></hr>
+<h2 id="实现归并排序算法">实现归并排序算法</h2>
+<p>下面我们有一个实现归并排序算法的 C 程序。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/*  
+    a[] is the array, p is starting index, that is 0, 
+    and r is the last index of array. 
+*/</span>
+
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-comment">// lets take a[5] = {32, 45, 67, 2, 7} as the array to be sorted.</span>
+
+<span class="hljs-comment">// merge sort function</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">mergeSort</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a[], <span class="hljs-keyword">int</span> p, <span class="hljs-keyword">int</span> r)</span>
+</span>{
+    <span class="hljs-keyword">int</span> q;
+    <span class="hljs-keyword">if</span>(p &lt; r)
+    {
+        q = (p + r) / <span class="hljs-number">2</span>;
+        mergeSort(a, p, q);
+        mergeSort(a, q+<span class="hljs-number">1</span>, r);
+        merge(a, p, q, r);
+    }
+}
+
+<span class="hljs-comment">// function to merge the subarrays</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a[], <span class="hljs-keyword">int</span> p, <span class="hljs-keyword">int</span> q, <span class="hljs-keyword">int</span> r)</span>
+</span>{
+    <span class="hljs-keyword">int</span> b[<span class="hljs-number">5</span>];   <span class="hljs-comment">//same size of a[]</span>
+    <span class="hljs-keyword">int</span> i, j, k;
+    k = <span class="hljs-number">0</span>;
+    i = p;
+    j = q + <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">while</span>(i &lt;= q &amp;&amp; j &lt;= r)
+    {
+        <span class="hljs-keyword">if</span>(a[i] &lt; a[j])
+        {
+            b[k++] = a[i++];    <span class="hljs-comment">// same as b[k]=a[i]; k++; i++;</span>
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            b[k++] = a[j++];
+        }
+    }
+
+    <span class="hljs-keyword">while</span>(i &lt;= q)
+    {
+        b[k++] = a[i++];
+    }
+
+    <span class="hljs-keyword">while</span>(j &lt;= r)
+    {
+        b[k++] = a[j++];
+    }
+
+    <span class="hljs-keyword">for</span>(i=r; i &gt;= p; i--)
+    {
+        a[i] = b[--k];  <span class="hljs-comment">// copying back the sorted list to a[]</span>
+    } 
+}
+
+<span class="hljs-comment">// function to print the array</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printArray</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a[], <span class="hljs-keyword">int</span> size)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>; i &lt; size; i++)
+    {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d "</span>, a[i]);
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> arr[] = {<span class="hljs-number">32</span>, <span class="hljs-number">45</span>, <span class="hljs-number">67</span>, <span class="hljs-number">2</span>, <span class="hljs-number">7</span>};
+    <span class="hljs-keyword">int</span> len = <span class="hljs-keyword">sizeof</span>(arr)/<span class="hljs-keyword">sizeof</span>(arr[<span class="hljs-number">0</span>]);
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Given array: \n"</span>);
+    printArray(arr, len);
+
+    <span class="hljs-comment">// calling merge sort</span>
+    mergeSort(arr, <span class="hljs-number">0</span>, len - <span class="hljs-number">1</span>);
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\nSorted array: \n"</span>);
+    printArray(arr, len);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>给定数组:32 45 67 2 7 排序数组:2 7 32 45 67</p>
+<hr></hr>
+<h3 id="归并排序的复杂度分析">归并排序的复杂度分析</h3>
+<p>归并排序相当快，时间复杂度为<code>O(n*log n)</code>。这也是一种稳定的排序，这意味着“相等”的元素在排序列表中以相同的顺序排序。</p>
+<p>在本节中，我们将了解为什么归并排序的运行时间是<code>O(n*log n)</code>。</p>
+<p>正如我们在<a href="binary-search-algorithm">二分搜索</a>中已经了解到的，每当我们在每一步中把一个数分成两半时，都可以用对数函数来表示，这就是<code>log n</code>，步数可以用<code>log n + 1</code>来表示(最多)</p>
+<p>此外，我们执行单步操作来找出任何子数组的中间，即<code>O(1)</code>。</p>
+<p>而要<strong>合并</strong>子数组，通过分割<code>n</code>元素的原始数组而制成，将需要<code>O(n)</code>的运行时间。</p>
+<p>因此<code>mergeSort</code>功能的总时间将变为<code>n(log n + 1)</code>，这给了我们一个<code>O(n*log n)</code>的时间复杂度。</p>
+<p>最坏情况时间复杂度[大 O ]: <strong>O(n*log n)</strong></p>
+<p>最佳案例时间复杂度[大ω]:<strong>O(n * log n)</strong></p>
+<p>平均时间复杂度[大-θ]:<strong>O(n * log n)</strong></p>
+<p>空间复杂度: <strong>O(n)</strong></p>
+<ul>
+<li>归并排序的时间复杂度在所有 3 种情况下(最差、平均和最佳)都是<code>O(n*Log n)</code>，因为归并排序总是<strong>将</strong>数组分成两半，并且需要线性时间来<strong>合并</strong>两半。</li>
+<li>它需要<strong>与未排序数组相等的额外空间</strong>。因此，它根本不推荐用于搜索大型未排序数组。</li>
+<li>这是用于排序链表的最佳排序技术。</li>
+</ul>
+<p>现在我们已经学习了插入排序算法，您也可以查看这些其他排序算法及其应用:</p>
+<ul>
+<li><a href="bubble-sort">气泡排序</a></li>
+<li><a href="insertion-sorting">插入输出</a></li>
+<li><a href="quick-sort">快速排序</a></li>
+<li><a href="selection-sorting">选择排序</a></li>
+<li><a href="heap-sort">堆排序</a></li>
+<li><a href="counting-sort">计数排序</a></li>
+</ul>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="356.html" class="navigation navigation-prev " aria-label="Previous page: 快速排序算法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="358.html" class="navigation navigation-next " aria-label="Next page: 堆排序算法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"归并排序算法","level":"1.1.15","depth":2,"next":{"title":"堆排序算法","level":"1.1.16","depth":2,"path":"358.md","ref":"358.md","articles":[]},"previous":{"title":"快速排序算法","level":"1.1.14","depth":2,"path":"356.md","ref":"356.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"357.md","mtime":"2025-04-30T01:08:58.849Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:10.684Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

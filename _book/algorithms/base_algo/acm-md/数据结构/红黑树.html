@@ -1,0 +1,1002 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>红黑树 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="跳表.html" />
+    
+    
+    <link rel="prev" href="二叉树.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="基础数据结构.html">
+            
+                <a href="基础数据结构.html">
+            
+                    
+                    基础数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="高级数据结构概述.html">
+            
+                <a href="高级数据结构概述.html">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="并查集.html">
+            
+                <a href="并查集.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="单调栈和单调队列.html">
+            
+                <a href="单调栈和单调队列.html">
+            
+                    
+                    单调栈/单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="线段树.html">
+            
+                <a href="线段树.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="线段树懒标记.html">
+            
+                <a href="线段树懒标记.html">
+            
+                    
+                    线段树懒标记
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="树状数组.html">
+            
+                <a href="树状数组.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="ST表.html">
+            
+                <a href="ST表.html">
+            
+                    
+                    ST表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="堆.html">
+            
+                <a href="堆.html">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="二叉树.html">
+            
+                <a href="二叉树.html">
+            
+                    
+                    二叉树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.10" data-path="红黑树.html">
+            
+                <a href="红黑树.html">
+            
+                    
+                    红黑树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="跳表.html">
+            
+                <a href="跳表.html">
+            
+                    
+                    跳表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="平衡树.html">
+            
+                <a href="平衡树.html">
+            
+                    
+                    平衡树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="分块算法.html">
+            
+                <a href="分块算法.html">
+            
+                    
+                    分块算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >红黑树</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="红黑树">红黑树</h1>
+<h2 id="算法概述">算法概述</h2>
+<p>【红黑树】是一种自平衡的二叉搜索树，在ACM竞赛和实际应用中广泛使用，尤其是STL中的map和set容器就是基于红黑树实现的。红黑树通过对节点染色并维护特定的平衡性质，确保树的高度始终保持在O(log n)级别，从而保证查找、插入和删除操作的高效性。</p>
+<h2 id="红黑树的性质">红黑树的性质</h2>
+<p>红黑树有以下五个关键性质：</p>
+<ol>
+<li><strong>节点颜色</strong>：每个节点要么是红色，要么是黑色</li>
+<li><strong>根节点</strong>：根节点必须是黑色</li>
+<li><strong>叶节点</strong>：所有叶节点（NIL或空节点）都是黑色</li>
+<li><strong>红色节点的子节点</strong>：如果一个节点是红色，则其两个子节点都必须是黑色（即不能有两个连续的红色节点）</li>
+<li><strong>黑色平衡</strong>：从任一节点到其每个叶节点的路径上，黑色节点数量相同（即黑色高度平衡）</li>
+</ol>
+<p>这些性质共同确保了红黑树的平衡性，特别是性质5保证了从根到最远叶节点的路径长度不会超过最短路径的两倍，这是红黑树性能保证的关键。</p>
+<h2 id="红黑树的基本操作">红黑树的基本操作</h2>
+<h3 id="节点结构">节点结构</h3>
+<pre><code class="lang-cpp"><span class="hljs-keyword">enum</span> Color { RED, BLACK };
+
+<span class="hljs-keyword">struct</span> RBNode {
+    <span class="hljs-keyword">int</span> key;           <span class="hljs-comment">// 键值</span>
+    Color color;       <span class="hljs-comment">// 节点颜色</span>
+    RBNode* left;      <span class="hljs-comment">// 左子节点</span>
+    RBNode* right;     <span class="hljs-comment">// 右子节点</span>
+    RBNode* parent;    <span class="hljs-comment">// 父节点</span>
+
+    <span class="hljs-comment">// 其他可能的附加信息</span>
+    <span class="hljs-keyword">int</span> size;          <span class="hljs-comment">// 子树大小（用于排名查询）</span>
+    <span class="hljs-keyword">int</span> count;         <span class="hljs-comment">// 当前值出现次数（处理重复值）</span>
+
+    RBNode(<span class="hljs-keyword">int</span> k, Color c = RED)
+        : key(k), color(c), left(<span class="hljs-literal">nullptr</span>), right(<span class="hljs-literal">nullptr</span>), 
+          parent(<span class="hljs-literal">nullptr</span>), size(<span class="hljs-number">1</span>), count(<span class="hljs-number">1</span>) {}
+};
+</code></pre>
+<h3 id="旋转操作">旋转操作</h3>
+<p>平衡调整的基础操作是旋转，包括左旋和右旋：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 左旋操作：将x的右子节点升为x的位置，x成为其左子节点</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">leftRotate</span><span class="hljs-params">(RBNode*&amp; root, RBNode* x)</span> </span>{
+    RBNode* y = x-&gt;right;  <span class="hljs-comment">// y是x的右子节点</span>
+
+    <span class="hljs-comment">// 将y的左子树变为x的右子树</span>
+    x-&gt;right = y-&gt;left;
+    <span class="hljs-keyword">if</span> (y-&gt;left != <span class="hljs-literal">nullptr</span>)
+        y-&gt;left-&gt;parent = x;
+
+    <span class="hljs-comment">// 设置y的父节点</span>
+    y-&gt;parent = x-&gt;parent;
+
+    <span class="hljs-comment">// 将y放到原来x的位置</span>
+    <span class="hljs-keyword">if</span> (x-&gt;parent == <span class="hljs-literal">nullptr</span>)
+        root = y;  <span class="hljs-comment">// x是根节点</span>
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (x == x-&gt;parent-&gt;left)
+        x-&gt;parent-&gt;left = y;  <span class="hljs-comment">// x是左子节点</span>
+    <span class="hljs-keyword">else</span>
+        x-&gt;parent-&gt;right = y;  <span class="hljs-comment">// x是右子节点</span>
+
+    <span class="hljs-comment">// 将x设为y的左子节点</span>
+    y-&gt;left = x;
+    x-&gt;parent = y;
+
+    <span class="hljs-comment">// 更新子树大小（如果需要）</span>
+    y-&gt;size = x-&gt;size;
+    x-&gt;size = (x-&gt;left ? x-&gt;left-&gt;size : <span class="hljs-number">0</span>) + 
+              (x-&gt;right ? x-&gt;right-&gt;size : <span class="hljs-number">0</span>) + 
+              x-&gt;count;
+}
+
+<span class="hljs-comment">// 右旋操作：将y的左子节点升为y的位置，y成为其右子节点</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rightRotate</span><span class="hljs-params">(RBNode*&amp; root, RBNode* y)</span> </span>{
+    RBNode* x = y-&gt;left;  <span class="hljs-comment">// x是y的左子节点</span>
+
+    <span class="hljs-comment">// 将x的右子树变为y的左子树</span>
+    y-&gt;left = x-&gt;right;
+    <span class="hljs-keyword">if</span> (x-&gt;right != <span class="hljs-literal">nullptr</span>)
+        x-&gt;right-&gt;parent = y;
+
+    <span class="hljs-comment">// 设置x的父节点</span>
+    x-&gt;parent = y-&gt;parent;
+
+    <span class="hljs-comment">// 将x放到原来y的位置</span>
+    <span class="hljs-keyword">if</span> (y-&gt;parent == <span class="hljs-literal">nullptr</span>)
+        root = x;  <span class="hljs-comment">// y是根节点</span>
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (y == y-&gt;parent-&gt;left)
+        y-&gt;parent-&gt;left = x;  <span class="hljs-comment">// y是左子节点</span>
+    <span class="hljs-keyword">else</span>
+        y-&gt;parent-&gt;right = x;  <span class="hljs-comment">// y是右子节点</span>
+
+    <span class="hljs-comment">// 将y设为x的右子节点</span>
+    x-&gt;right = y;
+    y-&gt;parent = x;
+
+    <span class="hljs-comment">// 更新子树大小（如果需要）</span>
+    x-&gt;size = y-&gt;size;
+    y-&gt;size = (y-&gt;left ? y-&gt;left-&gt;size : <span class="hljs-number">0</span>) + 
+              (y-&gt;right ? y-&gt;right-&gt;size : <span class="hljs-number">0</span>) + 
+              y-&gt;count;
+}
+</code></pre>
+<h3 id="插入操作">插入操作</h3>
+<p>红黑树的插入操作基本流程：</p>
+<ol>
+<li>以普通BST方式插入节点，初始颜色设为红色</li>
+<li>修复可能破坏的红黑树性质</li>
+</ol>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(RBNode*&amp; root, <span class="hljs-keyword">int</span> key)</span> </span>{
+    <span class="hljs-comment">// 1. 标准BST插入</span>
+    RBNode* z = <span class="hljs-keyword">new</span> RBNode(key);
+    RBNode* y = <span class="hljs-literal">nullptr</span>;
+    RBNode* x = root;
+
+    <span class="hljs-comment">// 寻找插入位置</span>
+    <span class="hljs-keyword">while</span> (x != <span class="hljs-literal">nullptr</span>) {
+        y = x;
+        <span class="hljs-keyword">if</span> (z-&gt;key &lt; x-&gt;key)
+            x = x-&gt;left;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (z-&gt;key &gt; x-&gt;key)
+            x = x-&gt;right;
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// 键已存在，增加计数</span>
+            x-&gt;count++;
+            x-&gt;size++;
+
+            <span class="hljs-comment">// 更新祖先节点的size</span>
+            RBNode* parent = x-&gt;parent;
+            <span class="hljs-keyword">while</span> (parent) {
+                parent-&gt;size++;
+                parent = parent-&gt;parent;
+            }
+
+            <span class="hljs-keyword">delete</span> z;  <span class="hljs-comment">// 释放新创建的节点</span>
+            <span class="hljs-keyword">return</span>;
+        }
+    }
+
+    <span class="hljs-comment">// 设置z的父节点</span>
+    z-&gt;parent = y;
+
+    <span class="hljs-keyword">if</span> (y == <span class="hljs-literal">nullptr</span>)
+        root = z;  <span class="hljs-comment">// 树为空</span>
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (z-&gt;key &lt; y-&gt;key)
+        y-&gt;left = z;
+    <span class="hljs-keyword">else</span>
+        y-&gt;right = z;
+
+    <span class="hljs-comment">// 更新祖先节点的size</span>
+    RBNode* parent = z-&gt;parent;
+    <span class="hljs-keyword">while</span> (parent) {
+        parent-&gt;size++;
+        parent = parent-&gt;parent;
+    }
+
+    <span class="hljs-comment">// 2. 修复红黑树性质</span>
+    insertFixup(root, z);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insertFixup</span><span class="hljs-params">(RBNode*&amp; root, RBNode* z)</span> </span>{
+    <span class="hljs-comment">// 父节点存在且为红色时需要修复</span>
+    <span class="hljs-keyword">while</span> (z-&gt;parent &amp;&amp; z-&gt;parent-&gt;color == RED) {
+        <span class="hljs-keyword">if</span> (z-&gt;parent == z-&gt;parent-&gt;parent-&gt;left) {
+            <span class="hljs-comment">// 父节点是祖父节点的左子节点</span>
+            RBNode* y = z-&gt;parent-&gt;parent-&gt;right;  <span class="hljs-comment">// 叔叔节点</span>
+
+            <span class="hljs-keyword">if</span> (y &amp;&amp; y-&gt;color == RED) {
+                <span class="hljs-comment">// 情况1：叔叔节点是红色</span>
+                z-&gt;parent-&gt;color = BLACK;
+                y-&gt;color = BLACK;
+                z-&gt;parent-&gt;parent-&gt;color = RED;
+                z = z-&gt;parent-&gt;parent;
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">if</span> (z == z-&gt;parent-&gt;right) {
+                    <span class="hljs-comment">// 情况2：叔叔节点是黑色，当前节点是右子节点</span>
+                    z = z-&gt;parent;
+                    leftRotate(root, z);
+                }
+                <span class="hljs-comment">// 情况3：叔叔节点是黑色，当前节点是左子节点</span>
+                z-&gt;parent-&gt;color = BLACK;
+                z-&gt;parent-&gt;parent-&gt;color = RED;
+                rightRotate(root, z-&gt;parent-&gt;parent);
+            }
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// 父节点是祖父节点的右子节点（对称情况）</span>
+            RBNode* y = z-&gt;parent-&gt;parent-&gt;left;  <span class="hljs-comment">// 叔叔节点</span>
+
+            <span class="hljs-keyword">if</span> (y &amp;&amp; y-&gt;color == RED) {
+                <span class="hljs-comment">// 情况1：叔叔节点是红色</span>
+                z-&gt;parent-&gt;color = BLACK;
+                y-&gt;color = BLACK;
+                z-&gt;parent-&gt;parent-&gt;color = RED;
+                z = z-&gt;parent-&gt;parent;
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">if</span> (z == z-&gt;parent-&gt;left) {
+                    <span class="hljs-comment">// 情况2：叔叔节点是黑色，当前节点是左子节点</span>
+                    z = z-&gt;parent;
+                    rightRotate(root, z);
+                }
+                <span class="hljs-comment">// 情况3：叔叔节点是黑色，当前节点是右子节点</span>
+                z-&gt;parent-&gt;color = BLACK;
+                z-&gt;parent-&gt;parent-&gt;color = RED;
+                leftRotate(root, z-&gt;parent-&gt;parent);
+            }
+        }
+    }
+    <span class="hljs-comment">// 确保根节点是黑色</span>
+    root-&gt;color = BLACK;
+}
+</code></pre>
+<h3 id="删除操作">删除操作</h3>
+<p>删除操作比插入操作更复杂，基本流程：</p>
+<ol>
+<li>标准BST删除操作找到要删除的节点</li>
+<li>如果被删除的节点或其替代节点是黑色，需要修复红黑树性质</li>
+</ol>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(RBNode*&amp; root, <span class="hljs-keyword">int</span> key)</span> </span>{
+    RBNode* z = search(root, key);
+    <span class="hljs-keyword">if</span> (!z) <span class="hljs-keyword">return</span>;  <span class="hljs-comment">// 键不存在</span>
+
+    <span class="hljs-comment">// 如果键有多个实例，仅减少计数</span>
+    <span class="hljs-keyword">if</span> (z-&gt;count &gt; <span class="hljs-number">1</span>) {
+        z-&gt;count--;
+        z-&gt;size--;
+
+        <span class="hljs-comment">// 更新祖先节点的size</span>
+        RBNode* parent = z-&gt;parent;
+        <span class="hljs-keyword">while</span> (parent) {
+            parent-&gt;size--;
+            parent = parent-&gt;parent;
+        }
+        <span class="hljs-keyword">return</span>;
+    }
+
+    RBNode* y = z;  <span class="hljs-comment">// y是将被删除或移动的节点</span>
+    RBNode* x = <span class="hljs-literal">nullptr</span>;  <span class="hljs-comment">// x是y的替代节点</span>
+    Color y_original_color = y-&gt;color;
+
+    <span class="hljs-comment">// 更新祖先节点的size</span>
+    RBNode* parent = z-&gt;parent;
+    <span class="hljs-keyword">while</span> (parent) {
+        parent-&gt;size--;
+        parent = parent-&gt;parent;
+    }
+
+    <span class="hljs-keyword">if</span> (z-&gt;left == <span class="hljs-literal">nullptr</span>) {
+        <span class="hljs-comment">// z没有左子节点</span>
+        x = z-&gt;right;
+        transplant(root, z, z-&gt;right);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (z-&gt;right == <span class="hljs-literal">nullptr</span>) {
+        <span class="hljs-comment">// z没有右子节点</span>
+        x = z-&gt;left;
+        transplant(root, z, z-&gt;left);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// z有两个子节点</span>
+        <span class="hljs-comment">// 找到z的后继（右子树中的最小节点）</span>
+        y = minimum(z-&gt;right);
+        y_original_color = y-&gt;color;
+        x = y-&gt;right;
+
+        <span class="hljs-keyword">if</span> (y-&gt;parent == z) {
+            <span class="hljs-keyword">if</span> (x) x-&gt;parent = y;
+        } <span class="hljs-keyword">else</span> {
+            transplant(root, y, y-&gt;right);
+            y-&gt;right = z-&gt;right;
+            <span class="hljs-keyword">if</span> (y-&gt;right) y-&gt;right-&gt;parent = y;
+        }
+
+        transplant(root, z, y);
+        y-&gt;left = z-&gt;left;
+        y-&gt;left-&gt;parent = y;
+        y-&gt;color = z-&gt;color;
+
+        <span class="hljs-comment">// 更新y的size</span>
+        y-&gt;size = (y-&gt;left ? y-&gt;left-&gt;size : <span class="hljs-number">0</span>) + 
+                  (y-&gt;right ? y-&gt;right-&gt;size : <span class="hljs-number">0</span>) + 
+                  y-&gt;count;
+    }
+
+    <span class="hljs-keyword">if</span> (y_original_color == BLACK) {
+        <span class="hljs-comment">// 如果删除的是黑色节点，需要修复红黑树性质</span>
+        removeFixup(root, x);
+    }
+
+    <span class="hljs-keyword">delete</span> z;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">transplant</span><span class="hljs-params">(RBNode*&amp; root, RBNode* u, RBNode* v)</span> </span>{
+    <span class="hljs-keyword">if</span> (u-&gt;parent == <span class="hljs-literal">nullptr</span>)
+        root = v;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (u == u-&gt;parent-&gt;left)
+        u-&gt;parent-&gt;left = v;
+    <span class="hljs-keyword">else</span>
+        u-&gt;parent-&gt;right = v;
+
+    <span class="hljs-keyword">if</span> (v) v-&gt;parent = u-&gt;parent;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">removeFixup</span><span class="hljs-params">(RBNode*&amp; root, RBNode* x)</span> </span>{
+    <span class="hljs-comment">// 调整红黑树平衡的复杂逻辑，处理各种情况</span>
+    <span class="hljs-comment">// 完整代码较长，这里略去，详见参考资料</span>
+}
+</code></pre>
+<h3 id="查找操作">查找操作</h3>
+<p>查找操作与标准BST相同：</p>
+<pre><code class="lang-cpp"><span class="hljs-function">RBNode* <span class="hljs-title">search</span><span class="hljs-params">(RBNode* root, <span class="hljs-keyword">int</span> key)</span> </span>{
+    <span class="hljs-keyword">while</span> (root != <span class="hljs-literal">nullptr</span> &amp;&amp; key != root-&gt;key) {
+        <span class="hljs-keyword">if</span> (key &lt; root-&gt;key)
+            root = root-&gt;left;
+        <span class="hljs-keyword">else</span>
+            root = root-&gt;right;
+    }
+    <span class="hljs-keyword">return</span> root;
+}
+</code></pre>
+<h3 id="查找第k小元素">查找第k小元素</h3>
+<p>通过维护子树大小，红黑树可以高效地查找第k小元素：</p>
+<pre><code class="lang-cpp"><span class="hljs-function">RBNode* <span class="hljs-title">findKth</span><span class="hljs-params">(RBNode* root, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">if</span> (!root) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+    <span class="hljs-keyword">int</span> leftSize = root-&gt;left ? root-&gt;left-&gt;size : <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">if</span> (k &lt;= leftSize) {
+        <span class="hljs-comment">// 第k小在左子树中</span>
+        <span class="hljs-keyword">return</span> findKth(root-&gt;left, k);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (k &lt;= leftSize + root-&gt;count) {
+        <span class="hljs-comment">// 当前节点就是第k小</span>
+        <span class="hljs-keyword">return</span> root;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// 第k小在右子树中</span>
+        <span class="hljs-keyword">return</span> findKth(root-&gt;right, k - leftSize - root-&gt;count);
+    }
+}
+</code></pre>
+<h2 id="红黑树的复杂度分析">红黑树的复杂度分析</h2>
+<ul>
+<li><strong>空间复杂度</strong>：O(n)，每个元素需要一个节点</li>
+<li><strong>时间复杂度</strong>：<ul>
+<li>查找：O(log n)</li>
+<li>插入：O(log n)</li>
+<li>删除：O(log n)</li>
+<li>查找第k小：O(log n)（需要额外维护子树大小）</li>
+</ul>
+</li>
+</ul>
+<p>红黑树保证了上述操作在最坏情况下的性能，这是它在实际应用中广泛使用的主要原因。</p>
+<h2 id="红黑树的优缺点">红黑树的优缺点</h2>
+<h3 id="优点">优点</h3>
+<ol>
+<li>保证最坏情况下O(log n)的操作时间复杂度</li>
+<li>插入和删除操作的平均旋转次数少于AVL树，调整成本更低</li>
+<li>内存占用相对适中</li>
+<li>可以方便地扩展实现排序和统计功能</li>
+</ol>
+<h3 id="缺点">缺点</h3>
+<ol>
+<li>实现复杂，特别是删除操作和修复过程</li>
+<li>相比一些特殊用途的数据结构（如跳表），常数因子较大</li>
+<li>不直接支持区间操作，需要额外设计</li>
+</ol>
+<h2 id="红黑树在acm竞赛中的应用">红黑树在ACM竞赛中的应用</h2>
+<p>在ACM竞赛中，红黑树主要用于以下场景：</p>
+<ol>
+<li><strong>动态集合维护</strong>：需要频繁插入、删除和查找元素时</li>
+<li><strong>多重集合</strong>：处理重复元素的有序集合</li>
+<li><strong>排名统计</strong>：查找第k小/大元素，或确定元素排名</li>
+<li><strong>前驱/后继查询</strong>：查找比某值小的最大元素或比某值大的最小元素</li>
+<li><strong>区间统计</strong>：维护区间内的元素信息，如范围计数或求和</li>
+</ol>
+<h2 id="红黑树与stl">红黑树与STL</h2>
+<p>在C++标准库中，<code>set</code>、<code>map</code>、<code>multiset</code>和<code>multimap</code>通常基于红黑树实现，提供了高效的有序集合和映射功能。在大多数ACM题目中，可以直接使用这些容器而不必手动实现红黑树。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;set&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;map&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// 使用set维护有序集合</span>
+    <span class="hljs-built_in">set</span>&lt;<span class="hljs-keyword">int</span>&gt; s;
+    s.insert(<span class="hljs-number">10</span>);
+    s.insert(<span class="hljs-number">20</span>);
+    s.insert(<span class="hljs-number">30</span>);
+
+    <span class="hljs-keyword">auto</span> it = s.lower_bound(<span class="hljs-number">15</span>);  <span class="hljs-comment">// 返回&gt;=15的第一个元素(20)</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; *it &lt;&lt; endl;
+
+    <span class="hljs-comment">// 使用map维护键值映射</span>
+    <span class="hljs-built_in">map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-keyword">int</span>&gt; scores;
+    scores[<span class="hljs-string">"Alice"</span>] = <span class="hljs-number">95</span>;
+    scores[<span class="hljs-string">"Bob"</span>] = <span class="hljs-number">89</span>;
+
+    <span class="hljs-comment">// 使用multiset允许重复元素</span>
+    <span class="hljs-built_in">multiset</span>&lt;<span class="hljs-keyword">int</span>&gt; ms;
+    ms.insert(<span class="hljs-number">10</span>);
+    ms.insert(<span class="hljs-number">10</span>);  <span class="hljs-comment">// 允许重复</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; ms.count(<span class="hljs-number">10</span>) &lt;&lt; endl;  <span class="hljs-comment">// 输出2</span>
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h2 id="红黑树实现注意事项">红黑树实现注意事项</h2>
+<h3 id="1-哨兵节点（sentinel）技巧">1. 哨兵节点（Sentinel）技巧</h3>
+<p>在红黑树实现中，使用哨兵节点（通常是一个空的黑色节点）代替nullptr可以简化边界处理：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 全局哨兵节点，表示NIL</span>
+RBNode* NIL = <span class="hljs-keyword">new</span> RBNode(<span class="hljs-number">0</span>, BLACK);
+
+<span class="hljs-comment">// 初始化红黑树时</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">initTree</span><span class="hljs-params">(RBNode*&amp; root)</span> </span>{
+    root = NIL;
+}
+
+<span class="hljs-comment">// 判断节点是否为NIL</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isNil</span><span class="hljs-params">(RBNode* node)</span> </span>{
+    <span class="hljs-keyword">return</span> node == NIL;
+}
+</code></pre>
+<h3 id="2-维护附加信息">2. 维护附加信息</h3>
+<p>根据题目需要，可以在节点中维护额外信息：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> RBNode {
+    <span class="hljs-comment">// 基本属性</span>
+    <span class="hljs-keyword">int</span> key;
+    Color color;
+    RBNode *left, *right, *parent;
+
+    <span class="hljs-comment">// 附加信息</span>
+    <span class="hljs-keyword">int</span> size;    <span class="hljs-comment">// 子树大小，用于排名查询</span>
+    <span class="hljs-keyword">int</span> sum;     <span class="hljs-comment">// 子树所有节点值的和</span>
+    <span class="hljs-keyword">int</span> max;     <span class="hljs-comment">// 子树中的最大值</span>
+
+    <span class="hljs-comment">// 在旋转和插入/删除操作中需要相应更新这些信息</span>
+};
+</code></pre>
+<h3 id="3-内存管理">3. 内存管理</h3>
+<p>在竞赛环境中，可以使用静态数组和节点池来避免动态内存分配的开销：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+RBNode nodes[MAXN];
+<span class="hljs-keyword">int</span> nodeCount = <span class="hljs-number">0</span>;
+
+<span class="hljs-function">RBNode* <span class="hljs-title">createNode</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key, Color color = RED)</span> </span>{
+    nodes[nodeCount].key = key;
+    nodes[nodeCount].color = color;
+    nodes[nodeCount].left = nodes[nodeCount].right = nodes[nodeCount].parent = <span class="hljs-literal">nullptr</span>;
+    nodes[nodeCount].size = <span class="hljs-number">1</span>;
+    nodes[nodeCount].count = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">return</span> &amp;nodes[nodeCount++];
+}
+</code></pre>
+<h2 id="典型例题分析">典型例题分析</h2>
+<h3 id="例题：查询排名">例题：查询排名</h3>
+<p><strong>问题</strong>：维护一个数据集合，支持以下操作：</p>
+<ol>
+<li>插入一个数</li>
+<li>删除一个数</li>
+<li>查询一个数的排名（集合中比它小的数的个数+1）</li>
+<li>查询排名为k的数</li>
+<li>查询一个数的前驱（小于该数的最大值）</li>
+<li>查询一个数的后继（大于该数的最小值）</li>
+</ol>
+<p><strong>思路</strong>：</p>
+<ul>
+<li>使用红黑树并在每个节点中维护子树大小</li>
+<li>对于排名查询，通过累加左子树大小来计算</li>
+<li>对于前驱和后继，可以通过中序遍历找到</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 查询x的排名（比x小的数的个数+1）</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getRank</span><span class="hljs-params">(RBNode* root, <span class="hljs-keyword">int</span> x)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == NIL) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">if</span> (x &lt;= root-&gt;key) {
+        <span class="hljs-keyword">return</span> getRank(root-&gt;left, x);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">int</span> leftSize = root-&gt;left-&gt;size;
+        <span class="hljs-keyword">return</span> leftSize + root-&gt;count + getRank(root-&gt;right, x);
+    }
+}
+
+<span class="hljs-comment">// 查询排名为k的数</span>
+<span class="hljs-function">RBNode* <span class="hljs-title">getKthElement</span><span class="hljs-params">(RBNode* root, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == NIL) <span class="hljs-keyword">return</span> NIL;
+
+    <span class="hljs-keyword">int</span> leftSize = root-&gt;left-&gt;size;
+
+    <span class="hljs-keyword">if</span> (k &lt;= leftSize) {
+        <span class="hljs-keyword">return</span> getKthElement(root-&gt;left, k);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (k &lt;= leftSize + root-&gt;count) {
+        <span class="hljs-keyword">return</span> root;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> getKthElement(root-&gt;right, k - leftSize - root-&gt;count);
+    }
+}
+
+<span class="hljs-comment">// 查询x的前驱（小于x的最大数）</span>
+<span class="hljs-function">RBNode* <span class="hljs-title">getPredecessor</span><span class="hljs-params">(RBNode* root, <span class="hljs-keyword">int</span> x)</span> </span>{
+    RBNode* result = NIL;
+    RBNode* current = root;
+
+    <span class="hljs-keyword">while</span> (current != NIL) {
+        <span class="hljs-keyword">if</span> (current-&gt;key &lt; x) {
+            result = current;
+            current = current-&gt;right;
+        } <span class="hljs-keyword">else</span> {
+            current = current-&gt;left;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+
+<span class="hljs-comment">// 查询x的后继（大于x的最小数）</span>
+<span class="hljs-function">RBNode* <span class="hljs-title">getSuccessor</span><span class="hljs-params">(RBNode* root, <span class="hljs-keyword">int</span> x)</span> </span>{
+    RBNode* result = NIL;
+    RBNode* current = root;
+
+    <span class="hljs-keyword">while</span> (current != NIL) {
+        <span class="hljs-keyword">if</span> (current-&gt;key &gt; x) {
+            result = current;
+            current = current-&gt;left;
+        } <span class="hljs-keyword">else</span> {
+            current = current-&gt;right;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h2 id="总结">总结</h2>
+<p>红黑树是一种应用广泛的自平衡二叉搜索树，其特点是在保证最坏情况下操作时间复杂度为O(log n)的同时，实现相对简单且内存使用高效。在ACM竞赛中，虽然大多数时候可以直接使用C++ STL中的set和map，但了解红黑树的原理有助于解决更复杂的问题。</p>
+<p>红黑树的核心思想是通过颜色标记和一系列平衡规则，确保树的黑色高度平衡，从而保证树的最大高度不会超过平衡高度的两倍，这就保证了各种操作的对数时间复杂度。</p>
+<p>当处理涉及有序集合的动态维护、排名统计等问题时，红黑树是一个强大而可靠的数据结构选择。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="二叉树.html" class="navigation navigation-prev " aria-label="Previous page: 二叉树">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="跳表.html" class="navigation navigation-next " aria-label="Next page: 跳表">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"红黑树","level":"1.2.10","depth":2,"next":{"title":"跳表","level":"1.2.11","depth":2,"path":"跳表.md","ref":"跳表.md","articles":[]},"previous":{"title":"二叉树","level":"1.2.9","depth":2,"path":"二叉树.md","ref":"二叉树.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"红黑树.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:40.626Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

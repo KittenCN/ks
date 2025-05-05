@@ -1,0 +1,667 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>STL 简介:标准模板库 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="192.html" />
+    
+    
+    <link rel="prev" href="190.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    STL
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="190.html">
+            
+                <a href="190.html">
+            
+                    
+                    容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.2" data-path="191.html">
+            
+                <a href="191.html">
+            
+                    
+                    STL 简介:标准模板库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="192.html">
+            
+                <a href="192.html">
+            
+                    
+                    什么是 STL 中的容器？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="193.html">
+            
+                <a href="193.html">
+            
+                    
+                    STL 中的偶对模板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="194.html">
+            
+                <a href="194.html">
+            
+                    
+                    STL 中的元组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="195.html">
+            
+                <a href="195.html">
+            
+                    
+                    STL 中的数组容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="196.html">
+            
+                <a href="196.html">
+            
+                    
+                    STL 中的向量容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="197.html">
+            
+                <a href="197.html">
+            
+                    
+                    STL 中的列表容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="198.html">
+            
+                <a href="198.html">
+            
+                    
+                    STL 中的映射容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="199.html">
+            
+                <a href="199.html">
+            
+                    
+                    C++ STL 中的栈容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="200.html">
+            
+                <a href="200.html">
+            
+                    
+                    STL 中的队列容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="201.html">
+            
+                <a href="201.html">
+            
+                    
+                    C++ STL 中的优先级队列容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="202.html">
+            
+                <a href="202.html">
+            
+                    
+                    C++ STL 中的 DEQUE 容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="203.html">
+            
+                <a href="203.html">
+            
+                    
+                    迭代器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="204.html">
+            
+                <a href="204.html">
+            
+                    
+                    C++ STL 中迭代器概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="205.html">
+            
+                <a href="205.html">
+            
+                    
+                    STL 中迭代器的运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="206.html">
+            
+                <a href="206.html">
+            
+                    
+                    STL 中的算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="207.html">
+            
+                <a href="207.html">
+            
+                    
+                    C++ STL 算法概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="208.html">
+            
+                <a href="208.html">
+            
+                    
+                    STL 中的排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="209.html">
+            
+                <a href="209.html">
+            
+                    
+                    STL 中的二分搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="210.html">
+            
+                <a href="210.html">
+            
+                    
+                    STL 中的上界和下界搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="211.html">
+            
+                <a href="211.html">
+            
+                    
+                    C++ STL 中的非修改算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="212.html">
+            
+                <a href="212.html">
+            
+                    
+                    C++ STL 中的修改算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="213.html">
+            
+                <a href="213.html">
+            
+                    
+                    C++ STL 中的数值算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="214.html">
+            
+                <a href="214.html">
+            
+                    
+                    STL 中的最小和最大操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="215.html">
+            
+                <a href="215.html">
+            
+                    
+                    最小最大值和置换运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >STL 简介:标准模板库</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="stl-简介标准模板库">STL 简介:标准模板库</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/cpp/stl/stl-introduction" target="_blank">https://www.studytonight.com/cpp/stl/stl-introduction</a></p>
+</blockquote>
+<p>STL 是标准模板库的缩写。它是一组 C++ 模板类，提供可用于实现数据结构和算法的泛型类和函数。STL 主要由以下部分组成:</p>
+<ol>
+<li>算法</li>
+<li>容器</li>
+<li>迭代程序</li>
+</ol>
+<p><img src="img/b936c7bf6ebcd759a801a11155bd2953.png" alt="Introduction to STL"></img></p>
+<p>STL 提供了大量的容器和算法，在复杂编程中非常有用，例如在 STL 中使用容器库的列表容器，可以非常容易地在一条语句中定义一个链表，省时省力。</p>
+<p>STL 是一个通用库，即相同的容器或算法可以在任何数据类型上操作，您不必为不同类型的元素定义相同的算法。</p>
+<p>例如，排序算法将对给定范围内的元素进行排序，而不考虑它们的数据类型，我们不必为不同的数据类型实现不同的排序算法。</p>
+<hr></hr>
+<h2 id="cstl-中的算法">c++:STL 中的算法</h2>
+<p>STL 提供了许多可以在任何容器中使用的算法，而不考虑它们的类型。算法库包含在数据结构上执行复杂算法的内置函数。</p>
+<p>例如:可以用<code>reverse()</code>功能反转一个范围，用<code>sort()</code>功能排序一个范围，用<code>binary_search()</code>搜索一个范围等等。</p>
+<p>算法库提供了抽象，也就是说你不一定需要知道算法是如何工作的。</p>
+<hr></hr>
+<h2 id="cstl-中的容器">c++:STL 中的容器</h2>
+<p>STL 中的容器库提供了用于创建数据结构的容器，如数组、链表、树等。</p>
+<p>这些容器是通用，它们可以保存任何数据类型的元素，例如: <strong>vector</strong> 可以用来创建 char、integer、float 和其他类型的动态数组。</p>
+<hr></hr>
+<h2 id="cstl-中的迭代器">c++:STL 中的迭代器</h2>
+<p>STL 中的迭代器用于指向容器。迭代器实际上充当了容器和算法之间的桥梁。</p>
+<p>例如:<code>sort()</code>算法有两个参数，开始迭代器和结束迭代器，现在 sort()比较这些迭代器中的每一个指向的元素，并按照排序的顺序排列它们，因此容器的类型是什么并不重要，相同的 sort()可以用于不同类型的容器。</p>
+<hr></hr>
+<h2 id="stl-的使用与应用">STL 的使用与应用</h2>
+<p>STL 是一个通用库，它提供了可用于存储和操作不同类型数据的容器和算法，因此它使我们不必从头定义这些数据结构和算法。因为有了 STL，现在我们不用每次做新程序都定义我们的排序函数，也不用为不同的数据类型定义同一个函数两次，取而代之的是我们可以只使用 STL 中的泛型容器和算法。</p>
+<p>这在编程过程中节省了大量的时间、代码和精力，因此 STL 在竞争性编程中被大量使用，而且它可靠且快速。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="190.html" class="navigation navigation-prev " aria-label="Previous page: 容器">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="192.html" class="navigation navigation-next " aria-label="Next page: 什么是 STL 中的容器？">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"STL 简介:标准模板库","level":"1.1.2","depth":2,"next":{"title":"什么是 STL 中的容器？","level":"1.1.3","depth":2,"path":"192.md","ref":"192.md","articles":[]},"previous":{"title":"容器","level":"1.1.1","depth":2,"path":"190.md","ref":"190.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"191.md","mtime":"2025-04-30T01:08:58.602Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:05.064Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

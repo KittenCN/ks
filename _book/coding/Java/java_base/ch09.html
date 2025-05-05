@@ -1,0 +1,834 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ch09. Java面向对象（上） · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch10.html" />
+    
+    
+    <link rel="prev" href="ch08.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    ch01. Java概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    ch02. Java关键字和保留字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    ch03. 运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    ch04. 程序流程控制（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    ch05. 程序流程控制（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    ch06. 数学函数、字符和字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    ch07. 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="ch08.html">
+            
+                <a href="ch08.html">
+            
+                    
+                    ch08. 数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.9" data-path="ch09.html">
+            
+                <a href="ch09.html">
+            
+                    
+                    ch09. Java面向对象（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="ch10.html">
+            
+                <a href="ch10.html">
+            
+                    
+                    ch10. Java面向对象（中）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ch11.html">
+            
+                <a href="ch11.html">
+            
+                    
+                    ch11. Java面向对象（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="ch12.html">
+            
+                <a href="ch12.html">
+            
+                    
+                    ch12. Java异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ch00.html">
+            
+                <a href="ch00.html">
+            
+                    
+                    ch00. 易错点
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ch09. Java面向对象（上）</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java面向对象（上）">Java面向对象（上）</h1>
+<h2 id="1-类和对象的创建">1. 类和对象的创建</h2>
+<h3 id="11-相关概念">1.1 相关概念</h3>
+<p>属性 = 成员变量 = filed = 域 = 字段</p>
+<p>方法 = 成员方法 = 函数 = method</p>
+<p>创建类的对象 = 类的实例化 = 实例化类</p>
+<h3 id="12-创建类和对象">1.2 创建类和对象</h3>
+<p>（1）创建类</p>
+<pre><code class="lang-Java"><span class="hljs-class"><span class="hljs-keyword">class</span> 类名 </span>{
+      <span class="hljs-comment">// 定义属性和成员方法</span>
+}
+</code></pre>
+<p>（2）创建对象（类的实例化）</p>
+<pre><code class="lang-Java">类名 对象名 = <span class="hljs-keyword">new</span> 类名();
+</code></pre>
+<h3 id="13-类和对象的使用">1.3 类和对象的使用</h3>
+<ol>
+<li>创建类，设计类成员</li>
+<li>创建类的对象</li>
+<li>通过 <code>对象.属性</code> 或 <code>对象.方法</code> 调用类结构</li>
+</ol>
+<p><strong>注意</strong></p>
+<ol>
+<li><p>如果创建了一个类的多个对象，则每个对象都独立的拥有一套类的属性。（非static的）意味着，修改一个对象的属性a，不影响其他对象的a</p>
+</li>
+<li><p>将p1变量保存的对象:地址值赋给p3,导致p1和p3指向了堆空间中的同一个对象实体。</p>
+<pre><code class="lang-Java">Person p3=p1;
+</code></pre>
+</li>
+</ol>
+<h3 id="14-属性成员变量-vs-局部变量">1.4 属性(成员变量) vs 局部变量</h3>
+<pre><code class="lang-Java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+    <span class="hljs-comment">//成员变量</span>
+    String name;
+    <span class="hljs-keyword">int</span> age;
+    <span class="hljs-keyword">boolean</span> isMale;
+
+    <span class="hljs-comment">// 局部变量</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">talk</span><span class="hljs-params">(String language)</span> </span>{
+        System.out.println(<span class="hljs-string">"我们使用"</span> + language + <span class="hljs-string">"进行交流"</span>);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span> </span>{
+        String food = <span class="hljs-string">"烙饼"</span>;
+        System.out.println(<span class="hljs-string">"北方人喜欢吃"</span> + food);
+    }    
+}
+</code></pre>
+<p><strong>相同点</strong></p>
+<ul>
+<li>定义变量的格式: 数据类型变量名=变量值</li>
+<li>先声明，后使用</li>
+<li>变量都有其对应的作用域</li>
+</ul>
+<p><strong>不同点</strong></p>
+<ul>
+<li><p>在类中声明的位置的不同</p>
+<p>（1）属性:直接定义在类的一对得内</p>
+<p>（2）局部变量：声明在方法内、方法形参、代码块内、构造器形参、构造器内部的变量</p>
+</li>
+<li><p>权限修饰符</p>
+<p>属性：可以在声明属性时，指明其权限，使用权限修饰符</p>
+<p>常用的权限修饰符：<code>private</code>、<code>public</code>、缺省、<code>protected</code></p>
+</li>
+<li><p>默认初始化值的情况</p>
+<p>（1）属性：类的属性，根据其类型，都具有初始化值。</p>
+<ul>
+<li>整型（byte、short、int、long）: <code>0</code></li>
+<li>浮点型（float、double）: <code>0.0</code></li>
+<li>字符型（char）：<code>0</code> 或 <code>'\u0000'</code></li>
+<li>布尔型（boolean）：<code>false</code></li>
+<li>引用数据类型（类、数组、接口）：<code>null</code></li>
+</ul>
+<p>（2）局部变量：没有默认初始化值，这意味着在调用局部变量之前，一定要显示赋值。特别的，形参在调用时，赋值即可。</p>
+</li>
+<li><p>二者在内存中加载的位置不同</p>
+<p>（1）属性加载到堆空间</p>
+<p>（2）局部变量加载到栈空间</p>
+</li>
+</ul>
+<h2 id="2-类中方法">2. 类中方法</h2>
+<h3 id="21-类中方法的声明和使用">2.1 类中方法的声明和使用</h3>
+<p>方法：描述类应该具有的功能</p>
+<p>比如 <code>Array</code>：<code>sort()</code>、<code>binarySearch()</code>、<code>toString()</code>、<code>equals()</code></p>
+<p>声明格式</p>
+<pre><code class="lang-Java">权限修饰符 返回值类型 方法名(形参列表) {
+        方法体
+};
+</code></pre>
+<blockquote>
+<p>static、final、abstract来修饰的方法，后面再讲</p>
+</blockquote>
+<pre><code class="lang-Java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span> </span>{}
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sleep</span><span class="hljs-params">(<span class="hljs-keyword">int</span> hour)</span> </span>{}
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>{}
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getNation</span><span class="hljs-params">(String nation)</span> </span>{}
+</code></pre>
+<h3 id="22-方法声明的说明">2.2. 方法声明的说明</h3>
+<ol>
+<li><p>关于权限修饰符</p>
+<p>Java规定的4种权限修饰符：<code>private</code>、<code>public</code>、<code>缺省</code>、<code>protected</code></p>
+<p>（封装性再说）</p>
+<p>目前默认方法的权限修饰符为 <code>public</code>。</p>
+</li>
+<li><p>返回值类型</p>
+<ul>
+<li><p>有返回值</p>
+<p>方法中必须 <code>return</code></p>
+</li>
+<li><p>无返回值：<code>void</code></p>
+<p>不能返回。一定要返回，只能 <code>reutrn;</code></p>
+</li>
+</ul>
+</li>
+<li><p>方法名：标识符，见名识义。</p>
+</li>
+<li><p>形参：单个或多个。</p>
+</li>
+<li><p>方法体：功能。</p>
+</li>
+</ol>
+<h3 id="23-方法的使用">2.3 方法的使用</h3>
+<ol>
+<li>方法的使用中，可以调用当前类的属性或方法。</li>
+<li>方法中不能定义方法。</li>
+</ol>
+<h3 id="24-方法的重载">2.4 方法的重载</h3>
+<p>Overload：在一个类中，允许同名方法的存在，只要其参数的个数或类型不同。</p>
+<p>判断是否重载：和方法的权限修饰符、返回值类型、形参名无关，只与参数个数和类型有关。</p>
+<h3 id="25-代码块">2.5 代码块</h3>
+<p>代码块在类中声明,类似一个没有名称的方法体。</p>
+<p>代码块分为 <strong>实例块</strong> 和 <strong>静态块</strong>。</p>
+<p>（1）实例块：每次创建对象时自动调用。</p>
+<pre><code class="lang-Java">{
+        <span class="hljs-comment">// 任何符合语法的 Java 代码</span>
+}
+</code></pre>
+<p>（2）静态块：类加载时自动调用，仅一次，与是否创建对象无关。</p>
+<pre><code class="lang-Java"><span class="hljs-keyword">static</span> {
+      <span class="hljs-comment">// 任何符合语法的 Java 代码</span>
+}
+</code></pre>
+<p>示例</p>
+<pre><code class="lang-Java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T2</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        Demo d = <span class="hljs-keyword">new</span> Demo();
+        System.out.println(<span class="hljs-string">"-----"</span>);
+        System.out.println(Demo.num);
+        System.out.println(<span class="hljs-string">"-----"</span>);
+        Demo d1 = <span class="hljs-keyword">new</span> Demo();
+
+    }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> </span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> num = <span class="hljs-number">10</span>;
+    {
+        System.out.println(<span class="hljs-string">"实例块1"</span>);
+    }
+
+    {
+        System.out.println(<span class="hljs-string">"实例块2"</span>);
+
+    }
+
+    <span class="hljs-keyword">static</span> {
+        System.out.println(<span class="hljs-string">"静态块1"</span>);
+    }
+
+    <span class="hljs-keyword">static</span> {
+        System.out.println(<span class="hljs-string">"静态块2"</span>);
+    }
+}
+</code></pre>
+<h2 id="3-面向对象思想">3. 面向对象思想</h2>
+<h3 id="31-对象是类的实例化">3.1 对象是类的实例化</h3>
+<h3 id="32-面向对象编程内容三大主线">3.2 面向对象编程内容三大主线</h3>
+<p>① 类及类成员；属性、方法、构造器；代码块、内部类</p>
+<p>② 面向对象三大特征：封装、继承、多态</p>
+<p>③ 其他关键字：this、super、abstract、interface、final、import、pakage</p>
+<h3 id="33-创建对象三大步">3.3 创建对象三大步</h3>
+<ol>
+<li>创建类</li>
+<li>类的实例化</li>
+<li>使用对象</li>
+</ol>
+<h3 id="34-匿名对象">3.4 匿名对象</h3>
+<p>所创建的对象没有赋给变量，而是直接拿来调用。</p>
+<p>使用场景：在一个方法或者对象里面暂时性的需要使用该对象。</p>
+<pre><code class="lang-Java">PhoneMall mall = <span class="hljs-keyword">new</span> PhoneMall();
+mall.show(<span class="hljs-keyword">new</span> Phone());
+</code></pre>
+<h3 id="35-对象数组">3.5 对象数组</h3>
+<p>当我们需要多个有序的对象时，一个一个去创建太麻烦了，使用 <strong>对象数组</strong> 可以很好解决问题。<br></br>使用步骤：</p>
+<ol>
+<li>声明对象数组</li>
+<li>循环创建数组中每一个对象</li>
+</ol>
+<p>举例：</p>
+<p>声明 ObjArray 对象</p>
+<pre><code class="lang-Java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ObjArray</span> </span>{
+    <span class="hljs-keyword">private</span> String name;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;
+    ObjArray() {}
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.name;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getAge</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.age;
+    }
+}
+</code></pre>
+<p>定义并创建对象数组 </p>
+<pre><code class="lang-Java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ObjArrayTest</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        ObjArray[] objs = <span class="hljs-keyword">new</span> ObjArray[<span class="hljs-number">10</span>];
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;objs.length;i++)
+            objs[i] = <span class="hljs-keyword">new</span> ObjArray();
+        System.out.println(objs[<span class="hljs-number">0</span>].getName()); <span class="hljs-comment">//null</span>
+        System.out.println(objs[<span class="hljs-number">1</span>].getAge()); <span class="hljs-comment">//0</span>
+    }
+}
+</code></pre>
+<h3 id="36-可变个数形参">3.6 可变个数形参</h3>
+<p>方法中可以接收同一类型的多个实参，可变形参形式为：</p>
+<pre><code>func(数据类型 ... 形参名)
+</code></pre><p>类似于：（两者不属于重载关系，不共存）</p>
+<pre><code class="lang-Java">func(数据类型[] 形参名)
+<span class="hljs-comment">// 形参为数组</span>
+</code></pre>
+<p>可变形参必须放在参数列表末尾。</p>
+<h2 id="4-值传递机制">4. 值传递机制</h2>
+<h3 id="41-变量的赋值">4.1 变量的赋值</h3>
+<p>若变量为基本数据类型，此时赋值的是变量所保存的 <strong>数据值</strong>。</p>
+<p>若变量是引用数据类型，此时赋值的是变量所保存的 <strong>地址值</strong>。</p>
+<h3 id="42-值传递机制">4.2 值传递机制</h3>
+<p>方法形参的传递机制：值传递</p>
+<p>形参：方法定义时，声明的小括号里的参数</p>
+<p>实参：方法调用时，实际传递给形参的数据</p>
+<p>值传递机制：</p>
+<ul>
+<li>若参数为基本数据类型，则形参接收的实参为实参真实存储的数据值</li>
+<li>若变量是引用数据类型，此时形参接收的是实参所保存的 <strong>地址值</strong>。</li>
+</ul>
+<h2 id="5-面向对象特征之一：封装与隐藏">5. 面向对象特征之一：封装与隐藏</h2>
+<h3 id="51-问题引入">5.1 问题引入</h3>
+<p>隐藏对象内部的复杂性，只对外公开简单的接口。便于外界调用，从而提高系统的可扩展性、可维护性。<br></br>通俗的说，<strong>把该隐藏的隐藏起来，该暴露的暴露出来。这就是封装性的设计思想。</strong></p>
+<p>当我们创建一个类的对象以后，我们可以通过 "对象.属性" 的方式对对象的属性进行赋值。这里的赋值操作要受到属性的数据类型和存储范围的制约。除此之外，没有其他制约条件。<strong>但是，在实际问题中，需要给属性添加额外的限制条件，这个条件不能在属性声明时体现，我们只能通过方法进行限制条件的添加。</strong><br></br>同时，避免用户直接使用 "对象.属性"，即设置 <code>private</code></p>
+<h3 id="52-封装性体现">5.2 封装性体现</h3>
+<ol>
+<li>将类的属性 <code>xxx</code> 私有化（<code>private</code>），同时，提供公共（<code>public</code>）的方法（<code>getXxx</code>）来获取和设置（<code>setXxx</code>）属性。</li>
+<li>不对外暴露私有的方法</li>
+<li>单例模式</li>
+</ol>
+<h3 id="53-四种权限修饰符">5.3 四种权限修饰符</h3>
+<ol>
+<li>Java规定的四种权限修饰符：<code>private</code>、缺省、protected、<code>public</code></li>
+<li>4 种权限可以用来修饰类的内部结构：属性、方法、构造器、内部类</li>
+<li>修饰类：缺省、public</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>修饰符</th>
+<th>类内部</th>
+<th>同一个包</th>
+<th>不同包的子类</th>
+<th>同一个工程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>private</td>
+<td>yes</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>（缺省）</td>
+<td>yes</td>
+<td>yes</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>protected</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td></td>
+</tr>
+<tr>
+<td>public</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>图示如下：</p>
+<p><img src="../img/权限修饰符.6231k69ojss0.png" alt="权限修饰符"></img></p>
+<h2 id="6-构造器（构造方法、constructor）">6. 构造器（构造方法、constructor）</h2>
+<h3 id="61-构造器的作用">6.1 构造器的作用</h3>
+<ol>
+<li>创建对象</li>
+<li>初始化对象的值</li>
+</ol>
+<h3 id="62-说明">6.2 说明</h3>
+<ol>
+<li><strong>如果没有显式的定义类的构造器的话，则系统默认提供一个空参 的构造器</strong></li>
+<li>定义构造器的格式: 权限修饰符类名(形参列表){}</li>
+<li>一个类中定义的多个构造器，彼此构成重载</li>
+<li>一旦我们显式的定义了类的构造器之后，系统就不在提供默认的空参构造器</li>
+</ol>
+<h3 id="63-javabean">6.3 JavaBean</h3>
+<ul>
+<li>JavaBean 是一种Java语言写成的可重用组件</li>
+<li>所谓 JavaBean，是指符合如下标准的类：<ul>
+<li>类是公共的</li>
+<li>有一个无参构造器</li>
+<li>有属性，属性有对应的get、set方法</li>
+</ul>
+</li>
+</ul>
+<h3 id="64-uml-类图">6.4 UML 类图</h3>
+<ol>
+<li>+表示 public 类型，-表示 private 类型，#表示 protected 类型</li>
+<li>方法的写法:<br></br> 方法的类型(+、-)方法名(参数名:参数类型): 返回值类型</li>
+<li>若方法有下划线表示为构造器</li>
+</ol>
+<h2 id="7-关键字——this">7. 关键字——this</h2>
+<h3 id="71-this-的使用">7.1 this 的使用</h3>
+<p><code>this</code> 理解为当前对象或当前正在创建的对象。  </p>
+<ol>
+<li>this 可以用来修饰属性、方法、构造器</li>
+<li>this 修饰属性和方法  <ul>
+<li>在类的方法中，我们可以使用 <code>this.属性</code> 或 <code>this.方法</code> 的方式，<strong>调用当前对象属性或方法</strong>。但是，通常情况下，我们都选择省略 <code>this.</code>。特殊情况下，如果方法的形参和类的属性同名时，我们必须显式的使用 <code>this.变量</code> 的方式，表明此变量是属性，而非形参。  </li>
+<li>在类的方法中，我们可以使用 <code>this.属性</code> 或 <code>this.方法</code> 的方式，<strong>调用当前正在创建对象属性或方法</strong>。但是，通常 情况下，我们都选择省略 <code>this.</code>。特殊情况下，如果方法的形参和类的属性同名时，我们必须显式的使用 <code>this.变量</code> 的方式，表明此变量是属性，而非形参。</li>
+</ul>
+</li>
+<li>this 调用构造器<br></br> 构造器中可以调用构造器，使用 <code>this()</code> 实现。<br></br> 当构造器中有些操作与其他构造器中的一些内容有重复的是时候，就可以在构造器中调用其他构造器，防止冗余。</li>
+<li>如果一个类中有 n 个构造器，则最多有 n - 1 构造器中使用 了"this (形参列表)'</li>
+<li>规定: <strong>"this (形参列表) "必须声明在当前构造器的首行</strong></li>
+</ol>
+<h2 id="8-pakage-关键字">8. pakage 关键字</h2>
+<ol>
+<li>为了更好的 <strong>实现项目中类的管理，提供包的概念</strong></li>
+<li>使用 pakage 声明类或接口所属的包，声明在源文件的首行。</li>
+<li>包，属于标识符，遵循一定规范，见名知意。</li>
+<li>每出现一次 <code>.</code>，则代表一层文件目录。</li>
+<li>同一个包下，不允许命名同名接口、类。<br></br> 不同包下可以。</li>
+</ol>
+<h2 id="9-import-关键字">9. import 关键字</h2>
+<ol>
+<li>在源文件中显示的使用 <code>import</code> 结构导入指定包下的类、接口。</li>
+<li>声明在包的声明和类的声明之间。</li>
+<li>若导入多个结构，则并列写出即可。</li>
+<li>使用 <code>xxx.*</code> 的格式，表示导入该包下所有类。</li>
+<li>若使用的类、接口是在 <code>Java.lang</code> 包下的，则不需要导入包。</li>
+<li>使用的类是本包下定义的，则无需导入。</li>
+<li>若源文件中，使用了不同包下的同名类，则必须有一个类需要以全类名（包含包名）的形式定义。</li>
+<li>使用 <code>xxx.*</code> 的方式表明可以调用 xxx 包下的所有结构。但是如果使用的是 xxx 子包下的结构，则仍需要显
+使用 <code>xxx.*</code> 方式表明可以调用 xxx 包下的所有结构。<strong>但是如果使用的是 xxx 子包下的结构，则仍需要显式导入。</strong></li>
+<li><code>import static</code> 导入指定类或接口中的静态结构: 属性或方法。<pre><code class="lang-Java"><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> Java.lang.System.*;
+out.println(<span class="hljs-number">123</span>);
+</code></pre>
+</li>
+</ol>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch08.html" class="navigation navigation-prev " aria-label="Previous page: ch08. 数组">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch10.html" class="navigation navigation-next " aria-label="Next page: ch10. Java面向对象（中）">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ch09. Java面向对象（上）","level":"1.1.9","depth":2,"next":{"title":"ch10. Java面向对象（中）","level":"1.1.10","depth":2,"path":"ch10.md","ref":"ch10.md","articles":[]},"previous":{"title":"ch08. 数组","level":"1.1.8","depth":2,"path":"ch08.md","ref":"ch08.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch09.md","mtime":"2025-04-20T02:13:13.210Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:28.596Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

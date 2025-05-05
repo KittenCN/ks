@@ -1,0 +1,766 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>使用 tomcat 服务器创建 Servlet 应用的步骤 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0485.html" />
+    
+    
+    <link rel="prev" href="0483.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Servlet
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0478.html">
+            
+                <a href="0478.html">
+            
+                    
+                    基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0479.html">
+            
+                <a href="0479.html">
+            
+                    
+                    Servlet：Web 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0480.html">
+            
+                <a href="0480.html">
+            
+                    
+                    Servlet 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0481.html">
+            
+                <a href="0481.html">
+            
+                    
+                    Servlet API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0482.html">
+            
+                <a href="0482.html">
+            
+                    
+                    Servlet 应用是如何工作的
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0483.html">
+            
+                <a href="0483.html">
+            
+                    
+                    Servlet 生命周期
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.7" data-path="0484.html">
+            
+                <a href="0484.html">
+            
+                    
+                    使用 tomcat 服务器创建 Servlet 应用的步骤
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0485.html">
+            
+                <a href="0485.html">
+            
+                    
+                    使用 Netbeans IDE 创建第一个 Servlet 应用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0486.html">
+            
+                <a href="0486.html">
+            
+                    
+                    使用 Eclipse IDE 创建第一个 Servlet 应用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0487.html">
+            
+                <a href="0487.html">
+            
+                    
+                    进阶
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0488.html">
+            
+                <a href="0488.html">
+            
+                    
+                    ServletRequest类简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0489.html">
+            
+                <a href="0489.html">
+            
+                    
+                    ServletResponse简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0490.html">
+            
+                <a href="0490.html">
+            
+                    
+                    Servlet 中的RequestDispatcher
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0491.html">
+            
+                <a href="0491.html">
+            
+                    
+                    Servlet 中的sendRedirect()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0492.html">
+            
+                <a href="0492.html">
+            
+                    
+                    ServletConfig接口介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0493.html">
+            
+                <a href="0493.html">
+            
+                    
+                    Servlet 中的ServletContext接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="0494.html">
+            
+                <a href="0494.html">
+            
+                    
+                    Servlet：属性介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="0495.html">
+            
+                <a href="0495.html">
+            
+                    
+                    高级
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="0496.html">
+            
+                <a href="0496.html">
+            
+                    
+                    在 Servlets 中管理会话
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="0497.html">
+            
+                <a href="0497.html">
+            
+                    
+                    Servlet：什么是HttpSession？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="0498.html">
+            
+                <a href="0498.html">
+            
+                    
+                    在 Servlet 中将 Cookies 用于会话管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="0499.html">
+            
+                <a href="0499.html">
+            
+                    
+                    在 Servlet 中使用 URL 重写进行会话管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="0500.html">
+            
+                <a href="0500.html">
+            
+                    
+                    在 Servlet 中将隐藏表单字段用于会话管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="0501.html">
+            
+                <a href="0501.html">
+            
+                    
+                    Servlet 中的ServletContextEvent和ServletContextListener
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="0502.html">
+            
+                <a href="0502.html">
+            
+                    
+                    什么是ServletRequestAttributeEvent？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="0503.html">
+            
+                <a href="0503.html">
+            
+                    
+                    Servlet：HttpSessionEvent和HttpSessionListener
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="0504.html">
+            
+                <a href="0504.html">
+            
+                    
+                    Servlet 中的ServletRequestEvent和ServletRequestListener
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="0505.html">
+            
+                <a href="0505.html">
+            
+                    
+                    Servlet：过滤器 API 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >使用 tomcat 服务器创建 Servlet 应用的步骤</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="使用-tomcat-服务器创建-servlet-应用的步骤">使用 tomcat 服务器创建 Servlet 应用的步骤</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/servlet/steps-to-create-servlet-using-tomcat-server.php" target="_blank">https://www.studytonight.com/servlet/steps-to-create-servlet-using-tomcat-server.php</a></p>
+</blockquote>
+<p>要创建一个 Servlet 应用，您需要遵循下面提到的步骤。这些步骤对于所有的网络服务器都是通用的。在我们的例子中，我们使用的是 Apache Tomcat 服务器。Apache Tomcat 是一个用于测试 servlets 和 JSP 技术的开源 web 服务器。下载最新版本的 <a href="http://tomcat.apache.org/" target="_blank">Tomcat 服务器</a>并安装在你的机器上。</p>
+<p>在您的机器上安装 Tomcat 服务器后，请遵循以下步骤:</p>
+<ol>
+<li>为您的应用创建目录结构。</li>
+<li>创建一个 Servlet</li>
+<li>编译 Servlet</li>
+<li>为应用创建部署描述符</li>
+<li>启动服务器并部署应用</li>
+</ol>
+<p>下面详细解释了这 5 个步骤，让我们创建第一个 Servlet 应用。</p>
+<hr></hr>
+<h2 id="1创建目录结构">1.创建目录结构</h2>
+<p>Sun 微系统定义了创建 servlet 应用必须遵循的唯一目录结构。</p>
+<p><img src="img/f48c43826f6c180b5af1380cbf9a9009.png" alt="servlet directory strucutre"></img></p>
+<p>在 <strong>Apache-Tomcat\webapps</strong> 目录中创建上述目录结构。所有 HTML、静态文件(图片、css 等)直接保存在<strong>网络应用</strong>文件夹下。而所有的 Servlet 类都保存在<code>classes</code>文件夹中。</p>
+<p><code>web.xml</code>(部署描述符)文件保存在<code>WEB-INF</code>文件夹下。</p>
+<hr></hr>
+<h2 id="2创建一个-servlet">2.创建一个 Servlet</h2>
+<p>创建 servlet 有三种不同的方法。</p>
+<ul>
+<li>通过实现 <strong>Servlet</strong> 接口</li>
+<li>通过扩展<strong>泛型 Servlet</strong> 类</li>
+<li>通过扩展 <strong>HttpServlet</strong> 类</li>
+</ul>
+<p>但是通常一个 servlet 是通过扩展 <strong>HttpServlet</strong> 抽象类创建的。如前所述 <strong>HttpServlet</strong> 给出了 <strong>Servlet</strong> 接口的<code>service()</code>方法的定义。我们将要创建的 servlet 类不应该覆盖<code>service()</code>方法。我们的 servlet 类将只覆盖<code>doGet()</code>或<code>doPost()</code>方法。</p>
+<p>当对 servlet 的请求到来时，网络容器调用 servlet 的<code>service()</code>方法，根据请求的类型，<code>service()</code>方法调用<code>doGet()</code>或<code>doPost()</code>方法。</p>
+<p><strong>注意:</strong>默认情况下，请求是<strong>获取</strong>请求。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> javax.servlet.*;
+<span class="hljs-keyword">import</span> javax.servlet.http.*;
+<span class="hljs-keyword">import</span> java.io.*;
+
+<span class="hljs-keyword">public</span> MyServlet extends HttpServlet
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doGet</span><span class="hljs-params">(HttpServletRequest request,HttpServletResposne response)</span> 
+                         <span class="hljs-keyword">throws</span> ServletException </span>{
+        response.setContentType(<span class="hljs-string">"text/html"</span>);
+        PrintWriter out = response.getWriter();
+        out.println(<span class="hljs-string">"&lt;html&gt;&lt;body&gt;"</span>);
+        out.println(<span class="hljs-string">"&lt;h1&gt;Hello Readers&lt;/h1&gt;"</span>);
+        out.println(<span class="hljs-string">"&lt;/body&gt;&lt;/html&gt;"</span>);
+    }
+}
+</code></pre>
+<p>将上述代码写在记事本文件中，并将其保存为您电脑上的任何地方的<strong>MyServlet.java</strong>。从那里编译它(在下一步中解释)，并将类文件粘贴到您必须在 <strong>Tomcat/webapps</strong> 目录中创建的<code>WEB-INF/classes/</code>目录中。</p>
+<hr></hr>
+<h2 id="3编译一个-servlet">3.编译一个 Servlet</h2>
+<p>要编译一个 Servlet，需要一个 JAR 文件。不同的服务器需要不同的 JAR 文件。在 Apache Tomcat 服务器中<code>servlet-api.jar</code>文件是编译一个 servlet 类所必需的。</p>
+<p>编译 Servlet 的步骤:</p>
+<ul>
+<li>设置类路径。</li>
+</ul>
+<p><img src="img/c933963bb560f894c2b5cd85950c2a2b.png" alt="compiling a Servlet"></img></p>
+<ul>
+<li>下载 <strong>servlet-api.jar</strong> 文件。</li>
+<li>将 servlet-api.jar 文件粘贴到<code>Java\jdk\jre\lib\ext</code>目录中。</li>
+</ul>
+<p><img src="img/c7e4cace34570ee0ee37f6e585cc09a0.png" alt="compiling a Servlet"></img></p>
+<ul>
+<li>编译 Servlet 类。</li>
+</ul>
+<p><img src="img/e14e5b3506c7ac328ebe1bc78d3e1e16.png" alt="compiling a Servlet"></img></p>
+<p><strong>注意:</strong>编译完你的 Servlet 类后，你必须将类文件粘贴到<code>WEB-INF/classes/</code>目录中。</p>
+<hr></hr>
+<h2 id="4创建部署描述符">4.创建部署描述符</h2>
+<p><strong>部署描述符(DD)</strong> 是 Web 容器用来运行 Servlets 和 JSP 页面的 XML 文档。DD 用于几个重要目的，例如:</p>
+<ul>
+<li>将 URL 映射到 Servlet 类。</li>
+<li>初始化参数。</li>
+<li>定义错误页面。</li>
+<li>安全角色。</li>
+<li>声明标记库。</li>
+</ul>
+<p>我们将在后面详细讨论所有这些。现在我们将看到如何为我们的 web 应用创建一个简单的 <strong>web.xml</strong> 文件。</p>
+<p><img src="img/a68c321997c15f68ec8ee6c33b05c246.png" alt="web.xml file"></img></p>
+<hr></hr>
+<h2 id="5启动服务器">5.启动服务器</h2>
+<p>双击 <strong>startup.bat</strong> 文件启动你的 Apache Tomcat 服务器。</p>
+<p>或者，使用 RUN 提示符在您的 windows 计算机上执行以下命令。</p>
+<pre><code class="lang-java">C:\apache-tomcat-<span class="hljs-number">7.0</span>.14\bin\startup.bat
+</code></pre>
+<hr></hr>
+<h2 id="6第一次启动-tomcat-服务器">6.第一次启动 Tomcat 服务器</h2>
+<p>如果你是第一次启动 Tomcat 服务器，你需要在环境变量中设置 JAVA_HOME。以下步骤将向您展示如何设置它。</p>
+<ul>
+<li>右键点击<strong>我的电脑</strong>，进入<strong>物业</strong>。</li>
+</ul>
+<p><img src="img/6dcc3416c3d653cbc2b6dda434f42547.png" alt="setting JAVA_HOME for Tomcat"></img></p>
+<ul>
+<li>进入<strong>高级</strong>选项卡，点击<strong>环境变量...</strong>按钮。</li>
+</ul>
+<p><img src="img/c63221019f504f6969e277c34104ecd9.png" alt="setting JAVA_HOME for Tomcat"></img></p>
+<ul>
+<li>点击<strong>新建</strong>按钮，在变量名文本字段中输入 <strong>JAVA_HOME</strong> ，在变量值文本字段中输入 JDK 的路径。单击确定保存。</li>
+</ul>
+<p><img src="img/d49509dd8cb35b6e32bd7e5f95ab1261.png" alt="setting JAVA_HOME for Tomcat"></img></p>
+<hr></hr>
+<h2 id="7运行-servlet-应用">7.运行 Servlet 应用</h2>
+<p>打开浏览器，输入<strong>http:localhost:8080/First/hello</strong></p>
+<p><img src="img/0e0cb5ed349cc5460170ebe6433eb2ec.png" alt="Running first servlet application"></img></p>
+<p>万岁！我们的第一个 Servlet 应用成功运行。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0483.html" class="navigation navigation-prev " aria-label="Previous page: Servlet 生命周期">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0485.html" class="navigation navigation-next " aria-label="Next page: 使用 Netbeans IDE 创建第一个 Servlet 应用">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"使用 tomcat 服务器创建 Servlet 应用的步骤","level":"1.1.7","depth":2,"next":{"title":"使用 Netbeans IDE 创建第一个 Servlet 应用","level":"1.1.8","depth":2,"path":"0485.md","ref":"0485.md","articles":[]},"previous":{"title":"Servlet 生命周期","level":"1.1.6","depth":2,"path":"0483.md","ref":"0483.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0484.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:23:21.745Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

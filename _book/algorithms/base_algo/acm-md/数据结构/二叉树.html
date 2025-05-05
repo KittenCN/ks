@@ -1,0 +1,1645 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>二叉树 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="红黑树.html" />
+    
+    
+    <link rel="prev" href="堆.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="基础数据结构.html">
+            
+                <a href="基础数据结构.html">
+            
+                    
+                    基础数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="高级数据结构概述.html">
+            
+                <a href="高级数据结构概述.html">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="并查集.html">
+            
+                <a href="并查集.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="单调栈和单调队列.html">
+            
+                <a href="单调栈和单调队列.html">
+            
+                    
+                    单调栈/单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="线段树.html">
+            
+                <a href="线段树.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="线段树懒标记.html">
+            
+                <a href="线段树懒标记.html">
+            
+                    
+                    线段树懒标记
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="树状数组.html">
+            
+                <a href="树状数组.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="ST表.html">
+            
+                <a href="ST表.html">
+            
+                    
+                    ST表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="堆.html">
+            
+                <a href="堆.html">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.9" data-path="二叉树.html">
+            
+                <a href="二叉树.html">
+            
+                    
+                    二叉树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="红黑树.html">
+            
+                <a href="红黑树.html">
+            
+                    
+                    红黑树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="跳表.html">
+            
+                <a href="跳表.html">
+            
+                    
+                    跳表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="平衡树.html">
+            
+                <a href="平衡树.html">
+            
+                    
+                    平衡树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="分块算法.html">
+            
+                <a href="分块算法.html">
+            
+                    
+                    分块算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >二叉树</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="二叉树">二叉树</h1>
+<p>二叉树是算法竞赛中最常用的数据结构之一，它不仅是其他高级树形结构的基础，也是许多高效算法的核心组件。</p>
+<h2 id="基本概念">基本概念</h2>
+<p>【定义】二叉树是一种树形结构，其中每个节点最多有两个子节点，通常称为左子节点和右子节点。</p>
+<p>二叉树的主要类型包括：</p>
+<ol>
+<li><strong>满二叉树</strong>：除叶节点外的所有节点都有两个子节点，且所有叶节点都在同一层</li>
+<li><strong>完全二叉树</strong>：除最后一层外，其他层的节点都是满的，且最后一层的节点都靠左排列</li>
+<li><strong>平衡二叉树</strong>：任意节点的左右子树高度差不超过1</li>
+<li><strong>二叉搜索树</strong>：左子树上所有节点的值都小于根节点，右子树上所有节点的值都大于根节点</li>
+</ol>
+<h2 id="二叉树的表示">二叉树的表示</h2>
+<h3 id="链式表示">链式表示</h3>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> TreeNode {
+    <span class="hljs-keyword">int</span> val;               <span class="hljs-comment">// 节点值</span>
+    TreeNode *left;        <span class="hljs-comment">// 左子节点指针</span>
+    TreeNode *right;       <span class="hljs-comment">// 右子节点指针</span>
+
+    TreeNode(<span class="hljs-keyword">int</span> x) : val(x), left(<span class="hljs-literal">nullptr</span>), right(<span class="hljs-literal">nullptr</span>) {}
+};
+</code></pre>
+<p>【链式表示分析】</p>
+<ul>
+<li><strong>优点</strong>：结构灵活，易于实现动态操作（插入、删除节点）</li>
+<li><strong>缺点</strong>：额外的指针开销，内存分散可能导致缓存不友好</li>
+<li><strong>适用场景</strong>：一般用于结构不规则的二叉树，如BST、平衡树等</li>
+<li><strong>ACM中常见用法</strong>：大多数树题目都使用此表示方法，因为操作更为灵活</li>
+</ul>
+<h3 id="数组表示">数组表示</h3>
+<p>对于完全二叉树，可以使用数组进行高效存储：</p>
+<ul>
+<li>根节点存储在索引1（或0，取决于实现）</li>
+<li>对于索引为i的节点，其左子节点的索引为2<em>i，右子节点的索引为2</em>i+1（如果索引从1开始）</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">1005</span>;
+<span class="hljs-keyword">int</span> tree[MAXN];  <span class="hljs-comment">// 使用数组存储完全二叉树</span>
+</code></pre>
+<p>【数组表示分析】</p>
+<ul>
+<li><strong>优点</strong>：内存连续，访问迅速，无需存储指针</li>
+<li><strong>缺点</strong>：对非完全二叉树会浪费空间</li>
+<li><strong>适用场景</strong>：堆、线段树等完全二叉树结构</li>
+<li><strong>ACM常见应用</strong>：<pre><code class="lang-cpp"><span class="hljs-comment">// 索引从1开始的完全二叉树操作示例</span>
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">left</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>{ <span class="hljs-keyword">return</span> i &lt;&lt; <span class="hljs-number">1</span>; }     <span class="hljs-comment">// 左子节点: 2*i</span>
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">right</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>{ <span class="hljs-keyword">return</span> (i &lt;&lt; <span class="hljs-number">1</span>) | <span class="hljs-number">1</span>; } <span class="hljs-comment">// 右子节点: 2*i+1</span>
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">parent</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>{ <span class="hljs-keyword">return</span> i &gt;&gt; <span class="hljs-number">1</span>; }   <span class="hljs-comment">// 父节点: i/2</span>
+</code></pre>
+</li>
+<li><strong>易错点</strong>：索引计算时的起始值(0或1)混淆会导致严重错误</li>
+</ul>
+<h2 id="二叉树的遍历">二叉树的遍历</h2>
+<h3 id="深度优先遍历">深度优先遍历</h3>
+<h4 id="前序遍历-根-左-右">前序遍历 (根-左-右)</h4>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">preorder</span><span class="hljs-params">(TreeNode* root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; root-&gt;val &lt;&lt; <span class="hljs-string">" "</span>;  <span class="hljs-comment">// 访问根节点</span>
+    preorder(root-&gt;left);      <span class="hljs-comment">// 遍历左子树</span>
+    preorder(root-&gt;right);     <span class="hljs-comment">// 遍历右子树</span>
+}
+
+<span class="hljs-comment">// 非递归实现</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; preorderIterative(TreeNode* root) {
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; result;
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> result;
+
+    <span class="hljs-built_in">stack</span>&lt;TreeNode*&gt; s;
+    s.push(root);
+
+    <span class="hljs-keyword">while</span> (!s.empty()) {
+        TreeNode* node = s.top();
+        s.pop();
+
+        result.push_back(node-&gt;val);  <span class="hljs-comment">// 访问节点</span>
+
+        <span class="hljs-comment">// 注意：先压入右子节点，再压入左子节点，这样出栈时会先处理左子节点</span>
+        <span class="hljs-keyword">if</span> (node-&gt;right) s.push(node-&gt;right);
+        <span class="hljs-keyword">if</span> (node-&gt;left) s.push(node-&gt;left);
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<p>【前序遍历分析】</p>
+<ul>
+<li><strong>实现思路</strong>：先访问当前节点，再递归访问左右子树</li>
+<li><strong>ACM应用场景</strong>：构建树的复制、序列化二叉树</li>
+<li><strong>递归vs迭代</strong>：递归代码简洁但有栈溢出风险；迭代需要手动管理栈但更安全</li>
+<li><strong>时间复杂度</strong>：O(n)，每个节点恰好被访问一次</li>
+<li><strong>空间复杂度</strong>：递归O(h)，迭代O(h)，h为树高，最坏情况O(n)</li>
+</ul>
+<h4 id="中序遍历-左-根-右">中序遍历 (左-根-右)</h4>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">inorder</span><span class="hljs-params">(TreeNode* root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span>;
+
+    inorder(root-&gt;left);       <span class="hljs-comment">// 遍历左子树</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; root-&gt;val &lt;&lt; <span class="hljs-string">" "</span>;  <span class="hljs-comment">// 访问根节点</span>
+    inorder(root-&gt;right);      <span class="hljs-comment">// 遍历右子树</span>
+}
+
+<span class="hljs-comment">// 非递归实现</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; inorderIterative(TreeNode* root) {
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; result;
+    <span class="hljs-built_in">stack</span>&lt;TreeNode*&gt; s;
+    TreeNode* curr = root;
+
+    <span class="hljs-keyword">while</span> (curr != <span class="hljs-literal">nullptr</span> || !s.empty()) {
+        <span class="hljs-comment">// 一直向左遍历，将所有节点入栈</span>
+        <span class="hljs-keyword">while</span> (curr != <span class="hljs-literal">nullptr</span>) {
+            s.push(curr);
+            curr = curr-&gt;left;
+        }
+
+        <span class="hljs-comment">// 弹出栈顶节点并访问</span>
+        curr = s.top();
+        s.pop();
+        result.push_back(curr-&gt;val);
+
+        <span class="hljs-comment">// 转向右子树</span>
+        curr = curr-&gt;right;
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<p>【中序遍历分析】</p>
+<ul>
+<li><strong>实现思路</strong>：递归或迭代方式按"左-根-右"顺序访问节点</li>
+<li><strong>ACM应用特点</strong>：对BST进行中序遍历可以得到有序序列，常用于判断BST合法性</li>
+<li><strong>易错点</strong>：迭代版本的双重循环逻辑较复杂，要注意内外循环的结束条件</li>
+<li><strong>优化思路</strong>：可使用Morris遍历降低空间复杂度至O(1)</li>
+<li><strong>测试用例设计</strong>：<ul>
+<li>单节点树：检验基本功能</li>
+<li>链状树（只有左子树或只有右子树）：测试极端情况</li>
+<li>满二叉树：测试平衡情况</li>
+</ul>
+</li>
+</ul>
+<h4 id="后序遍历-左-右-根">后序遍历 (左-右-根)</h4>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">postorder</span><span class="hljs-params">(TreeNode* root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span>;
+
+    postorder(root-&gt;left);     <span class="hljs-comment">// 遍历左子树</span>
+    postorder(root-&gt;right);    <span class="hljs-comment">// 遍历右子树</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; root-&gt;val &lt;&lt; <span class="hljs-string">" "</span>;  <span class="hljs-comment">// 访问根节点</span>
+}
+
+<span class="hljs-comment">// 非递归实现</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; postorderIterative(TreeNode* root) {
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; result;
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> result;
+
+    <span class="hljs-built_in">stack</span>&lt;TreeNode*&gt; s1, s2;
+    s1.push(root);
+
+    <span class="hljs-comment">// 第一次遍历，将节点按根-右-左的顺序压入 s2</span>
+    <span class="hljs-keyword">while</span> (!s1.empty()) {
+        TreeNode* node = s1.top();
+        s1.pop();
+        s2.push(node);
+
+        <span class="hljs-keyword">if</span> (node-&gt;left) s1.push(node-&gt;left);
+        <span class="hljs-keyword">if</span> (node-&gt;right) s1.push(node-&gt;right);
+    }
+
+    <span class="hljs-comment">// 从 s2 中弹出节点，顺序即为左-右-根</span>
+    <span class="hljs-keyword">while</span> (!s2.empty()) {
+        result.push_back(s2.top()-&gt;val);
+        s2.pop();
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<p>【后序遍历分析】</p>
+<ul>
+<li><strong>实现思路</strong>：使用双栈法是非递归实现中最直观的方式</li>
+<li><strong>ACM应用场景</strong>：树的删除操作、表达式计算树求值</li>
+<li><strong>复杂度优化</strong>：双栈法空间复杂度为O(n)，但实现简单易懂</li>
+<li><strong>单栈实现提示</strong>：需要记录上一个访问的节点，判断右子树是否已访问，实现更复杂</li>
+<li><strong>易错点</strong>：直接修改前序遍历代码（调整左右子树压栈顺序，再反转结果）不足以实现后序遍历</li>
+</ul>
+<h3 id="广度优先遍历-层序遍历">广度优先遍历 (层序遍历)</h3>
+<pre><code class="lang-cpp"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; levelOrder(TreeNode* root) {
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; result;
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> result;
+
+    <span class="hljs-built_in">queue</span>&lt;TreeNode*&gt; q;
+    q.push(root);
+
+    <span class="hljs-keyword">while</span> (!q.empty()) {
+        <span class="hljs-keyword">int</span> levelSize = q.size();  <span class="hljs-comment">// 当前层的节点数量</span>
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; currentLevel;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; levelSize; i++) {
+            TreeNode* node = q.front();
+            q.pop();
+
+            currentLevel.push_back(node-&gt;val);
+
+            <span class="hljs-keyword">if</span> (node-&gt;left) q.push(node-&gt;left);
+            <span class="hljs-keyword">if</span> (node-&gt;right) q.push(node-&gt;right);
+        }
+
+        result.push_back(currentLevel);
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<p>【层序遍历分析】</p>
+<ul>
+<li><strong>算法思路</strong>：使用队列按层从上到下遍历节点</li>
+<li><strong>数据结构</strong>：必须使用队列(FIFO)，不能用栈</li>
+<li><strong>标准实现</strong>：通过记录当前层的节点数量来分离不同层的节点</li>
+<li><strong>ACM实战应用</strong>：<ul>
+<li>计算二叉树的宽度</li>
+<li>寻找最近公共祖先</li>
+<li>判断是否为完全二叉树</li>
+</ul>
+</li>
+<li><p><strong>实现变种</strong>：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 简化版层序遍历(仅输出值)</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">simpleLevelOrder</span><span class="hljs-params">(TreeNode* root)</span> </span>{
+    <span class="hljs-keyword">if</span> (!root) <span class="hljs-keyword">return</span>;
+    <span class="hljs-built_in">queue</span>&lt;TreeNode*&gt; q;
+    q.push(root);
+
+    <span class="hljs-keyword">while</span> (!q.empty()) {
+        TreeNode* node = q.front();
+        q.pop();
+
+        <span class="hljs-built_in">cout</span> &lt;&lt; node-&gt;val &lt;&lt; <span class="hljs-string">" "</span>; <span class="hljs-comment">// 访问节点</span>
+
+        <span class="hljs-keyword">if</span> (node-&gt;left) q.push(node-&gt;left);
+        <span class="hljs-keyword">if</span> (node-&gt;right) q.push(node-&gt;right);
+    }
+}
+</code></pre>
+</li>
+<li><strong>时间复杂度</strong>：O(n)</li>
+<li><strong>空间复杂度</strong>：O(w)，其中w是树的最大宽度，最坏情况O(n/2)≈O(n)</li>
+</ul>
+<h2 id="二叉树的构造">二叉树的构造</h2>
+<h3 id="从前序和中序遍历构造二叉树">从前序和中序遍历构造二叉树</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">/**
+ * 根据前序遍历和中序遍历序列构造二叉树
+ * 前序遍历的第一个元素是根节点，中序遍历中根节点左侧是左子树，右侧是右子树
+ * @param preorder 前序遍历序列 [根节点, [左子树的前序遍历], [右子树的前序遍历]]
+ * @param inorder 中序遍历序列 [[左子树的中序遍历], 根节点, [右子树的中序遍历]]
+ * @return 构造的二叉树根节点
+ */</span>
+<span class="hljs-function">TreeNode* <span class="hljs-title">buildTree</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; preorder, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; inorder)</span> </span>{
+    <span class="hljs-keyword">return</span> buildTreeHelper(preorder, <span class="hljs-number">0</span>, preorder.size() - <span class="hljs-number">1</span>, 
+                           inorder, <span class="hljs-number">0</span>, inorder.size() - <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-comment">/**
+ * 递归辅助函数，用于构造二叉树的子树
+ * @param preorder 前序遍历序列
+ * @param preStart 当前子树在前序序列中的起始索引
+ * @param preEnd 当前子树在前序序列中的结束索引
+ * @param inorder 中序遍历序列
+ * @param inStart 当前子树在中序序列中的起始索引
+ * @param inEnd 当前子树在中序序列中的结束索引
+ * @return 当前子树的根节点
+ */</span>
+<span class="hljs-function">TreeNode* <span class="hljs-title">buildTreeHelper</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; preorder, <span class="hljs-keyword">int</span> preStart, <span class="hljs-keyword">int</span> preEnd, 
+                         <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; inorder, <span class="hljs-keyword">int</span> inStart, <span class="hljs-keyword">int</span> inEnd)</span> </span>{
+    <span class="hljs-comment">// 递归终止条件：如果索引范围无效，返回空节点</span>
+    <span class="hljs-keyword">if</span> (preStart &gt; preEnd || inStart &gt; inEnd) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+    <span class="hljs-comment">// 根节点是前序遍历的第一个节点</span>
+    <span class="hljs-keyword">int</span> rootVal = preorder[preStart];
+    TreeNode* root = <span class="hljs-keyword">new</span> TreeNode(rootVal);
+
+    <span class="hljs-comment">// 在中序遍历中找到根节点的位置</span>
+    <span class="hljs-comment">// 中序遍历中，根节点左侧的节点属于左子树，右侧的节点属于右子树</span>
+    <span class="hljs-keyword">int</span> rootIndex = inStart;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = inStart; i &lt;= inEnd; i++) {
+        <span class="hljs-keyword">if</span> (inorder[i] == rootVal) {
+            rootIndex = i;
+            <span class="hljs-keyword">break</span>;
+        }
+    }
+
+    <span class="hljs-comment">// 计算左子树的节点数量</span>
+    <span class="hljs-comment">// 这个数量用于确定前序遍历中左子树的范围</span>
+    <span class="hljs-keyword">int</span> leftSubtreeSize = rootIndex - inStart;
+
+    <span class="hljs-comment">// 递归构造左右子树</span>
+    <span class="hljs-comment">// 左子树：</span>
+    <span class="hljs-comment">// - 前序范围：[preStart+1, preStart+leftSubtreeSize]</span>
+    <span class="hljs-comment">// - 中序范围：[inStart, rootIndex-1]</span>
+    root-&gt;left = buildTreeHelper(preorder, preStart + <span class="hljs-number">1</span>, preStart + leftSubtreeSize, 
+                                inorder, inStart, rootIndex - <span class="hljs-number">1</span>);
+
+    <span class="hljs-comment">// 右子树：</span>
+    <span class="hljs-comment">// - 前序范围：[preStart+leftSubtreeSize+1, preEnd]</span>
+    <span class="hljs-comment">// - 中序范围：[rootIndex+1, inEnd]</span>
+    root-&gt;right = buildTreeHelper(preorder, preStart + leftSubtreeSize + <span class="hljs-number">1</span>, preEnd, 
+                                 inorder, rootIndex + <span class="hljs-number">1</span>, inEnd);
+
+    <span class="hljs-keyword">return</span> root;
+}
+</code></pre>
+<p>【构造二叉树分析】</p>
+<ul>
+<li><p><strong>算法原理</strong>：</p>
+<ol>
+<li>前序遍历的第一个元素是根节点</li>
+<li>在中序遍历中找到根节点位置，划分左右子树</li>
+<li>递归构建左右子树</li>
+</ol>
+</li>
+<li><p><strong>ACM常见题型</strong>：根据各种遍历序列重建二叉树</p>
+<ul>
+<li>前序+中序 → 二叉树（经典题型）</li>
+<li>后序+中序 → 二叉树</li>
+<li>前序+后序 → 完全二叉树（解不唯一）</li>
+</ul>
+</li>
+<li><p><strong>性能优化</strong>：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 使用哈希表优化根节点查找</span>
+<span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; buildIndexMap(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; inorder) {
+    <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; <span class="hljs-built_in">map</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; inorder.size(); i++) {
+        <span class="hljs-built_in">map</span>[inorder[i]] = i;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">map</span>;
+}
+
+<span class="hljs-comment">// 优化的构建函数</span>
+<span class="hljs-function">TreeNode* <span class="hljs-title">buildTreeOptimized</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; preorder, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; inorder)</span> </span>{
+    <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; indexMap = buildIndexMap(inorder);
+    <span class="hljs-keyword">return</span> buildTreeHelper(preorder, <span class="hljs-number">0</span>, preorder.size() - <span class="hljs-number">1</span>, 
+                           inorder, <span class="hljs-number">0</span>, inorder.size() - <span class="hljs-number">1</span>, indexMap);
+}
+
+<span class="hljs-function">TreeNode* <span class="hljs-title">buildTreeHelper</span><span class="hljs-params">(..., <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&amp; indexMap)</span> </span>{
+    <span class="hljs-comment">// 使用indexMap直接查找根节点位置，避免O(n)的线性查找</span>
+    <span class="hljs-keyword">int</span> rootIndex = indexMap[rootVal];
+    <span class="hljs-comment">// 其他代码不变...</span>
+}
+</code></pre>
+</li>
+<li><p><strong>复杂度分析</strong>：</p>
+<ul>
+<li>原始实现：时间O(n²)，每层递归中查找rootIndex需要O(n)</li>
+<li>哈希表优化：时间O(n)，空间O(n)</li>
+</ul>
+</li>
+<li><p><strong>易错点</strong>：</p>
+<ul>
+<li>索引计算错误导致子树划分不正确</li>
+<li>没有考虑到树中可能有重复值的情况</li>
+<li>递归基础情况处理不当可能导致无限递归</li>
+</ul>
+</li>
+</ul>
+<h3 id="从后序和中序遍历构造二叉树">从后序和中序遍历构造二叉树</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">/**
+ * 根据后序遍历和中序遍历序列构造二叉树
+ * 后序遍历的最后一个元素是根节点，中序遍历中根节点左侧是左子树，右侧是右子树
+ * @param postorder 后序遍历序列 [[左子树的后序遍历], [右子树的后序遍历], 根节点]
+ * @param inorder 中序遍历序列 [[左子树的中序遍历], 根节点, [右子树的中序遍历]]
+ * @return 构造的二叉树根节点
+ */</span>
+<span class="hljs-function">TreeNode* <span class="hljs-title">buildFromPostAndIn</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; postorder, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; inorder)</span> </span>{
+    <span class="hljs-comment">// 构建中序遍历值到索引的映射，用于快速查找根节点在中序遍历中的位置</span>
+    <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; indexMap;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; inorder.size(); i++) {
+        indexMap[inorder[i]] = i;
+    }
+
+    <span class="hljs-keyword">return</span> buildFromPostAndInHelper(postorder, <span class="hljs-number">0</span>, postorder.size() - <span class="hljs-number">1</span>,
+                                   inorder, <span class="hljs-number">0</span>, inorder.size() - <span class="hljs-number">1</span>, indexMap);
+}
+
+<span class="hljs-comment">/**
+ * 递归辅助函数，用于构造二叉树的子树
+ * @param postorder 后序遍历序列
+ * @param postStart 当前子树在后序序列中的起始索引
+ * @param postEnd 当前子树在后序序列中的结束索引
+ * @param inorder 中序遍历序列
+ * @param inStart 当前子树在中序序列中的起始索引
+ * @param inEnd 当前子树在中序序列中的结束索引
+ * @param indexMap 中序遍历值到索引的映射表
+ * @return 当前子树的根节点
+ */</span>
+<span class="hljs-function">TreeNode* <span class="hljs-title">buildFromPostAndInHelper</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; postorder, <span class="hljs-keyword">int</span> postStart, <span class="hljs-keyword">int</span> postEnd,
+                                  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; inorder, <span class="hljs-keyword">int</span> inStart, <span class="hljs-keyword">int</span> inEnd,
+                                  <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&amp; indexMap)</span> </span>{
+    <span class="hljs-comment">// 递归终止条件：如果索引范围无效，返回空节点</span>
+    <span class="hljs-keyword">if</span> (postStart &gt; postEnd || inStart &gt; inEnd) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+    <span class="hljs-comment">// 后序遍历的最后一个元素是当前子树的根节点</span>
+    <span class="hljs-keyword">int</span> rootVal = postorder[postEnd];
+    TreeNode* root = <span class="hljs-keyword">new</span> TreeNode(rootVal);
+
+    <span class="hljs-comment">// 在中序遍历中找到根节点的位置 - 使用哈希表实现O(1)查找</span>
+    <span class="hljs-keyword">int</span> rootIndex = indexMap[rootVal];
+
+    <span class="hljs-comment">// 计算左子树的节点数量</span>
+    <span class="hljs-comment">// 这个数量用于确定后序遍历中左子树的范围</span>
+    <span class="hljs-keyword">int</span> leftSubtreeSize = rootIndex - inStart;
+
+    <span class="hljs-comment">// 递归构造左右子树</span>
+    <span class="hljs-comment">// 左子树：</span>
+    <span class="hljs-comment">// - 后序范围：[postStart, postStart+leftSubtreeSize-1]</span>
+    <span class="hljs-comment">// - 中序范围：[inStart, rootIndex-1]</span>
+    root-&gt;left = buildFromPostAndInHelper(postorder, postStart, postStart + leftSubtreeSize - <span class="hljs-number">1</span>,
+                                         inorder, inStart, rootIndex - <span class="hljs-number">1</span>, indexMap);
+
+    <span class="hljs-comment">// 右子树：</span>
+    <span class="hljs-comment">// - 后序范围：[postStart+leftSubtreeSize, postEnd-1]</span>
+    <span class="hljs-comment">// - 中序范围：[rootIndex+1, inEnd]</span>
+    <span class="hljs-comment">// 注意：后序遍历中，根节点在最后，其前面是右子树，再前面是左子树</span>
+    root-&gt;right = buildFromPostAndInHelper(postorder, postStart + leftSubtreeSize, postEnd - <span class="hljs-number">1</span>,
+                                          inorder, rootIndex + <span class="hljs-number">1</span>, inEnd, indexMap);
+
+    <span class="hljs-keyword">return</span> root;
+}
+</code></pre>
+<p>【后序+中序构造分析】</p>
+<ul>
+<li><strong>算法原理</strong>：<ol>
+<li>后序遍历的最后一个元素是根节点</li>
+<li>在中序遍历中找到根节点位置，划分左右子树</li>
+<li>递归构建左右子树</li>
+</ol>
+</li>
+<li><strong>实现难点</strong>：后序遍历中子树范围的计算较前序遍历更复杂<ul>
+<li>左子树：postStart ~ (postStart + leftSize - 1)</li>
+<li>右子树：(postStart + leftSize) ~ (postEnd - 1)</li>
+</ul>
+</li>
+<li><strong>优化策略</strong>：<ul>
+<li>使用哈希表存储中序遍历的值到索引的映射，将查找根节点位置的复杂度从O(n)降低到O(1)</li>
+<li>直接传递子树大小而不是重新计算</li>
+</ul>
+</li>
+<li><strong>ACM应用场景</strong>：解析表达式树、处理语法分析树</li>
+<li><strong>易错点</strong>：<ul>
+<li>后序遍历的索引划分容易出错，注意右子树结束位置是postEnd-1</li>
+<li>处理空树或只有一个节点的特殊情况</li>
+</ul>
+</li>
+</ul>
+<h3 id="从层序遍历构造完全二叉树">从层序遍历构造完全二叉树</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">/**
+ * 根据层序遍历序列构造完全二叉树
+ * 层序遍历按照从上到下、从左到右的顺序访问节点
+ * @param levelOrder 层序遍历序列 [根节点, 第二层节点..., 第n层节点...]
+ * @return 构造的二叉树根节点
+ */</span>
+<span class="hljs-function">TreeNode* <span class="hljs-title">buildFromLevelOrder</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; levelOrder)</span> </span>{
+    <span class="hljs-comment">// 空序列返回空树</span>
+    <span class="hljs-keyword">if</span> (levelOrder.empty()) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+    <span class="hljs-comment">// 创建根节点</span>
+    TreeNode* root = <span class="hljs-keyword">new</span> TreeNode(levelOrder[<span class="hljs-number">0</span>]);
+    <span class="hljs-built_in">queue</span>&lt;TreeNode*&gt; q;  <span class="hljs-comment">// 使用队列按层构建树节点</span>
+    q.push(root);
+
+    <span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>;  <span class="hljs-comment">// 从第二个元素开始（索引1）</span>
+    <span class="hljs-comment">// 按照完全二叉树的性质，使用层序遍历构建树</span>
+    <span class="hljs-keyword">while</span> (!q.empty() &amp;&amp; i &lt; levelOrder.size()) {
+        <span class="hljs-comment">// 获取当前要处理的父节点</span>
+        TreeNode* current = q.front();
+        q.pop();
+
+        <span class="hljs-comment">// 处理左子节点 (2*i)</span>
+        <span class="hljs-keyword">if</span> (i &lt; levelOrder.size()) {
+            <span class="hljs-keyword">if</span> (levelOrder[i] != -<span class="hljs-number">1</span>) {  <span class="hljs-comment">// 假设-1表示空节点</span>
+                <span class="hljs-comment">// 创建左子节点并加入队列</span>
+                current-&gt;left = <span class="hljs-keyword">new</span> TreeNode(levelOrder[i]);
+                q.push(current-&gt;left);
+            }
+            i++;  <span class="hljs-comment">// 移动到下一个元素</span>
+
+            <span class="hljs-comment">// 处理右子节点 (2*i+1)</span>
+            <span class="hljs-keyword">if</span> (i &lt; levelOrder.size()) {
+                <span class="hljs-keyword">if</span> (levelOrder[i] != -<span class="hljs-number">1</span>) {  <span class="hljs-comment">// 假设-1表示空节点</span>
+                    <span class="hljs-comment">// 创建右子节点并加入队列</span>
+                    current-&gt;right = <span class="hljs-keyword">new</span> TreeNode(levelOrder[i]);
+                    q.push(current-&gt;right);
+                }
+                i++;  <span class="hljs-comment">// 移动到下一个元素</span>
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> root;
+}
+</code></pre>
+<p>【层序构造分析】</p>
+<ul>
+<li><p><strong>算法原理</strong>：利用队列按层构建树节点</p>
+<ol>
+<li>首先创建根节点（层序遍历的第一个元素）</li>
+<li>使用队列跟踪当前层的节点</li>
+<li>为队列中的每个节点分配其左右子节点（如果存在）</li>
+</ol>
+</li>
+<li><p><strong>数据结构</strong>：</p>
+<ul>
+<li>队列用于按层次顺序处理节点</li>
+<li>层序遍历数组中的空节点通常使用特殊值（如-1或null）表示</li>
+</ul>
+</li>
+<li><p><strong>时间复杂度</strong>：O(n)，每个节点只处理一次</p>
+</li>
+<li><p><strong>空间复杂度</strong>：O(w)，其中w是树的最大宽度（最后一层的节点数），最坏情况下约为n/2</p>
+</li>
+<li><p><strong>实现技巧</strong>：</p>
+<ul>
+<li>使用索引i跟踪层序序列中的当前位置</li>
+<li>对于每个父节点，先处理左子节点，再处理右子节点</li>
+<li>确保索引不超出数组范围</li>
+</ul>
+</li>
+<li><p><strong>适用场景</strong>：</p>
+<ul>
+<li>从数组表示转换为链式表示的树结构</li>
+<li>解析堆的数组表示并构建树形结构</li>
+<li>生成完全二叉树进行可视化或分析</li>
+</ul>
+</li>
+<li><p><strong>易错点</strong>：</p>
+<ul>
+<li>忘记检查空节点标记</li>
+<li>索引增量计算错误</li>
+<li>未正确处理数组边界条件
+````</li>
+</ul>
+</li>
+</ul>
+<h3 id="从字符串表示构造二叉树">从字符串表示构造二叉树</h3>
+<p>处理括号表示法的二叉树字符串，如："1(2)(3(4)(5))"</p>
+<pre><code class="lang-cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">buildFromBracketNotation</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>{
+    <span class="hljs-keyword">if</span> (s.empty()) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+    <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">return</span> parseNode(s, i);
+}
+
+<span class="hljs-function">TreeNode* <span class="hljs-title">parseNode</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; s, <span class="hljs-keyword">int</span>&amp; i)</span> </span>{
+    <span class="hljs-comment">// 解析节点值</span>
+    <span class="hljs-built_in">string</span> num;
+    <span class="hljs-keyword">while</span> (i &lt; s.size() &amp;&amp; s[i] &gt;= <span class="hljs-string">'0'</span> &amp;&amp; s[i] &lt;= <span class="hljs-string">'9'</span>) {
+        num += s[i++];
+    }
+
+    <span class="hljs-keyword">if</span> (num.empty()) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+    TreeNode* node = <span class="hljs-keyword">new</span> TreeNode(stoi(num));
+
+    <span class="hljs-comment">// 解析左子树</span>
+    <span class="hljs-keyword">if</span> (i &lt; s.size() &amp;&amp; s[i] == <span class="hljs-string">'('</span>) {
+        i++; <span class="hljs-comment">// 跳过左括号</span>
+        node-&gt;left = parseNode(s, i);
+        i++; <span class="hljs-comment">// 跳过右括号</span>
+    }
+
+    <span class="hljs-comment">// 解析右子树</span>
+    <span class="hljs-keyword">if</span> (i &lt; s.size() &amp;&amp; s[i] == <span class="hljs-string">'('</span>) {
+        i++; <span class="hljs-comment">// 跳过左括号</span>
+        node-&gt;right = parseNode(s, i);
+        i++; <span class="hljs-comment">// 跳过右括号</span>
+    }
+
+    <span class="hljs-keyword">return</span> node;
+}
+</code></pre>
+<p>【字符串构造分析】</p>
+<ul>
+<li><strong>算法原理</strong>：递归解析括号表示的树结构</li>
+<li><strong>实现技巧</strong>：使用引用传递索引位置，跟踪当前解析位置</li>
+<li><strong>ACM应用</strong>：解析输入的树形结构字符串表示</li>
+<li><strong>注意事项</strong>：需处理多位数字、空节点和格式错误等边界情况</li>
+</ul>
+<h3 id="构造特殊的二叉树">构造特殊的二叉树</h3>
+<h4 id="构造平衡二叉搜索树">构造平衡二叉搜索树</h4>
+<p>从排序数组构造平衡BST：</p>
+<pre><code class="lang-cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">sortedArrayToBST</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+    <span class="hljs-keyword">return</span> buildBST(nums, <span class="hljs-number">0</span>, nums.size() - <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-function">TreeNode* <span class="hljs-title">buildBST</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span> </span>{
+    <span class="hljs-keyword">if</span> (left &gt; right) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+    <span class="hljs-comment">// 总是选择中间位置的元素作为根节点</span>
+    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;
+    TreeNode* root = <span class="hljs-keyword">new</span> TreeNode(nums[mid]);
+
+    <span class="hljs-comment">// 递归构造左右子树</span>
+    root-&gt;left = buildBST(nums, left, mid - <span class="hljs-number">1</span>);
+    root-&gt;right = buildBST(nums, mid + <span class="hljs-number">1</span>, right);
+
+    <span class="hljs-keyword">return</span> root;
+}
+</code></pre>
+<p>【构造平衡BST分析】</p>
+<ul>
+<li><strong>核心思想</strong>：始终选择数组中间元素作为子树根节点</li>
+<li><strong>时间复杂度</strong>：O(n)</li>
+<li><strong>特点</strong>：构造出的树高度最小，约为log(n)</li>
+<li><strong>应用场景</strong>：需要快速构建平衡搜索树的场景</li>
+</ul>
+<h4 id="构造线段树">构造线段树</h4>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 线段树节点</span>
+<span class="hljs-keyword">struct</span> SegmentTreeNode {
+    <span class="hljs-keyword">int</span> start, end;  <span class="hljs-comment">// 区间范围</span>
+    <span class="hljs-keyword">int</span> sum;         <span class="hljs-comment">// 区间和（可根据需要改为其他聚合值）</span>
+    SegmentTreeNode *left, *right;
+
+    SegmentTreeNode(<span class="hljs-keyword">int</span> s, <span class="hljs-keyword">int</span> e) : start(s), end(e), sum(<span class="hljs-number">0</span>), left(<span class="hljs-literal">nullptr</span>), right(<span class="hljs-literal">nullptr</span>) {}
+};
+
+<span class="hljs-comment">// 从数组构建线段树</span>
+<span class="hljs-function">SegmentTreeNode* <span class="hljs-title">buildSegmentTree</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+    <span class="hljs-keyword">if</span> (start &gt; end) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+    SegmentTreeNode* root = <span class="hljs-keyword">new</span> SegmentTreeNode(start, end);
+
+    <span class="hljs-keyword">if</span> (start == end) {
+        <span class="hljs-comment">// 叶节点，代表单个元素</span>
+        root-&gt;sum = nums[start];
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">int</span> mid = start + (end - start) / <span class="hljs-number">2</span>;
+        root-&gt;left = buildSegmentTree(nums, start, mid);
+        root-&gt;right = buildSegmentTree(nums, mid + <span class="hljs-number">1</span>, end);
+
+        <span class="hljs-comment">// 合并子节点信息</span>
+        root-&gt;sum = (root-&gt;left ? root-&gt;left-&gt;sum : <span class="hljs-number">0</span>) + 
+                   (root-&gt;right ? root-&gt;right-&gt;sum : <span class="hljs-number">0</span>);
+    }
+
+    <span class="hljs-keyword">return</span> root;
+}
+</code></pre>
+<p>【线段树构造分析】</p>
+<ul>
+<li><strong>应用场景</strong>：区间查询和修改问题</li>
+<li><strong>构造思路</strong>：自顶向下分割区间，自底向上聚合信息</li>
+<li><strong>时间复杂度</strong>：O(n)</li>
+<li><strong>ACM实战提示</strong>：线段树是解决区间问题的强大工具，掌握其构造和操作是算法竞赛的基本要求</li>
+</ul>
+<h2 id="二叉树的应用">二叉树的应用</h2>
+<h3 id="二叉搜索树-bst">二叉搜索树 (BST)</h3>
+<p>二叉搜索树是特殊的二叉树，它满足以下性质：</p>
+<ul>
+<li>左子树上所有节点的值都小于根节点的值</li>
+<li>右子树上所有节点的值都大于根节点的值</li>
+<li>左右子树也都是二叉搜索树</li>
+</ul>
+<h4 id="bst的查找操作">BST的查找操作</h4>
+<pre><code class="lang-cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">search</span><span class="hljs-params">(TreeNode* root, <span class="hljs-keyword">int</span> key)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span> || root-&gt;val == key) <span class="hljs-keyword">return</span> root;
+
+    <span class="hljs-keyword">if</span> (key &lt; root-&gt;val) {
+        <span class="hljs-keyword">return</span> search(root-&gt;left, key);  <span class="hljs-comment">// 在左子树中查找</span>
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> search(root-&gt;right, key); <span class="hljs-comment">// 在右子树中查找</span>
+    }
+}
+
+<span class="hljs-comment">// 非递归实现</span>
+<span class="hljs-function">TreeNode* <span class="hljs-title">searchIterative</span><span class="hljs-params">(TreeNode* root, <span class="hljs-keyword">int</span> key)</span> </span>{
+    TreeNode* curr = root;
+
+    <span class="hljs-keyword">while</span> (curr != <span class="hljs-literal">nullptr</span> &amp;&amp; curr-&gt;val != key) {
+        <span class="hljs-keyword">if</span> (key &lt; curr-&gt;val) {
+            curr = curr-&gt;left;
+        } <span class="hljs-keyword">else</span> {
+            curr = curr-&gt;right;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> curr;  <span class="hljs-comment">// 如果找不到，返回nullptr</span>
+}
+</code></pre>
+<p>【BST查找分析】</p>
+<ul>
+<li><strong>算法思路</strong>：利用BST的有序性质，通过比较节点值与目标值大小决定搜索方向</li>
+<li><strong>时间复杂度</strong>：平均O(log n)，最坏O(n)（当树退化为链表时）</li>
+<li><strong>递归与迭代</strong>：迭代版本避免了函数调用开销，更适合ACM比赛</li>
+<li><strong>ACM实战应用</strong>：实现各种集合、映射操作</li>
+<li><strong>优化建议</strong>：对于不平衡的BST，考虑使用平衡树如AVL或红黑树</li>
+</ul>
+<h4 id="bst的插入操作">BST的插入操作</h4>
+<pre><code class="lang-cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">insert</span><span class="hljs-params">(TreeNode* root, <span class="hljs-keyword">int</span> key)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> TreeNode(key);
+
+    <span class="hljs-keyword">if</span> (key &lt; root-&gt;val) {
+        root-&gt;left = insert(root-&gt;left, key);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (key &gt; root-&gt;val) {
+        root-&gt;right = insert(root-&gt;right, key);
+    }
+
+    <span class="hljs-keyword">return</span> root;  <span class="hljs-comment">// 返回更新后的树的根节点</span>
+}
+
+<span class="hljs-comment">// 非递归实现</span>
+<span class="hljs-function">TreeNode* <span class="hljs-title">insertIterative</span><span class="hljs-params">(TreeNode* root, <span class="hljs-keyword">int</span> key)</span> </span>{
+    TreeNode* newNode = <span class="hljs-keyword">new</span> TreeNode(key);
+
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> newNode;
+
+    TreeNode* curr = root;
+    TreeNode* parent = <span class="hljs-literal">nullptr</span>;
+
+    <span class="hljs-keyword">while</span> (curr != <span class="hljs-literal">nullptr</span>) {
+        parent = curr;
+
+        <span class="hljs-keyword">if</span> (key &lt; curr-&gt;val) {
+            curr = curr-&gt;left;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (key &gt; curr-&gt;val) {
+            curr = curr-&gt;right;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// 键已存在，不进行插入</span>
+            <span class="hljs-keyword">delete</span> newNode;
+            <span class="hljs-keyword">return</span> root;
+        }
+    }
+
+    <span class="hljs-comment">// 确定新节点是父节点的左子节点还是右子节点</span>
+    <span class="hljs-keyword">if</span> (key &lt; parent-&gt;val) {
+        parent-&gt;left = newNode;
+    } <span class="hljs-keyword">else</span> {
+        parent-&gt;right = newNode;
+    }
+
+    <span class="hljs-keyword">return</span> root;
+}
+</code></pre>
+<p>【BST插入分析】</p>
+<ul>
+<li><strong>算法原理</strong>：通过比较寻找合适的插入位置</li>
+<li><strong>关键点</strong>：BST不允许重复值（标准定义下），需要特殊处理</li>
+<li><strong>时间复杂度</strong>：平均O(log n)，最坏O(n)</li>
+<li><strong>ACM应用</strong>：动态维护有序数据集合，multiset实现</li>
+<li><strong>易错点</strong>：<ul>
+<li>插入操作可能改变根节点，需要正确处理返回值</li>
+<li>不正确处理树中已存在的重复值会导致内存泄漏</li>
+<li>迭代版本必须记录parent节点才能连接新节点</li>
+</ul>
+</li>
+</ul>
+<h4 id="bst的删除操作">BST的删除操作</h4>
+<pre><code class="lang-cpp"><span class="hljs-function">TreeNode* <span class="hljs-title">deleteNode</span><span class="hljs-params">(TreeNode* root, <span class="hljs-keyword">int</span> key)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+    <span class="hljs-comment">// 寻找要删除的节点</span>
+    <span class="hljs-keyword">if</span> (key &lt; root-&gt;val) {
+        root-&gt;left = deleteNode(root-&gt;left, key);
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (key &gt; root-&gt;val) {
+        root-&gt;right = deleteNode(root-&gt;right, key);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// 找到要删除的节点</span>
+
+        <span class="hljs-comment">// 情况1: 叶节点（无子节点）</span>
+        <span class="hljs-keyword">if</span> (root-&gt;left == <span class="hljs-literal">nullptr</span> &amp;&amp; root-&gt;right == <span class="hljs-literal">nullptr</span>) {
+            <span class="hljs-keyword">delete</span> root;
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+        }
+        <span class="hljs-comment">// 情况2: 只有一个子节点</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (root-&gt;left == <span class="hljs-literal">nullptr</span>) {
+            TreeNode* temp = root-&gt;right;
+            <span class="hljs-keyword">delete</span> root;
+            <span class="hljs-keyword">return</span> temp;
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (root-&gt;right == <span class="hljs-literal">nullptr</span>) {
+            TreeNode* temp = root-&gt;left;
+            <span class="hljs-keyword">delete</span> root;
+            <span class="hljs-keyword">return</span> temp;
+        }
+        <span class="hljs-comment">// 情况3: 有两个子节点</span>
+        <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// 找到右子树中的最小节点（或左子树中的最大节点）</span>
+            TreeNode* temp = findMin(root-&gt;right);
+
+            <span class="hljs-comment">// 用该节点的值替换当前节点的值</span>
+            root-&gt;val = temp-&gt;val;
+
+            <span class="hljs-comment">// 删除右子树中的最小节点</span>
+            root-&gt;right = deleteNode(root-&gt;right, temp-&gt;val);
+        }
+    }
+
+    <span class="hljs-keyword">return</span> root;
+}
+
+<span class="hljs-function">TreeNode* <span class="hljs-title">findMin</span><span class="hljs-params">(TreeNode* node)</span> </span>{
+    <span class="hljs-keyword">while</span> (node-&gt;left != <span class="hljs-literal">nullptr</span>) {
+        node = node-&gt;left;
+    }
+    <span class="hljs-keyword">return</span> node;
+}
+</code></pre>
+<p>【BST删除分析】</p>
+<ul>
+<li><p><strong>算法思路</strong>：分三种情况处理删除操作</p>
+<ol>
+<li>叶节点：直接删除</li>
+<li>有一个子节点：用子节点替换</li>
+<li>有两个子节点：用后继节点（或前驱节点）替换，再删除后继</li>
+</ol>
+</li>
+<li><p><strong>复杂度分析</strong>：</p>
+<ul>
+<li>时间复杂度：平均O(log n)，最坏O(n)</li>
+<li>空间复杂度：递归实现O(h)，h为树高</li>
+</ul>
+</li>
+<li><p><strong>ACM实战技巧</strong>：</p>
+<ul>
+<li>题目中如果只需要考虑插入和查找操作，可省略删除操作，简化代码</li>
+<li>删除是BST中最复杂的操作，实现时考虑用标记删除（懒删除）简化</li>
+</ul>
+</li>
+<li><p><strong>常见错误</strong>：</p>
+<ul>
+<li>忘记释放被删除节点的内存</li>
+<li>处理有两个子节点的情况时，没有正确递归删除替换节点</li>
+<li>对根节点的改变处理不当</li>
+</ul>
+</li>
+</ul>
+<h2 id="二叉树的常见操作">二叉树的常见操作</h2>
+<h3 id="计算二叉树的高度">计算二叉树的高度</h3>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">height</span><span class="hljs-params">(TreeNode* root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">int</span> leftHeight = height(root-&gt;left);
+    <span class="hljs-keyword">int</span> rightHeight = height(root-&gt;right);
+
+    <span class="hljs-keyword">return</span> max(leftHeight, rightHeight) + <span class="hljs-number">1</span>;
+}
+</code></pre>
+<h3 id="检查二叉树是否平衡">检查二叉树是否平衡</h3>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isBalanced</span><span class="hljs-params">(TreeNode* root)</span> </span>{
+    <span class="hljs-keyword">return</span> checkHeight(root) != -<span class="hljs-number">1</span>;
+}
+
+<span class="hljs-comment">// 返回树的高度，如果不平衡则返回-1</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">checkHeight</span><span class="hljs-params">(TreeNode* root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">int</span> leftHeight = checkHeight(root-&gt;left);
+    <span class="hljs-keyword">if</span> (leftHeight == -<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">int</span> rightHeight = checkHeight(root-&gt;right);
+    <span class="hljs-keyword">if</span> (rightHeight == -<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+
+    <span class="hljs-comment">// 检查高度差是否超过1</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">abs</span>(leftHeight - rightHeight) &gt; <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">return</span> max(leftHeight, rightHeight) + <span class="hljs-number">1</span>;
+}
+</code></pre>
+<p>【平衡检查分析】</p>
+<ul>
+<li><strong>算法原理</strong>：自底向上检查每个节点的左右子树高度差</li>
+<li><strong>优化思路</strong>：使用一个函数同时计算高度和判断平衡性，避免重复计算</li>
+<li><strong>时间复杂度</strong>：O(n)，每个节点只访问一次</li>
+<li><p><strong>对比分析</strong>：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 朴素解法（低效）- O(n²)</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isBalancedNaive</span><span class="hljs-params">(TreeNode* root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+
+    <span class="hljs-keyword">int</span> leftHeight = height(root-&gt;left);
+    <span class="hljs-keyword">int</span> rightHeight = height(root-&gt;right);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">abs</span>(leftHeight - rightHeight) &lt;= <span class="hljs-number">1</span> &amp;&amp;
+           isBalancedNaive(root-&gt;left) &amp;&amp;
+           isBalancedNaive(root-&gt;right);
+}
+</code></pre>
+</li>
+<li><strong>ACM应用</strong>：AVL树相关问题，验证树的合法性</li>
+</ul>
+<h3 id="二叉树的序列化与反序列化">二叉树的序列化与反序列化</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 序列化二叉树</span>
+<span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">serialize</span><span class="hljs-params">(TreeNode* root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">"X,"</span>;  <span class="hljs-comment">// 使用X表示空节点</span>
+
+    <span class="hljs-built_in">string</span> result = to_string(root-&gt;val) + <span class="hljs-string">","</span>;
+    result += serialize(root-&gt;left);
+    result += serialize(root-&gt;right);
+
+    <span class="hljs-keyword">return</span> result;
+}
+
+<span class="hljs-comment">// 反序列化二叉树</span>
+<span class="hljs-function">TreeNode* <span class="hljs-title">deserialize</span><span class="hljs-params">(<span class="hljs-built_in">string</span> data)</span> </span>{
+    <span class="hljs-built_in">queue</span>&lt;<span class="hljs-built_in">string</span>&gt; nodes;
+    <span class="hljs-built_in">string</span> val;
+
+    <span class="hljs-comment">// 将序列化字符串分割为token</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : data) {
+        <span class="hljs-keyword">if</span> (c == <span class="hljs-string">','</span>) {
+            nodes.push(val);
+            val.clear();
+        } <span class="hljs-keyword">else</span> {
+            val.push_back(c);
+        }
+    }
+
+    <span class="hljs-keyword">return</span> deserializeHelper(nodes);
+}
+
+<span class="hljs-function">TreeNode* <span class="hljs-title">deserializeHelper</span><span class="hljs-params">(<span class="hljs-built_in">queue</span>&lt;<span class="hljs-built_in">string</span>&gt;&amp; nodes)</span> </span>{
+    <span class="hljs-built_in">string</span> val = nodes.front();
+    nodes.pop();
+
+    <span class="hljs-keyword">if</span> (val == <span class="hljs-string">"X"</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;  <span class="hljs-comment">// 空节点</span>
+
+    TreeNode* root = <span class="hljs-keyword">new</span> TreeNode(stoi(val));
+    root-&gt;left = deserializeHelper(nodes);
+    root-&gt;right = deserializeHelper(nodes);
+
+    <span class="hljs-keyword">return</span> root;
+}
+</code></pre>
+<p>【序列化分析】</p>
+<ul>
+<li><strong>实现思路</strong>：使用前序遍历序列化，空节点用特殊符号表示</li>
+<li><strong>ACM应用场景</strong>：树的持久化、树的传输与重建</li>
+<li><strong>多种序列化方案对比</strong>：<ol>
+<li>前序遍历序列化（常用）：实现简单，易于理解</li>
+<li>层序遍历序列化：适合表示广度优先遍历序列</li>
+<li>括号表示法：如"1(2)(3(4)(5))"，人类可读性好</li>
+</ol>
+</li>
+<li><strong>注意事项</strong>：<ul>
+<li>确保特殊字符(如X)不会与节点值冲突</li>
+<li>处理节点值可能包含的特殊字符</li>
+<li>序列化和反序列化算法必须配对使用</li>
+</ul>
+</li>
+<li><strong>优化提示</strong>：对于大型树，考虑使用二进制序列化以节省空间</li>
+</ul>
+<h2 id="二叉树的高级应用">二叉树的高级应用</h2>
+<h3 id="线索二叉树">线索二叉树</h3>
+<p>线索二叉树是一种优化的二叉树，它利用叶节点的空指针存储前驱和后继信息，以便更高效地进行树的遍历。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 线索二叉树节点定义</span>
+<span class="hljs-keyword">struct</span> ThreadedNode {
+    <span class="hljs-keyword">int</span> val;
+    ThreadedNode *left, *right;
+    <span class="hljs-keyword">bool</span> leftThread;   <span class="hljs-comment">// 左指针是否为线索</span>
+    <span class="hljs-keyword">bool</span> rightThread;  <span class="hljs-comment">// 右指针是否为线索</span>
+
+    ThreadedNode(<span class="hljs-keyword">int</span> x) : val(x), left(<span class="hljs-literal">nullptr</span>), right(<span class="hljs-literal">nullptr</span>), 
+                         leftThread(<span class="hljs-literal">false</span>), rightThread(<span class="hljs-literal">false</span>) {}
+};
+
+<span class="hljs-comment">// 中序线索化二叉树</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">inorderThreading</span><span class="hljs-params">(ThreadedNode* root)</span> </span>{
+    ThreadedNode* prev = <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">// 记录前一个访问的节点</span>
+    inorderThreadingHelper(root, prev);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">inorderThreadingHelper</span><span class="hljs-params">(ThreadedNode* node, ThreadedNode*&amp; prev)</span> </span>{
+    <span class="hljs-keyword">if</span> (node == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-comment">// 线索化左子树</span>
+    inorderThreadingHelper(node-&gt;left, prev);
+
+    <span class="hljs-comment">// 处理当前节点</span>
+    <span class="hljs-keyword">if</span> (node-&gt;left == <span class="hljs-literal">nullptr</span>) {
+        node-&gt;leftThread = <span class="hljs-literal">true</span>;
+        node-&gt;left = prev; <span class="hljs-comment">// 左指针指向前驱</span>
+    }
+
+    <span class="hljs-comment">// 处理前一个节点的右线索</span>
+    <span class="hljs-keyword">if</span> (prev != <span class="hljs-literal">nullptr</span> &amp;&amp; prev-&gt;right == <span class="hljs-literal">nullptr</span>) {
+        prev-&gt;rightThread = <span class="hljs-literal">true</span>;
+        prev-&gt;right = node; <span class="hljs-comment">// 右指针指向后继</span>
+    }
+
+    prev = node;
+
+    <span class="hljs-comment">// 线索化右子树</span>
+    inorderThreadingHelper(node-&gt;right, prev);
+}
+</code></pre>
+<p>【线索二叉树分析】</p>
+<ul>
+<li><strong>基本原理</strong>：利用空指针存储前驱后继，加速遍历</li>
+<li><strong>优点</strong>：无需栈或递归即可进行遍历，空间复杂度O(1)</li>
+<li><strong>缺点</strong>：修改树结构更复杂，需要维护线索信息</li>
+<li><strong>适用场景</strong>：需要频繁遍历但较少修改的二叉树</li>
+<li><strong>ACM竞赛应用</strong>：了解即可，实际竞赛中较少直接使用</li>
+</ul>
+<h3 id="二叉树的morris遍历">二叉树的Morris遍历</h3>
+<p>Morris遍历是一种不使用栈和递归，空间复杂度为O(1)的二叉树遍历算法。</p>
+<pre><code class="lang-cpp"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; morrisInorder(TreeNode* root) {
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; result;
+    TreeNode* curr = root;
+
+    <span class="hljs-keyword">while</span> (curr != <span class="hljs-literal">nullptr</span>) {
+        <span class="hljs-keyword">if</span> (curr-&gt;left == <span class="hljs-literal">nullptr</span>) {
+            <span class="hljs-comment">// 如果没有左子树，访问当前节点并转向右子树</span>
+            result.push_back(curr-&gt;val);
+            curr = curr-&gt;right;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// 找到当前节点在中序遍历下的前驱节点</span>
+            TreeNode* predecessor = curr-&gt;left;
+            <span class="hljs-keyword">while</span> (predecessor-&gt;right != <span class="hljs-literal">nullptr</span> &amp;&amp; predecessor-&gt;right != curr) {
+                predecessor = predecessor-&gt;right;
+            }
+
+            <span class="hljs-keyword">if</span> (predecessor-&gt;right == <span class="hljs-literal">nullptr</span>) {
+                <span class="hljs-comment">// 建立线索（前驱节点的右指针指向当前节点）</span>
+                predecessor-&gt;right = curr;
+                curr = curr-&gt;left;
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-comment">// 已经访问过左子树，恢复树结构</span>
+                predecessor-&gt;right = <span class="hljs-literal">nullptr</span>;
+                result.push_back(curr-&gt;val);
+                curr = curr-&gt;right;
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<p>【Morris遍历分析】</p>
+<ul>
+<li><strong>算法原理</strong>：动态建立和拆除线索，无需额外空间</li>
+<li><strong>关键步骤</strong>：<ol>
+<li>找到当前节点的前驱</li>
+<li>建立临时线索</li>
+<li>遍历完左子树后拆除线索</li>
+</ol>
+</li>
+<li><strong>复杂度分析</strong>：<ul>
+<li>时间复杂度：虽然有嵌套循环，但总体仍为O(n)</li>
+<li>空间复杂度：O(1)，不使用额外空间</li>
+</ul>
+</li>
+<li><strong>应用场景</strong>：内存受限环境，如嵌入式系统</li>
+<li><strong>ACM提示</strong>：这是一种高级技巧，了解原理即可，实际比赛中根据题目选择合适的遍历方式</li>
+</ul>
+<h2 id="习题推荐">习题推荐</h2>
+<ol>
+<li>LeetCode 94: 二叉树的中序遍历</li>
+<li>LeetCode 102: 二叉树的层序遍历</li>
+<li>LeetCode 105: 从前序与中序遍历序列构造二叉树</li>
+<li>LeetCode 236: 二叉树的最近公共祖先</li>
+<li>LeetCode 662: 二叉树最大宽度</li>
+<li>POJ 1330: 树的最近公共祖先</li>
+<li>Codeforces 380C: Sereja and Brackets（使用二叉树实现的线段树）</li>
+<li>SPOJ QTREE: 树上路径查询系列问题</li>
+</ol>
+<h2 id="acm竞赛实用技巧">ACM竞赛实用技巧</h2>
+<ol>
+<li><p><strong>二叉树问题解题框架</strong>：</p>
+<ul>
+<li>确定遍历方式（前序、中序、后序、层序）</li>
+<li>明确是自顶向下还是自底向上解决问题</li>
+<li>选择合适的递归/迭代方式</li>
+</ul>
+</li>
+<li><p><strong>输入优化</strong>：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 读入二叉树优化</span>
+ios::sync_with_stdio(<span class="hljs-literal">false</span>);
+<span class="hljs-built_in">cin</span>.tie(<span class="hljs-literal">nullptr</span>);
+
+<span class="hljs-comment">// 构建二叉树的常用方法</span>
+<span class="hljs-function">TreeNode* <span class="hljs-title">buildTreeFromArray</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; arr, <span class="hljs-keyword">int</span> index = <span class="hljs-number">0</span>)</span> </span>{
+    <span class="hljs-keyword">if</span> (index &gt;= arr.size() || arr[index] == -<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">// -1表示空节点</span>
+
+    TreeNode* root = <span class="hljs-keyword">new</span> TreeNode(arr[index]);
+    root-&gt;left = buildTreeFromArray(arr, <span class="hljs-number">2</span>*index + <span class="hljs-number">1</span>);
+    root-&gt;right = buildTreeFromArray(arr, <span class="hljs-number">2</span>*index + <span class="hljs-number">2</span>);
+    <span class="hljs-keyword">return</span> root;
+}
+</code></pre>
+</li>
+<li><p><strong>内存管理</strong>：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 清理二叉树内存</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">freeTree</span><span class="hljs-params">(TreeNode* root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span>;
+    freeTree(root-&gt;left);
+    freeTree(root-&gt;right);
+    <span class="hljs-keyword">delete</span> root;
+}
+
+<span class="hljs-comment">// 比赛中更简单的方法：使用静态数组预分配节点</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
+TreeNode nodes[MAXN];
+<span class="hljs-keyword">int</span> nodeCount = <span class="hljs-number">0</span>;
+
+<span class="hljs-function">TreeNode* <span class="hljs-title">newNode</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
+    nodes[nodeCount].val = val;
+    nodes[nodeCount].left = nodes[nodeCount].right = <span class="hljs-literal">nullptr</span>;
+    <span class="hljs-keyword">return</span> &amp;nodes[nodeCount++];
+}
+</code></pre>
+</li>
+<li><p><strong>调试技巧</strong>：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 打印二叉树结构（调试用）</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printTree</span><span class="hljs-params">(TreeNode* root, <span class="hljs-built_in">string</span> prefix = <span class="hljs-string">""</span>, <span class="hljs-keyword">bool</span> isLeft = <span class="hljs-literal">true</span>)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span>;
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; prefix;
+    <span class="hljs-built_in">cout</span> &lt;&lt; (isLeft ? <span class="hljs-string">"├── "</span> : <span class="hljs-string">"└── "</span>);
+    <span class="hljs-built_in">cout</span> &lt;&lt; root-&gt;val &lt;&lt; endl;
+
+    printTree(root-&gt;left, prefix + (isLeft ? <span class="hljs-string">"│   "</span> : <span class="hljs-string">"    "</span>), <span class="hljs-literal">true</span>);
+    printTree(root-&gt;right, prefix + (isLeft ? <span class="hljs-string">"│   "</span> : <span class="hljs-string">"    "</span>), <span class="hljs-literal">false</span>);
+}
+</code></pre>
+</li>
+<li><p><strong>记忆化搜索</strong>：对于需要多次重复计算的树形结构问题，使用哈希表缓存中间结果</p>
+</li>
+</ol>
+<h2 id="复杂度分析">复杂度分析</h2>
+<ul>
+<li><p><strong>平衡二叉搜索树</strong>：</p>
+<ul>
+<li>查找、插入、删除操作的平均时间复杂度：O(log n)</li>
+<li>最坏情况（如退化为链表）时间复杂度：O(n)</li>
+<li>存储空间：O(n)</li>
+</ul>
+</li>
+<li><p><strong>树遍历算法</strong>：</p>
+<ul>
+<li>递归/迭代实现的时间复杂度：O(n)</li>
+<li>递归/栈实现的空间复杂度：O(h)，h为树高，最坏O(n)</li>
+<li>Morris遍历空间复杂度：O(1)</li>
+</ul>
+</li>
+<li><p><strong>性能优化策略</strong>：</p>
+<ol>
+<li>对于高度不平衡的树，考虑重新平衡或使用平衡树结构</li>
+<li>对于频繁查询但很少修改的树，考虑缓存结果</li>
+<li>递归层数太深时，转为迭代实现避免栈溢出</li>
+<li>对于大规模数据，使用节点池管理内存，减少动态分配开销</li>
+</ol>
+</li>
+</ul>
+<h2 id="acm实战注意事项">ACM实战注意事项</h2>
+<ol>
+<li><p>根据题目规模选择合适的算法实现：</p>
+<ul>
+<li>n ≤ 10^4：普通递归实现通常足够</li>
+<li>n &gt; 10^5：考虑迭代实现或Morris遍历等优化方案</li>
+</ul>
+</li>
+<li><p>在竞赛环境中，优先使用简单直观的方法，除非题目明确要求优化</p>
+</li>
+<li><p>处理边界情况：</p>
+<ul>
+<li>空树</li>
+<li>只有一个节点的树</li>
+<li>链状树（只有左子节点或只有右子节点）</li>
+<li>完全平衡的满二叉树</li>
+</ul>
+</li>
+<li><p>对于需要频繁重建树的问题，考虑使用静态数组或内存池管理节点，避免反复的动态内存分配和释放</p>
+</li>
+</ol>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="堆.html" class="navigation navigation-prev " aria-label="Previous page: 堆">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="红黑树.html" class="navigation navigation-next " aria-label="Next page: 红黑树">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"二叉树","level":"1.2.9","depth":2,"next":{"title":"红黑树","level":"1.2.10","depth":2,"path":"红黑树.md","ref":"红黑树.md","articles":[]},"previous":{"title":"堆","level":"1.2.8","depth":2,"path":"堆.md","ref":"堆.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"二叉树.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:40.626Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

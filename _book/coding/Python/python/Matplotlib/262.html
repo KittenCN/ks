@@ -1,0 +1,846 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Matplotlib 简单折线图 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="263.html" />
+    
+    
+    <link rel="prev" href="261.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Matplotlib
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="257.html">
+            
+                <a href="257.html">
+            
+                    
+                    Matplotlib 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="258.html">
+            
+                <a href="258.html">
+            
+                    
+                    Matplotlib 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="259.html">
+            
+                <a href="259.html">
+            
+                    
+                    Matplotlib 中的一般概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="260.html">
+            
+                <a href="260.html">
+            
+                    
+                    Jupyter 笔记本中的 Matplotlib
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="261.html">
+            
+                <a href="261.html">
+            
+                    
+                    Matplotlib PyPlot API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.6" data-path="262.html">
+            
+                <a href="262.html">
+            
+                    
+                    Matplotlib 简单折线图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="263.html">
+            
+                <a href="263.html">
+            
+                    
+                    Matplotlib pylab 模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="264.html">
+            
+                <a href="264.html">
+            
+                    
+                    面向对象接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="265.html">
+            
+                <a href="265.html">
+            
+                    
+                    Matplotlib 图形类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="266.html">
+            
+                <a href="266.html">
+            
+                    
+                    Matplotlib Axes类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="267.html">
+            
+                <a href="267.html">
+            
+                    
+                    Matplotlib 使用subplots()函数的多图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="268.html">
+            
+                <a href="268.html">
+            
+                    
+                    Matplotlib subplots()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="269.html">
+            
+                <a href="269.html">
+            
+                    
+                    Matplotlib subplot2grid()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="270.html">
+            
+                <a href="270.html">
+            
+                    
+                    Matplotlib 网格
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="271.html">
+            
+                <a href="271.html">
+            
+                    
+                    在 Matplotlib 中格式化轴域
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="272.html">
+            
+                <a href="272.html">
+            
+                    
+                    在 Matplotlib 中设置轴限制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="273.html">
+            
+                <a href="273.html">
+            
+                    
+                    在 Matplotlib 中设置刻度和刻度标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="274.html">
+            
+                <a href="274.html">
+            
+                    
+                    Matplotlib 双轴
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="275.html">
+            
+                <a href="275.html">
+            
+                    
+                    Matplotlib 绘图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="276.html">
+            
+                <a href="276.html">
+            
+                    
+                    Matplotlib 条形图bar()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="277.html">
+            
+                <a href="277.html">
+            
+                    
+                    Matplotlib 直方图——hist()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="278.html">
+            
+                <a href="278.html">
+            
+                    
+                    Matplotlib 饼图——pie()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="279.html">
+            
+                <a href="279.html">
+            
+                    
+                    Matplotlib 散点图——scatter()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="280.html">
+            
+                <a href="280.html">
+            
+                    
+                    Matplotlib 等高线图——contour()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="281.html">
+            
+                <a href="281.html">
+            
+                    
+                    Matplotlib 抖动图-quiver()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="282.html">
+            
+                <a href="282.html">
+            
+                    
+                    Matplotlib 盒子图-boxplot()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="283.html">
+            
+                <a href="283.html">
+            
+                    
+                    Matplotlib 提琴图——violinplot()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="284.html">
+            
+                <a href="284.html">
+            
+                    
+                    Matplotlib 3D
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="285.html">
+            
+                <a href="285.html">
+            
+                    
+                    Matplotlib 三维绘图——折线和散点图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="286.html">
+            
+                <a href="286.html">
+            
+                    
+                    Matplotlib 3D 等高线图——contour3d()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="287.html">
+            
+                <a href="287.html">
+            
+                    
+                    Matplotlib 三维线框图——plot_wireframe()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="288.html">
+            
+                <a href="288.html">
+            
+                    
+                    Matplotlib 三维曲面图——plot_surface()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="289.html">
+            
+                <a href="289.html">
+            
+                    
+                    杂项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="290.html">
+            
+                <a href="290.html">
+            
+                    
+                    在 Matplotlib 中使用文本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="291.html">
+            
+                <a href="291.html">
+            
+                    
+                    Matplotlib 中的数学表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="292.html">
+            
+                <a href="292.html">
+            
+                    
+                    在 Matplotlib 中使用图像
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Matplotlib 简单折线图</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="matplotlib-简单折线图">Matplotlib 简单折线图</h1>
+<p>在本教程中，我们将介绍 Matplotlib 中的<strong>简单折线图</strong>。</p>
+<p><strong>单线功能</strong>即<code>y=f(x)</code>的可视化是所有功能中最简单的。让我们看一下创建这种类型的简单情节。在本教程中，我们将介绍以下简单的折线图:</p>
+<ol>
+<li><p><code>y=f(x)</code>型直线</p>
+</li>
+<li><p>正弦函数的图形</p>
+</li>
+<li><p>用多条线创建单个图形(正弦和余弦函数)</p>
+</li>
+<li><p>曲线</p>
+</li>
+</ol>
+<p>现在第一步也是最重要的一步是<strong>设置用于绘图的笔记本</strong>和<strong>导入我们将使用的那些功能</strong>:</p>
+<h3 id="1正在导入-matplotlib">1.正在导入 Matplotlib</h3>
+<p>要导入 Matplotlib，您只需要编写以下命令:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+</code></pre>
+<p>为了方便起见，我们将导入一个别名为 <strong>plt</strong> 的 matplotlib。</p>
+<h3 id="2正在导入-numpy">2.正在导入 Numpy</h3>
+<p>我们将绘制数字；所以为了绘制数字<strong>，我们需要一个数组</strong>。在 Python 的 <strong>Numpy 模块</strong>中，有<strong>很多创建数组</strong>的功能。所以我们也会在代码中<strong>导入 Numpy</strong> 。为了方便起见，我们将使用别名 <strong>np</strong> 导入 Numpy。</p>
+<p>其命令如下:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+</code></pre>
+<h2 id="matplotlib-中yfx类型的图形">Matplotlib 中<code>y=f(x)</code>类型的图形</h2>
+<p>让我们看看最简单等式的代码片段:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+x = np.linspace(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">50</span>)
+print(x)
+y = <span class="hljs-number">2</span>*x + <span class="hljs-number">1</span>
+
+plt.plot(x, y)
+plt.show()
+</code></pre>
+<p>在上面的代码示例中，<code>plot(x, y)</code>函数主要用于绘制直线。这个代码片段的输出如下所示:</p>
+<p><img src="img/6628388c5a20911187126072a76c3363.png" alt="Matplotlin Straight Line Plot"></img></p>
+<h2 id="matplotlib-中正弦波的图形">Matplotlib 中正弦波的图形</h2>
+<p>现在我们将向您展示使用 matplotlib 可视化正弦波。其代码片段如下所示:</p>
+<h2 id="代码说明">代码说明</h2>
+<p>让我们看一下代码的简要解释:</p>
+<ol>
+<li><p>第一步是导入别名为 <strong>plt</strong> 的<code>matplotlib.pyplot</code>。</p>
+</li>
+<li><p>下一步是<strong>用 np</strong> 的别名<strong>导入 Numpy</strong> ，以便使用与其相关的数组和函数。</p>
+</li>
+<li><p>然后我们导入了<strong>数学模块</strong>，用于可视化中所需的<strong>数学计算</strong>。</p>
+</li>
+<li><p>现在使用<code>arange()</code>功能从 <strong>NumPy 库</strong>获得 <strong>0 和 2(饼图)</strong>之间的<strong>标准角度对象</strong>。</p>
+</li>
+<li><p>为了绘制两个数组的值，我们使用了<code>plot()</code>函数。</p>
+</li>
+<li><p>在后面的两行中，我们已经设置了图形的 <strong>x 和 y 标签。</strong></p>
+</li>
+<li><p>之后在下一行，我们已经借助<code>title()</code>功能为图形设置了<strong>标题。</strong></p>
+</li>
+<li><p>为了显示图形，我们使用了<code>show()</code>功能。</p>
+</li>
+</ol>
+<h2 id="用多条线创建单个图形">用多条线创建单个图形</h2>
+<p>如果你想创建一个包含多条线的单一图形，那么你只需要<strong>多次调用绘图函数</strong>。</p>
+<p>其代码如下:</p>
+<h2 id="用曲线创建图形">用曲线创建图形</h2>
+<p>在 Matplotlib 中使用<code>plot()</code>方法绘制任意一条线。没有必要总是一条直线，就像我们刚刚在上面的例子中看到的，我们如何绘制一个波。我们也可以画一条曲线。</p>
+<p>让我们举一个 Matplotlib 中的简单曲线的例子:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> matplotlib
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+x = np.linspace(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">50</span>)
+y = <span class="hljs-number">2</span>**x + <span class="hljs-number">1</span>
+
+plt.plot(x, y)
+plt.show()
+</code></pre>
+<p>其输出如下所示:</p>
+<p><img src="img/7cf437b9951cfcee4fc68cf298160a78.png" alt="Curved line in matplotlib"></img></p>
+<p>在本教程中，我们已经介绍了<strong>如何绘制直线</strong>、<strong>如何绘制曲线</strong>、<strong>单正弦波</strong>，我们还介绍了<strong>绘制多条线</strong>。</p>
+<p>这都是关于在 Matplotlib 中绘制简单函数。现在在我们的后续教程中，我们将使用 matplotlib 讲述更多神奇的事情。我们将深入探讨如何控制轴和线的外观的更多细节。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="261.html" class="navigation navigation-prev " aria-label="Previous page: Matplotlib PyPlot API">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="263.html" class="navigation navigation-next " aria-label="Next page: Matplotlib pylab 模块">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Matplotlib 简单折线图","level":"1.1.6","depth":2,"next":{"title":"Matplotlib pylab 模块","level":"1.1.7","depth":2,"path":"263.md","ref":"263.md","articles":[]},"previous":{"title":"Matplotlib PyPlot API","level":"1.1.5","depth":2,"path":"261.md","ref":"261.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"262.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:36.648Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

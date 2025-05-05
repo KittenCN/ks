@@ -1,0 +1,1123 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>练习 45：创建 ORM · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="part7.html" />
+    
+    
+    <link rel="prev" href="ex44.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    笨办法学 Python · 续 中文版
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="READ_ME.html">
+            
+                <a href="READ_ME.html">
+            
+                    
+                    笨办法学 Python · 续 中文版
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="intro.html">
+            
+                <a href="intro.html">
+            
+                    
+                    引言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="part1.html">
+            
+                <a href="part1.html">
+            
+                    
+                    第一部分：预备知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="ex0.html">
+            
+                <a href="ex0.html">
+            
+                    
+                    练习 0：起步
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="ex1.html">
+            
+                <a href="ex1.html">
+            
+                    
+                    练习 1：流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="ex2.html">
+            
+                <a href="ex2.html">
+            
+                    
+                    练习 2：创造力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="ex3.html">
+            
+                <a href="ex3.html">
+            
+                    
+                    练习 3：质量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="part2.html">
+            
+                <a href="part2.html">
+            
+                    
+                    第二部分：简单的黑魔法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="ex4.html">
+            
+                <a href="ex4.html">
+            
+                    
+                    练习 4：处理命令行参数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="ex5.html">
+            
+                <a href="ex5.html">
+            
+                    
+                    练习 5：cat
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ex6.html">
+            
+                <a href="ex6.html">
+            
+                    
+                    练习 6：find
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="ex7.html">
+            
+                <a href="ex7.html">
+            
+                    
+                    练习 7：grep
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ex8.html">
+            
+                <a href="ex8.html">
+            
+                    
+                    练习 8：cut
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="ex9.html">
+            
+                <a href="ex9.html">
+            
+                    
+                    练习 9：sed
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="ex10.html">
+            
+                <a href="ex10.html">
+            
+                    
+                    练习 10：sort
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="ex11.html">
+            
+                <a href="ex11.html">
+            
+                    
+                    练习 11：uniq
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="ex12.html">
+            
+                <a href="ex12.html">
+            
+                    
+                    练习 12：复习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="part3.html">
+            
+                <a href="part3.html">
+            
+                    
+                    第三部分：数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="ex13.html">
+            
+                <a href="ex13.html">
+            
+                    
+                    练习 13：单链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="ex14.html">
+            
+                <a href="ex14.html">
+            
+                    
+                    练习 14：双链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="ex15.html">
+            
+                <a href="ex15.html">
+            
+                    
+                    练习 15：栈和队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="ex16.html">
+            
+                <a href="ex16.html">
+            
+                    
+                    练习 16：冒泡、快速和归并排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="ex17.html">
+            
+                <a href="ex17.html">
+            
+                    
+                    练习 17：字典
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="ex18.html">
+            
+                <a href="ex18.html">
+            
+                    
+                    练习 18：性能测量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="ex19.html">
+            
+                <a href="ex19.html">
+            
+                    
+                    练习 19：改善性能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="ex20.html">
+            
+                <a href="ex20.html">
+            
+                    
+                    练习 20：二叉搜索树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="ex21.html">
+            
+                <a href="ex21.html">
+            
+                    
+                    练习 21：二分搜索
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="ex22.html">
+            
+                <a href="ex22.html">
+            
+                    
+                    练习 22：后缀数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="ex23.html">
+            
+                <a href="ex23.html">
+            
+                    
+                    练习 23：三叉搜索树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="ex24.html">
+            
+                <a href="ex24.html">
+            
+                    
+                    练习 24：URL 快速路由
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="part4.html">
+            
+                <a href="part4.html">
+            
+                    
+                    第四部分：进阶项目
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="ex25.html">
+            
+                <a href="ex25.html">
+            
+                    
+                    练习 25：xargs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="ex26.html">
+            
+                <a href="ex26.html">
+            
+                    
+                    练习 26：hexdump
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="ex27.html">
+            
+                <a href="ex27.html">
+            
+                    
+                    练习 27：tr
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="ex28.html">
+            
+                <a href="ex28.html">
+            
+                    
+                    练习 28：sh
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="ex29.html">
+            
+                <a href="ex29.html">
+            
+                    
+                    练习 29：diff和patch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="part5.html">
+            
+                <a href="part5.html">
+            
+                    
+                    第五部分：文本解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="ex30.html">
+            
+                <a href="ex30.html">
+            
+                    
+                    练习 30：有限状态机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="ex31.html">
+            
+                <a href="ex31.html">
+            
+                    
+                    练习 31：正则表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="ex32.html">
+            
+                <a href="ex32.html">
+            
+                    
+                    练习 32：扫描器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="ex33.html">
+            
+                <a href="ex33.html">
+            
+                    
+                    练习 33：解析器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="ex34.html">
+            
+                <a href="ex34.html">
+            
+                    
+                    练习 34：分析器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="ex35.html">
+            
+                <a href="ex35.html">
+            
+                    
+                    练习 35：解释器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="ex36.html">
+            
+                <a href="ex36.html">
+            
+                    
+                    练习 36：简单的计算器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="ex37.html">
+            
+                <a href="ex37.html">
+            
+                    
+                    练习 37：小型 BASIC
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.46" data-path="part6.html">
+            
+                <a href="part6.html">
+            
+                    
+                    第六部分：SQL 和对象关系映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.47" data-path="ex38.html">
+            
+                <a href="ex38.html">
+            
+                    
+                    练习 38：SQL 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.48" data-path="ex39.html">
+            
+                <a href="ex39.html">
+            
+                    
+                    练习 39：SQL 创建
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.49" data-path="ex40.html">
+            
+                <a href="ex40.html">
+            
+                    
+                    练习 40：SQL 读取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.50" data-path="ex41.html">
+            
+                <a href="ex41.html">
+            
+                    
+                    练习 41：SQL 更新
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.51" data-path="ex42.html">
+            
+                <a href="ex42.html">
+            
+                    
+                    练习 42：SQL 删除
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.52" data-path="ex43.html">
+            
+                <a href="ex43.html">
+            
+                    
+                    练习 43：SQL 管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.53" data-path="ex44.html">
+            
+                <a href="ex44.html">
+            
+                    
+                    练习 44：使用 Python 的数据库 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.54" data-path="ex45.html">
+            
+                <a href="ex45.html">
+            
+                    
+                    练习 45：创建 ORM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.55" data-path="part7.html">
+            
+                <a href="part7.html">
+            
+                    
+                    第七部分：大作业
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.56" data-path="ex46.html">
+            
+                <a href="ex46.html">
+            
+                    
+                    练习 46：blog
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.57" data-path="ex47.html">
+            
+                <a href="ex47.html">
+            
+                    
+                    练习 47：bc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.58" data-path="ex48.html">
+            
+                <a href="ex48.html">
+            
+                    
+                    练习 48：ed
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.59" data-path="ex49.html">
+            
+                <a href="ex49.html">
+            
+                    
+                    练习 49：sed
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.60" data-path="ex50.html">
+            
+                <a href="ex50.html">
+            
+                    
+                    练习 50：vi
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.61" data-path="ex51.html">
+            
+                <a href="ex51.html">
+            
+                    
+                    练习 51：lessweb
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.62" data-path="ex52.html">
+            
+                <a href="ex52.html">
+            
+                    
+                    练习 52：moreweb
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >练习 45：创建 ORM</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="练习-45：创建-orm">练习 45：创建 ORM</h1>
+<blockquote>
+<p>原文：<a href="https://learncodethehardway.org/more-python-book/ex45.html" target="_blank">Exercise 45: Creating an ORM</a></p>
+<p>译者：<a href="https://github.com/wizardforcel" target="_blank">飞龙</a></p>
+<p>协议：<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></p>
+<p>自豪地采用<a href="https://translate.google.cn/" target="_blank">谷歌翻译</a></p>
+</blockquote>
+<p>这本书的 SQL 部分的最后一个练习是一个很大的跳跃。你使用一个数据库知道了 SQL 语言的基础知识。你也应该精通 Python 的 OOP。现在是时候组合这两个，并创建一个对象关系管理器（ORM）。ORM 的工作是，使用简单的 Python 类，并将它们转换为数据库表中存储的行。如果你曾经使用过 Django，那么你已经使用他们的 ORM 来存储数据。在本练习中，你将尝试逆向分析如何实现它。</p>
+<h2 id="挑战练习">挑战练习</h2>
+<p>在现实世界中，如果一个为我工作的程序员打算创建自己的 ORM，我会说：“没门，使用现有的。”工作环境不同于教育环境，因为有人付钱让你完成一些事情。使用你的工作时间，来创造一个不能使你的雇主受益的事情，这是不正当的。但是，你自己的个人时间全部是你的，作为初学者，你应该尝试重新创建尽可能多的经典软件。</p>
+<p>创建一个 ORM 将会让你了解许多问题，关于面向对象概念和 SQL 之间的不一致。有许多 SQL 可以建模的东西，而类经常卡在这里。还有一个问题，SQL 中的一切都是表。尝试创建自己的 ORM 将会让你深入了解 SQL 和 OOP，我建议花费大量的时间，尽你所能制作一个最好的 ORM。</p>
+<p>你在 ORM 中应实现的一些主要功能有：</p>
+<ul>
+<li>从外部传递字符串到 ORM 应该是安全的。如果你使用 F 字符串来制作你的 SQL，那么你就错了。原因是，如果你执行<code>f"SELECT * FROM {table_name}</code>，那么有人可以从外部将<code>table_name</code>设置为 SQL，例如<code>person; DROP TABLE person</code>。你的数据库很可能以这种方式运行，销毁所有内容或更糟。有些数据库甚至允许你在 SQL 中运行系统命令，这被称为“SQL 注入”，你不应该在 ORM 中引入它。</li>
+<li>所有的 CRUD 操作，但在 Python 中实现。我建议你跳过<code>CREATE TABLE</code>部分，直到你让其他的一切正常工作。简单的<code>INSERT</code>，<code>SELECT</code>，<code>UPDATE</code>和<code>DELETE</code>是易于制作的，但是从类定义创建数据库纲要涉及到一些主流的 Python 黑魔法，使其真正有效。使用手工制作的<code>.sql</code>文件创建你的数据库，然后一旦让其他东西正常工作，你可以尝试纲要系统来替换<code>.sql</code>文件。</li>
+<li>将 Python 类型匹配到 SQL 类型以及新类型，来处理 SQL 类型。你可能会发现，你必须做一些杂技，将 Python 数据类型放到 SQL 表中。也许这太痛苦了，所以你最终会自己制作数据类型。这就是 Django 做的事情。</li>
+<li>事务是一个高级话题，但如果你可以实现它就试一试。</li>
+</ul>
+<p>我也会说，在这个练习中，你可以从任意数量的项目借鉴功能。在设计时，请随意查看 Django 的 ORM。最后，我强烈建议你首先仅仅实现一个 ORM，它可以处理你在本书的这个部分创建的小型数据库。一旦你得到一个可以处理这个数据库的东西，就可以将其推广到任何数据库。</p>
+<h2 id="深入学习">深入学习</h2>
+<p>本书开头提到了，Joe Celko 的<a href="http://amzn.to/1QKi5iG" target="_blank">《"Smarties" SQL》</a>将会让你了解，你需要了解的 SQL 的每一件事情。Joe 的书很好，会让你远远超出这个小型速成课。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ex44.html" class="navigation navigation-prev " aria-label="Previous page: 练习 44：使用 Python 的数据库 API">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="part7.html" class="navigation navigation-next " aria-label="Next page: 第七部分：大作业">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"练习 45：创建 ORM","level":"1.1.54","depth":2,"next":{"title":"第七部分：大作业","level":"1.1.55","depth":2,"path":"part7.md","ref":"part7.md","articles":[]},"previous":{"title":"练习 44：使用 Python 的数据库 API","level":"1.1.53","depth":2,"path":"ex44.md","ref":"ex44.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ex45.md","mtime":"2017-12-26T13:55:22.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:23.504Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

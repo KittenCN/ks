@@ -1,0 +1,2498 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>7.1. 深度卷积神经网络（AlexNet） · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="vgg.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href="../.." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../d2l.md">
+            
+                <span>
+            
+                    
+                    动手学深度学习
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../chapter_installation/">
+            
+                <a href="../chapter_installation/">
+            
+                    
+                    安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../chapter_notation/">
+            
+                <a href="../chapter_notation/">
+            
+                    
+                    符号
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    1. 引言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../chapter_preliminaries/">
+            
+                <a href="../chapter_preliminaries/">
+            
+                    
+                    2. 预备知识
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.5.1" data-path="../chapter_preliminaries/ndarray.html">
+            
+                <a href="../chapter_preliminaries/ndarray.html">
+            
+                    
+                    2.1. 数据操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.2" data-path="../chapter_preliminaries/pandas.html">
+            
+                <a href="../chapter_preliminaries/pandas.html">
+            
+                    
+                    2.2. 数据预处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.3" data-path="../chapter_preliminaries/linear-algebra.html">
+            
+                <a href="../chapter_preliminaries/linear-algebra.html">
+            
+                    
+                    2.3. 线性代数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.4" data-path="../chapter_preliminaries/calculus.html">
+            
+                <a href="../chapter_preliminaries/calculus.html">
+            
+                    
+                    2.4. 微积分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.5" data-path="../chapter_preliminaries/autograd.html">
+            
+                <a href="../chapter_preliminaries/autograd.html">
+            
+                    
+                    2.5. 自动微分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.6" data-path="../chapter_preliminaries/probability.html">
+            
+                <a href="../chapter_preliminaries/probability.html">
+            
+                    
+                    2.6. 概率
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.7" data-path="../chapter_preliminaries/lookup-api.html">
+            
+                <a href="../chapter_preliminaries/lookup-api.html">
+            
+                    
+                    2.7. 查阅文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../chapter_linear-networks/">
+            
+                <a href="../chapter_linear-networks/">
+            
+                    
+                    3. 线性神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.6.1" data-path="../chapter_linear-networks/linear-regression.html">
+            
+                <a href="../chapter_linear-networks/linear-regression.html">
+            
+                    
+                    3.1. 线性回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.2" data-path="../chapter_linear-networks/linear-regression-scratch.html">
+            
+                <a href="../chapter_linear-networks/linear-regression-scratch.html">
+            
+                    
+                    3.2. 线性回归的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.3" data-path="../chapter_linear-networks/linear-regression-concise.html">
+            
+                <a href="../chapter_linear-networks/linear-regression-concise.html">
+            
+                    
+                    3.3. 线性回归的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.4" data-path="../chapter_linear-networks/softmax-regression.html">
+            
+                <a href="../chapter_linear-networks/softmax-regression.html">
+            
+                    
+                    3.4. softmax回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.5" data-path="../chapter_linear-networks/image-classification-dataset.html">
+            
+                <a href="../chapter_linear-networks/image-classification-dataset.html">
+            
+                    
+                    3.5. 图像分类数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.6" data-path="../chapter_linear-networks/softmax-regression-scratch.html">
+            
+                <a href="../chapter_linear-networks/softmax-regression-scratch.html">
+            
+                    
+                    3.6. softmax回归的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.7" data-path="../chapter_linear-networks/softmax-regression-concise.html">
+            
+                <a href="../chapter_linear-networks/softmax-regression-concise.html">
+            
+                    
+                    3.7. softmax回归的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../chapter_multilayer-perceptrons/">
+            
+                <a href="../chapter_multilayer-perceptrons/">
+            
+                    
+                    4. 多层感知机
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.7.1" data-path="../chapter_multilayer-perceptrons/mlp.html">
+            
+                <a href="../chapter_multilayer-perceptrons/mlp.html">
+            
+                    
+                    4.1. 多层感知机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.2" data-path="../chapter_multilayer-perceptrons/mlp-scratch.html">
+            
+                <a href="../chapter_multilayer-perceptrons/mlp-scratch.html">
+            
+                    
+                    4.2. 多层感知机的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.3" data-path="../chapter_multilayer-perceptrons/mlp-concise.html">
+            
+                <a href="../chapter_multilayer-perceptrons/mlp-concise.html">
+            
+                    
+                    4.3. 多层感知机的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.4" data-path="../chapter_multilayer-perceptrons/underfit-overfit.html">
+            
+                <a href="../chapter_multilayer-perceptrons/underfit-overfit.html">
+            
+                    
+                    4.4. 模型选择、欠拟合和过拟合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.5" data-path="../chapter_multilayer-perceptrons/weight-decay.html">
+            
+                <a href="../chapter_multilayer-perceptrons/weight-decay.html">
+            
+                    
+                    4.5. 权重衰减
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.6" data-path="../chapter_multilayer-perceptrons/dropout.html">
+            
+                <a href="../chapter_multilayer-perceptrons/dropout.html">
+            
+                    
+                    4.6. 暂退法（Dropout）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.7" data-path="../chapter_multilayer-perceptrons/backprop.html">
+            
+                <a href="../chapter_multilayer-perceptrons/backprop.html">
+            
+                    
+                    4.7. 前向传播、反向传播和计算图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.8" data-path="../chapter_multilayer-perceptrons/numerical-stability-and-init.html">
+            
+                <a href="../chapter_multilayer-perceptrons/numerical-stability-and-init.html">
+            
+                    
+                    4.8. 数值稳定性和模型初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.9" data-path="../chapter_multilayer-perceptrons/environment.html">
+            
+                <a href="../chapter_multilayer-perceptrons/environment.html">
+            
+                    
+                    4.9. 环境和分布偏移
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.10" data-path="../chapter_multilayer-perceptrons/kaggle-house-price.html">
+            
+                <a href="../chapter_multilayer-perceptrons/kaggle-house-price.html">
+            
+                    
+                    4.10. 实战Kaggle比赛：预测房价
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../chapter_deep-learning-computation/">
+            
+                <a href="../chapter_deep-learning-computation/">
+            
+                    
+                    5. 深度学习计算
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.8.1" data-path="../chapter_deep-learning-computation/model-construction.html">
+            
+                <a href="../chapter_deep-learning-computation/model-construction.html">
+            
+                    
+                    5.1. 层和块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.2" data-path="../chapter_deep-learning-computation/parameters.html">
+            
+                <a href="../chapter_deep-learning-computation/parameters.html">
+            
+                    
+                    5.2. 参数管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.3" data-path="../chapter_deep-learning-computation/deferred-init.html">
+            
+                <a href="../chapter_deep-learning-computation/deferred-init.html">
+            
+                    
+                    5.3. 延后初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.4" data-path="../chapter_deep-learning-computation/custom-layer.html">
+            
+                <a href="../chapter_deep-learning-computation/custom-layer.html">
+            
+                    
+                    5.4. 自定义层
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.5" data-path="../chapter_deep-learning-computation/read-write.html">
+            
+                <a href="../chapter_deep-learning-computation/read-write.html">
+            
+                    
+                    5.5. 读写文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.6" data-path="../chapter_deep-learning-computation/use-gpu.html">
+            
+                <a href="../chapter_deep-learning-computation/use-gpu.html">
+            
+                    
+                    5.6. GPU计算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../chapter_convolutional-neural-networks/">
+            
+                <a href="../chapter_convolutional-neural-networks/">
+            
+                    
+                    6. 卷积神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.9.1" data-path="../chapter_convolutional-neural-networks/why-conv.html">
+            
+                <a href="../chapter_convolutional-neural-networks/why-conv.html">
+            
+                    
+                    6.1. 从全连接层到卷积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.2" data-path="../chapter_convolutional-neural-networks/conv-layer.html">
+            
+                <a href="../chapter_convolutional-neural-networks/conv-layer.html">
+            
+                    
+                    6.2. 图像卷积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.3" data-path="../chapter_convolutional-neural-networks/padding-and-strides.html">
+            
+                <a href="../chapter_convolutional-neural-networks/padding-and-strides.html">
+            
+                    
+                    6.3. 填充和步幅
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.4" data-path="../chapter_convolutional-neural-networks/channels.html">
+            
+                <a href="../chapter_convolutional-neural-networks/channels.html">
+            
+                    
+                    6.4. 多输入多输出通道
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.5" data-path="../chapter_convolutional-neural-networks/pooling.html">
+            
+                <a href="../chapter_convolutional-neural-networks/pooling.html">
+            
+                    
+                    6.5. 汇聚层
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.6" data-path="../chapter_convolutional-neural-networks/lenet.html">
+            
+                <a href="../chapter_convolutional-neural-networks/lenet.html">
+            
+                    
+                    6.6. 卷积神经网络（LeNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    7. 现代卷积神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.10.1" data-path="alexnet.html">
+            
+                <a href="alexnet.html">
+            
+                    
+                    7.1. 深度卷积神经网络（AlexNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.2" data-path="vgg.html">
+            
+                <a href="vgg.html">
+            
+                    
+                    7.2. 使用块的网络（VGG）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.3" data-path="nin.html">
+            
+                <a href="nin.html">
+            
+                    
+                    7.3. 网络中的网络（NiN）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.4" data-path="googlenet.html">
+            
+                <a href="googlenet.html">
+            
+                    
+                    7.4. 含并行连结的网络（GoogLeNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.5" data-path="batch-norm.html">
+            
+                <a href="batch-norm.html">
+            
+                    
+                    7.5. 批量规范化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.6" data-path="resnet.html">
+            
+                <a href="resnet.html">
+            
+                    
+                    7.6. 残差网络（ResNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.7" data-path="densenet.html">
+            
+                <a href="densenet.html">
+            
+                    
+                    7.7. 稠密连接网络（DenseNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../chapter_recurrent-neural-networks/">
+            
+                <a href="../chapter_recurrent-neural-networks/">
+            
+                    
+                    8. 循环神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.11.1" data-path="../chapter_recurrent-neural-networks/sequence.html">
+            
+                <a href="../chapter_recurrent-neural-networks/sequence.html">
+            
+                    
+                    8.1. 序列模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.2" data-path="../chapter_recurrent-neural-networks/text-preprocessing.html">
+            
+                <a href="../chapter_recurrent-neural-networks/text-preprocessing.html">
+            
+                    
+                    8.2. 文本预处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.3" data-path="../chapter_recurrent-neural-networks/language-models-and-dataset.html">
+            
+                <a href="../chapter_recurrent-neural-networks/language-models-and-dataset.html">
+            
+                    
+                    8.3. 语言模型和数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.4" data-path="../chapter_recurrent-neural-networks/rnn.html">
+            
+                <a href="../chapter_recurrent-neural-networks/rnn.html">
+            
+                    
+                    8.4. 循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.5" data-path="../chapter_recurrent-neural-networks/rnn-scratch.html">
+            
+                <a href="../chapter_recurrent-neural-networks/rnn-scratch.html">
+            
+                    
+                    8.5. 循环神经网络的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.6" data-path="../chapter_recurrent-neural-networks/rnn-concise.html">
+            
+                <a href="../chapter_recurrent-neural-networks/rnn-concise.html">
+            
+                    
+                    8.6. 循环神经网络的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.7" data-path="../chapter_recurrent-neural-networks/bptt.html">
+            
+                <a href="../chapter_recurrent-neural-networks/bptt.html">
+            
+                    
+                    8.7. 通过时间反向传播
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../chapter_recurrent-modern/">
+            
+                <a href="../chapter_recurrent-modern/">
+            
+                    
+                    9. 现代循环神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.12.1" data-path="../chapter_recurrent-modern/gru.html">
+            
+                <a href="../chapter_recurrent-modern/gru.html">
+            
+                    
+                    9.1. 门控循环单元（GRU）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.2" data-path="../chapter_recurrent-modern/lstm.html">
+            
+                <a href="../chapter_recurrent-modern/lstm.html">
+            
+                    
+                    9.2. 长短期记忆（LSTM）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.3" data-path="../chapter_recurrent-modern/deep-rnn.html">
+            
+                <a href="../chapter_recurrent-modern/deep-rnn.html">
+            
+                    
+                    9.3. 深度循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.4" data-path="../chapter_recurrent-modern/bi-rnn.html">
+            
+                <a href="../chapter_recurrent-modern/bi-rnn.html">
+            
+                    
+                    9.4. 双向循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.5" data-path="../chapter_recurrent-modern/machine-translation-and-dataset.html">
+            
+                <a href="../chapter_recurrent-modern/machine-translation-and-dataset.html">
+            
+                    
+                    9.5. 机器翻译及数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.6" data-path="../chapter_recurrent-modern/encoder-decoder.html">
+            
+                <a href="../chapter_recurrent-modern/encoder-decoder.html">
+            
+                    
+                    9.6. 编码器—解码器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.7" data-path="../chapter_recurrent-modern/seq2seq.html">
+            
+                <a href="../chapter_recurrent-modern/seq2seq.html">
+            
+                    
+                    9.7. 序列到序列学习（seq2seq）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.8" data-path="../chapter_recurrent-modern/beam-search.html">
+            
+                <a href="../chapter_recurrent-modern/beam-search.html">
+            
+                    
+                    9.8. 束搜索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="../chapter_attention-mechanisms/">
+            
+                <a href="../chapter_attention-mechanisms/">
+            
+                    
+                    10. 注意力机制
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.13.1" data-path="../chapter_attention-mechanisms/attention-cues.html">
+            
+                <a href="../chapter_attention-mechanisms/attention-cues.html">
+            
+                    
+                    10.1. 注意力提示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.2" data-path="../chapter_attention-mechanisms/nadaraya-waston.html">
+            
+                <a href="../chapter_attention-mechanisms/nadaraya-waston.html">
+            
+                    
+                    10.2. 注意力汇聚：Nadaraya-Watson 核回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.3" data-path="../chapter_attention-mechanisms/attention-scoring-functions.html">
+            
+                <a href="../chapter_attention-mechanisms/attention-scoring-functions.html">
+            
+                    
+                    10.3. 注意力评分函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.4" data-path="../chapter_attention-mechanisms/bahdanau-attention.html">
+            
+                <a href="../chapter_attention-mechanisms/bahdanau-attention.html">
+            
+                    
+                    10.4. Bahdanau 注意力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.5" data-path="../chapter_attention-mechanisms/multihead-attention.html">
+            
+                <a href="../chapter_attention-mechanisms/multihead-attention.html">
+            
+                    
+                    10.5. 多头注意力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.6" data-path="../chapter_attention-mechanisms/self-attention-and-positional-encoding.html">
+            
+                <a href="../chapter_attention-mechanisms/self-attention-and-positional-encoding.html">
+            
+                    
+                    10.6. 自注意力和位置编码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.7" data-path="../chapter_attention-mechanisms/transformer.html">
+            
+                <a href="../chapter_attention-mechanisms/transformer.html">
+            
+                    
+                    10.7. Transformer
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="../chapter_optimization/">
+            
+                <a href="../chapter_optimization/">
+            
+                    
+                    11. 优化算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.14.1" data-path="../chapter_optimization/optimization-intro.html">
+            
+                <a href="../chapter_optimization/optimization-intro.html">
+            
+                    
+                    11.1. 优化与深度学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.2" data-path="../chapter_optimization/convexity.html">
+            
+                <a href="../chapter_optimization/convexity.html">
+            
+                    
+                    11.2. 凸性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.3" data-path="../chapter_optimization/gd.html">
+            
+                <a href="../chapter_optimization/gd.html">
+            
+                    
+                    11.3. 梯度下降
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.4" data-path="../chapter_optimization/sgd.html">
+            
+                <a href="../chapter_optimization/sgd.html">
+            
+                    
+                    11.4. 随机梯度下降
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.5" data-path="../chapter_optimization/minibatch-sgd.html">
+            
+                <a href="../chapter_optimization/minibatch-sgd.html">
+            
+                    
+                    11.5. 小批量随机梯度下降
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.6" data-path="../chapter_optimization/momentum.html">
+            
+                <a href="../chapter_optimization/momentum.html">
+            
+                    
+                    11.6. 动量法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.7" data-path="../chapter_optimization/adagrad.html">
+            
+                <a href="../chapter_optimization/adagrad.html">
+            
+                    
+                    11.7. AdaGrad算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.8" data-path="../chapter_optimization/rmsprop.html">
+            
+                <a href="../chapter_optimization/rmsprop.html">
+            
+                    
+                    11.8. RMSProp算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.9" data-path="../chapter_optimization/adadelta.html">
+            
+                <a href="../chapter_optimization/adadelta.html">
+            
+                    
+                    11.9. Adadelta
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.10" data-path="../chapter_optimization/adam.html">
+            
+                <a href="../chapter_optimization/adam.html">
+            
+                    
+                    11.10. Adam算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.11" data-path="../chapter_optimization/lr-scheduler.html">
+            
+                <a href="../chapter_optimization/lr-scheduler.html">
+            
+                    
+                    11.11. 学习率调度器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="../chapter_computational-performance/">
+            
+                <a href="../chapter_computational-performance/">
+            
+                    
+                    12. 计算性能
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.15.1" data-path="../chapter_computational-performance/hybridize.html">
+            
+                <a href="../chapter_computational-performance/hybridize.html">
+            
+                    
+                    12.1. 编译器和解释器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.2" data-path="../chapter_computational-performance/async-computation.html">
+            
+                <a href="../chapter_computational-performance/async-computation.html">
+            
+                    
+                    12.2. 异步计算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.3" data-path="../chapter_computational-performance/auto-parallelism.html">
+            
+                <a href="../chapter_computational-performance/auto-parallelism.html">
+            
+                    
+                    12.3. 自动并行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.4" data-path="../chapter_computational-performance/hardware.html">
+            
+                <a href="../chapter_computational-performance/hardware.html">
+            
+                    
+                    12.4. 硬件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.5" data-path="../chapter_computational-performance/multiple-gpus.html">
+            
+                <a href="../chapter_computational-performance/multiple-gpus.html">
+            
+                    
+                    12.5. 多GPU训练
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.6" data-path="../chapter_computational-performance/multiple-gpus-concise.html">
+            
+                <a href="../chapter_computational-performance/multiple-gpus-concise.html">
+            
+                    
+                    12.6. 多GPU的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.7" data-path="../chapter_computational-performance/parameterserver.html">
+            
+                <a href="../chapter_computational-performance/parameterserver.html">
+            
+                    
+                    12.7. 参数服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="../chapter_computer-vision/">
+            
+                <a href="../chapter_computer-vision/">
+            
+                    
+                    13. 计算机视觉
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.16.1" data-path="../chapter_computer-vision/image-augmentation.html">
+            
+                <a href="../chapter_computer-vision/image-augmentation.html">
+            
+                    
+                    13.1. 图像增广
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.2" data-path="../chapter_computer-vision/fine-tuning.html">
+            
+                <a href="../chapter_computer-vision/fine-tuning.html">
+            
+                    
+                    13.2. 微调
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.3" data-path="../chapter_computer-vision/bounding-box.html">
+            
+                <a href="../chapter_computer-vision/bounding-box.html">
+            
+                    
+                    13.3. 目标检测和边界框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.4" data-path="../chapter_computer-vision/anchor.html">
+            
+                <a href="../chapter_computer-vision/anchor.html">
+            
+                    
+                    13.4. 锚框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.5" data-path="../chapter_computer-vision/multiscale-object-detection.html">
+            
+                <a href="../chapter_computer-vision/multiscale-object-detection.html">
+            
+                    
+                    13.5. 多尺度目标检测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.6" data-path="../chapter_computer-vision/object-detection-dataset.html">
+            
+                <a href="../chapter_computer-vision/object-detection-dataset.html">
+            
+                    
+                    13.6. 目标检测数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.7" data-path="../chapter_computer-vision/ssd.html">
+            
+                <a href="../chapter_computer-vision/ssd.html">
+            
+                    
+                    13.7. 单发多框检测（SSD）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.8" data-path="../chapter_computer-vision/rcnn.html">
+            
+                <a href="../chapter_computer-vision/rcnn.html">
+            
+                    
+                    13.8. 区域卷积神经网络（R-CNN）系列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.9" data-path="../chapter_computer-vision/semantic-segmentation-and-dataset.html">
+            
+                <a href="../chapter_computer-vision/semantic-segmentation-and-dataset.html">
+            
+                    
+                    13.9. 语义分割和数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.10" data-path="../chapter_computer-vision/transposed-conv.html">
+            
+                <a href="../chapter_computer-vision/transposed-conv.html">
+            
+                    
+                    13.10. 转置卷积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.11" data-path="../chapter_computer-vision/fcn.html">
+            
+                <a href="../chapter_computer-vision/fcn.html">
+            
+                    
+                    13.11. 全卷积网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.12" data-path="../chapter_computer-vision/neural-style.html">
+            
+                <a href="../chapter_computer-vision/neural-style.html">
+            
+                    
+                    13.12. 风格迁移
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.13" data-path="../chapter_computer-vision/kaggle-cifar10.html">
+            
+                <a href="../chapter_computer-vision/kaggle-cifar10.html">
+            
+                    
+                    13.13. 实战 Kaggle 比赛：图像分类 (CIFAR-10.md)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.14" data-path="../chapter_computer-vision/kaggle-dog.html">
+            
+                <a href="../chapter_computer-vision/kaggle-dog.html">
+            
+                    
+                    13.14. 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="../chapter_natural-language-processing-pretraining/">
+            
+                <a href="../chapter_natural-language-processing-pretraining/">
+            
+                    
+                    14. 自然语言处理：预训练
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.17.1" data-path="../chapter_natural-language-processing-pretraining/word2vec.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/word2vec.html">
+            
+                    
+                    14.1. 词嵌入（word2vec）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.2" data-path="../chapter_natural-language-processing-pretraining/approx-training.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/approx-training.html">
+            
+                    
+                    14.2. 近似训练
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.3" data-path="../chapter_natural-language-processing-pretraining/word-embedding-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/word-embedding-dataset.html">
+            
+                    
+                    14.3. 用于预训练词嵌入的数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.4" data-path="../chapter_natural-language-processing-pretraining/word2vec-pretraining.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/word2vec-pretraining.html">
+            
+                    
+                    14.4. 预训练word2vec
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.5" data-path="../chapter_natural-language-processing-pretraining/glove.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/glove.html">
+            
+                    
+                    14.5. 全局向量的词嵌入（GloVe）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.6" data-path="../chapter_natural-language-processing-pretraining/subword-embedding.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/subword-embedding.html">
+            
+                    
+                    14.6. 子词嵌入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.7" data-path="../chapter_natural-language-processing-pretraining/similarity-analogy.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/similarity-analogy.html">
+            
+                    
+                    14.7. 词的相似性和类比任务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.8" data-path="../chapter_natural-language-processing-pretraining/bert.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/bert.html">
+            
+                    
+                    14.8. 来自Transformers的双向编码器表示（BERT）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.9" data-path="../chapter_natural-language-processing-pretraining/bert-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/bert-dataset.html">
+            
+                    
+                    14.9. 用于预训练BERT的数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.10" data-path="../chapter_natural-language-processing-pretraining/bert-pretraining.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/bert-pretraining.html">
+            
+                    
+                    14.10. 预训练BERT
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="../chapter_natural-language-processing-applications/">
+            
+                <a href="../chapter_natural-language-processing-applications/">
+            
+                    
+                    15. 自然语言处理：应用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.18.1" data-path="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset.html">
+            
+                    
+                    15.1. 情感分析及数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.2" data-path="../chapter_natural-language-processing-applications/sentiment-analysis-rnn.html">
+            
+                <a href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn.html">
+            
+                    
+                    15.2. 情感分析：使用循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.3" data-path="../chapter_natural-language-processing-applications/sentiment-analysis-cnn.html">
+            
+                <a href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn.html">
+            
+                    
+                    15.3. 情感分析：使用卷积神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.4" data-path="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset.html">
+            
+                    
+                    15.4. 自然语言推断与数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.5" data-path="../chapter_natural-language-processing-applications/natural-language-inference-attention.html">
+            
+                <a href="../chapter_natural-language-processing-applications/natural-language-inference-attention.html">
+            
+                    
+                    15.5. 自然语言推断：使用注意力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.6" data-path="../chapter_natural-language-processing-applications/finetuning-bert.html">
+            
+                <a href="../chapter_natural-language-processing-applications/finetuning-bert.html">
+            
+                    
+                    15.6. 针对序列级和词元级应用微调BERT
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.7" data-path="../chapter_natural-language-processing-applications/natural-language-inference-bert.html">
+            
+                <a href="../chapter_natural-language-processing-applications/natural-language-inference-bert.html">
+            
+                    
+                    15.7. 自然语言推断：微调BERT
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="../chapter_appendix-tools-for-deep-learning/">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/">
+            
+                    
+                    16. 附录：深度学习工具
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.19.1" data-path="../chapter_appendix-tools-for-deep-learning/jupyter.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/jupyter.html">
+            
+                    
+                    16.1. 使用Jupyter Notebook
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.2" data-path="../chapter_appendix-tools-for-deep-learning/sagemaker.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/sagemaker.html">
+            
+                    
+                    16.2. 使用Amazon SageMaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.3" data-path="../chapter_appendix-tools-for-deep-learning/aws.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/aws.html">
+            
+                    
+                    16.3. 使用Amazon EC2实例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.4" data-path="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html">
+            
+                    
+                    16.4. 选择服务器和GPU
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.5" data-path="../chapter_appendix-tools-for-deep-learning/contributing.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/contributing.html">
+            
+                    
+                    16.5. 为本书做贡献
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.6" data-path="../chapter_appendix-tools-for-deep-learning/d2l.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/d2l.html">
+            
+                    
+                    16.6. d2l API 文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.20" data-path="../chapter_references/zreferences.html">
+            
+                <a href="../chapter_references/zreferences.html">
+            
+                    
+                    参考文献
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >7.1. 深度卷积神经网络（AlexNet）</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="深度卷积神经网络（alexnet）">深度卷积神经网络（AlexNet）</h1>
+<p>:label:<code>sec_alexnet</code></p>
+<p>在LeNet提出后，卷积神经网络在计算机视觉和机器学习领域中很有名气。但卷积神经网络并没有主导这些领域。这是因为虽然LeNet在小数据集上取得了很好的效果，但是在更大、更真实的数据集上训练卷积神经网络的性能和可行性还有待研究。事实上，在上世纪90年代初到2012年之间的大部分时间里，神经网络往往被其他机器学习方法超越，如支持向量机（support vector machines）。</p>
+<p>在计算机视觉中，直接将神经网络与其他机器学习方法进行比较也许不公平。这是因为，卷积神经网络的输入是由原始像素值或是经过简单预处理（例如居中、缩放）的像素值组成的。但在使用传统机器学习方法时，从业者永远不会将原始像素作为输入。在传统机器学习方法中，计算机视觉流水线是由经过人的手工精心设计的特征流水线组成的。对于这些传统方法，大部分的进展都来自于对特征有了更聪明的想法，并且学习到的算法往往归于事后的解释。</p>
+<p>虽然上世纪90年代就有了一些神经网络加速卡，但仅靠它们还不足以开发出有大量参数的深层多通道多层卷积神经网络。此外，当时的数据集仍然相对较小。除了这些障碍，训练神经网络的一些关键技巧仍然缺失，包括启发式参数初始化、随机梯度下降的变体、非挤压激活函数和有效的正则化技术。</p>
+<p>因此，与训练<em>端到端</em>（从像素到分类结果）系统不同，经典机器学习的流水线看起来更像下面这样：</p>
+<ol>
+<li>获取一个有趣的数据集。在早期，收集这些数据集需要昂贵的传感器（在当时最先进的图像也就100万像素）。</li>
+<li>根据光学、几何学、其他知识以及偶然的发现，手工对特征数据集进行预处理。</li>
+<li>通过标准的特征提取算法，如SIFT（尺度不变特征变换） :cite:<code>Lowe.2004</code>和SURF（加速鲁棒特征） :cite:<code>Bay.Tuytelaars.Van-Gool.2006</code>或其他手动调整的流水线来输入数据。</li>
+<li>将提取的特征送入最喜欢的分类器中（例如线性模型或其它核方法），以训练分类器。</li>
+</ol>
+<p>当人们和机器学习研究人员交谈时，会发现机器学习研究人员相信机器学习既重要又美丽：优雅的理论去证明各种模型的性质。机器学习是一个正在蓬勃发展、严谨且非常有用的领域。然而，当人们和计算机视觉研究人员交谈，会听到一个完全不同的故事。计算机视觉研究人员会告诉一个诡异事实————推动领域进步的是数据特征，而不是学习算法。计算机视觉研究人员相信，从对最终模型精度的影响来说，更大或更干净的数据集、或是稍微改进的特征提取，比任何学习算法带来的进步要大得多。</p>
+<h2 id="学习表征">学习表征</h2>
+<p>另一种预测这个领域发展的方法————观察图像特征的提取方法。在2012年前，图像特征都是机械地计算出来的。事实上，设计一套新的特征函数、改进结果，并撰写论文是盛极一时的潮流。SIFT :cite:<code>Lowe.2004</code>、SURF :cite:<code>Bay.Tuytelaars.Van-Gool.2006</code>、HOG（定向梯度直方图） :cite:<code>Dalal.Triggs.2005</code>、<a href="https://en.wikipedia.org/wiki/Bag-of-words_model_in_computer_vision" target="_blank">bags of visual words</a>和类似的特征提取方法占据了主导地位。</p>
+<p>另一组研究人员，包括Yann LeCun、Geoff Hinton、Yoshua Bengio、Andrew Ng、Shun ichi Amari和Juergen Schmidhuber，想法则与众不同：他们认为特征本身应该被学习。此外，他们还认为，在合理地复杂性前提下，特征应该由多个共同学习的神经网络层组成，每个层都有可学习的参数。在机器视觉中，最底层可能检测边缘、颜色和纹理。事实上，Alex Krizhevsky、Ilya Sutskever和Geoff Hinton提出了一种新的卷积神经网络变体<em>AlexNet</em>。在2012年ImageNet挑战赛中取得了轰动一时的成绩。AlexNet以Alex Krizhevsky的名字命名，他是论文 :cite:<code>Krizhevsky.Sutskever.Hinton.2012</code>的第一作者。</p>
+<p>有趣的是，在网络的最底层，模型学习到了一些类似于传统滤波器的特征抽取器。 :numref:<code>fig_filters</code>是从AlexNet论文 :cite:<code>Krizhevsky.Sutskever.Hinton.2012</code>复制的，描述了底层图像特征。</p>
+<p><img src="../img/filters.png" alt="AlexNet第一层学习到的特征抽取器。"></img>
+:width:<code>400px</code>
+:label:<code>fig_filters</code></p>
+<p>AlexNet的更高层建立在这些底层表示的基础上，以表示更大的特征，如眼睛、鼻子、草叶等等。而更高的层可以检测整个物体，如人、飞机、狗或飞盘。最终的隐藏神经元可以学习图像的综合表示，从而使属于不同类别的数据易于区分。尽管一直有一群执着的研究者不断钻研，试图学习视觉数据的逐级表征，然而很长一段时间里这些尝试都未有突破。深度卷积神经网络的突破出现在2012年。突破可归因于两个关键因素。</p>
+<h3 id="缺少的成分：数据">缺少的成分：数据</h3>
+<p>包含许多特征的深度模型需要大量的有标签数据，才能显著优于基于凸优化的传统方法（如线性方法和核方法）。
+然而，限于早期计算机有限的存储和90年代有限的研究预算，大部分研究只基于小的公开数据集。例如，不少研究论文基于加州大学欧文分校（UCI）提供的若干个公开数据集，其中许多数据集只有几百至几千张在非自然环境下以低分辨率拍摄的图像。这一状况在2010年前后兴起的大数据浪潮中得到改善。2009年，ImageNet数据集发布，并发起ImageNet挑战赛：要求研究人员从100万个样本中训练模型，以区分1000个不同类别的对象。ImageNet数据集由斯坦福教授李飞飞小组的研究人员开发，利用谷歌图像搜索（Google Image Search）对每一类图像进行预筛选，并利用亚马逊众包（Amazon Mechanical Turk）来标注每张图片的相关类别。这种规模是前所未有的。这项被称为ImageNet的挑战赛推动了计算机视觉和机器学习研究的发展，挑战研究人员确定哪些模型能够在更大的数据规模下表现最好。</p>
+<h3 id="缺少的成分：硬件">缺少的成分：硬件</h3>
+<p>深度学习对计算资源要求很高，训练可能需要数百个迭代轮数，每次迭代都需要通过代价高昂的许多线性代数层传递数据。这也是为什么在20世纪90年代至21世纪初，优化凸目标的简单算法是研究人员的首选。然而，用GPU训练神经网络改变了这一格局。<em>图形处理器</em>（Graphics Processing Unit，GPU）早年用来加速图形处理，使电脑游戏玩家受益。GPU可优化高吞吐量的$4 \times 4$矩阵和向量乘法，从而服务于基本的图形任务。幸运的是，这些数学运算与卷积层的计算惊人地相似。由此，英伟达（NVIDIA）和ATI已经开始为通用计算操作优化gpu，甚至把它们作为<em>通用GPU</em>（general-purpose GPUs，GPGPU）来销售。</p>
+<p>那么GPU比CPU强在哪里呢？</p>
+<p>首先，我们深度理解一下中央处理器（Central Processing Unit，CPU）的<em>核心</em>。
+CPU的每个核心都拥有高时钟频率的运行能力，和高达数MB的三级缓存（L3Cache）。
+它们非常适合执行各种指令，具有分支预测器、深层流水线和其他使CPU能够运行各种程序的功能。
+然而，这种明显的优势也是它的致命弱点：通用核心的制造成本非常高。
+它们需要大量的芯片面积、复杂的支持结构（内存接口、内核之间的缓存逻辑、高速互连等等），而且它们在任何单个任务上的性能都相对较差。
+现代笔记本电脑最多有4核，即使是高端服务器也很少超过64核，因为它们的性价比不高。</p>
+<p>相比于CPU，GPU由$100 \sim 1000$个小的处理单元组成（NVIDIA、ATI、ARM和其他芯片供应商之间的细节稍有不同），通常被分成更大的组（NVIDIA称之为warps）。
+虽然每个GPU核心都相对较弱，有时甚至以低于1GHz的时钟频率运行，但庞大的核心数量使GPU比CPU快几个数量级。
+例如，NVIDIA最近一代的Ampere GPU架构为每个芯片提供了高达312 TFlops的浮点性能，而CPU的浮点性能到目前为止还没有超过1 TFlops。
+之所以有如此大的差距，原因其实很简单：首先，功耗往往会随时钟频率呈二次方增长。
+对于一个CPU核心，假设它的运行速度比GPU快4倍，但可以使用16个GPU核代替，那么GPU的综合性能就是CPU的$16 \times 1/4 = 4$倍。
+其次，GPU内核要简单得多，这使得它们更节能。
+此外，深度学习中的许多操作需要相对较高的内存带宽，而GPU拥有10倍于CPU的带宽。</p>
+<p>回到2012年的重大突破，当Alex Krizhevsky和Ilya Sutskever实现了可以在GPU硬件上运行的深度卷积神经网络时，一个重大突破出现了。他们意识到卷积神经网络中的计算瓶颈：卷积和矩阵乘法，都是可以在硬件上并行化的操作。
+于是，他们使用两个显存为3GB的NVIDIA GTX580 GPU实现了快速卷积运算。他们的创新<a href="https://code.google.com/archive/p/cuda-convnet/" target="_blank">cuda-convnet</a>几年来它一直是行业标准，并推动了深度学习热潮。</p>
+<h2 id="alexnet">AlexNet</h2>
+<p>2012年，AlexNet横空出世。它首次证明了学习到的特征可以超越手工设计的特征。它一举打破了计算机视觉研究的现状。
+AlexNet使用了8层卷积神经网络，并以很大的优势赢得了2012年ImageNet图像识别挑战赛。</p>
+<p>AlexNet和LeNet的架构非常相似，如 :numref:<code>fig_alexnet</code>所示。
+注意，本书在这里提供的是一个稍微精简版本的AlexNet，去除了当年需要两个小型GPU同时运算的设计特点。</p>
+<p><img src="../img/alexnet.svg" alt="从LeNet（左）到AlexNet（右）"></img>
+:label:<code>fig_alexnet</code></p>
+<p>AlexNet和LeNet的设计理念非常相似，但也存在显著差异。</p>
+<ol>
+<li>AlexNet比相对较小的LeNet5要深得多。AlexNet由八层组成：五个卷积层、两个全连接隐藏层和一个全连接输出层。</li>
+<li>AlexNet使用ReLU而不是sigmoid作为其激活函数。</li>
+</ol>
+<p>下面的内容将深入研究AlexNet的细节。</p>
+<h3 id="模型设计">模型设计</h3>
+<p>在AlexNet的第一层，卷积窗口的形状是$11\times11$。
+由于ImageNet中大多数图像的宽和高比MNIST图像的多10倍以上，因此，需要一个更大的卷积窗口来捕获目标。
+第二层中的卷积窗口形状被缩减为$5\times5$，然后是$3\times3$。
+此外，在第一层、第二层和第五层卷积层之后，加入窗口形状为$3\times3$、步幅为2的最大汇聚层。
+而且，AlexNet的卷积通道数目是LeNet的10倍。</p>
+<p>在最后一个卷积层后有两个全连接层，分别有4096个输出。
+这两个巨大的全连接层拥有将近1GB的模型参数。
+由于早期GPU显存有限，原版的AlexNet采用了双数据流设计，使得每个GPU只负责存储和计算模型的一半参数。
+幸运的是，现在GPU显存相对充裕，所以现在很少需要跨GPU分解模型（因此，本书的AlexNet模型在这方面与原始论文稍有不同）。</p>
+<h3 id="激活函数">激活函数</h3>
+<p>此外，AlexNet将sigmoid激活函数改为更简单的ReLU激活函数。
+一方面，ReLU激活函数的计算更简单，它不需要如sigmoid激活函数那般复杂的求幂运算。
+另一方面，当使用不同的参数初始化方法时，ReLU激活函数使训练模型更加容易。
+当sigmoid激活函数的输出非常接近于0或1时，这些区域的梯度几乎为0，因此反向传播无法继续更新一些模型参数。
+相反，ReLU激活函数在正区间的梯度总是1。
+因此，如果模型参数没有正确初始化，sigmoid函数可能在正区间内得到几乎为0的梯度，从而使模型无法得到有效的训练。</p>
+<h3 id="容量控制和预处理">容量控制和预处理</h3>
+<p>AlexNet通过暂退法（ :numref:<code>sec_dropout</code>）控制全连接层的模型复杂度，而LeNet只使用了权重衰减。
+为了进一步扩充数据，AlexNet在训练时增加了大量的图像增强数据，如翻转、裁切和变色。
+这使得模型更健壮，更大的样本量有效地减少了过拟合。
+在 :numref:<code>sec_image_augmentation</code>中更详细地讨论数据扩增。</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> mxnet <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">from</span> mxnet <span class="hljs-keyword">import</span> np, npx
+<span class="hljs-keyword">from</span> mxnet.gluon <span class="hljs-keyword">import</span> nn
+npx.set_np()
+
+net = nn.Sequential()
+
+net.add(
+    <span class="hljs-comment"># 这里使用一个11*11的更大窗口来捕捉对象。</span>
+    <span class="hljs-comment"># 同时，步幅为4，以减少输出的高度和宽度。</span>
+    <span class="hljs-comment"># 另外，输出通道的数目远大于LeNet</span>
+    nn.Conv2D(<span class="hljs-number">96</span>, kernel_size=<span class="hljs-number">11</span>, strides=<span class="hljs-number">4</span>, activation=<span class="hljs-string">'relu'</span>),
+    nn.MaxPool2D(pool_size=<span class="hljs-number">3</span>, strides=<span class="hljs-number">2</span>),
+    <span class="hljs-comment"># 减小卷积窗口，使用填充为2来使得输入与输出的高和宽一致，且增大输出通道数</span>
+    nn.Conv2D(<span class="hljs-number">256</span>, kernel_size=<span class="hljs-number">5</span>, padding=<span class="hljs-number">2</span>, activation=<span class="hljs-string">'relu'</span>),
+    nn.MaxPool2D(pool_size=<span class="hljs-number">3</span>, strides=<span class="hljs-number">2</span>),
+    <span class="hljs-comment"># 使用三个连续的卷积层和一个较小的卷积窗口。</span>
+    <span class="hljs-comment"># 除了最后的卷积层，输出通道的数量进一步增加。</span>
+    <span class="hljs-comment"># 前两个卷积层后不使用汇聚层来减小输入的高和宽</span>
+    nn.Conv2D(<span class="hljs-number">384</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>, activation=<span class="hljs-string">'relu'</span>),
+    nn.Conv2D(<span class="hljs-number">384</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>, activation=<span class="hljs-string">'relu'</span>),
+    nn.Conv2D(<span class="hljs-number">256</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>, activation=<span class="hljs-string">'relu'</span>),
+    nn.MaxPool2D(pool_size=<span class="hljs-number">3</span>, strides=<span class="hljs-number">2</span>),
+    <span class="hljs-comment"># 这里，全连接层的输出数量是LeNet中的好几倍。使用dropout层来减轻过拟合</span>
+    nn.Dense(<span class="hljs-number">4096</span>, activation=<span class="hljs-string">'relu'</span>), nn.Dropout(<span class="hljs-number">0.5</span>),
+    nn.Dense(<span class="hljs-number">4096</span>, activation=<span class="hljs-string">'relu'</span>), nn.Dropout(<span class="hljs-number">0.5</span>),
+    <span class="hljs-comment"># 最后是输出层。由于这里使用Fashion-MNIST，所以用类别数为10，而非论文中的1000</span>
+    nn.Dense(<span class="hljs-number">10</span>))
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> torch <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> torch
+<span class="hljs-keyword">from</span> torch <span class="hljs-keyword">import</span> nn
+
+net = nn.Sequential(
+    <span class="hljs-comment"># 这里使用一个11*11的更大窗口来捕捉对象。</span>
+    <span class="hljs-comment"># 同时，步幅为4，以减少输出的高度和宽度。</span>
+    <span class="hljs-comment"># 另外，输出通道的数目远大于LeNet</span>
+    nn.Conv2d(<span class="hljs-number">1</span>, <span class="hljs-number">96</span>, kernel_size=<span class="hljs-number">11</span>, stride=<span class="hljs-number">4</span>, padding=<span class="hljs-number">1</span>), nn.ReLU(),
+    nn.MaxPool2d(kernel_size=<span class="hljs-number">3</span>, stride=<span class="hljs-number">2</span>),
+    <span class="hljs-comment"># 减小卷积窗口，使用填充为2来使得输入与输出的高和宽一致，且增大输出通道数</span>
+    nn.Conv2d(<span class="hljs-number">96</span>, <span class="hljs-number">256</span>, kernel_size=<span class="hljs-number">5</span>, padding=<span class="hljs-number">2</span>), nn.ReLU(),
+    nn.MaxPool2d(kernel_size=<span class="hljs-number">3</span>, stride=<span class="hljs-number">2</span>),
+    <span class="hljs-comment"># 使用三个连续的卷积层和较小的卷积窗口。</span>
+    <span class="hljs-comment"># 除了最后的卷积层，输出通道的数量进一步增加。</span>
+    <span class="hljs-comment"># 在前两个卷积层之后，汇聚层不用于减少输入的高度和宽度</span>
+    nn.Conv2d(<span class="hljs-number">256</span>, <span class="hljs-number">384</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>), nn.ReLU(),
+    nn.Conv2d(<span class="hljs-number">384</span>, <span class="hljs-number">384</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>), nn.ReLU(),
+    nn.Conv2d(<span class="hljs-number">384</span>, <span class="hljs-number">256</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>), nn.ReLU(),
+    nn.MaxPool2d(kernel_size=<span class="hljs-number">3</span>, stride=<span class="hljs-number">2</span>),
+    nn.Flatten(),
+    <span class="hljs-comment"># 这里，全连接层的输出数量是LeNet中的好几倍。使用dropout层来减轻过拟合</span>
+    nn.Linear(<span class="hljs-number">6400</span>, <span class="hljs-number">4096</span>), nn.ReLU(),
+    nn.Dropout(p=<span class="hljs-number">0.5</span>),
+    nn.Linear(<span class="hljs-number">4096</span>, <span class="hljs-number">4096</span>), nn.ReLU(),
+    nn.Dropout(p=<span class="hljs-number">0.5</span>),
+    <span class="hljs-comment"># 最后是输出层。由于这里使用Fashion-MNIST，所以用类别数为10，而非论文中的1000</span>
+    nn.Linear(<span class="hljs-number">4096</span>, <span class="hljs-number">10</span>))
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">net</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> tf.keras.models.Sequential([
+        <span class="hljs-comment"># 这里使用一个11*11的更大窗口来捕捉对象。</span>
+        <span class="hljs-comment"># 同时，步幅为4，以减少输出的高度和宽度。</span>
+        <span class="hljs-comment"># 另外，输出通道的数目远大于LeNet</span>
+        tf.keras.layers.Conv2D(filters=<span class="hljs-number">96</span>, kernel_size=<span class="hljs-number">11</span>, strides=<span class="hljs-number">4</span>,
+                               activation=<span class="hljs-string">'relu'</span>),
+        tf.keras.layers.MaxPool2D(pool_size=<span class="hljs-number">3</span>, strides=<span class="hljs-number">2</span>),
+        <span class="hljs-comment"># 减小卷积窗口，使用填充为2来使得输入与输出的高和宽一致，且增大输出通道数</span>
+        tf.keras.layers.Conv2D(filters=<span class="hljs-number">256</span>, kernel_size=<span class="hljs-number">5</span>, padding=<span class="hljs-string">'same'</span>,
+                               activation=<span class="hljs-string">'relu'</span>),
+        tf.keras.layers.MaxPool2D(pool_size=<span class="hljs-number">3</span>, strides=<span class="hljs-number">2</span>),
+        <span class="hljs-comment"># 使用三个连续的卷积层和较小的卷积窗口。</span>
+        <span class="hljs-comment"># 除了最后的卷积层，输出通道的数量进一步增加。</span>
+        <span class="hljs-comment"># 在前两个卷积层之后，汇聚层不用于减少输入的高度和宽度</span>
+        tf.keras.layers.Conv2D(filters=<span class="hljs-number">384</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-string">'same'</span>,
+                               activation=<span class="hljs-string">'relu'</span>),
+        tf.keras.layers.Conv2D(filters=<span class="hljs-number">384</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-string">'same'</span>,
+                               activation=<span class="hljs-string">'relu'</span>),
+        tf.keras.layers.Conv2D(filters=<span class="hljs-number">256</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-string">'same'</span>,
+                               activation=<span class="hljs-string">'relu'</span>),
+        tf.keras.layers.MaxPool2D(pool_size=<span class="hljs-number">3</span>, strides=<span class="hljs-number">2</span>),
+        tf.keras.layers.Flatten(),
+        <span class="hljs-comment"># 这里，全连接层的输出数量是LeNet中的好几倍。使用dropout层来减轻过拟合</span>
+        tf.keras.layers.Dense(<span class="hljs-number">4096</span>, activation=<span class="hljs-string">'relu'</span>),
+        tf.keras.layers.Dropout(<span class="hljs-number">0.5</span>),
+        tf.keras.layers.Dense(<span class="hljs-number">4096</span>, activation=<span class="hljs-string">'relu'</span>),
+        tf.keras.layers.Dropout(<span class="hljs-number">0.5</span>),
+        <span class="hljs-comment"># 最后是输出层。由于这里使用Fashion-MNIST，所以用类别数为10，而非论文中的1000</span>
+        tf.keras.layers.Dense(<span class="hljs-number">10</span>)
+    ])
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> paddle <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> warnings
+warnings.filterwarnings(<span class="hljs-string">"ignore"</span>)
+<span class="hljs-keyword">import</span> paddle
+<span class="hljs-keyword">import</span> paddle.nn <span class="hljs-keyword">as</span> nn
+
+net = nn.Sequential(
+    <span class="hljs-comment"># 这里，我们使用一个11*11的更大窗口来捕捉对象。</span>
+    <span class="hljs-comment"># 同时，步幅为4，以减少输出的高度和宽度。</span>
+    <span class="hljs-comment"># 另外，输出通道的数目远大于LeNet</span>
+    nn.Conv2D(<span class="hljs-number">1</span>, <span class="hljs-number">96</span>, kernel_size=<span class="hljs-number">11</span>, stride=<span class="hljs-number">4</span>, padding=<span class="hljs-number">1</span>), nn.ReLU(),
+    nn.MaxPool2D(kernel_size=<span class="hljs-number">3</span>, stride=<span class="hljs-number">2</span>),
+    <span class="hljs-comment"># 减小卷积窗口，使用填充为2来使得输入与输出的高和宽一致，且增大输出通道数</span>
+    nn.Conv2D(<span class="hljs-number">96</span>, <span class="hljs-number">256</span>, kernel_size=<span class="hljs-number">5</span>, padding=<span class="hljs-number">2</span>), nn.ReLU(),
+    nn.MaxPool2D(kernel_size=<span class="hljs-number">3</span>, stride=<span class="hljs-number">2</span>),
+    <span class="hljs-comment"># 使用三个连续的卷积层和较小的卷积窗口。</span>
+    <span class="hljs-comment"># 除了最后的卷积层，输出通道的数量进一步增加。</span>
+    <span class="hljs-comment"># 在前两个卷积层之后，池化层不用于减少输入的高度和宽度</span>
+    nn.Conv2D(<span class="hljs-number">256</span>, <span class="hljs-number">384</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>), nn.ReLU(),
+    nn.Conv2D(<span class="hljs-number">384</span>, <span class="hljs-number">384</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>), nn.ReLU(),
+    nn.Conv2D(<span class="hljs-number">384</span>, <span class="hljs-number">256</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>), nn.ReLU(),
+    nn.MaxPool2D(kernel_size=<span class="hljs-number">3</span>, stride=<span class="hljs-number">2</span>), nn.Flatten(),
+    <span class="hljs-comment"># 这里，全连接层的输出数量是LeNet中的好几倍。使用dropout层来减轻过度拟合</span>
+    nn.Linear(<span class="hljs-number">6400</span>, <span class="hljs-number">4096</span>), nn.ReLU(), nn.Dropout(p=<span class="hljs-number">0.5</span>),
+    nn.Linear(<span class="hljs-number">4096</span>, <span class="hljs-number">4096</span>), nn.ReLU(), nn.Dropout(p=<span class="hljs-number">0.5</span>),
+    <span class="hljs-comment"># 最后是输出层。由于这里使用Fashion-MNIST，所以用类别数为10，而非论文中的1000</span>
+    nn.Linear(<span class="hljs-number">4096</span>, <span class="hljs-number">10</span>)
+)
+</code></pre>
+<p>[<strong>我们构造一个</strong>]高度和宽度都为224的(<strong>单通道数据，来观察每一层输出的形状</strong>)。
+它与 :numref:<code>fig_alexnet</code>中的AlexNet架构相匹配。</p>
+<pre><code class="lang-python">X = np.random.uniform(size=(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>))
+net.initialize()
+<span class="hljs-keyword">for</span> layer <span class="hljs-keyword">in</span> net:
+    X = layer(X)
+    print(layer.name, <span class="hljs-string">'output shape:\t'</span>, X.shape)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+X = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>)
+<span class="hljs-keyword">for</span> layer <span class="hljs-keyword">in</span> net:
+    X=layer(X)
+    print(layer.__class__.__name__,<span class="hljs-string">'output shape:\t'</span>,X.shape)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+X = tf.random.uniform((<span class="hljs-number">1</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>, <span class="hljs-number">1</span>))
+<span class="hljs-keyword">for</span> layer <span class="hljs-keyword">in</span> net().layers:
+    X = layer(X)
+    print(layer.__class__.__name__, <span class="hljs-string">'output shape:\t'</span>, X.shape)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+X = paddle.randn(shape=(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">224</span>, <span class="hljs-number">224</span>))
+<span class="hljs-keyword">for</span> layer <span class="hljs-keyword">in</span> net:
+    X=layer(X)
+    print(layer.__class__.__name__,<span class="hljs-string">'output shape:\t'</span>,X.shape)
+</code></pre>
+<h2 id="读取数据集">读取数据集</h2>
+<p>尽管原文中AlexNet是在ImageNet上进行训练的，但本书在这里使用的是Fashion-MNIST数据集。因为即使在现代GPU上，训练ImageNet模型，同时使其收敛可能需要数小时或数天的时间。
+将AlexNet直接应用于Fashion-MNIST的一个问题是，[<strong>Fashion-MNIST图像的分辨率</strong>]（$28 \times 28$像素）(<strong>低于ImageNet图像。</strong>)
+为了解决这个问题，(<strong>我们将它们增加到$224 \times 224$</strong>)（通常来讲这不是一个明智的做法，但在这里这样做是为了有效使用AlexNet架构）。
+这里需要使用<code>d2l.load_data_fashion_mnist</code>函数中的<code>resize</code>参数执行此调整。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+batch_size = <span class="hljs-number">128</span>
+train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=<span class="hljs-number">224</span>)
+</code></pre>
+<h2 id="训练alexnet">[<strong>训练AlexNet</strong>]</h2>
+<p>现在AlexNet可以开始被训练了。与 :numref:<code>sec_lenet</code>中的LeNet相比，这里的主要变化是使用更小的学习速率训练，这是因为网络更深更广、图像分辨率更高，训练卷积神经网络就更昂贵。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+lr, num_epochs = <span class="hljs-number">0.01</span>, <span class="hljs-number">10</span>
+d2l.train_ch6(net, train_iter, test_iter, num_epochs, lr, d2l.try_gpu())
+</code></pre>
+<h2 id="小结">小结</h2>
+<ul>
+<li>AlexNet的架构与LeNet相似，但使用了更多的卷积层和更多的参数来拟合大规模的ImageNet数据集。</li>
+<li>今天，AlexNet已经被更有效的架构所超越，但它是从浅层网络到深层网络的关键一步。</li>
+<li>尽管AlexNet的代码只比LeNet多出几行，但学术界花了很多年才接受深度学习这一概念，并应用其出色的实验结果。这也是由于缺乏有效的计算工具。</li>
+<li>Dropout、ReLU和预处理是提升计算机视觉任务性能的其他关键步骤。</li>
+</ul>
+<h2 id="练习">练习</h2>
+<ol>
+<li>试着增加迭代轮数。对比LeNet的结果有什么不同？为什么？</li>
+<li>AlexNet对Fashion-MNIST数据集来说可能太复杂了。<ol>
+<li>尝试简化模型以加快训练速度，同时确保准确性不会显著下降。</li>
+<li>设计一个更好的模型，可以直接在$28 \times 28$图像上工作。</li>
+</ol>
+</li>
+<li>修改批量大小，并观察模型精度和GPU显存变化。</li>
+<li>分析了AlexNet的计算性能。<ol>
+<li>在AlexNet中主要是哪部分占用显存？</li>
+<li>在AlexNet中主要是哪部分需要更多的计算？</li>
+<li>计算结果时显存带宽如何？</li>
+</ol>
+</li>
+<li>将dropout和ReLU应用于LeNet-5，效果有提升吗？再试试预处理会怎么样？</li>
+</ol>
+<p>:begin_tab:<code>mxnet</code>
+<a href="https://discuss.d2l.ai/t/1864" target="_blank">Discussions</a>
+:end_tab:</p>
+<p>:begin_tab:<code>pytorch</code>
+<a href="https://discuss.d2l.ai/t/1863" target="_blank">Discussions</a>
+:end_tab:</p>
+<p>:begin_tab:<code>tensorflow</code>
+<a href="https://discuss.d2l.ai/t/1862" target="_blank">Discussions</a>
+:end_tab:</p>
+<p>:begin_tab:<code>paddle</code>
+<a href="https://discuss.d2l.ai/t/11788" target="_blank">Discussions</a>
+:end_tab:</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 7. 现代卷积神经网络">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="vgg.html" class="navigation navigation-next " aria-label="Next page: 7.2. 使用块的网络（VGG）">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"7.1. 深度卷积神经网络（AlexNet）","level":"1.2.10.1","depth":3,"next":{"title":"7.2. 使用块的网络（VGG）","level":"1.2.10.2","depth":3,"path":"chapter_convolutional-modern/vgg.md","ref":"chapter_convolutional-modern/vgg.md","articles":[]},"previous":{"title":"7. 现代卷积神经网络","level":"1.2.10","depth":2,"path":"chapter_convolutional-modern/index.md","ref":"chapter_convolutional-modern/index.md","articles":[{"title":"7.1. 深度卷积神经网络（AlexNet）","level":"1.2.10.1","depth":3,"path":"chapter_convolutional-modern/alexnet.md","ref":"chapter_convolutional-modern/alexnet.md","articles":[]},{"title":"7.2. 使用块的网络（VGG）","level":"1.2.10.2","depth":3,"path":"chapter_convolutional-modern/vgg.md","ref":"chapter_convolutional-modern/vgg.md","articles":[]},{"title":"7.3. 网络中的网络（NiN）","level":"1.2.10.3","depth":3,"path":"chapter_convolutional-modern/nin.md","ref":"chapter_convolutional-modern/nin.md","articles":[]},{"title":"7.4. 含并行连结的网络（GoogLeNet）","level":"1.2.10.4","depth":3,"path":"chapter_convolutional-modern/googlenet.md","ref":"chapter_convolutional-modern/googlenet.md","articles":[]},{"title":"7.5. 批量规范化","level":"1.2.10.5","depth":3,"path":"chapter_convolutional-modern/batch-norm.md","ref":"chapter_convolutional-modern/batch-norm.md","articles":[]},{"title":"7.6. 残差网络（ResNet）","level":"1.2.10.6","depth":3,"path":"chapter_convolutional-modern/resnet.md","ref":"chapter_convolutional-modern/resnet.md","articles":[]},{"title":"7.7. 稠密连接网络（DenseNet）","level":"1.2.10.7","depth":3,"path":"chapter_convolutional-modern/densenet.md","ref":"chapter_convolutional-modern/densenet.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"chapter_convolutional-modern/alexnet.md","mtime":"2024-01-19T05:42:16.947Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:47.289Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

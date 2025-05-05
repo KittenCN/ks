@@ -1,0 +1,1554 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>使用现有数据创建 Numpy 数组 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="177.html" />
+    
+    
+    <link rel="prev" href="175.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    NumPy
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="170.html">
+            
+                <a href="170.html">
+            
+                    
+                    NumPy 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="171.html">
+            
+                <a href="171.html">
+            
+                    
+                    什么是 Numpy 库？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="172.html">
+            
+                <a href="172.html">
+            
+                    
+                    安装 NumPy 库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="173.html">
+            
+                <a href="173.html">
+            
+                    
+                    NumPy 数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="174.html">
+            
+                <a href="174.html">
+            
+                    
+                    NumPy 数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="175.html">
+            
+                <a href="175.html">
+            
+                    
+                    NumPy 数组创建——empty、zeroes和ones
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.7" data-path="176.html">
+            
+                <a href="176.html">
+            
+                    
+                    使用现有数据创建 Numpy 数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="177.html">
+            
+                <a href="177.html">
+            
+                    
+                    从数值范围创建 Numpy 数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="178.html">
+            
+                <a href="178.html">
+            
+                    
+                    NumPy 索引和切片
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="179.html">
+            
+                <a href="179.html">
+            
+                    
+                    NumPy 高级索引
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="180.html">
+            
+                <a href="180.html">
+            
+                    
+                    NumPy 广播
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="181.html">
+            
+                <a href="181.html">
+            
+                    
+                    NumPy 排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="182.html">
+            
+                <a href="182.html">
+            
+                    
+                    NumPy 副本和视图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="183.html">
+            
+                <a href="183.html">
+            
+                    
+                    NumPy 访问数组元素的（迭代）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="184.html">
+            
+                <a href="184.html">
+            
+                    
+                    NumPy 矩阵乘法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="185.html">
+            
+                <a href="185.html">
+            
+                    
+                    NumPy 基本函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="186.html">
+            
+                <a href="186.html">
+            
+                    
+                    NumPy arange()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="187.html">
+            
+                <a href="187.html">
+            
+                    
+                    NumPy reshape()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="188.html">
+            
+                <a href="188.html">
+            
+                    
+                    NumPy append()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="189.html">
+            
+                <a href="189.html">
+            
+                    
+                    NumPy concatenate()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="190.html">
+            
+                <a href="190.html">
+            
+                    
+                    NumPy array()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="191.html">
+            
+                <a href="191.html">
+            
+                    
+                    NumPy transpose()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="192.html">
+            
+                <a href="192.html">
+            
+                    
+                    NumPy partition()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="193.html">
+            
+                <a href="193.html">
+            
+                    
+                    NumPy 数学函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="194.html">
+            
+                <a href="194.html">
+            
+                    
+                    NumPy ceil()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="195.html">
+            
+                <a href="195.html">
+            
+                    
+                    NumPy floor()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="196.html">
+            
+                <a href="196.html">
+            
+                    
+                    NumPy trunc()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="197.html">
+            
+                <a href="197.html">
+            
+                    
+                    NumPy fix()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="198.html">
+            
+                <a href="198.html">
+            
+                    
+                    NumPy 字符串函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="199.html">
+            
+                <a href="199.html">
+            
+                    
+                    NumPy islower()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="200.html">
+            
+                <a href="200.html">
+            
+                    
+                    NumPy find()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="201.html">
+            
+                <a href="201.html">
+            
+                    
+                    NumPy count()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="202.html">
+            
+                <a href="202.html">
+            
+                    
+                    NumPy istitle()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="203.html">
+            
+                <a href="203.html">
+            
+                    
+                    NumPy decode()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="204.html">
+            
+                <a href="204.html">
+            
+                    
+                    NumPy encode()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="205.html">
+            
+                <a href="205.html">
+            
+                    
+                    NumPy replace()功能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="206.html">
+            
+                <a href="206.html">
+            
+                    
+                    NumPy splitlines()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="207.html">
+            
+                <a href="207.html">
+            
+                    
+                    NumPy add()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="208.html">
+            
+                <a href="208.html">
+            
+                    
+                    NumPy multiply()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="209.html">
+            
+                <a href="209.html">
+            
+                    
+                    NumPy center()功能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="210.html">
+            
+                <a href="210.html">
+            
+                    
+                    NumPy join()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="211.html">
+            
+                <a href="211.html">
+            
+                    
+                    NumPy split()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="212.html">
+            
+                <a href="212.html">
+            
+                    
+                    NumPy title()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="213.html">
+            
+                <a href="213.html">
+            
+                    
+                    NumPy lower()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="214.html">
+            
+                <a href="214.html">
+            
+                    
+                    NumPy isupper()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.46" data-path="215.html">
+            
+                <a href="215.html">
+            
+                    
+                    NumPy isnumeric()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.47" data-path="216.html">
+            
+                <a href="216.html">
+            
+                    
+                    NumPy isalpha()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.48" data-path="217.html">
+            
+                <a href="217.html">
+            
+                    
+                    NumPy index()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.49" data-path="218.html">
+            
+                <a href="218.html">
+            
+                    
+                    NumPy startswith()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.50" data-path="219.html">
+            
+                <a href="219.html">
+            
+                    
+                    NumPy isspace()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.51" data-path="220.html">
+            
+                <a href="220.html">
+            
+                    
+                    NumPy isdigit()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.52" data-path="221.html">
+            
+                <a href="221.html">
+            
+                    
+                    NumPy isdecimal()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.53" data-path="222.html">
+            
+                <a href="222.html">
+            
+                    
+                    NumPy upper()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.54" data-path="223.html">
+            
+                <a href="223.html">
+            
+                    
+                    NumPy capitalize()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.55" data-path="224.html">
+            
+                <a href="224.html">
+            
+                    
+                    NumPy swapcase()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.56" data-path="225.html">
+            
+                <a href="225.html">
+            
+                    
+                    NumPy strip()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.57" data-path="226.html">
+            
+                <a href="226.html">
+            
+                    
+                    NumPy partition()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.58" data-path="227.html">
+            
+                <a href="227.html">
+            
+                    
+                    Numpy 统计函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.59" data-path="228.html">
+            
+                <a href="228.html">
+            
+                    
+                    NumPy amin()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.60" data-path="229.html">
+            
+                <a href="229.html">
+            
+                    
+                    NumPy amax()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.61" data-path="230.html">
+            
+                <a href="230.html">
+            
+                    
+                    NumPy ptp()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.62" data-path="231.html">
+            
+                <a href="231.html">
+            
+                    
+                    NumPy median()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.63" data-path="232.html">
+            
+                <a href="232.html">
+            
+                    
+                    NumPy mean()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.64" data-path="233.html">
+            
+                <a href="233.html">
+            
+                    
+                    NumPy std()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.65" data-path="234.html">
+            
+                <a href="234.html">
+            
+                    
+                    矩阵库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.66" data-path="235.html">
+            
+                <a href="235.html">
+            
+                    
+                    NumPy eye()功能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.67" data-path="236.html">
+            
+                <a href="236.html">
+            
+                    
+                    NumPy identity()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.68" data-path="237.html">
+            
+                <a href="237.html">
+            
+                    
+                    NumPy rand()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.69" data-path="238.html">
+            
+                <a href="238.html">
+            
+                    
+                    NumPy empty()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.70" data-path="239.html">
+            
+                <a href="239.html">
+            
+                    
+                    NumPy ones()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.71" data-path="240.html">
+            
+                <a href="240.html">
+            
+                    
+                    NumPy zeros()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.72" data-path="241.html">
+            
+                <a href="241.html">
+            
+                    
+                    二元运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.73" data-path="242.html">
+            
+                <a href="242.html">
+            
+                    
+                    NumPy left_shift()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.74" data-path="243.html">
+            
+                <a href="243.html">
+            
+                    
+                    NumPy right_shift()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.75" data-path="244.html">
+            
+                <a href="244.html">
+            
+                    
+                    NumPy bitwise_xor()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.76" data-path="245.html">
+            
+                <a href="245.html">
+            
+                    
+                    NumPy invert()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.77" data-path="246.html">
+            
+                <a href="246.html">
+            
+                    
+                    NumPy bitwise_or()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.78" data-path="247.html">
+            
+                <a href="247.html">
+            
+                    
+                    NumPy bitwise_and()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.79" data-path="248.html">
+            
+                <a href="248.html">
+            
+                    
+                    线性代数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.80" data-path="249.html">
+            
+                <a href="249.html">
+            
+                    
+                    NumPy dot()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.81" data-path="250.html">
+            
+                <a href="250.html">
+            
+                    
+                    杂项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.82" data-path="251.html">
+            
+                <a href="251.html">
+            
+                    
+                    NumPy asarray()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.83" data-path="252.html">
+            
+                <a href="252.html">
+            
+                    
+                    NumPy frombuffer()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.84" data-path="253.html">
+            
+                <a href="253.html">
+            
+                    
+                    NumPy logspace()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.85" data-path="254.html">
+            
+                <a href="254.html">
+            
+                    
+                    NumPy linspace()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.86" data-path="255.html">
+            
+                <a href="255.html">
+            
+                    
+                    NumPy fromiter()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >使用现有数据创建 Numpy 数组</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="使用现有数据创建-numpy-数组">使用现有数据创建 Numpy 数组</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/numpy/python-numpy-array-creation-using-existing-data" target="_blank">https://www.studytonight.com/numpy/python-numpy-array-creation-using-existing-data</a></p>
+</blockquote>
+<p>在本教程中，我们将介绍如何使用 Numpy 库中的现有数据创建数组。</p>
+<p>Numpy 库提供了从现有数据创建数组的各种方法，如下所示:</p>
+<ol>
+<li><p><code>numpy.asarray</code></p>
+</li>
+<li><p><code>numpy.frombuffer</code></p>
+</li>
+<li><p><code>numpy.fromiter</code></p>
+</li>
+</ol>
+<p>现在，我们将在接下来的章节中逐一介绍上述内容。</p>
+<h2 id="1python-序列到数组-使用numpyasarray">1.Python 序列到数组-使用<code>numpy.asarray</code></h2>
+<p>例程<code>numpy.asarray</code>用于将 Python 序列转换为数组。<code>numpy.asarray</code>与<code>numpy.array</code>有些相似，但参数比<code>numpy.array</code>少。该功能主要用于利用现有数据创建数组，其形式为<strong>列表</strong>，或<strong>元组</strong>。</p>
+<p>下面给出了用于<code>numpy.asarray</code>的所需语法:</p>
+<pre><code class="lang-py">numpy.asarray(sequence,  dtype, order)
+</code></pre>
+<p><strong>参数:</strong></p>
+<p>让我们讨论上述构造器的参数:</p>
+<ol>
+<li><p><strong>序列:</strong>
+该参数用于指示要转换为蟒阵的蟒序列。</p>
+</li>
+<li><p><strong>数据类型:</strong>
+此参数用于指示数组中每一项的数据类型。</p>
+</li>
+<li><p><strong>顺序:</strong>
+该参数可设置为 C 或 f，默认为 C</p>
+</li>
+</ol>
+<p>让我们举几个例子来看看这种数组创建技术的工作原理。</p>
+<h3 id="示例-1--使用元组的数组">示例 1 -使用元组的数组</h3>
+<p>在下面给出的示例中，我们将使用元组创建一个数组:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np  
+
+<span class="hljs-comment"># Python tuple</span>
+l = (<span class="hljs-number">34</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">78</span>)
+<span class="hljs-comment"># creating array using the tuple</span>
+a = np.asarray(l)
+
+print(type(a))  
+print(a)
+</code></pre>
+<p>&lt;类‘num py . ndaarray’&gt;
+【34 7 8 78】</p>
+<h3 id="示例-2--使用列表的数组">示例 2 -使用列表的数组</h3>
+<p>现在我们将使用多个<strong>列表</strong>创建一个数组。其代码如下:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np  
+
+<span class="hljs-comment"># Python list</span>
+l = [[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">8</span>,<span class="hljs-number">9</span>],[<span class="hljs-number">5</span>,<span class="hljs-number">7</span>]] 
+<span class="hljs-comment"># creating array from list </span>
+b = np.asarray(l)
+
+print(type(b))  
+print(b)
+</code></pre>
+<p>&lt;类&gt;
+【list([1，2，3]) list([8，9]) list([5，7])</p>
+<h2 id="2使用numpyfrombuffer">2.使用<code>numpy.frombuffer</code></h2>
+<p><code>numpy.frombuffer</code>例程用于通过使用<strong>指定的缓冲区</strong>来创建数组。</p>
+<p>下面给出了用于<code>numpy.frombuffer</code>的所需语法:</p>
+<pre><code class="lang-py">numpy.frombuffer(buffer, dtype, count, offset)
+</code></pre>
+<p><strong>参数:</strong></p>
+<p>让我们讨论上述构造器的参数:</p>
+<ul>
+<li><p><strong>缓冲区:</strong>
+该参数用于表示一个暴露缓冲区接口的对象。</p>
+</li>
+<li><p><strong>dtype:</strong>
+此参数用于表示返回的数据类型数组的数据类型。此参数的默认值为 0。</p>
+</li>
+<li><p><strong>计数:</strong>
+此参数表示返回数组的长度。此参数的默认值为-1。</p>
+</li>
+<li><p><strong>偏移量:</strong>
+该参数表示读取的起始位置。此参数的默认值为 0。</p>
+</li>
+</ul>
+<p>现在让我们讨论一些使用 <strong>frombuffer</strong> 例程的例子。</p>
+<h3 id="基本示例">基本示例:</h3>
+<p>下面是我们将使用<code>numpy.frombuffer</code>例程的代码片段:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np  
+
+<span class="hljs-comment"># intialize bytes</span>
+l = <span class="hljs-string">b'StudyTonight!'</span>  
+print(type(l))  
+
+a = np.frombuffer(l, dtype = <span class="hljs-string">"S1"</span>)  
+print(a)  
+print(type(a))
+</code></pre>
+<p><img src="img/4765334125b448ec4c4bdf8285a1da72.png" alt=""></img></p>
+<p>&lt;类字节】&gt;
+【b ' s ' b ' t ' u ' b ' y ' b ' t ' o ' b ' n ' b ' b ' h ' b ' t '！"]
+&lt;类‘num py . ndaarray’&gt;</p>
+<h2 id="3使用numpyfromiter">3.使用<code>numpy.fromiter</code></h2>
+<p>例程<code>numpy.fromiter</code>用于通过使用<strong>可迭代对象</strong>来创建<strong>数组</strong>。这个例程主要返回一个一维数组对象。</p>
+<p>下面给出了用于<code>numpy.fromiter</code>的所需语法:</p>
+<pre><code class="lang-py">numpy.fromiter(iterable, dtype, count)
+</code></pre>
+<p><strong>参数:</strong></p>
+<p>让我们讨论上述构造器的参数:</p>
+<ol>
+<li><p><strong>可迭代:</strong>
+该参数主要用于表示可迭代对象。</p>
+</li>
+<li><p><strong>数据类型:</strong>
+该参数用于表示结果数组项的数据类型。</p>
+</li>
+<li><p><strong>计数:</strong>
+此参数用于表示从数组中的缓冲区读取的项目数。</p>
+</li>
+</ol>
+<p>让我们举一个使用这个例程的例子。</p>
+<h3 id="基本示例">基本示例:</h3>
+<p>下面是我们将使用<code>numpy.fromiter</code>的代码片段:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np  
+
+<span class="hljs-comment"># using python tuple</span>
+tup = (<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">6</span>,<span class="hljs-number">20</span>)  
+<span class="hljs-comment"># create an iterator</span>
+it = iter(tup)  
+
+<span class="hljs-comment"># create ndarray using the iterator</span>
+x = np.fromiter(it, dtype = float)  
+
+print(x)  
+print(type(x))
+</code></pre>
+<p>【2。4.6.20.]
+&lt;类‘num py . ndaarray’&gt;</p>
+<h2 id="摘要">摘要</h2>
+<p>本教程是关于如何使用现有数据在 numpy 中创建数组的，我们已经介绍了使用它们的语法和示例来实现这一点的不同方法。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="175.html" class="navigation navigation-prev " aria-label="Previous page: NumPy 数组创建——empty、zeroes和ones">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="177.html" class="navigation navigation-next " aria-label="Next page: 从数值范围创建 Numpy 数组">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"使用现有数据创建 Numpy 数组","level":"1.1.7","depth":2,"next":{"title":"从数值范围创建 Numpy 数组","level":"1.1.8","depth":2,"path":"177.md","ref":"177.md","articles":[]},"previous":{"title":"NumPy 数组创建——empty、zeroes和ones","level":"1.1.6","depth":2,"path":"175.md","ref":"175.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"176.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:41.367Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

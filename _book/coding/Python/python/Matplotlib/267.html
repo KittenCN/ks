@@ -1,0 +1,861 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Matplotlib 使用subplots()函数的多图 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="268.html" />
+    
+    
+    <link rel="prev" href="266.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Matplotlib
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="257.html">
+            
+                <a href="257.html">
+            
+                    
+                    Matplotlib 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="258.html">
+            
+                <a href="258.html">
+            
+                    
+                    Matplotlib 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="259.html">
+            
+                <a href="259.html">
+            
+                    
+                    Matplotlib 中的一般概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="260.html">
+            
+                <a href="260.html">
+            
+                    
+                    Jupyter 笔记本中的 Matplotlib
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="261.html">
+            
+                <a href="261.html">
+            
+                    
+                    Matplotlib PyPlot API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="262.html">
+            
+                <a href="262.html">
+            
+                    
+                    Matplotlib 简单折线图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="263.html">
+            
+                <a href="263.html">
+            
+                    
+                    Matplotlib pylab 模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="264.html">
+            
+                <a href="264.html">
+            
+                    
+                    面向对象接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="265.html">
+            
+                <a href="265.html">
+            
+                    
+                    Matplotlib 图形类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="266.html">
+            
+                <a href="266.html">
+            
+                    
+                    Matplotlib Axes类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.11" data-path="267.html">
+            
+                <a href="267.html">
+            
+                    
+                    Matplotlib 使用subplots()函数的多图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="268.html">
+            
+                <a href="268.html">
+            
+                    
+                    Matplotlib subplots()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="269.html">
+            
+                <a href="269.html">
+            
+                    
+                    Matplotlib subplot2grid()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="270.html">
+            
+                <a href="270.html">
+            
+                    
+                    Matplotlib 网格
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="271.html">
+            
+                <a href="271.html">
+            
+                    
+                    在 Matplotlib 中格式化轴域
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="272.html">
+            
+                <a href="272.html">
+            
+                    
+                    在 Matplotlib 中设置轴限制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="273.html">
+            
+                <a href="273.html">
+            
+                    
+                    在 Matplotlib 中设置刻度和刻度标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="274.html">
+            
+                <a href="274.html">
+            
+                    
+                    Matplotlib 双轴
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="275.html">
+            
+                <a href="275.html">
+            
+                    
+                    Matplotlib 绘图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="276.html">
+            
+                <a href="276.html">
+            
+                    
+                    Matplotlib 条形图bar()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="277.html">
+            
+                <a href="277.html">
+            
+                    
+                    Matplotlib 直方图——hist()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="278.html">
+            
+                <a href="278.html">
+            
+                    
+                    Matplotlib 饼图——pie()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="279.html">
+            
+                <a href="279.html">
+            
+                    
+                    Matplotlib 散点图——scatter()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="280.html">
+            
+                <a href="280.html">
+            
+                    
+                    Matplotlib 等高线图——contour()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="281.html">
+            
+                <a href="281.html">
+            
+                    
+                    Matplotlib 抖动图-quiver()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="282.html">
+            
+                <a href="282.html">
+            
+                    
+                    Matplotlib 盒子图-boxplot()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="283.html">
+            
+                <a href="283.html">
+            
+                    
+                    Matplotlib 提琴图——violinplot()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="284.html">
+            
+                <a href="284.html">
+            
+                    
+                    Matplotlib 3D
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="285.html">
+            
+                <a href="285.html">
+            
+                    
+                    Matplotlib 三维绘图——折线和散点图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="286.html">
+            
+                <a href="286.html">
+            
+                    
+                    Matplotlib 3D 等高线图——contour3d()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="287.html">
+            
+                <a href="287.html">
+            
+                    
+                    Matplotlib 三维线框图——plot_wireframe()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="288.html">
+            
+                <a href="288.html">
+            
+                    
+                    Matplotlib 三维曲面图——plot_surface()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="289.html">
+            
+                <a href="289.html">
+            
+                    
+                    杂项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="290.html">
+            
+                <a href="290.html">
+            
+                    
+                    在 Matplotlib 中使用文本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="291.html">
+            
+                <a href="291.html">
+            
+                    
+                    Matplotlib 中的数学表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="292.html">
+            
+                <a href="292.html">
+            
+                    
+                    在 Matplotlib 中使用图像
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Matplotlib 使用subplots()函数的多图</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="matplotlib-使用subplots函数的多图">Matplotlib 使用<code>subplots()</code>函数的多图</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/matplotlib/matplotlib-multiplots-with-subplots-function" target="_blank">https://www.studytonight.com/matplotlib/matplotlib-multiplots-with-subplots-function</a></p>
+</blockquote>
+<p>在本教程中，我们将介绍<strong>如何在 matplotlib 中在单个图形中绘制多个图</strong>。</p>
+<p>你一定在想，为什么我们要在一个图中有多个图。那只会导致混乱和混乱。但是如果你需要<strong>要么在两条曲线</strong>之间做比较，要么你想在图中显示一些<strong>渐变(相对于彼此)等等。在这种情况下，多个图是有用的。</strong></p>
+<p>在 matplotlib 中，我们可以使用<strong>支线剧情</strong>来实现。</p>
+<p><code>subplots()</code>功能在 matplotlib 库的 <strong>pyplot 模块</strong>中，用于以有效的方式创建子剧情/多剧情。</p>
+<h2 id="subplots功能"><code>subplots()</code>功能</h2>
+<p>该功能将<strong>创建一个图形和一组支线剧情</strong>。它基本上是<strong>一个包装函数</strong>，用于在一次调用中创建<strong>子场景</strong>(包括包围图对象)的通用布局。</p>
+<ul>
+<li><p>该函数主要返回一个<strong>图形</strong>和一个<strong>轴对象</strong>或者一个<strong>轴对象数组</strong>。</p>
+</li>
+<li><p>如果在没有任何参数的情况下使用此功能<strong>，那么它将返回一个</strong>图形对象和一个轴对象<strong>。</strong></p>
+</li>
+</ul>
+<h3 id="suplots函数的语法"><code>suplots()</code>函数的语法:</h3>
+<p>下面给出了使用该函数的语法:</p>
+<pre><code class="lang-py">subplots(nrows, ncols, sharex, sharey, squeeze, subplot_kw, gridspec_kw, **fig_kw)
+</code></pre>
+<h3 id="参数">参数:</h3>
+<p>让我们讨论一下这个函数使用的参数:</p>
+<ul>
+<li><p><strong>非政府组织，ncls</strong></p>
+<p>参数<strong>显示</strong>表示<strong>行数</strong>，参数<strong>显示</strong>表示<strong>表示子图网格的列数</strong>。两个参数都有默认值 <strong>1</strong> 。</p>
+</li>
+<li><p><strong>sharex，sharey</strong></p>
+<p>为了控制 x ( <code>sharex</code>)轴之间的<strong>属性共享或 y</strong> ( <code>sharey</code>)轴之间的<strong>属性共享，使用这些参数。</strong></p>
+</li>
+<li><p><strong>挤压</strong></p>
+<p>该可选参数通常<strong>包含布尔值</strong>，默认值为<strong>真</strong>。</p>
+</li>
+<li><p><strong>支线剧情 _kw</strong></p>
+<p>该参数用于用传递给<code>add_subplot</code>调用的关键字指示字典，该调用用于创建每个子图。</p>
+</li>
+<li><p><strong>电网规格 _kw</strong></p>
+<p>此参数用于指示带有传递给<code>GridSpec</code>构造器的关键字的字典，该构造器用于创建放置子情节的网格。</p>
+</li>
+<li><p><strong><em> </em>图 _kw</strong></p>
+<p>传递给<code>.pyplot.figure</code>调用的所有附加关键字参数都是该参数的一部分。</p>
+</li>
+</ul>
+<p>现在我们将介绍一些例子，以便所有的概念对您来说变得清晰。</p>
+<h2 id="示例-1用一个图形和一个轴绘图">示例 1:用一个图形和一个轴绘图</h2>
+<p>该示例的代码如下:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+
+x = np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>*np.pi, <span class="hljs-number">400</span>)
+y = np.sin(x**<span class="hljs-number">2</span>) + np.cos(x)
+
+fig, ax = plt.subplots()
+ax.plot(x, y)
+ax.set_title(<span class="hljs-string">'Simplest plot in the matplotlib'</span>)
+</code></pre>
+<p>现在该看看代码的输出了:
+<img src="img/cf6073e49d7471c4768c713fbcfbff1a.png" alt="creating subplots in Matplotlib"></img></p>
+<p>在本例中，我们使用了<code>subplots()</code>函数，但是我们没有向图中添加两个图。所以<code>subplots()</code>功能通常也可以用来创建一个单独的图表。</p>
+<h2 id="示例-2堆叠图">示例 2:堆叠图</h2>
+<p>让我们举一个堆叠图的例子。我们将通过<strong>将一个叠加在另一个</strong>上来尝试绘制一系列的图(这里是图 2)。由于有地块的堆叠，所以行数(即<code>nrows</code>)会发生变化，也就是说<code>ncols</code>保持不变 <strong>1</strong> 。此外，每个子剧情由<strong>索引参数</strong>标识。</p>
+<p>这方面的代码片段如下:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+
+plt.figure(figsize=(<span class="hljs-number">6</span>, <span class="hljs-number">4</span>))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">return</span> np.sin(x) - x * np.cos(x)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fp</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-string">""" The derivative function of f """</span>
+    <span class="hljs-keyword">return</span> x * np.sin(x)
+
+X = np.arange(-<span class="hljs-number">5</span>, <span class="hljs-number">5.0</span>, <span class="hljs-number">0.05</span>)
+
+fig, ax = plt.subplots(<span class="hljs-number">2</span>, 
+           sharex=<span class="hljs-string">'col'</span>, sharey=<span class="hljs-string">'row'</span>)
+
+ax[<span class="hljs-number">0</span>].plot(X, f(X), <span class="hljs-string">'bo'</span>, X, f(X), <span class="hljs-string">'k'</span>)
+ax[<span class="hljs-number">0</span>].set(title=<span class="hljs-string">' function f'</span>)
+
+ax[<span class="hljs-number">1</span>].plot(X, fp(X), <span class="hljs-string">'go'</span>, X, fp(X), <span class="hljs-string">'k'</span>)
+ax[<span class="hljs-number">1</span>].set(xlabel=<span class="hljs-string">'X Values'</span>, ylabel=<span class="hljs-string">'Y Values'</span>,
+       title=<span class="hljs-string">'Derivative Function of f'</span>)
+
+plt.show()
+</code></pre>
+<p>下面是上面代码的输出:</p>
+<p><img src="img/f90268446f3f23436f865fc37af85156.png" alt="creating subplots in Matplotlib"></img></p>
+<p>正如您在上面的输出中看到的，两个地块一个堆叠在另一个之上。情节也可以是其他类型的。但是当你想在情节之间做一些比较时，这是一个很好的方法。</p>
+<h2 id="示例-3在另一个图中绘制">示例 3:在另一个图中绘制</h2>
+<p>对于这个代码示例。让我们举一个活生生的例子。</p>
+<p>您也可以使用上面的终端运行其他示例并查看输出。也尝试制作不同的情节。</p>
+<h2 id="总结">总结:</h2>
+<p>在本教程中，我们讲述了如何使用<code>subplots()</code>函数在 matplotlib 中创建多个图。我们还在一张图中介绍了多个地块的不同布局。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="266.html" class="navigation navigation-prev " aria-label="Previous page: Matplotlib Axes类">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="268.html" class="navigation navigation-next " aria-label="Next page: Matplotlib subplots()函数">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Matplotlib 使用subplots()函数的多图","level":"1.1.11","depth":2,"next":{"title":"Matplotlib subplots()函数","level":"1.1.12","depth":2,"path":"268.md","ref":"268.md","articles":[]},"previous":{"title":"Matplotlib Axes类","level":"1.1.10","depth":2,"path":"266.md","ref":"266.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"267.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:36.648Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

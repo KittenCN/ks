@@ -1,0 +1,558 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>线性回归 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="LogisticRegression.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    常见机器学习算法的数学推导
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.1.1" data-path="LinearRegression.html">
+            
+                <a href="LinearRegression.html">
+            
+                    
+                    线性回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="LogisticRegression.html">
+            
+                <a href="LogisticRegression.html">
+            
+                    
+                    逻辑回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="SimpleBayes.html">
+            
+                <a href="SimpleBayes.html">
+            
+                    
+                    朴素贝叶斯
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="KNN.html">
+            
+                <a href="KNN.html">
+            
+                    
+                    K近邻
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="DecisionTrees.html">
+            
+                <a href="DecisionTrees.html">
+            
+                    
+                    决策树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="RandomForest.html">
+            
+                <a href="RandomForest.html">
+            
+                    
+                    随机森林
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="AdaBoost.html">
+            
+                <a href="AdaBoost.html">
+            
+                    
+                    AdaBoost
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="GBDT.html">
+            
+                <a href="GBDT.html">
+            
+                    
+                    梯度提升树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="XGBoost.html">
+            
+                <a href="XGBoost.html">
+            
+                    
+                    XGBoost
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >线性回归</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="线性回归">线性回归</h1>
+<p><strong>约定：</strong></p>
+<ul>
+<li><font color="F66A65">红色：</font>对名词进行解释的重点</li>
+<li><font color="FDA63E">黄色：</font>各部分总结中的重点</li>
+<li><font color="62D257">绿色：</font>算法基本假设与解释</li>
+</ul>
+<p><strong>摘要：</strong></p>
+<ol>
+<li>两种得到损失函数的方法（<a href="#2.1-最小二乘法-LMS">最小二乘法</a>、<a href="#2.2-极大似然估计">极大似然估计</a>）</li>
+<li>两种求解损失函数的方法（<a href="#31-正规解">正规解</a>、<a href="#32-梯度下降">梯度下降</a>）</li>
+</ol>
+<p><strong>名词解释：</strong><code>MSE</code>、<code>似然函数</code>、<code>极大似然估计</code>、<code>对数似然函数</code>、<code>正规解</code></p>
+<blockquote>
+<ol>
+<li>MSE：均方误差，线性回归常用的<font color="F66A65">损失函数</font></li>
+<li>似然函数：输入 $\theta$参数空间 和 $X$输入空间，输出是样本分类概率$P$的函数: <font color="F66A65">$P(y|X,\theta)$</font></li>
+<li>极大似然估计: 一种通过最大化所有样本的似然函数连乘起来的表达式，来<font color="F66A65">估计参数的取值的方法</font></li>
+<li>对数似然函数：连乘的函数不好求最大，所以取对数，变成连加，<font color="F66A65">方便求最大值</font></li>
+<li>正规解：线性回归常用的损失函数是可以求出解析解的，在<font color="F66A65">矩阵形式表达的“解析解”</font>称为正规解</li>
+<li>注：在<a href="algorithms/ai/ai_math/Extra2.html">番外-似然函数：一个摸小球的例子</a> 中举了一个实际的例子说明了「似然函数」和「极大似然估计」的应用，建议看完这一篇，可以从另一个角度理解。</li>
+</ol>
+</blockquote>
+<p><strong>原理实现：</strong>
+<a href="">基于梯度下降的线性回归</a></p>
+<h2 id="一、线性回归目的">一、线性回归目的</h2>
+<p>找到一个线性模型对已知数据进行线性拟合，并期望能很好的泛化到未知的数据上</p>
+<h2 id="二、线性回归损失函数">二、线性回归损失函数</h2>
+<p>$$H=\frac{1}{2}\sum^N_{i=0}(Xw-y)^2$$
+以下两种理解这个公式的方法（2种推导过程）</p>
+<h3 id="21-最小二乘法-lms">2.1 最小二乘法 LMS</h3>
+<ol>
+<li>预测值 $Xw$ 和 真实值 $y$ 的距离: $(Xw-y)$</li>
+<li>直接相加，预测的偏离方向会被掩盖（一正一负会湮灭）所以取平方 $(Xw-y)^2$ \
+不取绝对值是因为不好求梯度，原则上都喜欢使用平方进行中和</li>
+<li>$\frac{1}{2}$ 也是因为求梯度方便（中和掉平方梯度的2系数） 本质上没有区别<blockquote>
+<p>注：二乘是平方的意思</p>
+<h3 id="22-极大似然估计">2.2 极大似然估计</h3>
+<h4 id="221-背景补充：似然函数-likelyhood-function">2.2.1 背景补充：似然函数 likelyhood function</h4>
+<p>似然函数：是一种函数，它的输入是 $\theta$参数空间 和 $X$输入空间，它的输出是样本分类概率$P$。也就是说，似然函数是: $P(y|X,\theta)$</p>
+</blockquote>
+</li>
+</ol>
+<p>对以上概念的理解过程：</p>
+<ol>
+<li>正常求一个已知分布的概率过程，直接找到x，在坐标上描点即可\
+这样的函数我们称之为「概率密度函数」</li>
+<li>对于要求解的损失函数，我们并不知道具体的分布（因为参数需要求），所以没法画出概率密度函数\
+所以求解概率的输入还需要考虑“影响概率密度函数的参数”</li>
+</ol>
+<p><strong>似然函数总结</strong></p>
+<blockquote>
+<p><font color="FDA63E">似然函数是跳过得到完整分布的过程直接求概率的函数</font>（因此还需要参数作为输入）</p>
+<h4 id="222-背景补充：极大似然估计假设">2.2.2 背景补充：极大似然估计假设</h4>
+<ol>
+<li>通过最大化似然函数进行参数估计的方法，称之为极大似然估计</li>
+<li>上面提到的似然函数是各个样本的似然函数的乘积（相当于一个总的似然函数）</li>
+</ol>
+</blockquote>
+<p>为什么最大化各样本似然函数的乘积会有用？这里其实依赖了极大似然估计的一个基本假设：</p>
+<center><font color="62D257">一件事情发生了，一定是可能性最大的那件事发生了才合理</font></center>
+
+<p>这句话似乎没什么问题，我们一点点带入看这个过程：</p>
+<ol>
+<li><font color="62D257">一件事情发生了：</font>于第$i$个样本来说，这个样本具备了所有特征$X_i$之后，成为了标签$y_i$，这个概率是它的似然函数</li>
+<li><font color="62D257">一件事情发生了：</font>对于样本空间来说，各个样本成为我们采集的样子这件事的概率，就是每个样本的似然函数的乘积（因为样本间有独立同分布的假设）</li>
+<li><font color="62D257">可能性最大的那件事发生了：</font>我们让整个乘起来的表达式最大，就是「可能性最大的那件事」<blockquote>
+<p>注：样本间的独立同分布的假设是监督学习能够通过样本学到总体分布的一个基本假设（大家得来自于一个分布）</p>
+<h4 id="223-极大似然估计过程">2.2.3 极大似然估计过程</h4>
+</blockquote>
+</li>
+<li><p>前提条件：$y^{(i)} = \theta^Tx^{(i)}+\epsilon^{(i)}​$      </p>
+<p>其中  $\epsilon^{(i)}$   是一个独立并且服从均值为0方差 $\theta^2$ 的分布</p>
+</li>
+<li><p>服从均值为0方差 $\theta^2$ 的分布可以得到：</p>
+<p>$p(\epsilon^{(i)})=\frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{(\epsilon^{(i)})^2}{2\sigma^2})​$ </p>
+</li>
+<li><p>带入  $\epsilon^{(i)} = y^{(i)}-\theta^Tx^{(i)} $   得</p>
+<p>$p\left(y^{(i)} \mid x^{(i)} ; \theta\right)=\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2} }{2 \sigma^{2} }\right)​$     也就是说找到一组 $\theta​$ 和 $x^{(i)}​$  组合可以使得 $y^{i}​$ 的概率最大</p>
+</li>
+<li><p>引入似然函数</p>
+<p>$L(\theta) = \prod<em>{i=1}^mp(y^{(i)}|x^{(i)};\theta)=\prod</em>{i=1}^m\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2} }{2 \sigma^{2} }\right)​$</p>
+</li>
+<li><p>对似然函数取对数：方便求最大值</p>
+<p>$logL(\theta)=\sum_{i=1}^mlog\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(-\frac{\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2} }{2 \sigma^{2} }\right)$</p>
+<p>$logL(\theta) = m \log \frac{1}{\sqrt{2 \pi} \sigma}-\frac{1}{\sigma^{2} } \cdot \frac{1}{2} \sum_{i=1}^{m}\left(y^{(i)}-\theta^{T} x^{(i)}\right)^{2}$          去掉前面的常数项</p>
+<p>$logL(\theta)=\frac{1}{2}\sum<em>{i=1}^m(h</em>{\theta}(x^{(i)})-y^{(i)})^2$                                      得到最终损失函数</p>
+</li>
+</ol>
+<p><strong>损失函数总结</strong> </p>
+<blockquote>
+<ol>
+<li>对于线性回归来说，<font color="FDA63E">通过极大似然估计得到的损失函数也就是MSE</font></li>
+<li>对于线性回归来说，<font color="FDA63E">极大似然估计需要大前提</font>：
+​        $y^{(i)} = \theta^Tx^{(i)}+\epsilon^{(i)}$         其中 $\epsilon^{(i)}$   是一个独立并且服从均值为0方差 $\theta^2$ 的分布<h2 id="三、损失函数求解">三、损失函数求解</h2>
+<h3 id="31-正规解">3.1 正规解</h3>
+</li>
+<li>使得 $H=\sum^N_{i=0}(Xw-y)^2​$   最小</li>
+</ol>
+</blockquote>
+<ol>
+<li><p>求导：令导函数为零                              复合函数求导</p>
+<p>$\frac{H}{\partial{w} } = 2(Xw-y)X=====0$</p>
+</li>
+<li><p>想要同乘$x^{-1}​$ ：消掉左侧的X                 $XX^{-1}=0​$       注意$X^{-1}​$不一定存在  必须满秩矩阵才有逆矩阵</p>
+<p>$(Xw-y)XX^{-1} = 0X^{-1}$      不能直接这么写</p>
+</li>
+<li><p>解决3的问题：$XX^{T}​$ 得到方阵，方阵就有逆矩阵</p>
+<p>$(Xw-y)XX^{T}\cdot (XX^{T})^{-1}=0\cdot X^{T}\cdot (XX^{T})^{-1}$</p>
+</li>
+<li><p>化简左侧为1，右侧仍为0，得到等式</p>
+<p>$Xw=y​$ </p>
+</li>
+<li><p>此时想要同乘$x^{-1}$ ：消掉左侧的X，再次遇到3的问题，用同样的手法</p>
+<p>$(X^{T}X)^{-1}X^{T}\cdot Xw=(X^{T}X)^{-1}X^{T}\cdot y​$ </p>
+</li>
+<li><p>化简得到最后结果：</p>
+<p>$w=(X^{T}X)^{-1}X^{T}\cdot y​$</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+np.linalg.inv(x.T.dot(x)).dot(x.T).dot(y)   <span class="hljs-comment"># np.linalg.inv 求逆</span>
+</code></pre>
+</li>
+</ol>
+<p><strong>正规解总结</strong></p>
+<blockquote>
+<ol>
+<li>对最小二乘法的损失函数进行复合函数的求导，令导数为0得到求解的入口</li>
+<li>为了化简掉x，外层和内层的X，需要两次使用 $X^{-1}​$  但是不一定有$X^{-1}​$ 需要引入 $X^{T}​$  和$X​$ 凑方阵</li>
+<li>记住最后化简的公式：$Xw=y$  <font color="FDA63E">为了消掉$X$ 得到  $w=(X^{T}X)^{-1}X^{T}\cdot y$</font>  这么复杂的结果</li>
+</ol>
+</blockquote>
+<h3 id="32-梯度下降">3.2 梯度下降</h3>
+<ol>
+<li>梯度下降是一种在知道函数表达式，无法借助图像（参数量庞大）求出全局最优解的情况下尝试求解最小值的实用方法。</li>
+<li>深度学习中梯度下降十分常用，其基于微积分中的2种链式求导法则（「加法原理」和「乘法原理」）</li>
+<li>通常情况下梯度下降容易陷入局部最优的情况，所以有很多的AdaXXX优化方法避免这种情况，然而线性回归是为数不多的局部最优解也是全局最优解的常用算法<blockquote>
+<p>注：在我另一个仓库“机器学习算法手写实现”中，简单实现了<a href="">基于梯度下降的线性回归</a></p>
+<h2 id="四、总结">四、总结</h2>
+<ol>
+<li>作为一个入门级别的算法，线性回归也是<font color="FDA63E">为数不多存在解析解的一个算法</font></li>
+<li>线性回归的总体实现较为简单，但是在梳理的过程中，本篇引入了很多很有用的工具，包括「极大似然估计」和「梯度下降」</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 常见机器学习算法的数学推导">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="LogisticRegression.html" class="navigation navigation-next " aria-label="Next page: 逻辑回归">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"线性回归","level":"1.1.1","depth":2,"next":{"title":"逻辑回归","level":"1.1.2","depth":2,"path":"LogisticRegression.md","ref":"LogisticRegression.md","articles":[]},"previous":{"title":"常见机器学习算法的数学推导","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[{"title":"线性回归","level":"1.1.1","depth":2,"path":"LinearRegression.md","ref":"LinearRegression.md","articles":[]},{"title":"逻辑回归","level":"1.1.2","depth":2,"path":"LogisticRegression.md","ref":"LogisticRegression.md","articles":[]},{"title":"朴素贝叶斯","level":"1.1.3","depth":2,"path":"SimpleBayes.md","ref":"SimpleBayes.md","articles":[]},{"title":"K近邻","level":"1.1.4","depth":2,"path":"KNN.md","ref":"KNN.md","articles":[]},{"title":"决策树","level":"1.1.5","depth":2,"path":"DecisionTrees.md","ref":"DecisionTrees.md","articles":[]},{"title":"随机森林","level":"1.1.6","depth":2,"path":"RandomForest.md","ref":"RandomForest.md","articles":[]},{"title":"AdaBoost","level":"1.1.7","depth":2,"path":"AdaBoost.md","ref":"AdaBoost.md","articles":[]},{"title":"梯度提升树","level":"1.1.8","depth":2,"path":"GBDT.md","ref":"GBDT.md","articles":[]},{"title":"XGBoost","level":"1.1.9","depth":2,"path":"XGBoost.md","ref":"XGBoost.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"LinearRegression.md","mtime":"2025-04-25T11:45:23.982Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:43.273Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,917 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>C 指针介绍 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="035.html" />
+    
+    
+    <link rel="prev" href="033.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    C
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="002.html">
+            
+                <a href="002.html">
+            
+                    
+                    基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="003.html">
+            
+                <a href="003.html">
+            
+                    
+                    C 语言概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="004.html">
+            
+                <a href="004.html">
+            
+                    
+                    C 语言的特点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="005.html">
+            
+                <a href="005.html">
+            
+                    
+                    安装 C 编译器和集成开发环境（Turbo C++）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="006.html">
+            
+                <a href="006.html">
+            
+                    
+                    第一个 C 程序及其结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="007.html">
+            
+                <a href="007.html">
+            
+                    
+                    编译并运行 C 程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="008.html">
+            
+                <a href="008.html">
+            
+                    
+                    C 源代码编译过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="009.html">
+            
+                <a href="009.html">
+            
+                    
+                    C 语言基本语法规则
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="010.html">
+            
+                <a href="010.html">
+            
+                    
+                    关键字和标识符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="011.html">
+            
+                <a href="011.html">
+            
+                    
+                    理解 C 数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="012.html">
+            
+                <a href="012.html">
+            
+                    
+                    使用 C 数据类型的示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="013.html">
+            
+                <a href="013.html">
+            
+                    
+                    变量示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="014.html">
+            
+                <a href="014.html">
+            
+                    
+                    字面值/常量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="015.html">
+            
+                <a href="015.html">
+            
+                    
+                    常量值变量——const关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="016.html">
+            
+                <a href="016.html">
+            
+                    
+                    输入和输出
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="017.html">
+            
+                <a href="017.html">
+            
+                    
+                    运算符示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="018.html">
+            
+                <a href="018.html">
+            
+                    
+                    C 语言中的决策
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="019.html">
+            
+                <a href="019.html">
+            
+                    
+                    C 语言中的switch语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="020.html">
+            
+                <a href="020.html">
+            
+                    
+                    C 语言中的循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="021.html">
+            
+                <a href="021.html">
+            
+                    
+                    C 语言中的数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="022.html">
+            
+                <a href="022.html">
+            
+                    
+                    字符串和字符数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="023.html">
+            
+                <a href="023.html">
+            
+                    
+                    C 语言中的存储类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="024.html">
+            
+                <a href="024.html">
+            
+                    
+                    函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="025.html">
+            
+                <a href="025.html">
+            
+                    
+                    C 语言中的函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="026.html">
+            
+                <a href="026.html">
+            
+                    
+                    C 语言中用户定义函数的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="027.html">
+            
+                <a href="027.html">
+            
+                    
+                    C 语言中函数调用的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="028.html">
+            
+                <a href="028.html">
+            
+                    
+                    如何用 C 语言将数组传递给函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="029.html">
+            
+                <a href="029.html">
+            
+                    
+                    结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="030.html">
+            
+                <a href="030.html">
+            
+                    
+                    结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="031.html">
+            
+                <a href="031.html">
+            
+                    
+                    C 语言中的typedef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="032.html">
+            
+                <a href="032.html">
+            
+                    
+                    联合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="033.html">
+            
+                <a href="033.html">
+            
+                    
+                    指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.33" data-path="034.html">
+            
+                <a href="034.html">
+            
+                    
+                    C 指针介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="035.html">
+            
+                <a href="035.html">
+            
+                    
+                    C 语言中指针变量的声明、初始化和使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="036.html">
+            
+                <a href="036.html">
+            
+                    
+                    C 语言中的指向指针的指针（双指针）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="037.html">
+            
+                <a href="037.html">
+            
+                    
+                    C 语言中的指针和数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="038.html">
+            
+                <a href="038.html">
+            
+                    
+                    C 语言中的指向结构数组的指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="039.html">
+            
+                <a href="039.html">
+            
+                    
+                    C 语言中的指针算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="040.html">
+            
+                <a href="040.html">
+            
+                    
+                    C 语言中的作为函数参数的指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="041.html">
+            
+                <a href="041.html">
+            
+                    
+                    文件/错误
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="042.html">
+            
+                <a href="042.html">
+            
+                    
+                    C 语言文件输入/输出
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="043.html">
+            
+                <a href="043.html">
+            
+                    
+                    C 语言中的错误处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="044.html">
+            
+                <a href="044.html">
+            
+                    
+                    C 语言中的动态内存分配
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="045.html">
+            
+                <a href="045.html">
+            
+                    
+                    C 语言中的命令行参数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >C 指针介绍</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="c-指针介绍">C 指针介绍</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/c/pointers-in-c.php" target="_blank">https://www.studytonight.com/c/pointers-in-c.php</a></p>
+</blockquote>
+<p>C 语言中的指针是一个保存另一个相同<a href="datatype-in-c.php">数据类型</a>变量地址的变量。</p>
+<p>指针用于访问内存和操作地址。</p>
+<p>指针是 C 语言最鲜明、最令人兴奋的特征之一。它为语言提供了力量和灵活性。虽然指针在一开始可能会显得有些混乱和复杂，但是相信我，一旦你理解了这个概念，你就能够用 C 语言做更多的事情。</p>
+<p>在我们开始理解指针是什么以及它们能做什么之前，让我们先来理解“内存位置的地址”是什么意思？</p>
+<hr></hr>
+<h2 id="c-语言中的地址">C 语言中的地址</h2>
+<p>每当用 C 语言定义一个<a href="variables-in-c.php">变量</a>时，就给它分配一个存储位置，它的值将存储在这个位置。我们可以使用<code>&amp;</code>符号轻松检查该内存地址。</p>
+<p>如果<code>var</code>是变量的名称，那么<code>&amp;var</code>会给出它的地址。</p>
+<p>让我们编写一个小程序来查看我们在程序中定义的任何变量的内存地址。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> var = <span class="hljs-number">7</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Value of the variable var is: %d\n"</span>, var);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Memory address of the variable var is: %x\n"</span>, &amp;var);
+}
+</code></pre>
+<p>变量 var 的值为:7 变量 var 的内存地址为:bcc7a00</p>
+<p>你一定也看到了在<a href="user-defined-functions-in-c.php">功能</a> <code>scanf()</code>中，我们提到<code>&amp;var</code>来为任何变量<code>var</code>进行用户输入。</p>
+<pre><code class="lang-cpp"><span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>, &amp;var);
+</code></pre>
+<p>这用于将用户输入的值存储到变量<code>var</code>的地址。</p>
+<hr></hr>
+<h2 id="指针的概念">指针的概念</h2>
+<p>每当在程序中声明一个<strong>变量</strong>时，系统在内存中为该变量分配一个位置，即一个地址，以保存分配的值。这个位置有自己的地址号码，我们刚刚在上面看到了。</p>
+<p>让我们假设系统已经为变量<code>a</code>分配了内存位置<code>80F</code>。</p>
+<p><code>int a = 10;</code></p>
+<p><img src="img/c33b74081b60acf203db00a7c0474b4f.png" alt="storage of variable in C"></img></p>
+<p>我们可以通过使用变量名<code>a</code>或者通过使用其地址<code>80F</code>来访问值<code>10</code>。</p>
+<p>问题是我们如何使用变量的地址来访问它？由于内存地址也只是数字，它们也可以分配给其他变量。用于保存内存地址的变量称为<strong>指针变量</strong>。</p>
+<p>因此<strong>指针</strong>变量只不过是一个保存其他变量地址的变量。一个<strong>指针变量</strong>的值被存储在另一个内存位置。</p>
+<p><img src="img/63af7858ba040084d1f97ff992cf1a67.png" alt="Pointer to a variable"></img></p>
+<hr></hr>
+<h3 id="使用指针的好处">使用指针的好处</h3>
+<p>下面我们列出了使用指针的一些好处:</p>
+<ol>
+<li>指针在处理<a href="arrays-in-c.php">数组</a>和<a href="structures-in-c.php">结构</a>时更有效。</li>
+<li>指针允许引用函数，从而有助于将函数作为参数传递给其他函数。</li>
+<li>它减少了程序的长度和执行时间。</li>
+<li>它允许 C 语言支持动态内存管理。</li>
+</ol>
+<p>在下一个教程中，我们将学习指针的语法，如何声明和定义指针，以及如何使用指针。下一课再见。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="033.html" class="navigation navigation-prev " aria-label="Previous page: 指针">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="035.html" class="navigation navigation-next " aria-label="Next page: C 语言中指针变量的声明、初始化和使用">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"C 指针介绍","level":"1.1.33","depth":2,"next":{"title":"C 语言中指针变量的声明、初始化和使用","level":"1.1.34","depth":2,"path":"035.md","ref":"035.md","articles":[]},"previous":{"title":"指针","level":"1.1.32","depth":2,"path":"033.md","ref":"033.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"034.md","mtime":"2025-04-30T01:08:58.376Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:23:35.455Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

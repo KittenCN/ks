@@ -1,0 +1,643 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>最短路径算法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="最小生成树.html" />
+    
+    
+    <link rel="prev" href="图的表示.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="图论概述.html">
+            
+                <a href="图论概述.html">
+            
+                    
+                    图论算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="图的表示.html">
+            
+                <a href="图的表示.html">
+            
+                    
+                    图的表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.2" data-path="最短路径算法.html">
+            
+                <a href="最短路径算法.html">
+            
+                    
+                    最短路径算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="最小生成树.html">
+            
+                <a href="最小生成树.html">
+            
+                    
+                    最小生成树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="拓扑排序.html">
+            
+                <a href="拓扑排序.html">
+            
+                    
+                    拓扑排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >最短路径算法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="最短路径算法">最短路径算法</h1>
+<p>在图论中，最短路径问题是一类非常经典且实用的问题。本节将详细介绍几种常用的最短路径算法。</p>
+<h2 id="问题定义">问题定义</h2>
+<p>【定义】给定一个图G=(V,E)，其中V是顶点集合，E是边集合，每条边有一个权值（距离或成本）。最短路径问题就是要找到从起点s到终点t之间的一条路径，使得路径上所有边的权值之和最小。</p>
+<p>最短路径问题分为几种类型：</p>
+<ol>
+<li>单源最短路径：从一个源点到其他所有点的最短路径</li>
+<li>多源最短路径：任意两点之间的最短路径</li>
+<li>带负权边的最短路径</li>
+<li>带负权环的图中的最短路径问题（可能无解）</li>
+</ol>
+<h2 id="dijkstra算法">Dijkstra算法</h2>
+<p>【算法】Dijkstra算法是解决单源最短路径问题的经典算法，适用于<strong>所有边权为非负数</strong>的情况。</p>
+<h3 id="算法思想">算法思想</h3>
+<ol>
+<li>维护一个距离数组dist，dist[i]表示从源点s到顶点i的当前最短距离</li>
+<li>每次从未处理的顶点中选择距离最小的顶点u</li>
+<li>更新u的所有邻居v的距离：如果dist[u] + weight(u,v) &lt; dist[v]，则更新dist[v]</li>
+<li>重复步骤2-3直到所有顶点都被处理</li>
+</ol>
+<h3 id="代码实现">代码实现</h3>
+<p>基于优先队列的Dijkstra算法实现：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF = <span class="hljs-number">0x3f3f3f3f</span>;
+
+<span class="hljs-keyword">struct</span> Edge {
+    <span class="hljs-keyword">int</span> to, weight;
+    Edge(<span class="hljs-keyword">int</span> _to, <span class="hljs-keyword">int</span> _weight) : to(_to), weight(_weight) {}
+};
+
+<span class="hljs-built_in">vector</span>&lt;Edge&gt; graph[MAXN];  <span class="hljs-comment">// 邻接表表示的图</span>
+<span class="hljs-keyword">int</span> dist[MAXN];            <span class="hljs-comment">// 存储从源点到各点的最短距离</span>
+<span class="hljs-keyword">bool</span> visited[MAXN];        <span class="hljs-comment">// 标记顶点是否已经处理过</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dijkstra</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-comment">// 初始化</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        dist[i] = INF;
+        visited[i] = <span class="hljs-literal">false</span>;
+    }
+    dist[start] = <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// 使用优先队列优化，pair的first是距离，second是顶点编号</span>
+    <span class="hljs-comment">// 小顶堆，距离小的优先出队</span>
+    priority_queue&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;, <span class="hljs-built_in">vector</span>&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt;, greater&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt;&gt; pq;
+    pq.push({<span class="hljs-number">0</span>, start});
+
+    <span class="hljs-keyword">while</span> (!pq.empty()) {
+        <span class="hljs-keyword">int</span> u = pq.top().second;
+        pq.pop();
+
+        <span class="hljs-keyword">if</span> (visited[u]) <span class="hljs-keyword">continue</span>;  <span class="hljs-comment">// 如果已经处理过，跳过</span>
+        visited[u] = <span class="hljs-literal">true</span>;
+
+        <span class="hljs-comment">// 更新u的所有邻居</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> Edge&amp; e : graph[u]) {
+            <span class="hljs-keyword">int</span> v = e.to;
+            <span class="hljs-keyword">int</span> weight = e.weight;
+
+            <span class="hljs-keyword">if</span> (dist[u] + weight &lt; dist[v]) {
+                dist[v] = dist[u] + weight;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="时间复杂度分析">时间复杂度分析</h3>
+<ul>
+<li>使用邻接矩阵：O(V²)</li>
+<li>使用优先队列优化的邻接表：O((V+E)log V)</li>
+</ul>
+<h3 id="应用场景">应用场景</h3>
+<ol>
+<li>路径规划</li>
+<li>网络路由算法</li>
+<li>任何需要找到最小代价路径的问题</li>
+</ol>
+<h2 id="bellman-ford算法">Bellman-Ford算法</h2>
+<p>【算法】Bellman-Ford算法也用于解决单源最短路径问题，但其<strong>可以处理带有负权边</strong>的图，还能检测负权环。</p>
+<h3 id="算法思想">算法思想</h3>
+<ol>
+<li>初始化dist[source]=0，其他dist[v]=∞</li>
+<li>对所有边进行V-1次松弛操作（因为最短路径最多包含V-1条边）</li>
+<li>再对所有边进行一次松弛操作，如果还有更新，说明存在负权环</li>
+</ol>
+<h3 id="代码实现">代码实现</h3>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> Edge {
+    <span class="hljs-keyword">int</span> from, to, weight;
+};
+
+<span class="hljs-built_in">vector</span>&lt;Edge&gt; edges;  <span class="hljs-comment">// 存储所有边</span>
+<span class="hljs-keyword">int</span> dist[MAXN];      <span class="hljs-comment">// 存储从源点到各点的最短距离</span>
+
+<span class="hljs-comment">// 返回true表示没有负环，false表示存在负环</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">bellmanFord</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> m)</span> </span>{
+    <span class="hljs-comment">// 初始化</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        dist[i] = INF;
+    }
+    dist[start] = <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// 进行n-1次松弛</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n - <span class="hljs-number">1</span>; i++) {
+        <span class="hljs-keyword">bool</span> updated = <span class="hljs-literal">false</span>;
+
+        <span class="hljs-comment">// 对每条边进行松弛操作</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> Edge&amp; e : edges) {
+            <span class="hljs-keyword">if</span> (dist[e.from] != INF &amp;&amp; dist[e.from] + e.weight &lt; dist[e.to]) {
+                dist[e.to] = dist[e.from] + e.weight;
+                updated = <span class="hljs-literal">true</span>;
+            }
+        }
+
+        <span class="hljs-comment">// 如果这一轮没有更新，提前退出</span>
+        <span class="hljs-keyword">if</span> (!updated) <span class="hljs-keyword">break</span>;
+    }
+
+    <span class="hljs-comment">// 检测负环</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> Edge&amp; e : edges) {
+        <span class="hljs-keyword">if</span> (dist[e.from] != INF &amp;&amp; dist[e.from] + e.weight &lt; dist[e.to]) {
+            <span class="hljs-comment">// 存在负环</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;  <span class="hljs-comment">// 不存在负环</span>
+}
+</code></pre>
+<h3 id="时间复杂度分析">时间复杂度分析</h3>
+<ul>
+<li>时间复杂度：O(VE)，其中V是顶点数，E是边数</li>
+</ul>
+<h3 id="spfa算法">SPFA算法</h3>
+<p>SPFA（Shortest Path Faster Algorithm）是Bellman-Ford的队列优化版本，平均复杂度为O(kE)，k一般很小。</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">spfa</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-comment">// 初始化</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        dist[i] = INF;
+        inQueue[i] = <span class="hljs-literal">false</span>;
+        count[i] = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 记录顶点入队次数，用于判断负环</span>
+    }
+
+    dist[start] = <span class="hljs-number">0</span>;
+    <span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; q;
+    q.push(start);
+    inQueue[start] = <span class="hljs-literal">true</span>;
+    count[start]++;
+
+    <span class="hljs-keyword">while</span> (!q.empty()) {
+        <span class="hljs-keyword">int</span> u = q.front();
+        q.pop();
+        inQueue[u] = <span class="hljs-literal">false</span>;
+
+        <span class="hljs-comment">// 更新u的所有邻居</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> Edge&amp; e : graph[u]) {
+            <span class="hljs-keyword">int</span> v = e.to;
+            <span class="hljs-keyword">int</span> w = e.weight;
+
+            <span class="hljs-keyword">if</span> (dist[u] + w &lt; dist[v]) {
+                dist[v] = dist[u] + w;
+
+                <span class="hljs-keyword">if</span> (!inQueue[v]) {
+                    q.push(v);
+                    inQueue[v] = <span class="hljs-literal">true</span>;
+                    count[v]++;
+
+                    <span class="hljs-comment">// 如果一个顶点入队次数超过n，说明存在负环</span>
+                    <span class="hljs-keyword">if</span> (count[v] &gt; n) {
+                        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;  <span class="hljs-comment">// 存在负环</span>
+                    }
+                }
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;  <span class="hljs-comment">// 不存在负环</span>
+}
+</code></pre>
+<h2 id="floyd-warshall算法">Floyd-Warshall算法</h2>
+<p>【算法】Floyd-Warshall算法用于解决<strong>多源最短路径问题</strong>，即求出图中任意两点之间的最短路径。</p>
+<h3 id="算法思想">算法思想</h3>
+<ol>
+<li>通过三重循环，考虑对于每一对顶点(i,j)，是否存在一个顶点k，使得从i到k再到j的路径比已知的从i到j的路径更短</li>
+<li>不断更新这些中间路径，最终得到任意两点间的最短路径</li>
+</ol>
+<h3 id="代码实现">代码实现</h3>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">505</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> INF = <span class="hljs-number">0x3f3f3f3f</span>;
+
+<span class="hljs-keyword">int</span> dist[MAXN][MAXN];  <span class="hljs-comment">// 存储任意两点间的最短距离</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">floyd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-comment">// 初始化，dist[i][j]已经包含了直接连接的边</span>
+
+    <span class="hljs-comment">// 核心算法：考虑所有可能的中转点</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">1</span>; k &lt;= n; k++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) {
+                <span class="hljs-keyword">if</span> (dist[i][k] != INF &amp;&amp; dist[k][j] != INF) {
+                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="时间复杂度分析">时间复杂度分析</h3>
+<ul>
+<li>时间复杂度：O(V³)</li>
+<li>空间复杂度：O(V²)</li>
+</ul>
+<h3 id="应用场景">应用场景</h3>
+<ol>
+<li>需要求解所有点对之间最短路径的场景</li>
+<li>图的顶点数不是很大（小于1000）的情况</li>
+<li>传递闭包问题</li>
+</ol>
+<h2 id="各算法对比与选择">各算法对比与选择</h2>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>时间复杂度</th>
+<th>适用情况</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dijkstra</td>
+<td>O((V+E)log V)</td>
+<td>无负权边的单源最短路</td>
+<td>效率高</td>
+<td>不能处理负权边</td>
+</tr>
+<tr>
+<td>Bellman-Ford</td>
+<td>O(VE)</td>
+<td>可能有负权边的单源最短路</td>
+<td>可检测负权环</td>
+<td>效率较低</td>
+</tr>
+<tr>
+<td>SPFA</td>
+<td>平均O(kE)</td>
+<td>可能有负权边的单源最短路</td>
+<td>一般情况下比Bellman-Ford快</td>
+<td>最坏情况下仍是O(VE)</td>
+</tr>
+<tr>
+<td>Floyd-Warshall</td>
+<td>O(V³)</td>
+<td>多源最短路</td>
+<td>代码简洁，可处理负权边</td>
+<td>顶点数大时效率低</td>
+</tr>
+</tbody>
+</table>
+<h2 id="实战技巧">实战技巧</h2>
+<ol>
+<li>当图没有负权边时，优先使用Dijkstra算法</li>
+<li>当顶点数较小（&lt;1000）且需要求所有点对的最短路径时，使用Floyd-Warshall</li>
+<li>当存在负权边且顶点数较大时，使用SPFA算法</li>
+<li>检测负权环时，使用Bellman-Ford或SPFA算法</li>
+</ol>
+<h2 id="常见问题与优化">常见问题与优化</h2>
+<ol>
+<li><strong>路径记录</strong>：通过添加prev数组记录前驱节点，可以重建最短路径</li>
+<li><strong>处理无穷大</strong>：使用合适的INF值，避免整数溢出</li>
+<li><strong>多起点</strong>：对于多个起点的问题，可以添加一个超级源点</li>
+<li><strong>启发式优化</strong>：针对特定问题，可以结合启发式算法（如A*）</li>
+</ol>
+<h2 id="练习题目推荐">练习题目推荐</h2>
+<ol>
+<li>POJ 3259 Wormholes (负环检测)</li>
+<li>POJ 1502 MPI Maelstrom (Dijkstra)</li>
+<li>POJ 3660 Cow Contest (Floyd传递闭包)</li>
+<li>Codeforces 20C Dijkstra? (路径重建)</li>
+</ol>
+<p>通过这些练习题，你可以深入理解和掌握不同最短路径算法的实际应用。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="图的表示.html" class="navigation navigation-prev " aria-label="Previous page: 图的表示">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="最小生成树.html" class="navigation navigation-next " aria-label="Next page: 最小生成树">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"最短路径算法","level":"1.2.2","depth":2,"next":{"title":"最小生成树","level":"1.2.3","depth":2,"path":"最小生成树.md","ref":"最小生成树.md","articles":[]},"previous":{"title":"图的表示","level":"1.2.1","depth":2,"path":"图的表示.md","ref":"图的表示.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"最短路径算法.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:17.825Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

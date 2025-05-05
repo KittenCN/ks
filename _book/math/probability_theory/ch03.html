@@ -1,0 +1,825 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>连续机率分布 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch04.html" />
+    
+    
+    <link rel="prev" href="ch02.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    概率论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    离散机率分布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    连续机率分布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    期望值 条件概率 失忆性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    联合概率 边际概率 双变数期望值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    多个随机变量之和的概率分布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    随机数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >连续机率分布</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <p><a href="...menustart"></a></p>
+<ul>
+<li><a href="#61746ec0f4a80bc5cb5caef1f62afd5b">Week5 连续机率分布</a><ul>
+<li><a href="#fc548c0411701f3a57c7799ad18245e3">5-1: 机率密度函数 PDF (PROBABILITY DENSITY FUNCTION)</a><ul>
+<li><a href="#bcd1b68617759b1dfcff0403a6b5a8d1">PDF</a></li>
+<li><a href="#0b821c7256491cd7494160a47d4a1023">PDF 跟机率的关系</a></li>
+<li><a href="#5bc2e5b291e2fbe5196f9a425ad6a0c9">PDF 有哪些性质呢?</a></li>
+</ul>
+</li>
+<li><a href="#423296d40fd5d59d1f076d73508c42e6">5-2: 连续机率分布 I (CONTINUOUS PROBABILITY DISTRIBUTION)</a><ul>
+<li><a href="#f7bf1cb803a0ab0539a6dc3ed526dd4f">Uniform 机率分布</a></li>
+<li><a href="#894ad572b4888ac89196f741cd003480">Exponential 机率分布</a><ul>
+<li><a href="#a781eb710c59f5f1dffeb4d79e0bf04d">指数分布和 柏松分布之间的关系</a></li>
+<li><a href="#ee8d241828945ff9c5d39465a5c65f25">指数分布和 几何分布之间的关系</a></li>
+<li><a href="#dc45153d24cf787ea2b2917ec03ca044">指数分布和 uniform 分布的关系</a></li>
+<li><a href="#6d91070e066c0b53115e187e5f194191">指数分布和 正态分布的关系</a></li>
+</ul>
+</li>
+<li><a href="#7d09f590df9dfcbd10d1b8cbffce9514">Erlang 机率分布</a><ul>
+<li><a href="#a37b5c85c6d082e170925dbe09051a82">Erlang 和 Exponential  关系</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2f5c9c5eb9da34f36d7092d770b94259">6-1: 连续机率分布 II ( CONTINUOUS PROBABILITY DISTRIBUTIONS )</a><ul>
+<li><a href="#a638878f993f94c84c6c050963d0f635">Normal 机率分布(常态分布)</a><ul>
+<li><a href="#b672e9679aa32ead876e8b9c6c43d78c">Standard Normal Distribution 标准常态分布</a></li>
+<li><a href="#cdfda3a64e2be69c7339bf9914528638">The 68-95-99.7 rule</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#e1f7ff5183a361cd3b41e3ab5e647cb5">QUIZ</a><ul>
+<li><a href="#cd1c601d65c97e1393f70771cd14e8a1">max/min</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><a href="...menuend"></a></p>
+<h2 id="61746ec0f4a80bc5cb5caef1f62afd5b"></h2>
+
+<h1 id="week5-连续机率分布">Week5 连续机率分布</h1>
+<h2 id="fc548c0411701f3a57c7799ad18245e3"></h2>
+
+<h2 id="5-1-机率密度函数-pdf-probability-density-function">5-1: 机率密度函数 PDF (PROBABILITY DENSITY FUNCTION)</h2>
+<h2 id="bcd1b68617759b1dfcff0403a6b5a8d1"></h2>
+
+<h3 id="pdf">PDF</h3>
+<ul>
+<li>离散的随机变数有 PMF 告诉我们 某个数字发生的机率</li>
+<li>连续变数的机率分布常有不均等的情况发生， Ex: 睡觉的时间长度</li>
+<li>对连续的随机变量，我们也想知道某个数字 发生的机会多大，可以用 PMF 吗?</li>
+</ul>
+<hr></hr>
+<ul>
+<li>连续Random Variable  的先天问题</li>
+<li>每个数字发生的机率都是 0!</li>
+<li>还是很想知道在某个数字发生的机会多大， 怎么办?</li>
+<li>先看个乱七八糟的例子<ul>
+<li>因为拍戏，特别订做合金宝剑</li>
+<li>铜、金打造，如何得知有无偷工减料?</li>
+<li>整根有质量，但是每点质量都是零?好熟悉!</li>
+<li>不看质量看什么?看密度!</li>
+<li>密度 at x ≈ (质量 in [x,x+Δx])/Δx  (Δx→0)</li>
+</ul>
+</li>
+</ul>
+<hr></hr>
+<ul>
+<li>连续的东西，关键是密度!</li>
+<li>宝剑有密度，机率也可有密度!</li>
+<li>对随机变数 𝑿 而言，其机率密度:</li>
+</ul>
+<p><img src="../../ap/calculus/imgs/TU_probability_pdf.png" alt=""></img></p>
+<ul>
+<li>PS:<ul>
+<li>the value of PMF can not be greater than 1</li>
+<li>but the value of PDF can be greater than 1</li>
+</ul>
+</li>
+</ul>
+<h2 id="0b821c7256491cd7494160a47d4a1023"></h2>
+
+<h3 id="pdf-跟机率的关系">PDF 跟机率的关系</h3>
+<ul>
+<li>因为我们习惯处理机率，看到 PDF 如何把它跟机率连结呢?</li>
+</ul>
+<p><img src="../../ap/calculus/imgs/TU_probability_pdf_cdf_relation.png" alt=""></img></p>
+<ul>
+<li>PDF 是 CDF 的微分, CDF 是 PDF 的积分</li>
+<li>fₓ(x) = lim<sub>Δx→0</sub> P(x≤ X ≤x+Δx)/Δx </li>
+<li>当 Δx 很小时：P(x≤ X ≤x+Δx) = fₓ(x)·Δx</li>
+<li><img src="../../ap/calculus/imgs/TU_probability_pdf_calculus.png" alt=""></img></li>
+</ul>
+<h2 id="5bc2e5b291e2fbe5196f9a425ad6a0c9"></h2>
+
+<h3 id="pdf-有哪些性质呢">PDF 有哪些性质呢?</h3>
+<p><img src="../../ap/calculus/imgs/TU_probability_pdf_property.png" alt=""></img></p>
+<hr></hr>
+<h2 id="423296d40fd5d59d1f076d73508c42e6"></h2>
+
+<h2 id="5-2-连续机率分布-i-continuous-probability-distribution">5-2: 连续机率分布 I (CONTINUOUS PROBABILITY DISTRIBUTION)</h2>
+<h2 id="f7bf1cb803a0ab0539a6dc3ed526dd4f"></h2>
+
+<h3 id="uniform-机率分布">Uniform 机率分布</h3>
+<p><img src="../../ap/calculus/imgs/TU_probability2_uniform_dist.png" alt=""></img></p>
+<ul>
+<li>Ex: 已知1路公交车每十分钟一班。 小美随意出发到公车站，小美须等候公交 车之时间为 X</li>
+</ul>
+<h2 id="894ad572b4888ac89196f741cd003480"></h2>
+
+<h3 id="exponential-机率分布">Exponential 机率分布</h3>
+<p><img src="../../ap/calculus/imgs/TU_probability2_exp_dist.png" alt=""></img></p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> scipy, scipy.stats
+x = scipy.linspace(<span class="hljs-number">0</span>,<span class="hljs-number">10</span>,<span class="hljs-number">101</span>)
+lamda = <span class="hljs-number">1</span>
+pmf = scipy.stats.expon.pdf(x, <span class="hljs-number">0</span>, <span class="hljs-number">1.0</span>/lamda)  <span class="hljs-comment"># theta = 1/lamda</span>
+cdf = scipy.stats.expon.cdf(x, <span class="hljs-number">0</span>, <span class="hljs-number">1.0</span>/lamda)
+<span class="hljs-keyword">import</span> pylab
+pylab.plot(x,pmf)
+pylab.plot(x,cdf,color=<span class="hljs-string">"red"</span>)
+pylab.show()
+</code></pre>
+<ul>
+<li>注意: λ = 1.0/θ , scipy.stats 参数是θ<pre><code class="lang-python">  &gt;&gt;&gt; theta = <span class="hljs-number">1</span>
+  &gt;&gt;&gt; x = <span class="hljs-number">3</span>
+  &gt;&gt;&gt; <span class="hljs-number">1</span>/theta* math.e**( -x/theta )
+  <span class="hljs-number">0.04978706836786395</span>
+  &gt;&gt;&gt; stats.expon.pdf( x , scale=theta )
+  <span class="hljs-number">0.049787068367863944</span>
+  &gt;&gt;&gt; theta = <span class="hljs-number">2</span>
+  &gt;&gt;&gt; <span class="hljs-number">1</span>/theta* math.e**( -x/theta )
+  <span class="hljs-number">0.11156508007421492</span>
+  &gt;&gt;&gt; stats.expon.pdf( x , scale=theta )
+  <span class="hljs-number">0.11156508007421491</span>
+</code></pre>
+</li>
+</ul>
+<p><img src="../../ap/calculus/imgs/TU_probability2_exp_dist2.png" alt=""></img></p>
+<ul>
+<li>连续的"几何分布" ?</li>
+<li>非常漂亮的CDF积分</li>
+<li>Exponential 分布有失忆的性质 (memoryless)，常被用来 model 有这种性质 的事情<ul>
+<li>Ex: 小美出门化妆所需之时间</li>
+<li>Ex: 某宅打LOL所花的时间</li>
+<li>指数函数的无记忆性来自于泊松过程k=0时的 时间指数性，而泊松过程k=0时的 时间指数性 来自于泊松分布时 lambda的恒定性，也就是离散情况下，二项分布的n*p的恒定性。</li>
+</ul>
+</li>
+<li>The only memoryless continuous probability distributions are the exponential distributions,<ul>
+<li><code>P( X&gt;t+s | X&gt;t ) = P( X&gt;s )</code>.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="lang-bash">   P( X&gt;t+s | X&gt;t ) = P( X&gt;s )
+=&gt; P( X&gt;t+s , X&gt;t ) / P(X&gt;t) = P( X&gt;s )
+=&gt; P( X&gt;t+s  ) / P(X&gt;t) = P( X&gt;s )
+   <span class="hljs-built_in">let</span> G(t) = P(X&gt;t) 
+=&gt; G(t+s) = G(t)G(s)
+=&gt; G(a) = G(<span class="hljs-number">1</span>)ª
+</code></pre>
+<p>G(a) = G(1)ª = e<sup>log(G(1))·a</sup></p>
+<hr></hr>
+<h2 id="a781eb710c59f5f1dffeb4d79e0bf04d"></h2>
+
+<h4 id="指数分布和-柏松分布之间的关系">指数分布和 柏松分布之间的关系</h4>
+<ul>
+<li>定理一：设随机变量 X 服从参数为 λT的柏松分布，则 两次发生之间的“等待时间”Y 服从参数为 λ的指数分布。</li>
+<li>泊松分布<ul>
+<li>泊松分布的参数λ是单位时间(或单位面积)内随机事件的平均发生率</li>
+<li>泊松分布适合于描述单位时间(或空间)内随机事件发生的次数</li>
+<li>参数λ 由二项分布的期望np决定，λ=np，表示该时间(空间)段内的事件发生的频率。</li>
+<li>eg. 一本书里，印刷错误的字的个数<ul>
+<li>泊松分布 表示一般情况下，书内(空间)的出错的频率(期望)，n代表所有的字数，p代表印刷错误的概率，k表示印刷错的字数。</li>
+<li>当n很大，p很小的时候，二项分布的极限是泊松分布。<ul>
+<li>这个例子同样可以用二项分布的角度来解释：每印刷一个字，表示一次伯努利实验（n代表所有的字数，p代表印刷错误的概率，k表示印刷错的字数</li>
+</ul>
+</li>
+<li>当n继续变大，为连续变量的时候，二项分布的极限又成了正态分布（正态分布是所有分布趋于极限大样本的分布）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>指数分布<ul>
+<li>指数分布是泊松过程的事件间隔的分布</li>
+<li>泊松分布表示的是事件发生的次数，“次数”这个是离散变量，所以泊松分布是离散随机变量的分布；</li>
+<li>指数分布是两件事情发生的平均间隔时间，“时间”是连续变量，所以指数分布是一种连续随机变量的分布。</li>
+<li>指数分布λ 的含义就是泊松分布中的λ</li>
+</ul>
+</li>
+</ul>
+<hr></hr>
+<ul>
+<li>Q: 柯仔在學校的中午都會去跑操場，但是他用意並不是訓練強健的體魄，而是要撿拾別人遺落在跑道邊的金錢。假設柯仔經過長期的經驗與訓練，不管在任何天氣或是體力的影響下，都可以保持一定的速度 1 m/s(公尺每秒)，而在這個速度之下，柯仔平均跑 300 m(公尺) 可以發現一次遺落的錢。隨機變數X代表柯仔開始跑步到撿到錢為止所跑的距離，已知X是個 Exponential Distribution。<ul>
+<li>請問柯仔跑超過5分鐘才撿到錢的機率是多少?</li>
+</ul>
+</li>
+<li>A: 柏松分布 单位时间(300s) λ = 1 ，<ul>
+<li>5分钟内 捡到钱的概率 P(x≤1) = F( 1 ) = 1 - e⁻¹</li>
+<li>5分钟后 捡到钱的概率 P(x&gt;1 ) = 1 - F(1) = e⁻¹ = 0.37<pre><code class="lang-python">  &gt;&gt;&gt; <span class="hljs-number">1.0</span> - scipy.stats.expon.cdf(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)
+  <span class="hljs-number">0.36787944117144233</span>
+</code></pre>
+</li>
+</ul>
+</li>
+<li>Q: 承續上题柯仔的撿錢故事，請問柯仔跑10分鐘操場內撿不到錢的機率是多少?<pre><code class="lang-python">  &gt;&gt;&gt; <span class="hljs-number">1</span> - stats.expon.cdf( <span class="hljs-number">2</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span> )
+  <span class="hljs-number">0.1353352832366127</span>
+</code></pre>
+</li>
+<li>Q: 再承續柯仔的撿錢傳說，某天，柯仔預計只要跑10分鐘操場，但是柯仔在跑5分鐘操場內已經確定沒撿到錢，這時柯仔思量著當天撿不到錢的機率如果大於等於四成，他就要回教室睡覺了。<ul>
+<li>請幫忙柯仔計算在已知柯仔跑五分鐘操場內撿不到錢的前提下，今天跑總共10分鐘操場撿不到錢的機率是多少?</li>
+<li>P( X&gt;x+x₀ | X&gt;x₀ ) = P( X&gt;x+x₀, X&gt;x₀ ) / P(X&gt;x₀) )<pre><code class="lang-python">  &gt;&gt;&gt; ( <span class="hljs-number">1</span> - stats.expon.cdf( <span class="hljs-number">2</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span> ) ) / ( <span class="hljs-number">1</span> - stats.expon.cdf( <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span> ) )
+  <span class="hljs-number">0.36787944117144233</span>
+</code></pre>
+</li>
+<li>和 超過5分鐘才撿到錢的機率 相同！！！ 这就是 指数分布的 失记性！！！</li>
+</ul>
+</li>
+</ul>
+<h2 id="ee8d241828945ff9c5d39465a5c65f25"></h2>
+
+<h4 id="指数分布和-几何分布之间的关系">指数分布和 几何分布之间的关系</h4>
+<ul>
+<li>都是失忆性分布</li>
+<li>期望值都是 倒数 形式</li>
+<li>服从指数分布的随机变量，可以表示 某些易碎品的 寿命， 如电子元件，玻璃制品。 虽然它们的寿命与多种因素有关，但是有一种因素是决定性的。它正好与 “服从正态分布是与 多种相互独立的因素有关，但是没有一种因素是起决定作用” 相反。</li>
+<li>几何分布 是一种 “直到 。。。为止” 型概率分布，也是一种 “寿命”。</li>
+<li>相互独立的设计，直到击中为止，射击次数服从几何分布。被枪手离散地射击，直到击中，它的寿命 就 "为止"了</li>
+</ul>
+<h2 id="dc45153d24cf787ea2b2917ec03ca044"></h2>
+
+<h4 id="指数分布和-uniform-分布的关系">指数分布和 uniform 分布的关系</h4>
+<ul>
+<li>定理2: 随机变量Y 服从参数为 λ 的指数分布的充要条件是 随机变量 Y = 1-e<sup>-λx</sup> 服从(0,1) 上的均匀分布。</li>
+</ul>
+<h2 id="6d91070e066c0b53115e187e5f194191"></h2>
+
+<h4 id="指数分布和-正态分布的关系">指数分布和 正态分布的关系</h4>
+<ul>
+<li>定理3: 随机变量 X,Y 相互独立，都服从正态分布N(0,λ²) , 则 Z=X²+Y² 服从指数分布。</li>
+</ul>
+<hr></hr>
+<h2 id="7d09f590df9dfcbd10d1b8cbffce9514"></h2>
+
+<h3 id="erlang-机率分布">Erlang 机率分布</h3>
+<p><img src="../../ap/calculus/imgs/TU_probability2_Erlang_dist.png" alt=""></img></p>
+<ul>
+<li>CDF:</li>
+</ul>
+<p><img src="../../ap/calculus/imgs/TU_probability2_Erlang_cdf.pn.png" alt=""></img></p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> scipy, scipy.stats
+x = scipy.linspace(<span class="hljs-number">0</span>,<span class="hljs-number">10</span>,<span class="hljs-number">101</span>)
+lamda = <span class="hljs-number">1</span>
+pmf = scipy.stats.erlang.pdf(x, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1.0</span>/lamda)  <span class="hljs-comment"># theta = 1/lambda</span>
+cdf = scipy.stats.erlang.cdf(x, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1.0</span>/lamda)
+<span class="hljs-keyword">import</span> pylab
+pylab.plot(x,pmf)
+pylab.plot(x,cdf,color=<span class="hljs-string">"red"</span>)
+pylab.show()
+</code></pre>
+<p><img src="../../ap/calculus/imgs/TU_probability2_Erlang_cdf2.png" alt=""></img></p>
+<hr></hr>
+<h2 id="a37b5c85c6d082e170925dbe09051a82"></h2>
+
+<h4 id="erlang-和-exponential--关系">Erlang 和 Exponential  关系</h4>
+<ul>
+<li>Erlang(n,λ) 常被用来model 一件有多个关卡事情的总时间，而每个关卡所 需时间都是随机的 <ul>
+<li>关卡数: n</li>
+<li>每关卡所需时间之机率分布: Exponential( λ )</li>
+<li>Ex: 打电动过三关所需时间: Erlang(3, λ)</li>
+<li>Ex: 写完五科作业所需时间</li>
+</ul>
+</li>
+</ul>
+<hr></hr>
+<h2 id="2f5c9c5eb9da34f36d7092d770b94259"></h2>
+
+<h2 id="6-1-连续机率分布-ii--continuous-probability-distributions-">6-1: 连续机率分布 II ( CONTINUOUS PROBABILITY DISTRIBUTIONS )</h2>
+<p>From part of Week6</p>
+<h2 id="a638878f993f94c84c6c050963d0f635"></h2>
+
+<h3 id="normal-机率分布常态分布">Normal 机率分布(常态分布)</h3>
+<ul>
+<li>常态分布在自然界很常出现<ul>
+<li>Ex: 人口身高分布、体重分布</li>
+</ul>
+</li>
+<li>亦常被用作「很多随机量的总合」的机率模型<ul>
+<li>Ex: 100 人吃饭时间的总合</li>
+<li>原因:来自最后会讲到的「中央极限定理」</li>
+</ul>
+</li>
+<li>常态分布，亦常被称作Gaussian (高斯) 机率分布 </li>
+<li>X ~ Gaussian ( μ,σ )<ul>
+<li>也常有人用 X ~ N( μ,σ² ) 表示</li>
+<li><img src="../../ap/calculus/imgs/TU_probability_norm_pdf.png" alt=""></img></li>
+<li><img src="../../ap/calculus/imgs/TU_probability_norm_pdf_graph.png" alt=""></img></li>
+</ul>
+</li>
+<li>CDF是多少?<ul>
+<li>很难算，积分根本算不出来!</li>
+<li>用数值积分法去建表?<ul>
+<li>很难啊，因为不同的 μ,σ 就会造就 出不同的 常态分布 PDF，每个都要建一个表会要命啊!</li>
+</ul>
+</li>
+<li>怎么办?<ul>
+<li>有没有办法找到一组特别 μ,σ  ，先针对这组的 CDF 建表， 然后想办法把别的常态分布的 CDF 跟这组 CDF 牵上关系?</li>
+<li>若能牵扯上，再利用这表去算出别的常态分布的 CDF 值?</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="b672e9679aa32ead876e8b9c6c43d78c"></h2>
+
+<h4 id="standard-normal-distribution-标准常态分布">Standard Normal Distribution 标准常态分布</h4>
+<ul>
+<li>Z ~ N( 0,1 )<ul>
+<li><img src="../../ap/calculus/imgs/TU_probability_std_norm_pdf.png" alt=""></img></li>
+<li><img src="../../ap/calculus/imgs/TU_probability_std_norm_pdf_graph.png" alt=""></img></li>
+</ul>
+</li>
+<li>CDF 表示为Φ(z) :<ul>
+<li><img src="../../ap/calculus/imgs/TU_probability_std_norm_cdf.png" alt=""></img></li>
+<li>积不出来，只能以数值方法近似出来后建表 给人家查</li>
+<li>网络上或是工程计算器上常能找到</li>
+</ul>
+</li>
+<li>Φ(z) 的性质：<ul>
+<li>Φ(-z)= 1 - Φ(z) </li>
+<li><img src="../../ap/calculus/imgs/TU_probability_std_norm_property.png" alt=""></img> </li>
+</ul>
+</li>
+</ul>
+<hr></hr>
+<ul>
+<li>任意 μ,σ 下的 CDF ？<ul>
+<li>任意 μ,σ 下的 CDF , 我们要把它跟 N(0,1) 牵上关系</li>
+<li>「关系!」: 对任何  X ~ N( μ,σ² ) 而言， (X-μ)/σ ~ N(0,1) <ul>
+<li>证明：略</li>
+</ul>
+</li>
+<li>对任何 X ~ N( μ,σ² )  而言 , F<sub>X</sub>(x) = Φ( (x-μ)/σ ) .<ul>
+<li>证明：</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>Fₓ(x) = P( X≤x )
+      = P( X-μ ≤ x-μ )
+      = P( (X-μ)/σ ≤ (x-μ)/σ )
+      = Φ( (x-μ)/σ )
+</code></pre><ul>
+<li><p>Ex. 已知 10 名水源阿伯每日拖车总重量总和 X ~ N(500, 100²) (kg) , 问本日总重量少于700 之机率为 ？</p>
+<ul>
+<li>F<sub>X</sub>(700) = P( X≤700 ) = P( (X-μ)/σ ≤ (700-500)/100 ) = Φ(2) = 0.977<pre><code class="lang-python">  &gt;&gt;&gt; scipy.stats.norm.cdf( <span class="hljs-number">700</span>, <span class="hljs-number">500</span>,<span class="hljs-number">100</span> )
+  <span class="hljs-number">0.97724986805182079</span>
+</code></pre>
+</li>
+</ul>
+</li>
+<li><p>Draw PDF </p>
+</li>
+</ul>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> scipy.stats <span class="hljs-keyword">as</span> stats
+
+mu = <span class="hljs-number">20</span>
+sigma = <span class="hljs-number">2</span>
+
+x = np.linspace( mu - <span class="hljs-number">5</span>*sigma, mu + <span class="hljs-number">5</span>*sigma, <span class="hljs-number">200</span> )
+plt.plot( x, stats.norm.pdf( x, mu, sigma  ) )
+plt.show()
+</code></pre>
+<h2 id="cdfda3a64e2be69c7339bf9914528638"></h2>
+
+<h4 id="the-68-95-997-rule">The 68-95-99.7 rule</h4>
+<ol>
+<li>68% of values fall within <strong>1</strong> standard deviations of the mean</li>
+<li>95% of values fall within <strong>2</strong> standard deviations of the mean</li>
+<li>99.7% of values fall within <strong>3</strong> standard deviations of the mean</li>
+</ol>
+<p><img src="https://www.freecodecamp.org/news/content/images/2020/08/normal_dist_68_rule.jpg" width="480"></img></p>
+<hr></hr>
+<h2 id="e1f7ff5183a361cd3b41e3ab5e647cb5"></h2>
+
+<h2 id="quiz">QUIZ</h2>
+<details>
+<summary>
+quiz ...
+</summary>
+
+- 有一个连续随机变数X， 已知其概率密度PDF: f<sub>X</sub>(x) 在任何x都是连续的， 则下列的叙述何者正确?
+    - ∫₀<sup>∞</sup> f<sub>X</sub>(x)dx = 0.5  - 错
+    - 因为 P(X=x₀) == 0. 所以 {X=x₀} 事件必为∅ - 错
+    - P(X=x) = f<sub>X</sub>(x)·dx = 0    - ✓
+    - f<sub>X</sub>(x) = P(X=x)                - 错
+
+- 小美追打小明，小明远匿方圆2里。 小美有神出鬼没神通，随机平均出没于小明隐匿的地方。 請求出小美、小明之間距離 X (單位：里）之 PDF ( 只需写出 `0≤x&lt;2` 的 pdf )
+    - **易错**
+    - cdf 为半径为x的圆的面积，因为 F(2) = 1 , 所以， F(x) = π*x² / (π*4) , 求导得到 pdf: f(x) = x/2
+    - **pdf/cdf 都和π没关系了, 神奇...**
+- 阿猴上機率課打瞌睡之後，到醒來所需的時間是 T分鐘 , T~Exp(λ=1/10)
+    - 但是醒來之後，過了W分鐘又會睡著, W~Exp(λ=1/10).
+    - 而且醒來與睡著是獨立的。一堂課的時間是 30分鐘，而且阿猴一開始是醒著的 (經過 W分鐘會睡著)，請問阿猴這一堂課裡恰只有睡著過一次的機率是? 
+        ```python
+        # 没有睡觉的概率 (1 - stats.erlang.cdf( 30, 1 ,scale=10 ))
+        # 睡了少于两次的概率 : 1 - stats.erlang.cdf( 30, 3 ,scale=10 )
+        &gt;&gt;&gt; P = 1 - stats.erlang.cdf( 30, 3 ,scale=10 ) - (1 - stats.erlang.cdf( 30, 1 ,scale=10 ))
+        0.37340301275897947
+        ```
+
+
+<h2 id="cd1c601d65c97e1393f70771cd14e8a1"></h2>
+
+### max/min
+
+- 有一公平的幸運之輪，轉盤上有[0,1)的區間，隨機變數X代表轉盤轉到的所對應的數值，也就是PDF:
+    - f<sub>X</sub>(x) = 
+        - 1, 1&gt;x≥0
+        - 0, otherwise
+    - 寶做一個實驗，連續轉這個幸運之輪三次，紀錄這三次結果的最大值，發現這也會是個隨機變數，暫且稱他為Y, Y=max{ X₁,X₂,X₃ }
+        - 其中 X₁,X₂,X₃ 分別是第一到第三次轉動幸運之輪的結果，也就是這三個的PDF都與X 一樣. 
+    - 假設每次轉動幸運之輪都是獨立的操作，請試著推導出Y的CDF: F<sub>Y</sub>(y) = P(Y≤y) , 然后如果小寶希望三次轉動的結果的最大值小於等於0.75，請問此機率 F<sub>Y</sub>(0.75)  是多少?
+    - A: 
+        - **F<sub>max</sub>(z) = P{ Y≤z } = P{ X₁≤z, X₂≤z, X₃≤z } = P{X₁≤z}·P{X₂≤z}·P{X₃≤z} = F<sub>X₁</sub>(z)·F<sub>X₂</sub>(z)·F<sub>X₃</sub>(z)**
+        - 0.75**3 == 0.421875
+            ```python
+            import numpy as np
+
+            nSample = 10000000
+            a = np.random.sample( [3, nSample])
+
+            d =  a.max(axis=0)
+            d = d[ d &lt;= 0.75 ]
+            print( "prob:", len(d)/nSample )
+            # 0.4217941
+            ```
+    - **F<sub>min</sub>(z) = 1-P{X₁&gt;z}·P{X₂&gt;z}·P{X₃&gt;z} = 1- ( 1-F<sub>X₁</sub>(z) )( 1-F<sub>X₂</sub>(z) )( 1-F<sub>X₃</sub>(z) )** 
+
+
+
+</details>
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch02.html" class="navigation navigation-prev " aria-label="Previous page: 离散机率分布">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch04.html" class="navigation navigation-next " aria-label="Next page: 期望值 条件概率 失忆性">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"连续机率分布","level":"1.4","depth":1,"next":{"title":"期望值 条件概率 失忆性","level":"1.5","depth":1,"path":"ch04.md","ref":"ch04.md","articles":[]},"previous":{"title":"离散机率分布","level":"1.3","depth":1,"path":"ch02.md","ref":"ch02.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch03.md","mtime":"2024-01-02T13:15:18.591Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:18:34.382Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

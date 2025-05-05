@@ -1,0 +1,935 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>编译并运行 C 程序 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="008.html" />
+    
+    
+    <link rel="prev" href="006.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    C
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="002.html">
+            
+                <a href="002.html">
+            
+                    
+                    基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="003.html">
+            
+                <a href="003.html">
+            
+                    
+                    C 语言概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="004.html">
+            
+                <a href="004.html">
+            
+                    
+                    C 语言的特点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="005.html">
+            
+                <a href="005.html">
+            
+                    
+                    安装 C 编译器和集成开发环境（Turbo C++）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="006.html">
+            
+                <a href="006.html">
+            
+                    
+                    第一个 C 程序及其结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.6" data-path="007.html">
+            
+                <a href="007.html">
+            
+                    
+                    编译并运行 C 程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="008.html">
+            
+                <a href="008.html">
+            
+                    
+                    C 源代码编译过程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="009.html">
+            
+                <a href="009.html">
+            
+                    
+                    C 语言基本语法规则
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="010.html">
+            
+                <a href="010.html">
+            
+                    
+                    关键字和标识符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="011.html">
+            
+                <a href="011.html">
+            
+                    
+                    理解 C 数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="012.html">
+            
+                <a href="012.html">
+            
+                    
+                    使用 C 数据类型的示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="013.html">
+            
+                <a href="013.html">
+            
+                    
+                    变量示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="014.html">
+            
+                <a href="014.html">
+            
+                    
+                    字面值/常量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="015.html">
+            
+                <a href="015.html">
+            
+                    
+                    常量值变量——const关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="016.html">
+            
+                <a href="016.html">
+            
+                    
+                    输入和输出
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="017.html">
+            
+                <a href="017.html">
+            
+                    
+                    运算符示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="018.html">
+            
+                <a href="018.html">
+            
+                    
+                    C 语言中的决策
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="019.html">
+            
+                <a href="019.html">
+            
+                    
+                    C 语言中的switch语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="020.html">
+            
+                <a href="020.html">
+            
+                    
+                    C 语言中的循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="021.html">
+            
+                <a href="021.html">
+            
+                    
+                    C 语言中的数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="022.html">
+            
+                <a href="022.html">
+            
+                    
+                    字符串和字符数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="023.html">
+            
+                <a href="023.html">
+            
+                    
+                    C 语言中的存储类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="024.html">
+            
+                <a href="024.html">
+            
+                    
+                    函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="025.html">
+            
+                <a href="025.html">
+            
+                    
+                    C 语言中的函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="026.html">
+            
+                <a href="026.html">
+            
+                    
+                    C 语言中用户定义函数的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="027.html">
+            
+                <a href="027.html">
+            
+                    
+                    C 语言中函数调用的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="028.html">
+            
+                <a href="028.html">
+            
+                    
+                    如何用 C 语言将数组传递给函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="029.html">
+            
+                <a href="029.html">
+            
+                    
+                    结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="030.html">
+            
+                <a href="030.html">
+            
+                    
+                    结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="031.html">
+            
+                <a href="031.html">
+            
+                    
+                    C 语言中的typedef
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="032.html">
+            
+                <a href="032.html">
+            
+                    
+                    联合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="033.html">
+            
+                <a href="033.html">
+            
+                    
+                    指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="034.html">
+            
+                <a href="034.html">
+            
+                    
+                    C 指针介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="035.html">
+            
+                <a href="035.html">
+            
+                    
+                    C 语言中指针变量的声明、初始化和使用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="036.html">
+            
+                <a href="036.html">
+            
+                    
+                    C 语言中的指向指针的指针（双指针）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="037.html">
+            
+                <a href="037.html">
+            
+                    
+                    C 语言中的指针和数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="038.html">
+            
+                <a href="038.html">
+            
+                    
+                    C 语言中的指向结构数组的指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="039.html">
+            
+                <a href="039.html">
+            
+                    
+                    C 语言中的指针算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="040.html">
+            
+                <a href="040.html">
+            
+                    
+                    C 语言中的作为函数参数的指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="041.html">
+            
+                <a href="041.html">
+            
+                    
+                    文件/错误
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="042.html">
+            
+                <a href="042.html">
+            
+                    
+                    C 语言文件输入/输出
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="043.html">
+            
+                <a href="043.html">
+            
+                    
+                    C 语言中的错误处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="044.html">
+            
+                <a href="044.html">
+            
+                    
+                    C 语言中的动态内存分配
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="045.html">
+            
+                <a href="045.html">
+            
+                    
+                    C 语言中的命令行参数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >编译并运行 C 程序</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="编译并运行-c-程序">编译并运行 C 程序</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/c/compile-and-run-c-program.php" target="_blank">https://www.studytonight.com/c/compile-and-run-c-program.php</a></p>
+</blockquote>
+<p>要编译运行一个 <a href="https://www.studytonight.com/c/first-c-program.php" target="_blank">C 语言程序</a>，需要一个 C 编译器。一个<strong>编译器</strong>是一个用来编译和执行程序的软件。要在计算机/笔记本电脑中设置 C 语言编译器，有两种方法:</p>
+<ol>
+<li><p>下载一个成熟的集成开发环境，如 Turbo C++ 或微软 Visual C++ 或 DevC++，它附带一个 C 语言编译器。</p>
+</li>
+<li><p>或者，您可以使用任何文本编辑器分别编辑程序文件和下载 C 编译器，然后使用命令行运行 C 程序。</p>
+</li>
+</ol>
+<p>如果你还没有为 C 语言安装 IDE 按照这个分步指南 <strong><a href="https://www.studytonight.com/c/installing-c-language-compiler-and-ide.php" target="_blank">为 C 语言安装 Turbo c++</a></strong></p>
+<h2 id="使用集成开发环境-涡轮增压">使用集成开发环境-涡轮增压</h2>
+<p>我们会推荐你使用 <strong>Turbo C 或者 Turbo C++</strong> IDE，这是 C 编程最古老的 IDE。它可以在网上免费获得，对初学者很有好处。</p>
+<p><strong>第一步:</strong>打开 turbo C IDE(集成开发环境)，点击<strong>文件</strong>，然后点击<strong>新增</strong></p>
+<p><img src="img/dbe66b3839d4e6af95a6d7ce813726fd.png" alt="first c program with turbo C"></img></p>
+<p><strong>第二步:</strong>写一个我们在上一篇文章中创建的 Hello World 程序- <strong><a href="http://www.studytonight.com/c/first-c-program.php" target="_blank">C Hello World 程序</a></strong> 。</p>
+<p><img src="img/542dee4bde6e87cc84fbbeb888c30ced.png" alt="Write a C program with turbo C"></img></p>
+<p><strong>第三步:</strong>点击<strong>编译</strong>菜单，然后点击<strong>编译</strong>选项，或者按键按 <strong>Alt + F9</strong> 编译代码。</p>
+<p><img src="img/b9876ed68bd18bff539133723b01951d.png" alt="Compiling a C program with turbo C"></img></p>
+<p><strong>第四步:</strong>点击<strong>运行</strong>或按 <strong>Ctrl + F9</strong> 运行代码。是的，首先编译 C 程序以生成目标代码，然后运行该目标代码。</p>
+<p><img src="img/9173494c5d33d635ba178428199ccea6.png" alt="Running a C program with turbo C"></img></p>
+<p><strong>第五步:</strong>输出在这里。</p>
+<p><img src="img/f97b3795ae2ac867b44f150ec0250cbd.png" alt="Output of C program with turbo C"></img></p>
+<h2 id="不使用任何集成开发环境运行-c-程序">不使用任何集成开发环境运行 C 程序</h2>
+<p>如果你不想设置 IDE，更喜欢老派的方式，那就从 GCC 网站<a href="https://gcc.gnu.org/install/" target="_blank">https://gcc.gnu.org/install/</a>下载名为<code>gcc</code>的 C 编译器</p>
+<p>一旦你下载并安装了<code>gcc</code>编译器，你所要做的就是，<strong>打开任意一个文本编辑器</strong>，复制并粘贴 <a href="https://www.studytonight.com/c/first-c-program.php" target="_blank">C Hello World Program</a> 的 C 程序代码，并将其以 <strong>helloworld.c</strong> 的名称保存，就像你以名称保存的任何其他文件一样。</p>
+<p>现在，打开<strong>命令提示符或终端</strong>(如果使用的是 Ubuntu 或 Mac OS)，转到保存 <strong>helloworld.c</strong> 程序文件的目录。</p>
+<p>键入命令<code>gcc hello.c</code>编译代码。这将编译代码，如果没有错误，那么它将产生一个名为 <strong>a.out</strong> (默认名称)的输出文件</p>
+<p>现在，要运行程序，输入<code>./a.out</code>你会看到<strong>你好，世界</strong>显示在你的屏幕上。</p>
+<pre><code class="lang-cpp">$ gcc hello.c
+$ ./a.out
+</code></pre>
+<p>你好，世界</p>
+<h2 id="c-语言编译和运行的区别？">C 语言编译和运行的区别？</h2>
+<p>你一定在想为什么这是一个两步的过程，首先，我们编译代码，然后运行代码。我们对 Turbo C 做了同样的事情，对命令行或终端也是如此。</p>
+<p>嗯，<strong>编译</strong>是编译器检查<strong>程序语法是否正确的过程</strong>，语法没有错误，如果代码没问题就把 C 语言源代码转换成机器可理解的目标代码。</p>
+<p>当我们<strong>运行一个编译好的程序</strong>时，运行的只是已经编译好的代码。</p>
+<p>当我们使用命令行运行一个 C 程序时，这种差异是显而易见的。当你编译代码时，一个<strong>。out</strong> 文件生成，然后运行执行程序。</p>
+<p>一次<strong>。out</strong> 文件生成，然后你在源代码文件中对你的程序做任何<strong>的修改，你就要再次</strong>编译代码<strong>，否则，</strong>。out 文件将有旧的源代码<strong>并将继续运行旧程序本身。</strong></p>
+<hr></hr>
+<h2 id="常见问题解答">常见问题解答</h2>
+<h3 id="1你通过编译的过程理解了什么？">1.你通过编译的过程理解了什么？</h3>
+<p>这是一个编译器检查程序语法是否正确的过程。如果在语法中发现任何错误，那么它将抛出错误。编译时抛出的错误称为<strong>编译时错误</strong>。</p>
+<h3 id="2命名-turbo-c-中用来编译代码的键。">2.命名 Turbo C 中用来编译代码的键。</h3>
+<p><strong>ALT + F9</strong> 在 turbo C 中为了编译代码而使用。</p>
+<h3 id="3c-程序是如何运行的？">3.C 程序是如何运行的？</h3>
+<p>在 C 程序的编译和执行过程中，编译器生成与 <strong>C 程序</strong>文件同名但扩展名不同的输出文件。那个。c 扩展文件称为保存<strong>程序</strong>代码的源文件。现在，当我们编译文件时，然后 <strong>C</strong> 编译器寻找错误。</p>
+<h3 id="4在哪里可以编写和运行-c-程序？">4.在哪里可以编写和运行 C 程序？</h3>
+<p>您可以按照以下步骤使用集成开发环境编写和运行 C 程序:</p>
+<ul>
+<li><p>第一步:打开 turbo <strong>C</strong> IDE(集成开发环境)，点击<strong>文件</strong>，然后点击<strong>新建</strong>。</p>
+</li>
+<li><p>第二步:<strong>编写</strong>C 程序代码。</p>
+</li>
+<li><p>第三步:点击<strong>编译</strong>或按 <strong>Alt + F9</strong> 到<strong>编译</strong>代码。</p>
+</li>
+<li><p>第四步:点击<strong>运行</strong>或按 <strong>Ctrl + F9</strong> 运行<strong>代码。</strong></p>
+</li>
+<li><p>第五步:turbo C 将打开控制台，向您显示程序的输出。</p>
+</li>
+</ul>
+<hr></hr>
+<h2 id="结论">结论</h2>
+<p>本教程讲述了如何使用一个名为 Turbo C 的集成开发环境运行和编译任何 C 程序。我们还介绍了如何在不使用任何集成开发环境的情况下完成这项工作。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="006.html" class="navigation navigation-prev " aria-label="Previous page: 第一个 C 程序及其结构">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="008.html" class="navigation navigation-next " aria-label="Next page: C 源代码编译过程">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"编译并运行 C 程序","level":"1.1.6","depth":2,"next":{"title":"C 源代码编译过程","level":"1.1.7","depth":2,"path":"008.md","ref":"008.md","articles":[]},"previous":{"title":"第一个 C 程序及其结构","level":"1.1.5","depth":2,"path":"006.md","ref":"006.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"007.md","mtime":"2025-04-30T01:08:58.336Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:23:35.455Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

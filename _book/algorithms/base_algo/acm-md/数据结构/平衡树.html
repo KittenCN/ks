@@ -1,0 +1,644 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>平衡树 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="分块算法.html" />
+    
+    
+    <link rel="prev" href="跳表.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="基础数据结构.html">
+            
+                <a href="基础数据结构.html">
+            
+                    
+                    基础数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="高级数据结构概述.html">
+            
+                <a href="高级数据结构概述.html">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="并查集.html">
+            
+                <a href="并查集.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="单调栈和单调队列.html">
+            
+                <a href="单调栈和单调队列.html">
+            
+                    
+                    单调栈/单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="线段树.html">
+            
+                <a href="线段树.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="线段树懒标记.html">
+            
+                <a href="线段树懒标记.html">
+            
+                    
+                    线段树懒标记
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="树状数组.html">
+            
+                <a href="树状数组.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="ST表.html">
+            
+                <a href="ST表.html">
+            
+                    
+                    ST表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="堆.html">
+            
+                <a href="堆.html">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="二叉树.html">
+            
+                <a href="二叉树.html">
+            
+                    
+                    二叉树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="红黑树.html">
+            
+                <a href="红黑树.html">
+            
+                    
+                    红黑树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="跳表.html">
+            
+                <a href="跳表.html">
+            
+                    
+                    跳表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.12" data-path="平衡树.html">
+            
+                <a href="平衡树.html">
+            
+                    
+                    平衡树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="分块算法.html">
+            
+                <a href="分块算法.html">
+            
+                    
+                    分块算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >平衡树</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="平衡树">平衡树</h1>
+<h2 id="算法概述">算法概述</h2>
+<p>【平衡树】是一类特殊的二叉搜索树，它通过一定的机制保证树的高度平衡，从而确保各种操作（查找、插入、删除）的时间复杂度维持在O(log n)级别。常见的平衡树包括AVL树、红黑树、Treap、SPlay树等。</p>
+<p>平衡树的核心思想是：在保持二叉搜索树基本性质的同时，通过自平衡操作防止树退化成链表，避免最坏情况下O(n)的操作时间复杂度。</p>
+<h2 id="平衡树的类型">平衡树的类型</h2>
+<h3 id="1-avl树">1. AVL树</h3>
+<p>AVL树是最早被发明的自平衡二叉搜索树，其特点是任何节点的两个子树高度差不超过1。</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>严格平衡：任意节点的左右子树高度差不超过1</li>
+<li>通过旋转操作维护平衡</li>
+<li>查找、插入、删除操作的时间复杂度均为O(log n)</li>
+<li>平衡因子：左子树高度减右子树高度的值</li>
+</ul>
+<p><strong>应用场景</strong>：</p>
+<ul>
+<li>适合读操作较多的场景</li>
+<li>需要严格平衡的场景</li>
+</ul>
+<h3 id="2-红黑树">2. 红黑树</h3>
+<p>红黑树是一种广泛使用的平衡二叉搜索树，它通过节点染色和一系列规则维护平衡。</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>每个节点非红即黑</li>
+<li>根节点和叶节点(NIL)是黑色</li>
+<li>红色节点的子节点必须是黑色</li>
+<li>从任一节点到其叶节点的路径上黑节点数量相同</li>
+<li>平衡性不如AVL树严格，但调整开销更小</li>
+</ul>
+<p><strong>应用场景</strong>：</p>
+<ul>
+<li>C++ STL中的<code>set</code>、<code>map</code>、<code>multiset</code>、<code>multimap</code></li>
+<li>Linux内核中的红黑树</li>
+<li>读写操作都比较频繁的场景</li>
+</ul>
+<h3 id="3-treap">3. Treap</h3>
+<p>Treap是树堆的简称，它将二叉搜索树与堆的特性结合，通过随机优先级维持平衡。</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>每个节点有两个键：一个是BST的键，另一个是随机分配的优先级</li>
+<li>按BST键维护二叉搜索树性质</li>
+<li>按优先级维护最大堆性质</li>
+<li>实现简单，期望时间复杂度为O(log n)</li>
+</ul>
+<p><strong>应用场景</strong>：</p>
+<ul>
+<li>需要分裂和合并操作的场景</li>
+<li>实现简单但仍需保持较好平衡性的场景</li>
+</ul>
+<h3 id="4-splay树">4. Splay树</h3>
+<p>Splay树是一种自调整的二叉搜索树，它不严格保持平衡，但通过伸展操作使频繁访问的元素更易于访问。</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>每次操作后将被访问的节点旋转到根部</li>
+<li>不保证最坏情况的O(log n)时间复杂度，但均摊复杂度为O(log n)</li>
+<li>自适应性强，对连续访问相同或邻近元素效率高</li>
+</ul>
+<p><strong>应用场景</strong>：</p>
+<ul>
+<li>有局部性的访问模式（相同或邻近元素被频繁访问）</li>
+<li>缓存实现</li>
+<li>需要支持区间操作的场景</li>
+</ul>
+<h2 id="平衡树在acm竞赛中的应用">平衡树在ACM竞赛中的应用</h2>
+<p>在ACM竞赛中，平衡树主要用于以下场景：</p>
+<ol>
+<li><strong>动态维护有序集合</strong>：需要支持插入、删除、查找、排名等操作</li>
+<li><strong>区间查询与修改</strong>：某些平衡树变体可以支持高效的区间操作</li>
+<li><strong>求解第k大/小元素</strong>：维护元素顺序和数量</li>
+<li><strong>动态维护统计信息</strong>：如区间和、最大值等</li>
+<li><strong>可持久化数据结构</strong>：记录历史版本，支持历史查询</li>
+</ol>
+<h2 id="常见操作的实现思路">常见操作的实现思路</h2>
+<p>所有平衡树都支持以下基本操作，各自实现细节有所不同：</p>
+<h3 id="1-查找操作">1. 查找操作</h3>
+<p>与普通二叉搜索树相同，自顶向下查找，时间复杂度O(log n)。</p>
+<h3 id="2-插入操作">2. 插入操作</h3>
+<p>将新元素插入适当位置后，需要进行平衡调整：</p>
+<ul>
+<li>AVL树：更新平衡因子，必要时进行旋转</li>
+<li>红黑树：染色并可能旋转以维持红黑性质</li>
+<li>Treap：通过旋转维持堆性质</li>
+<li>Splay树：将新插入的节点伸展到根部</li>
+</ul>
+<h3 id="3-删除操作">3. 删除操作</h3>
+<p>删除节点后，同样需要进行平衡调整，算法与插入类似但通常更复杂。</p>
+<h3 id="4-旋转操作">4. 旋转操作</h3>
+<p>旋转是平衡树调整平衡的核心操作，主要有左旋和右旋两种：</p>
+<ul>
+<li>左旋：将右子节点升为父节点，原父节点变为左子节点</li>
+<li>右旋：将左子节点升为父节点，原父节点变为右子节点</li>
+</ul>
+<h2 id="stl中的平衡树">STL中的平衡树</h2>
+<p>C++ STL中的有序关联容器（<code>set</code>, <code>map</code>, <code>multiset</code>, <code>multimap</code>）通常基于红黑树实现，提供以下操作：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 使用set存储有序数据</span>
+<span class="hljs-built_in">set</span>&lt;<span class="hljs-keyword">int</span>&gt; s;
+s.insert(<span class="hljs-number">5</span>);  <span class="hljs-comment">// 插入元素</span>
+s.erase(<span class="hljs-number">5</span>);   <span class="hljs-comment">// 删除元素</span>
+<span class="hljs-keyword">auto</span> it = s.find(<span class="hljs-number">5</span>);  <span class="hljs-comment">// 查找元素，返回迭代器</span>
+<span class="hljs-keyword">auto</span> it = s.lower_bound(<span class="hljs-number">5</span>);  <span class="hljs-comment">// 返回大于等于5的第一个元素迭代器</span>
+<span class="hljs-keyword">auto</span> it = s.upper_bound(<span class="hljs-number">5</span>);  <span class="hljs-comment">// 返回大于5的第一个元素迭代器</span>
+</code></pre>
+<p>这些容器提供了平衡树的基本功能，但在ACM竞赛中，有时候需要更多的操作，如求第k大元素、区间操作等，这时可能需要自己实现平衡树或扩展STL容器。</p>
+<h2 id="竞赛使用提示">竞赛使用提示</h2>
+<ol>
+<li><strong>优先考虑STL</strong>：大多数情况下，STL的<code>set</code>和<code>map</code>已经足够高效，避免重复造轮子</li>
+<li><strong>正确选择平衡树类型</strong>：<ul>
+<li>元素操作比较均衡时，选择红黑树</li>
+<li>读操作远多于写操作时，选择AVL树</li>
+<li>需要区间操作时，考虑Splay树或线段树</li>
+</ul>
+</li>
+<li><strong>平衡和复杂度的权衡</strong>：实现复杂的平衡树可能不值得，有时一个简单的解决方案更可行</li>
+<li><strong>替代选择</strong>：某些情况下，可以用其他数据结构替代平衡树，如树状数组、线段树、跳表等</li>
+</ol>
+<h2 id="比较：平衡树与其他数据结构">比较：平衡树与其他数据结构</h2>
+<table>
+<thead>
+<tr>
+<th>数据结构</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>平衡树</td>
+<td>查找、插入、删除均为O(log n)</td>
+<td>实现复杂</td>
+<td>动态维护有序集合</td>
+</tr>
+<tr>
+<td>线段树</td>
+<td>支持区间操作</td>
+<td>不支持动态插入/删除元素</td>
+<td>区间查询与修改</td>
+</tr>
+<tr>
+<td>树状数组</td>
+<td>实现简单，常数小</td>
+<td>功能相对受限</td>
+<td>前缀和查询</td>
+</tr>
+<tr>
+<td>哈希表</td>
+<td>期望O(1)的操作</td>
+<td>不支持有序操作</td>
+<td>无序查找</td>
+</tr>
+<tr>
+<td>跳表</td>
+<td>实现简单，支持有序操作</td>
+<td>空间开销较大</td>
+<td>替代平衡树的简单选择</td>
+</tr>
+</tbody>
+</table>
+<h2 id="进阶内容：自定义平衡树">进阶内容：自定义平衡树</h2>
+<p>在竞赛中可能需要实现带有额外功能的平衡树，如支持求第k大元素或区间操作。这些功能可以通过在节点中维护子树大小、子树和等信息来实现。</p>
+<h3 id="典型例题：第k大数">典型例题：第k大数</h3>
+<p><strong>问题</strong>：维护一个数据集合，支持插入、删除、查询第k大的数。</p>
+<p><strong>提示</strong>：可以用平衡树（如红黑树或treap）实现，在每个节点中维护以该节点为根的子树的节点数量。</p>
+<h2 id="总结">总结</h2>
+<p>平衡树是一类保持平衡的二叉搜索树，它确保树的高度近似O(log n)，从而保证各种操作的对数时间复杂度。在ACM竞赛中，平衡树是处理动态有序集合的强大工具。深入了解各种平衡树的特点和实现方法，可以根据具体问题选择最合适的数据结构。</p>
+<p>更多详细的实现和应用，请参考本章中的【红黑树】和【跳表】等具体数据结构的详细介绍。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="跳表.html" class="navigation navigation-prev " aria-label="Previous page: 跳表">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="分块算法.html" class="navigation navigation-next " aria-label="Next page: 分块算法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"平衡树","level":"1.2.12","depth":2,"next":{"title":"分块算法","level":"1.2.13","depth":2,"path":"分块算法.md","ref":"分块算法.md","articles":[]},"previous":{"title":"跳表","level":"1.2.11","depth":2,"path":"跳表.md","ref":"跳表.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"平衡树.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:40.626Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

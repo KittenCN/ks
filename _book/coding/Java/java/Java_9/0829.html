@@ -1,0 +1,589 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>进程 API 改进 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0830.html" />
+    
+    
+    <link rel="prev" href="0828.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 9
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0824.html">
+            
+                <a href="0824.html">
+            
+                    
+                    Java 9 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0825.html">
+            
+                <a href="0825.html">
+            
+                    
+                    Java 模块——Java 平台模块系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0826.html">
+            
+                <a href="0826.html">
+            
+                    
+                    Java REPL——JShell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0827.html">
+            
+                <a href="0827.html">
+            
+                    
+                    接口私有方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0828.html">
+            
+                <a href="0828.html">
+            
+                    
+                    日期 API 改进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.6" data-path="0829.html">
+            
+                <a href="0829.html">
+            
+                    
+                    进程 API 改进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0830.html">
+            
+                <a href="0830.html">
+            
+                    
+                    下划线关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0831.html">
+            
+                <a href="0831.html">
+            
+                    
+                    匿名内部类改进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0832.html">
+            
+                <a href="0832.html">
+            
+                    
+                    流 API 改进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0833.html">
+            
+                <a href="0833.html">
+            
+                    
+                    集合工厂方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0834.html">
+            
+                <a href="0834.html">
+            
+                    
+                    资源试用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0835.html">
+            
+                <a href="0835.html">
+            
+                    
+                    @SafeVarargs注解
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >进程 API 改进</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="进程-api-改进">进程 API 改进</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-9/process-api-improvement" target="_blank">https://www.studytonight.com/java-9/process-api-improvement</a></p>
+</blockquote>
+<p>Java 在 Java 9 版本中通过在 process 类中添加新的方法以及 ProcessHandle 和 ProcessHandle.Info 这两个新接口，对其 process API 进行了改进</p>
+<p>它有助于控制和管理流程，无论是基于操作系统的流程还是应用流程。我们可以创建流程，获取有关流程的信息，如流程 id、所有者姓名、等待时间、流程状态等。</p>
+<p>进程 API 中的两个新接口:</p>
+<ul>
+<li>java.lang.ProcessHandle</li>
+<li>java.lang.ProcessHandle.Info</li>
+</ul>
+<p>Java 中的 Process 类提供了几种方法来处理流程并执行操作，如检查等待流程完成、检查流程的退出状态以及销毁(杀死)流程等。</p>
+<p>以下是在 <strong>Java 9 版本</strong>中添加到 Process 类的一些方法。</p>
+<h2 id="java-进程类方法仅限-java-9-方法">Java 进程类方法(仅限 Java 9 方法)</h2>
+<p>| 方法 | 描述 |
+| 布尔支持 sNormalTermination() | 如果 destroy()的实现是正常终止进程，则返回 true，否则返回 false。 |
+| ProcessHandle toHandle() | 它为进程返回一个进程句柄。 |
+| 长 pid() | 它返回进程的本机进程标识。 |
+| 流<processhandle>子()</processhandle> | 它返回进程的直接子进程的快照。 |
+| 流<processhandle>后代()</processhandle> | 它返回进程后代的快照。 |
+| processhandle.info() | 它返回进程信息的快照。 |
+| 可完成的未来〔t0〕one success() | 它返回一个完整的未来<process>来终止进程。</process> |</p>
+<h2 id="示例查找流程标识">示例:查找流程标识</h2>
+<p>让我们通过一个简单的例子来理解流程处理。这里，我们使用 process 类的 pid()方法获取进程 id。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+        ProcessHandle currentProcess = ProcessHandle.current();
+        System.out.println(<span class="hljs-string">"Process Id: "</span>+currentProcess.pid());    
+    }
+}
+</code></pre>
+<p>流程编号:16458</p>
+<h2 id="java-进程句柄接口">Java 进程句柄接口</h2>
+<p>Java 添加了这个接口来识别和控制本地进程。获取子进程列表、进程信息或销毁进程等都是很有帮助的。下面给出了该方法的语法。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ProcessHandle</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Comparable</span>&lt;<span class="hljs-title">ProcessHandle</span>&gt;
+</span></code></pre>
+<h2 id="接口方法">接口方法</h2>
+<p>以下是进程句柄接口的方法。它包含一个名为“信息”的嵌套接口。</p>
+<p>| 方法 | 描述 |
+| 静态流<processhandle>所有进程()</processhandle> | 它返回当前进程可见的所有进程的快照。 |
+| 流<processhandle>子()</processhandle> | 它返回进程的当前直接子进程的快照。 |
+| （同 Internationalorganizations）国际组织</p>
+<p>| 比较(其他进程句柄) |  |</p>
+<p> | 它将此进程句柄与订单的指定进程句柄进行比较。 |
+| 静态进程句柄电流() | 它返回当前进程的进程句柄。 |
+| 流<processhandle>后代()</processhandle> | 它返回进程后代的快照。 |
+| 布尔销毁() | 它请求终止进程。 |
+| 布尔型强制销毁() | 它请求强行杀死进程。 |
+| 布尔等于(对象其他) | 如果其他对象为非空，具有相同的实现，并且表示相同的系统进程，则返回 true 否则它返回假。 |
+| int hashCode（） | 它返回该进程句柄的哈希代码值。 |
+| processhandle.info() | 它返回进程信息的快照。 |
+| boolean isAlive() | 它测试这个 ProcessHandle 表示的进程是否是活动的。 |
+| 静态可选<processhandle>的(长 pid)</processhandle> | 它为现有的本机进程返回一个可选的<processhandle>。</processhandle> |
+| 可完成的未来〔t0〕one success() | 它返回一个 CompletableFuture <processhandle>来终止该进程。</processhandle> |
+| 可选<processhandle>父项()</processhandle> | 它为父进程返回一个可选的<processhandle>。</processhandle> |
+| 长 pid() | 它返回进程的本机进程标识。 |
+| 布尔支持 sNormalTermination() | 如果 destroy()的实现通常会终止进程，则返回 true。 |</p>
+<p>在前面的例子中，我们获取了当前正在运行的进程的进程 id。然而，我们可以自己开始一个新的进程并处理它。</p>
+<h2 id="示例在-linux-中启动虚拟仪器编辑器">示例:在 Linux 中启动虚拟仪器编辑器</h2>
+<p>现在，让我们使用 ProcessBuilder 类的 start()方法创建一个新的进程。这里，我们在 Linux 中启动 vim 编辑器的一个进程，并使用 pid()方法获取进程 id。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException</span>{
+         Process p = <span class="hljs-keyword">new</span> ProcessBuilder(<span class="hljs-string">"vim"</span>).start();
+          System.out.println(p.pid()); 
+    }
+}
+</code></pre>
+<p>13834</p>
+<h2 id="示例进程信息">示例:进程信息</h2>
+<p>这个例子解释了我们如何获得一个进程的信息。我们使用了进程类的 pid()、isAlive()、info()、hashCode()等方法。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.io.IOException;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException</span>{
+         Process p = <span class="hljs-keyword">new</span> ProcessBuilder(<span class="hljs-string">"vim"</span>).start();
+         <span class="hljs-comment">// Get process ID</span>
+         System.out.println(p.pid());
+         <span class="hljs-comment">// Check is Alive?</span>
+         System.out.println(p.isAlive());
+         <span class="hljs-comment">// Get process Info</span>
+         System.out.println(p.info());
+         <span class="hljs-comment">// Get Hahscode</span>
+         System.out.println(p.hashCode());
+         <span class="hljs-comment">// Get child process</span>
+         System.out.println(p.children());
+         <span class="hljs-comment">// Get className</span>
+         System.out.println(p.getClass());
+    }
+}
+</code></pre>
+<p>14413
+true
+【用户:可选【root】，cmd: /usr/bin/vim.basic，startTime:可选【2020-07-23T19:02:42.310Z】，totalTime:可选【PT0S】】
+1418481495
+Java . util . stream . referencepipeline $ 2 @ 65ab 7765
+class Java . lang . processimpl</p>
+<h2 id="java-processhandle。信息界面">Java ProcessHandle。信息界面</h2>
+<p>该界面提供了有关该进程的信息快照。它是 ProcessHandle 接口的嵌套接口。每个操作系统的进程属性并不相似，并且在所有实现中都不可用。有关进程的信息受到发出请求的进程的操作系统权限的限制。这个接口的签名如下。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ProcessHandle</span>.<span class="hljs-title">Info</span>
+</span></code></pre>
+<h2 id="processhandle。信息方法">ProcessHandle。信息方法</h2>
+<p>下面是 ProcessHandle.info 接口的方法，它是一个静态的嵌套接口</p>
+<p>| 方法 | 描述 |
+| 可选<string>参数()</string> | 它返回进程参数的字符串数组。 |
+| 可选<string>命令()</string> | 它返回进程的可执行路径名。 |
+| 可选<string>命令行()</string> | 它返回进程的命令行。 |
+| 可选<instant>起始符号()</instant> | 它返回进程的开始时间。 |
+| 可选<duration>totalcpudduration()</duration> | 它返回进程累计的总 CPU 时间。 |
+| 可选 <string>用户（）</string> | 它返回进程的用户。 |</p>
+<h2 id="示例">示例:</h2>
+<p>这里，我们使用的是 ProcessHandle。获取进程信息的接口方法。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.io.IOException;
+<span class="hljs-keyword">import</span> java.time.Duration;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException</span>{
+        ProcessHandle.Info info = ProcessHandle.current().info();
+        System.out.println(info.arguments());
+        System.out.println(info.command().orElse(<span class="hljs-string">"Not Found"</span>));
+        String[] argz = info.arguments().orElse(<span class="hljs-keyword">new</span> String[] {});
+        <span class="hljs-keyword">for</span> (String arg: argz)
+             System.out.printf(<span class="hljs-string">"   %s%n"</span>, arg);
+        System.out.println(<span class="hljs-string">"Owner: "</span>+info.user());
+        System.out.println(<span class="hljs-string">"RunTime: "</span>+info.totalCpuDuration().orElse(Duration.ofMillis(<span class="hljs-number">0</span>)).toMillis());
+
+    }
+}
+</code></pre>
+<p>可选[[ljava . lang . string；@ 1f 32 e 575]
+/usr/lib/JVM/Java-11-openjdk-amd64/bin/Java
+-dfile . encoding = UTF-8
+-类路径
+/home/root/eclipse/myjavaproject/bin:/home/root/Downloads/mongo-Java-driver-3 . 12 . 4 . jar:/home/root/Downloads/opencsv-3 . 8 . jar:/home/root/Downloads/commons-logging-1.2/commons 主
+所有者:可选【根】
+运行时间:100</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0828.html" class="navigation navigation-prev " aria-label="Previous page: 日期 API 改进">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0830.html" class="navigation navigation-next " aria-label="Next page: 下划线关键字">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"进程 API 改进","level":"1.1.6","depth":2,"next":{"title":"下划线关键字","level":"1.1.7","depth":2,"path":"0830.md","ref":"0830.md","articles":[]},"previous":{"title":"日期 API 改进","level":"1.1.5","depth":2,"path":"0828.md","ref":"0828.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0829.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:54.669Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

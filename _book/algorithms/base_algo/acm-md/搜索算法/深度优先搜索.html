@@ -1,0 +1,671 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>深度优先搜索(DFS) · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="广度优先搜索.html" />
+    
+    
+    <link rel="prev" href="搜索算法概述.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="搜索算法概述.html">
+            
+                <a href="搜索算法概述.html">
+            
+                    
+                    搜索算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.1" data-path="深度优先搜索.html">
+            
+                <a href="深度优先搜索.html">
+            
+                    
+                    深度优先搜索(DFS)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="广度优先搜索.html">
+            
+                <a href="广度优先搜索.html">
+            
+                    
+                    广度优先搜索(BFS)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="二分查找.html">
+            
+                <a href="二分查找.html">
+            
+                    
+                    二分查找
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="回溯法.html">
+            
+                <a href="回溯法.html">
+            
+                    
+                    回溯法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >深度优先搜索(DFS)</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="深度优先搜索dfs">深度优先搜索(DFS)</h1>
+<h2 id="算法概述">算法概述</h2>
+<p>【深度优先搜索】(Depth-First Search, DFS)是一种用于遍历或搜索树/图数据结构的算法。其特点是沿着一条路径尽可能深入地搜索，直到不能再深入为止，然后回溯到前一个节点，继续搜索其他路径。</p>
+<h2 id="算法设计思路">算法设计思路</h2>
+<p>DFS的核心思想是：</p>
+<ol>
+<li>从起点开始，选择一个方向深入探索</li>
+<li>不断深入，直到无法继续（达到目标或碰到边界）</li>
+<li>回溯到上一个状态，选择另一个方向继续探索</li>
+<li>重复上述过程直到所有可能的路径都被探索完毕</li>
+</ol>
+<p>DFS通常使用函数递归或显式栈来实现回溯机制。</p>
+<h2 id="代码实现与解析">代码实现与解析</h2>
+<h3 id="递归实现以图的遍历为例">递归实现(以图的遍历为例)</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 邻接表表示的图</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; graph;
+<span class="hljs-comment">// 访问标记数组</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt; visited;
+
+<span class="hljs-comment">// DFS函数定义</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node)</span> </span>{
+    <span class="hljs-comment">// 标记当前节点为已访问</span>
+    visited[node] = <span class="hljs-literal">true</span>;
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"访问节点: "</span> &lt;&lt; node &lt;&lt; endl;
+
+    <span class="hljs-comment">// 遍历所有相邻节点</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> neighbor : graph[node]) {
+        <span class="hljs-comment">// 如果相邻节点未被访问，则递归访问它</span>
+        <span class="hljs-keyword">if</span> (!visited[neighbor]) {
+            dfs(neighbor);
+        }
+    }
+}
+
+<span class="hljs-comment">// 图的DFS遍历，处理非连通图的情况</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfsTraversal</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    visited.resize(n, <span class="hljs-literal">false</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">if</span> (!visited[i]) {
+            dfs(i);
+        }
+    }
+}
+</code></pre>
+<h3 id="非递归实现使用栈">非递归实现(使用栈)</h3>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfsIterative</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start)</span> </span>{
+    <span class="hljs-built_in">stack</span>&lt;<span class="hljs-keyword">int</span>&gt; s;
+    s.push(start);
+    visited[start] = <span class="hljs-literal">true</span>;
+
+    <span class="hljs-keyword">while</span> (!s.empty()) {
+        <span class="hljs-keyword">int</span> node = s.top();
+        s.pop();
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"访问节点: "</span> &lt;&lt; node &lt;&lt; endl;
+
+        <span class="hljs-comment">// 注意：与递归DFS相比，迭代版本的访问顺序可能不同</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> neighbor : graph[node]) {
+            <span class="hljs-keyword">if</span> (!visited[neighbor]) {
+                visited[neighbor] = <span class="hljs-literal">true</span>;
+                s.push(neighbor);
+            }
+        }
+    }
+}
+</code></pre>
+<h2 id="流程图解析">流程图解析</h2>
+<pre><code>DFS过程示意(以二叉树为例):
+
+      1        第1步: 访问节点1
+     / \
+    2   3      第2步: 访问节点2
+   / \         第3步: 访问节点4
+  4   5        第4步: 访问节点5 (节点4没有子节点)
+                第5步: 返回节点2
+                第6步: 访问节点3 (节点2的所有路径都已探索)
+</code></pre><h2 id="复杂度分析">复杂度分析</h2>
+<ul>
+<li>时间复杂度：O(V + E)，其中V是节点数，E是边数<ul>
+<li>在邻接表表示下，每个节点和每条边都会被访问一次</li>
+<li>在邻接矩阵表示下，时间复杂度为O(V²)</li>
+</ul>
+</li>
+<li>空间复杂度：O(V)，递归实现时，递归栈的最大深度为图的深度，最坏情况为O(V)</li>
+</ul>
+<h2 id="典型应用场景">典型应用场景</h2>
+<p>DFS在算法竞赛中有广泛应用，常见的应用场景包括：</p>
+<ol>
+<li>【图的遍历】与节点的发现/访问</li>
+<li>【连通分量】的识别</li>
+<li>【拓扑排序】（通过结束时间的逆序）</li>
+<li>【路径查找】问题，特别是所有路径的枚举</li>
+<li>【迷宫问题】和网格搜索</li>
+<li>【回溯算法】的框架，如排列组合、数独解决等</li>
+<li>【图的环检测】</li>
+</ol>
+<h2 id="典型例题分析">典型例题分析</h2>
+<h3 id="例题1-岛屿的数量（leetcode-200）">例题1: 岛屿的数量（LeetCode 200）</h3>
+<p>问题描述：给你一个由 <code>'1'</code>（陆地）和 <code>'0'</code>（水）组成的二维网格，请你计算网格中岛屿的数量。岛屿由相邻的陆地连接而成，上、下、左、右四个方向视为相邻。</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">class</span> Solution {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">numIslands</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">char</span>&gt;&gt;&amp; grid)</span> </span>{
+        <span class="hljs-keyword">if</span> (grid.empty() || grid[<span class="hljs-number">0</span>].empty()) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">int</span> rows = grid.size();
+        <span class="hljs-keyword">int</span> cols = grid[<span class="hljs-number">0</span>].size();
+        <span class="hljs-keyword">int</span> islands = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; rows; i++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; cols; j++) {
+                <span class="hljs-keyword">if</span> (grid[i][j] == <span class="hljs-string">'1'</span>) {
+                    islands++; <span class="hljs-comment">// 发现一个新岛屿</span>
+                    dfs(grid, i, j); <span class="hljs-comment">// 用DFS将整个岛屿标记为已访问</span>
+                }
+            }
+        }
+
+        <span class="hljs-keyword">return</span> islands;
+    }
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">char</span>&gt;&gt;&amp; grid, <span class="hljs-keyword">int</span> row, <span class="hljs-keyword">int</span> col)</span> </span>{
+        <span class="hljs-keyword">int</span> rows = grid.size();
+        <span class="hljs-keyword">int</span> cols = grid[<span class="hljs-number">0</span>].size();
+
+        <span class="hljs-comment">// 边界检查和已访问检查</span>
+        <span class="hljs-keyword">if</span> (row &lt; <span class="hljs-number">0</span> || col &lt; <span class="hljs-number">0</span> || row &gt;= rows || col &gt;= cols || grid[row][col] != <span class="hljs-string">'1'</span>)
+            <span class="hljs-keyword">return</span>;
+
+        grid[row][col] = <span class="hljs-string">'2'</span>; <span class="hljs-comment">// 标记为已访问（可以设为任何非'1'值）</span>
+
+        <span class="hljs-comment">// 探索上下左右四个方向</span>
+        dfs(grid, row + <span class="hljs-number">1</span>, col);
+        dfs(grid, row - <span class="hljs-number">1</span>, col);
+        dfs(grid, row, col + <span class="hljs-number">1</span>);
+        dfs(grid, row, col - <span class="hljs-number">1</span>);
+    }
+};
+</code></pre>
+<p>分析：</p>
+<ul>
+<li>时间复杂度：O(M×N)，其中M是行数，N是列数</li>
+<li>空间复杂度：O(M×N)，最坏情况下，整个网格都是陆地，递归调用深度为M×N</li>
+<li>核心思想：当发现一个陆地格子时，使用DFS将整个相连的陆地区域标记为已访问，避免重复计数</li>
+</ul>
+<h3 id="例题2-全排列（leetcode-46）">例题2: 全排列（LeetCode 46）</h3>
+<p>问题描述：给定一个不含重复数字的数组，返回其所有可能的全排列。</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">class</span> Solution {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; permute(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums) {
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; result;
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; current;
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt; used(nums.size(), <span class="hljs-literal">false</span>);
+
+        dfs(nums, used, current, result);
+        <span class="hljs-keyword">return</span> result;
+    }
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&amp; used, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; current, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; result)</span> </span>{
+        <span class="hljs-comment">// 达到排列长度，记录结果</span>
+        <span class="hljs-keyword">if</span> (current.size() == nums.size()) {
+            result.push_back(current);
+            <span class="hljs-keyword">return</span>;
+        }
+
+        <span class="hljs-comment">// 尝试每个数字</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.size(); i++) {
+            <span class="hljs-comment">// 跳过已使用的数字</span>
+            <span class="hljs-keyword">if</span> (used[i]) <span class="hljs-keyword">continue</span>;
+
+            <span class="hljs-comment">// 选择当前数字</span>
+            used[i] = <span class="hljs-literal">true</span>;
+            current.push_back(nums[i]);
+
+            <span class="hljs-comment">// 递归生成后续排列</span>
+            dfs(nums, used, current, result);
+
+            <span class="hljs-comment">// 回溯：撤销选择</span>
+            current.pop_back();
+            used[i] = <span class="hljs-literal">false</span>;
+        }
+    }
+};
+</code></pre>
+<p>分析：</p>
+<ul>
+<li>时间复杂度：O(n!)，其中n是数组长度，全排列的数量为n!</li>
+<li>空间复杂度：O(n)，递归调用栈的深度为n，额外使用了used数组和current数组</li>
+<li>核心思想：使用DFS和回溯技术生成所有可能的排列</li>
+</ul>
+<h2 id="易错点与调试技巧">易错点与调试技巧</h2>
+<ol>
+<li>【访问标记】忘记标记节点为已访问，导致无限递归
+```cpp
+// 错误写法
+void dfs_wrong(int node) {
+ // 忘记标记为已访问
+ for (int neighbor : graph[node]) {<pre><code> if (!visited[neighbor]) {
+     dfs_wrong(neighbor);
+ }
+</code></pre> }
+}</li>
+</ol>
+<p>// 正确写法
+void dfs_correct(int node) {
+    visited[node] = true; // 立即标记为已访问
+    for (int neighbor : graph[node]) {
+        if (!visited[neighbor]) {
+            dfs_correct(neighbor);
+        }
+    }
+}</p>
+<pre><code>
+2. 【边界条件】检查不充分，特别是在网格问题中
+```cpp
+// 错误写法
+void dfs_grid_wrong(vector&lt;vector&lt;int&gt;&gt;&amp; grid, int row, int col) {
+    // 缺少边界检查
+    if (grid[row][col] != 1) return; // 可能导致数组越界
+
+    grid[row][col] = 2;
+    dfs_grid_wrong(grid, row+1, col);
+    // ...其他方向
+}
+
+// 正确写法
+void dfs_grid_correct(vector&lt;vector&lt;int&gt;&gt;&amp; grid, int row, int col) {
+    int rows = grid.size();
+    int cols = grid[0].size();
+
+    // 完整的边界检查
+    if (row &lt; 0 || row &gt;= rows || col &lt; 0 || col &gt;= cols || grid[row][col] != 1)
+        return;
+
+    grid[row][col] = 2;
+    dfs_grid_correct(grid, row+1, col);
+    // ...其他方向
+}
+</code></pre><ol>
+<li><p>【递归深度】过深导致栈溢出</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 处理递归深度过大的情况</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs_with_depth_check</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node, <span class="hljs-keyword">int</span> depth)</span> </span>{
+ <span class="hljs-keyword">if</span> (depth &gt; MAX_DEPTH) <span class="hljs-keyword">return</span>; <span class="hljs-comment">// 限制递归深度</span>
+
+ visited[node] = <span class="hljs-literal">true</span>;
+ <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> neighbor : graph[node]) {
+     <span class="hljs-keyword">if</span> (!visited[neighbor]) {
+         dfs_with_depth_check(neighbor, depth + <span class="hljs-number">1</span>);
+     }
+ }
+}
+</code></pre>
+</li>
+</ol>
+<h2 id="优化策略">优化策略</h2>
+<ol>
+<li>【记忆化搜索】避免重复计算
+```cpp
+// 使用记忆化数组避免重复状态计算
+vector<int> memo;</int></li>
+</ol>
+<p>int dfs_with_memo(int state) {
+    if (memo[state] != -1) return memo[state]; // 已计算过的状态直接返回</p>
+<pre><code>// 计算结果
+int result = 0;
+// ...计算逻辑
+
+memo[state] = result; // 存储结果
+return result;
+</code></pre><p>}</p>
+<pre><code>
+2. 【剪枝】提前终止无效搜索路径
+```cpp
+void dfs_with_pruning(int node, int target, int current_sum) {
+    if (current_sum &gt; target) {
+        return; // 剪枝：当前和已超过目标，无需继续
+    }
+
+    if (current_sum == target) {
+        // 找到解
+        return;
+    }
+
+    for (int neighbor : graph[node]) {
+        if (!visited[neighbor]) {
+            visited[neighbor] = true;
+            dfs_with_pruning(neighbor, target, current_sum + value[neighbor]);
+            visited[neighbor] = false;
+        }
+    }
+}
+</code></pre><h2 id="练习题推荐">练习题推荐</h2>
+<ol>
+<li>LeetCode 733: 图像渲染（简单DFS网格问题）</li>
+<li>LeetCode 200: 岛屿数量（中等难度网格DFS）</li>
+<li>LeetCode 695: 岛屿的最大面积（中等难度网格DFS）</li>
+<li>LeetCode 46: 全排列（中等难度回溯）</li>
+<li>LeetCode 79: 单词搜索（中等难度网格DFS）</li>
+<li>LeetCode 417: 太平洋大西洋水流问题（中等难度多源DFS）</li>
+<li>POJ 1321: 棋盘问题（经典DFS练习）</li>
+<li>CodeForces 510B: Fox And Two Dots（环检测DFS）</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>深度优先搜索是一种强大的图遍历算法，广泛应用于各类问题求解中。其核心思想是尽可能深入探索一条路径，再回溯尝试其他可能的选择。掌握DFS的关键在于：</p>
+<ol>
+<li>理解递归与回溯的本质</li>
+<li>正确处理访问标记和边界条件</li>
+<li>灵活运用剪枝和记忆化等优化技巧</li>
+</ol>
+<p>在ACM比赛中，DFS通常与回溯、记忆化、剪枝等技术结合使用，能够高效解决图遍历、排列组合、路径查找等各类问题。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="搜索算法概述.html" class="navigation navigation-prev " aria-label="Previous page: 搜索算法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="广度优先搜索.html" class="navigation navigation-next " aria-label="Next page: 广度优先搜索(BFS)">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"深度优先搜索(DFS)","level":"1.2.1","depth":2,"next":{"title":"广度优先搜索(BFS)","level":"1.2.2","depth":2,"path":"广度优先搜索.md","ref":"广度优先搜索.md","articles":[]},"previous":{"title":"搜索算法","level":"1.2","depth":1,"path":"搜索算法概述.md","ref":"搜索算法概述.md","articles":[{"title":"深度优先搜索(DFS)","level":"1.2.1","depth":2,"path":"深度优先搜索.md","ref":"深度优先搜索.md","articles":[]},{"title":"广度优先搜索(BFS)","level":"1.2.2","depth":2,"path":"广度优先搜索.md","ref":"广度优先搜索.md","articles":[]},{"title":"二分查找","level":"1.2.3","depth":2,"path":"二分查找.md","ref":"二分查找.md","articles":[]},{"title":"回溯法","level":"1.2.4","depth":2,"path":"回溯法.md","ref":"回溯法.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"深度优先搜索.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:34.691Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

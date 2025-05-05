@@ -1,0 +1,742 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ch12. 文件和异常 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch13.html" />
+    
+    
+    <link rel="prev" href="ch11.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Python基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    ch01. 初识 Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    ch02. Python 运算符与基本数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    ch03. 玩转 Python 字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    ch04. Python 序列结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    ch05. Python 的三种格式化输出方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    ch06. Python 常用内置函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    ch07. Python 程序流程控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="ch08.html">
+            
+                <a href="ch08.html">
+            
+                    
+                    ch08. Python 标准库和扩展库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="ch09.html">
+            
+                <a href="ch09.html">
+            
+                    
+                    ch09. 常用 Python 标准库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="ch10.html">
+            
+                <a href="ch10.html">
+            
+                    
+                    ch10. 函数Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ch11.html">
+            
+                <a href="ch11.html">
+            
+                    
+                    ch11. 面向对象程序设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.12" data-path="ch12.html">
+            
+                <a href="ch12.html">
+            
+                    
+                    ch12. 文件和异常
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ch13.html">
+            
+                <a href="ch13.html">
+            
+                    
+                    ch13. 迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="ch14.html">
+            
+                <a href="ch14.html">
+            
+                    
+                    ch14. Python 奇技淫巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ch12. 文件和异常</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="（十二）文件和异常">（十二）文件和异常</h1>
+<h2 id="1-从文件中读取数据">1. 从文件中读取数据</h2>
+<p><strong>1.1 读取整个文件内容</strong></p>
+<p><code>with</code> 方法：</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">with</span> open(<span class="hljs-string">'test.txt'</span>) <span class="hljs-keyword">as</span> file_project:
+      contents = file_project.read()
+        print(contents)
+</code></pre>
+<p><code>open-close</code> 方法：</p>
+<pre><code class="lang-Python">fo = open(<span class="hljs-string">'test.txt'</span>)
+contents = fo.read()
+print(contents)
+fo.close() <span class="hljs-comment"># 注意关闭文件</span>
+</code></pre>
+<p>说明：</p>
+<ol>
+<li><code>with</code> 使得我们不需要手动关闭文件；打开文件就必须要关闭文件，否则文件会出现数据丢失等问题；</li>
+<li><code>open()</code> 函数打开一个文件，参数是文件名，必要时带上相对路径；</li>
+<li><code>file_project</code> 是构造的一个文件对象，在 <code>with</code> 块内对其进行操作；</li>
+<li><code>read()</code> 方法读取整个文件，返回一个字符串；</li>
+</ol>
+<p><strong>1.2 逐行读取（一）</strong></p>
+<pre><code class="lang-Python">filename = <span class="hljs-string">'test.txt'</span>
+<span class="hljs-keyword">with</span> open(filenname) <span class="hljs-keyword">as</span> file_project:
+        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> file_project:
+              print(line.rstrip())
+</code></pre>
+<p><strong>1.3 逐行读取（二）</strong></p>
+<pre><code class="lang-Python">filename = <span class="hljs-string">'test.txt'</span>
+<span class="hljs-keyword">with</span> open(filenname) <span class="hljs-keyword">as</span> file_project:
+      lines = file_project.readlines()
+<span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:
+      print(line.rstrip())
+</code></pre>
+<p>说明：</p>
+<ol>
+<li><code>readlines()</code> 读取文件内容的每一行，包括换行 <code>\n</code>，返回一个列表；</li>
+<li><code>readline([size])</code> 按照读取次数从上到下依次读取一行；</li>
+<li><code>rstrip()</code> 是为了消除换行 <code>\n</code>；</li>
+</ol>
+<p><strong>1.4 处理读取的文件内容</strong></p>
+<pre><code class="lang-Python">filename = <span class="hljs-string">'test.txt'</span>
+<span class="hljs-keyword">with</span> open(filename) <span class="hljs-keyword">as</span> file_project:
+      lines = file_project.readlines()
+string = <span class="hljs-string">''</span>
+<span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> lines:
+      string += line.rstrip()
+</code></pre>
+<h2 id="2-写入文件">2. 写入文件</h2>
+<p>2.1 覆盖重写</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">with</span> open(<span class="hljs-string">'1.txt'</span>, <span class="hljs-string">'w'</span>) <span class="hljs-keyword">as</span> file_project:
+      file_project.write(<span class="hljs-string">'I like Python.'</span>)
+</code></pre>
+<p>以 <code>w</code> （只读）方式对文件写入，会覆盖原始数据。</p>
+<p>2.2 附加写入</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">with</span> open(<span class="hljs-string">'1.txt'</span>, <span class="hljs-string">'a'</span>) <span class="hljs-keyword">as</span> file_project:
+        file_project.write(<span class="hljs-string">'I like Python.'</span>)
+</code></pre>
+<p>以 <code>a</code> （附加）形式写入，会在原文件内容后面新增一条数据。</p>
+<p>2.3 清空文件内容</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">with</span> open(<span class="hljs-string">'1.txt'</span>, <span class="hljs-string">'w'</span>) <span class="hljs-keyword">as</span> file_project:
+      file_project.truncate()
+</code></pre>
+<p>以 <code>w</code> （写入）形式使用 <code>truncate</code> 方法清空文件数据。</p>
+<h2 id="3-文件读写总结">3. 文件读写总结</h2>
+<p>格式一：</p>
+<pre><code class="lang-Python">fo = open(filename, mode, buffering=-<span class="hljs-number">1</span>, encoding=<span class="hljs-keyword">None</span>)
+<span class="hljs-comment"># 文件操作</span>
+fo.close()
+</code></pre>
+<p>格式二：</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">with</span> open(filename, mode, buffering=-<span class="hljs-number">1</span>, encoding=<span class="hljs-keyword">None</span>) <span class="hljs-keyword">as</span> file_project:
+      <span class="hljs-comment"># 文件操作</span>
+</code></pre>
+<p>参数说明：</p>
+<ul>
+<li><code>filename</code> : 文件名</li>
+<li><code>mode</code> : 打开文件的模式</li>
+<li><code>buffering</code>: 是否缓冲；0=不缓冲，1=缓冲, &gt;1的int数=缓冲区大小</li>
+<li><code>encoding</code>: 文件编码，一般是 <code>utf-8</code></li>
+</ul>
+<p><code>mode</code> 参数：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>r</code></td>
+<td><strong>只读</strong> 模式；若文件不存在则报错；默认模式。</td>
+</tr>
+<tr>
+<td><code>rb</code></td>
+<td>二进制格式<strong>只读</strong>；但文件属于非文本，默认模式。</td>
+</tr>
+<tr>
+<td><code>r+</code></td>
+<td><strong>读写</strong> 模式。文件指针将会放在文件的开头。</td>
+</tr>
+<tr>
+<td><code>rb+</code></td>
+<td>二进制格式 <strong>读写</strong>。文件指针将会放在文件的开头。一般用于非文本文件如图片等。</td>
+</tr>
+<tr>
+<td><code>w</code></td>
+<td><strong>只写</strong> 模式；如果该文件已存在则打开文件，并从开头编辑，即原有内容会被删除。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td><code>wb</code></td>
+<td>二进制格式 <strong>只写</strong>。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。一般用于非文本文件如图片等。</td>
+</tr>
+<tr>
+<td><code>w+</code></td>
+<td><strong>读写</strong> 模式。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。</td>
+</tr>
+<tr>
+<td><code>wb+</code></td>
+<td>以二进制格式打开一个文件用于 <strong>读写</strong>。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。一般用于非文本文件如图片等。</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td><strong>追加</strong> 模式；如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。</td>
+</tr>
+<tr>
+<td><code>ab</code></td>
+<td>二进制格式 <strong>追加</strong>。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。</td>
+</tr>
+<tr>
+<td><code>a+</code></td>
+<td><strong>读写</strong> 模式。如果该文件已存在，文件指针将会放在文件的结尾。文件打开时会是追加模式。如果该文件不存在，创建新文件用于读写</td>
+</tr>
+<tr>
+<td><code>ab+</code></td>
+<td>二进制格式 <strong>追加</strong>。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，创建新文件用于读写。</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td><strong>更新</strong> 模式，可读可写。</td>
+</tr>
+<tr>
+<td><code>x</code></td>
+<td><strong>只写</strong> 模式，新建一个文件，如果该文件已存在则会报错</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-异常">4. 异常</h2>
+<p>4.1 <code>try-except</code></p>
+<p>4.2 <code>try-except-else</code></p>
+<ul>
+<li>将要验证是否出错的代码段放在 <code>try</code> 块中，将通过 <code>try</code> 块后要执行的代码放在 <code>else</code> 中；<code>excpet</code> 中的代码是对错误的处理。</li>
+<li><code>excpet</code> 块和 <code>else</code> 中的代码只会执行其一，<code>try</code> 中无错误，则 <code>else</code> 就执行。</li>
+</ul>
+<p>4.3 <code>except</code> 语句块</p>
+<p>（一）使用异常类型 <code>ErrorObjectError</code></p>
+<pre><code class="lang-Python"><span class="hljs-keyword">try</span>:
+    <span class="hljs-comment"># ...</span>
+<span class="hljs-keyword">except</span> ErrorObjectName:
+    <span class="hljs-comment"># ...</span>
+<span class="hljs-keyword">else</span>:
+    <span class="hljs-comment"># ...</span>
+</code></pre>
+<p><code>ErrorObjectName</code> 是内的置异常错误对象，比如 <code>FileNotFoundError</code> 和 <code>ZeroDivisionError</code> 、<code>SyntaxError</code> 等等。</p>
+<p>（二）不使用任何异常类型 </p>
+<pre><code class="lang-Python"><span class="hljs-keyword">try</span>:
+  <span class="hljs-comment"># ...</span>
+<span class="hljs-keyword">except</span>:
+  <span class="hljs-comment"># ...</span>
+<span class="hljs-keyword">else</span>:
+  <span class="hljs-comment"># ...</span>
+</code></pre>
+<p>4.4 结合 <code>pass</code> 语句实现</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">except</span>:
+    <span class="hljs-keyword">pass</span>
+</code></pre>
+<h2 id="5-常见异常">5. 常见异常</h2>
+<table>
+<thead>
+<tr>
+<th>异常名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Exception</code></td>
+<td>常规错误的基类</td>
+</tr>
+<tr>
+<td><code>ZeroDivisionError</code></td>
+<td>除(或取模)零 (所有数据类型)</td>
+</tr>
+<tr>
+<td><code>IOError</code></td>
+<td>输入/输出操作失败</td>
+</tr>
+<tr>
+<td><code>IndexError</code></td>
+<td>序列中没有此索引(index</td>
+</tr>
+<tr>
+<td><code>KeyError</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>NameError</code></td>
+<td>未声明/初始化对象 (没有属性)</td>
+</tr>
+<tr>
+<td><code>FileNotFoundError</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SyntaxError</code></td>
+<td>Python 语法错误</td>
+</tr>
+<tr>
+<td><code>StopIteration</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ImportError</code></td>
+<td>导入模块/对象失败</td>
+</tr>
+<tr>
+<td><code>IndentationError</code></td>
+<td>缩进错误</td>
+</tr>
+<tr>
+<td><code>TabError</code></td>
+<td>Tab 和空格混用</td>
+</tr>
+<tr>
+<td><code>ValueError</code></td>
+<td>传入无效的参数</td>
+</tr>
+<tr>
+<td><code>AttributeError</code></td>
+<td>对象没有这个属性</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-存储数据">6. 存储数据</h2>
+<p>6.1 使用 <code>json</code> 库</p>
+<p>使用 <code>json.dump()</code> 和 <code>json.load()</code> 来写入和读取<code>json</code>数据 </p>
+<ul>
+<li><p><code>json.dump(data, file_project)</code> </p>
+<p>接收两个参数，要写入的数据 <code>data</code> 和 写入的文件对象 <code>file_project</code></p>
+<pre><code class="lang-Python"><span class="hljs-keyword">import</span> json
+filename = <span class="hljs-string">'numbers.json'</span>
+numbers = [<span class="hljs-number">12</span>, <span class="hljs-number">13</span>, <span class="hljs-number">14</span>, <span class="hljs-number">15</span>, <span class="hljs-number">16</span>, <span class="hljs-number">17</span>, <span class="hljs-number">18</span>, <span class="hljs-number">19</span>, <span class="hljs-number">20</span>]
+<span class="hljs-keyword">with</span> open(filename, <span class="hljs-string">'w'</span>) <span class="hljs-keyword">as</span> f_object:
+    json.dump(numbers, f_object)
+</code></pre>
+</li>
+<li><p><code>json.load(file_project)</code></p>
+<pre><code class="lang-Python"><span class="hljs-keyword">with</span> open(filename, <span class="hljs-string">'r'</span>) <span class="hljs-keyword">as</span> f_object:
+    numbers = json.load(f_object)
+print(numbers)
+</code></pre>
+</li>
+</ul>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch11.html" class="navigation navigation-prev " aria-label="Previous page: ch11. 面向对象程序设计">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch13.html" class="navigation navigation-next " aria-label="Next page: ch13. 迭代器和生成器">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ch12. 文件和异常","level":"1.1.12","depth":2,"next":{"title":"ch13. 迭代器和生成器","level":"1.1.13","depth":2,"path":"ch13.md","ref":"ch13.md","articles":[]},"previous":{"title":"ch11. 面向对象程序设计","level":"1.1.11","depth":2,"path":"ch11.md","ref":"ch11.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch12.md","mtime":"2025-04-20T02:13:02.372Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:34.729Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

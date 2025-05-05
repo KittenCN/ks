@@ -1,0 +1,1930 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>十二、为什么均值重要 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="13.html" />
+    
+    
+    <link rel="prev" href="11.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    计算与推断思维
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="READ_ME.html">
+            
+                <a href="READ_ME.html">
+            
+                    
+                    计算与推断思维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="1.html">
+            
+                <a href="1.html">
+            
+                    
+                    一、数据科学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="2.html">
+            
+                <a href="2.html">
+            
+                    
+                    二、因果和实验
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="3.html">
+            
+                <a href="3.html">
+            
+                    
+                    三、Python 编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="4.html">
+            
+                <a href="4.html">
+            
+                    
+                    四、数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="5.html">
+            
+                <a href="5.html">
+            
+                    
+                    五、表格
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="6.html">
+            
+                <a href="6.html">
+            
+                    
+                    六、可视化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="7.html">
+            
+                <a href="7.html">
+            
+                    
+                    七、函数和表格
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="8.html">
+            
+                <a href="8.html">
+            
+                    
+                    八、随机性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="9.html">
+            
+                <a href="9.html">
+            
+                    
+                    九、经验分布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="10.html">
+            
+                <a href="10.html">
+            
+                    
+                    十、假设检验
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="11.html">
+            
+                <a href="11.html">
+            
+                    
+                    十一、估计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.13" data-path="12.html">
+            
+                <a href="12.html">
+            
+                    
+                    十二、为什么均值重要
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="13.html">
+            
+                <a href="13.html">
+            
+                    
+                    十三、预测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="14.html">
+            
+                <a href="14.html">
+            
+                    
+                    十四、回归的推断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="15.html">
+            
+                <a href="15.html">
+            
+                    
+                    十五、分类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="16.html">
+            
+                <a href="16.html">
+            
+                    
+                    十六、比较两个样本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="17.html">
+            
+                <a href="17.html">
+            
+                    
+                    十七、更新预测
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >十二、为什么均值重要</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="十二、为什么均值重要">十二、为什么均值重要</h1>
+<blockquote>
+<p>原文：<a href="https://github.com/data-8/textbook/tree/gh-pages/chapters/12" target="_blank">Why the Mean Matters</a></p>
+<p>译者：<a href="https://github.com/wizardforcel" target="_blank">飞龙</a></p>
+<p>协议：<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></p>
+<p>自豪地采用<a href="https://translate.google.cn/" target="_blank">谷歌翻译</a></p>
+</blockquote>
+<p>在这个课程中，我们已经研究了几个不同的统计量，包括总编译距离，最大值，中位数和平均值。在关于随机性的明确假设下，我们绘制了所有这些统计量的经验分布。有些统计量，比如最大和总变异距离，分布明显偏向一个方向。但是，无论研究对象如何，样本均值的经验分布几乎总是接近钟形。</p>
+<p>如果随机样本的性质是真的，不管总体如何，它都能成为一个有力的推理工具，因为我们通常不清楚总体中的数据。大型随机样本的均值分布属于这类性质。这就是随机抽样方法广泛用于数据科学的原因。</p>
+<p>在本章中，我们将研究均值，以及我们可以说的一些东西，仅仅使用最基本的底层总体的假设。我们要解决的问题包括：</p>
+<ul>
+<li>均值正好测量了什么？</li>
+<li>大部分数据与平均值有多接近？</li>
+<li>样本量如何与样本的均值相关？</li>
+<li>为什么随机样本的经验分布出现钟形？</li>
+<li>我们如何有效地使用抽样方法进行推理？</li>
+</ul>
+<h2 id="均值的性质">均值的性质</h2>
+<p>在这个课程中，我们可以互换地使用“average”和“mean”两个单词（译者注，在中文中都译为“均值”），后面也一样。 在你高中甚至更早的时候，你熟悉均值的定义。</p>
+<p>定义：数值集合的均值是集合中所有元素的总和，除以集合中元素的数量。</p>
+<p><code>np.average</code>和<code>np.mean</code>方法返回数组的均值。</p>
+<pre><code class="lang-py">not_symmetric = make_array(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">9</span>)
+np.average(not_symmetric)
+<span class="hljs-number">4.25</span>
+np.mean(not_symmetric)
+<span class="hljs-number">4.25</span>
+</code></pre>
+<h3 id="基本性质">基本性质</h3>
+<p>上面的定义和例子指出了均值的一些性质。</p>
+<ul>
+<li>它不一定是集合中的一个元素。</li>
+<li>即使集合的所有元素都是整数，也不一定是整数。</li>
+<li>它在集合的最小值和最大值之间。</li>
+<li>它不一定在两个极值的正中间；集合中一半的元素并不总是大于均值。</li>
+<li>如果集合含有一个变量的值，以指定单位测量，则均值也具有相同的单位。</li>
+</ul>
+<p>我们现在将研究一些其他性质，它有助于理解均值，并与其他统计量相关。</p>
+<h3 id="均值是个平滑器">均值是个“平滑器”</h3>
+<p>你可以将均值视为“均衡”或“平滑”操作。 例如，将上面的<code>not_symmetric</code>中的条目设想为四个不同人的口袋中的美元。 为此，你先把所有的钱都放进一个大袋子，然后平均分配给四个人。 最开始，他们在口袋中装了不同数量的钱（2 美元，3 美元，3 美元和9 美元），但现在每个人都有平均数量 4.25 美元。</p>
+<h3 id="均值的性质">均值的性质</h3>
+<p>如果一个集合只包含 1 和 0，那么集合的总和就是集合中 1 的数量，集合的均值就是 1 的比例。</p>
+<pre><code class="lang-py">zero_one = make_array(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)
+sum(zero_one)
+<span class="hljs-number">3</span>
+np.mean(zero_one)
+<span class="hljs-number">0.75</span>
+</code></pre>
+<p>捏可以将 1 替换为布尔值<code>True</code>，0 替换为<code>False</code>。</p>
+<pre><code class="lang-py">np.mean(make_array(<span class="hljs-keyword">True</span>, <span class="hljs-keyword">True</span>, <span class="hljs-keyword">True</span>, <span class="hljs-keyword">False</span>))
+<span class="hljs-number">0.75</span>
+</code></pre>
+<p>因为比例是均值的一个特例，随机样本均值的结果也适用于随机样本比例。</p>
+<h3 id="均值和直方图">均值和直方图</h3>
+<p>集合<code>{2, 3, 3, 9}</code>的平均值是 4.25，这不是数据的“正中间的点”。 那么这是什么意思？</p>
+<p>为了了解它，请注意，平均值可以用不同的方式计算。</p>
+<p><img src="img/tex-12-1.gif" alt=""></img></p>
+<p>最后一个表达式就是一个普遍事实的例子：当我们计算平均值时，集合中的每个不同的值都由它在集合中出现的时间比例加权。</p>
+<p>这有一个重要的结果。 集合的平均值仅取决于不同的值及其比例，而不取决于集合中元素的数量。 换句话说，集合的平均值仅取决于集合中值的分布。</p>
+<p>因此，如果两个集合具有相同的分布，则它们具有相同的均值。</p>
+<p>例如，这里是另一个集合，它的分布与<code>not_symmetric</code>相同，因此均值也相同。</p>
+<pre><code class="lang-py">not_symmetric
+array([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">9</span>])
+same_distribution = make_array(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">9</span>, <span class="hljs-number">9</span>)
+np.mean(same_distribution)
+<span class="hljs-number">4.25</span>
+</code></pre>
+<p>均值是分布直方图的物理属性。这里是<code>not_symmetric</code>的分布直方图，或者等价的<code>same_distribution</code>的分布直方图。</p>
+<p><img src="img/12-1.png" alt=""></img></p>
+<p>想象一下，直方图是由纸板组成的图形，它附着在一条线上，线沿着横轴延伸。并且，将这些条形想象为附加在值 2, 3 和 9 上的权重。假设你尝试在线上的某个点平衡这个图形。如果该点接近 2，图形就向右倾斜。如果该点接近 9，则图形就向左倾斜。之间的某个地方是这个数字取得平衡的点。这个点是 4.25，就是均值。</p>
+<p>均值是直方图的重心或平衡点。</p>
+<p>为了理解这是为什么，了解一些物理会有帮助。重心的计算与我们计算平均值的方法完全相同，通过将不同值按它们比例加权。</p>
+<p>因为均值是一个平衡点，有时在直方图的底部显示为一个支点或三角形。</p>
+<p><img src="img/12-2.png" alt=""></img></p>
+<h3 id="均值和中位数">均值和中位数</h3>
+<p>如果一个学生的考试成绩低于平均水平，这是否意味着该学生在该考试中处于后一半？</p>
+<p>对于学生来说，回答是“不一定”。 原因与直方图的平衡点即均值，和数据的“中间点”即中位数之间的关系有关。</p>
+<p>通过这个关系很容易看到一个简单的例子。 这里是数组<code>symmetric</code>的集合<code>{2, 3, 3, 4}</code>的直方图。 分布对称于 3。均值和中位数都等于 3。</p>
+<pre><code class="lang-py">symmetric = make_array(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>)
+</code></pre>
+<p><img src="img/12-3.png" alt=""></img></p>
+<pre><code class="lang-py">np.mean(symmetric)
+<span class="hljs-number">3.0</span>
+percentile(<span class="hljs-number">50</span>, symmetric)
+<span class="hljs-number">3</span>
+</code></pre>
+<p>一般来说，对于对称分布，均值和中位数是相等的。</p>
+<p>如果分布不对称呢？ 我们来比较<code>symmetric</code>和<code>not_symmetric</code>。</p>
+<p><img src="img/12-4.png" alt=""></img></p>
+<p>蓝色直方图表示原始的<code>symmetric</code>分布。 <code>not_symmetric</code>的金色从左端起始，和蓝色一样，但是最右边的条形到了数值 9。棕色部分是两个直方图重叠的位置。</p>
+<p>蓝色分布的中位数和均值都等于 3。金色分布的中值也等于 3，尽管右半部分与左边的分布不同。</p>
+<p>但金色分布的平均值不是 3：金色直方图在 3 时不平衡。平衡点已经向右移动到 4.25。</p>
+<p>在金色分布中，4 个条目中有 3 个（75%）低于平均水平。 因此，低于平均分的学生可以放心。 他或她可能是班上的大多数人。</p>
+<p>一般来说，如果直方图的一边有尾巴（整数属于是“偏斜的”），那么平均值就会从中间拉到尾巴的方向。</p>
+<h3 id="示例">示例</h3>
+<p><code>sf2015</code>表包含 2015 年旧金山城市员工的薪水和福利数据。与以前一样，我们将我们的分析仅限于那些等价于至少就业半年的人。</p>
+<pre><code class="lang-py">sf2015 = Table.read_table(<span class="hljs-string">'san_francisco_2015.csv'</span>).where(<span class="hljs-string">'Salaries'</span>, are.above(<span class="hljs-number">10000</span>))
+</code></pre>
+<p>我们前面看到了，最高薪资高于 60 万美元，但绝大多数雇员的薪资低于 30 万美元。</p>
+<pre><code class="lang-py">sf2015.select(<span class="hljs-string">'Total Compensation'</span>).hist(bins = np.arange(<span class="hljs-number">10000</span>, <span class="hljs-number">700000</span>, <span class="hljs-number">25000</span>))
+</code></pre>
+<p><img src="img/12-5.png" alt=""></img></p>
+<p>这个直方图向右偏斜；它的右侧有个尾巴。</p>
+<p>平均值拉向了尾巴的方向。 所以我们预计平均薪酬会比中位数大，事实确实如此。</p>
+<pre><code class="lang-py">compensation = sf2015.column(<span class="hljs-string">'Total Compensation'</span>)
+percentile(<span class="hljs-number">50</span>, compensation)
+<span class="hljs-number">110305.78999999999</span>
+np.mean(compensation)
+<span class="hljs-number">114725.98411824222</span>
+</code></pre>
+<p>大量总体的收入分布往往是右偏的。 当总体的大部分收入中到低，但很小一部分收入很高时，直方图的右侧有条细长的尾巴。</p>
+<p>平均收入受这条尾巴的影响：尾巴向右延伸得越远，平均值就越大。 但中位数不受分布极值的影响。 这就是经济学家经常用收入分布的中位数来代替平均值的原因。</p>
+<h2 id="可变性">可变性</h2>
+<p>平均值告诉我们直方图平衡的位置。 但是在我们所看到的几乎所有的直方图中，值都位于均值的两边。 他们距离均值有多远？ 为了回答这个问题，我们将开发一个关于均值的可变性度量。</p>
+<p>我们首先描述如何计算度量值。 然后我们就会明白，为什么这是很好的计算方法。</p>
+<h3 id="距离均值的偏差的大致大小">距离均值的偏差的大致大小</h3>
+<p>为了简单起见，我们将在简单数组<code>any_numbers</code>的上下文中开始计算，它由四个值组成。 你将会看到，我们的方法非常易于扩展到任何其他数组。</p>
+<pre><code class="lang-py">any_numbers = make_array(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">10</span>)
+</code></pre>
+<p>我们的目标是，大致衡量这些数值离他们的平均水平有多远。 为了实现它，我们首先需要均值：</p>
+<pre><code class="lang-py"><span class="hljs-comment"># Step 1. The average.</span>
+
+mean = np.mean(any_numbers)
+mean
+<span class="hljs-number">3.75</span>
+</code></pre>
+<p>接下来，我们来看看每个数值离均值有多远。 这些被称为到均值的偏差。 “到均值的偏差”只是每个值减去平均值。 <code>calculation_steps</code>表显示了结果。</p>
+<pre><code class="lang-py"><span class="hljs-comment"># Step 2. The deviations from average.</span>
+
+deviations = any_numbers - mean
+calculation_steps = Table().with_columns(
+        <span class="hljs-string">'Value'</span>, any_numbers,
+        <span class="hljs-string">'Deviation from Average'</span>, deviations
+        )
+calculation_steps
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Deviation from Average</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>-2.75</td>
+</tr>
+<tr>
+<td>2</td>
+<td>-1.75</td>
+</tr>
+<tr>
+<td>2</td>
+<td>-1.75</td>
+</tr>
+<tr>
+<td>10</td>
+<td>6.25</td>
+</tr>
+</tbody>
+</table>
+<p>一些偏差是负的；它们对应于低于均值的值。 正的偏差对应于高于平均值的值。</p>
+<p>要计算偏差有多大，计算偏差的平均值是很自然的。 但是当所有的偏差加在一起的时候，会发生一些有趣的事：</p>
+<pre><code class="lang-py">sum(deviations)
+<span class="hljs-number">0.0</span>
+</code></pre>
+<p>正的偏差正好和负的偏差抵消。 无论列表的直方图是什么样子，所有的数字列表都是如此：到均值的偏差总和为零。</p>
+<p>由于偏差的总和为零，偏差的均值也将为零：</p>
+<pre><code class="lang-py">np.mean(deviations)
+<span class="hljs-number">0.0</span>
+</code></pre>
+<p>因此，偏差的均值不是偏差大小的有用度量。 我们真正想知道的是偏差有多大，不管它们是正的还是负的。 所以我们需要一种方法来消除偏差的符号。</p>
+<p>有两种历史悠久的丢掉符号的方式：绝对值和平方。 事实证明，采用平方会构建一个度量，带有非常强大的性质，其中一些我们将在这个课程中学习。</p>
+<p>所以让我们计算所有偏差的平方，来消除符号。 那么我们将计算平方的均值：</p>
+<pre><code class="lang-py"><span class="hljs-comment"># Step 3. The squared deviations from average</span>
+
+squared_deviations = deviations ** <span class="hljs-number">2</span>
+calculation_steps = calculation_steps.with_column(
+   <span class="hljs-string">'Squared Deviations from Average'</span>, squared_deviations
+    )
+calculation_steps
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Deviation from Average</th>
+<th>Squared Deviations from Average</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>-2.75</td>
+<td>7.5625</td>
+</tr>
+<tr>
+<td>2</td>
+<td>-1.75</td>
+<td>3.0625</td>
+</tr>
+<tr>
+<td>2</td>
+<td>-1.75</td>
+<td>3.0625</td>
+</tr>
+<tr>
+<td>10</td>
+<td>6.25</td>
+<td>39.0625</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="lang-py"><span class="hljs-comment"># Step 4. Variance = the mean squared deviation from average</span>
+
+variance = np.mean(squared_deviations)
+variance
+<span class="hljs-number">13.1875</span>
+</code></pre>
+<p>方差：上面计算的偏差平方的均值称为方差。</p>
+<p>虽然方差确实给了我们延展度的概念，但它和原始变量不是一个量纲，因为它的单位是原始变量的平方。 这使得解释非常困难。</p>
+<p>所以我们通过计算方差的算术平方根的来返回原来的量纲：</p>
+<pre><code class="lang-py"><span class="hljs-comment"># Step 5.</span>
+<span class="hljs-comment"># Standard Deviation:    root mean squared deviation from average</span>
+<span class="hljs-comment"># Steps of calculation:   5    4      3       2             1</span>
+
+sd = variance ** <span class="hljs-number">0.5</span>
+sd
+<span class="hljs-number">3.6314597615834874</span>
+</code></pre>
+<h3 id="标准差">标准差</h3>
+<p>我们刚计算出来的数量叫做列表的标准差，简写为 SD。 它大致衡量列表中的数字与其平均水平的差距。</p>
+<p>定义：列表的 SD 定义为方差（偏差平方的均值）的算术平方根。这很拗口。 但是从左到右阅读，你需要执行一系列的步骤的计算。</p>
+<p>计算：上述五个步骤会产生 SD。 你还可以使用函数<code>np.std</code>来计算数组中值的标准差：</p>
+<pre><code class="lang-py">np.std(any_numbers)
+<span class="hljs-number">3.6314597615834874</span>
+</code></pre>
+<blockquote>
+<p>译者注：写在一起就是<code>np.mean((arr - arr.mean()) ** 2) ** 0.5</code>。</p>
+</blockquote>
+<h3 id="使用-sd">使用 SD</h3>
+<p>要看看我们可以从SD中学到什么，让我们转向一个比<code>any_numbers</code>更有趣的数据集。 <code>nba13</code>表包含了 2013 年 NBA 的球员数据。对于每个球员来说，表格中记录了球员通常的位置，他的身高（英寸），体重（磅）和年龄。</p>
+<pre><code class="lang-py">nba13 = Table.read_table(<span class="hljs-string">'nba2013.csv'</span>)
+nba13
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Position</th>
+<th>Height</th>
+<th>Weight</th>
+<th>Age in 2013</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeQuan Jones</td>
+<td>Guard</td>
+<td>80</td>
+<td>221</td>
+<td>23</td>
+</tr>
+<tr>
+<td>Darius Miller</td>
+<td>Guard</td>
+<td>80</td>
+<td>235</td>
+<td>23</td>
+</tr>
+<tr>
+<td>Trevor Ariza</td>
+<td>Guard</td>
+<td>80</td>
+<td>210</td>
+<td>28</td>
+</tr>
+<tr>
+<td>James Jones</td>
+<td>Guard</td>
+<td>80</td>
+<td>215</td>
+<td>32</td>
+</tr>
+<tr>
+<td>Wesley Johnson</td>
+<td>Guard</td>
+<td>79</td>
+<td>215</td>
+<td>26</td>
+</tr>
+<tr>
+<td>Klay Thompson</td>
+<td>Guard</td>
+<td>79</td>
+<td>205</td>
+<td>23</td>
+</tr>
+<tr>
+<td>Thabo Sefolosha</td>
+<td>Guard</td>
+<td>79</td>
+<td>215</td>
+<td>29</td>
+</tr>
+<tr>
+<td>Chase Budinger</td>
+<td>Guard</td>
+<td>79</td>
+<td>218</td>
+<td>25</td>
+</tr>
+<tr>
+<td>Kevin Martin</td>
+<td>Guard</td>
+<td>79</td>
+<td>185</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Evan Fournier</td>
+<td>Guard</td>
+<td>79</td>
+<td>206</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+<p>（省略了 495 行）</p>
+<p>这里是球员身高的直方图。</p>
+<pre><code class="lang-py">nba13.select(<span class="hljs-string">'Height'</span>).hist(bins=np.arange(<span class="hljs-number">68</span>, <span class="hljs-number">88</span>, <span class="hljs-number">1</span>))
+</code></pre>
+<p><img src="img/12-6.png" alt=""></img></p>
+<p>NBA 球员身材高大并不奇怪！ 他们的平均身高只有 79 英寸（6'7"），比美国男子的平均身高高出 10 英寸。</p>
+<pre><code class="lang-py">mean_height = np.mean(nba13.column(<span class="hljs-string">'Height'</span>))
+mean_height
+<span class="hljs-number">79.065346534653472</span>
+</code></pre>
+<p>球员的身高距离平均有多远？ 这通过身高的 SD 来测量，大约是 3.45 英寸。</p>
+<pre><code class="lang-py">sd_height = np.std(nba13.column(<span class="hljs-string">'Height'</span>))
+sd_height
+<span class="hljs-number">3.4505971830275546</span>
+</code></pre>
+<p>俄克拉荷马雷霆的高个中锋哈希姆·塔比特（Hasheem Thabeet）是最高的球员，身高 87 英寸。</p>
+<pre><code class="lang-py">nba13.sort(<span class="hljs-string">'Height'</span>, descending=<span class="hljs-keyword">True</span>).show(<span class="hljs-number">3</span>)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Position</th>
+<th>Height</th>
+<th>Weight</th>
+<th>Age in 2013</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hasheem Thabeet</td>
+<td>Center</td>
+<td>87</td>
+<td>263</td>
+<td>26</td>
+</tr>
+<tr>
+<td>Roy Hibbert</td>
+<td>Center</td>
+<td>86</td>
+<td>278</td>
+<td>26</td>
+</tr>
+<tr>
+<td>Tyson Chandler</td>
+<td>Center</td>
+<td>85</td>
+<td>235</td>
+<td>30</td>
+</tr>
+</tbody>
+</table>
+<p>（省略了 502 行）</p>
+<p>Thabeet 比平均身高高了大约 8 英寸。</p>
+<pre><code class="lang-py"><span class="hljs-number">87</span> - mean_height
+<span class="hljs-number">7.9346534653465284</span>
+</code></pre>
+<p>这个就是距离均值的偏差，大约是 2.3 乘标准差。</p>
+<pre><code class="lang-py">(<span class="hljs-number">87</span> - mean_height)/sd_height
+<span class="hljs-number">2.2995015194397923</span>
+</code></pre>
+<p>换句话说，最高球员的身高比均值高了 2.3 个 SD。</p>
+<p>以赛亚·托马斯（Isaiah Thomas）身高 69 英寸，是 2013 年 NBA 最矮的球员之一。他的身高比均值低了 2.9 个 SD。</p>
+<pre><code class="lang-py">nba13.sort(<span class="hljs-string">'Height'</span>).show(<span class="hljs-number">3</span>)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Position</th>
+<th>Height</th>
+<th>Weight</th>
+<th>Age in 2013</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Isaiah Thomas</td>
+<td>Guard</td>
+<td>69</td>
+<td>185</td>
+<td>24</td>
+</tr>
+<tr>
+<td>Nate Robinson</td>
+<td>Guard</td>
+<td>69</td>
+<td>180</td>
+<td>29</td>
+</tr>
+<tr>
+<td>John Lucas III</td>
+<td>Guard</td>
+<td>71</td>
+<td>157</td>
+<td>30</td>
+</tr>
+</tbody>
+</table>
+<p>（省略了 502 行）</p>
+<pre><code class="lang-py">(<span class="hljs-number">69</span> - mean_height)/sd_height
+-<span class="hljs-number">2.9169868288775844</span>
+</code></pre>
+<p>我们观察到，最高和最矮的球员都距离平均身高只有几个标准差。 这是例子，说明了为什么 SD 是延展度的有效度量。无论直方图的形状如何，平均值和 SD 一起告诉你很多东西，关于直方图在数轴上的位置。</p>
+<h3 id="使用-sd-度量延展度的最主要原因">使用 SD 度量延展度的最主要原因</h3>
+<p>非正式声明：在所有的数值数据集中，大部分条目都在“均值上下几个标准差”的范围内。</p>
+<p>现在，先克制住自己，不要了解“散”，“少”等模糊词的确切含义。 我们将在本节的后面进行详细说明。 我们仅仅在更多示例的背景下研究这个陈述。</p>
+<p>我们已经看到，所有 NBA 球员的身高都在“均值上下几个标准差”的范围内。</p>
+<p>那年龄呢？ 这里是分布的直方图，以及年龄的平均值和标准差。</p>
+<pre><code class="lang-py">nba13.select(<span class="hljs-string">'Age in 2013'</span>).hist(bins=np.arange(<span class="hljs-number">15</span>, <span class="hljs-number">45</span>, <span class="hljs-number">1</span>))
+</code></pre>
+<p><img src="img/12-7.png" alt=""></img></p>
+<pre><code class="lang-py">ages = nba13.column(<span class="hljs-string">'Age in 2013'</span>)
+mean_age = np.mean(ages)
+sd_age = np.std(ages)
+mean_age, sd_age
+(<span class="hljs-number">26.19009900990099</span>, <span class="hljs-number">4.3212004417203067</span>)
+</code></pre>
+<p>平均年龄只有 26 岁，标准差大约是 4.3 岁。</p>
+<p>年龄与均值相差多远？ 就像我们对身高所做的那样，让我们看看两个年龄的极端值。</p>
+<p>Juwan Howard 是年龄最大的球员 40 岁。</p>
+<pre><code class="lang-py">nba13.sort(<span class="hljs-string">'Age in 2013'</span>, descending=<span class="hljs-keyword">True</span>).show(<span class="hljs-number">3</span>)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Position</th>
+<th>Height</th>
+<th>Weight</th>
+<th>Age in 2013</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Juwan Howard</td>
+<td>Forward</td>
+<td>81</td>
+<td>250</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Marcus Camby</td>
+<td>Center</td>
+<td>83</td>
+<td>235</td>
+<td>39</td>
+</tr>
+<tr>
+<td>Derek Fisher</td>
+<td>Guard</td>
+<td>73</td>
+<td>210</td>
+<td>39</td>
+</tr>
+</tbody>
+</table>
+<p>（省略了 502 行）</p>
+<p>Howard 的年龄比均值高了 3.2 个标准差。</p>
+<pre><code class="lang-py">(<span class="hljs-number">40</span> - mean_age)/sd_age
+<span class="hljs-number">3.1958482778922357</span>
+</code></pre>
+<p>年龄最小的是 15 岁的 Jarvis Varnado，他当年在迈阿密热火队（Miami Heat）夺得了 NBA 总冠军。 他的年龄比均值低了 2.6 个标准差。</p>
+<pre><code class="lang-py">nba13.sort(<span class="hljs-string">'Age in 2013'</span>).show(<span class="hljs-number">3</span>)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Position</th>
+<th>Height</th>
+<th>Weight</th>
+<th>Age in 2013</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jarvis Varnado</td>
+<td>Forward</td>
+<td>81</td>
+<td>230</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Giannis Antetokounmpo</td>
+<td>Forward</td>
+<td>81</td>
+<td>205</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Sergey Karasev</td>
+<td>Guard</td>
+<td>79</td>
+<td>197</td>
+<td>19</td>
+</tr>
+</tbody>
+</table>
+<p>（省略了 502 行）</p>
+<pre><code class="lang-py">(<span class="hljs-number">15</span> - mean_age)/sd_age
+-<span class="hljs-number">2.5895811038670811</span>
+</code></pre>
+<p>对于高度和年龄，我们观察到的东西非常普遍。 对于所有列表，大部分条目都不超过平均值 2 或 3 个标准差。</p>
+<h3 id="切比雪夫边界">切比雪夫边界</h3>
+<p>俄罗斯数学家切比雪夫（Pafnuty Chebychev，1821-1894）证明了这个结论，使我们的粗略陈述更加精确。</p>
+<p>对于所有列表和所有数字<code>z</code>，“均值上下<code>z</code>个标准差”范围内的条目比例至少为 <img src="img/tex-12-2.gif" alt=""></img>。</p>
+<p>值得注意的是，结果给出了一个界限，而不是一个确切的数值或近似值。</p>
+<p>是什么让结果变得强大，对于所有列表来说都是这样呢 - 所有的分布，无论多么不规则？</p>
+<p>具体来说，对于每个列表：</p>
+<p>在“均值上下两个标准差”范围内的比例至少是<code>1 - 1/4 = 0.75</code></p>
+<p>在“均值上下三个标准差”范围内的比例至少为<code>1 - 1/9 ≈ 0.89</code></p>
+<p>在“均值上下 4.5 个标准差”范围内的比例至少为<code>1 - 1/4.5^2 ≈ 0.95</code></p>
+<p>如上所述，切比雪夫的结果给出了一个下界，而不是一个确切的答案或近似值。例如，“均值上下两个标准差”范围内的条目百分比可能比 75% 大得多。但它不会更小。</p>
+<h3 id="标准单位">标准单位</h3>
+<p>在上面的计算中，<code>z</code>的数量是标准单位，高于平均水平的标准差的数量。</p>
+<p>标准单位的某些值是负值，对应于低于均值的原始值。 标准单位的其他是正值。 但是无论列表的分布如何，切比雪夫边界意味着标准单位一般在<code>(-5, 5)</code>范围内。</p>
+<p>要将一个值转换为标准单位，首先要求出距离平均值有多远，然后将该偏差与标准差比较。</p>
+<p><img src="img/tex-12-3.gif" alt=""></img></p>
+<p>我们将会看到，标准单位经常用于数据分析。 所以定义一个函数，将数值的数组转换为标准单位是很有用的。</p>
+<pre><code class="lang-py"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">standard_units</span><span class="hljs-params">(numbers_array)</span>:</span>
+    <span class="hljs-string">"Convert any array of numbers to standard units."</span>
+    <span class="hljs-keyword">return</span> (numbers_array - np.mean(numbers_array))/np.std(numbers_array)
+</code></pre>
+<h3 id="示例">示例</h3>
+<p>我们在前面的章节中看到，<code>united</code>表包含了<code>Delay</code>列，包括 2015 年夏天联合航空数千航班的起飞延误时间，以分钟为单位。我们将创建一个名为<code>Delay (Standard Units)</code>的新列， 通过将函数<code>standard_units</code>应用于<code>Delay</code>列。 这使我们可以看到所有延误时间（分钟）以及标准单位的相应值。</p>
+<pre><code class="lang-py">united = Table.read_table(<span class="hljs-string">'united_summer2015.csv'</span>)
+united = united.with_column(
+    <span class="hljs-string">'Delay (Standard Units)'</span>, standard_units(united.column(<span class="hljs-string">'Delay'</span>))
+)
+united
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Flight Number</th>
+<th>Destination</th>
+<th>Delay</th>
+<th>Delay (Standard Units)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6/1/15</td>
+<td>73</td>
+<td>HNL</td>
+<td>257</td>
+<td>6.08766</td>
+</tr>
+<tr>
+<td>6/1/15</td>
+<td>217</td>
+<td>EWR</td>
+<td>28</td>
+<td>0.287279</td>
+</tr>
+<tr>
+<td>6/1/15</td>
+<td>237</td>
+<td>STL</td>
+<td>-3</td>
+<td>-0.497924</td>
+</tr>
+<tr>
+<td>6/1/15</td>
+<td>250</td>
+<td>SAN</td>
+<td>0</td>
+<td>-0.421937</td>
+</tr>
+<tr>
+<td>6/1/15</td>
+<td>267</td>
+<td>PHL</td>
+<td>64</td>
+<td>1.19913</td>
+</tr>
+<tr>
+<td>6/1/15</td>
+<td>273</td>
+<td>SEA</td>
+<td>-6</td>
+<td>-0.573912</td>
+</tr>
+<tr>
+<td>6/1/15</td>
+<td>278</td>
+<td>SEA</td>
+<td>-8</td>
+<td>-0.62457</td>
+</tr>
+<tr>
+<td>6/1/15</td>
+<td>292</td>
+<td>EWR</td>
+<td>12</td>
+<td>-0.117987</td>
+</tr>
+<tr>
+<td>6/1/15</td>
+<td>300</td>
+<td>HNL</td>
+<td>20</td>
+<td>0.0846461</td>
+</tr>
+<tr>
+<td>6/1/15</td>
+<td>317</td>
+<td>IND</td>
+<td>-10</td>
+<td>-0.675228</td>
+</tr>
+</tbody>
+</table>
+<p>（省略了 13815 行）</p>
+<p>我们看到的标准单位与我们根据切比雪夫边界的预期一致。 大部分都是相当小的值；只有一个大于 6。</p>
+<p>但是，当我们将延误时间从高到低排序时，会发生一些惊人的事情。 我们看到的标准单位是非常高的！</p>
+<pre><code class="lang-py">united.sort(<span class="hljs-string">'Delay'</span>, descending=<span class="hljs-keyword">True</span>)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Flight Number</th>
+<th>Destination</th>
+<th>Delay</th>
+<th>Delay (Standard Units)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6/21/15</td>
+<td>1964</td>
+<td>SEA</td>
+<td>580</td>
+<td>14.269</td>
+</tr>
+<tr>
+<td>6/22/15</td>
+<td>300</td>
+<td>HNL</td>
+<td>537</td>
+<td>13.1798</td>
+</tr>
+<tr>
+<td>6/21/15</td>
+<td>1149</td>
+<td>IAD</td>
+<td>508</td>
+<td>12.4453</td>
+</tr>
+<tr>
+<td>6/20/15</td>
+<td>353</td>
+<td>ORD</td>
+<td>505</td>
+<td>12.3693</td>
+</tr>
+<tr>
+<td>8/23/15</td>
+<td>1589</td>
+<td>ORD</td>
+<td>458</td>
+<td>11.1788</td>
+</tr>
+<tr>
+<td>7/23/15</td>
+<td>1960</td>
+<td>LAX</td>
+<td>438</td>
+<td>10.6722</td>
+</tr>
+<tr>
+<td>6/23/15</td>
+<td>1606</td>
+<td>ORD</td>
+<td>430</td>
+<td>10.4696</td>
+</tr>
+<tr>
+<td>6/4/15</td>
+<td>1743</td>
+<td>LAX</td>
+<td>408</td>
+<td>9.91236</td>
+</tr>
+<tr>
+<td>6/17/15</td>
+<td>1122</td>
+<td>HNL</td>
+<td>405</td>
+<td>9.83637</td>
+</tr>
+<tr>
+<td>7/27/15</td>
+<td>572</td>
+<td>ORD</td>
+<td>385</td>
+<td>9.32979</td>
+</tr>
+</tbody>
+</table>
+<p>（省略了 13815 行）</p>
+<p>这表明，数据有可能高于均值很多个标准差（对于延误了 10 个小时的航班）。 延误的最高值超过 14 个标准单位。</p>
+<p>然而，这些极端值的比例很小，切比雪夫边界仍然是真的。 例如，让我们计算在“均值上下三个标准差”范围内的延误百分比。 这与标准单位在<code>(-3, 3)</code>范围内的时间百分比相同。 这大约是 98%，计算在下面，和切比雪夫边界“至少 89%”一致。</p>
+<pre><code class="lang-py">within_3_sd = united.where(<span class="hljs-string">'Delay (Standard Units)'</span>, are.between(-<span class="hljs-number">3</span>, <span class="hljs-number">3</span>))
+within_3_sd.num_rows/united.num_rows
+<span class="hljs-number">0.9790235081374322</span>
+</code></pre>
+<p>延误时间的直方图如下所示，横轴以标准单位表示。 从上表中可以看出，右边的尾巴一直延伸到<code>z = 14.27</code>个标准单位（580 分钟）。 在<code>z = -3</code>到<code>z = 3</code>范围外的直方图面积大约是 2%，加起来非常小，在直方图中几乎不可见。</p>
+<pre><code class="lang-py">united.hist(<span class="hljs-string">'Delay (Standard Units)'</span>, bins=np.arange(-<span class="hljs-number">5</span>, <span class="hljs-number">15.5</span>, <span class="hljs-number">0.5</span>))
+plots.xticks(np.arange(-<span class="hljs-number">6</span>, <span class="hljs-number">17</span>, <span class="hljs-number">3</span>));
+</code></pre>
+<p><img src="img/12-8.png" alt=""></img></p>
+<h2 id="标准差和正态曲线">标准差和正态曲线</h2>
+<p>我们知道均值是直方图的平衡点。 标准差与平均值不同，通常不容易通过查看直方图来识别。</p>
+<p>然而，有一种分布形状，它的标准差与平均值几乎一样清晰可辨。 这是钟形分布。 本节将查看该形状，因为它经常出现在概率直方图中，也出现在一些数据的直方图中。</p>
+<h3 id="数据的大致钟形的直方图">数据的大致钟形的直方图</h3>
+<p>让我们看看母亲的身高分布，它们在我们熟悉的 1174 对母亲和新生儿的样本中。母亲的平均身高为 64 英寸，SD 为 2.5 英寸。 与篮球运动员的身高不同，母亲身高关于钟形曲线中的平均值对称分布。</p>
+<pre><code class="lang-py">baby = Table.read_table(<span class="hljs-string">'baby.csv'</span>)
+heights = baby.column(<span class="hljs-string">'Maternal Height'</span>)
+mean_height = np.round(np.mean(heights), <span class="hljs-number">1</span>)
+mean_height
+<span class="hljs-number">64.0</span>
+sd_height = np.round(np.std(heights), <span class="hljs-number">1</span>)
+sd_height
+<span class="hljs-number">2.5</span>
+baby.hist(<span class="hljs-string">'Maternal Height'</span>, bins=np.arange(<span class="hljs-number">55.5</span>, <span class="hljs-number">72.5</span>, <span class="hljs-number">1</span>), unit=<span class="hljs-string">'inch'</span>)
+positions = np.arange(-<span class="hljs-number">3</span>, <span class="hljs-number">3.1</span>, <span class="hljs-number">1</span>)*sd_height + mean_height
+plots.xticks(positions);
+</code></pre>
+<p><img src="img/12-9.png" alt=""></img></p>
+<p>上面单元格中的最后两行代码更改了横轴的标签。 现在，对于<code>z=0, ±1, ±2, ±3</code>，标签对应于“标签上下<code>z</code>个标准差”。 由于分布的形状，“中心”具有明确的含义，在 64 处清晰可见。</p>
+<h3 id="如何定位钟形曲线上的-sd">如何定位钟形曲线上的 SD</h3>
+<p>要看 SD 如何与曲线相关，请从曲线顶部开始，向右看。 请注意，曲线有一个地方，从看起来像“倒扣的杯子”，变为“朝右的杯子”。 在形式上，曲线有一个拐点。 这个点高于均值一个 SD。 这是<code>z = 1</code>的点，即“均值加一个标准差”，为 66.5 英寸。</p>
+<p>在均值的左边也对称，拐点在<code>z = -1</code>处，也就是“均值减一个标准差”，为 61.5 英寸。</p>
+<p>一般来说，对于钟形分布，SD 是均值和任一侧的拐点之间的距离。</p>
+<h3 id="标准正态曲线">标准正态曲线</h3>
+<p>除了轴上的标签，我们所看到的所有钟形直方图，看起来基本相同。 的确，通过适当地重新标记坐标轴，从所有这些曲线中，实际上只能绘制一条曲线。</p>
+<p>为了绘制这条基本曲线，我们将使用标准单位，我们可以将每个列表转换成它。所得到的曲线因此被称为标准正态曲线。</p>
+<p>标准正态曲线的方程令人印象深刻。 但是现在，最好把它看作是变量直方图的平滑轮廓，变量以标准单位测量并具有钟形分布。</p>
+<p><img src="img/tex-12-4.gif" alt=""></img></p>
+<p><img src="img/12-10.png" alt=""></img></p>
+<p>与往常一样，当你检查新的直方图时，首先查看横轴。在标准正态曲线的横轴上，这些值是标准单位。</p>
+<p>这里是曲线的一些属性。有些是通过观察显而易见的，有些则需要大量的数学才能建立起来。</p>
+<p>曲线下面的总面积是1.所以你可以把它看作是绘制为密度标度的直方图。</p>
+<p>曲线是对称的。所以如果一个变量具有这个分布，它的平均值和中位数都是 0。</p>
+<p>曲线的拐点在 -1 和 +1 处。</p>
+<p>如果一个变量具有这种分布，那么它的 SD 是 1。正态曲线是 SD 清晰可辨的极少数分布之一。</p>
+<p>由于我们将曲线视为平滑的直方图，因此我们希望用曲线下方的面积来表示数据总量的比例。</p>
+<p>平滑曲线下的面积通常是通过微积分来计算的，使用一种称为积分的方法。然而，一个数学的事实是，标准的正态曲线不能通过任何微积分方式来积分。</p>
+<p>因此，曲线下方的面积必须近似。这就是几乎所有的统计教科书，都带有曲线下方的面积的原因。这也是所有统计系统，包括 Python 模块在内，都包含提供这些面积的优秀近似的方法的原因。</p>
+<pre><code class="lang-py"><span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> stats
+</code></pre>
+<h3 id="标准正态的累积分布函数（cdf）">标准正态的累积分布函数（CDF）</h3>
+<p>用于求出正态曲线下的面积的基本函数是<code>stats.norm.cdf</code>。 它接受一个数值参数，并返回曲线下，该数值的左侧的所有面积。 它在形式上被称为标准正态曲线的“累积分布函数”。 在口语里缩写为 CDF。</p>
+<p>让我们使用这个函数来求出标准正态曲线下，<code>z=1</code>左侧的面积。</p>
+<p><img src="img/12-11.png" alt=""></img></p>
+<p>阴影区域的数值可以通过调用<code>stats.norm.cdf</code>来求出。</p>
+<pre><code class="lang-py">stats.norm.cdf(<span class="hljs-number">1</span>)
+<span class="hljs-number">0.84134474606854293</span>
+</code></pre>
+<p>这大概是 84%。 现在我们可以使用曲线的对称性，以及曲线下面的总面积为 1 事实，来求出其他面积。</p>
+<p><code>z = 1</code>右侧的面积大概是<code>100% - 84% = 16%</code>。</p>
+<p><img src="img/12-12.png" alt=""></img></p>
+<pre><code class="lang-py"><span class="hljs-number">1</span> - stats.norm.cdf(<span class="hljs-number">1</span>)
+<span class="hljs-number">0.15865525393145707</span>
+</code></pre>
+<p><code>z = -1</code>和<code>z = 1</code>之间的面积可以用几种不同的方式来计算。 它是下面的曲线下方的金色区域。</p>
+<p><img src="img/12-13.png" alt=""></img></p>
+<p>例如，我们可以将面积计算为“<code>100% -</code>两个相等的尾巴”，结果大致是<code>100% - 2X16% = 68%</code>。</p>
+<p>或者我们可以注意到，<code>z = 1</code>和<code>z = -1</code>之间的区域等于<code>z = 1</code>左边的所有区域，减去<code>z = -1</code>左边的所有区域。</p>
+<pre><code class="lang-py">stats.norm.cdf(<span class="hljs-number">1</span>) - stats.norm.cdf(-<span class="hljs-number">1</span>)
+<span class="hljs-number">0.68268949213708585</span>
+</code></pre>
+<p>通过类似的计算，我们看到<code>-2</code>和<code>2</code>之间的区域大约是 95%。</p>
+<p><img src="img/12-14.png" alt=""></img></p>
+<pre><code class="lang-py">stats.norm.cdf(<span class="hljs-number">2</span>) - stats.norm.cdf(-<span class="hljs-number">2</span>)
+<span class="hljs-number">0.95449973610364158</span>
+</code></pre>
+<p>换句话说，如果一个直方图大致是钟形，那么在“均值上下两个标准差”范围内的数据比例大约是 95%。</p>
+<p>这比切比雪夫的下界 75% 还要多。 切比雪夫边界较弱，因为它必须适用于所有的分布。 如果我们知道一个分布是正态的，那么我们就有很好的比例近似，而不仅仅是边界。</p>
+<p>下表比较了我们对所有分布和正态分布的了解。 请注意，当<code>z = 1</code>时，切比雪夫的边界是正确的，但没有启发性。</p>
+<table>
+<thead>
+<tr>
+<th>Percent in Range</th>
+<th>All Distributions: Bound</th>
+<th>Normal Distribution: Approximation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>均值上下一个标准差</td>
+<td>至少 0%</td>
+<td>约 68%</td>
+</tr>
+<tr>
+<td>均值上下两个标准差</td>
+<td>至少 75%</td>
+<td>约 95%</td>
+</tr>
+<tr>
+<td>均值上下三个标准差</td>
+<td>至少 88.888...%</td>
+<td>约 99.73%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="中心极限定律">中心极限定律</h2>
+<p>我们在本课程中看到的很少数据直方图是钟形的。 当我们遇到一个钟形的分布时，它几乎总是一个基于随机样本的统计量的经验直方图。</p>
+<p>下面的例子显示了两个非常不同的情况，其中在这样的直方图中出现了近似的钟形。</p>
+<h3 id="轮盘赌的净收益">轮盘赌的净收益</h3>
+<p>在前面的章节中，如果我们在轮盘的不同轮次上重复下相同的赌注，那么我们所花费的总金额的粗略形状就会成为钟形。</p>
+<pre><code class="lang-py">wheel
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Pocket</th>
+<th>Color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>green</td>
+</tr>
+<tr>
+<td>00</td>
+<td>green</td>
+</tr>
+<tr>
+<td>1</td>
+<td>red</td>
+</tr>
+<tr>
+<td>2</td>
+<td>black</td>
+</tr>
+<tr>
+<td>3</td>
+<td>red</td>
+</tr>
+<tr>
+<td>4</td>
+<td>black</td>
+</tr>
+<tr>
+<td>5</td>
+<td>red</td>
+</tr>
+<tr>
+<td>6</td>
+<td>black</td>
+</tr>
+<tr>
+<td>7</td>
+<td>red</td>
+</tr>
+<tr>
+<td>8</td>
+<td>black</td>
+</tr>
+</tbody>
+</table>
+<p>（省略了 28 行）</p>
+<p>回想一下，红色的下注返回相等的钱，1 比 1。我们定义的函数<code>red_winnings</code>返回对红色下注一美元的净收益。具体来说，该函数将颜色作为参数，如果颜色为红色，则返回 1。 对于所有其他颜色，它返回 -1。</p>
+<pre><code class="lang-py"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">red_winnings</span><span class="hljs-params">(color)</span>:</span>
+    <span class="hljs-keyword">if</span> color == <span class="hljs-string">'red'</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>
+</code></pre>
+<p><code>red</code>表展示了红色情况下，每个口袋的奖金。</p>
+<pre><code class="lang-py">red = wheel.with_column(
+    <span class="hljs-string">'Winnings: Red'</span>, wheel.apply(red_winnings, <span class="hljs-string">'Color'</span>)
+    )
+red
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Pocket</th>
+<th>Color</th>
+<th>Winnings: Red</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>green</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>00</td>
+<td>green</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>red</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>black</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>red</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>black</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>red</td>
+<td>1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>black</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>7</td>
+<td>red</td>
+<td>1</td>
+</tr>
+<tr>
+<td>8</td>
+<td>black</td>
+<td>-1</td>
+</tr>
+</tbody>
+</table>
+<p>（省略了 28 行）</p>
+<p>你在赌注上的净收益<code>Winnings: Red</code>的随机抽样。 有 1/18 的几率赚一美元，20/38 的几率损失一美元。 这个概率分布显示在下面的直方图中。</p>
+<pre><code class="lang-py">red.select(<span class="hljs-string">'Winnings: Red'</span>).hist(bins=np.arange(-<span class="hljs-number">1.5</span>, <span class="hljs-number">1.6</span>, <span class="hljs-number">1</span>))
+</code></pre>
+<p><img src="img/12-15.png" alt=""></img></p>
+<p>现在假设你多次对红色下注。 你的净收益将是来自上述分布的，多个带放回随机抽样的总和。</p>
+<p>这将需要一些数学，来列出净收益的所有可能值，以及所有的记录。 我们不会那样做；相反，我们将通过模拟来逼近概率分布，就像我们在这个过程中一直做的那样。</p>
+<p>下面的代码模拟你的净收益，如果你在轮盘赌的 400 个不同的轮次中，对红色下注一美元。</p>
+<pre><code class="lang-py">num_bets = <span class="hljs-number">400</span>
+repetitions = <span class="hljs-number">10000</span>
+
+net_gain_red = make_array()
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> np.arange(repetitions):
+    spins = red.sample(num_bets)
+    new_net_gain_red = spins.column(<span class="hljs-string">'Winnings: Red'</span>).sum()
+    net_gain_red = np.append(net_gain_red, new_net_gain_red)
+
+
+results = Table().with_column(
+    <span class="hljs-string">'Net Gain on Red'</span>, net_gain_red
+    )
+results.hist(bins=np.arange(-<span class="hljs-number">80</span>, <span class="hljs-number">50</span>, <span class="hljs-number">6</span>))
+</code></pre>
+<p><img src="img/12-16.png" alt=""></img></p>
+<p>这是一个大致钟形的直方图，即使我们正在绘制的分布并不是钟形。</p>
+<p>中心。分布集中在<code>-$20</code>附近。 要知道为什么，请注意，你的奖金在 18/38 左右的下注中为 1 美元，剩下的 20/38 则为负一美元。 所以每个一美元赌注的平均奖金大概是 -5.26 美分：</p>
+<pre><code class="lang-py">average_per_bet = <span class="hljs-number">1</span>*(<span class="hljs-number">18</span>/<span class="hljs-number">38</span>) + (-<span class="hljs-number">1</span>)*(<span class="hljs-number">20</span>/<span class="hljs-number">38</span>)
+average_per_bet
+-<span class="hljs-number">0.05263157894736842</span>
+</code></pre>
+<p>因此，在 400 次下注中，你预计净收益大约是 21 美元。</p>
+<pre><code class="lang-py"><span class="hljs-number">400</span> * average_per_bet
+-<span class="hljs-number">21.052631578947366</span>
+</code></pre>
+<p>为了确认，我们可以计算 10,000 次模拟净收益的平均值：</p>
+<pre><code class="lang-py">np.mean(results.column(<span class="hljs-number">0</span>))
+-<span class="hljs-number">20.8992</span>
+</code></pre>
+<p>延展。让你的眼睛沿着曲线从中心开始，注意到拐点在 0 附近。在钟形曲线上，SD 是中心到拐点的距离。 中心大概是 -20 美元，这意味着分布的标准差大约是 20 美元。</p>
+<p>在下一节中，我们将看到 20 美元是怎么来的。 现在，让我们通过简单计算 10,000 个模拟净收益的 SD 来证实我们的观察：</p>
+<pre><code class="lang-py">np.std(results.column(<span class="hljs-number">0</span>))
+<span class="hljs-number">20.043159415621083</span>
+</code></pre>
+<p>总结。 400 次下注的净收益是每个单独赌注的 400 个奖金的总和。 这个总和的概率分布近似正态，我们可以近似它的均值和标准差。</p>
+<h3 id="平均航班延误">平均航班延误</h3>
+<p><code>united</code>表包含 2015 年夏季旧金山机场出发的 13,825 个联合航空国内航班的出发延误数据。正如我们以前所见，延误的分布的右侧有着很长的尾巴。</p>
+<pre><code class="lang-py">united = Table.read_table(<span class="hljs-string">'united_summer2015.csv'</span>)
+united.select(<span class="hljs-string">'Delay'</span>).hist(bins=np.arange(-<span class="hljs-number">20</span>, <span class="hljs-number">300</span>, <span class="hljs-number">10</span>))
+</code></pre>
+<p><img src="img/12-17.png" alt=""></img></p>
+<p>平均延误约为 16.6 分钟，SD 约为 39.5 分钟。 注意 SD 与平均值相比有多大。 但是右侧的较大偏差会产生影响，尽管它们在数据中占很小的比例。</p>
+<pre><code class="lang-py">mean_delay = np.mean(united.column(<span class="hljs-string">'Delay'</span>))
+sd_delay = np.std(united.column(<span class="hljs-string">'Delay'</span>))
+
+mean_delay, sd_delay
+(<span class="hljs-number">16.658155515370705</span>, <span class="hljs-number">39.480199851609314</span>)
+</code></pre>
+<p>现在假设我们随机抽取了 400 个延误。 如果你愿意，你可以无放回抽样，但是结果与放回抽样非常相似。 如果你从 13,825 个中无放回地抽取几百个，那么每当你抽出一个值时，几乎不会改变总体。</p>
+<p>在样本中，平均延误会是多少？ 我们预计在 16 或 17 左右，因为这是总体的均值。 但可能会有些偏差。 让我们看看我们通过抽样得到了什么。 我们将处理<code>delay</code>表，仅包含延迟的列。</p>
+<pre><code class="lang-py">delay = united.select(<span class="hljs-string">'Delay'</span>)
+np.mean(delay.sample(<span class="hljs-number">400</span>).column(<span class="hljs-string">'Delay'</span>))
+<span class="hljs-number">16.68</span>
+</code></pre>
+<p>样本均值根据样本的出现方式而变化，因此我们将重复模拟抽样过程，并绘制样本均值的经验直方图。 这是样本均值的概率直方图的近似值。</p>
+<pre><code class="lang-py">sample_size = <span class="hljs-number">400</span>
+repetitions = <span class="hljs-number">10000</span>
+
+means = make_array()
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> np.arange(repetitions):
+    sample = delay.sample(sample_size)
+    new_mean = np.mean(sample.column(<span class="hljs-string">'Delay'</span>))
+    means = np.append(means, new_mean)
+
+results = Table().with_column(
+    <span class="hljs-string">'Sample Mean'</span>, means
+)
+results.hist(bins=np.arange(<span class="hljs-number">10</span>, <span class="hljs-number">25</span>, <span class="hljs-number">0.5</span>))
+</code></pre>
+<p><img src="img/12-18.png" alt=""></img></p>
+<p>即使我们从非常偏斜的分布抽样，我们再次看到了大致的钟形。 正如我们所期望的那样，这个钟形的中心在 16 到 17 之间。</p>
+<h3 id="中心极限定律">中心极限定律</h3>
+<p>钟形出现在这样的环境中的原因，是一个概率理论的显着结果，称为中心极限定律。</p>
+<p>中心极限定理表明，无论用于抽取样本的总体分布如何，带放回抽取的大型随机样本的总和或均值的概率分布大致是正态的。</p>
+<p>我们在研究切比雪夫边界时指出，不管总体分布如何，结果都可以应用于随机样本，这非常强大，因为在数据科学中，我们很少知道总体的分布。</p>
+<p>如果我们有一个大型随机样本，那么中心极限定理就能够在总体知识很少的情况下进行推理。 这就是它是统计推断领域的核心的原因。</p>
+<h3 id="紫色的花的分布">紫色的花的分布</h3>
+<p>回忆孟德尔的豌豆植物的花朵颜色的概率模型。 该模型表明，植物的花朵颜色类似于来自<code>{紫色，紫色，紫色，白色}</code>的带放回随机抽样。</p>
+<p>在植物的大型样本中，紫色的花约有多少比例？ 我们预计答案约为 0.75，模型中紫色的比例。 而且，由于比例是均值，中心极限定理表明，紫色的样本比例的分布大致是正态的。</p>
+<p>我们可以通过模拟来确认。 我们来模拟 200 株植物样本中紫色的花的比例。</p>
+<pre><code class="lang-py">colors = make_array(<span class="hljs-string">'Purple'</span>, <span class="hljs-string">'Purple'</span>, <span class="hljs-string">'Purple'</span>, <span class="hljs-string">'White'</span>)
+
+model = Table().with_column(<span class="hljs-string">'Color'</span>, colors)
+
+model
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purple</td>
+</tr>
+<tr>
+<td>Purple</td>
+</tr>
+<tr>
+<td>Purple</td>
+</tr>
+<tr>
+<td>White</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="lang-py">props = make_array()
+
+num_plants = <span class="hljs-number">200</span>
+repetitions = <span class="hljs-number">10000</span>
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> np.arange(repetitions):
+    sample = model.sample(num_plants)
+    new_prop = np.count_nonzero(sample.column(<span class="hljs-string">'Color'</span>) == <span class="hljs-string">'Purple'</span>)/num_plants
+    props = np.append(props, new_prop)
+
+results = Table().with_column(<span class="hljs-string">'Sample Proportion: 200'</span>, props)
+results.hist(bins=np.arange(<span class="hljs-number">0.65</span>, <span class="hljs-number">0.85</span>, <span class="hljs-number">0.01</span>))
+</code></pre>
+<p><img src="img/12-19.png" alt=""></img></p>
+<p>正如你所期望的那样，中央极限定理预测了，正态曲线再次集中于 0.75 左右。</p>
+<p>如果我们增加样本量，这个分布如何变化？ 让我们再次运行代码，样本量为 800 ，并将模拟结果收集在同一个表中，我们在里面收集了样本量为 200 的模拟结果。我们使重复次数与之前相同，以便两列具有相同的长度。</p>
+<pre><code class="lang-py">props2 = make_array()
+
+num_plants = <span class="hljs-number">800</span>
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> np.arange(repetitions):
+    sample = model.sample(num_plants)
+    new_prop = np.count_nonzero(sample.column(<span class="hljs-string">'Color'</span>) == <span class="hljs-string">'Purple'</span>)/num_plants
+    props2 = np.append(props2, new_prop)
+
+results = results.with_column(<span class="hljs-string">'Sample Proportion: 800'</span>, props2)
+results.hist(bins=np.arange(<span class="hljs-number">0.65</span>, <span class="hljs-number">0.85</span>, <span class="hljs-number">0.01</span>))
+</code></pre>
+<p><img src="img/12-20.png" alt=""></img></p>
+<p>两个分布都大致是正态，但一个比另一个更窄。 样本量为 800 的比例，比样本量为 200 的比例更紧密地聚集在 0.75 左右。增加样本量可以减少样本比例的可变性。</p>
+<p>这应该不会令人惊讶。 我们多次产生了这样的直觉，更大的样本量通常会降低统计量的可变性。 然而，在样本均值的案例中，我们可以量化样本量和可变性之间的关系。</p>
+<p>样本量究竟是如何影响样本均值或比例的可变性呢？ 这是我们将在下一节中讨论的问题。</p>
+<h2 id="样本均值的可变性">样本均值的可变性</h2>
+<p>根据中心极限定理，大型随机样本的均值的概率分布是大致正态的。 钟形曲线以总体平均值为中心。 一些样本均值较高，有些则较低，但距离总体均值的偏差在两边大致对称，正如我们已经看到的那样。 形式上，概率论表明样本均值是总体均值的无偏估计。</p>
+<p>在我们的模拟中，我们也注意到较大样本的均值，相对较小样本的平均值更倾向于紧密聚集于总体均值附近。 在本节中，我们将量化样本均值的可变性，并建立可变性和样本量之间的关系。</p>
+<p>我们从航班延误表开始。 平均延误时间约为 16.7 分钟，延误分布右倾。</p>
+<pre><code class="lang-py">united = Table.read_table(<span class="hljs-string">'united_summer2015.csv'</span>)
+delay = united.select(<span class="hljs-string">'Delay'</span>)
+pop_mean = np.mean(delay.column(<span class="hljs-string">'Delay'</span>))
+pop_mean
+<span class="hljs-number">16.658155515370705</span>
+</code></pre>
+<p><img src="img/12-21.png" alt=""></img></p>
+<p>现在我们来随机抽样，来查看样本均值的概率分布。 像往常一样，我们将使用模拟来得到这种分布的经验近似。</p>
+<p>我们将定义一个函数<code>simulate_sample_mean</code>来实现，因为我们将在稍后改变样本量。 参数是表的名称，包含变量的列标签，样本量和模拟次数。</p>
+<pre><code class="lang-py"><span class="hljs-string">"""Empirical distribution of random sample means"""</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">simulate_sample_mean</span><span class="hljs-params">(table, label, sample_size, repetitions)</span>:</span>
+
+    means = make_array()
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(repetitions):
+        new_sample = table.sample(sample_size)
+        new_sample_mean = np.mean(new_sample.column(label))
+        means = np.append(means, new_sample_mean)
+
+    sample_means = Table().with_column(<span class="hljs-string">'Sample Means'</span>, means)
+
+    <span class="hljs-comment"># Display empirical histogram and print all relevant quantities</span>
+    sample_means.hist(bins=<span class="hljs-number">20</span>)
+    plots.xlabel(<span class="hljs-string">'Sample Means'</span>)
+    plots.title(<span class="hljs-string">'Sample Size '</span> + str(sample_size))
+    print(<span class="hljs-string">"Sample size: "</span>, sample_size)
+    print(<span class="hljs-string">"Population mean:"</span>, np.mean(table.column(label)))
+    print(<span class="hljs-string">"Average of sample means: "</span>, np.mean(means))
+    print(<span class="hljs-string">"Population SD:"</span>, np.std(table.column(label)))
+    print(<span class="hljs-string">"SD of sample means:"</span>, np.std(means))
+</code></pre>
+<p>让我们模拟 100 个延误的随机样本的均值，然后是 400 个，最后是 625 个延误的均值。 我们将对这些过程中的每一个执行 10,000 次重复。 <code>xlim</code>和<code>ylim</code>在所有图表中设置一致的坐标轴，以便比较。 你可以忽略每个单元格中的这两行代码。</p>
+<pre><code class="lang-py">simulate_sample_mean(delay, <span class="hljs-string">'Delay'</span>, <span class="hljs-number">100</span>, <span class="hljs-number">10000</span>)
+plots.xlim(<span class="hljs-number">5</span>, <span class="hljs-number">35</span>)
+plots.ylim(<span class="hljs-number">0</span>, <span class="hljs-number">0.25</span>);
+Sample size:  <span class="hljs-number">100</span>
+Population mean: <span class="hljs-number">16.6581555154</span>
+Average of sample means:  <span class="hljs-number">16.662059</span>
+Population SD: <span class="hljs-number">39.4801998516</span>
+SD of sample means: <span class="hljs-number">3.90507237968</span>
+</code></pre>
+<p><img src="img/12-22.png" alt=""></img></p>
+<pre><code class="lang-py">simulate_sample_mean(delay, <span class="hljs-string">'Delay'</span>, <span class="hljs-number">400</span>, <span class="hljs-number">10000</span>)
+plots.xlim(<span class="hljs-number">5</span>, <span class="hljs-number">35</span>)
+plots.ylim(<span class="hljs-number">0</span>, <span class="hljs-number">0.25</span>);
+Sample size:  <span class="hljs-number">400</span>
+Population mean: <span class="hljs-number">16.6581555154</span>
+Average of sample means:  <span class="hljs-number">16.67117625</span>
+Population SD: <span class="hljs-number">39.4801998516</span>
+SD of sample means: <span class="hljs-number">1.98326299651</span>
+</code></pre>
+<p><img src="img/12-23.png" alt=""></img></p>
+<pre><code class="lang-py">simulate_sample_mean(delay, <span class="hljs-string">'Delay'</span>, <span class="hljs-number">625</span>, <span class="hljs-number">10000</span>)
+plots.xlim(<span class="hljs-number">5</span>, <span class="hljs-number">35</span>)
+plots.ylim(<span class="hljs-number">0</span>, <span class="hljs-number">0.25</span>);
+Sample size:  <span class="hljs-number">625</span>
+Population mean: <span class="hljs-number">16.6581555154</span>
+Average of sample means:  <span class="hljs-number">16.68523712</span>
+Population SD: <span class="hljs-number">39.4801998516</span>
+SD of sample means: <span class="hljs-number">1.60089096006</span>
+</code></pre>
+<p><img src="img/12-24.png" alt=""></img></p>
+<p>你可以在实践中看到中心极限定律 - 样本均值的直方图是大致正态的，即使延误本身的直方图与正态分布相差甚远。</p>
+<p>你还可以看到，样本均值的三个直方图中的每一个中心都非常接近总体均值。 在每种情况下，“样本均值的均值”非常接近 16.66 分钟，是总体均值。 每个直方图上方的打印输出都提供了这两个值。 像预期一样，样本均值是对总体均值的无偏估计。</p>
+<h3 id="所有样本均值的-sd">所有样本均值的 SD</h3>
+<p>随着样本量的增加，你还可以看到直方图变窄，因此更高。 我们之前已经看到，但现在我们将更加关注延展度的度量。</p>
+<p>所有延误总体的标准差约为 40 分钟。</p>
+<pre><code class="lang-py">pop_sd = np.std(delay.column(<span class="hljs-string">'Delay'</span>))
+pop_sd
+<span class="hljs-number">39.480199851609314</span>
+</code></pre>
+<p>看看上面的样本均值的直方图中的标准差。在这三个里面，延误总体的标准差约为 40 分钟，因为所有的样本都来自同一个总体。</p>
+<p>现在来看，样本量为 100 时，所有 10,000 个样本均值的标准差。标准差是总体标准差的十分之一。当样本量为 400 时，所有样本均值的标准差约为总体标准差的二十分之一。当样本量为 625 时，样本均值的标准差为总体标准差的二十五分之一。</p>
+<p>将样本均值的经验分布的标准差与“总体标准差除以样本量的平方根”的数量进行比较，似乎是一个好主意。</p>
+<p>这里是数值。对于第一列中的每个样本量，抽取 10,000 个该大小的随机样本，并计算 10,000 个样本均值。第二列包含那些 10,000 个样本均值的标准差。第三列包含计算结果“总体标准差除以样本量的平方根”。</p>
+<p>该单元格需要一段时间来运行，因为这是大型模拟。但是你很快就会看到它值得等待。</p>
+<pre><code class="lang-py">repetitions = <span class="hljs-number">10000</span>
+sample_sizes = np.arange(<span class="hljs-number">25</span>, <span class="hljs-number">626</span>, <span class="hljs-number">25</span>)
+
+sd_means = make_array()
+
+<span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> sample_sizes:
+    means = make_array()
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> np.arange(repetitions):
+        means = np.append(means, np.mean(delay.sample(n).column(<span class="hljs-string">'Delay'</span>)))
+    sd_means = np.append(sd_means, np.std(means))
+
+sd_comparison = Table().with_columns(
+    <span class="hljs-string">'Sample Size n'</span>, sample_sizes,
+    <span class="hljs-string">'SD of 10,000 Sample Means'</span>, sd_means,
+    <span class="hljs-string">'pop_sd/sqrt(n)'</span>, pop_sd/np.sqrt(sample_sizes)
+)
+sd_comparison
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Sample Size n</th>
+<th>SD of 10,000 Sample Means</th>
+<th>pop_sd/sqrt(n)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>25</td>
+<td>7.95017</td>
+<td>7.89604</td>
+</tr>
+<tr>
+<td>50</td>
+<td>5.53425</td>
+<td>5.58334</td>
+</tr>
+<tr>
+<td>75</td>
+<td>4.54429</td>
+<td>4.55878</td>
+</tr>
+<tr>
+<td>100</td>
+<td>3.96157</td>
+<td>3.94802</td>
+</tr>
+<tr>
+<td>125</td>
+<td>3.51095</td>
+<td>3.53122</td>
+</tr>
+<tr>
+<td>150</td>
+<td>3.23949</td>
+<td>3.22354</td>
+</tr>
+<tr>
+<td>175</td>
+<td>3.00694</td>
+<td>2.98442</td>
+</tr>
+<tr>
+<td>200</td>
+<td>2.74606</td>
+<td>2.79167</td>
+</tr>
+<tr>
+<td>225</td>
+<td>2.63865</td>
+<td>2.63201</td>
+</tr>
+<tr>
+<td>250</td>
+<td>2.51853</td>
+<td>2.49695</td>
+</tr>
+</tbody>
+</table>
+<p>（省略了 15 行）</p>
+<p>第二列和第三列的值非常接近。 如果我们用横轴上的样本量绘制每个列，那么这两个图基本上是不可区分的。</p>
+<pre><code class="lang-py">sd_comparison.plot(<span class="hljs-string">'Sample Size n'</span>)
+</code></pre>
+<p><img src="img/12-25.png" alt=""></img></p>
+<p>那里确实有两条曲线。但他们彼此如此接近，看起来好像只有一个。</p>
+<p>我们看到了一个普遍结果的实例。 请记住，上面的图表基于每个样本量的 10,000 个重复。 但是每个样本量有超过 10,000 个样本。 样本均值的概率分布基于大小固定的所有可能样本的均值。</p>
+<p>固定样本大小。如果样本是从总体中带放回随机抽取的：</p>
+<p><img src="img/tex-12-5.gif" alt=""></img></p>
+<p>这是所有可能样本均值的标准差。 它大致衡量了样本均值与总体均值的差距。</p>
+<h3 id="用于样本均值的中心极限定律">用于样本均值的中心极限定律</h3>
+<p>如果从总体中带放回地抽取大型随机样本，那么不管总体分布情况如何，样本均值的概率分布大致是正态的，以总体均值为中心，标准等于总体标准差除以样本量的平方根。</p>
+<h3 id="样本均值的准确性">样本均值的准确性</h3>
+<p>所有可能的样本均值的标准差表示样本均值的变化程度。因此，它被视为样本均值作为总体均值的估计的准确度的一个度量。标准差越小，估计越准确。</p>
+<p>公式表明：</p>
+<ul>
+<li>总体大小不影响样本均值的准确性。公式中的任何地方都没有出现总体大小。</li>
+<li>总体标准差是一个常数；从总体中抽取的每个样本都是一样的。样本量可以变化。由于样本量出现在分母中，样本均值的可变性随着样本量的增加而降低，因此准确度增加。</li>
+</ul>
+<h3 id="平方根法则">平方根法则</h3>
+<p>从标准差比较表中可以看出，25 次航班延误的随机样本的均值的标准差约为 8 分钟。 如果你将样本量乘以 4，你将得到大小为 100 的样本。所有这些样本的均值的标准差约为 4 分钟。 这比 8 分钟还小，但并不是 4 倍，只有 2 倍。 这是因为分母中的样本量上面有一个平方根。 样本量增加了 4 倍，但标准差下降了<code>2 = sqrt(4)</code>倍。 换句话说，准确度上升了<code>2 = sqrt(4)</code>倍。</p>
+<p>一般来说，当你将样本量乘以一个因数时，样本均值的准确度将会上升该因数的平方根。</p>
+<p>所以为了提高 10 倍的准确度，你必须将样本量乘以 100 倍。精度并不便宜！</p>
+<h2 id="选取样本量">选取样本量</h2>
+<p>候选人 A 在大选中竞选。一个投票机构想要估计投票给她的选民的比例。假设他们打算随机抽取选民，但实际上他们的抽样方法会更复杂。他们如何决定样本应该多大，才能达到理想的准确度？</p>
+<p>在作出一些假设之后，我们现在可以回答这个问题：</p>
+<ul>
+<li>选民人数非常多，所以我们可以假定随机样本带放回地抽取。</li>
+<li>投票机构将通过为候选人 A 的选民百分比，构建一个约 95% 置信区间来做出估计。</li>
+<li>准确度的理想水平是间隔宽度不应超过 1%。这非常准确！例如，置信区间<code>(33.2%, 34%)</code>可以，但<code>(33.2％, 35％)</code>不行。</li>
+<li>我们将以候选人 A 的选民比例为例。回想一下，比例是一个平均值，其中总体中的值只有 0（你不计算的个体类型）或 1（你计算的个体类型）。</li>
+</ul>
+<h3 id="置信区间的宽度">置信区间的宽度</h3>
+<p>如果我们有一个随机样本，我们可以使用自举法为候选人 A 的选民百分比构建一个置信区间。但是我们还没有样本 - 我们试图找出样本有多大，为了让我们的置信区间如我们所希望的那样狭窄。</p>
+<p>在这样的情况下，了解理论预测的结果会有帮助。</p>
+<p>中心极限定律表明，样本比例大致是正态分布的，以总体中 1 的比例为中心，标准差等于总体中 0 和 1 的标准差除以样本量的平方根。</p>
+<p>所以即使我们不能把自己的目标作为自举比例的第 2.5 和第 97.5 个百分点，那么置信区间仍然是正态分布的“中间 95%”。</p>
+<p>有没有另外一种方法来求出间隔有多大？是的，因为我们知道对于正态分布变量，“中心上下两个标准差”的间隔包含 95% 的数据。</p>
+<p>置信区间将延伸到样本比例的两个标准差，位于中心的任一侧。因此，间隔的宽度将是样本比例的 4 个标准差。</p>
+<p>我们愿意容忍<code>1% = 0.01</code>的宽度。因此，使用上一节中开发的公式：</p>
+<p><img src="img/tex-12-6.gif" alt=""></img></p>
+<p>所以：</p>
+<p><img src="img/tex-12-7.gif" alt=""></img></p>
+<h3 id="01-集合的标准差">01 集合的标准差</h3>
+<p>如果我们知道总体的标准差，我们就完成了。 我们可以计算样本量的平方根，然后取平方得到样本量。 但我们不知道总体的标准差。 总体中，候选人 A 的每个选民为 1，其余选民为 0，我们不知道每种选民的比例是多少。 这就是我们正在估计的。</p>
+<p>那么我们卡住了吗？ 不，因为我们可以限制人口的标准差。 这里是两个这样的分布的直方图，一个是相等比例的 1 和 0 ，另一个是 90% 的 1 和 10% 的 0。 哪一个标准差更大？</p>
+<p><img src="img/12-26.png" alt=""></img></p>
+<p>请记住，总体中的可能值只有 0 和 1。</p>
+<p>蓝色直方图（50% 的 1 和 50% 的 0）比金色延展度更大。 它的均值是 0.5。 距离均值的偏差，一半等于 0.5，另一半等于 -0.5，所以标准差是 0.5。</p>
+<p>在金色直方图中，所有的区域都挤压在 1 左右，从而延展度更小。 90% 的偏差很小，为 0.1。 其他的 10% 是 -0.9 ，较大，但总体上的延展度比蓝色直方图小。</p>
+<p>如果我们改变 1 的比例或者让 0 的比例大于 1 的比例，那么同样的观察也成立。 我们通过计算不同比例，只包含 0 和 1 的 10 个元素的总体的标准差来检查它。 函数<code>np.ones</code>对此很有用。 它接受一个正整数作为它的参数，并返回一个由多个 1 组成的数组。</p>
+<pre><code class="lang-py">sd = make_array()
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> np.arange(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, <span class="hljs-number">1</span>):
+    <span class="hljs-comment"># Create an array of i 1's and (10-i) 0's</span>
+    population = np.append(np.ones(i), <span class="hljs-number">1</span>-np.ones(<span class="hljs-number">10</span>-i))
+    sd = np.append(sd, np.std(population))
+
+zero_one_sds = Table().with_columns(
+    <span class="hljs-string">"Population Proportion of 1's"</span>, np.arange(<span class="hljs-number">0.1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0.1</span>),
+    <span class="hljs-string">"Population SD"</span>, sd
+)
+
+zero_one_sds
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Population Proportion of 1's</th>
+<th>Population SD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>0.4</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>0.458258</td>
+</tr>
+<tr>
+<td>0.4</td>
+<td>0.489898</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>0.6</td>
+<td>0.489898</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>0.458258</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>0.4</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>0.3</td>
+</tr>
+</tbody>
+</table>
+<p>毫不奇怪，10% 的 1 和 90% 的 0 的总体标准差，与 90% 的 1 和 10% 的 0 的总体标准差相同。 那是因为你把直方图的一个条和两一个条互换，延展度没有变化。</p>
+<p>更重要的是，出于我们的目的，标准差随着 1 的比例增加而增加，直到 1 的比例为 0.5；然后开始对称下降。</p>
+<pre><code class="lang-py">zero_one_sds.scatter(<span class="hljs-string">"Population Proportion of 1's"</span>)
+</code></pre>
+<p><img src="img/12-27.png" alt=""></img></p>
+<p>总结：01 总体的标准差最大为 0.5。 当 50% 的总体为 1 而另外 50% 为 0 时，这就是标准差的值。</p>
+<h3 id="样本量">样本量</h3>
+<p>我们知道了 <img src="img/tex-12-7.gif" alt=""></img>，并且 01 总体的标准差最大为 0.5，无论总体中 1 的比例。 所以这样是安全的：</p>
+<p><img src="img/tex-12-8.gif" alt=""></img></p>
+<p>所以样本量应该至少是<code>200 ^ 2 = 40,000</code>。 这是一个巨大的样本！ 但是，如果你想以较高的置信度确保高精度，不管总体是什么样子，那就是你所需要的。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="11.html" class="navigation navigation-prev " aria-label="Previous page: 十一、估计">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="13.html" class="navigation navigation-next " aria-label="Next page: 十三、预测">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"十二、为什么均值重要","level":"1.1.13","depth":2,"next":{"title":"十三、预测","level":"1.1.14","depth":2,"path":"13.md","ref":"13.md","articles":[]},"previous":{"title":"十一、估计","level":"1.1.12","depth":2,"path":"11.md","ref":"11.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"12.md","mtime":"2018-03-04T12:09:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:18:25.491Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

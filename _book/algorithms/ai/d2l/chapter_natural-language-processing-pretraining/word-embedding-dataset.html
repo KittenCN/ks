@@ -1,0 +1,2548 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>14.3. 用于预训练词嵌入的数据集 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="word2vec-pretraining.html" />
+    
+    
+    <link rel="prev" href="approx-training.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href="../.." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../d2l.md">
+            
+                <span>
+            
+                    
+                    动手学深度学习
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../chapter_installation/">
+            
+                <a href="../chapter_installation/">
+            
+                    
+                    安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../chapter_notation/">
+            
+                <a href="../chapter_notation/">
+            
+                    
+                    符号
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    1. 引言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../chapter_preliminaries/">
+            
+                <a href="../chapter_preliminaries/">
+            
+                    
+                    2. 预备知识
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.5.1" data-path="../chapter_preliminaries/ndarray.html">
+            
+                <a href="../chapter_preliminaries/ndarray.html">
+            
+                    
+                    2.1. 数据操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.2" data-path="../chapter_preliminaries/pandas.html">
+            
+                <a href="../chapter_preliminaries/pandas.html">
+            
+                    
+                    2.2. 数据预处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.3" data-path="../chapter_preliminaries/linear-algebra.html">
+            
+                <a href="../chapter_preliminaries/linear-algebra.html">
+            
+                    
+                    2.3. 线性代数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.4" data-path="../chapter_preliminaries/calculus.html">
+            
+                <a href="../chapter_preliminaries/calculus.html">
+            
+                    
+                    2.4. 微积分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.5" data-path="../chapter_preliminaries/autograd.html">
+            
+                <a href="../chapter_preliminaries/autograd.html">
+            
+                    
+                    2.5. 自动微分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.6" data-path="../chapter_preliminaries/probability.html">
+            
+                <a href="../chapter_preliminaries/probability.html">
+            
+                    
+                    2.6. 概率
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.7" data-path="../chapter_preliminaries/lookup-api.html">
+            
+                <a href="../chapter_preliminaries/lookup-api.html">
+            
+                    
+                    2.7. 查阅文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../chapter_linear-networks/">
+            
+                <a href="../chapter_linear-networks/">
+            
+                    
+                    3. 线性神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.6.1" data-path="../chapter_linear-networks/linear-regression.html">
+            
+                <a href="../chapter_linear-networks/linear-regression.html">
+            
+                    
+                    3.1. 线性回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.2" data-path="../chapter_linear-networks/linear-regression-scratch.html">
+            
+                <a href="../chapter_linear-networks/linear-regression-scratch.html">
+            
+                    
+                    3.2. 线性回归的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.3" data-path="../chapter_linear-networks/linear-regression-concise.html">
+            
+                <a href="../chapter_linear-networks/linear-regression-concise.html">
+            
+                    
+                    3.3. 线性回归的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.4" data-path="../chapter_linear-networks/softmax-regression.html">
+            
+                <a href="../chapter_linear-networks/softmax-regression.html">
+            
+                    
+                    3.4. softmax回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.5" data-path="../chapter_linear-networks/image-classification-dataset.html">
+            
+                <a href="../chapter_linear-networks/image-classification-dataset.html">
+            
+                    
+                    3.5. 图像分类数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.6" data-path="../chapter_linear-networks/softmax-regression-scratch.html">
+            
+                <a href="../chapter_linear-networks/softmax-regression-scratch.html">
+            
+                    
+                    3.6. softmax回归的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.7" data-path="../chapter_linear-networks/softmax-regression-concise.html">
+            
+                <a href="../chapter_linear-networks/softmax-regression-concise.html">
+            
+                    
+                    3.7. softmax回归的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../chapter_multilayer-perceptrons/">
+            
+                <a href="../chapter_multilayer-perceptrons/">
+            
+                    
+                    4. 多层感知机
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.7.1" data-path="../chapter_multilayer-perceptrons/mlp.html">
+            
+                <a href="../chapter_multilayer-perceptrons/mlp.html">
+            
+                    
+                    4.1. 多层感知机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.2" data-path="../chapter_multilayer-perceptrons/mlp-scratch.html">
+            
+                <a href="../chapter_multilayer-perceptrons/mlp-scratch.html">
+            
+                    
+                    4.2. 多层感知机的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.3" data-path="../chapter_multilayer-perceptrons/mlp-concise.html">
+            
+                <a href="../chapter_multilayer-perceptrons/mlp-concise.html">
+            
+                    
+                    4.3. 多层感知机的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.4" data-path="../chapter_multilayer-perceptrons/underfit-overfit.html">
+            
+                <a href="../chapter_multilayer-perceptrons/underfit-overfit.html">
+            
+                    
+                    4.4. 模型选择、欠拟合和过拟合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.5" data-path="../chapter_multilayer-perceptrons/weight-decay.html">
+            
+                <a href="../chapter_multilayer-perceptrons/weight-decay.html">
+            
+                    
+                    4.5. 权重衰减
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.6" data-path="../chapter_multilayer-perceptrons/dropout.html">
+            
+                <a href="../chapter_multilayer-perceptrons/dropout.html">
+            
+                    
+                    4.6. 暂退法（Dropout）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.7" data-path="../chapter_multilayer-perceptrons/backprop.html">
+            
+                <a href="../chapter_multilayer-perceptrons/backprop.html">
+            
+                    
+                    4.7. 前向传播、反向传播和计算图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.8" data-path="../chapter_multilayer-perceptrons/numerical-stability-and-init.html">
+            
+                <a href="../chapter_multilayer-perceptrons/numerical-stability-and-init.html">
+            
+                    
+                    4.8. 数值稳定性和模型初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.9" data-path="../chapter_multilayer-perceptrons/environment.html">
+            
+                <a href="../chapter_multilayer-perceptrons/environment.html">
+            
+                    
+                    4.9. 环境和分布偏移
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.10" data-path="../chapter_multilayer-perceptrons/kaggle-house-price.html">
+            
+                <a href="../chapter_multilayer-perceptrons/kaggle-house-price.html">
+            
+                    
+                    4.10. 实战Kaggle比赛：预测房价
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../chapter_deep-learning-computation/">
+            
+                <a href="../chapter_deep-learning-computation/">
+            
+                    
+                    5. 深度学习计算
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.8.1" data-path="../chapter_deep-learning-computation/model-construction.html">
+            
+                <a href="../chapter_deep-learning-computation/model-construction.html">
+            
+                    
+                    5.1. 层和块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.2" data-path="../chapter_deep-learning-computation/parameters.html">
+            
+                <a href="../chapter_deep-learning-computation/parameters.html">
+            
+                    
+                    5.2. 参数管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.3" data-path="../chapter_deep-learning-computation/deferred-init.html">
+            
+                <a href="../chapter_deep-learning-computation/deferred-init.html">
+            
+                    
+                    5.3. 延后初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.4" data-path="../chapter_deep-learning-computation/custom-layer.html">
+            
+                <a href="../chapter_deep-learning-computation/custom-layer.html">
+            
+                    
+                    5.4. 自定义层
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.5" data-path="../chapter_deep-learning-computation/read-write.html">
+            
+                <a href="../chapter_deep-learning-computation/read-write.html">
+            
+                    
+                    5.5. 读写文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.6" data-path="../chapter_deep-learning-computation/use-gpu.html">
+            
+                <a href="../chapter_deep-learning-computation/use-gpu.html">
+            
+                    
+                    5.6. GPU计算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../chapter_convolutional-neural-networks/">
+            
+                <a href="../chapter_convolutional-neural-networks/">
+            
+                    
+                    6. 卷积神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.9.1" data-path="../chapter_convolutional-neural-networks/why-conv.html">
+            
+                <a href="../chapter_convolutional-neural-networks/why-conv.html">
+            
+                    
+                    6.1. 从全连接层到卷积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.2" data-path="../chapter_convolutional-neural-networks/conv-layer.html">
+            
+                <a href="../chapter_convolutional-neural-networks/conv-layer.html">
+            
+                    
+                    6.2. 图像卷积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.3" data-path="../chapter_convolutional-neural-networks/padding-and-strides.html">
+            
+                <a href="../chapter_convolutional-neural-networks/padding-and-strides.html">
+            
+                    
+                    6.3. 填充和步幅
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.4" data-path="../chapter_convolutional-neural-networks/channels.html">
+            
+                <a href="../chapter_convolutional-neural-networks/channels.html">
+            
+                    
+                    6.4. 多输入多输出通道
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.5" data-path="../chapter_convolutional-neural-networks/pooling.html">
+            
+                <a href="../chapter_convolutional-neural-networks/pooling.html">
+            
+                    
+                    6.5. 汇聚层
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.6" data-path="../chapter_convolutional-neural-networks/lenet.html">
+            
+                <a href="../chapter_convolutional-neural-networks/lenet.html">
+            
+                    
+                    6.6. 卷积神经网络（LeNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../chapter_convolutional-modern/">
+            
+                <a href="../chapter_convolutional-modern/">
+            
+                    
+                    7. 现代卷积神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.10.1" data-path="../chapter_convolutional-modern/alexnet.html">
+            
+                <a href="../chapter_convolutional-modern/alexnet.html">
+            
+                    
+                    7.1. 深度卷积神经网络（AlexNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.2" data-path="../chapter_convolutional-modern/vgg.html">
+            
+                <a href="../chapter_convolutional-modern/vgg.html">
+            
+                    
+                    7.2. 使用块的网络（VGG）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.3" data-path="../chapter_convolutional-modern/nin.html">
+            
+                <a href="../chapter_convolutional-modern/nin.html">
+            
+                    
+                    7.3. 网络中的网络（NiN）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.4" data-path="../chapter_convolutional-modern/googlenet.html">
+            
+                <a href="../chapter_convolutional-modern/googlenet.html">
+            
+                    
+                    7.4. 含并行连结的网络（GoogLeNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.5" data-path="../chapter_convolutional-modern/batch-norm.html">
+            
+                <a href="../chapter_convolutional-modern/batch-norm.html">
+            
+                    
+                    7.5. 批量规范化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.6" data-path="../chapter_convolutional-modern/resnet.html">
+            
+                <a href="../chapter_convolutional-modern/resnet.html">
+            
+                    
+                    7.6. 残差网络（ResNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.7" data-path="../chapter_convolutional-modern/densenet.html">
+            
+                <a href="../chapter_convolutional-modern/densenet.html">
+            
+                    
+                    7.7. 稠密连接网络（DenseNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../chapter_recurrent-neural-networks/">
+            
+                <a href="../chapter_recurrent-neural-networks/">
+            
+                    
+                    8. 循环神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.11.1" data-path="../chapter_recurrent-neural-networks/sequence.html">
+            
+                <a href="../chapter_recurrent-neural-networks/sequence.html">
+            
+                    
+                    8.1. 序列模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.2" data-path="../chapter_recurrent-neural-networks/text-preprocessing.html">
+            
+                <a href="../chapter_recurrent-neural-networks/text-preprocessing.html">
+            
+                    
+                    8.2. 文本预处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.3" data-path="../chapter_recurrent-neural-networks/language-models-and-dataset.html">
+            
+                <a href="../chapter_recurrent-neural-networks/language-models-and-dataset.html">
+            
+                    
+                    8.3. 语言模型和数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.4" data-path="../chapter_recurrent-neural-networks/rnn.html">
+            
+                <a href="../chapter_recurrent-neural-networks/rnn.html">
+            
+                    
+                    8.4. 循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.5" data-path="../chapter_recurrent-neural-networks/rnn-scratch.html">
+            
+                <a href="../chapter_recurrent-neural-networks/rnn-scratch.html">
+            
+                    
+                    8.5. 循环神经网络的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.6" data-path="../chapter_recurrent-neural-networks/rnn-concise.html">
+            
+                <a href="../chapter_recurrent-neural-networks/rnn-concise.html">
+            
+                    
+                    8.6. 循环神经网络的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.7" data-path="../chapter_recurrent-neural-networks/bptt.html">
+            
+                <a href="../chapter_recurrent-neural-networks/bptt.html">
+            
+                    
+                    8.7. 通过时间反向传播
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../chapter_recurrent-modern/">
+            
+                <a href="../chapter_recurrent-modern/">
+            
+                    
+                    9. 现代循环神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.12.1" data-path="../chapter_recurrent-modern/gru.html">
+            
+                <a href="../chapter_recurrent-modern/gru.html">
+            
+                    
+                    9.1. 门控循环单元（GRU）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.2" data-path="../chapter_recurrent-modern/lstm.html">
+            
+                <a href="../chapter_recurrent-modern/lstm.html">
+            
+                    
+                    9.2. 长短期记忆（LSTM）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.3" data-path="../chapter_recurrent-modern/deep-rnn.html">
+            
+                <a href="../chapter_recurrent-modern/deep-rnn.html">
+            
+                    
+                    9.3. 深度循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.4" data-path="../chapter_recurrent-modern/bi-rnn.html">
+            
+                <a href="../chapter_recurrent-modern/bi-rnn.html">
+            
+                    
+                    9.4. 双向循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.5" data-path="../chapter_recurrent-modern/machine-translation-and-dataset.html">
+            
+                <a href="../chapter_recurrent-modern/machine-translation-and-dataset.html">
+            
+                    
+                    9.5. 机器翻译及数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.6" data-path="../chapter_recurrent-modern/encoder-decoder.html">
+            
+                <a href="../chapter_recurrent-modern/encoder-decoder.html">
+            
+                    
+                    9.6. 编码器—解码器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.7" data-path="../chapter_recurrent-modern/seq2seq.html">
+            
+                <a href="../chapter_recurrent-modern/seq2seq.html">
+            
+                    
+                    9.7. 序列到序列学习（seq2seq）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.8" data-path="../chapter_recurrent-modern/beam-search.html">
+            
+                <a href="../chapter_recurrent-modern/beam-search.html">
+            
+                    
+                    9.8. 束搜索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="../chapter_attention-mechanisms/">
+            
+                <a href="../chapter_attention-mechanisms/">
+            
+                    
+                    10. 注意力机制
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.13.1" data-path="../chapter_attention-mechanisms/attention-cues.html">
+            
+                <a href="../chapter_attention-mechanisms/attention-cues.html">
+            
+                    
+                    10.1. 注意力提示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.2" data-path="../chapter_attention-mechanisms/nadaraya-waston.html">
+            
+                <a href="../chapter_attention-mechanisms/nadaraya-waston.html">
+            
+                    
+                    10.2. 注意力汇聚：Nadaraya-Watson 核回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.3" data-path="../chapter_attention-mechanisms/attention-scoring-functions.html">
+            
+                <a href="../chapter_attention-mechanisms/attention-scoring-functions.html">
+            
+                    
+                    10.3. 注意力评分函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.4" data-path="../chapter_attention-mechanisms/bahdanau-attention.html">
+            
+                <a href="../chapter_attention-mechanisms/bahdanau-attention.html">
+            
+                    
+                    10.4. Bahdanau 注意力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.5" data-path="../chapter_attention-mechanisms/multihead-attention.html">
+            
+                <a href="../chapter_attention-mechanisms/multihead-attention.html">
+            
+                    
+                    10.5. 多头注意力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.6" data-path="../chapter_attention-mechanisms/self-attention-and-positional-encoding.html">
+            
+                <a href="../chapter_attention-mechanisms/self-attention-and-positional-encoding.html">
+            
+                    
+                    10.6. 自注意力和位置编码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.7" data-path="../chapter_attention-mechanisms/transformer.html">
+            
+                <a href="../chapter_attention-mechanisms/transformer.html">
+            
+                    
+                    10.7. Transformer
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="../chapter_optimization/">
+            
+                <a href="../chapter_optimization/">
+            
+                    
+                    11. 优化算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.14.1" data-path="../chapter_optimization/optimization-intro.html">
+            
+                <a href="../chapter_optimization/optimization-intro.html">
+            
+                    
+                    11.1. 优化与深度学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.2" data-path="../chapter_optimization/convexity.html">
+            
+                <a href="../chapter_optimization/convexity.html">
+            
+                    
+                    11.2. 凸性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.3" data-path="../chapter_optimization/gd.html">
+            
+                <a href="../chapter_optimization/gd.html">
+            
+                    
+                    11.3. 梯度下降
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.4" data-path="../chapter_optimization/sgd.html">
+            
+                <a href="../chapter_optimization/sgd.html">
+            
+                    
+                    11.4. 随机梯度下降
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.5" data-path="../chapter_optimization/minibatch-sgd.html">
+            
+                <a href="../chapter_optimization/minibatch-sgd.html">
+            
+                    
+                    11.5. 小批量随机梯度下降
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.6" data-path="../chapter_optimization/momentum.html">
+            
+                <a href="../chapter_optimization/momentum.html">
+            
+                    
+                    11.6. 动量法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.7" data-path="../chapter_optimization/adagrad.html">
+            
+                <a href="../chapter_optimization/adagrad.html">
+            
+                    
+                    11.7. AdaGrad算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.8" data-path="../chapter_optimization/rmsprop.html">
+            
+                <a href="../chapter_optimization/rmsprop.html">
+            
+                    
+                    11.8. RMSProp算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.9" data-path="../chapter_optimization/adadelta.html">
+            
+                <a href="../chapter_optimization/adadelta.html">
+            
+                    
+                    11.9. Adadelta
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.10" data-path="../chapter_optimization/adam.html">
+            
+                <a href="../chapter_optimization/adam.html">
+            
+                    
+                    11.10. Adam算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.11" data-path="../chapter_optimization/lr-scheduler.html">
+            
+                <a href="../chapter_optimization/lr-scheduler.html">
+            
+                    
+                    11.11. 学习率调度器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="../chapter_computational-performance/">
+            
+                <a href="../chapter_computational-performance/">
+            
+                    
+                    12. 计算性能
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.15.1" data-path="../chapter_computational-performance/hybridize.html">
+            
+                <a href="../chapter_computational-performance/hybridize.html">
+            
+                    
+                    12.1. 编译器和解释器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.2" data-path="../chapter_computational-performance/async-computation.html">
+            
+                <a href="../chapter_computational-performance/async-computation.html">
+            
+                    
+                    12.2. 异步计算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.3" data-path="../chapter_computational-performance/auto-parallelism.html">
+            
+                <a href="../chapter_computational-performance/auto-parallelism.html">
+            
+                    
+                    12.3. 自动并行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.4" data-path="../chapter_computational-performance/hardware.html">
+            
+                <a href="../chapter_computational-performance/hardware.html">
+            
+                    
+                    12.4. 硬件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.5" data-path="../chapter_computational-performance/multiple-gpus.html">
+            
+                <a href="../chapter_computational-performance/multiple-gpus.html">
+            
+                    
+                    12.5. 多GPU训练
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.6" data-path="../chapter_computational-performance/multiple-gpus-concise.html">
+            
+                <a href="../chapter_computational-performance/multiple-gpus-concise.html">
+            
+                    
+                    12.6. 多GPU的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.7" data-path="../chapter_computational-performance/parameterserver.html">
+            
+                <a href="../chapter_computational-performance/parameterserver.html">
+            
+                    
+                    12.7. 参数服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="../chapter_computer-vision/">
+            
+                <a href="../chapter_computer-vision/">
+            
+                    
+                    13. 计算机视觉
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.16.1" data-path="../chapter_computer-vision/image-augmentation.html">
+            
+                <a href="../chapter_computer-vision/image-augmentation.html">
+            
+                    
+                    13.1. 图像增广
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.2" data-path="../chapter_computer-vision/fine-tuning.html">
+            
+                <a href="../chapter_computer-vision/fine-tuning.html">
+            
+                    
+                    13.2. 微调
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.3" data-path="../chapter_computer-vision/bounding-box.html">
+            
+                <a href="../chapter_computer-vision/bounding-box.html">
+            
+                    
+                    13.3. 目标检测和边界框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.4" data-path="../chapter_computer-vision/anchor.html">
+            
+                <a href="../chapter_computer-vision/anchor.html">
+            
+                    
+                    13.4. 锚框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.5" data-path="../chapter_computer-vision/multiscale-object-detection.html">
+            
+                <a href="../chapter_computer-vision/multiscale-object-detection.html">
+            
+                    
+                    13.5. 多尺度目标检测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.6" data-path="../chapter_computer-vision/object-detection-dataset.html">
+            
+                <a href="../chapter_computer-vision/object-detection-dataset.html">
+            
+                    
+                    13.6. 目标检测数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.7" data-path="../chapter_computer-vision/ssd.html">
+            
+                <a href="../chapter_computer-vision/ssd.html">
+            
+                    
+                    13.7. 单发多框检测（SSD）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.8" data-path="../chapter_computer-vision/rcnn.html">
+            
+                <a href="../chapter_computer-vision/rcnn.html">
+            
+                    
+                    13.8. 区域卷积神经网络（R-CNN）系列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.9" data-path="../chapter_computer-vision/semantic-segmentation-and-dataset.html">
+            
+                <a href="../chapter_computer-vision/semantic-segmentation-and-dataset.html">
+            
+                    
+                    13.9. 语义分割和数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.10" data-path="../chapter_computer-vision/transposed-conv.html">
+            
+                <a href="../chapter_computer-vision/transposed-conv.html">
+            
+                    
+                    13.10. 转置卷积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.11" data-path="../chapter_computer-vision/fcn.html">
+            
+                <a href="../chapter_computer-vision/fcn.html">
+            
+                    
+                    13.11. 全卷积网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.12" data-path="../chapter_computer-vision/neural-style.html">
+            
+                <a href="../chapter_computer-vision/neural-style.html">
+            
+                    
+                    13.12. 风格迁移
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.13" data-path="../chapter_computer-vision/kaggle-cifar10.html">
+            
+                <a href="../chapter_computer-vision/kaggle-cifar10.html">
+            
+                    
+                    13.13. 实战 Kaggle 比赛：图像分类 (CIFAR-10.md)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.14" data-path="../chapter_computer-vision/kaggle-dog.html">
+            
+                <a href="../chapter_computer-vision/kaggle-dog.html">
+            
+                    
+                    13.14. 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    14. 自然语言处理：预训练
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.17.1" data-path="word2vec.html">
+            
+                <a href="word2vec.html">
+            
+                    
+                    14.1. 词嵌入（word2vec）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.2" data-path="approx-training.html">
+            
+                <a href="approx-training.html">
+            
+                    
+                    14.2. 近似训练
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.17.3" data-path="word-embedding-dataset.html">
+            
+                <a href="word-embedding-dataset.html">
+            
+                    
+                    14.3. 用于预训练词嵌入的数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.4" data-path="word2vec-pretraining.html">
+            
+                <a href="word2vec-pretraining.html">
+            
+                    
+                    14.4. 预训练word2vec
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.5" data-path="glove.html">
+            
+                <a href="glove.html">
+            
+                    
+                    14.5. 全局向量的词嵌入（GloVe）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.6" data-path="subword-embedding.html">
+            
+                <a href="subword-embedding.html">
+            
+                    
+                    14.6. 子词嵌入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.7" data-path="similarity-analogy.html">
+            
+                <a href="similarity-analogy.html">
+            
+                    
+                    14.7. 词的相似性和类比任务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.8" data-path="bert.html">
+            
+                <a href="bert.html">
+            
+                    
+                    14.8. 来自Transformers的双向编码器表示（BERT）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.9" data-path="bert-dataset.html">
+            
+                <a href="bert-dataset.html">
+            
+                    
+                    14.9. 用于预训练BERT的数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.10" data-path="bert-pretraining.html">
+            
+                <a href="bert-pretraining.html">
+            
+                    
+                    14.10. 预训练BERT
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="../chapter_natural-language-processing-applications/">
+            
+                <a href="../chapter_natural-language-processing-applications/">
+            
+                    
+                    15. 自然语言处理：应用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.18.1" data-path="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset.html">
+            
+                    
+                    15.1. 情感分析及数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.2" data-path="../chapter_natural-language-processing-applications/sentiment-analysis-rnn.html">
+            
+                <a href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn.html">
+            
+                    
+                    15.2. 情感分析：使用循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.3" data-path="../chapter_natural-language-processing-applications/sentiment-analysis-cnn.html">
+            
+                <a href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn.html">
+            
+                    
+                    15.3. 情感分析：使用卷积神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.4" data-path="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset.html">
+            
+                    
+                    15.4. 自然语言推断与数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.5" data-path="../chapter_natural-language-processing-applications/natural-language-inference-attention.html">
+            
+                <a href="../chapter_natural-language-processing-applications/natural-language-inference-attention.html">
+            
+                    
+                    15.5. 自然语言推断：使用注意力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.6" data-path="../chapter_natural-language-processing-applications/finetuning-bert.html">
+            
+                <a href="../chapter_natural-language-processing-applications/finetuning-bert.html">
+            
+                    
+                    15.6. 针对序列级和词元级应用微调BERT
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.7" data-path="../chapter_natural-language-processing-applications/natural-language-inference-bert.html">
+            
+                <a href="../chapter_natural-language-processing-applications/natural-language-inference-bert.html">
+            
+                    
+                    15.7. 自然语言推断：微调BERT
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="../chapter_appendix-tools-for-deep-learning/">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/">
+            
+                    
+                    16. 附录：深度学习工具
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.19.1" data-path="../chapter_appendix-tools-for-deep-learning/jupyter.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/jupyter.html">
+            
+                    
+                    16.1. 使用Jupyter Notebook
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.2" data-path="../chapter_appendix-tools-for-deep-learning/sagemaker.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/sagemaker.html">
+            
+                    
+                    16.2. 使用Amazon SageMaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.3" data-path="../chapter_appendix-tools-for-deep-learning/aws.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/aws.html">
+            
+                    
+                    16.3. 使用Amazon EC2实例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.4" data-path="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html">
+            
+                    
+                    16.4. 选择服务器和GPU
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.5" data-path="../chapter_appendix-tools-for-deep-learning/contributing.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/contributing.html">
+            
+                    
+                    16.5. 为本书做贡献
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.6" data-path="../chapter_appendix-tools-for-deep-learning/d2l.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/d2l.html">
+            
+                    
+                    16.6. d2l API 文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.20" data-path="../chapter_references/zreferences.html">
+            
+                <a href="../chapter_references/zreferences.html">
+            
+                    
+                    参考文献
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >14.3. 用于预训练词嵌入的数据集</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="用于预训练词嵌入的数据集">用于预训练词嵌入的数据集</h1>
+<p>:label:<code>sec_word2vec_data</code></p>
+<p>现在我们已经了解了word2vec模型的技术细节和大致的训练方法，让我们来看看它们的实现。具体地说，我们将以 :numref:<code>sec_word2vec</code>的跳元模型和 :numref:<code>sec_approx_train</code>的负采样为例。本节从用于预训练词嵌入模型的数据集开始：数据的原始格式将被转换为可以在训练期间迭代的小批量。</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> mxnet <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">from</span> mxnet <span class="hljs-keyword">import</span> gluon, np
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> random
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> torch <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">import</span> torch
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> random
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> paddle <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> warnings
+warnings.filterwarnings(<span class="hljs-string">"ignore"</span>)
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">import</span> paddle
+<span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">import</span> random
+</code></pre>
+<h2 id="读取数据集">读取数据集</h2>
+<p>我们在这里使用的数据集是<a href="https://catalog.ldc.upenn.edu/LDC99T42" target="_blank">Penn Tree Bank（PTB）</a>。该语料库取自“华尔街日报”的文章，分为训练集、验证集和测试集。在原始格式中，文本文件的每一行表示由空格分隔的一句话。在这里，我们将每个单词视为一个词元。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+<span class="hljs-comment">#@save</span>
+d2l.DATA_HUB[<span class="hljs-string">'ptb'</span>] = (d2l.DATA_URL + <span class="hljs-string">'ptb.zip'</span>,
+                       <span class="hljs-string">'319d85e578af0cdc590547f26231e4e31cdf1e42'</span>)
+
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_ptb</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-string">"""将PTB数据集加载到文本行的列表中"""</span>
+    data_dir = d2l.download_extract(<span class="hljs-string">'ptb'</span>)
+    <span class="hljs-comment"># Readthetrainingset.</span>
+    <span class="hljs-keyword">with</span> open(os.path.join(data_dir, <span class="hljs-string">'ptb.train.txt'</span>)) <span class="hljs-keyword">as</span> f:
+        raw_text = f.read()
+    <span class="hljs-keyword">return</span> [line.split() <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> raw_text.split(<span class="hljs-string">'\n'</span>)]
+
+sentences = read_ptb()
+f<span class="hljs-string">'# sentences数: {len(sentences)}'</span>
+</code></pre>
+<p>在读取训练集之后，我们为语料库构建了一个词表，其中出现次数少于10次的任何单词都将由“&lt;unk&gt;”词元替换。请注意，原始数据集还包含表示稀有（未知）单词的“&lt;unk&gt;”词元。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+vocab = d2l.Vocab(sentences, min_freq=<span class="hljs-number">10</span>)
+f<span class="hljs-string">'vocab size: {len(vocab)}'</span>
+</code></pre>
+<h2 id="下采样">下采样</h2>
+<p>文本数据通常有“the”“a”和“in”等高频词：它们在非常大的语料库中甚至可能出现数十亿次。然而，这些词经常在上下文窗口中与许多不同的词共同出现，提供的有用信息很少。例如，考虑上下文窗口中的词“chip”：直观地说，它与低频单词“intel”的共现比与高频单词“a”的共现在训练中更有用。此外，大量（高频）单词的训练速度很慢。因此，当训练词嵌入模型时，可以对高频单词进行<em>下采样</em> :cite:<code>Mikolov.Sutskever.Chen.ea.2013</code>。具体地说，数据集中的每个词$w_i$将有概率地被丢弃</p>
+<p>$$ P(w_i) = \max\left(1 - \sqrt{\frac{t}{f(w_i)} }, 0\right),$$</p>
+<p>其中$f(w_i)$是$w_i$的词数与数据集中的总词数的比率，常量$t$是超参数（在实验中为$10^{-4}$）。我们可以看到，只有当相对比率$f(w_i) &gt; t$时，（高频）词$w_i$才能被丢弃，且该词的相对比率越高，被丢弃的概率就越大。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">subsample</span><span class="hljs-params">(sentences, vocab)</span>:</span>
+    <span class="hljs-string">"""下采样高频词"""</span>
+    <span class="hljs-comment"># 排除未知词元'&lt;unk&gt;'</span>
+    sentences = [[token <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> line <span class="hljs-keyword">if</span> vocab[token] != vocab.unk]
+                 <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> sentences]
+    counter = d2l.count_corpus(sentences)
+    num_tokens = sum(counter.values())
+
+    <span class="hljs-comment"># 如果在下采样期间保留词元，则返回True</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">keep</span><span class="hljs-params">(token)</span>:</span>
+        <span class="hljs-keyword">return</span>(random.uniform(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>) &lt;
+               math.sqrt(<span class="hljs-number">1e-4</span> / counter[token] * num_tokens))
+
+    <span class="hljs-keyword">return</span> ([[token <span class="hljs-keyword">for</span> token <span class="hljs-keyword">in</span> line <span class="hljs-keyword">if</span> keep(token)] <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> sentences],
+            counter)
+
+subsampled, counter = subsample(sentences, vocab)
+</code></pre>
+<p>下面的代码片段绘制了下采样前后每句话的词元数量的直方图。正如预期的那样，下采样通过删除高频词来显著缩短句子，这将使训练加速。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+d2l.show_list_len_pair_hist(
+    [<span class="hljs-string">'origin'</span>, <span class="hljs-string">'subsampled'</span>], <span class="hljs-string">'# tokens per sentence'</span>,
+    <span class="hljs-string">'count'</span>, sentences, subsampled);
+</code></pre>
+<p>对于单个词元，高频词“the”的采样率不到1/20。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">compare_counts</span><span class="hljs-params">(token)</span>:</span>
+    <span class="hljs-keyword">return</span> (f<span class="hljs-string">'"{token}"的数量：'</span>
+            f<span class="hljs-string">'之前={sum([l.count(token) for l in sentences])}, '</span>
+            f<span class="hljs-string">'之后={sum([l.count(token) for l in subsampled])}'</span>)
+
+compare_counts(<span class="hljs-string">'the'</span>)
+</code></pre>
+<p>相比之下，低频词“join”则被完全保留。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+compare_counts(<span class="hljs-string">'join'</span>)
+</code></pre>
+<p>在下采样之后，我们将词元映射到它们在语料库中的索引。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+corpus = [vocab[line] <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> subsampled]
+corpus[:<span class="hljs-number">3</span>]
+</code></pre>
+<h2 id="中心词和上下文词的提取">中心词和上下文词的提取</h2>
+<p>下面的<code>get_centers_and_contexts</code>函数从<code>corpus</code>中提取所有中心词及其上下文词。它随机采样1到<code>max_window_size</code>之间的整数作为上下文窗口。对于任一中心词，与其距离不超过采样上下文窗口大小的词为其上下文词。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_centers_and_contexts</span><span class="hljs-params">(corpus, max_window_size)</span>:</span>
+    <span class="hljs-string">"""返回跳元模型中的中心词和上下文词"""</span>
+    centers, contexts = [], []
+    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> corpus:
+        <span class="hljs-comment"># 要形成“中心词-上下文词”对，每个句子至少需要有2个词</span>
+        <span class="hljs-keyword">if</span> len(line) &lt; <span class="hljs-number">2</span>:
+            <span class="hljs-keyword">continue</span>
+        centers += line
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(line)):  <span class="hljs-comment"># 上下文窗口中间i</span>
+            window_size = random.randint(<span class="hljs-number">1</span>, max_window_size)
+            indices = list(range(max(<span class="hljs-number">0</span>, i - window_size),
+                                 min(len(line), i + <span class="hljs-number">1</span> + window_size)))
+            <span class="hljs-comment"># 从上下文词中排除中心词</span>
+            indices.remove(i)
+            contexts.append([line[idx] <span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> indices])
+    <span class="hljs-keyword">return</span> centers, contexts
+</code></pre>
+<p>接下来，我们创建一个人工数据集，分别包含7个和3个单词的两个句子。设置最大上下文窗口大小为2，并打印所有中心词及其上下文词。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+tiny_dataset = [list(range(<span class="hljs-number">7</span>)), list(range(<span class="hljs-number">7</span>, <span class="hljs-number">10</span>))]
+print(<span class="hljs-string">'数据集'</span>, tiny_dataset)
+<span class="hljs-keyword">for</span> center, context <span class="hljs-keyword">in</span> zip(*get_centers_and_contexts(tiny_dataset, <span class="hljs-number">2</span>)):
+    print(<span class="hljs-string">'中心词'</span>, center, <span class="hljs-string">'的上下文词是'</span>, context)
+</code></pre>
+<p>在PTB数据集上进行训练时，我们将最大上下文窗口大小设置为5。下面提取数据集中的所有中心词及其上下文词。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+all_centers, all_contexts = get_centers_and_contexts(corpus, <span class="hljs-number">5</span>)
+f<span class="hljs-string">'# “中心词-上下文词对”的数量: {sum([len(contexts) for contexts in all_contexts])}'</span>
+</code></pre>
+<h2 id="负采样">负采样</h2>
+<p>我们使用负采样进行近似训练。为了根据预定义的分布对噪声词进行采样，我们定义以下<code>RandomGenerator</code>类，其中（可能未规范化的）采样分布通过变量<code>sampling_weights</code>传递。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RandomGenerator</span>:</span>
+    <span class="hljs-string">"""根据n个采样权重在{1,...,n}中随机抽取"""</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, sampling_weights)</span>:</span>
+        <span class="hljs-comment"># Exclude</span>
+        self.population = list(range(<span class="hljs-number">1</span>, len(sampling_weights) + <span class="hljs-number">1</span>))
+        self.sampling_weights = sampling_weights
+        self.candidates = []
+        self.i = <span class="hljs-number">0</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">draw</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">if</span> self.i == len(self.candidates):
+            <span class="hljs-comment"># 缓存k个随机采样结果</span>
+            self.candidates = random.choices(
+                self.population, self.sampling_weights, k=<span class="hljs-number">10000</span>)
+            self.i = <span class="hljs-number">0</span>
+        self.i += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> self.candidates[self.i - <span class="hljs-number">1</span>]
+</code></pre>
+<p>例如，我们可以在索引1、2和3中绘制10个随机变量$X$，采样概率为$P(X=1)=2/9, P(X=2)=3/9$和$P(X=3)=4/9$，如下所示。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+<span class="hljs-comment">#@save</span>
+generator = RandomGenerator([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>])
+[generator.draw() <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">10</span>)]
+</code></pre>
+<p>对于一对中心词和上下文词，我们随机抽取了<code>K</code>个（实验中为5个）噪声词。根据word2vec论文中的建议，将噪声词$w$的采样概率$P(w)$设置为其在字典中的相对频率，其幂为0.75 :cite:<code>Mikolov.Sutskever.Chen.ea.2013</code>。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_negatives</span><span class="hljs-params">(all_contexts, vocab, counter, K)</span>:</span>
+    <span class="hljs-string">"""返回负采样中的噪声词"""</span>
+    <span class="hljs-comment"># 索引为1、2、...（索引0是词表中排除的未知标记）</span>
+    sampling_weights = [counter[vocab.to_tokens(i)]**<span class="hljs-number">0.75</span>
+                        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, len(vocab))]
+    all_negatives, generator = [], RandomGenerator(sampling_weights)
+    <span class="hljs-keyword">for</span> contexts <span class="hljs-keyword">in</span> all_contexts:
+        negatives = []
+        <span class="hljs-keyword">while</span> len(negatives) &lt; len(contexts) * K:
+            neg = generator.draw()
+            <span class="hljs-comment"># 噪声词不能是上下文词</span>
+            <span class="hljs-keyword">if</span> neg <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> contexts:
+                negatives.append(neg)
+        all_negatives.append(negatives)
+    <span class="hljs-keyword">return</span> all_negatives
+
+all_negatives = get_negatives(all_contexts, vocab, counter, <span class="hljs-number">5</span>)
+</code></pre>
+<h2 id="小批量加载训练实例">小批量加载训练实例</h2>
+<p>:label:<code>subsec_word2vec-minibatch-loading</code></p>
+<p>在提取所有中心词及其上下文词和采样噪声词后，将它们转换成小批量的样本，在训练过程中可以迭代加载。</p>
+<p>在小批量中，$i^\mathrm{th}$个样本包括中心词及其$n_i$个上下文词和$m_i$个噪声词。由于上下文窗口大小不同，$n_i+m_i$对于不同的$i$是不同的。因此，对于每个样本，我们在<code>contexts_negatives</code>个变量中将其上下文词和噪声词连结起来，并填充零，直到连结长度达到$\max_i n_i+m_i$(<code>max_len</code>)。为了在计算损失时排除填充，我们定义了掩码变量<code>masks</code>。在<code>masks</code>中的元素和<code>contexts_negatives</code>中的元素之间存在一一对应关系，其中<code>masks</code>中的0（否则为1）对应于<code>contexts_negatives</code>中的填充。</p>
+<p>为了区分正反例，我们在<code>contexts_negatives</code>中通过一个<code>labels</code>变量将上下文词与噪声词分开。类似于<code>masks</code>，在<code>labels</code>中的元素和<code>contexts_negatives</code>中的元素之间也存在一一对应关系，其中<code>labels</code>中的1（否则为0）对应于<code>contexts_negatives</code>中的上下文词的正例。</p>
+<p>上述思想在下面的<code>batchify</code>函数中实现。其输入<code>data</code>是长度等于批量大小的列表，其中每个元素是由中心词<code>center</code>、其上下文词<code>context</code>和其噪声词<code>negative</code>组成的样本。此函数返回一个可以在训练期间加载用于计算的小批量，例如包括掩码变量。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">batchify</span><span class="hljs-params">(data)</span>:</span>
+    <span class="hljs-string">"""返回带有负采样的跳元模型的小批量样本"""</span>
+    max_len = max(len(c) + len(n) <span class="hljs-keyword">for</span> _, c, n <span class="hljs-keyword">in</span> data)
+    centers, contexts_negatives, masks, labels = [], [], [], []
+    <span class="hljs-keyword">for</span> center, context, negative <span class="hljs-keyword">in</span> data:
+        cur_len = len(context) + len(negative)
+        centers += [center]
+        contexts_negatives += \
+            [context + negative + [<span class="hljs-number">0</span>] * (max_len - cur_len)]
+        masks += [[<span class="hljs-number">1</span>] * cur_len + [<span class="hljs-number">0</span>] * (max_len - cur_len)]
+        labels += [[<span class="hljs-number">1</span>] * len(context) + [<span class="hljs-number">0</span>] * (max_len - len(context))]
+    <span class="hljs-keyword">return</span> (d2l.reshape(d2l.tensor(centers), (-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)), d2l.tensor(
+        contexts_negatives), d2l.tensor(masks), d2l.tensor(labels))
+</code></pre>
+<p>让我们使用一个小批量的两个样本来测试此函数。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+x_1 = (<span class="hljs-number">1</span>, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>])
+x_2 = (<span class="hljs-number">1</span>, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>])
+batch = batchify((x_1, x_2))
+
+names = [<span class="hljs-string">'centers'</span>, <span class="hljs-string">'contexts_negatives'</span>, <span class="hljs-string">'masks'</span>, <span class="hljs-string">'labels'</span>]
+<span class="hljs-keyword">for</span> name, data <span class="hljs-keyword">in</span> zip(names, batch):
+    print(name, <span class="hljs-string">'='</span>, data)
+</code></pre>
+<h2 id="整合代码">整合代码</h2>
+<p>最后，我们定义了读取PTB数据集并返回数据迭代器和词表的<code>load_data_ptb</code>函数。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_data_ptb</span><span class="hljs-params">(batch_size, max_window_size, num_noise_words)</span>:</span>
+    <span class="hljs-string">"""下载PTB数据集，然后将其加载到内存中"""</span>
+    sentences = read_ptb()
+    vocab = d2l.Vocab(sentences, min_freq=<span class="hljs-number">10</span>)
+    subsampled, counter = subsample(sentences, vocab)
+    corpus = [vocab[line] <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> subsampled]
+    all_centers, all_contexts = get_centers_and_contexts(
+        corpus, max_window_size)
+    all_negatives = get_negatives(
+        all_contexts, vocab, counter, num_noise_words)
+    dataset = gluon.data.ArrayDataset(
+        all_centers, all_contexts, all_negatives)
+    data_iter = gluon.data.DataLoader(
+        dataset, batch_size, shuffle=<span class="hljs-keyword">True</span>,batchify_fn=batchify,
+        num_workers=d2l.get_dataloader_workers())
+    <span class="hljs-keyword">return</span> data_iter, vocab
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_data_ptb</span><span class="hljs-params">(batch_size, max_window_size, num_noise_words)</span>:</span>
+    <span class="hljs-string">"""下载PTB数据集，然后将其加载到内存中"""</span>
+    num_workers = d2l.get_dataloader_workers()
+    sentences = read_ptb()
+    vocab = d2l.Vocab(sentences, min_freq=<span class="hljs-number">10</span>)
+    subsampled, counter = subsample(sentences, vocab)
+    corpus = [vocab[line] <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> subsampled]
+    all_centers, all_contexts = get_centers_and_contexts(
+        corpus, max_window_size)
+    all_negatives = get_negatives(
+        all_contexts, vocab, counter, num_noise_words)
+
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PTBDataset</span><span class="hljs-params">(torch.utils.data.Dataset)</span>:</span>
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, centers, contexts, negatives)</span>:</span>
+            <span class="hljs-keyword">assert</span> len(centers) == len(contexts) == len(negatives)
+            self.centers = centers
+            self.contexts = contexts
+            self.negatives = negatives
+
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__getitem__</span><span class="hljs-params">(self, index)</span>:</span>
+            <span class="hljs-keyword">return</span> (self.centers[index], self.contexts[index],
+                    self.negatives[index])
+
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__len__</span><span class="hljs-params">(self)</span>:</span>
+            <span class="hljs-keyword">return</span> len(self.centers)
+
+    dataset = PTBDataset(all_centers, all_contexts, all_negatives)
+
+    data_iter = torch.utils.data.DataLoader(
+        dataset, batch_size, shuffle=<span class="hljs-keyword">True</span>, 
+        collate_fn=batchify, num_workers=num_workers)
+    <span class="hljs-keyword">return</span> data_iter, vocab
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_data_ptb</span><span class="hljs-params">(batch_size, max_window_size, num_noise_words)</span>:</span>
+    <span class="hljs-string">"""下载PTB数据集，然后将其加载到内存中"""</span>
+    num_workers = d2l.get_dataloader_workers()
+    sentences = read_ptb()
+    vocab = d2l.Vocab(sentences, min_freq=<span class="hljs-number">10</span>)
+    subsampled, counter = subsample(sentences, vocab)
+    corpus = [vocab[line] <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> subsampled]
+    all_centers, all_contexts = get_centers_and_contexts(
+        corpus, max_window_size)
+    all_negatives = get_negatives(
+        all_contexts, vocab, counter, num_noise_words)
+
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PTBDataset</span><span class="hljs-params">(paddle.io.Dataset)</span>:</span>
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, centers, contexts, negatives)</span>:</span>
+            <span class="hljs-keyword">assert</span> len(centers) == len(contexts) == len(negatives)
+            self.centers = centers
+            self.contexts = contexts
+            self.negatives = negatives
+
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__getitem__</span><span class="hljs-params">(self, index)</span>:</span>
+            <span class="hljs-keyword">return</span> (self.centers[index], self.contexts[index],
+                    self.negatives[index])
+
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__len__</span><span class="hljs-params">(self)</span>:</span>
+            <span class="hljs-keyword">return</span> len(self.centers)
+
+    dataset = PTBDataset(all_centers, all_contexts, all_negatives)
+
+    data_iter = paddle.io.DataLoader(
+        dataset, batch_size=batch_size, shuffle=<span class="hljs-keyword">True</span>, return_list=<span class="hljs-keyword">True</span>, 
+        collate_fn=batchify, num_workers=num_workers)
+    <span class="hljs-keyword">return</span> data_iter, vocab
+</code></pre>
+<p>让我们打印数据迭代器的第一个小批量。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+data_iter, vocab = load_data_ptb(<span class="hljs-number">512</span>, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>)
+<span class="hljs-keyword">for</span> batch <span class="hljs-keyword">in</span> data_iter:
+    <span class="hljs-keyword">for</span> name, data <span class="hljs-keyword">in</span> zip(names, batch):
+        print(name, <span class="hljs-string">'shape:'</span>, data.shape)
+    <span class="hljs-keyword">break</span>
+</code></pre>
+<h2 id="小结">小结</h2>
+<ul>
+<li>高频词在训练中可能不是那么有用。我们可以对他们进行下采样，以便在训练中加快速度。</li>
+<li>为了提高计算效率，我们以小批量方式加载样本。我们可以定义其他变量来区分填充标记和非填充标记，以及正例和负例。</li>
+</ul>
+<h2 id="练习">练习</h2>
+<ol>
+<li>如果不使用下采样，本节中代码的运行时间会发生什么变化？</li>
+<li><code>RandomGenerator</code>类缓存<code>k</code>个随机采样结果。将<code>k</code>设置为其他值，看看它如何影响数据加载速度。</li>
+<li>本节代码中的哪些其他超参数可能会影响数据加载速度？</li>
+</ol>
+<p>:begin_tab:<code>mxnet</code>
+<a href="https://discuss.d2l.ai/t/5734" target="_blank">Discussions</a>
+:end_tab:</p>
+<p>:begin_tab:<code>pytorch</code>
+<a href="https://discuss.d2l.ai/t/5735" target="_blank">Discussions</a>
+:end_tab:</p>
+<p>:begin_tab:<code>paddle</code>
+<a href="https://discuss.d2l.ai/t/11816" target="_blank">Discussions</a>
+:end_tab:</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="approx-training.html" class="navigation navigation-prev " aria-label="Previous page: 14.2. 近似训练">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="word2vec-pretraining.html" class="navigation navigation-next " aria-label="Next page: 14.4. 预训练word2vec">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"14.3. 用于预训练词嵌入的数据集","level":"1.2.17.3","depth":3,"next":{"title":"14.4. 预训练word2vec","level":"1.2.17.4","depth":3,"path":"chapter_natural-language-processing-pretraining/word2vec-pretraining.md","ref":"chapter_natural-language-processing-pretraining/word2vec-pretraining.md","articles":[]},"previous":{"title":"14.2. 近似训练","level":"1.2.17.2","depth":3,"path":"chapter_natural-language-processing-pretraining/approx-training.md","ref":"chapter_natural-language-processing-pretraining/approx-training.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"chapter_natural-language-processing-pretraining/word-embedding-dataset.md","mtime":"2025-04-25T11:45:23.956Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:47.289Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

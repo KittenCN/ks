@@ -1,0 +1,3190 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>9.7. 序列到序列学习（seq2seq） · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="beam-search.html" />
+    
+    
+    <link rel="prev" href="encoder-decoder.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href="../.." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../d2l.md">
+            
+                <span>
+            
+                    
+                    动手学深度学习
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../chapter_installation/">
+            
+                <a href="../chapter_installation/">
+            
+                    
+                    安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../chapter_notation/">
+            
+                <a href="../chapter_notation/">
+            
+                    
+                    符号
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    1. 引言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../chapter_preliminaries/">
+            
+                <a href="../chapter_preliminaries/">
+            
+                    
+                    2. 预备知识
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.5.1" data-path="../chapter_preliminaries/ndarray.html">
+            
+                <a href="../chapter_preliminaries/ndarray.html">
+            
+                    
+                    2.1. 数据操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.2" data-path="../chapter_preliminaries/pandas.html">
+            
+                <a href="../chapter_preliminaries/pandas.html">
+            
+                    
+                    2.2. 数据预处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.3" data-path="../chapter_preliminaries/linear-algebra.html">
+            
+                <a href="../chapter_preliminaries/linear-algebra.html">
+            
+                    
+                    2.3. 线性代数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.4" data-path="../chapter_preliminaries/calculus.html">
+            
+                <a href="../chapter_preliminaries/calculus.html">
+            
+                    
+                    2.4. 微积分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.5" data-path="../chapter_preliminaries/autograd.html">
+            
+                <a href="../chapter_preliminaries/autograd.html">
+            
+                    
+                    2.5. 自动微分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.6" data-path="../chapter_preliminaries/probability.html">
+            
+                <a href="../chapter_preliminaries/probability.html">
+            
+                    
+                    2.6. 概率
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.7" data-path="../chapter_preliminaries/lookup-api.html">
+            
+                <a href="../chapter_preliminaries/lookup-api.html">
+            
+                    
+                    2.7. 查阅文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../chapter_linear-networks/">
+            
+                <a href="../chapter_linear-networks/">
+            
+                    
+                    3. 线性神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.6.1" data-path="../chapter_linear-networks/linear-regression.html">
+            
+                <a href="../chapter_linear-networks/linear-regression.html">
+            
+                    
+                    3.1. 线性回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.2" data-path="../chapter_linear-networks/linear-regression-scratch.html">
+            
+                <a href="../chapter_linear-networks/linear-regression-scratch.html">
+            
+                    
+                    3.2. 线性回归的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.3" data-path="../chapter_linear-networks/linear-regression-concise.html">
+            
+                <a href="../chapter_linear-networks/linear-regression-concise.html">
+            
+                    
+                    3.3. 线性回归的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.4" data-path="../chapter_linear-networks/softmax-regression.html">
+            
+                <a href="../chapter_linear-networks/softmax-regression.html">
+            
+                    
+                    3.4. softmax回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.5" data-path="../chapter_linear-networks/image-classification-dataset.html">
+            
+                <a href="../chapter_linear-networks/image-classification-dataset.html">
+            
+                    
+                    3.5. 图像分类数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.6" data-path="../chapter_linear-networks/softmax-regression-scratch.html">
+            
+                <a href="../chapter_linear-networks/softmax-regression-scratch.html">
+            
+                    
+                    3.6. softmax回归的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.7" data-path="../chapter_linear-networks/softmax-regression-concise.html">
+            
+                <a href="../chapter_linear-networks/softmax-regression-concise.html">
+            
+                    
+                    3.7. softmax回归的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../chapter_multilayer-perceptrons/">
+            
+                <a href="../chapter_multilayer-perceptrons/">
+            
+                    
+                    4. 多层感知机
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.7.1" data-path="../chapter_multilayer-perceptrons/mlp.html">
+            
+                <a href="../chapter_multilayer-perceptrons/mlp.html">
+            
+                    
+                    4.1. 多层感知机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.2" data-path="../chapter_multilayer-perceptrons/mlp-scratch.html">
+            
+                <a href="../chapter_multilayer-perceptrons/mlp-scratch.html">
+            
+                    
+                    4.2. 多层感知机的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.3" data-path="../chapter_multilayer-perceptrons/mlp-concise.html">
+            
+                <a href="../chapter_multilayer-perceptrons/mlp-concise.html">
+            
+                    
+                    4.3. 多层感知机的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.4" data-path="../chapter_multilayer-perceptrons/underfit-overfit.html">
+            
+                <a href="../chapter_multilayer-perceptrons/underfit-overfit.html">
+            
+                    
+                    4.4. 模型选择、欠拟合和过拟合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.5" data-path="../chapter_multilayer-perceptrons/weight-decay.html">
+            
+                <a href="../chapter_multilayer-perceptrons/weight-decay.html">
+            
+                    
+                    4.5. 权重衰减
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.6" data-path="../chapter_multilayer-perceptrons/dropout.html">
+            
+                <a href="../chapter_multilayer-perceptrons/dropout.html">
+            
+                    
+                    4.6. 暂退法（Dropout）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.7" data-path="../chapter_multilayer-perceptrons/backprop.html">
+            
+                <a href="../chapter_multilayer-perceptrons/backprop.html">
+            
+                    
+                    4.7. 前向传播、反向传播和计算图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.8" data-path="../chapter_multilayer-perceptrons/numerical-stability-and-init.html">
+            
+                <a href="../chapter_multilayer-perceptrons/numerical-stability-and-init.html">
+            
+                    
+                    4.8. 数值稳定性和模型初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.9" data-path="../chapter_multilayer-perceptrons/environment.html">
+            
+                <a href="../chapter_multilayer-perceptrons/environment.html">
+            
+                    
+                    4.9. 环境和分布偏移
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.10" data-path="../chapter_multilayer-perceptrons/kaggle-house-price.html">
+            
+                <a href="../chapter_multilayer-perceptrons/kaggle-house-price.html">
+            
+                    
+                    4.10. 实战Kaggle比赛：预测房价
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../chapter_deep-learning-computation/">
+            
+                <a href="../chapter_deep-learning-computation/">
+            
+                    
+                    5. 深度学习计算
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.8.1" data-path="../chapter_deep-learning-computation/model-construction.html">
+            
+                <a href="../chapter_deep-learning-computation/model-construction.html">
+            
+                    
+                    5.1. 层和块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.2" data-path="../chapter_deep-learning-computation/parameters.html">
+            
+                <a href="../chapter_deep-learning-computation/parameters.html">
+            
+                    
+                    5.2. 参数管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.3" data-path="../chapter_deep-learning-computation/deferred-init.html">
+            
+                <a href="../chapter_deep-learning-computation/deferred-init.html">
+            
+                    
+                    5.3. 延后初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.4" data-path="../chapter_deep-learning-computation/custom-layer.html">
+            
+                <a href="../chapter_deep-learning-computation/custom-layer.html">
+            
+                    
+                    5.4. 自定义层
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.5" data-path="../chapter_deep-learning-computation/read-write.html">
+            
+                <a href="../chapter_deep-learning-computation/read-write.html">
+            
+                    
+                    5.5. 读写文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.6" data-path="../chapter_deep-learning-computation/use-gpu.html">
+            
+                <a href="../chapter_deep-learning-computation/use-gpu.html">
+            
+                    
+                    5.6. GPU计算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../chapter_convolutional-neural-networks/">
+            
+                <a href="../chapter_convolutional-neural-networks/">
+            
+                    
+                    6. 卷积神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.9.1" data-path="../chapter_convolutional-neural-networks/why-conv.html">
+            
+                <a href="../chapter_convolutional-neural-networks/why-conv.html">
+            
+                    
+                    6.1. 从全连接层到卷积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.2" data-path="../chapter_convolutional-neural-networks/conv-layer.html">
+            
+                <a href="../chapter_convolutional-neural-networks/conv-layer.html">
+            
+                    
+                    6.2. 图像卷积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.3" data-path="../chapter_convolutional-neural-networks/padding-and-strides.html">
+            
+                <a href="../chapter_convolutional-neural-networks/padding-and-strides.html">
+            
+                    
+                    6.3. 填充和步幅
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.4" data-path="../chapter_convolutional-neural-networks/channels.html">
+            
+                <a href="../chapter_convolutional-neural-networks/channels.html">
+            
+                    
+                    6.4. 多输入多输出通道
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.5" data-path="../chapter_convolutional-neural-networks/pooling.html">
+            
+                <a href="../chapter_convolutional-neural-networks/pooling.html">
+            
+                    
+                    6.5. 汇聚层
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.6" data-path="../chapter_convolutional-neural-networks/lenet.html">
+            
+                <a href="../chapter_convolutional-neural-networks/lenet.html">
+            
+                    
+                    6.6. 卷积神经网络（LeNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../chapter_convolutional-modern/">
+            
+                <a href="../chapter_convolutional-modern/">
+            
+                    
+                    7. 现代卷积神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.10.1" data-path="../chapter_convolutional-modern/alexnet.html">
+            
+                <a href="../chapter_convolutional-modern/alexnet.html">
+            
+                    
+                    7.1. 深度卷积神经网络（AlexNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.2" data-path="../chapter_convolutional-modern/vgg.html">
+            
+                <a href="../chapter_convolutional-modern/vgg.html">
+            
+                    
+                    7.2. 使用块的网络（VGG）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.3" data-path="../chapter_convolutional-modern/nin.html">
+            
+                <a href="../chapter_convolutional-modern/nin.html">
+            
+                    
+                    7.3. 网络中的网络（NiN）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.4" data-path="../chapter_convolutional-modern/googlenet.html">
+            
+                <a href="../chapter_convolutional-modern/googlenet.html">
+            
+                    
+                    7.4. 含并行连结的网络（GoogLeNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.5" data-path="../chapter_convolutional-modern/batch-norm.html">
+            
+                <a href="../chapter_convolutional-modern/batch-norm.html">
+            
+                    
+                    7.5. 批量规范化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.6" data-path="../chapter_convolutional-modern/resnet.html">
+            
+                <a href="../chapter_convolutional-modern/resnet.html">
+            
+                    
+                    7.6. 残差网络（ResNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.7" data-path="../chapter_convolutional-modern/densenet.html">
+            
+                <a href="../chapter_convolutional-modern/densenet.html">
+            
+                    
+                    7.7. 稠密连接网络（DenseNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../chapter_recurrent-neural-networks/">
+            
+                <a href="../chapter_recurrent-neural-networks/">
+            
+                    
+                    8. 循环神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.11.1" data-path="../chapter_recurrent-neural-networks/sequence.html">
+            
+                <a href="../chapter_recurrent-neural-networks/sequence.html">
+            
+                    
+                    8.1. 序列模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.2" data-path="../chapter_recurrent-neural-networks/text-preprocessing.html">
+            
+                <a href="../chapter_recurrent-neural-networks/text-preprocessing.html">
+            
+                    
+                    8.2. 文本预处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.3" data-path="../chapter_recurrent-neural-networks/language-models-and-dataset.html">
+            
+                <a href="../chapter_recurrent-neural-networks/language-models-and-dataset.html">
+            
+                    
+                    8.3. 语言模型和数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.4" data-path="../chapter_recurrent-neural-networks/rnn.html">
+            
+                <a href="../chapter_recurrent-neural-networks/rnn.html">
+            
+                    
+                    8.4. 循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.5" data-path="../chapter_recurrent-neural-networks/rnn-scratch.html">
+            
+                <a href="../chapter_recurrent-neural-networks/rnn-scratch.html">
+            
+                    
+                    8.5. 循环神经网络的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.6" data-path="../chapter_recurrent-neural-networks/rnn-concise.html">
+            
+                <a href="../chapter_recurrent-neural-networks/rnn-concise.html">
+            
+                    
+                    8.6. 循环神经网络的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.7" data-path="../chapter_recurrent-neural-networks/bptt.html">
+            
+                <a href="../chapter_recurrent-neural-networks/bptt.html">
+            
+                    
+                    8.7. 通过时间反向传播
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    9. 现代循环神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.12.1" data-path="gru.html">
+            
+                <a href="gru.html">
+            
+                    
+                    9.1. 门控循环单元（GRU）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.2" data-path="lstm.html">
+            
+                <a href="lstm.html">
+            
+                    
+                    9.2. 长短期记忆（LSTM）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.3" data-path="deep-rnn.html">
+            
+                <a href="deep-rnn.html">
+            
+                    
+                    9.3. 深度循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.4" data-path="bi-rnn.html">
+            
+                <a href="bi-rnn.html">
+            
+                    
+                    9.4. 双向循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.5" data-path="machine-translation-and-dataset.html">
+            
+                <a href="machine-translation-and-dataset.html">
+            
+                    
+                    9.5. 机器翻译及数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.6" data-path="encoder-decoder.html">
+            
+                <a href="encoder-decoder.html">
+            
+                    
+                    9.6. 编码器—解码器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.12.7" data-path="seq2seq.html">
+            
+                <a href="seq2seq.html">
+            
+                    
+                    9.7. 序列到序列学习（seq2seq）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.8" data-path="beam-search.html">
+            
+                <a href="beam-search.html">
+            
+                    
+                    9.8. 束搜索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="../chapter_attention-mechanisms/">
+            
+                <a href="../chapter_attention-mechanisms/">
+            
+                    
+                    10. 注意力机制
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.13.1" data-path="../chapter_attention-mechanisms/attention-cues.html">
+            
+                <a href="../chapter_attention-mechanisms/attention-cues.html">
+            
+                    
+                    10.1. 注意力提示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.2" data-path="../chapter_attention-mechanisms/nadaraya-waston.html">
+            
+                <a href="../chapter_attention-mechanisms/nadaraya-waston.html">
+            
+                    
+                    10.2. 注意力汇聚：Nadaraya-Watson 核回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.3" data-path="../chapter_attention-mechanisms/attention-scoring-functions.html">
+            
+                <a href="../chapter_attention-mechanisms/attention-scoring-functions.html">
+            
+                    
+                    10.3. 注意力评分函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.4" data-path="../chapter_attention-mechanisms/bahdanau-attention.html">
+            
+                <a href="../chapter_attention-mechanisms/bahdanau-attention.html">
+            
+                    
+                    10.4. Bahdanau 注意力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.5" data-path="../chapter_attention-mechanisms/multihead-attention.html">
+            
+                <a href="../chapter_attention-mechanisms/multihead-attention.html">
+            
+                    
+                    10.5. 多头注意力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.6" data-path="../chapter_attention-mechanisms/self-attention-and-positional-encoding.html">
+            
+                <a href="../chapter_attention-mechanisms/self-attention-and-positional-encoding.html">
+            
+                    
+                    10.6. 自注意力和位置编码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.7" data-path="../chapter_attention-mechanisms/transformer.html">
+            
+                <a href="../chapter_attention-mechanisms/transformer.html">
+            
+                    
+                    10.7. Transformer
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="../chapter_optimization/">
+            
+                <a href="../chapter_optimization/">
+            
+                    
+                    11. 优化算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.14.1" data-path="../chapter_optimization/optimization-intro.html">
+            
+                <a href="../chapter_optimization/optimization-intro.html">
+            
+                    
+                    11.1. 优化与深度学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.2" data-path="../chapter_optimization/convexity.html">
+            
+                <a href="../chapter_optimization/convexity.html">
+            
+                    
+                    11.2. 凸性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.3" data-path="../chapter_optimization/gd.html">
+            
+                <a href="../chapter_optimization/gd.html">
+            
+                    
+                    11.3. 梯度下降
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.4" data-path="../chapter_optimization/sgd.html">
+            
+                <a href="../chapter_optimization/sgd.html">
+            
+                    
+                    11.4. 随机梯度下降
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.5" data-path="../chapter_optimization/minibatch-sgd.html">
+            
+                <a href="../chapter_optimization/minibatch-sgd.html">
+            
+                    
+                    11.5. 小批量随机梯度下降
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.6" data-path="../chapter_optimization/momentum.html">
+            
+                <a href="../chapter_optimization/momentum.html">
+            
+                    
+                    11.6. 动量法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.7" data-path="../chapter_optimization/adagrad.html">
+            
+                <a href="../chapter_optimization/adagrad.html">
+            
+                    
+                    11.7. AdaGrad算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.8" data-path="../chapter_optimization/rmsprop.html">
+            
+                <a href="../chapter_optimization/rmsprop.html">
+            
+                    
+                    11.8. RMSProp算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.9" data-path="../chapter_optimization/adadelta.html">
+            
+                <a href="../chapter_optimization/adadelta.html">
+            
+                    
+                    11.9. Adadelta
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.10" data-path="../chapter_optimization/adam.html">
+            
+                <a href="../chapter_optimization/adam.html">
+            
+                    
+                    11.10. Adam算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.11" data-path="../chapter_optimization/lr-scheduler.html">
+            
+                <a href="../chapter_optimization/lr-scheduler.html">
+            
+                    
+                    11.11. 学习率调度器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="../chapter_computational-performance/">
+            
+                <a href="../chapter_computational-performance/">
+            
+                    
+                    12. 计算性能
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.15.1" data-path="../chapter_computational-performance/hybridize.html">
+            
+                <a href="../chapter_computational-performance/hybridize.html">
+            
+                    
+                    12.1. 编译器和解释器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.2" data-path="../chapter_computational-performance/async-computation.html">
+            
+                <a href="../chapter_computational-performance/async-computation.html">
+            
+                    
+                    12.2. 异步计算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.3" data-path="../chapter_computational-performance/auto-parallelism.html">
+            
+                <a href="../chapter_computational-performance/auto-parallelism.html">
+            
+                    
+                    12.3. 自动并行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.4" data-path="../chapter_computational-performance/hardware.html">
+            
+                <a href="../chapter_computational-performance/hardware.html">
+            
+                    
+                    12.4. 硬件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.5" data-path="../chapter_computational-performance/multiple-gpus.html">
+            
+                <a href="../chapter_computational-performance/multiple-gpus.html">
+            
+                    
+                    12.5. 多GPU训练
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.6" data-path="../chapter_computational-performance/multiple-gpus-concise.html">
+            
+                <a href="../chapter_computational-performance/multiple-gpus-concise.html">
+            
+                    
+                    12.6. 多GPU的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.7" data-path="../chapter_computational-performance/parameterserver.html">
+            
+                <a href="../chapter_computational-performance/parameterserver.html">
+            
+                    
+                    12.7. 参数服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="../chapter_computer-vision/">
+            
+                <a href="../chapter_computer-vision/">
+            
+                    
+                    13. 计算机视觉
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.16.1" data-path="../chapter_computer-vision/image-augmentation.html">
+            
+                <a href="../chapter_computer-vision/image-augmentation.html">
+            
+                    
+                    13.1. 图像增广
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.2" data-path="../chapter_computer-vision/fine-tuning.html">
+            
+                <a href="../chapter_computer-vision/fine-tuning.html">
+            
+                    
+                    13.2. 微调
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.3" data-path="../chapter_computer-vision/bounding-box.html">
+            
+                <a href="../chapter_computer-vision/bounding-box.html">
+            
+                    
+                    13.3. 目标检测和边界框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.4" data-path="../chapter_computer-vision/anchor.html">
+            
+                <a href="../chapter_computer-vision/anchor.html">
+            
+                    
+                    13.4. 锚框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.5" data-path="../chapter_computer-vision/multiscale-object-detection.html">
+            
+                <a href="../chapter_computer-vision/multiscale-object-detection.html">
+            
+                    
+                    13.5. 多尺度目标检测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.6" data-path="../chapter_computer-vision/object-detection-dataset.html">
+            
+                <a href="../chapter_computer-vision/object-detection-dataset.html">
+            
+                    
+                    13.6. 目标检测数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.7" data-path="../chapter_computer-vision/ssd.html">
+            
+                <a href="../chapter_computer-vision/ssd.html">
+            
+                    
+                    13.7. 单发多框检测（SSD）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.8" data-path="../chapter_computer-vision/rcnn.html">
+            
+                <a href="../chapter_computer-vision/rcnn.html">
+            
+                    
+                    13.8. 区域卷积神经网络（R-CNN）系列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.9" data-path="../chapter_computer-vision/semantic-segmentation-and-dataset.html">
+            
+                <a href="../chapter_computer-vision/semantic-segmentation-and-dataset.html">
+            
+                    
+                    13.9. 语义分割和数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.10" data-path="../chapter_computer-vision/transposed-conv.html">
+            
+                <a href="../chapter_computer-vision/transposed-conv.html">
+            
+                    
+                    13.10. 转置卷积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.11" data-path="../chapter_computer-vision/fcn.html">
+            
+                <a href="../chapter_computer-vision/fcn.html">
+            
+                    
+                    13.11. 全卷积网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.12" data-path="../chapter_computer-vision/neural-style.html">
+            
+                <a href="../chapter_computer-vision/neural-style.html">
+            
+                    
+                    13.12. 风格迁移
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.13" data-path="../chapter_computer-vision/kaggle-cifar10.html">
+            
+                <a href="../chapter_computer-vision/kaggle-cifar10.html">
+            
+                    
+                    13.13. 实战 Kaggle 比赛：图像分类 (CIFAR-10.md)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.14" data-path="../chapter_computer-vision/kaggle-dog.html">
+            
+                <a href="../chapter_computer-vision/kaggle-dog.html">
+            
+                    
+                    13.14. 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="../chapter_natural-language-processing-pretraining/">
+            
+                <a href="../chapter_natural-language-processing-pretraining/">
+            
+                    
+                    14. 自然语言处理：预训练
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.17.1" data-path="../chapter_natural-language-processing-pretraining/word2vec.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/word2vec.html">
+            
+                    
+                    14.1. 词嵌入（word2vec）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.2" data-path="../chapter_natural-language-processing-pretraining/approx-training.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/approx-training.html">
+            
+                    
+                    14.2. 近似训练
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.3" data-path="../chapter_natural-language-processing-pretraining/word-embedding-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/word-embedding-dataset.html">
+            
+                    
+                    14.3. 用于预训练词嵌入的数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.4" data-path="../chapter_natural-language-processing-pretraining/word2vec-pretraining.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/word2vec-pretraining.html">
+            
+                    
+                    14.4. 预训练word2vec
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.5" data-path="../chapter_natural-language-processing-pretraining/glove.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/glove.html">
+            
+                    
+                    14.5. 全局向量的词嵌入（GloVe）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.6" data-path="../chapter_natural-language-processing-pretraining/subword-embedding.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/subword-embedding.html">
+            
+                    
+                    14.6. 子词嵌入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.7" data-path="../chapter_natural-language-processing-pretraining/similarity-analogy.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/similarity-analogy.html">
+            
+                    
+                    14.7. 词的相似性和类比任务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.8" data-path="../chapter_natural-language-processing-pretraining/bert.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/bert.html">
+            
+                    
+                    14.8. 来自Transformers的双向编码器表示（BERT）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.9" data-path="../chapter_natural-language-processing-pretraining/bert-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/bert-dataset.html">
+            
+                    
+                    14.9. 用于预训练BERT的数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.10" data-path="../chapter_natural-language-processing-pretraining/bert-pretraining.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/bert-pretraining.html">
+            
+                    
+                    14.10. 预训练BERT
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="../chapter_natural-language-processing-applications/">
+            
+                <a href="../chapter_natural-language-processing-applications/">
+            
+                    
+                    15. 自然语言处理：应用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.18.1" data-path="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset.html">
+            
+                    
+                    15.1. 情感分析及数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.2" data-path="../chapter_natural-language-processing-applications/sentiment-analysis-rnn.html">
+            
+                <a href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn.html">
+            
+                    
+                    15.2. 情感分析：使用循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.3" data-path="../chapter_natural-language-processing-applications/sentiment-analysis-cnn.html">
+            
+                <a href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn.html">
+            
+                    
+                    15.3. 情感分析：使用卷积神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.4" data-path="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset.html">
+            
+                    
+                    15.4. 自然语言推断与数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.5" data-path="../chapter_natural-language-processing-applications/natural-language-inference-attention.html">
+            
+                <a href="../chapter_natural-language-processing-applications/natural-language-inference-attention.html">
+            
+                    
+                    15.5. 自然语言推断：使用注意力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.6" data-path="../chapter_natural-language-processing-applications/finetuning-bert.html">
+            
+                <a href="../chapter_natural-language-processing-applications/finetuning-bert.html">
+            
+                    
+                    15.6. 针对序列级和词元级应用微调BERT
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.7" data-path="../chapter_natural-language-processing-applications/natural-language-inference-bert.html">
+            
+                <a href="../chapter_natural-language-processing-applications/natural-language-inference-bert.html">
+            
+                    
+                    15.7. 自然语言推断：微调BERT
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="../chapter_appendix-tools-for-deep-learning/">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/">
+            
+                    
+                    16. 附录：深度学习工具
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.19.1" data-path="../chapter_appendix-tools-for-deep-learning/jupyter.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/jupyter.html">
+            
+                    
+                    16.1. 使用Jupyter Notebook
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.2" data-path="../chapter_appendix-tools-for-deep-learning/sagemaker.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/sagemaker.html">
+            
+                    
+                    16.2. 使用Amazon SageMaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.3" data-path="../chapter_appendix-tools-for-deep-learning/aws.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/aws.html">
+            
+                    
+                    16.3. 使用Amazon EC2实例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.4" data-path="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html">
+            
+                    
+                    16.4. 选择服务器和GPU
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.5" data-path="../chapter_appendix-tools-for-deep-learning/contributing.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/contributing.html">
+            
+                    
+                    16.5. 为本书做贡献
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.6" data-path="../chapter_appendix-tools-for-deep-learning/d2l.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/d2l.html">
+            
+                    
+                    16.6. d2l API 文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.20" data-path="../chapter_references/zreferences.html">
+            
+                <a href="../chapter_references/zreferences.html">
+            
+                    
+                    参考文献
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >9.7. 序列到序列学习（seq2seq）</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="序列到序列学习（seq2seq）">序列到序列学习（seq2seq）</h1>
+<p>:label:<code>sec_seq2seq</code></p>
+<p>正如我们在 :numref:<code>sec_machine_translation</code>中看到的，
+机器翻译中的输入序列和输出序列都是长度可变的。
+为了解决这类问题，我们在 :numref:<code>sec_encoder-decoder</code>中
+设计了一个通用的”编码器－解码器“架构。
+本节，我们将使用两个循环神经网络的编码器和解码器，
+并将其应用于<em>序列到序列</em>（sequence to sequence，seq2seq）类的学习任务
+ :cite:<code>Sutskever.Vinyals.Le.2014,Cho.Van-Merrienboer.Gulcehre.ea.2014</code>。</p>
+<p>遵循编码器－解码器架构的设计原则，
+循环神经网络编码器使用长度可变的序列作为输入，
+将其转换为固定形状的隐状态。
+换言之，输入序列的信息被<em>编码</em>到循环神经网络编码器的隐状态中。
+为了连续生成输出序列的词元，
+独立的循环神经网络解码器是基于输入序列的编码信息
+和输出序列已经看见的或者生成的词元来预测下一个词元。
+ :numref:<code>fig_seq2seq</code>演示了
+如何在机器翻译中使用两个循环神经网络进行序列到序列学习。</p>
+<p><img src="../img/seq2seq.svg" alt="使用循环神经网络编码器和循环神经网络解码器的序列到序列学习"></img>
+:label:<code>fig_seq2seq</code></p>
+<p>在 :numref:<code>fig_seq2seq</code>中，
+特定的“&lt;eos&gt;”表示序列结束词元。
+一旦输出序列生成此词元，模型就会停止预测。
+在循环神经网络解码器的初始化时间步，有两个特定的设计决定：
+首先，特定的“&lt;bos&gt;”表示序列开始词元，它是解码器的输入序列的第一个词元。
+其次，使用循环神经网络编码器最终的隐状态来初始化解码器的隐状态。
+例如，在 :cite:<code>Sutskever.Vinyals.Le.2014</code>的设计中，
+正是基于这种设计将输入序列的编码信息送入到解码器中来生成输出序列的。
+在其他一些设计中 :cite:<code>Cho.Van-Merrienboer.Gulcehre.ea.2014</code>，
+如 :numref:<code>fig_seq2seq</code>所示，
+编码器最终的隐状态在每一个时间步都作为解码器的输入序列的一部分。
+类似于 :numref:<code>sec_language_model</code>中语言模型的训练，
+可以允许标签成为原始的输出序列，
+从源序列词元“&lt;bos&gt;”“Ils”“regardent”“.”
+到新序列词元
+“Ils”“regardent”“.”“&lt;eos&gt;”来移动预测的位置。</p>
+<p>下面，我们动手构建 :numref:<code>fig_seq2seq</code>的设计，
+并将基于 :numref:<code>sec_machine_translation</code>中
+介绍的“英－法”数据集来训练这个机器翻译模型。</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> collections
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> mxnet <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">from</span> mxnet <span class="hljs-keyword">import</span> np, npx, init, gluon, autograd
+<span class="hljs-keyword">from</span> mxnet.gluon <span class="hljs-keyword">import</span> nn, rnn
+npx.set_np()
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-keyword">import</span> collections
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> torch <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">import</span> torch
+<span class="hljs-keyword">from</span> torch <span class="hljs-keyword">import</span> nn
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+<span class="hljs-keyword">import</span> collections
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-keyword">import</span> collections
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> paddle <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> warnings
+warnings.filterwarnings(<span class="hljs-string">"ignore"</span>)
+<span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">import</span> paddle
+<span class="hljs-keyword">from</span> paddle <span class="hljs-keyword">import</span> nn
+</code></pre>
+<h2 id="编码器">编码器</h2>
+<p>从技术上讲，编码器将长度可变的输入序列转换成
+形状固定的上下文变量$\mathbf{c}$，
+并且将输入序列的信息在该上下文变量中进行编码。
+如 :numref:<code>fig_seq2seq</code>所示，可以使用循环神经网络来设计编码器。</p>
+<p>考虑由一个序列组成的样本（批量大小是$1$）。
+假设输入序列是$x<em>1, \ldots, x_T$，
+其中$x_t$是输入文本序列中的第$t$个词元。
+在时间步$t$，循环神经网络将词元$x_t$的输入特征向量
+$\mathbf{x}_t$和$\mathbf{h} </em>{t-1}$（即上一时间步的隐状态）
+转换为$\mathbf{h}_t$（即当前步的隐状态）。
+使用一个函数$f$来描述循环神经网络的循环层所做的变换：</p>
+<p>$$\mathbf{h}<em>t = f(\mathbf{x}_t, \mathbf{h}</em>{t-1}). $$</p>
+<p>总之，编码器通过选定的函数$q$，
+将所有时间步的隐状态转换为上下文变量：</p>
+<p>$$\mathbf{c} =  q(\mathbf{h}_1, \ldots, \mathbf{h}_T).$$</p>
+<p>比如，当选择$q(\mathbf{h}_1, \ldots, \mathbf{h}_T) = \mathbf{h}_T$时
+（就像 :numref:<code>fig_seq2seq</code>中一样），
+上下文变量仅仅是输入序列在最后时间步的隐状态$\mathbf{h}_T$。</p>
+<p>到目前为止，我们使用的是一个单向循环神经网络来设计编码器，
+其中隐状态只依赖于输入子序列，
+这个子序列是由输入序列的开始位置到隐状态所在的时间步的位置
+（包括隐状态所在的时间步）组成。
+我们也可以使用双向循环神经网络构造编码器，
+其中隐状态依赖于两个输入子序列，
+两个子序列是由隐状态所在的时间步的位置之前的序列和之后的序列
+（包括隐状态所在的时间步），
+因此隐状态对整个序列的信息都进行了编码。</p>
+<p>现在，让我们[<strong>实现循环神经网络编码器</strong>]。
+注意，我们使用了<em>嵌入层</em>（embedding layer）
+来获得输入序列中每个词元的特征向量。
+嵌入层的权重是一个矩阵，
+其行数等于输入词表的大小（<code>vocab_size</code>），
+其列数等于特征向量的维度（<code>embed_size</code>）。
+对于任意输入词元的索引$i$，
+嵌入层获取权重矩阵的第$i$行（从$0$开始）以返回其特征向量。
+另外，本文选择了一个多层门控循环单元来实现编码器。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@save</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Seq2SeqEncoder</span><span class="hljs-params">(d2l.Encoder)</span>:</span>
+    <span class="hljs-string">"""用于序列到序列学习的循环神经网络编码器"""</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, vocab_size, embed_size, num_hiddens, num_layers,
+                 dropout=<span class="hljs-number">0</span>, **kwargs)</span>:</span>
+        super(Seq2SeqEncoder, self).__init__(**kwargs)
+        <span class="hljs-comment"># 嵌入层</span>
+        self.embedding = nn.Embedding(vocab_size, embed_size)
+        self.rnn = rnn.GRU(num_hiddens, num_layers, dropout=dropout)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, X, *args)</span>:</span>
+        <span class="hljs-comment"># 输出'X'的形状：(batch_size,num_steps,embed_size)</span>
+        X = self.embedding(X)
+        <span class="hljs-comment"># 在循环神经网络模型中，第一个轴对应于时间步</span>
+        X = X.swapaxes(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
+        state = self.rnn.begin_state(batch_size=X.shape[<span class="hljs-number">1</span>], ctx=X.ctx)
+        output, state = self.rnn(X, state)
+        <span class="hljs-comment"># output的形状:(num_steps,batch_size,num_hiddens)</span>
+        <span class="hljs-comment"># state的形状:(num_layers,batch_size,num_hiddens)</span>
+        <span class="hljs-keyword">return</span> output, state
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Seq2SeqEncoder</span><span class="hljs-params">(d2l.Encoder)</span>:</span>
+    <span class="hljs-string">"""用于序列到序列学习的循环神经网络编码器"""</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, vocab_size, embed_size, num_hiddens, num_layers,
+                 dropout=<span class="hljs-number">0</span>, **kwargs)</span>:</span>
+        super(Seq2SeqEncoder, self).__init__(**kwargs)
+        <span class="hljs-comment"># 嵌入层</span>
+        self.embedding = nn.Embedding(vocab_size, embed_size)
+        self.rnn = nn.GRU(embed_size, num_hiddens, num_layers,
+                          dropout=dropout)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, X, *args)</span>:</span>
+        <span class="hljs-comment"># 输出'X'的形状：(batch_size,num_steps,embed_size)</span>
+        X = self.embedding(X)
+        <span class="hljs-comment"># 在循环神经网络模型中，第一个轴对应于时间步</span>
+        X = X.permute(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>)
+        <span class="hljs-comment"># 如果未提及状态，则默认为0</span>
+        output, state = self.rnn(X)
+        <span class="hljs-comment"># output的形状:(num_steps,batch_size,num_hiddens)</span>
+        <span class="hljs-comment"># state的形状:(num_layers,batch_size,num_hiddens)</span>
+        <span class="hljs-keyword">return</span> output, state
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Seq2SeqEncoder</span><span class="hljs-params">(d2l.Encoder)</span>:</span>
+    <span class="hljs-string">"""用于序列到序列学习的循环神经网络编码器"""</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, vocab_size, embed_size, num_hiddens, num_layers, dropout=<span class="hljs-number">0</span>, **kwargs)</span>:</span> 
+        super().__init__(*kwargs)
+        <span class="hljs-comment"># 嵌入层</span>
+        self.embedding = tf.keras.layers.Embedding(vocab_size, embed_size)
+        self.rnn = tf.keras.layers.RNN(tf.keras.layers.StackedRNNCells(
+            [tf.keras.layers.GRUCell(num_hiddens, dropout=dropout)
+             <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(num_layers)]), return_sequences=<span class="hljs-keyword">True</span>,
+                                       return_state=<span class="hljs-keyword">True</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">call</span><span class="hljs-params">(self, X, *args, **kwargs)</span>:</span>
+        <span class="hljs-comment"># 输入'X'的形状：(batch_size,num_steps)</span>
+        <span class="hljs-comment"># 输出'X'的形状：(batch_size,num_steps,embed_size)</span>
+        X = self.embedding(X)
+        output = self.rnn(X, **kwargs)
+        state = output[<span class="hljs-number">1</span>:]
+        <span class="hljs-keyword">return</span> output[<span class="hljs-number">0</span>], state
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Seq2SeqEncoder</span><span class="hljs-params">(d2l.Encoder)</span>:</span>
+    <span class="hljs-string">"""用于序列到序列学习的循环神经网络编码器"""</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, vocab_size, embed_size, num_hiddens, num_layers,
+                 dropout=<span class="hljs-number">0</span>, **kwargs)</span>:</span>
+        super(Seq2SeqEncoder, self).__init__(**kwargs)
+        weight_ih_attr = paddle.ParamAttr(initializer=nn.initializer.XavierUniform())
+        weight_hh_attr = paddle.ParamAttr(initializer=nn.initializer.XavierUniform())
+        <span class="hljs-comment"># 嵌入层</span>
+        self.embedding = nn.Embedding(vocab_size, embed_size)
+        self.rnn = nn.GRU(embed_size, num_hiddens, num_layers, dropout=dropout,
+                          time_major=<span class="hljs-keyword">True</span>, weight_ih_attr=weight_ih_attr, weight_hh_attr=weight_hh_attr)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, X, *args)</span>:</span>
+        <span class="hljs-comment"># 输出'X'的形状：(batch_size,num_steps,embed_size)</span>
+        X = self.embedding(X)
+        <span class="hljs-comment"># 在循环神经网络模型中，第一个轴对应于时间步</span>
+        X = X.transpose([<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>])
+        <span class="hljs-comment"># 如果未提及状态，则默认为0</span>
+        output, state = self.rnn(X)
+        <span class="hljs-comment"># PaddlePaddle的GRU层output的形状:(batch_size,time_steps,num_directions * num_hiddens),</span>
+        <span class="hljs-comment"># 需设定time_major=True,指定input的第一个维度为time_steps</span>
+        <span class="hljs-comment"># state[0]的形状:(num_layers,batch_size,num_hiddens)</span>
+        <span class="hljs-keyword">return</span> output, state
+</code></pre>
+<p>循环层返回变量的说明可以参考 :numref:<code>sec_rnn-concise</code>。</p>
+<p>下面，我们实例化[<strong>上述编码器的实现</strong>]：
+我们使用一个两层门控循环单元编码器，其隐藏单元数为$16$。
+给定一小批量的输入序列<code>X</code>（批量大小为$4$，时间步为$7$）。
+在完成所有时间步后，
+最后一层的隐状态的输出是一个张量（<code>output</code>由编码器的循环层返回），
+其形状为（时间步数，批量大小，隐藏单元数）。</p>
+<pre><code class="lang-python">encoder = Seq2SeqEncoder(vocab_size=<span class="hljs-number">10</span>, embed_size=<span class="hljs-number">8</span>, num_hiddens=<span class="hljs-number">16</span>,
+                         num_layers=<span class="hljs-number">2</span>)
+encoder.initialize()
+X = d2l.zeros((<span class="hljs-number">4</span>, <span class="hljs-number">7</span>))
+output, state = encoder(X)
+output.shape
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+encoder = Seq2SeqEncoder(vocab_size=<span class="hljs-number">10</span>, embed_size=<span class="hljs-number">8</span>, num_hiddens=<span class="hljs-number">16</span>,
+                         num_layers=<span class="hljs-number">2</span>)
+encoder.eval()
+X = d2l.zeros((<span class="hljs-number">4</span>, <span class="hljs-number">7</span>), dtype=torch.long)
+output, state = encoder(X)
+output.shape
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+encoder = Seq2SeqEncoder(vocab_size=<span class="hljs-number">10</span>, embed_size=<span class="hljs-number">8</span>, num_hiddens=<span class="hljs-number">16</span>, num_layers=<span class="hljs-number">2</span>)
+X = tf.zeros((<span class="hljs-number">4</span>, <span class="hljs-number">7</span>))
+output, state = encoder(X, training=<span class="hljs-keyword">False</span>)
+output.shape
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+encoder = Seq2SeqEncoder(vocab_size=<span class="hljs-number">10</span>, embed_size=<span class="hljs-number">8</span>, num_hiddens=<span class="hljs-number">16</span>,
+                         num_layers=<span class="hljs-number">2</span>)
+encoder.eval()
+X = d2l.zeros((<span class="hljs-number">4</span>, <span class="hljs-number">7</span>), dtype=paddle.int64)
+output, state = encoder(X)
+output.shape
+</code></pre>
+<p>由于这里使用的是门控循环单元，
+所以在最后一个时间步的多层隐状态的形状是
+（隐藏层的数量，批量大小，隐藏单元的数量）。
+如果使用长短期记忆网络，<code>state</code>中还将包含记忆单元信息。</p>
+<pre><code class="lang-python">len(state), state[<span class="hljs-number">0</span>].shape
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch, paddle</span>
+state.shape
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+len(state), [element.shape <span class="hljs-keyword">for</span> element <span class="hljs-keyword">in</span> state]
+</code></pre>
+<h2 id="解码器">[<strong>解码器</strong>]</h2>
+<p>:label:<code>sec_seq2seq_decoder</code></p>
+<p>正如上文提到的，编码器输出的上下文变量$\mathbf{c}$
+对整个输入序列$x<em>1, \ldots, x_T$进行编码。
+来自训练数据集的输出序列$y_1, y_2, \ldots, y</em>{T'}$，
+对于每个时间步$t'$（与输入序列或编码器的时间步$t$不同），
+解码器输出$y<em>{t'}$的概率取决于先前的输出子序列
+$y_1, \ldots, y</em>{t'-1}$和上下文变量$\mathbf{c}$，
+即$P(y<em>{t'} \mid y_1, \ldots, y</em>{t'-1}, \mathbf{c})$。</p>
+<p>为了在序列上模型化这种条件概率，
+我们可以使用另一个循环神经网络作为解码器。
+在输出序列上的任意时间步$t^\prime$，
+循环神经网络将来自上一时间步的输出$y<em>{t^\prime-1}$
+和上下文变量$\mathbf{c}$作为其输入，
+然后在当前时间步将它们和上一隐状态
+$\mathbf{s}</em>{t^\prime-1}$转换为
+隐状态$\mathbf{s}_{t^\prime}$。
+因此，可以使用函数$g$来表示解码器的隐藏层的变换：</p>
+<p>$$\mathbf{s}<em>{t^\prime} = g(y</em>{t^\prime-1}, \mathbf{c}, \mathbf{s}_{t^\prime-1}).$$
+:eqlabel:<code>eq_seq2seq_s_t</code></p>
+<p>在获得解码器的隐状态之后，
+我们可以使用输出层和softmax操作
+来计算在时间步$t^\prime$时输出$y<em>{t^\prime}$的条件概率分布
+$P(y</em>{t^\prime} \mid y<em>1, \ldots, y</em>{t^\prime-1}, \mathbf{c})$。</p>
+<p>根据 :numref:<code>fig_seq2seq</code>，当实现解码器时，
+我们直接使用编码器最后一个时间步的隐状态来初始化解码器的隐状态。
+这就要求使用循环神经网络实现的编码器和解码器具有相同数量的层和隐藏单元。
+为了进一步包含经过编码的输入序列的信息，
+上下文变量在所有的时间步与解码器的输入进行拼接（concatenate）。
+为了预测输出词元的概率分布，
+在循环神经网络解码器的最后一层使用全连接层来变换隐状态。</p>
+<pre><code class="lang-python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Seq2SeqDecoder</span><span class="hljs-params">(d2l.Decoder)</span>:</span>
+    <span class="hljs-string">"""用于序列到序列学习的循环神经网络解码器"""</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, vocab_size, embed_size, num_hiddens, num_layers,
+                 dropout=<span class="hljs-number">0</span>, **kwargs)</span>:</span>
+        super(Seq2SeqDecoder, self).__init__(**kwargs)
+        self.embedding = nn.Embedding(vocab_size, embed_size)
+        self.rnn = rnn.GRU(num_hiddens, num_layers, dropout=dropout)
+        self.dense = nn.Dense(vocab_size, flatten=<span class="hljs-keyword">False</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">init_state</span><span class="hljs-params">(self, enc_outputs, *args)</span>:</span>
+        <span class="hljs-keyword">return</span> enc_outputs[<span class="hljs-number">1</span>]
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, X, state)</span>:</span>
+        <span class="hljs-comment"># 输出'X'的形状：(batch_size,num_steps,embed_size)</span>
+        X = self.embedding(X).swapaxes(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
+        <span class="hljs-comment"># context的形状:(batch_size,num_hiddens)</span>
+        context = state[<span class="hljs-number">0</span>][-<span class="hljs-number">1</span>]
+        <span class="hljs-comment"># 广播context，使其具有与X相同的num_steps</span>
+        context = np.broadcast_to(context, (
+            X.shape[<span class="hljs-number">0</span>], context.shape[<span class="hljs-number">0</span>], context.shape[<span class="hljs-number">1</span>]))
+        X_and_context = d2l.concat((X, context), <span class="hljs-number">2</span>)
+        output, state = self.rnn(X_and_context, state)
+        output = self.dense(output).swapaxes(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
+        <span class="hljs-comment"># output的形状:(batch_size,num_steps,vocab_size)</span>
+        <span class="hljs-comment"># state的形状:(num_layers,batch_size,num_hiddens)</span>
+        <span class="hljs-keyword">return</span> output, state
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Seq2SeqDecoder</span><span class="hljs-params">(d2l.Decoder)</span>:</span>
+    <span class="hljs-string">"""用于序列到序列学习的循环神经网络解码器"""</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, vocab_size, embed_size, num_hiddens, num_layers,
+                 dropout=<span class="hljs-number">0</span>, **kwargs)</span>:</span>
+        super(Seq2SeqDecoder, self).__init__(**kwargs)
+        self.embedding = nn.Embedding(vocab_size, embed_size)
+        self.rnn = nn.GRU(embed_size + num_hiddens, num_hiddens, num_layers,
+                          dropout=dropout)
+        self.dense = nn.Linear(num_hiddens, vocab_size)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">init_state</span><span class="hljs-params">(self, enc_outputs, *args)</span>:</span>
+        <span class="hljs-keyword">return</span> enc_outputs[<span class="hljs-number">1</span>]
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, X, state)</span>:</span>
+        <span class="hljs-comment"># 输出'X'的形状：(batch_size,num_steps,embed_size)</span>
+        X = self.embedding(X).permute(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>)
+        <span class="hljs-comment"># 广播context，使其具有与X相同的num_steps</span>
+        context = state[-<span class="hljs-number">1</span>].repeat(X.shape[<span class="hljs-number">0</span>], <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+        X_and_context = d2l.concat((X, context), <span class="hljs-number">2</span>)
+        output, state = self.rnn(X_and_context, state)
+        output = self.dense(output).permute(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>)
+        <span class="hljs-comment"># output的形状:(batch_size,num_steps,vocab_size)</span>
+        <span class="hljs-comment"># state的形状:(num_layers,batch_size,num_hiddens)</span>
+        <span class="hljs-keyword">return</span> output, state
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Seq2SeqDecoder</span><span class="hljs-params">(d2l.Decoder)</span>:</span>
+    <span class="hljs-string">"""用于序列到序列学习的循环神经网络解码器"""</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, vocab_size, embed_size, num_hiddens, num_layers,
+                 dropout=<span class="hljs-number">0</span>, **kwargs)</span>:</span>
+        super().__init__(**kwargs)
+        self.embedding = tf.keras.layers.Embedding(vocab_size, embed_size)
+        self.rnn = tf.keras.layers.RNN(tf.keras.layers.StackedRNNCells(
+            [tf.keras.layers.GRUCell(num_hiddens, dropout=dropout)
+             <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(num_layers)]), return_sequences=<span class="hljs-keyword">True</span>,
+                                       return_state=<span class="hljs-keyword">True</span>)
+        self.dense = tf.keras.layers.Dense(vocab_size)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">init_state</span><span class="hljs-params">(self, enc_outputs, *args)</span>:</span>
+        <span class="hljs-keyword">return</span> enc_outputs[<span class="hljs-number">1</span>]
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">call</span><span class="hljs-params">(self, X, state, **kwargs)</span>:</span>
+        <span class="hljs-comment"># 输出'X'的形状：(batch_size,num_steps,embed_size)</span>
+        X = self.embedding(X)
+        <span class="hljs-comment"># 广播context，使其具有与X相同的num_steps</span>
+        context = tf.repeat(tf.expand_dims(state[-<span class="hljs-number">1</span>], axis=<span class="hljs-number">1</span>), repeats=X.shape[<span class="hljs-number">1</span>], axis=<span class="hljs-number">1</span>)
+        X_and_context = tf.concat((X, context), axis=<span class="hljs-number">2</span>)
+        rnn_output = self.rnn(X_and_context, state, **kwargs)
+        output = self.dense(rnn_output[<span class="hljs-number">0</span>])
+        <span class="hljs-comment"># output的形状:(batch_size,num_steps,vocab_size)</span>
+        <span class="hljs-comment"># state是一个包含num_layers个元素的列表，每个元素的形状:(batch_size,num_hiddens)</span>
+        <span class="hljs-keyword">return</span> output, rnn_output[<span class="hljs-number">1</span>:]
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Seq2SeqDecoder</span><span class="hljs-params">(d2l.Decoder)</span>:</span>
+    <span class="hljs-string">"""用于序列到序列学习的循环神经网络解码器"""</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, vocab_size, embed_size, num_hiddens, num_layers,
+                 dropout=<span class="hljs-number">0</span>, **kwargs)</span>:</span>
+        super(Seq2SeqDecoder, self).__init__(**kwargs)
+        self.embedding = nn.Embedding(vocab_size, embed_size)
+        weight_attr = paddle.ParamAttr(initializer=nn.initializer.XavierUniform())
+        weight_ih_attr = paddle.ParamAttr(initializer=nn.initializer.XavierUniform())
+        weight_hh_attr = paddle.ParamAttr(initializer=nn.initializer.XavierUniform())
+        self.rnn = nn.GRU(embed_size + num_hiddens, num_hiddens, num_layers, dropout=dropout,
+                          time_major=<span class="hljs-keyword">True</span>, weight_ih_attr=weight_ih_attr,weight_hh_attr=weight_hh_attr)
+        self.dense = nn.Linear(num_hiddens, vocab_size,weight_attr=weight_attr)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">init_state</span><span class="hljs-params">(self, enc_outputs, *args)</span>:</span>
+        <span class="hljs-keyword">return</span> enc_outputs[<span class="hljs-number">1</span>]
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, X, state)</span>:</span>
+        <span class="hljs-comment"># 输出'X'的形状：(batch_size,num_steps,embed_size)</span>
+        X = self.embedding(X).transpose([<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>])
+        <span class="hljs-comment"># 广播context，使其具有与X相同的num_steps</span>
+        context = state[-<span class="hljs-number">1</span>].tile([X.shape[<span class="hljs-number">0</span>], <span class="hljs-number">1</span>, <span class="hljs-number">1</span>])
+        X_and_context = d2l.concat((X, context), <span class="hljs-number">2</span>)
+        output, state = self.rnn(X_and_context, state)
+        output = self.dense(output).transpose([<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>])
+        <span class="hljs-comment"># output的形状:(batch_size,num_steps,vocab_size)</span>
+        <span class="hljs-comment"># state[0]的形状:(num_layers,batch_size,num_hiddens)</span>
+        <span class="hljs-keyword">return</span> output, state
+</code></pre>
+<p>下面，我们用与前面提到的编码器中相同的超参数来[<strong>实例化解码器</strong>]。
+如我们所见，解码器的输出形状变为（批量大小，时间步数，词表大小），
+其中张量的最后一个维度存储预测的词元分布。</p>
+<pre><code class="lang-python">decoder = Seq2SeqDecoder(vocab_size=<span class="hljs-number">10</span>, embed_size=<span class="hljs-number">8</span>, num_hiddens=<span class="hljs-number">16</span>,
+                         num_layers=<span class="hljs-number">2</span>)
+decoder.initialize()
+state = decoder.init_state(encoder(X))
+output, state = decoder(X, state)
+output.shape, len(state), state[<span class="hljs-number">0</span>].shape
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+decoder = Seq2SeqDecoder(vocab_size=<span class="hljs-number">10</span>, embed_size=<span class="hljs-number">8</span>, num_hiddens=<span class="hljs-number">16</span>,
+                         num_layers=<span class="hljs-number">2</span>)
+decoder.eval()
+state = decoder.init_state(encoder(X))
+output, state = decoder(X, state)
+output.shape, state.shape
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+decoder = Seq2SeqDecoder(vocab_size=<span class="hljs-number">10</span>, embed_size=<span class="hljs-number">8</span>, num_hiddens=<span class="hljs-number">16</span>, num_layers=<span class="hljs-number">2</span>)
+state = decoder.init_state(encoder(X))
+output, state = decoder(X, state, training=<span class="hljs-keyword">False</span>)
+output.shape, len(state), state[<span class="hljs-number">0</span>].shape
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+decoder = Seq2SeqDecoder(vocab_size=<span class="hljs-number">10</span>, embed_size=<span class="hljs-number">8</span>, num_hiddens=<span class="hljs-number">16</span>,
+                         num_layers=<span class="hljs-number">2</span>)
+decoder.eval()
+state = decoder.init_state(encoder(X))
+output, state = decoder(X, state)
+output.shape, state.shape
+</code></pre>
+<p>总之，上述循环神经网络“编码器－解码器”模型中的各层如
+ :numref:<code>fig_seq2seq_details</code>所示。</p>
+<p><img src="../img/seq2seq-details.svg" alt="循环神经网络编码器-解码器模型中的层"></img>
+:label:<code>fig_seq2seq_details</code></p>
+<h2 id="损失函数">损失函数</h2>
+<p>在每个时间步，解码器预测了输出词元的概率分布。
+类似于语言模型，可以使用softmax来获得分布，
+并通过计算交叉熵损失函数来进行优化。
+回想一下 :numref:<code>sec_machine_translation</code>中，
+特定的填充词元被添加到序列的末尾，
+因此不同长度的序列可以以相同形状的小批量加载。
+但是，我们应该将填充词元的预测排除在损失函数的计算之外。</p>
+<p>为此，我们可以使用下面的<code>sequence_mask</code>函数
+[<strong>通过零值化屏蔽不相关的项</strong>]，
+以便后面任何不相关预测的计算都是与零的乘积，结果都等于零。
+例如，如果两个序列的有效长度（不包括填充词元）分别为$1$和$2$，
+则第一个序列的第一项和第二个序列的前两项之后的剩余项将被清除为零。</p>
+<pre><code class="lang-python">X = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])
+npx.sequence_mask(X, np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]), <span class="hljs-keyword">True</span>, axis=<span class="hljs-number">1</span>)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sequence_mask</span><span class="hljs-params">(X, valid_len, value=<span class="hljs-number">0</span>)</span>:</span>
+    <span class="hljs-string">"""在序列中屏蔽不相关的项"""</span>
+    maxlen = X.size(<span class="hljs-number">1</span>)
+    mask = torch.arange((maxlen), dtype=torch.float32,
+                        device=X.device)[<span class="hljs-keyword">None</span>, :] &lt; valid_len[:, <span class="hljs-keyword">None</span>]
+    X[~mask] = value
+    <span class="hljs-keyword">return</span> X
+
+X = torch.tensor([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])
+sequence_mask(X, torch.tensor([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]))
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sequence_mask</span><span class="hljs-params">(X, valid_len, value=<span class="hljs-number">0</span>)</span>:</span>
+    <span class="hljs-string">"""在序列中屏蔽不相关的项"""</span>
+    maxlen = X.shape[<span class="hljs-number">1</span>]
+    mask = tf.range(start=<span class="hljs-number">0</span>, limit=maxlen, dtype=tf.float32)[
+        <span class="hljs-keyword">None</span>, :] &lt; tf.cast(valid_len[:, <span class="hljs-keyword">None</span>], dtype=tf.float32)
+
+    <span class="hljs-keyword">if</span> len(X.shape) == <span class="hljs-number">3</span>:
+        <span class="hljs-keyword">return</span> tf.where(tf.expand_dims(mask, axis=-<span class="hljs-number">1</span>), X, value)
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> tf.where(mask, X, value)
+
+X = tf.constant([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])
+sequence_mask(X, tf.constant([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]))
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sequence_mask</span><span class="hljs-params">(X, valid_len, value=<span class="hljs-number">0</span>)</span>:</span>
+    <span class="hljs-string">"""在序列中屏蔽不相关的项"""</span>
+    maxlen = X.shape[<span class="hljs-number">1</span>]
+    mask = paddle.arange((maxlen), dtype=paddle.float32)[<span class="hljs-keyword">None</span>, :] &lt; valid_len[:, <span class="hljs-keyword">None</span>]
+    Xtype = X.dtype
+    X = X.astype(paddle.float32)
+    X[~mask] = float(value)
+    <span class="hljs-keyword">return</span> X.astype(Xtype)
+
+X = paddle.to_tensor([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])
+sequence_mask(X, paddle.to_tensor([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]))
+</code></pre>
+<p>(<strong>我们还可以使用此函数屏蔽最后几个轴上的所有项。</strong>)如果愿意，也可以使用指定的非零值来替换这些项。</p>
+<pre><code class="lang-python">X = d2l.ones((<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>))
+npx.sequence_mask(X, np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]), <span class="hljs-keyword">True</span>, value=-<span class="hljs-number">1</span>, axis=<span class="hljs-number">1</span>)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+X = d2l.ones(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>)
+sequence_mask(X, torch.tensor([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]), value=-<span class="hljs-number">1</span>)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+X = tf.ones((<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>))
+sequence_mask(X, tf.constant([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]), value=-<span class="hljs-number">1</span>)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+X = d2l.ones([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>])
+sequence_mask(X, paddle.to_tensor([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]), value=-<span class="hljs-number">1</span>)
+</code></pre>
+<p>现在，我们可以[<strong>通过扩展softmax交叉熵损失函数来遮蔽不相关的预测</strong>]。
+最初，所有预测词元的掩码都设置为1。
+一旦给定了有效长度，与填充词元对应的掩码将被设置为0。
+最后，将所有词元的损失乘以掩码，以过滤掉损失中填充词元产生的不相关预测。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@save</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MaskedSoftmaxCELoss</span><span class="hljs-params">(gluon.loss.SoftmaxCELoss)</span>:</span>
+    <span class="hljs-string">"""带遮蔽的softmax交叉熵损失函数"""</span>
+    <span class="hljs-comment"># pred的形状：(batch_size,num_steps,vocab_size)</span>
+    <span class="hljs-comment"># label的形状：(batch_size,num_steps)</span>
+    <span class="hljs-comment"># valid_len的形状：(batch_size,)</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, pred, label, valid_len)</span>:</span>
+        <span class="hljs-comment"># weights的形状：(batch_size,num_steps,1)</span>
+        weights = np.expand_dims(np.ones_like(label), axis=-<span class="hljs-number">1</span>)
+        weights = npx.sequence_mask(weights, valid_len, <span class="hljs-keyword">True</span>, axis=<span class="hljs-number">1</span>)
+        <span class="hljs-keyword">return</span> super(MaskedSoftmaxCELoss, self).forward(pred, label, weights)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MaskedSoftmaxCELoss</span><span class="hljs-params">(nn.CrossEntropyLoss)</span>:</span>
+    <span class="hljs-string">"""带遮蔽的softmax交叉熵损失函数"""</span>
+    <span class="hljs-comment"># pred的形状：(batch_size,num_steps,vocab_size)</span>
+    <span class="hljs-comment"># label的形状：(batch_size,num_steps)</span>
+    <span class="hljs-comment"># valid_len的形状：(batch_size,)</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, pred, label, valid_len)</span>:</span>
+        weights = torch.ones_like(label)
+        weights = sequence_mask(weights, valid_len)
+        self.reduction=<span class="hljs-string">'none'</span>
+        unweighted_loss = super(MaskedSoftmaxCELoss, self).forward(
+            pred.permute(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>), label)
+        weighted_loss = (unweighted_loss * weights).mean(dim=<span class="hljs-number">1</span>)
+        <span class="hljs-keyword">return</span> weighted_loss
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MaskedSoftmaxCELoss</span><span class="hljs-params">(tf.keras.losses.Loss)</span>:</span>
+    <span class="hljs-string">"""带遮蔽的softmax交叉熵损失函数"""</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, valid_len)</span>:</span>
+        super().__init__(reduction=<span class="hljs-string">'none'</span>)
+        self.valid_len = valid_len
+
+    <span class="hljs-comment"># pred的形状：(batch_size,num_steps,vocab_size)</span>
+    <span class="hljs-comment"># label的形状：(batch_size,num_steps)</span>
+    <span class="hljs-comment"># valid_len的形状：(batch_size,)</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">call</span><span class="hljs-params">(self, label, pred)</span>:</span>
+        weights = tf.ones_like(label, dtype=tf.float32)
+        weights = sequence_mask(weights, self.valid_len)
+        label_one_hot = tf.one_hot(label, depth=pred.shape[-<span class="hljs-number">1</span>])
+        unweighted_loss = tf.keras.losses.CategoricalCrossentropy(
+            from_logits=<span class="hljs-keyword">True</span>, reduction=<span class="hljs-string">'none'</span>)(label_one_hot, pred)
+        weighted_loss = tf.reduce_mean((unweighted_loss*weights), axis=<span class="hljs-number">1</span>)
+        <span class="hljs-keyword">return</span> weighted_loss
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MaskedSoftmaxCELoss</span><span class="hljs-params">(nn.CrossEntropyLoss)</span>:</span>
+    <span class="hljs-string">"""带遮蔽的softmax交叉熵损失函数"""</span>
+    <span class="hljs-comment"># pred的形状：(batch_size,num_steps,vocab_size)</span>
+    <span class="hljs-comment"># label的形状：(batch_size,num_steps)</span>
+    <span class="hljs-comment"># valid_len的形状：(batch_size,)</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, pred, label, valid_len)</span>:</span>
+        weights = paddle.ones_like(label)
+        weights = sequence_mask(weights, valid_len)
+        self.reduction=<span class="hljs-string">'none'</span>
+        unweighted_loss = super(MaskedSoftmaxCELoss, self).forward(
+            pred, label)
+        weighted_loss = (unweighted_loss * weights).mean(axis=<span class="hljs-number">1</span>)
+        <span class="hljs-keyword">return</span> weighted_loss
+</code></pre>
+<p>我们可以创建三个相同的序列来进行[<strong>代码健全性检查</strong>]，
+然后分别指定这些序列的有效长度为$4$、$2$和$0$。
+结果就是，第一个序列的损失应为第二个序列的两倍，而第三个序列的损失应为零。</p>
+<pre><code class="lang-python">loss = MaskedSoftmaxCELoss()
+loss(d2l.ones((<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">10</span>)), d2l.ones((<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)), np.array([<span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>]))
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+loss = MaskedSoftmaxCELoss()
+loss(d2l.ones(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">10</span>), d2l.ones((<span class="hljs-number">3</span>, <span class="hljs-number">4</span>), dtype=torch.long),
+     torch.tensor([<span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>]))
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+loss = MaskedSoftmaxCELoss(tf.constant([<span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>]))
+loss(tf.ones((<span class="hljs-number">3</span>,<span class="hljs-number">4</span>), dtype = tf.int32), tf.ones((<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">10</span>))).numpy()
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+loss = MaskedSoftmaxCELoss()
+loss(d2l.ones([<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">10</span>]), d2l.ones((<span class="hljs-number">3</span>, <span class="hljs-number">4</span>), dtype=paddle.int64),
+     paddle.to_tensor([<span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>]))
+</code></pre>
+<h2 id="训练">[<strong>训练</strong>]</h2>
+<p>:label:<code>sec_seq2seq_training</code></p>
+<p>在下面的循环训练过程中，如 :numref:<code>fig_seq2seq</code>所示，
+特定的序列开始词元（“&lt;bos&gt;”）和
+原始的输出序列（不包括序列结束词元“&lt;eos&gt;”）
+拼接在一起作为解码器的输入。
+这被称为<em>强制教学</em>（teacher forcing），
+因为原始的输出序列（词元的标签）被送入解码器。
+或者，将来自上一个时间步的<em>预测</em>得到的词元作为解码器的当前输入。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train_seq2seq</span><span class="hljs-params">(net, data_iter, lr, num_epochs, tgt_vocab, device)</span>:</span>
+    <span class="hljs-string">"""训练序列到序列模型"""</span>
+    net.initialize(init.Xavier(), force_reinit=<span class="hljs-keyword">True</span>, ctx=device)
+    trainer = gluon.Trainer(net.collect_params(), <span class="hljs-string">'adam'</span>,
+                            {<span class="hljs-string">'learning_rate'</span>: lr})
+    loss = MaskedSoftmaxCELoss()
+    animator = d2l.Animator(xlabel=<span class="hljs-string">'epoch'</span>, ylabel=<span class="hljs-string">'loss'</span>,
+                            xlim=[<span class="hljs-number">10</span>, num_epochs])
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> range(num_epochs):
+        timer = d2l.Timer()
+        metric = d2l.Accumulator(<span class="hljs-number">2</span>)  <span class="hljs-comment"># 训练损失求和，词元数量</span>
+        <span class="hljs-keyword">for</span> batch <span class="hljs-keyword">in</span> data_iter:
+            X, X_valid_len, Y, Y_valid_len = [
+                x.as_in_ctx(device) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> batch]
+            bos = np.array([tgt_vocab[<span class="hljs-string">'&lt;bos&gt;'</span>]] * Y.shape[<span class="hljs-number">0</span>], 
+                       ctx=device).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+            dec_input = np.concatenate([bos, Y[:, :-<span class="hljs-number">1</span>]], <span class="hljs-number">1</span>)  <span class="hljs-comment"># 强制教学</span>
+            <span class="hljs-keyword">with</span> autograd.record():
+                Y_hat, _ = net(X, dec_input, X_valid_len)
+                l = loss(Y_hat, Y, Y_valid_len)
+            l.backward()
+            d2l.grad_clipping(net, <span class="hljs-number">1</span>)
+            num_tokens = Y_valid_len.sum()
+            trainer.step(num_tokens)
+            metric.add(l.sum(), num_tokens)
+        <span class="hljs-keyword">if</span> (epoch + <span class="hljs-number">1</span>) % <span class="hljs-number">10</span> == <span class="hljs-number">0</span>:
+            animator.add(epoch + <span class="hljs-number">1</span>, (metric[<span class="hljs-number">0</span>] / metric[<span class="hljs-number">1</span>],))
+    print(f<span class="hljs-string">'loss {metric[0] / metric[1]:.3f}, {metric[1] / timer.stop():.1f} '</span>
+        f<span class="hljs-string">'tokens/sec on {str(device)}'</span>)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train_seq2seq</span><span class="hljs-params">(net, data_iter, lr, num_epochs, tgt_vocab, device)</span>:</span>
+    <span class="hljs-string">"""训练序列到序列模型"""</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">xavier_init_weights</span><span class="hljs-params">(m)</span>:</span>
+        <span class="hljs-keyword">if</span> type(m) == nn.Linear:
+            nn.init.xavier_uniform_(m.weight)
+        <span class="hljs-keyword">if</span> type(m) == nn.GRU:
+            <span class="hljs-keyword">for</span> param <span class="hljs-keyword">in</span> m._flat_weights_names:
+                <span class="hljs-keyword">if</span> <span class="hljs-string">"weight"</span> <span class="hljs-keyword">in</span> param:
+                    nn.init.xavier_uniform_(m._parameters[param])
+
+    net.apply(xavier_init_weights)
+    net.to(device)
+    optimizer = torch.optim.Adam(net.parameters(), lr=lr)
+    loss = MaskedSoftmaxCELoss()
+    net.train()
+    animator = d2l.Animator(xlabel=<span class="hljs-string">'epoch'</span>, ylabel=<span class="hljs-string">'loss'</span>,
+                     xlim=[<span class="hljs-number">10</span>, num_epochs])
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> range(num_epochs):
+        timer = d2l.Timer()
+        metric = d2l.Accumulator(<span class="hljs-number">2</span>)  <span class="hljs-comment"># 训练损失总和，词元数量</span>
+        <span class="hljs-keyword">for</span> batch <span class="hljs-keyword">in</span> data_iter:
+            optimizer.zero_grad()
+            X, X_valid_len, Y, Y_valid_len = [x.to(device) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> batch]
+            bos = torch.tensor([tgt_vocab[<span class="hljs-string">'&lt;bos&gt;'</span>]] * Y.shape[<span class="hljs-number">0</span>],
+                          device=device).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+            dec_input = torch.cat([bos, Y[:, :-<span class="hljs-number">1</span>]], <span class="hljs-number">1</span>)  <span class="hljs-comment"># 强制教学</span>
+            Y_hat, _ = net(X, dec_input, X_valid_len)
+            l = loss(Y_hat, Y, Y_valid_len)
+            l.sum().backward()    <span class="hljs-comment"># 损失函数的标量进行“反向传播”</span>
+            d2l.grad_clipping(net, <span class="hljs-number">1</span>)
+            num_tokens = Y_valid_len.sum()
+            optimizer.step()
+            <span class="hljs-keyword">with</span> torch.no_grad():
+                metric.add(l.sum(), num_tokens)
+        <span class="hljs-keyword">if</span> (epoch + <span class="hljs-number">1</span>) % <span class="hljs-number">10</span> == <span class="hljs-number">0</span>:
+            animator.add(epoch + <span class="hljs-number">1</span>, (metric[<span class="hljs-number">0</span>] / metric[<span class="hljs-number">1</span>],))
+    print(f<span class="hljs-string">'loss {metric[0] / metric[1]:.3f}, {metric[1] / timer.stop():.1f} '</span>
+        f<span class="hljs-string">'tokens/sec on {str(device)}'</span>)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train_seq2seq</span><span class="hljs-params">(net, data_iter, lr, num_epochs, tgt_vocab, device)</span>:</span>
+    <span class="hljs-string">"""训练序列到序列模型"""</span>
+    optimizer = tf.keras.optimizers.Adam(learning_rate=lr)
+    animator = d2l.Animator(xlabel=<span class="hljs-string">"epoch"</span>, ylabel=<span class="hljs-string">"loss"</span>,
+                            xlim=[<span class="hljs-number">10</span>, num_epochs])
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> range(num_epochs):
+        timer = d2l.Timer()
+        metric = d2l.Accumulator(<span class="hljs-number">2</span>)  <span class="hljs-comment"># 训练损失总和，词元数量</span>
+        <span class="hljs-keyword">for</span> batch <span class="hljs-keyword">in</span> data_iter:
+            X, X_valid_len, Y, Y_valid_len = [x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> batch]
+            bos = tf.reshape(tf.constant([tgt_vocab[<span class="hljs-string">'&lt;bos&gt;'</span>]] * Y.shape[<span class="hljs-number">0</span>]),
+                             shape=(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>))
+            dec_input = tf.concat([bos, Y[:, :-<span class="hljs-number">1</span>]], <span class="hljs-number">1</span>)  <span class="hljs-comment"># 强制教学</span>
+            <span class="hljs-keyword">with</span> tf.GradientTape() <span class="hljs-keyword">as</span> tape:
+                Y_hat, _ = net(X, dec_input, X_valid_len, training=<span class="hljs-keyword">True</span>)
+                l = MaskedSoftmaxCELoss(Y_valid_len)(Y, Y_hat)
+            gradients = tape.gradient(l, net.trainable_variables)
+            gradients = d2l.grad_clipping(gradients, <span class="hljs-number">1</span>)
+            optimizer.apply_gradients(zip(gradients, net.trainable_variables))
+            num_tokens = tf.reduce_sum(Y_valid_len).numpy()
+            metric.add(tf.reduce_sum(l), num_tokens)
+        <span class="hljs-keyword">if</span> (epoch + <span class="hljs-number">1</span>) % <span class="hljs-number">10</span> == <span class="hljs-number">0</span>:
+            animator.add(epoch + <span class="hljs-number">1</span>, (metric[<span class="hljs-number">0</span>] / metric[<span class="hljs-number">1</span>],))
+    print(f<span class="hljs-string">'loss {metric[0] / metric[1]:.3f}, {metric[1] / timer.stop():.1f} '</span>
+          f<span class="hljs-string">'tokens/sec on {str(device)}'</span>)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train_seq2seq</span><span class="hljs-params">(net, data_iter, lr, num_epochs, tgt_vocab, device)</span>:</span>
+    <span class="hljs-string">"""训练序列到序列模型"""</span>
+    optimizer = paddle.optimizer.Adam(learning_rate=lr, parameters=net.parameters())
+    loss = MaskedSoftmaxCELoss()
+    net.train()
+    animator = d2l.Animator(xlabel=<span class="hljs-string">'epoch'</span>, ylabel=<span class="hljs-string">'loss'</span>,
+                     xlim=[<span class="hljs-number">10</span>, num_epochs])
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> range(num_epochs):
+        timer = d2l.Timer()
+        metric = d2l.Accumulator(<span class="hljs-number">2</span>)  <span class="hljs-comment"># 训练损失总和，词元数量</span>
+        <span class="hljs-keyword">for</span> batch <span class="hljs-keyword">in</span> data_iter:
+            optimizer.clear_grad()
+            X, X_valid_len, Y, Y_valid_len = [paddle.to_tensor(x, place=device) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> batch]
+            bos = paddle.to_tensor([tgt_vocab[<span class="hljs-string">'&lt;bos&gt;'</span>]] * Y.shape[<span class="hljs-number">0</span>]).reshape([-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>])
+            dec_input = paddle.concat([bos, Y[:, :-<span class="hljs-number">1</span>]], <span class="hljs-number">1</span>)  <span class="hljs-comment"># 强制教学</span>
+            Y_hat, _ = net(X, dec_input, X_valid_len.squeeze())
+            l = loss(Y_hat, Y, Y_valid_len.squeeze())
+            l.backward()    <span class="hljs-comment"># 损失函数的标量进行“反向传播”</span>
+            d2l.grad_clipping(net, <span class="hljs-number">1</span>)
+            num_tokens = Y_valid_len.sum()
+            optimizer.step()
+            <span class="hljs-keyword">with</span> paddle.no_grad():
+                metric.add(l.sum(), num_tokens)
+        <span class="hljs-keyword">if</span> (epoch + <span class="hljs-number">1</span>) % <span class="hljs-number">10</span> == <span class="hljs-number">0</span>:
+            animator.add(epoch + <span class="hljs-number">1</span>, (metric[<span class="hljs-number">0</span>] / metric[<span class="hljs-number">1</span>],))
+    print(f<span class="hljs-string">'loss {metric[0] / metric[1]:.3f}, {metric[1] / timer.stop():.1f} '</span>
+        f<span class="hljs-string">'tokens/sec on {str(device)}'</span>)
+</code></pre>
+<p>现在，在机器翻译数据集上，我们可以
+[<strong>创建和训练一个循环神经网络“编码器－解码器”模型</strong>]用于序列到序列的学习。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+embed_size, num_hiddens, num_layers, dropout = <span class="hljs-number">32</span>, <span class="hljs-number">32</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0.1</span>
+batch_size, num_steps = <span class="hljs-number">64</span>, <span class="hljs-number">10</span>
+lr, num_epochs, device = <span class="hljs-number">0.005</span>, <span class="hljs-number">300</span>, d2l.try_gpu()
+
+train_iter, src_vocab, tgt_vocab = d2l.load_data_nmt(batch_size, num_steps)
+encoder = Seq2SeqEncoder(len(src_vocab), embed_size, num_hiddens, num_layers,
+                        dropout)
+decoder = Seq2SeqDecoder(len(tgt_vocab), embed_size, num_hiddens, num_layers,
+                        dropout)
+net = d2l.EncoderDecoder(encoder, decoder)
+train_seq2seq(net, train_iter, lr, num_epochs, tgt_vocab, device)
+</code></pre>
+<h2 id="预测">[<strong>预测</strong>]</h2>
+<p>为了采用一个接着一个词元的方式预测输出序列，
+每个解码器当前时间步的输入都将来自于前一时间步的预测词元。
+与训练类似，序列开始词元（“&lt;bos&gt;”）
+在初始时间步被输入到解码器中。
+该预测过程如 :numref:<code>fig_seq2seq_predict</code>所示，
+当输出序列的预测遇到序列结束词元（“&lt;eos&gt;”）时，预测就结束了。</p>
+<p><img src="../img/seq2seq-predict.svg" alt="使用循环神经网络编码器-解码器逐词元地预测输出序列。"></img>
+:label:<code>fig_seq2seq_predict</code></p>
+<p>我们将在 :numref:<code>sec_beam-search</code>中介绍不同的序列生成策略。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">predict_seq2seq</span><span class="hljs-params">(net, src_sentence, src_vocab, tgt_vocab, num_steps,
+                    device, save_attention_weights=False)</span>:</span>
+    <span class="hljs-string">"""序列到序列模型的预测"""</span>
+    src_tokens = src_vocab[src_sentence.lower().split(<span class="hljs-string">' '</span>)] + [
+        src_vocab[<span class="hljs-string">'&lt;eos&gt;'</span>]]
+    enc_valid_len = np.array([len(src_tokens)], ctx=device)
+    src_tokens = d2l.truncate_pad(src_tokens, num_steps, src_vocab[<span class="hljs-string">'&lt;pad&gt;'</span>])
+    <span class="hljs-comment"># 添加批量轴</span>
+    enc_X = np.expand_dims(np.array(src_tokens, ctx=device), axis=<span class="hljs-number">0</span>)
+    enc_outputs = net.encoder(enc_X, enc_valid_len)
+    dec_state = net.decoder.init_state(enc_outputs, enc_valid_len)
+    <span class="hljs-comment"># 添加批量轴</span>
+    dec_X = np.expand_dims(np.array([tgt_vocab[<span class="hljs-string">'&lt;bos&gt;'</span>]], ctx=device), 
+                           axis=<span class="hljs-number">0</span>)
+    output_seq, attention_weight_seq = [], []
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(num_steps):
+        Y, dec_state = net.decoder(dec_X, dec_state)
+        <span class="hljs-comment"># 我们使用具有预测最高可能性的词元，作为解码器在下一时间步的输入</span>
+        dec_X = Y.argmax(axis=<span class="hljs-number">2</span>)
+        pred = dec_X.squeeze(axis=<span class="hljs-number">0</span>).astype(<span class="hljs-string">'int32'</span>).item()
+        <span class="hljs-comment"># 保存注意力权重（稍后讨论）</span>
+        <span class="hljs-keyword">if</span> save_attention_weights:
+            attention_weight_seq.append(net.decoder.attention_weights)
+        <span class="hljs-comment"># 一旦序列结束词元被预测，输出序列的生成就完成了</span>
+        <span class="hljs-keyword">if</span> pred == tgt_vocab[<span class="hljs-string">'&lt;eos&gt;'</span>]:
+            <span class="hljs-keyword">break</span>
+        output_seq.append(pred)
+    <span class="hljs-keyword">return</span> <span class="hljs-string">' '</span>.join(tgt_vocab.to_tokens(output_seq)), attention_weight_seq
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">predict_seq2seq</span><span class="hljs-params">(net, src_sentence, src_vocab, tgt_vocab, num_steps,
+                    device, save_attention_weights=False)</span>:</span>
+    <span class="hljs-string">"""序列到序列模型的预测"""</span>
+    <span class="hljs-comment"># 在预测时将net设置为评估模式</span>
+    net.eval()
+    src_tokens = src_vocab[src_sentence.lower().split(<span class="hljs-string">' '</span>)] + [
+        src_vocab[<span class="hljs-string">'&lt;eos&gt;'</span>]]
+    enc_valid_len = torch.tensor([len(src_tokens)], device=device)
+    src_tokens = d2l.truncate_pad(src_tokens, num_steps, src_vocab[<span class="hljs-string">'&lt;pad&gt;'</span>])
+    <span class="hljs-comment"># 添加批量轴</span>
+    enc_X = torch.unsqueeze(
+        torch.tensor(src_tokens, dtype=torch.long, device=device), dim=<span class="hljs-number">0</span>)
+    enc_outputs = net.encoder(enc_X, enc_valid_len)
+    dec_state = net.decoder.init_state(enc_outputs, enc_valid_len)
+    <span class="hljs-comment"># 添加批量轴</span>
+    dec_X = torch.unsqueeze(torch.tensor(
+        [tgt_vocab[<span class="hljs-string">'&lt;bos&gt;'</span>]], dtype=torch.long, device=device), dim=<span class="hljs-number">0</span>)
+    output_seq, attention_weight_seq = [], []
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(num_steps):
+        Y, dec_state = net.decoder(dec_X, dec_state)
+        <span class="hljs-comment"># 我们使用具有预测最高可能性的词元，作为解码器在下一时间步的输入</span>
+        dec_X = Y.argmax(dim=<span class="hljs-number">2</span>)
+        pred = dec_X.squeeze(dim=<span class="hljs-number">0</span>).type(torch.int32).item()
+        <span class="hljs-comment"># 保存注意力权重（稍后讨论）</span>
+        <span class="hljs-keyword">if</span> save_attention_weights:
+            attention_weight_seq.append(net.decoder.attention_weights)
+        <span class="hljs-comment"># 一旦序列结束词元被预测，输出序列的生成就完成了</span>
+        <span class="hljs-keyword">if</span> pred == tgt_vocab[<span class="hljs-string">'&lt;eos&gt;'</span>]:
+            <span class="hljs-keyword">break</span>
+        output_seq.append(pred)
+    <span class="hljs-keyword">return</span> <span class="hljs-string">' '</span>.join(tgt_vocab.to_tokens(output_seq)), attention_weight_seq
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">predict_seq2seq</span><span class="hljs-params">(net, src_sentence, src_vocab, tgt_vocab, num_steps,
+                    save_attention_weights=False)</span>:</span>
+    <span class="hljs-string">"""序列到序列模型的预测"""</span>
+    src_tokens = src_vocab[src_sentence.lower().split(<span class="hljs-string">' '</span>)] + [
+        src_vocab[<span class="hljs-string">'&lt;eos&gt;'</span>]]
+    enc_valid_len = tf.constant([len(src_tokens)])
+    src_tokens = d2l.truncate_pad(src_tokens, num_steps, src_vocab[<span class="hljs-string">'&lt;pad&gt;'</span>])
+    <span class="hljs-comment"># 添加批量轴</span>
+    enc_X = tf.expand_dims(src_tokens, axis=<span class="hljs-number">0</span>)
+    enc_outputs = net.encoder(enc_X, enc_valid_len, training=<span class="hljs-keyword">False</span>)
+    dec_state = net.decoder.init_state(enc_outputs, enc_valid_len)
+    <span class="hljs-comment"># 添加批量轴</span>
+    dec_X = tf.expand_dims(tf.constant([tgt_vocab[<span class="hljs-string">'&lt;bos&gt;'</span>]]), axis=<span class="hljs-number">0</span>)
+    output_seq, attention_weight_seq = [], []
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(num_steps):
+        Y, dec_state = net.decoder(dec_X, dec_state, training=<span class="hljs-keyword">False</span>)
+        <span class="hljs-comment"># 我们使用具有预测最高可能性的词元，作为解码器在下一时间步的输入</span>
+        dec_X = tf.argmax(Y, axis=<span class="hljs-number">2</span>)
+        pred = tf.squeeze(dec_X, axis=<span class="hljs-number">0</span>)
+        <span class="hljs-comment"># 保存注意力权重</span>
+        <span class="hljs-keyword">if</span> save_attention_weights:
+            attention_weight_seq.append(net.decoder.attention_weights)
+        <span class="hljs-comment"># 一旦序列结束词元被预测，输出序列的生成就完成了</span>
+        <span class="hljs-keyword">if</span> pred == tgt_vocab[<span class="hljs-string">'&lt;eos&gt;'</span>]:
+            <span class="hljs-keyword">break</span>
+        output_seq.append(pred.numpy())
+    <span class="hljs-keyword">return</span> <span class="hljs-string">' '</span>.join(tgt_vocab.to_tokens(tf.reshape(output_seq, 
+        shape = -<span class="hljs-number">1</span>).numpy().tolist())), attention_weight_seq
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-comment">#@save</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">predict_seq2seq</span><span class="hljs-params">(net, src_sentence, src_vocab, tgt_vocab, num_steps,
+                    device, save_attention_weights=False)</span>:</span>
+    <span class="hljs-string">"""序列到序列模型的预测"""</span>
+    <span class="hljs-comment"># 在预测时将net设置为评估模式</span>
+    net.eval()
+    src_tokens = src_vocab[src_sentence.lower().split(<span class="hljs-string">' '</span>)] + [
+        src_vocab[<span class="hljs-string">'&lt;eos&gt;'</span>]]
+    enc_valid_len = paddle.to_tensor([len(src_tokens)], place=device)
+    src_tokens = d2l.truncate_pad(src_tokens, num_steps, src_vocab[<span class="hljs-string">'&lt;pad&gt;'</span>])
+    <span class="hljs-comment"># 添加批量轴</span>
+    enc_X = paddle.unsqueeze(
+        paddle.to_tensor(src_tokens, dtype=paddle.int64, place=device), axis=<span class="hljs-number">0</span>)
+    enc_outputs = net.encoder(enc_X, enc_valid_len)
+    dec_state = net.decoder.init_state(enc_outputs, enc_valid_len)
+    <span class="hljs-comment"># 添加批量轴</span>
+    dec_X = paddle.unsqueeze(paddle.to_tensor(
+        [tgt_vocab[<span class="hljs-string">'&lt;bos&gt;'</span>]], dtype=paddle.int64, place=device), axis=<span class="hljs-number">0</span>)
+    output_seq, attention_weight_seq = [], []
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(num_steps):
+        Y, dec_state = net.decoder(dec_X, dec_state)
+        <span class="hljs-comment"># 我们使用具有预测最高可能性的词元，作为解码器在下一时间步的输入</span>
+        dec_X = Y.argmax(axis=<span class="hljs-number">2</span>)
+        pred = dec_X.squeeze(axis=<span class="hljs-number">0</span>).astype(paddle.int32).item()
+        <span class="hljs-comment"># 保存注意力权重（稍后讨论）</span>
+        <span class="hljs-keyword">if</span> save_attention_weights:
+            attention_weight_seq.append(net.decoder.attention_weights)
+        <span class="hljs-comment"># 一旦序列结束词元被预测，输出序列的生成就完成了</span>
+        <span class="hljs-keyword">if</span> pred == tgt_vocab[<span class="hljs-string">'&lt;eos&gt;'</span>]:
+            <span class="hljs-keyword">break</span>
+        output_seq.append(pred)
+    <span class="hljs-keyword">return</span> <span class="hljs-string">' '</span>.join(tgt_vocab.to_tokens(output_seq)), attention_weight_seq
+</code></pre>
+<h2 id="预测序列的评估">预测序列的评估</h2>
+<p>我们可以通过与真实的标签序列进行比较来评估预测序列。
+虽然 :cite:<code>Papineni.Roukos.Ward.ea.2002</code>
+提出的BLEU（bilingual evaluation understudy）
+最先是用于评估机器翻译的结果，
+但现在它已经被广泛用于测量许多应用的输出序列的质量。
+原则上说，对于预测序列中的任意$n$元语法（n-grams），
+BLEU的评估都是这个$n$元语法是否出现在标签序列中。</p>
+<p>我们将BLEU定义为：</p>
+<p>$$ \exp\left(\min\left(0, 1 - \frac{\mathrm{len}<em>{\text{label} } }{\mathrm{len}</em>{\text{pred} } }\right)\right) \prod_{n=1}^k p_n^{1/2^n},$$
+:eqlabel:<code>eq_bleu</code></p>
+<p>其中$\mathrm{len}<em>{\text{label} }$表示标签序列中的词元数和
+$\mathrm{len}</em>{\text{pred} }$表示预测序列中的词元数，
+$k$是用于匹配的最长的$n$元语法。
+另外，用$p_n$表示$n$元语法的精确度，它是两个数量的比值：
+第一个是预测序列与标签序列中匹配的$n$元语法的数量，
+第二个是预测序列中$n$元语法的数量的比率。
+具体地说，给定标签序列$A$、$B$、$C$、$D$、$E$、$F$
+和预测序列$A$、$B$、$B$、$C$、$D$，
+我们有$p_1 = 4/5$、$p_2 = 3/4$、$p_3 = 1/3$和$p_4 = 0$。</p>
+<p>根据 :eqref:<code>eq_bleu</code>中BLEU的定义，
+当预测序列与标签序列完全相同时，BLEU为$1$。
+此外，由于$n$元语法越长则匹配难度越大，
+所以BLEU为更长的$n$元语法的精确度分配更大的权重。
+具体来说，当$p_n$固定时，$p_n^{1/2^n}$
+会随着$n$的增长而增加（原始论文使用$p_n^{1/n}$）。
+而且，由于预测的序列越短获得的$p_n$值越高，
+所以 :eqref:<code>eq_bleu</code>中乘法项之前的系数用于惩罚较短的预测序列。
+例如，当$k=2$时，给定标签序列$A$、$B$、$C$、$D$、$E$、$F$
+和预测序列$A$、$B$，尽管$p_1 = p_2 = 1$，
+惩罚因子$\exp(1-6/2) \approx 0.14$会降低BLEU。</p>
+<p>[<strong>BLEU的代码实现</strong>]如下。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bleu</span><span class="hljs-params">(pred_seq, label_seq, k)</span>:</span>  <span class="hljs-comment">#@save</span>
+    <span class="hljs-string">"""计算BLEU"""</span>
+    pred_tokens, label_tokens = pred_seq.split(<span class="hljs-string">' '</span>), label_seq.split(<span class="hljs-string">' '</span>)
+    len_pred, len_label = len(pred_tokens), len(label_tokens)
+    score = math.exp(min(<span class="hljs-number">0</span>, <span class="hljs-number">1</span> - len_label / len_pred))
+    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, k + <span class="hljs-number">1</span>):
+        num_matches, label_subs = <span class="hljs-number">0</span>, collections.defaultdict(int)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len_label - n + <span class="hljs-number">1</span>):
+            label_subs[<span class="hljs-string">' '</span>.join(label_tokens[i: i + n])] += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len_pred - n + <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> label_subs[<span class="hljs-string">' '</span>.join(pred_tokens[i: i + n])] &gt; <span class="hljs-number">0</span>:
+                num_matches += <span class="hljs-number">1</span>
+                label_subs[<span class="hljs-string">' '</span>.join(pred_tokens[i: i + n])] -= <span class="hljs-number">1</span>
+        score *= math.pow(num_matches / (len_pred - n + <span class="hljs-number">1</span>), math.pow(<span class="hljs-number">0.5</span>, n))
+    <span class="hljs-keyword">return</span> score
+</code></pre>
+<p>最后，利用训练好的循环神经网络“编码器－解码器”模型，
+[<strong>将几个英语句子翻译成法语</strong>]，并计算BLEU的最终结果。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab mxnet, pytorch, paddle</span>
+engs = [<span class="hljs-string">'go .'</span>, <span class="hljs-string">"i lost ."</span>, <span class="hljs-string">'he\'s calm .'</span>, <span class="hljs-string">'i\'m home .'</span>]
+fras = [<span class="hljs-string">'va !'</span>, <span class="hljs-string">'j\'ai perdu .'</span>, <span class="hljs-string">'il est calme .'</span>, <span class="hljs-string">'je suis chez moi .'</span>]
+<span class="hljs-keyword">for</span> eng, fra <span class="hljs-keyword">in</span> zip(engs, fras):
+    translation, attention_weight_seq = predict_seq2seq(
+        net, eng, src_vocab, tgt_vocab, num_steps, device)
+    print(f<span class="hljs-string">'{eng} =&gt; {translation}, bleu {bleu(translation, fra, k=2):.3f}'</span>)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+engs = [<span class="hljs-string">'go .'</span>, <span class="hljs-string">"i lost ."</span>, <span class="hljs-string">'he\'s calm .'</span>, <span class="hljs-string">'i\'m home .'</span>]
+fras = [<span class="hljs-string">'va !'</span>, <span class="hljs-string">'j\'ai perdu .'</span>, <span class="hljs-string">'il est calme .'</span>, <span class="hljs-string">'je suis chez moi .'</span>]
+<span class="hljs-keyword">for</span> eng, fra <span class="hljs-keyword">in</span> zip(engs, fras):
+    translation, attention_weight_seq = predict_seq2seq(
+        net, eng, src_vocab, tgt_vocab, num_steps)
+    print(f<span class="hljs-string">'{eng} =&gt; {translation}, bleu {bleu(translation, fra, k=2):.3f}'</span>)
+</code></pre>
+<h2 id="小结">小结</h2>
+<ul>
+<li>根据“编码器-解码器”架构的设计，
+我们可以使用两个循环神经网络来设计一个序列到序列学习的模型。</li>
+<li>在实现编码器和解码器时，我们可以使用多层循环神经网络。</li>
+<li>我们可以使用遮蔽来过滤不相关的计算，例如在计算损失时。</li>
+<li>在“编码器－解码器”训练中，强制教学方法将原始输出序列（而非预测结果）输入解码器。</li>
+<li>BLEU是一种常用的评估方法，它通过测量预测序列和标签序列之间的$n$元语法的匹配度来评估预测。</li>
+</ul>
+<h2 id="练习">练习</h2>
+<ol>
+<li>试着通过调整超参数来改善翻译效果。</li>
+<li>重新运行实验并在计算损失时不使用遮蔽，可以观察到什么结果？为什么会有这个结果？</li>
+<li>如果编码器和解码器的层数或者隐藏单元数不同，那么如何初始化解码器的隐状态？</li>
+<li>在训练中，如果用前一时间步的预测输入到解码器来代替强制教学，对性能有何影响？</li>
+<li>用长短期记忆网络替换门控循环单元重新运行实验。</li>
+<li>有没有其他方法来设计解码器的输出层？</li>
+</ol>
+<p>:begin_tab:<code>mxnet</code>
+<a href="https://discuss.d2l.ai/t/2783" target="_blank">Discussions</a>
+:end_tab:</p>
+<p>:begin_tab:<code>pytorch</code>
+<a href="https://discuss.d2l.ai/t/2782" target="_blank">Discussions</a>
+:end_tab:</p>
+<p>:begin_tab:<code>paddle</code>
+<a href="https://discuss.d2l.ai/t/11838" target="_blank">Discussions</a>
+:end_tab:</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="encoder-decoder.html" class="navigation navigation-prev " aria-label="Previous page: 9.6. 编码器—解码器">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="beam-search.html" class="navigation navigation-next " aria-label="Next page: 9.8. 束搜索">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"9.7. 序列到序列学习（seq2seq）","level":"1.2.12.7","depth":3,"next":{"title":"9.8. 束搜索","level":"1.2.12.8","depth":3,"path":"chapter_recurrent-modern/beam-search.md","ref":"chapter_recurrent-modern/beam-search.md","articles":[]},"previous":{"title":"9.6. 编码器—解码器","level":"1.2.12.6","depth":3,"path":"chapter_recurrent-modern/encoder-decoder.md","ref":"chapter_recurrent-modern/encoder-decoder.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"chapter_recurrent-modern/seq2seq.md","mtime":"2025-04-25T11:46:11.361Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:47.289Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

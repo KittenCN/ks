@@ -1,0 +1,514 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>图的表示 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="最短路径算法.html" />
+    
+    
+    <link rel="prev" href="图论概述.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="图论概述.html">
+            
+                <a href="图论概述.html">
+            
+                    
+                    图论算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.1" data-path="图的表示.html">
+            
+                <a href="图的表示.html">
+            
+                    
+                    图的表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="最短路径算法.html">
+            
+                <a href="最短路径算法.html">
+            
+                    
+                    最短路径算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="最小生成树.html">
+            
+                <a href="最小生成树.html">
+            
+                    
+                    最小生成树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="拓扑排序.html">
+            
+                <a href="拓扑排序.html">
+            
+                    
+                    拓扑排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >图的表示</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="图的表示方法">图的表示方法</h1>
+<p>在算法竞赛中，选择合适的图的表示方法对于算法的性能和代码的简洁性至关重要。本节介绍两种主要的图表示方法。</p>
+<h2 id="邻接矩阵表示法">邻接矩阵表示法</h2>
+<p>【定义】邻接矩阵是一个二维数组，用于表示顶点之间的连接关系。如果顶点i和j之间有一条边，则matrix[i][j]等于这条边的权值（无权图则为1），否则为0或无穷大。</p>
+<h3 id="邻接矩阵的c实现">邻接矩阵的C++实现</h3>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">1000</span>;  <span class="hljs-comment">// 最大顶点数</span>
+<span class="hljs-keyword">int</span> graph[MAXN][MAXN];  <span class="hljs-comment">// 邻接矩阵</span>
+
+<span class="hljs-comment">// 初始化图</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">initGraph</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++) {
+            <span class="hljs-keyword">if</span> (i == j) {
+                graph[i][j] = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 自己到自己的距离为0</span>
+            } <span class="hljs-keyword">else</span> {
+                graph[i][j] = INT_MAX;  <span class="hljs-comment">// 初始化为无穷大，表示不可达</span>
+            }
+        }
+    }
+}
+
+<span class="hljs-comment">// 添加边（有向图）</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> from, <span class="hljs-keyword">int</span> to, <span class="hljs-keyword">int</span> weight)</span> </span>{
+    graph[from][to] = weight;
+}
+
+<span class="hljs-comment">// 添加边（无向图）</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addUndirectedEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> weight)</span> </span>{
+    graph[u][v] = weight;
+    graph[v][u] = weight;  <span class="hljs-comment">// 无向图需要添加两条边</span>
+}
+</code></pre>
+<h3 id="邻接矩阵的优缺点">邻接矩阵的优缺点</h3>
+<p><strong>优点：</strong></p>
+<ol>
+<li>实现简单，容易理解</li>
+<li>查询两点是否有边的时间复杂度为O(1)</li>
+<li>适合稠密图（边数接近顶点数的平方）</li>
+<li>方便实现Floyd等算法</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>空间复杂度为O(V²)，对于大型图会消耗大量内存</li>
+<li>对于稀疏图（边数远小于顶点数的平方）效率低下</li>
+<li>添加/删除顶点的操作复杂度高</li>
+</ol>
+<h2 id="邻接表表示法">邻接表表示法</h2>
+<p>【定义】邻接表使用一个顶点数组，每个顶点维护一个链表，存储与该顶点相连的所有顶点和边的信息。</p>
+<h3 id="邻接表的c实现">邻接表的C++实现</h3>
+<p>使用STL的vector实现：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100000</span>;  <span class="hljs-comment">// 最大顶点数</span>
+
+<span class="hljs-comment">// 边的结构</span>
+<span class="hljs-keyword">struct</span> Edge {
+    <span class="hljs-keyword">int</span> to;      <span class="hljs-comment">// 目标顶点</span>
+    <span class="hljs-keyword">int</span> weight;  <span class="hljs-comment">// 权值</span>
+
+    Edge(<span class="hljs-keyword">int</span> _to, <span class="hljs-keyword">int</span> _weight) : to(_to), weight(_weight) {}
+};
+
+<span class="hljs-built_in">vector</span>&lt;Edge&gt; graph[MAXN];  <span class="hljs-comment">// 邻接表</span>
+
+<span class="hljs-comment">// 添加边（有向图）</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> from, <span class="hljs-keyword">int</span> to, <span class="hljs-keyword">int</span> weight)</span> </span>{
+    graph[from].push_back(Edge(to, weight));
+}
+
+<span class="hljs-comment">// 添加边（无向图）</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addUndirectedEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> weight)</span> </span>{
+    graph[u].push_back(Edge(v, weight));
+    graph[v].push_back(Edge(u, weight));
+}
+
+<span class="hljs-comment">// 遍历从顶点u出发的所有边</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">traverseEdges</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> Edge&amp; e : graph[u]) {
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Edge from "</span> &lt;&lt; u &lt;&lt; <span class="hljs-string">" to "</span> &lt;&lt; e.to 
+             &lt;&lt; <span class="hljs-string">" with weight "</span> &lt;&lt; e.weight &lt;&lt; endl;
+    }
+}
+</code></pre>
+<h3 id="邻接表的优缺点">邻接表的优缺点</h3>
+<p><strong>优点：</strong></p>
+<ol>
+<li>空间复杂度为O(V+E)，适合稀疏图</li>
+<li>快速查找顶点的所有邻居</li>
+<li>添加边的操作简单高效</li>
+<li>适合实现Dijkstra、Kruskal等算法</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>查询两点之间是否有边需要O(degree)时间</li>
+<li>实现相对复杂</li>
+<li>不适合需要频繁查询两点连接关系的场景</li>
+</ol>
+<h2 id="其他表示方法">其他表示方法</h2>
+<h3 id="链式前向星">链式前向星</h3>
+<p>链式前向星是邻接表的一种静态实现，在某些竞赛中很常用：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">10005</span>;  <span class="hljs-comment">// 最大顶点数</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXM = <span class="hljs-number">100005</span>; <span class="hljs-comment">// 最大边数</span>
+
+<span class="hljs-keyword">struct</span> Edge {
+    <span class="hljs-keyword">int</span> to, weight, next;
+} edges[MAXM];
+
+<span class="hljs-keyword">int</span> head[MAXN]; <span class="hljs-comment">// 每个顶点的第一条边的索引</span>
+<span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;    <span class="hljs-comment">// 边的计数器</span>
+
+<span class="hljs-comment">// 初始化</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
+    cnt = <span class="hljs-number">0</span>;
+    <span class="hljs-built_in">memset</span>(head, -<span class="hljs-number">1</span>, <span class="hljs-keyword">sizeof</span>(head));
+}
+
+<span class="hljs-comment">// 添加边</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> from, <span class="hljs-keyword">int</span> to, <span class="hljs-keyword">int</span> weight)</span> </span>{
+    edges[cnt].to = to;
+    edges[cnt].weight = weight;
+    edges[cnt].next = head[from];
+    head[from] = cnt++;
+}
+
+<span class="hljs-comment">// 遍历从顶点u出发的所有边</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">traverseEdges</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = head[u]; i != -<span class="hljs-number">1</span>; i = edges[i].next) {
+        <span class="hljs-keyword">int</span> v = edges[i].to;
+        <span class="hljs-keyword">int</span> w = edges[i].weight;
+        <span class="hljs-comment">// 处理边(u,v,w)</span>
+    }
+}
+</code></pre>
+<h2 id="选择合适的表示方法">选择合适的表示方法</h2>
+<p>选择图的表示方法时，考虑以下因素：</p>
+<ol>
+<li><strong>图的稠密程度</strong>：稠密图选择邻接矩阵，稀疏图选择邻接表</li>
+<li><strong>需要的操作</strong>：频繁查询连接关系选择邻接矩阵</li>
+<li><strong>内存限制</strong>：内存受限时选择邻接表</li>
+<li><strong>算法需求</strong>：某些算法在特定表示下实现更容易</li>
+</ol>
+<h2 id="竞赛实战技巧">竞赛实战技巧</h2>
+<ol>
+<li>在ACM竞赛中，通常使用<code>vector&lt;vector&lt;int&gt;&gt;</code>或<code>vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt;</code>实现邻接表，代码简洁且灵活</li>
+<li>对于静态图，链式前向星效率高，且容易实现</li>
+<li>在处理大规模图时，注意内存限制，选择合适的表示方法</li>
+<li>邻接矩阵适合Floyd算法，邻接表适合Dijkstra和BFS/DFS</li>
+</ol>
+<h2 id="练习题目推荐">练习题目推荐</h2>
+<ol>
+<li>洛谷P3916 图的遍历</li>
+<li>POJ 1236 Network of Schools</li>
+<li>CodeForces 20C Dijkstra?</li>
+</ol>
+<p>通过这些题目练习不同表示方法的使用场景和实现技巧。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="图论概述.html" class="navigation navigation-prev " aria-label="Previous page: 图论算法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="最短路径算法.html" class="navigation navigation-next " aria-label="Next page: 最短路径算法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"图的表示","level":"1.2.1","depth":2,"next":{"title":"最短路径算法","level":"1.2.2","depth":2,"path":"最短路径算法.md","ref":"最短路径算法.md","articles":[]},"previous":{"title":"图论算法","level":"1.2","depth":1,"path":"图论概述.md","ref":"图论概述.md","articles":[{"title":"图的表示","level":"1.2.1","depth":2,"path":"图的表示.md","ref":"图的表示.md","articles":[]},{"title":"最短路径算法","level":"1.2.2","depth":2,"path":"最短路径算法.md","ref":"最短路径算法.md","articles":[]},{"title":"最小生成树","level":"1.2.3","depth":2,"path":"最小生成树.md","ref":"最小生成树.md","articles":[]},{"title":"拓扑排序","level":"1.2.4","depth":2,"path":"拓扑排序.md","ref":"拓扑排序.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"图的表示.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:17.825Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

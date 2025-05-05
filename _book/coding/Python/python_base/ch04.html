@@ -1,0 +1,790 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ch04. Python 序列结构 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch05.html" />
+    
+    
+    <link rel="prev" href="ch03.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Python基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    ch01. 初识 Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    ch02. Python 运算符与基本数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    ch03. 玩转 Python 字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.4" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    ch04. Python 序列结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    ch05. Python 的三种格式化输出方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    ch06. Python 常用内置函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    ch07. Python 程序流程控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="ch08.html">
+            
+                <a href="ch08.html">
+            
+                    
+                    ch08. Python 标准库和扩展库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="ch09.html">
+            
+                <a href="ch09.html">
+            
+                    
+                    ch09. 常用 Python 标准库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="ch10.html">
+            
+                <a href="ch10.html">
+            
+                    
+                    ch10. 函数Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ch11.html">
+            
+                <a href="ch11.html">
+            
+                    
+                    ch11. 面向对象程序设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="ch12.html">
+            
+                <a href="ch12.html">
+            
+                    
+                    ch12. 文件和异常
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ch13.html">
+            
+                <a href="ch13.html">
+            
+                    
+                    ch13. 迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="ch14.html">
+            
+                <a href="ch14.html">
+            
+                    
+                    ch14. Python 奇技淫巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ch04. Python 序列结构</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="（四）python-序列结构">（四）Python 序列结构</h1>
+<table>
+<thead>
+<tr>
+<th>序列</th>
+<th>支持的操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>字符串</td>
+<td>索引、切片、相加、数乘</td>
+</tr>
+<tr>
+<td>列表</td>
+<td>索引、切片、相加、数乘、列表推导式</td>
+</tr>
+<tr>
+<td>元组</td>
+<td>索引、切片、相加、数乘</td>
+</tr>
+<tr>
+<td>字典</td>
+<td>索引、字典推导式、字典连接运算符</td>
+</tr>
+<tr>
+<td>集合</td>
+<td>索引</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-列表">1. 列表</h2>
+<p>1.1 访问列表元素</p>
+<p>通过列表索引（从 <code>0</code> 开始）访问元素。</p>
+<pre><code class="lang-Python"><span class="hljs-prompt">&gt;&gt;&gt; </span>l = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
+<span class="hljs-prompt">&gt;&gt;&gt; </span>l[<span class="hljs-number">0</span>]
+<span class="hljs-number">1</span>
+</code></pre>
+<p>1.2 创建列表</p>
+<p>通过 <code>[]</code> 或 <code>list()</code> 创建列表。
+其中 <code>list()</code> 接收的参数是序列类（字符串、列表、元组、集合、字典）。</p>
+<pre><code class="lang-Python"><span class="hljs-prompt">&gt;&gt;&gt; </span>l1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
+<span class="hljs-prompt">&gt;&gt;&gt; </span>l2 = list((<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>))
+<span class="hljs-prompt">&gt;&gt;&gt; </span>l2
+[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
+</code></pre>
+<p>1.3 创建空列表</p>
+<pre><code class="lang-Python"><span class="hljs-prompt">&gt;&gt;&gt; </span>l0 = []
+<span class="hljs-prompt">&gt;&gt;&gt; </span>l1 = list()
+</code></pre>
+<p>1.4 修改列表元素</p>
+<p>列表属于可变数据类型，每一项都是可以改的。使用索引 <code>list[i]</code> 访问并赋值即可修改。</p>
+<pre><code class="lang-Python"><span class="hljs-prompt">&gt;&gt;&gt; </span>l[<span class="hljs-number">0</span>] = <span class="hljs-number">10</span>
+</code></pre>
+<p>1.5 添加列表元素</p>
+<ul>
+<li><code>append(x)</code> 方法
+在列表末尾添加元素。</li>
+<li><code>insert(i，x)</code> 方法
+在位置 <code>i</code> 处插入 <code>x</code> 元素，后续元素的下标都会改变。</li>
+</ul>
+<p>1.6 删除列表元素</p>
+<ul>
+<li><code>del list[i]</code>
+直接删除索引是 <code>i</code> 的元素，无法使用。</li>
+<li><code>list.pop(i)</code> 
+弹出索引是 <code>i</code> 的元素，删除并使用该元素。
+当参数时，默认删除列表最后一项元素，可看作是栈顶。</li>
+<li><code>list.remove(x)</code>
+删除指定元素 <code>x</code>，无法使用。</li>
+</ul>
+<p>1.7 列表的运算</p>
+<ul>
+<li><p>加法运算符</p>
+<pre><code class="lang-Python"><span class="hljs-prompt">&gt;&gt;&gt; </span>l = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>] + [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]
+<span class="hljs-prompt">&gt;&gt;&gt; </span>l
+[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]
+</code></pre>
+</li>
+<li><p>比较运算符
+逐项比较，直至比出结果。</p>
+<pre><code class="lang-Python"><span class="hljs-prompt">&gt;&gt;&gt; </span>[<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">5</span>] &gt; [<span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">2</span>]
+<span class="hljs-keyword">True</span>
+</code></pre>
+</li>
+</ul>
+<p> 1.8 排序</p>
+<ul>
+<li><p>使用 <code>sort()</code> 方法进行永久性排序
+排序规则：数值大小和字母顺序（默认从小到大，前到后）</p>
+<pre><code class="lang-Python"><span class="hljs-prompt">&gt;&gt;&gt; </span>l = [<span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">3</span>]
+<span class="hljs-prompt">&gt;&gt;&gt; </span>l.sort()
+[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
+</code></pre>
+</li>
+<li><p>使用 <code>sorted()</code> 函数进行临时排序
+排序规则：数值大小和字母顺序（默认从小到大，前到后）
+加参数 <code>reverse = True</code> 则规则相反</p>
+<pre><code class="lang-Python"><span class="hljs-prompt">&gt;&gt;&gt; </span>l1 = [<span class="hljs-string">'b'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'c'</span>]
+<span class="hljs-prompt">&gt;&gt;&gt; </span>sorted(l1)
+[<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>]
+<span class="hljs-prompt">&gt;&gt;&gt; </span>l1
+[<span class="hljs-string">'b'</span>, <span class="hljs-string">'a'</span>, <span class="hljs-string">'c'</span>]
+</code></pre>
+</li>
+<li><p>使用 <code>reverse()</code> 逆转列表</p>
+<pre><code class="lang-Python"><span class="hljs-prompt">&gt;&gt;&gt; </span>[<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>].reverse()
+[<span class="hljs-number">6</span>, <span class="hljs-number">5</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>]
+</code></pre>
+</li>
+</ul>
+<p>1.9 列表长度</p>
+<pre><code class="lang-Python">  &gt;&gt;&gt; len(list)
+</code></pre>
+<p>1.10 切片</p>
+<p>  与字符串的切片类似</p>
+<p>1.11 列表解析式</p>
+<p>语法：</p>
+<pre><code class="lang-Python">l = [expression <span class="hljs-keyword">for</span> expr1 <span class="hljs-keyword">in</span> sequence1 <span class="hljs-keyword">if</span> condition1
+                <span class="hljs-keyword">for</span> expr2 <span class="hljs-keyword">in</span> sequence2 <span class="hljs-keyword">if</span> condition2
+                ...
+                             <span class="hljs-keyword">for</span> exprN <span class="hljs-keyword">in</span> sequenceN <span class="hljs-keyword">if</span> conditionN]
+</code></pre>
+<p>举例1：</p>
+<pre><code class="lang-Python"><span class="hljs-prompt">&gt;&gt;&gt; </span>names = [<span class="hljs-string">' aa'</span>, <span class="hljs-string">'bbb '</span>, <span class="hljs-string">'ccc ddd '</span>, <span class="hljs-number">123</span>]
+<span class="hljs-prompt">&gt;&gt;&gt; </span>names = [i.strip() <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> name <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> isinstance(i, int)]
+<span class="hljs-prompt">&gt;&gt;&gt; </span>names
+[<span class="hljs-string">'aa'</span>, <span class="hljs-string">'bbb'</span>, <span class="hljs-string">'ccc ddd'</span>]
+</code></pre>
+<p>举例2：</p>
+<pre><code class="lang-Python">l = [[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>], [<span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>]]
+l1 = [i <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> l
+         <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> j]
+print(l1)
+[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>, <span class="hljs-number">13</span>]
+</code></pre>
+<p>1.12 列表的复制</p>
+<p><strong>深拷贝</strong>：（两个列表各有独立空间）</p>
+<ul>
+<li><p>使用切片 <code>[:]</code> 方法</p>
+<pre><code class="lang-Python">l1 = l[:]
+</code></pre>
+</li>
+<li><p>使用 <code>copy()</code> 方法</p>
+<pre><code class="lang-Python">l1 = l.copy()
+</code></pre>
+</li>
+</ul>
+<p><strong>浅拷贝：</strong></p>
+<p>直接使用列表名赋值，则会将两个列表关联起来（指向同一个地址）</p>
+<h2 id="2-元组">2. 元组</h2>
+<p>元组使用圆括号来标识，属于不可修改类型的数据。</p>
+<p>1.1 定义元组</p>
+<ul>
+<li>创建元组的方法</li>
+</ul>
+<pre><code class="lang-py">tup = ('a', 'b', 'c)
+</code></pre>
+<ul>
+<li>创造空元组</li>
+</ul>
+<pre><code class="lang-py">tup1 = ()
+</code></pre>
+<ul>
+<li>创造1个元素的元组</li>
+</ul>
+<pre><code class="lang-py">tup2 = (<span class="hljs-string">'a'</span>,)
+</code></pre>
+<blockquote>
+<p>❗ 创造1个元素的元组不能使用 <code>tup = ('a')</code>，否则就是创造了一个字符串 <code>'a'</code> ，要在后面加英文逗号 <code>,</code>。</p>
+</blockquote>
+<p>1.2 遍历元组</p>
+<pre><code class="lang-Python"><span class="hljs-comment"># 方法一</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> tup:
+  print(i)
+<span class="hljs-comment"># 方法二</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(tup)):
+  print(tup[i])
+</code></pre>
+<p>1.3 修改元组</p>
+<p>元组的元素是不能修改的，但是可以给元组重新赋值。</p>
+<h2 id="3-字典">3. 字典</h2>
+<p>3.1 定义</p>
+<p>字典被花括号 <code>{}</code> 包裹，由一对对的 <em>键值对</em> <code>key:value</code> 组成。</p>
+<p>3.2 创建字典的方法</p>
+<pre><code class="lang-py"><span class="hljs-comment"># 依次赋值</span>
+dict1[<span class="hljs-string">'aaa'</span>] = <span class="hljs-string">'bbb'</span>
+dict1[<span class="hljs-number">123</span>] = <span class="hljs-number">444</span>
+<span class="hljs-comment"># 直接赋值</span>
+dict2 = {
+    <span class="hljs-string">'name'</span>: <span class="hljs-string">'murphy'</span>,
+    <span class="hljs-string">'code'</span>: <span class="hljs-string">'Python'</span>,
+    <span class="hljs-string">'site'</span>: <span class="hljs-string">'https://github.com/KittenCN'</span>
+}
+<span class="hljs-comment"># 创建空字典</span>
+dict = {}
+</code></pre>
+<p>3.3 引用和修改字典</p>
+<pre><code class="lang-Python"><span class="hljs-prompt">&gt;&gt;&gt; </span>dict_name[key] <span class="hljs-comment"># 引用键值对</span>
+<span class="hljs-prompt">&gt;&gt;&gt; </span>dict_name[key] = value <span class="hljs-comment"># 修改键值对</span>
+<span class="hljs-prompt">&gt;&gt;&gt; </span><span class="hljs-keyword">del</span> dict_name[key] <span class="hljs-comment"># 删除键值对</span>
+</code></pre>
+<p>3.4 遍历字典</p>
+<p>方法一：</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> dict1:
+    print(<span class="hljs-string">'{0}: {1}'</span>.format(i, dict1[i]))
+</code></pre>
+<p>方法二：使用字典的 <code>items()</code> 方法</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> dict1:
+    print(<span class="hljs-string">'{0}: {1}'</span>.format(k, .v)
+</code></pre>
+<p>3.5 遍历字典的键</p>
+<p>方法一：</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> dict1:
+    print(k)
+</code></pre>
+<p>方法二：</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> dict1.keys():
+    print(k)
+</code></pre>
+<p>3.6 按顺序遍历字典的键
+使用 <code>sorted()</code> 函数对字典的键进行顺序遍历。</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> sorted(dict1.keys()):
+    print(k)
+</code></pre>
+<p>3.7 遍历字典的值
+使用 <code>values()</code> 方法遍历字典的值。</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> dict1.values():
+    print(v)
+</code></pre>
+<p>筛选出重复的值，使用 <code>set()</code> 方法。</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> set(dict1.values()):
+    print(v)
+</code></pre>
+<p>3.8 嵌套</p>
+<p>善用列表的 <code>items()</code> 、<code>keys()</code>, <code>values</code> 方法对嵌套型数据进行遍历操作。</p>
+<ul>
+<li><p>字典列表</p>
+<p>  在列表中存储列表，形成字典列表。</p>
+<pre><code class="lang-Python">  alien_0 = { ... }
+  alien_1 = { ... }
+  alien_2 = { ... }
+  aliens = [ alien_0, alien_1, alien_2 ]
+</code></pre>
+</li>
+<li><p>列表字典</p>
+<p>  在字典中存储列表，形成列表字典。</p>
+<pre><code class="lang-Python">  fruits_like = {
+      <span class="hljs-string">'Peter'</span>: [ <span class="hljs-string">'apple'</span>, <span class="hljs-string">'banana'</span> ],
+      <span class="hljs-string">'Jerry'</span>: [ <span class="hljs-string">'orrange'</span>, <span class="hljs-string">'banana'</span>, <span class="hljs-string">'watermelon'</span> ],
+      <span class="hljs-string">'Murphy'</span>: [<span class="hljs-string">'apple'</span>]
+  }
+</code></pre>
+</li>
+<li><p>字典型字典</p>
+<p>  在字典中存储字典，形成字典型字典</p>
+<pre><code class="lang-Python">  users = {
+      <span class="hljs-string">'murphy'</span>: {
+          <span class="hljs-string">'site'</span>: <span class="hljs-string">'https://github.com/KittenCN'</span>,
+          <span class="hljs-string">'location'</span>: <span class="hljs-string">'leiyang'</span>,
+          <span class="hljs-string">'time'</span>: <span class="hljs-number">2020</span>
+      },
+      <span class="hljs-string">'xpoet'</span>: {
+          <span class="hljs-string">'site'</span>: <span class="hljs-string">'https://xpoet.cn'</span>,
+          <span class="hljs-string">'location'</span>: <span class="hljs-string">'xxx'</span>,
+          <span class="hljs-string">'time'</span>: <span class="hljs-number">2018</span>
+      }
+  }
+</code></pre>
+</li>
+</ul>
+<h2 id="4-集合">4. 集合</h2>
+<h3 id="41-可变集合">4.1 可变集合</h3>
+<p>① 创建集合的两种方式：</p>
+<ul>
+<li>使用 <code>{}</code> 括起来<pre><code class="lang-Python">colors = {<span class="hljs-string">'red'</span>, <span class="hljs-string">'blue'</span>, <span class="hljs-string">'yellow'</span>, <span class="hljs-string">'green'</span>}
+</code></pre>
+</li>
+<li>使用 <code>set()</code> 创建<pre><code class="lang-Python">letters = set(<span class="hljs-string">'Python'</span>)
+</code></pre>
+</li>
+</ul>
+<p>② 构造空集合的方法</p>
+<pre><code class="lang-py">s = set()
+</code></pre>
+<p>③ 集合的成员测试和删除重复元素</p>
+<pre><code class="lang-py">s1 = {<span class="hljs-string">'google'</span>, <span class="hljs-string">'baidu'</span>, <span class="hljs-string">'zhihu'</span>, <span class="hljs-string">'douban'</span>, <span class="hljs-string">'google'</span>}
+<span class="hljs-comment"># 成员测试</span>
+<span class="hljs-keyword">if</span> <span class="hljs-string">'google'</span> <span class="hljs-keyword">in</span> s1:
+    print(<span class="hljs-string">'google is in'</span>, s1)
+<span class="hljs-keyword">else</span>:
+    print(<span class="hljs-string">'google is not in'</span>, s1)
+<span class="hljs-comment"># 删除重复元素</span>
+print(s1)
+</code></pre>
+<blockquote>
+<p>❗ 注意构造空集合不能使用 <code>s = {}</code> 的方法，这是在构造空字典。</p>
+</blockquote>
+<p>④ 集合间的运算</p>
+<pre><code class="lang-Python">a = {<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'e'</span>}
+b = {<span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'e'</span>, <span class="hljs-string">'f'</span>}
+print(a - b) <span class="hljs-comment"># 集合间的差集</span>
+print(a | b) <span class="hljs-comment"># 集合间的并集</span>
+print(a &amp; b) <span class="hljs-comment"># 集合间的交集</span>
+print(a ^ b) <span class="hljs-comment"># 集合间的不同时存在的元素的集合（对称差集）</span>
+</code></pre>
+<h3 id="42-不可变集合">4.2 不可变集合</h3>
+<p><code>frozenset()</code></p>
+<h2 id="5-推导式">5. 推导式</h2>
+<h3 id="51-列表推导式">5.1 列表推导式</h3>
+<h3 id="52-字典推导式">5.2 字典推导式</h3>
+<h3 id="53-集合推导式">5.3 集合推导式</h3>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch03.html" class="navigation navigation-prev " aria-label="Previous page: ch03. 玩转 Python 字符串">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch05.html" class="navigation navigation-next " aria-label="Next page: ch05. Python 的三种格式化输出方法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ch04. Python 序列结构","level":"1.1.4","depth":2,"next":{"title":"ch05. Python 的三种格式化输出方法","level":"1.1.5","depth":2,"path":"ch05.md","ref":"ch05.md","articles":[]},"previous":{"title":"ch03. 玩转 Python 字符串","level":"1.1.3","depth":2,"path":"ch03.md","ref":"ch03.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch04.md","mtime":"2025-04-20T02:13:02.373Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:34.729Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

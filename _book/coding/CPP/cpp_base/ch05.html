@@ -1,0 +1,513 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ch05. CPP 调试中输出代码所在文件、函数和行数的方法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch06.html" />
+    
+    
+    <link rel="prev" href="ch04.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    CPP 基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="ch00.html">
+            
+                <a href="ch00.html">
+            
+                    
+                    ch00. CPP 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    ch01. CPP 指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    ch02. CPP 函数指针与回调函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    ch03. CPP 结构体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    ch04. CPP 枚举和共用体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.6" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    ch05. CPP 调试中输出代码所在文件、函数和行数的方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    ch06. CPP 实现单向链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    ch07. CPP 模板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="ch08.html">
+            
+                <a href="ch08.html">
+            
+                    
+                    ch08. CPP 内存模型与名称空间
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="ch09.html">
+            
+                <a href="ch09.html">
+            
+                    
+                    ch09. CPP 大端小端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ch10.html">
+            
+                <a href="ch10.html">
+            
+                    
+                    ch10. CPP 基础入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="ch11.html">
+            
+                <a href="ch11.html">
+            
+                    
+                    ch11. CPP 学习笔记
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ch12.html">
+            
+                <a href="ch12.html">
+            
+                    
+                    ch12. CPP 核心编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="ch13.html">
+            
+                <a href="ch13.html">
+            
+                    
+                    ch13. CPP 深入理解
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ch05. CPP 调试中输出代码所在文件、函数和行数的方法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="c程序调试中输出代码所在文件、函数和行数的方法">C程序调试中输出代码所在文件、函数和行数的方法</h1>
+<p>我们在调试C程序代码，尤其是嵌入式系统开发过程中的时候，经常使用printf函数输出一些我们需要关注的变量和状态，以判断我们代码中存在的问题，比如我们在程序适当的位置添加打印输出：</p>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">funcdemo</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    ……
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"i = %d"</span>,i);
+}
+</code></pre>
+<p>这时候借助串口的输出信息我们就可以比较方便的判断是不是出问题，有没有正确执行。输出如下：</p>
+<blockquote>
+<p>i = 10</p>
+</blockquote>
+<p>但是当我们程序量非常大的时候，各种打印输出也非常多，这时候可能我们需要快速定位是哪个地方的输出，当然我们可以加一些定位的语句在printf中，或者直接搜索整个工程文件来定位。</p>
+<p>另外我们会有一个更加方便的方法来使用printf函数直接输出代码所在的文件和行数，需要用到以下两个c语言中的宏定义：</p>
+<ul>
+<li><strong>_<em>FILE_</em></strong> ：当前源文件名，表示字符串型常量</li>
+<li><strong>_<em>LINE_</em></strong>：当前程序行的行号，表示为十进制整型常量</li>
+<li><strong>_<em>func_</em></strong> ：当前函数名，仅GCC编译器支持</li>
+</ul>
+<p>以上是标准C语言预处理要求定义某些对象宏，每个预定义宏的名称一两个下划线字符开头和结尾，这些预定义宏不能被取消定义（#undef）或由编程人员重新定义。</p>
+<p>使用方法如下：</p>
+<pre><code class="lang-c"><span class="hljs-comment">//例如源文件的文件名demo.c</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">funcdemo</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    ……
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%s(%d) %s: i = %d"</span>, __FILE__, __LINE__,__func__,i); <span class="hljs-comment">//假如本行是从第一行开始数的第15行</span>
+}
+</code></pre>
+<p>这样，当程序运行到此处时，就会输出：</p>
+<blockquote>
+<p>c:\documents and settings\administrator\demo.c(15) funcdemo: i = 10</p>
+</blockquote>
+<p>如此一来就非常方便的定位到了代码所在位置，方便我们的调试。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch04.html" class="navigation navigation-prev " aria-label="Previous page: ch04. CPP 枚举和共用体">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch06.html" class="navigation navigation-next " aria-label="Next page: ch06. CPP 实现单向链表">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ch05. CPP 调试中输出代码所在文件、函数和行数的方法","level":"1.1.6","depth":2,"next":{"title":"ch06. CPP 实现单向链表","level":"1.1.7","depth":2,"path":"ch06.md","ref":"ch06.md","articles":[]},"previous":{"title":"ch04. CPP 枚举和共用体","level":"1.1.5","depth":2,"path":"ch04.md","ref":"ch04.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch05.md","mtime":"2024-01-02T01:39:35.790Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:23:31.082Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

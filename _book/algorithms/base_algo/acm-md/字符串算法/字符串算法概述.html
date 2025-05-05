@@ -1,0 +1,784 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>字符串算法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="字符串匹配.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="字符串算法概述.html">
+            
+                <a href="字符串算法概述.html">
+            
+                    
+                    字符串算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="字符串匹配.html">
+            
+                <a href="字符串匹配.html">
+            
+                    
+                    字符串匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="KMP算法.html">
+            
+                <a href="KMP算法.html">
+            
+                    
+                    KMP算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="字典树.html">
+            
+                <a href="字典树.html">
+            
+                    
+                    字典树(Trie)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >字符串算法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="字符串算法概述">字符串算法概述</h1>
+<h2 id="什么是字符串算法">什么是字符串算法</h2>
+<p>【字符串算法】是处理文本数据的一系列算法，主要关注如何高效地存储、搜索、比较和操作字符串。在算法竞赛和实际编程中，字符串处理是一类常见且重要的问题。</p>
+<h2 id="字符串算法的基本操作">字符串算法的基本操作</h2>
+<ol>
+<li><p><strong>字符串匹配</strong>：在文本中查找特定的模式串。</p>
+<ul>
+<li>朴素算法：O(n*m) 时间复杂度</li>
+<li>KMP算法：O(n+m) 时间复杂度</li>
+<li>Rabin-Karp算法：平均O(n+m)，最坏O(n*m)</li>
+<li>Boyer-Moore算法：平均情况下比KMP更快</li>
+</ul>
+</li>
+<li><p><strong>字符串处理</strong>：</p>
+<ul>
+<li>分割与合并</li>
+<li>替换与删除</li>
+<li>大小写转换</li>
+<li>子串提取</li>
+</ul>
+</li>
+<li><p><strong>字符串存储</strong>：</p>
+<ul>
+<li>字典树(Trie)</li>
+<li>后缀树与后缀数组</li>
+<li>哈希表</li>
+</ul>
+</li>
+</ol>
+<h2 id="常用字符串算法">常用字符串算法</h2>
+<h3 id="1-kmp算法">1. KMP算法</h3>
+<p>Knuth-Morris-Pratt算法是一种高效的字符串匹配算法，通过预处理模式串，避免了不必要的比较。</p>
+<p><strong>核心思想</strong>：利用已经匹配过的信息，避免回溯文本串的指针。</p>
+<p><strong>时间复杂度</strong>：O(n+m)，其中n和m分别是文本串和模式串的长度。</p>
+<p><strong>主要步骤</strong>：</p>
+<ol>
+<li>预处理模式串，计算next数组</li>
+<li>使用next数组指导匹配过程</li>
+</ol>
+<pre><code class="lang-cpp"><span class="hljs-comment">// KMP算法实现</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">computeLPS</span><span class="hljs-params">(<span class="hljs-built_in">string</span> pat, <span class="hljs-keyword">int</span>* lps)</span> </span>{
+    <span class="hljs-keyword">int</span> m = pat.length();
+    <span class="hljs-keyword">int</span> len = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 前缀长度</span>
+
+    lps[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;  <span class="hljs-comment">// lps[0]总是0</span>
+
+    <span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">while</span> (i &lt; m) {
+        <span class="hljs-keyword">if</span> (pat[i] == pat[len]) {
+            len++;
+            lps[i] = len;
+            i++;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">if</span> (len != <span class="hljs-number">0</span>) {
+                len = lps[len - <span class="hljs-number">1</span>];
+            } <span class="hljs-keyword">else</span> {
+                lps[i] = <span class="hljs-number">0</span>;
+                i++;
+            }
+        }
+    }
+}
+
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; KMP(<span class="hljs-built_in">string</span> txt, <span class="hljs-built_in">string</span> pat) {
+    <span class="hljs-keyword">int</span> n = txt.length();
+    <span class="hljs-keyword">int</span> m = pat.length();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; result;  <span class="hljs-comment">// 存储所有匹配位置</span>
+
+    <span class="hljs-comment">// 创建lps数组存储最长匹配前缀后缀值</span>
+    <span class="hljs-keyword">int</span> lps[m];
+    computeLPS(pat, lps);
+
+    <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;  <span class="hljs-comment">// txt的索引</span>
+    <span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>;  <span class="hljs-comment">// pat的索引</span>
+
+    <span class="hljs-keyword">while</span> (i &lt; n) {
+        <span class="hljs-comment">// 当前字符匹配</span>
+        <span class="hljs-keyword">if</span> (pat[j] == txt[i]) {
+            i++;
+            j++;
+        }
+
+        <span class="hljs-comment">// 找到完整匹配</span>
+        <span class="hljs-keyword">if</span> (j == m) {
+            result.push_back(i - j);  <span class="hljs-comment">// 记录匹配位置</span>
+            j = lps[j - <span class="hljs-number">1</span>];  <span class="hljs-comment">// 寻找下一个匹配</span>
+        }
+        <span class="hljs-comment">// 不匹配的情况</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i &lt; n &amp;&amp; pat[j] != txt[i]) {
+            <span class="hljs-keyword">if</span> (j != <span class="hljs-number">0</span>) {
+                j = lps[j - <span class="hljs-number">1</span>];
+            } <span class="hljs-keyword">else</span> {
+                i++;
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h3 id="2-字典树trie">2. 字典树(Trie)</h3>
+<p>字典树是一种树形数据结构，用于高效地存储和检索字符串集合。</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>根节点不包含字符</li>
+<li>每个节点包含多个子节点，对应不同的字符</li>
+<li>从根节点到某一节点的路径上的字符连接起来形成一个字符串</li>
+</ul>
+<p><strong>应用场景</strong>：</p>
+<ul>
+<li>前缀匹配</li>
+<li>自动补全</li>
+<li>字符串集合的快速查找</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 字典树实现</span>
+<span class="hljs-keyword">struct</span> TrieNode {
+    <span class="hljs-keyword">bool</span> isEndOfWord;  <span class="hljs-comment">// 标记该节点是否为某个单词的结尾</span>
+    TrieNode* children[<span class="hljs-number">26</span>];  <span class="hljs-comment">// 假设只包含小写英文字母</span>
+
+    TrieNode() {
+        isEndOfWord = <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">26</span>; i++) {
+            children[i] = <span class="hljs-literal">nullptr</span>;
+        }
+    }
+};
+
+<span class="hljs-keyword">class</span> Trie {
+<span class="hljs-keyword">private</span>:
+    TrieNode* root;
+
+<span class="hljs-keyword">public</span>:
+    Trie() {
+        root = <span class="hljs-keyword">new</span> TrieNode();
+    }
+
+    <span class="hljs-comment">// 插入单词</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-built_in">string</span> word)</span> </span>{
+        TrieNode* node = root;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : word) {
+            <span class="hljs-keyword">int</span> index = c - <span class="hljs-string">'a'</span>;
+            <span class="hljs-keyword">if</span> (!node-&gt;children[index]) {
+                node-&gt;children[index] = <span class="hljs-keyword">new</span> TrieNode();
+            }
+            node = node-&gt;children[index];
+        }
+        node-&gt;isEndOfWord = <span class="hljs-literal">true</span>;  <span class="hljs-comment">// 标记单词结尾</span>
+    }
+
+    <span class="hljs-comment">// 搜索单词</span>
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">search</span><span class="hljs-params">(<span class="hljs-built_in">string</span> word)</span> </span>{
+        TrieNode* node = root;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : word) {
+            <span class="hljs-keyword">int</span> index = c - <span class="hljs-string">'a'</span>;
+            <span class="hljs-keyword">if</span> (!node-&gt;children[index]) {
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;  <span class="hljs-comment">// 找不到对应字符</span>
+            }
+            node = node-&gt;children[index];
+        }
+        <span class="hljs-keyword">return</span> node-&gt;isEndOfWord;  <span class="hljs-comment">// 只有到达单词结尾才算找到</span>
+    }
+
+    <span class="hljs-comment">// 前缀搜索</span>
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(<span class="hljs-built_in">string</span> prefix)</span> </span>{
+        TrieNode* node = root;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : prefix) {
+            <span class="hljs-keyword">int</span> index = c - <span class="hljs-string">'a'</span>;
+            <span class="hljs-keyword">if</span> (!node-&gt;children[index]) {
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }
+            node = node-&gt;children[index];
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;  <span class="hljs-comment">// 只要能走完前缀就算找到</span>
+    }
+
+    <span class="hljs-comment">// 析构函数</span>
+    ~Trie() {
+        deleteTrie(root);
+    }
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-comment">// 递归删除树节点</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">deleteTrie</span><span class="hljs-params">(TrieNode* node)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">26</span>; i++) {
+            <span class="hljs-keyword">if</span> (node-&gt;children[i]) {
+                deleteTrie(node-&gt;children[i]);
+            }
+        }
+        <span class="hljs-keyword">delete</span> node;
+    }
+};
+</code></pre>
+<h3 id="3-rabin-karp算法">3. Rabin-Karp算法</h3>
+<p>Rabin-Karp算法使用哈希函数计算字符串的哈希值，通过比较哈希值来进行字符串匹配。</p>
+<p><strong>核心思想</strong>：</p>
+<ul>
+<li>计算模式串的哈希值</li>
+<li>计算文本串中每个长度为m的子串的哈希值</li>
+<li>比较哈希值，如果相同则进一步验证</li>
+</ul>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>平均时间复杂度：O(n+m)</li>
+<li>最坏时间复杂度：O(n*m)</li>
+<li>适合多模式串匹配</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-comment">// Rabin-Karp算法实现</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; rabinKarp(<span class="hljs-built_in">string</span> txt, <span class="hljs-built_in">string</span> pat) {
+    <span class="hljs-keyword">int</span> n = txt.length();
+    <span class="hljs-keyword">int</span> m = pat.length();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; result;
+
+    <span class="hljs-comment">// 基数，通常选择一个比字符集大小大的素数</span>
+    <span class="hljs-keyword">int</span> d = <span class="hljs-number">256</span>;
+    <span class="hljs-comment">// 一个大素数</span>
+    <span class="hljs-keyword">int</span> q = <span class="hljs-number">101</span>;
+
+    <span class="hljs-keyword">int</span> h = <span class="hljs-number">1</span>;
+    <span class="hljs-comment">// 计算 h = d^(m-1) % q</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m - <span class="hljs-number">1</span>; i++) {
+        h = (h * d) % q;
+    }
+
+    <span class="hljs-comment">// 计算模式串和文本串第一个窗口的哈希值</span>
+    <span class="hljs-keyword">int</span> p = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 模式串哈希值</span>
+    <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 文本串当前窗口的哈希值</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) {
+        p = (d * p + pat[i]) % q;
+        t = (d * t + txt[i]) % q;
+    }
+
+    <span class="hljs-comment">// 滑动窗口并比较</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n - m; i++) {
+        <span class="hljs-comment">// 如果哈希值相等，进一步比较字符</span>
+        <span class="hljs-keyword">if</span> (p == t) {
+            <span class="hljs-keyword">bool</span> match = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j++) {
+                <span class="hljs-keyword">if</span> (txt[i + j] != pat[j]) {
+                    match = <span class="hljs-literal">false</span>;
+                    <span class="hljs-keyword">break</span>;
+                }
+            }
+            <span class="hljs-keyword">if</span> (match) {
+                result.push_back(i);
+            }
+        }
+
+        <span class="hljs-comment">// 计算下一个窗口的哈希值</span>
+        <span class="hljs-keyword">if</span> (i &lt; n - m) {
+            t = (d * (t - txt[i] * h) + txt[i + m]) % q;
+            <span class="hljs-keyword">if</span> (t &lt; <span class="hljs-number">0</span>) {
+                t += q;
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h2 id="字符串算法优化技巧">字符串算法优化技巧</h2>
+<ol>
+<li><p><strong>字符串哈希</strong>：将字符串转换为整数，便于快速比较。</p>
+<ul>
+<li>常用哈希函数：h = (h * base + s[i]) % mod</li>
+<li>常见的base值：31, 131, 1331等</li>
+<li>常见的mod值：10^9+7, 10^9+9等</li>
+</ul>
+</li>
+<li><p><strong>位运算优化</strong>：利用位运算优化字符串处理。</p>
+<ul>
+<li>例如，用一个整数表示字符集，利用位操作进行字符集合运算</li>
+</ul>
+</li>
+<li><p><strong>滑动窗口</strong>：在需要连续处理子串的问题中使用滑动窗口技术。</p>
+<ul>
+<li>维护一个窗口，通过添加和删除元素更新窗口状态</li>
+</ul>
+</li>
+<li><p><strong>双指针技术</strong>：使用两个指针处理字符串。</p>
+<ul>
+<li>如对撞指针、快慢指针等</li>
+</ul>
+</li>
+</ol>
+<h2 id="常见字符串问题类型">常见字符串问题类型</h2>
+<ol>
+<li><p><strong>模式匹配</strong>：在文本中查找特定的模式串。</p>
+<ul>
+<li>精确匹配：KMP, Rabin-Karp等</li>
+<li>近似匹配：编辑距离，最长公共子序列等</li>
+</ul>
+</li>
+<li><p><strong>字符串统计</strong>：统计字符串中的特定字符或模式。</p>
+<ul>
+<li>字符频率统计</li>
+<li>最长重复子串</li>
+<li>最长回文子串</li>
+</ul>
+</li>
+<li><p><strong>字符串转换</strong>：将一个字符串转换为另一个字符串。</p>
+<ul>
+<li>编辑距离问题</li>
+<li>字符串压缩与解压</li>
+</ul>
+</li>
+<li><p><strong>字符串排序</strong>：特定条件下的字符串排序。</p>
+<ul>
+<li>字典序排序</li>
+<li>按特定条件排序</li>
+</ul>
+</li>
+</ol>
+<h2 id="典型例题分析">典型例题分析</h2>
+<h3 id="例题1：最长回文子串">例题1：最长回文子串</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// Manacher算法求最长回文子串</span>
+<span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">longestPalindrome</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>{
+    <span class="hljs-comment">// 预处理，在字符间插入特殊字符</span>
+    <span class="hljs-built_in">string</span> t = <span class="hljs-string">"$#"</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">char</span> c : s) {
+        t += c;
+        t += <span class="hljs-string">'#'</span>;
+    }
+    t += <span class="hljs-string">'@'</span>;
+
+    <span class="hljs-keyword">int</span> n = t.length();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; p(n, <span class="hljs-number">0</span>);  <span class="hljs-comment">// p[i]表示以i为中心的回文半径</span>
+
+    <span class="hljs-keyword">int</span> center = <span class="hljs-number">0</span>, maxRight = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> maxLen = <span class="hljs-number">0</span>, start = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n - <span class="hljs-number">1</span>; i++) {
+        <span class="hljs-comment">// 初始化p[i]</span>
+        <span class="hljs-keyword">if</span> (i &lt; maxRight) {
+            p[i] = min(p[<span class="hljs-number">2</span> * center - i], maxRight - i);
+        } <span class="hljs-keyword">else</span> {
+            p[i] = <span class="hljs-number">1</span>;
+        }
+
+        <span class="hljs-comment">// 中心扩展</span>
+        <span class="hljs-keyword">while</span> (t[i + p[i]] == t[i - p[i]]) {
+            p[i]++;
+        }
+
+        <span class="hljs-comment">// 更新maxRight</span>
+        <span class="hljs-keyword">if</span> (i + p[i] &gt; maxRight) {
+            center = i;
+            maxRight = i + p[i];
+        }
+
+        <span class="hljs-comment">// 更新最长回文子串</span>
+        <span class="hljs-keyword">if</span> (p[i] - <span class="hljs-number">1</span> &gt; maxLen) {
+            maxLen = p[i] - <span class="hljs-number">1</span>;
+            start = (i - p[i] + <span class="hljs-number">1</span>) / <span class="hljs-number">2</span>;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> s.substr(start, maxLen);
+}
+</code></pre>
+<h3 id="例题2：字符串哈希应用">例题2：字符串哈希应用</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 使用字符串哈希检查重复子串</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">hasRepeatingSubstring</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s, <span class="hljs-keyword">int</span> len)</span> </span>{
+    <span class="hljs-keyword">int</span> n = s.length();
+    <span class="hljs-keyword">if</span> (len * <span class="hljs-number">2</span> &gt; n) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;  <span class="hljs-comment">// 无法形成重复子串</span>
+
+    <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; hash_pos;
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> base = <span class="hljs-number">31</span>;
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> mod = <span class="hljs-number">1e9</span> + <span class="hljs-number">7</span>;
+
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> hash = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> power = <span class="hljs-number">1</span>;
+
+    <span class="hljs-comment">// 计算第一个窗口的哈希值</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++) {
+        hash = (hash * base + (s[i] - <span class="hljs-string">'a'</span> + <span class="hljs-number">1</span>)) % mod;
+        <span class="hljs-keyword">if</span> (i &lt; len - <span class="hljs-number">1</span>) {
+            power = (power * base) % mod;
+        }
+    }
+
+    hash_pos[hash].push_back(<span class="hljs-number">0</span>);
+
+    <span class="hljs-comment">// 滑动窗口计算后续哈希值</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n - len; i++) {
+        hash = (hash - (s[i - <span class="hljs-number">1</span>] - <span class="hljs-string">'a'</span> + <span class="hljs-number">1</span>) * power % mod + mod) % mod;
+        hash = (hash * base + (s[i + len - <span class="hljs-number">1</span>] - <span class="hljs-string">'a'</span> + <span class="hljs-number">1</span>)) % mod;
+
+        <span class="hljs-comment">// 检查哈希冲突</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> pos : hash_pos[hash]) {
+            <span class="hljs-keyword">bool</span> equal = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; len; j++) {
+                <span class="hljs-keyword">if</span> (s[pos + j] != s[i + j]) {
+                    equal = <span class="hljs-literal">false</span>;
+                    <span class="hljs-keyword">break</span>;
+                }
+            }
+            <span class="hljs-keyword">if</span> (equal) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;  <span class="hljs-comment">// 找到重复子串</span>
+        }
+
+        hash_pos[hash].push_back(i);
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+</code></pre>
+<h2 id="练习题推荐">练习题推荐</h2>
+<ol>
+<li><p><strong>字符串匹配</strong>：</p>
+<ul>
+<li><a href="http://poj.org/problem?id=3461" target="_blank">POJ 3461 - Oulipo</a> (KMP应用)</li>
+<li><a href="https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/" target="_blank">LeetCode 28 - Find the Index of the First Occurrence in a String</a></li>
+</ul>
+</li>
+<li><p><strong>字典树</strong>：</p>
+<ul>
+<li><a href="https://leetcode.com/problems/implement-trie-prefix-tree/" target="_blank">LeetCode 208 - Implement Trie</a></li>
+<li><a href="http://poj.org/problem?id=2001" target="_blank">POJ 2001 - Shortest Prefix</a></li>
+</ul>
+</li>
+<li><p><strong>回文串</strong>：</p>
+<ul>
+<li><a href="https://leetcode.com/problems/longest-palindromic-substring/" target="_blank">LeetCode 5 - Longest Palindromic Substring</a></li>
+<li><a href="https://leetcode.com/problems/palindromic-substrings/" target="_blank">LeetCode 647 - Palindromic Substrings</a></li>
+</ul>
+</li>
+<li><p><strong>字符串哈希</strong>：</p>
+<ul>
+<li><a href="https://leetcode.com/problems/repeated-dna-sequences/" target="_blank">LeetCode 187 - Repeated DNA Sequences</a></li>
+<li><a href="http://poj.org/problem?id=3974" target="_blank">POJ 3974 - Palindrome</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>字符串算法在竞赛编程和实际应用中都有广泛的用途。掌握KMP、字典树等核心算法，以及各种优化技巧，能够帮助我们高效处理各种字符串问题。在实践中，应根据问题特点选择合适的算法和数据结构，灵活运用各种技巧提高解题效率。</p>
+<p>在接下来的章节中，我们会更详细地介绍各种字符串算法及其应用场景。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="字符串匹配.html" class="navigation navigation-next " aria-label="Next page: 字符串匹配">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"字符串算法","level":"1.2","depth":1,"next":{"title":"字符串匹配","level":"1.2.1","depth":2,"path":"字符串匹配.md","ref":"字符串匹配.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"articles":[{"title":"字符串匹配","level":"1.2.1","depth":2,"path":"字符串匹配.md","ref":"字符串匹配.md","articles":[]},{"title":"KMP算法","level":"1.2.2","depth":2,"path":"KMP算法.md","ref":"KMP算法.md","articles":[]},{"title":"字典树(Trie)","level":"1.2.3","depth":2,"path":"字典树.md","ref":"字典树.md","articles":[]}],"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"字符串算法概述.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:23.368Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

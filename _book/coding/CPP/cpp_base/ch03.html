@@ -1,0 +1,826 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ch03. CPP 结构体 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch04.html" />
+    
+    
+    <link rel="prev" href="ch02.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    CPP 基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="ch00.html">
+            
+                <a href="ch00.html">
+            
+                    
+                    ch00. CPP 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    ch01. CPP 指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    ch02. CPP 函数指针与回调函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.4" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    ch03. CPP 结构体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    ch04. CPP 枚举和共用体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    ch05. CPP 调试中输出代码所在文件、函数和行数的方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    ch06. CPP 实现单向链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    ch07. CPP 模板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="ch08.html">
+            
+                <a href="ch08.html">
+            
+                    
+                    ch08. CPP 内存模型与名称空间
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="ch09.html">
+            
+                <a href="ch09.html">
+            
+                    
+                    ch09. CPP 大端小端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ch10.html">
+            
+                <a href="ch10.html">
+            
+                    
+                    ch10. CPP 基础入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="ch11.html">
+            
+                <a href="ch11.html">
+            
+                    
+                    ch11. CPP 学习笔记
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ch12.html">
+            
+                <a href="ch12.html">
+            
+                    
+                    ch12. CPP 核心编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="ch13.html">
+            
+                <a href="ch13.html">
+            
+                    
+                    ch13. CPP 深入理解
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ch03. CPP 结构体</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="c语言结构体">C语言结构体</h1>
+<p>[TOC]</p>
+<h2 id="c-结构体">C 结构体</h2>
+<p>C 数组允许定义可存储相同类型数据项的变量，<strong>结构</strong>是 C 编程中另一种用户自定义的可用的数据类型，它允许您存储不同类型的数据项。</p>
+<p>结构用于表示一条记录，假设您想要跟踪图书馆中书本的动态，您可能需要跟踪每本书的下列属性：</p>
+<ul>
+<li>Title</li>
+<li>Author</li>
+<li>Subject</li>
+<li>Book ID</li>
+</ul>
+<h3 id="定义结构">定义结构</h3>
+<p>为了定义结构，您必须使用 <strong>struct</strong> 语句。struct 语句定义了一个包含多个成员的新的数据类型，struct 语句的格式如下：</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> tag 
+{     
+    member-<span class="hljs-built_in">list</span>    
+    member-<span class="hljs-built_in">list</span>     
+    member-<span class="hljs-built_in">list</span>      
+    ... 
+} 
+variable-<span class="hljs-built_in">list</span> ;
+</code></pre>
+<p><strong>tag</strong> 是结构体标签。</p>
+<p><strong>member-list</strong> 是标准的变量定义，比如 int i; 或者 float f，或者其他有效的变量定义。</p>
+<p><strong>variable-list</strong> 结构变量，定义在结构的末尾，最后一个分号之前，您可以指定一个或多个结构变量。下面是声明 Book 结构的方式：</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> Books 
+{   
+    <span class="hljs-keyword">char</span>  title[<span class="hljs-number">50</span>];   
+    <span class="hljs-keyword">char</span>  author[<span class="hljs-number">50</span>];  
+    <span class="hljs-keyword">char</span>  subject[<span class="hljs-number">100</span>];   
+    <span class="hljs-keyword">int</span>   book_id; 
+} book;
+</code></pre>
+<p>在一般情况下，<strong>tag、member-list、variable-list</strong> 这 3 部分至少要出现 2 个。以下为实例：</p>
+<pre><code class="lang-c"><span class="hljs-comment">//此声明声明了拥有3个成员的结构体，分别为整型的a，字符型的b和双精度的c </span>
+<span class="hljs-comment">//同时又声明了结构体变量s1 </span>
+<span class="hljs-comment">//这个结构体并没有标明其标签 </span>
+<span class="hljs-keyword">struct</span>  {    
+    <span class="hljs-keyword">int</span> a;    
+    <span class="hljs-keyword">char</span> b;    
+    <span class="hljs-keyword">double</span> c; 
+} s1;  
+<span class="hljs-comment">//此声明声明了拥有3个成员的结构体，分别为整型的a，字符型的b和双精度的c </span>
+<span class="hljs-comment">//结构体的标签被命名为SIMPLE,没有声明变量 </span>
+<span class="hljs-keyword">struct</span> SIMPLE {    
+    <span class="hljs-keyword">int</span> a;    
+    <span class="hljs-keyword">char</span> b;    
+    <span class="hljs-keyword">double</span> c; 
+}; 
+<span class="hljs-comment">//用SIMPLE标签的结构体，另外声明了变量t1、t2、t3 </span>
+<span class="hljs-keyword">struct</span> SIMPLE t1, t2[<span class="hljs-number">20</span>], *t3;  
+<span class="hljs-comment">//也可以用typedef创建新类型 </span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> {    
+    <span class="hljs-keyword">int</span> a;    
+    <span class="hljs-keyword">char</span> b;    
+    <span class="hljs-keyword">double</span> c;  
+} Simple2; 
+<span class="hljs-comment">//现在可以用Simple2作为类型声明新的结构体变量 </span>
+Simple2 u1, u2[<span class="hljs-number">20</span>], *u3;
+</code></pre>
+<p>在上面的声明中，第一个和第二声明被编译器当作两个完全不同的类型，即使他们的成员列表是一样的，如果令 t3=&amp;s1，则是非法的。</p>
+<p>结构体的成员可以包含其他结构体，也可以包含指向自己结构体类型的指针，而通常这种指针的应用是为了实现一些更高级的数据结构如链表和树等。</p>
+<pre><code class="lang-c"><span class="hljs-comment">//此结构体的声明包含了其他的结构体 </span>
+<span class="hljs-keyword">struct</span> COMPLEX {   
+    <span class="hljs-keyword">char</span> <span class="hljs-built_in">string</span>[<span class="hljs-number">100</span>];    
+    <span class="hljs-keyword">struct</span> SIMPLE a;
+};  
+<span class="hljs-comment">//此结构体的声明包含了指向自己类型的指针 </span>
+<span class="hljs-keyword">struct</span> NODE {    
+    <span class="hljs-keyword">char</span> <span class="hljs-built_in">string</span>[<span class="hljs-number">100</span>];    
+    <span class="hljs-keyword">struct</span> NODE *next_node; 
+};
+</code></pre>
+<p>如果两个结构体互相包含，则需要对其中一个结构体进行不完整声明，如下所示：</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> B;    <span class="hljs-comment">//对结构体B进行不完整声明  </span>
+<span class="hljs-comment">//结构体A中包含指向结构体B的指针 </span>
+<span class="hljs-keyword">struct</span> A 
+{    
+    <span class="hljs-keyword">struct</span> B *partner;    
+<span class="hljs-comment">//other members; </span>
+};  
+<span class="hljs-comment">//结构体B中包含指向结构体A的指针，在A声明完后，B也随之进行声明 </span>
+<span class="hljs-keyword">struct</span> B {    
+    <span class="hljs-keyword">struct</span> A *partner;    
+<span class="hljs-comment">//other members; </span>
+};
+</code></pre>
+<h3 id="结构体变量的初始化">结构体变量的初始化</h3>
+<p>和其它类型变量一样，对结构体变量可以在定义时指定初始值。</p>
+<pre><code class="lang-c"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span>  </span>
+<span class="hljs-keyword">struct</span> Books {   
+<span class="hljs-keyword">char</span>  title[<span class="hljs-number">50</span>];   
+<span class="hljs-keyword">char</span>  author[<span class="hljs-number">50</span>];   
+<span class="hljs-keyword">char</span>  subject[<span class="hljs-number">100</span>];   
+<span class="hljs-keyword">int</span>   book_id; 
+} book = {<span class="hljs-string">"C 语言"</span>, <span class="hljs-string">"RUNOOB"</span>, <span class="hljs-string">"编程语言"</span>, <span class="hljs-number">123456</span>};  
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> 
+</span>{    
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">"title : %s\nauthor: %s\nsubject: %s\nbook_id: %d\n"</span>, book.title, book.author, book.subject, book.book_id); 
+}
+</code></pre>
+<p>执行输出结果为：</p>
+<pre><code class="lang-c">title : C 语言
+author: RUNOOB
+subject: 编程语言
+book_id: <span class="hljs-number">123456</span>
+</code></pre>
+<h3 id="访问结构成员">访问结构成员</h3>
+<p>为了访问结构的成员，我们使用<strong>成员访问运算符（.）</strong>。成员访问运算符是结构变量名称和我们要访问的结构成员之间的一个句号。您可以使用 <strong>struct</strong> 关键字来定义结构类型的变量。下面的实例演示了结构的用法：</p>
+<pre><code class="lang-c"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span> </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span>  </span>
+<span class="hljs-keyword">struct</span> Books {   
+    <span class="hljs-keyword">char</span>  title[<span class="hljs-number">50</span>];   
+    <span class="hljs-keyword">char</span>  author[<span class="hljs-number">50</span>];   
+    <span class="hljs-keyword">char</span>  subject[<span class="hljs-number">100</span>];   
+    <span class="hljs-keyword">int</span>   book_id; 
+};  
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">( )</span> 
+</span>{   
+    <span class="hljs-keyword">struct</span> Books Book1;        <span class="hljs-comment">/* 声明 Book1，类型为 Books */</span>   
+    <span class="hljs-keyword">struct</span> Books Book2;        <span class="hljs-comment">/* 声明 Book2，类型为 Books */</span>    
+    <span class="hljs-comment">/* Book1 详述 */</span>   
+    <span class="hljs-built_in">strcpy</span>( Book1.title, <span class="hljs-string">"C Programming"</span>);   
+    <span class="hljs-built_in">strcpy</span>( Book1.author, <span class="hljs-string">"Nuha Ali"</span>);    
+    <span class="hljs-built_in">strcpy</span>( Book1.subject, <span class="hljs-string">"C Programming Tutorial"</span>);   
+    Book1.book_id = <span class="hljs-number">6495407</span>;    
+    <span class="hljs-comment">/* Book2 详述 */</span>   
+    <span class="hljs-built_in">strcpy</span>( Book2.title, <span class="hljs-string">"Telecom Billing"</span>);   
+    <span class="hljs-built_in">strcpy</span>( Book2.author, <span class="hljs-string">"Zara Ali"</span>);   
+    <span class="hljs-built_in">strcpy</span>( Book2.subject, <span class="hljs-string">"Telecom Billing Tutorial"</span>);   
+    Book2.book_id = <span class="hljs-number">6495700</span>;    
+    <span class="hljs-comment">/* 输出 Book1 信息 */</span>   
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book 1 title : %s\n"</span>, Book1.title);   
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book 1 author : %s\n"</span>, Book1.author);   
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book 1 subject : %s\n"</span>, Book1.subject);   
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book 1 book_id : %d\n"</span>, Book1.book_id);    
+    <span class="hljs-comment">/* 输出 Book2 信息 */</span>   
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book 2 title : %s\n"</span>, Book2.title);   
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book 2 author : %s\n"</span>, Book2.author);   
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book 2 subject : %s\n"</span>, Book2.subject);   
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book 2 book_id : %d\n"</span>, Book2.book_id);    
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; 
+}
+</code></pre>
+<p>当上面的代码被编译和执行时，它会产生下列结果：</p>
+<pre><code class="lang-c">Book <span class="hljs-number">1</span> title : C Programming
+Book <span class="hljs-number">1</span> author : Nuha Ali
+Book <span class="hljs-number">1</span> subject : C Programming Tutorial
+Book <span class="hljs-number">1</span> book_id : <span class="hljs-number">6495407</span>
+Book <span class="hljs-number">2</span> title : Telecom Billing
+Book <span class="hljs-number">2</span> author : Zara Ali
+Book <span class="hljs-number">2</span> subject : Telecom Billing Tutorial
+Book <span class="hljs-number">2</span> book_id : <span class="hljs-number">6495700</span>
+</code></pre>
+<h3 id="结构作为函数参数">结构作为函数参数</h3>
+<p>您可以把结构作为函数参数，传参方式与其他类型的变量或指针类似。您可以使用上面实例中的方式来访问结构变量：</p>
+<pre><code class="lang-c"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span>  </span>
+<span class="hljs-keyword">struct</span> Books {   
+    <span class="hljs-keyword">char</span>  title[<span class="hljs-number">50</span>];   
+    <span class="hljs-keyword">char</span>  author[<span class="hljs-number">50</span>];   
+    <span class="hljs-keyword">char</span>  subject[<span class="hljs-number">100</span>];   
+    <span class="hljs-keyword">int</span>   book_id; };  
+<span class="hljs-comment">/* 函数声明 */</span> 
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printBook</span><span class="hljs-params">( <span class="hljs-keyword">struct</span> Books book )</span></span>; 
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">( )</span> 
+</span>{   
+    <span class="hljs-keyword">struct</span> Books Book1;        <span class="hljs-comment">/* 声明 Book1，类型为 Books */</span>   
+    <span class="hljs-keyword">struct</span> Books Book2;        <span class="hljs-comment">/* 声明 Book2，类型为 Books */</span>    
+<span class="hljs-comment">/* Book1 详述 */</span>   
+    <span class="hljs-built_in">strcpy</span>( Book1.title, <span class="hljs-string">"C Programming"</span>);   
+    <span class="hljs-built_in">strcpy</span>( Book1.author, <span class="hljs-string">"Nuha Ali"</span>);    
+    <span class="hljs-built_in">strcpy</span>( Book1.subject, <span class="hljs-string">"C Programming Tutorial"</span>);   
+    Book1.book_id = <span class="hljs-number">6495407</span>;    
+<span class="hljs-comment">/* Book2 详述 */</span>   
+    <span class="hljs-built_in">strcpy</span>( Book2.title, <span class="hljs-string">"Telecom Billing"</span>);   
+    <span class="hljs-built_in">strcpy</span>( Book2.author, <span class="hljs-string">"Zara Ali"</span>);   
+    <span class="hljs-built_in">strcpy</span>( Book2.subject, <span class="hljs-string">"Telecom Billing Tutorial"</span>);   
+    Book2.book_id = <span class="hljs-number">6495700</span>;    
+<span class="hljs-comment">/* 输出 Book1 信息 */</span>  
+    printBook( Book1 );    
+<span class="hljs-comment">/* 输出 Book2 信息 */</span>   
+    printBook( Book2 );    
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; 
+} 
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printBook</span><span class="hljs-params">( <span class="hljs-keyword">struct</span> Books book )</span> 
+</span>{   
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book title : %s\n"</span>, book.title);   
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book author : %s\n"</span>, book.author);  
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book subject : %s\n"</span>, book.subject);  
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book book_id : %d\n"</span>, book.book_id); 
+}
+</code></pre>
+<p>当上面的代码被编译和执行时，它会产生下列结果：</p>
+<pre><code class="lang-c">Book title : C Programming
+Book author : Nuha Ali
+Book subject : C Programming Tutorial
+Book book_id : <span class="hljs-number">6495407</span>
+Book title : Telecom Billing
+Book author : Zara Ali
+Book subject : Telecom Billing Tutorial
+Book book_id : <span class="hljs-number">6495700</span>
+</code></pre>
+<h3 id="指向结构的指针">指向结构的指针</h3>
+<p>您可以定义指向结构的指针，方式与定义指向其他类型变量的指针相似，如下所示：</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> Books *struct_pointer;
+</code></pre>
+<p>现在，您可以在上述定义的指针变量中存储结构变量的地址。为了查找结构变量的地址，请把 &amp; 运算符放在结构名称的前面，如下所示：</p>
+<pre><code class="lang-c">struct_pointer = &amp;Book1;
+</code></pre>
+<p>为了使用指向该结构的指针访问结构的成员，您必须使用 -&gt; 运算符，如下所示：</p>
+<pre><code class="lang-c">struct_pointer-&gt;title;
+</code></pre>
+<p>让我们使用结构指针来重写上面的实例，这将有助于您理解结构指针的概念：</p>
+<pre><code class="lang-c"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span> </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span>  </span>
+<span class="hljs-keyword">struct</span> Books {   
+    <span class="hljs-keyword">char</span>  title[<span class="hljs-number">50</span>];   
+    <span class="hljs-keyword">char</span>  author[<span class="hljs-number">50</span>];   
+    <span class="hljs-keyword">char</span>  subject[<span class="hljs-number">100</span>];   
+    <span class="hljs-keyword">int</span>   book_id; 
+};  
+<span class="hljs-comment">/* 函数声明 */</span> 
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printBook</span><span class="hljs-params">( <span class="hljs-keyword">struct</span> Books *book )</span></span>; 
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">( )</span> 
+</span>{   
+    <span class="hljs-keyword">struct</span> Books Book1;        <span class="hljs-comment">/* 声明 Book1，类型为 Books */</span>   
+    <span class="hljs-keyword">struct</span> Books Book2;        <span class="hljs-comment">/* 声明 Book2，类型为 Books */</span>    
+    <span class="hljs-comment">/* Book1 详述 */</span>   
+    <span class="hljs-built_in">strcpy</span>( Book1.title, <span class="hljs-string">"C Programming"</span>);   
+    <span class="hljs-built_in">strcpy</span>( Book1.author, <span class="hljs-string">"Nuha Ali"</span>);    
+    <span class="hljs-built_in">strcpy</span>( Book1.subject, <span class="hljs-string">"C Programming Tutorial"</span>);   
+    Book1.book_id = <span class="hljs-number">6495407</span>;    
+    <span class="hljs-comment">/* Book2 详述 */</span>   
+    <span class="hljs-built_in">strcpy</span>( Book2.title, <span class="hljs-string">"Telecom Billing"</span>);   
+    <span class="hljs-built_in">strcpy</span>( Book2.author, <span class="hljs-string">"Zara Ali"</span>);  
+    <span class="hljs-built_in">strcpy</span>( Book2.subject, <span class="hljs-string">"Telecom Billing Tutorial"</span>);   
+    Book2.book_id = <span class="hljs-number">6495700</span>;    <span class="hljs-comment">/* 通过传 Book1 的地址来输出 Book1 信息 */</span>         printBook( &amp;Book1 );    <span class="hljs-comment">/* 通过传 Book2 的地址来输出 Book2 信息 */</span>       printBook( &amp;Book2 );    
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; 
+} 
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printBook</span><span class="hljs-params">( <span class="hljs-keyword">struct</span> Books *book )</span> 
+</span>{   
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book title : %s\n"</span>, book-&gt;title);   
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book author : %s\n"</span>, book-&gt;author);  
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book subject : %s\n"</span>, book-&gt;subject);  
+    <span class="hljs-built_in">printf</span>( <span class="hljs-string">"Book book_id : %d\n"</span>, book-&gt;book_id); 
+}
+</code></pre>
+<p>当上面的代码被编译和执行时，它会产生下列结果：</p>
+<pre><code class="lang-c">Book title : C Programming
+Book author : Nuha Ali
+Book subject : C Programming Tutorial
+Book book_id : <span class="hljs-number">6495407</span>
+Book title : Telecom Billing
+Book author : Zara Ali
+Book subject : Telecom Billing Tutorial
+Book book_id : <span class="hljs-number">6495700</span>
+</code></pre>
+<h3 id="位域">位域</h3>
+<p>有些信息在存储时，并不需要占用一个完整的字节，而只需占几个或一个二进制位。例如在存放一个开关量时，只有 0 和 1 两种状态，用 1 位二进位即可。为了节省存储空间，并使处理简便，C 语言又提供了一种数据结构，称为"位域"或"位段"。</p>
+<p>所谓"位域"是把一个字节中的二进位划分为几个不同的区域，并说明每个区域的位数。每个域有一个域名，允许在程序中按域名进行操作。这样就可以把几个不同的对象用一个字节的二进制位域来表示。</p>
+<p>典型的实例：</p>
+<ul>
+<li>用 1 位二进位存放一个开关量时，只有 0 和 1 两种状态。</li>
+<li>读取外部文件格式——可以读取非标准的文件格式。例如：9 位的整数。</li>
+</ul>
+<h4 id="位域的定义和位域变量的说明">位域的定义和位域变量的说明</h4>
+<p>位域定义与结构定义相仿，其形式为：</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> 位域结构名 
+{
+
+ 位域列表
+
+};
+</code></pre>
+<p>其中位域列表的形式为：</p>
+<pre><code class="lang-c">类型说明符 位域名: 位域长度
+</code></pre>
+<p>例如：</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> bs{    
+    <span class="hljs-keyword">int</span> a:<span class="hljs-number">8</span>;    
+    <span class="hljs-keyword">int</span> b:<span class="hljs-number">2</span>;    
+    <span class="hljs-keyword">int</span> c:<span class="hljs-number">6</span>; 
+}data;
+</code></pre>
+<p>说明 data 为 bs 变量，共占两个字节。其中位域 a 占 8 位，位域 b 占 2 位，位域 c 占 6 位。</p>
+<p>让我们再来看一个实例：</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> packed_struct {  
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> f1:<span class="hljs-number">1</span>;  
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> f2:<span class="hljs-number">1</span>;  
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> f3:<span class="hljs-number">1</span>;  
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> f4:<span class="hljs-number">1</span>;  
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> type:<span class="hljs-number">4</span>;  
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> my_int:<span class="hljs-number">9</span>; 
+} pack;
+</code></pre>
+<p>在这里，packed_struct 包含了 6 个成员：四个 1 位的标识符 f1..f4、一个 4 位的 type 和一个 9 位的 my_int。</p>
+<p><strong>对于位域的定义尚有以下几点说明：</strong></p>
+<ul>
+<li><p>一个位域存储在同一个字节中，如一个字节所剩空间不够存放另一位域时，则会从下一单元起存放该位域。也可以有意使某位域从下一单元开始。例如：</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> bs{   
+  <span class="hljs-keyword">unsigned</span> a:<span class="hljs-number">4</span>;   
+  <span class="hljs-keyword">unsigned</span>  :<span class="hljs-number">4</span>;    <span class="hljs-comment">/* 空域 */</span>    
+  <span class="hljs-keyword">unsigned</span> b:<span class="hljs-number">4</span>;    <span class="hljs-comment">/* 从下一单元开始存放 */</span>    
+  <span class="hljs-keyword">unsigned</span> c:<span class="hljs-number">4</span> 
+}
+</code></pre>
+<p>在这个位域定义中，a 占第一字节的 4 位，后 4 位填 0 表示不使用，b 从第二字节开始，占用 4 位，c 占用 4 位。</p>
+</li>
+<li><p><strong>由于位域不允许跨两个字节，因此位域的长度不能大于一个字节的长度，也就是说不能超过8位二进位。</strong>如果最大长度大于计算机的整数字长，一些编译器可能会允许域的内存重叠，另外一些编译器可能会把大于一个域的部分存储在下一个字中。</p>
+</li>
+<li><p>位域可以是无名位域，这时它只用来作填充或调整位置。无名的位域是不能使用的。例如：</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> k{    
+  <span class="hljs-keyword">int</span> a:<span class="hljs-number">1</span>;    
+  <span class="hljs-keyword">int</span>  :<span class="hljs-number">2</span>;    <span class="hljs-comment">/* 该 2 位不能使用 */</span>    
+  <span class="hljs-keyword">int</span> b:<span class="hljs-number">3</span>;    
+  <span class="hljs-keyword">int</span> c:<span class="hljs-number">2</span>; 
+};
+</code></pre>
+<p>从以上分析可以看出，位域在本质上就是一种结构类型，不过其成员是按二进位分配的。</p>
+</li>
+</ul>
+<h4 id="位域的使用">位域的使用</h4>
+<p>位域的使用和结构成员的使用相同，其一般形式为：</p>
+<pre><code class="lang-c">位域变量名.位域名
+位域变量名-&gt;位域名
+</code></pre>
+<p>位域允许用各种格式输出。</p>
+<p>请看下面的实例：</p>
+<pre><code class="lang-c">main()
+{    
+<span class="hljs-keyword">struct</span> bs{        
+    <span class="hljs-keyword">unsigned</span> a:<span class="hljs-number">1</span>;       
+    <span class="hljs-keyword">unsigned</span> b:<span class="hljs-number">3</span>;       
+    <span class="hljs-keyword">unsigned</span> c:<span class="hljs-number">4</span>;   
+} bit,*pbit;    
+    bit.a=<span class="hljs-number">1</span>;    <span class="hljs-comment">/* 给位域赋值（应注意赋值不能超过该位域的允许范围） */</span>   
+    bit.b=<span class="hljs-number">7</span>;    <span class="hljs-comment">/* 给位域赋值（应注意赋值不能超过该位域的允许范围） */</span>    
+    bit.c=<span class="hljs-number">15</span>;    <span class="hljs-comment">/* 给位域赋值（应注意赋值不能超过该位域的允许范围） */</span>                                                    
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d,%d,%d\n"</span>,bit.a,bit.b,bit.c);    <span class="hljs-comment">/* 以整型量格式输出三个域的内容 */</span>    
+    pbit=&amp;bit;    <span class="hljs-comment">/* 把位域变量 bit 的地址送给指针变量 pbit */</span>    
+    pbit-&gt;a=<span class="hljs-number">0</span>;    <span class="hljs-comment">/* 用指针方式给位域 a 重新赋值，赋为 0 */</span>    
+    pbit-&gt;b&amp;=<span class="hljs-number">3</span>;    <span class="hljs-comment">/* 使用了复合的位运算符 "&amp;="，相当于：pbit-&gt;b=pbit-&gt;b&amp;3，位域 b 中原有值为 7，与 3 作按位与运算的结果为 3（111&amp;011=011，十进制值为 3） */</span>        
+    pbit-&gt;c|=<span class="hljs-number">1</span>;    <span class="hljs-comment">/* 使用了复合位运算符"|="，相当于：pbit-&gt;c=pbit-&gt;c|1，其结果为 15 */</span>    
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d,%d,%d\n"</span>,pbit-&gt;a,pbit-&gt;b,pbit-&gt;c);    <span class="hljs-comment">/* 用指针方式输出了这三个域的值 */</span> 
+}
+</code></pre>
+<p>上例程序中定义了位域结构 bs，三个位域为 a、b、c。说明了 bs 类型的变量 bit 和指向 bs 类型的指针变量 pbit。这表示位域也是可以使用指针的。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch02.html" class="navigation navigation-prev " aria-label="Previous page: ch02. CPP 函数指针与回调函数">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch04.html" class="navigation navigation-next " aria-label="Next page: ch04. CPP 枚举和共用体">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ch03. CPP 结构体","level":"1.1.4","depth":2,"next":{"title":"ch04. CPP 枚举和共用体","level":"1.1.5","depth":2,"path":"ch04.md","ref":"ch04.md","articles":[]},"previous":{"title":"ch02. CPP 函数指针与回调函数","level":"1.1.3","depth":2,"path":"ch02.md","ref":"ch02.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch03.md","mtime":"2024-01-02T01:39:03.615Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:23:31.082Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

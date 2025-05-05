@@ -1,0 +1,2460 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>哈希冲突 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="hash_algorithm.html" />
+    
+    
+    <link rel="prev" href="hash_map.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href="../.." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Hello 算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1.1" data-path="../chapter_preface/about_the_book.html">
+            
+                <a href="../chapter_preface/about_the_book.html">
+            
+                    
+                    关于本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.1.2" data-path="../chapter_preface/suggestions.html">
+            
+                <a href="../chapter_preface/suggestions.html">
+            
+                    
+                    如何使用本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.1.3" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    初识算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.2.1" data-path="../chapter_introduction/algorithms_are_everywhere.html">
+            
+                <a href="../chapter_introduction/algorithms_are_everywhere.html">
+            
+                    
+                    算法无处不在
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2.2" data-path="../chapter_introduction/what_is_dsa.html">
+            
+                <a href="../chapter_introduction/what_is_dsa.html">
+            
+                    
+                    算法是什么
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2.3" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="../chapter_computational_complexity/">
+            
+                <a href="../chapter_computational_complexity/">
+            
+                    
+                    复杂度分析
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.3.1" data-path="../chapter_computational_complexity/performance_evaluation.html">
+            
+                <a href="../chapter_computational_complexity/performance_evaluation.html">
+            
+                    
+                    算法效率评估
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.2" data-path="../chapter_computational_complexity/iteration_and_recursion.html">
+            
+                <a href="../chapter_computational_complexity/iteration_and_recursion.html">
+            
+                    
+                    迭代与递归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.3" data-path="../chapter_computational_complexity/time_complexity.html">
+            
+                <a href="../chapter_computational_complexity/time_complexity.html">
+            
+                    
+                    时间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.4" data-path="../chapter_computational_complexity/space_complexity.html">
+            
+                <a href="../chapter_computational_complexity/space_complexity.html">
+            
+                    
+                    空间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.5" data-path="../chapter_computational_complexity/">
+            
+                <a href="../chapter_computational_complexity/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="../chapter_data_structure/">
+            
+                <a href="../chapter_data_structure/">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.4.1" data-path="../chapter_data_structure/classification_of_data_structure.html">
+            
+                <a href="../chapter_data_structure/classification_of_data_structure.html">
+            
+                    
+                    数据结构分类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.2" data-path="../chapter_data_structure/basic_data_types.html">
+            
+                <a href="../chapter_data_structure/basic_data_types.html">
+            
+                    
+                    基本数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.3" data-path="../chapter_data_structure/number_encoding.html">
+            
+                <a href="../chapter_data_structure/number_encoding.html">
+            
+                    
+                    数字编码 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.4" data-path="../chapter_data_structure/character_encoding.html">
+            
+                <a href="../chapter_data_structure/character_encoding.html">
+            
+                    
+                    字符编码 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.5" data-path="../chapter_data_structure/">
+            
+                <a href="../chapter_data_structure/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="../chapter_array_and_linkedlist/">
+            
+                <a href="../chapter_array_and_linkedlist/">
+            
+                    
+                    数组与链表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.5.1" data-path="../chapter_array_and_linkedlist/array.html">
+            
+                <a href="../chapter_array_and_linkedlist/array.html">
+            
+                    
+                    数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.2" data-path="../chapter_array_and_linkedlist/linked_list.html">
+            
+                <a href="../chapter_array_and_linkedlist/linked_list.html">
+            
+                    
+                    链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.3" data-path="../chapter_array_and_linkedlist/list.html">
+            
+                <a href="../chapter_array_and_linkedlist/list.html">
+            
+                    
+                    列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.4" data-path="../chapter_array_and_linkedlist/ram_and_cache.html">
+            
+                <a href="../chapter_array_and_linkedlist/ram_and_cache.html">
+            
+                    
+                    内存与缓存 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.5" data-path="../chapter_array_and_linkedlist/">
+            
+                <a href="../chapter_array_and_linkedlist/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="../chapter_stack_and_queue/">
+            
+                <a href="../chapter_stack_and_queue/">
+            
+                    
+                    栈与队列
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.6.1" data-path="../chapter_stack_and_queue/stack.html">
+            
+                <a href="../chapter_stack_and_queue/stack.html">
+            
+                    
+                    栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.2" data-path="../chapter_stack_and_queue/queue.html">
+            
+                <a href="../chapter_stack_and_queue/queue.html">
+            
+                    
+                    队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.3" data-path="../chapter_stack_and_queue/deque.html">
+            
+                <a href="../chapter_stack_and_queue/deque.html">
+            
+                    
+                    双向队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.4" data-path="../chapter_stack_and_queue/">
+            
+                <a href="../chapter_stack_and_queue/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    哈希表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.7.1" data-path="hash_map.html">
+            
+                <a href="hash_map.html">
+            
+                    
+                    哈希表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.7.2" data-path="hash_collision.html">
+            
+                <a href="hash_collision.html">
+            
+                    
+                    哈希冲突
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.3" data-path="hash_algorithm.html">
+            
+                <a href="hash_algorithm.html">
+            
+                    
+                    哈希算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="../chapter_tree/">
+            
+                <a href="../chapter_tree/">
+            
+                    
+                    树
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.8.1" data-path="../chapter_tree/binary_tree.html">
+            
+                <a href="../chapter_tree/binary_tree.html">
+            
+                    
+                    二叉树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.2" data-path="../chapter_tree/binary_tree_traversal.html">
+            
+                <a href="../chapter_tree/binary_tree_traversal.html">
+            
+                    
+                    二叉树遍历
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.3" data-path="../chapter_tree/array_representation_of_tree.html">
+            
+                <a href="../chapter_tree/array_representation_of_tree.html">
+            
+                    
+                    二叉树数组表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.4" data-path="../chapter_tree/binary_search_tree.html">
+            
+                <a href="../chapter_tree/binary_search_tree.html">
+            
+                    
+                    二叉搜索树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.5" data-path="../chapter_tree/avl_tree.html">
+            
+                <a href="../chapter_tree/avl_tree.html">
+            
+                    
+                    AVL 树 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.6" data-path="../chapter_tree/">
+            
+                <a href="../chapter_tree/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="../chapter_heap/">
+            
+                <a href="../chapter_heap/">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.9.1" data-path="../chapter_heap/heap.html">
+            
+                <a href="../chapter_heap/heap.html">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.2" data-path="../chapter_heap/build_heap.html">
+            
+                <a href="../chapter_heap/build_heap.html">
+            
+                    
+                    建堆操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.3" data-path="../chapter_heap/top_k.html">
+            
+                <a href="../chapter_heap/top_k.html">
+            
+                    
+                    Top-k 问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.4" data-path="../chapter_heap/">
+            
+                <a href="../chapter_heap/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="../chapter_graph/">
+            
+                <a href="../chapter_graph/">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.10.1" data-path="../chapter_graph/graph.html">
+            
+                <a href="../chapter_graph/graph.html">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.2" data-path="../chapter_graph/graph_operations.html">
+            
+                <a href="../chapter_graph/graph_operations.html">
+            
+                    
+                    图基础操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.3" data-path="../chapter_graph/graph_traversal.html">
+            
+                <a href="../chapter_graph/graph_traversal.html">
+            
+                    
+                    图的遍历
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.4" data-path="../chapter_graph/">
+            
+                <a href="../chapter_graph/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="../chapter_searching/">
+            
+                <a href="../chapter_searching/">
+            
+                    
+                    搜索
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.11.1" data-path="../chapter_searching/binary_search.html">
+            
+                <a href="../chapter_searching/binary_search.html">
+            
+                    
+                    二分查找
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.2" data-path="../chapter_searching/binary_search_insertion.html">
+            
+                <a href="../chapter_searching/binary_search_insertion.html">
+            
+                    
+                    二分查找插入点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.3" data-path="../chapter_searching/binary_search_edge.html">
+            
+                <a href="../chapter_searching/binary_search_edge.html">
+            
+                    
+                    二分查找边界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.4" data-path="../chapter_searching/replace_linear_by_hashing.html">
+            
+                <a href="../chapter_searching/replace_linear_by_hashing.html">
+            
+                    
+                    哈希优化策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.5" data-path="../chapter_searching/searching_algorithm_revisited.html">
+            
+                <a href="../chapter_searching/searching_algorithm_revisited.html">
+            
+                    
+                    重识搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.6" data-path="../chapter_searching/">
+            
+                <a href="../chapter_searching/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="../chapter_sorting/">
+            
+                <a href="../chapter_sorting/">
+            
+                    
+                    排序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.12.1" data-path="../chapter_sorting/sorting_algorithm.html">
+            
+                <a href="../chapter_sorting/sorting_algorithm.html">
+            
+                    
+                    排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.2" data-path="../chapter_sorting/selection_sort.html">
+            
+                <a href="../chapter_sorting/selection_sort.html">
+            
+                    
+                    选择排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.3" data-path="../chapter_sorting/bubble_sort.html">
+            
+                <a href="../chapter_sorting/bubble_sort.html">
+            
+                    
+                    冒泡排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.4" data-path="../chapter_sorting/insertion_sort.html">
+            
+                <a href="../chapter_sorting/insertion_sort.html">
+            
+                    
+                    插入排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.5" data-path="../chapter_sorting/quick_sort.html">
+            
+                <a href="../chapter_sorting/quick_sort.html">
+            
+                    
+                    快速排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.6" data-path="../chapter_sorting/merge_sort.html">
+            
+                <a href="../chapter_sorting/merge_sort.html">
+            
+                    
+                    归并排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.7" data-path="../chapter_sorting/heap_sort.html">
+            
+                <a href="../chapter_sorting/heap_sort.html">
+            
+                    
+                    堆排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.8" data-path="../chapter_sorting/bucket_sort.html">
+            
+                <a href="../chapter_sorting/bucket_sort.html">
+            
+                    
+                    桶排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.9" data-path="../chapter_sorting/counting_sort.html">
+            
+                <a href="../chapter_sorting/counting_sort.html">
+            
+                    
+                    计数排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.10" data-path="../chapter_sorting/radix_sort.html">
+            
+                <a href="../chapter_sorting/radix_sort.html">
+            
+                    
+                    基数排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.11" data-path="../chapter_sorting/">
+            
+                <a href="../chapter_sorting/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="../chapter_divide_and_conquer/">
+            
+                <a href="../chapter_divide_and_conquer/">
+            
+                    
+                    分治
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.13.1" data-path="../chapter_divide_and_conquer/divide_and_conquer.html">
+            
+                <a href="../chapter_divide_and_conquer/divide_and_conquer.html">
+            
+                    
+                    分治算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.2" data-path="../chapter_divide_and_conquer/binary_search_recur.html">
+            
+                <a href="../chapter_divide_and_conquer/binary_search_recur.html">
+            
+                    
+                    分治搜索策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.3" data-path="../chapter_divide_and_conquer/build_binary_tree_problem.html">
+            
+                <a href="../chapter_divide_and_conquer/build_binary_tree_problem.html">
+            
+                    
+                    构建二叉树问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.4" data-path="../chapter_divide_and_conquer/hanota_problem.html">
+            
+                <a href="../chapter_divide_and_conquer/hanota_problem.html">
+            
+                    
+                    汉诺塔问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.5" data-path="../chapter_divide_and_conquer/">
+            
+                <a href="../chapter_divide_and_conquer/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="../chapter_backtracking/">
+            
+                <a href="../chapter_backtracking/">
+            
+                    
+                    回溯
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.14.1" data-path="../chapter_backtracking/backtracking_algorithm.html">
+            
+                <a href="../chapter_backtracking/backtracking_algorithm.html">
+            
+                    
+                    回溯算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.2" data-path="../chapter_backtracking/permutations_problem.html">
+            
+                <a href="../chapter_backtracking/permutations_problem.html">
+            
+                    
+                    全排列问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.3" data-path="../chapter_backtracking/subset_sum_problem.html">
+            
+                <a href="../chapter_backtracking/subset_sum_problem.html">
+            
+                    
+                    子集和问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.4" data-path="../chapter_backtracking/n_queens_problem.html">
+            
+                <a href="../chapter_backtracking/n_queens_problem.html">
+            
+                    
+                    N 皇后问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.5" data-path="../chapter_backtracking/">
+            
+                <a href="../chapter_backtracking/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="../chapter_dynamic_programming/">
+            
+                <a href="../chapter_dynamic_programming/">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.15.1" data-path="../chapter_dynamic_programming/intro_to_dynamic_programming.html">
+            
+                <a href="../chapter_dynamic_programming/intro_to_dynamic_programming.html">
+            
+                    
+                    初探动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.2" data-path="../chapter_dynamic_programming/dp_problem_features.html">
+            
+                <a href="../chapter_dynamic_programming/dp_problem_features.html">
+            
+                    
+                    动态规划问题特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.3" data-path="../chapter_dynamic_programming/dp_solution_pipeline.html">
+            
+                <a href="../chapter_dynamic_programming/dp_solution_pipeline.html">
+            
+                    
+                    动态规划解题思路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.4" data-path="../chapter_dynamic_programming/knapsack_problem.html">
+            
+                <a href="../chapter_dynamic_programming/knapsack_problem.html">
+            
+                    
+                    0-1 背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.5" data-path="../chapter_dynamic_programming/unbounded_knapsack_problem.html">
+            
+                <a href="../chapter_dynamic_programming/unbounded_knapsack_problem.html">
+            
+                    
+                    完全背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.6" data-path="../chapter_dynamic_programming/edit_distance_problem.html">
+            
+                <a href="../chapter_dynamic_programming/edit_distance_problem.html">
+            
+                    
+                    编辑距离问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.7" data-path="../chapter_dynamic_programming/">
+            
+                <a href="../chapter_dynamic_programming/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="../chapter_greedy/">
+            
+                <a href="../chapter_greedy/">
+            
+                    
+                    贪心
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.16.1" data-path="../chapter_greedy/greedy_algorithm.html">
+            
+                <a href="../chapter_greedy/greedy_algorithm.html">
+            
+                    
+                    贪心算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.2" data-path="../chapter_greedy/fractional_knapsack_problem.html">
+            
+                <a href="../chapter_greedy/fractional_knapsack_problem.html">
+            
+                    
+                    分数背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.3" data-path="../chapter_greedy/max_capacity_problem.html">
+            
+                <a href="../chapter_greedy/max_capacity_problem.html">
+            
+                    
+                    最大容量问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.4" data-path="../chapter_greedy/max_product_cutting_problem.html">
+            
+                <a href="../chapter_greedy/max_product_cutting_problem.html">
+            
+                    
+                    最大切分乘积问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.5" data-path="../chapter_greedy/">
+            
+                <a href="../chapter_greedy/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="../chapter_appendix/">
+            
+                <a href="../chapter_appendix/">
+            
+                    
+                    附录
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.17.1" data-path="../chapter_appendix/installation.html">
+            
+                <a href="../chapter_appendix/installation.html">
+            
+                    
+                    编程环境安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17.2" data-path="../chapter_appendix/terminology.html">
+            
+                <a href="../chapter_appendix/terminology.html">
+            
+                    
+                    术语表
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >哈希冲突</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="哈希冲突">哈希冲突</h1>
+<p>上一节提到，<strong>通常情况下哈希函数的输入空间远大于输出空间</strong>，因此理论上哈希冲突是不可避免的。比如，输入空间为全体整数，输出空间为数组容量大小，则必然有多个整数映射至同一桶索引。</p>
+<p>哈希冲突会导致查询结果错误，严重影响哈希表的可用性。为了解决该问题，每当遇到哈希冲突时，我们就进行哈希表扩容，直至冲突消失为止。此方法简单粗暴且有效，但效率太低，因为哈希表扩容需要进行大量的数据搬运与哈希值计算。为了提升效率，我们可以采用以下策略。</p>
+<ol>
+<li>改良哈希表数据结构，<strong>使得哈希表可以在出现哈希冲突时正常工作</strong>。</li>
+<li>仅在必要时，即当哈希冲突比较严重时，才执行扩容操作。</li>
+</ol>
+<p>哈希表的结构改良方法主要包括“链式地址”和“开放寻址”。</p>
+<h2 id="链式地址">链式地址</h2>
+<p>在原始哈希表中，每个桶仅能存储一个键值对。「链式地址 separate chaining」将单个元素转换为链表，将键值对作为链表节点，将所有发生冲突的键值对都存储在同一链表中。下图展示了一个链式地址哈希表的例子。</p>
+<p><img src="hash_collision.assets/hash_table_chaining.png" alt="链式地址哈希表"></img></p>
+<p>基于链式地址实现的哈希表的操作方法发生了以下变化。</p>
+<ul>
+<li><strong>查询元素</strong>：输入 <code>key</code> ，经过哈希函数得到桶索引，即可访问链表头节点，然后遍历链表并对比 <code>key</code> 以查找目标键值对。</li>
+<li><strong>添加元素</strong>：首先通过哈希函数访问链表头节点，然后将节点（键值对）添加到链表中。</li>
+<li><strong>删除元素</strong>：根据哈希函数的结果访问链表头部，接着遍历链表以查找目标节点并将其删除。</li>
+</ul>
+<p>链式地址存在以下局限性。</p>
+<ul>
+<li><strong>占用空间增大</strong>：链表包含节点指针，它相比数组更加耗费内存空间。</li>
+<li><strong>查询效率降低</strong>：因为需要线性遍历链表来查找对应元素。</li>
+</ul>
+<p>以下代码给出了链式地址哈希表的简单实现，需要注意两点。</p>
+<ul>
+<li>使用列表（动态数组）代替链表，从而简化代码。在这种设定下，哈希表（数组）包含多个桶，每个桶都是一个列表。</li>
+<li><p>以下实现包含哈希表扩容方法。当负载因子超过 $\frac{2}{3}$ 时，我们将哈希表扩容至原先的 $2$ 倍。</p>
+</li>
+<li><p>"Python"</p>
+<pre><code class="lang-python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HashMapChaining</span>:</span>
+  <span class="hljs-string">"""链式地址哈希表"""</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+      <span class="hljs-string">"""构造方法"""</span>
+      self.size = <span class="hljs-number">0</span> // 键值对数量
+      self.capacity = <span class="hljs-number">4</span> // 哈希表容量
+      self.load_thres = <span class="hljs-number">2.0</span> / <span class="hljs-number">3.0</span> // 触发扩容的负载因子阈值
+      self.extend_ratio = <span class="hljs-number">2</span> // 扩容倍数
+      self.buckets = [[] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(self.capacity)] // 桶数组
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hash_func</span><span class="hljs-params">(self, key: int)</span> -&gt; <span class="hljs-title">int</span>:</span>
+      <span class="hljs-string">"""哈希函数"""</span>
+      <span class="hljs-keyword">return</span> key % self.capacity
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_factor</span><span class="hljs-params">(self)</span> -&gt; <span class="hljs-title">float</span>:</span>
+      <span class="hljs-string">"""负载因子"""</span>
+      <span class="hljs-keyword">return</span> self.size / self.capacity
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get</span><span class="hljs-params">(self, key: int)</span> -&gt; <span class="hljs-title">str</span> | <span class="hljs-title">None</span>:</span>
+      <span class="hljs-string">"""查询操作"""</span>
+      index = self.hash_func(key)
+      bucket = self.buckets[index]
+     // 遍历桶，若找到 key ，则返回对应 val
+      <span class="hljs-keyword">for</span> pair <span class="hljs-keyword">in</span> bucket:
+          <span class="hljs-keyword">if</span> pair.key == key:
+              <span class="hljs-keyword">return</span> pair.val
+     // 若未找到 key ，则返回 <span class="hljs-keyword">None</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">None</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">put</span><span class="hljs-params">(self, key: int, val: str)</span>:</span>
+      <span class="hljs-string">"""添加操作"""</span>
+     // 当负载因子超过阈值时，执行扩容
+      <span class="hljs-keyword">if</span> self.load_factor() &gt; self.load_thres:
+          self.extend()
+      index = self.hash_func(key)
+      bucket = self.buckets[index]
+     // 遍历桶，若遇到指定 key ，则更新对应 val 并返回
+      <span class="hljs-keyword">for</span> pair <span class="hljs-keyword">in</span> bucket:
+          <span class="hljs-keyword">if</span> pair.key == key:
+              pair.val = val
+              <span class="hljs-keyword">return</span>
+     // 若无该 key ，则将键值对添加至尾部
+      pair = Pair(key, val)
+      bucket.append(pair)
+      self.size += <span class="hljs-number">1</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">remove</span><span class="hljs-params">(self, key: int)</span>:</span>
+      <span class="hljs-string">"""删除操作"""</span>
+      index = self.hash_func(key)
+      bucket = self.buckets[index]
+     // 遍历桶，从中删除键值对
+      <span class="hljs-keyword">for</span> pair <span class="hljs-keyword">in</span> bucket:
+          <span class="hljs-keyword">if</span> pair.key == key:
+              bucket.remove(pair)
+              self.size -= <span class="hljs-number">1</span>
+              <span class="hljs-keyword">break</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">extend</span><span class="hljs-params">(self)</span>:</span>
+      <span class="hljs-string">"""扩容哈希表"""</span>
+     // 暂存原哈希表
+      buckets = self.buckets
+     // 初始化扩容后的新哈希表
+      self.capacity *= self.extend_ratio
+      self.buckets = [[] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(self.capacity)]
+      self.size = <span class="hljs-number">0</span>
+     // 将键值对从原哈希表搬运至新哈希表
+      <span class="hljs-keyword">for</span> bucket <span class="hljs-keyword">in</span> buckets:
+          <span class="hljs-keyword">for</span> pair <span class="hljs-keyword">in</span> bucket:
+              self.put(pair.key, pair.val)
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print</span><span class="hljs-params">(self)</span>:</span>
+      <span class="hljs-string">"""打印哈希表"""</span>
+      <span class="hljs-keyword">for</span> bucket <span class="hljs-keyword">in</span> self.buckets:
+          res = []
+          <span class="hljs-keyword">for</span> pair <span class="hljs-keyword">in</span> bucket:
+              res.append(str(pair.key) + <span class="hljs-string">" -&gt; "</span> + pair.val)
+          print(res)
+</code></pre>
+</li>
+<li><p>"C++"</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/* 链式地址哈希表 */</span>
+<span class="hljs-keyword">class</span> HashMapChaining {
+<span class="hljs-keyword">private</span>:
+  <span class="hljs-keyword">int</span> size;                       <span class="hljs-comment">// 键值对数量</span>
+  <span class="hljs-keyword">int</span> capacity;                   <span class="hljs-comment">// 哈希表容量</span>
+  <span class="hljs-keyword">double</span> loadThres;               <span class="hljs-comment">// 触发扩容的负载因子阈值</span>
+  <span class="hljs-keyword">int</span> extendRatio;                <span class="hljs-comment">// 扩容倍数</span>
+  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;Pair *&gt;&gt; buckets; <span class="hljs-comment">// 桶数组</span>
+
+<span class="hljs-keyword">public</span>:
+  <span class="hljs-comment">/* 构造方法 */</span>
+  HashMapChaining() : size(<span class="hljs-number">0</span>), capacity(<span class="hljs-number">4</span>), loadThres(<span class="hljs-number">2.0</span> / <span class="hljs-number">3.0</span>), extendRatio(<span class="hljs-number">2</span>) {
+      buckets.resize(capacity);
+  }
+
+  <span class="hljs-comment">/* 析构方法 */</span>
+  ~HashMapChaining() {
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> &amp;bucket : buckets) {
+          <span class="hljs-keyword">for</span> (Pair *pair : bucket) {
+              <span class="hljs-comment">// 释放内存</span>
+              <span class="hljs-keyword">delete</span> pair;
+          }
+      }
+  }
+
+  <span class="hljs-comment">/* 哈希函数 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">hashFunc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-keyword">return</span> key % capacity;
+  }
+
+  <span class="hljs-comment">/* 负载因子 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">loadFactor</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">return</span> (<span class="hljs-keyword">double</span>)size / (<span class="hljs-keyword">double</span>)capacity;
+  }
+
+  <span class="hljs-comment">/* 查询操作 */</span>
+  <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-keyword">int</span> index = hashFunc(key);
+      <span class="hljs-comment">// 遍历桶，若找到 key ，则返回对应 val</span>
+      <span class="hljs-keyword">for</span> (Pair *pair : buckets[index]) {
+          <span class="hljs-keyword">if</span> (pair-&gt;key == key) {
+              <span class="hljs-keyword">return</span> pair-&gt;val;
+          }
+      }
+      <span class="hljs-comment">// 若未找到 key ，则返回空字符串</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
+  }
+
+  <span class="hljs-comment">/* 添加操作 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">put</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key, <span class="hljs-built_in">string</span> val)</span> </span>{
+      <span class="hljs-comment">// 当负载因子超过阈值时，执行扩容</span>
+      <span class="hljs-keyword">if</span> (loadFactor() &gt; loadThres) {
+          extend();
+      }
+      <span class="hljs-keyword">int</span> index = hashFunc(key);
+      <span class="hljs-comment">// 遍历桶，若遇到指定 key ，则更新对应 val 并返回</span>
+      <span class="hljs-keyword">for</span> (Pair *pair : buckets[index]) {
+          <span class="hljs-keyword">if</span> (pair-&gt;key == key) {
+              pair-&gt;val = val;
+              <span class="hljs-keyword">return</span>;
+          }
+      }
+      <span class="hljs-comment">// 若无该 key ，则将键值对添加至尾部</span>
+      buckets[index].push_back(<span class="hljs-keyword">new</span> Pair(key, val));
+      size++;
+  }
+
+  <span class="hljs-comment">/* 删除操作 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-keyword">int</span> index = hashFunc(key);
+      <span class="hljs-keyword">auto</span> &amp;bucket = buckets[index];
+      <span class="hljs-comment">// 遍历桶，从中删除键值对</span>
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; bucket.size(); i++) {
+          <span class="hljs-keyword">if</span> (bucket[i]-&gt;key == key) {
+              Pair *tmp = bucket[i];
+              bucket.erase(bucket.begin() + i); <span class="hljs-comment">// 从中删除键值对</span>
+              <span class="hljs-keyword">delete</span> tmp;                       <span class="hljs-comment">// 释放内存</span>
+              size--;
+              <span class="hljs-keyword">return</span>;
+          }
+      }
+  }
+
+  <span class="hljs-comment">/* 扩容哈希表 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">extend</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-comment">// 暂存原哈希表</span>
+      <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;Pair *&gt;&gt; bucketsTmp = buckets;
+      <span class="hljs-comment">// 初始化扩容后的新哈希表</span>
+      capacity *= extendRatio;
+      buckets.clear();
+      buckets.resize(capacity);
+      size = <span class="hljs-number">0</span>;
+      <span class="hljs-comment">// 将键值对从原哈希表搬运至新哈希表</span>
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> &amp;bucket : bucketsTmp) {
+          <span class="hljs-keyword">for</span> (Pair *pair : bucket) {
+              put(pair-&gt;key, pair-&gt;val);
+              <span class="hljs-comment">// 释放内存</span>
+              <span class="hljs-keyword">delete</span> pair;
+          }
+      }
+  }
+
+  <span class="hljs-comment">/* 打印哈希表 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> &amp;bucket : buckets) {
+          <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"["</span>;
+          <span class="hljs-keyword">for</span> (Pair *pair : bucket) {
+              <span class="hljs-built_in">cout</span> &lt;&lt; pair-&gt;key &lt;&lt; <span class="hljs-string">" -&gt; "</span> &lt;&lt; pair-&gt;val &lt;&lt; <span class="hljs-string">", "</span>;
+          }
+          <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"]\n"</span>;
+      }
+  }
+};
+</code></pre>
+</li>
+<li><p>"Java"</p>
+<pre><code class="lang-java"><span class="hljs-comment">/* 链式地址哈希表 */</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HashMapChaining</span> </span>{
+  <span class="hljs-keyword">int</span> size; <span class="hljs-comment">// 键值对数量</span>
+  <span class="hljs-keyword">int</span> capacity; <span class="hljs-comment">// 哈希表容量</span>
+  <span class="hljs-keyword">double</span> loadThres; <span class="hljs-comment">// 触发扩容的负载因子阈值</span>
+  <span class="hljs-keyword">int</span> extendRatio; <span class="hljs-comment">// 扩容倍数</span>
+  List&lt;List&lt;Pair&gt;&gt; buckets; <span class="hljs-comment">// 桶数组</span>
+
+  <span class="hljs-comment">/* 构造方法 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">HashMapChaining</span><span class="hljs-params">()</span> </span>{
+      size = <span class="hljs-number">0</span>;
+      capacity = <span class="hljs-number">4</span>;
+      loadThres = <span class="hljs-number">2.0</span> / <span class="hljs-number">3.0</span>;
+      extendRatio = <span class="hljs-number">2</span>;
+      buckets = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;(capacity);
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; capacity; i++) {
+          buckets.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+      }
+  }
+
+  <span class="hljs-comment">/* 哈希函数 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">hashFunc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-keyword">return</span> key % capacity;
+  }
+
+  <span class="hljs-comment">/* 负载因子 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">loadFactor</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">return</span> (<span class="hljs-keyword">double</span>) size / capacity;
+  }
+
+  <span class="hljs-comment">/* 查询操作 */</span>
+  <span class="hljs-function">String <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-keyword">int</span> index = hashFunc(key);
+      List&lt;Pair&gt; bucket = buckets.get(index);
+      <span class="hljs-comment">// 遍历桶，若找到 key ，则返回对应 val</span>
+      <span class="hljs-keyword">for</span> (Pair pair : bucket) {
+          <span class="hljs-keyword">if</span> (pair.key == key) {
+              <span class="hljs-keyword">return</span> pair.val;
+          }
+      }
+      <span class="hljs-comment">// 若未找到 key ，则返回 null</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+  }
+
+  <span class="hljs-comment">/* 添加操作 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">put</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key, String val)</span> </span>{
+      <span class="hljs-comment">// 当负载因子超过阈值时，执行扩容</span>
+      <span class="hljs-keyword">if</span> (loadFactor() &gt; loadThres) {
+          extend();
+      }
+      <span class="hljs-keyword">int</span> index = hashFunc(key);
+      List&lt;Pair&gt; bucket = buckets.get(index);
+      <span class="hljs-comment">// 遍历桶，若遇到指定 key ，则更新对应 val 并返回</span>
+      <span class="hljs-keyword">for</span> (Pair pair : bucket) {
+          <span class="hljs-keyword">if</span> (pair.key == key) {
+              pair.val = val;
+              <span class="hljs-keyword">return</span>;
+          }
+      }
+      <span class="hljs-comment">// 若无该 key ，则将键值对添加至尾部</span>
+      Pair pair = <span class="hljs-keyword">new</span> Pair(key, val);
+      bucket.add(pair);
+      size++;
+  }
+
+  <span class="hljs-comment">/* 删除操作 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-keyword">int</span> index = hashFunc(key);
+      List&lt;Pair&gt; bucket = buckets.get(index);
+      <span class="hljs-comment">// 遍历桶，从中删除键值对</span>
+      <span class="hljs-keyword">for</span> (Pair pair : bucket) {
+          <span class="hljs-keyword">if</span> (pair.key == key) {
+              bucket.remove(pair);
+              size--;
+              <span class="hljs-keyword">break</span>;
+          }
+      }
+  }
+
+  <span class="hljs-comment">/* 扩容哈希表 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">extend</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-comment">// 暂存原哈希表</span>
+      List&lt;List&lt;Pair&gt;&gt; bucketsTmp = buckets;
+      <span class="hljs-comment">// 初始化扩容后的新哈希表</span>
+      capacity *= extendRatio;
+      buckets = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;(capacity);
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; capacity; i++) {
+          buckets.add(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;());
+      }
+      size = <span class="hljs-number">0</span>;
+      <span class="hljs-comment">// 将键值对从原哈希表搬运至新哈希表</span>
+      <span class="hljs-keyword">for</span> (List&lt;Pair&gt; bucket : bucketsTmp) {
+          <span class="hljs-keyword">for</span> (Pair pair : bucket) {
+              put(pair.key, pair.val);
+          }
+      }
+  }
+
+  <span class="hljs-comment">/* 打印哈希表 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">for</span> (List&lt;Pair&gt; bucket : buckets) {
+          List&lt;String&gt; res = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+          <span class="hljs-keyword">for</span> (Pair pair : bucket) {
+              res.add(pair.key + <span class="hljs-string">" -&gt; "</span> + pair.val);
+          }
+          System.out.println(res);
+      }
+  }
+}
+</code></pre>
+</li>
+</ul>
+<p>值得注意的是，当链表很长时，查询效率 $O(n)$ 很差。<strong>此时可以将链表转换为“AVL 树”或“红黑树”</strong>，从而将查询操作的时间复杂度优化至 $O(\log n)$ 。</p>
+<h2 id="开放寻址">开放寻址</h2>
+<p>「开放寻址 open addressing」不引入额外的数据结构，而是通过“多次探测”来处理哈希冲突，探测方式主要包括线性探测、平方探测和多次哈希等。</p>
+<p>下面以线性探测为例，介绍开放寻址哈希表的工作机制。</p>
+<h3 id="线性探测">线性探测</h3>
+<p>线性探测采用固定步长的线性搜索来进行探测，其操作方法与普通哈希表有所不同。</p>
+<ul>
+<li><strong>插入元素</strong>：通过哈希函数计算桶索引，若发现桶内已有元素，则从冲突位置向后线性遍历（步长通常为 $1$ ），直至找到空桶，将元素插入其中。</li>
+<li><strong>查找元素</strong>：若发现哈希冲突，则使用相同步长向后进行线性遍历，直到找到对应元素，返回 <code>value</code> 即可；如果遇到空桶，说明目标元素不在哈希表中，返回 <code>None</code> 。</li>
+</ul>
+<p>下图展示了开放寻址（线性探测）哈希表的键值对分布。根据此哈希函数，最后两位相同的 <code>key</code> 都会被映射到相同的桶。而通过线性探测，它们被依次存储在该桶以及之下的桶中。</p>
+<p><img src="hash_collision.assets/hash_table_linear_probing.png" alt="开放寻址（线性探测）哈希表的键值对分布"></img></p>
+<p>然而，<strong>线性探测容易产生“聚集现象”</strong>。具体来说，数组中连续被占用的位置越长，这些连续位置发生哈希冲突的可能性越大，从而进一步促使该位置的聚堆生长，形成恶性循环，最终导致增删查改操作效率劣化。</p>
+<p>值得注意的是，<strong>我们不能在开放寻址哈希表中直接删除元素</strong>。这是因为删除元素会在数组内产生一个空桶 <code>None</code> ，而当查询元素时，线性探测到该空桶就会返回，因此在该空桶之下的元素都无法再被访问到，程序可能误判这些元素不存在。</p>
+<p><img src="hash_collision.assets/hash_table_open_addressing_deletion.png" alt="在开放寻址中删除元素导致的查询问题"></img></p>
+<p>为了解决该问题，我们可以采用「懒删除 lazy deletion」机制：它不直接从哈希表中移除元素，<strong>而是利用一个常量 <code>TOMBSTONE</code> 来标记这个桶</strong>。在该机制下，<code>None</code> 和 <code>TOMBSTONE</code> 都代表空桶，都可以放置键值对。但不同的是，线性探测到 <code>TOMBSTONE</code> 时应该继续遍历，因为其之下可能还存在键值对。</p>
+<p>然而，<strong>懒删除可能会加速哈希表的性能退化</strong>。这是因为每次删除操作都会产生一个删除标记，随着 <code>TOMBSTONE</code> 的增加，搜索时间也会增加，因为线性探测可能需要跳过多个 <code>TOMBSTONE</code> 才能找到目标元素。</p>
+<p>为此，考虑在线性探测中记录遇到的首个 <code>TOMBSTONE</code> 的索引，并将搜索到的目标元素与该 <code>TOMBSTONE</code> 交换位置。这样做的好处是当每次查询或添加元素时，元素会被移动至距离理想位置（探测起始点）更近的桶，从而优化查询效率。</p>
+<p>以下代码实现了一个包含懒删除的开放寻址（线性探测）哈希表。为了更加充分地使用哈希表的空间，我们将哈希表看作一个“环形数组”，当越过数组尾部时，回到头部继续遍历。</p>
+<ul>
+<li><p>"Python"</p>
+<pre><code class="lang-python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HashMapOpenAddressing</span>:</span>
+  <span class="hljs-string">"""开放寻址哈希表"""</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+      <span class="hljs-string">"""构造方法"""</span>
+      self.size = <span class="hljs-number">0</span> // 键值对数量
+      self.capacity = <span class="hljs-number">4</span> // 哈希表容量
+      self.load_thres = <span class="hljs-number">2.0</span> / <span class="hljs-number">3.0</span> // 触发扩容的负载因子阈值
+      self.extend_ratio = <span class="hljs-number">2</span> // 扩容倍数
+      self.buckets: list[Pair | <span class="hljs-keyword">None</span>] = [<span class="hljs-keyword">None</span>] * self.capacity // 桶数组
+      self.TOMBSTONE = Pair(-<span class="hljs-number">1</span>, <span class="hljs-string">"-1"</span>) // 删除标记
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hash_func</span><span class="hljs-params">(self, key: int)</span> -&gt; <span class="hljs-title">int</span>:</span>
+      <span class="hljs-string">"""哈希函数"""</span>
+      <span class="hljs-keyword">return</span> key % self.capacity
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">load_factor</span><span class="hljs-params">(self)</span> -&gt; <span class="hljs-title">float</span>:</span>
+      <span class="hljs-string">"""负载因子"""</span>
+      <span class="hljs-keyword">return</span> self.size / self.capacity
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_bucket</span><span class="hljs-params">(self, key: int)</span> -&gt; <span class="hljs-title">int</span>:</span>
+      <span class="hljs-string">"""搜索 key 对应的桶索引"""</span>
+      index = self.hash_func(key)
+      first_tombstone = -<span class="hljs-number">1</span>
+     // 线性探测，当遇到空桶时跳出
+      <span class="hljs-keyword">while</span> self.buckets[index] <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">None</span>:
+         // 若遇到 key ，返回对应的桶索引
+          <span class="hljs-keyword">if</span> self.buckets[index].key == key:
+             // 若之前遇到了删除标记，则将键值对移动至该索引处
+              <span class="hljs-keyword">if</span> first_tombstone != -<span class="hljs-number">1</span>:
+                  self.buckets[first_tombstone] = self.buckets[index]
+                  self.buckets[index] = self.TOMBSTONE
+                  <span class="hljs-keyword">return</span> first_tombstone // 返回移动后的桶索引
+              <span class="hljs-keyword">return</span> index // 返回桶索引
+         // 记录遇到的首个删除标记
+          <span class="hljs-keyword">if</span> first_tombstone == -<span class="hljs-number">1</span> <span class="hljs-keyword">and</span> self.buckets[index] <span class="hljs-keyword">is</span> self.TOMBSTONE:
+              first_tombstone = index
+         // 计算桶索引，越过尾部则返回头部
+          index = (index + <span class="hljs-number">1</span>) % self.capacity
+     // 若 key 不存在，则返回添加点的索引
+      <span class="hljs-keyword">return</span> index <span class="hljs-keyword">if</span> first_tombstone == -<span class="hljs-number">1</span> <span class="hljs-keyword">else</span> first_tombstone
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get</span><span class="hljs-params">(self, key: int)</span> -&gt; <span class="hljs-title">str</span>:</span>
+      <span class="hljs-string">"""查询操作"""</span>
+     // 搜索 key 对应的桶索引
+      index = self.find_bucket(key)
+     // 若找到键值对，则返回对应 val
+      <span class="hljs-keyword">if</span> self.buckets[index] <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> [<span class="hljs-keyword">None</span>, self.TOMBSTONE]:
+          <span class="hljs-keyword">return</span> self.buckets[index].val
+     // 若键值对不存在，则返回 <span class="hljs-keyword">None</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">None</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">put</span><span class="hljs-params">(self, key: int, val: str)</span>:</span>
+      <span class="hljs-string">"""添加操作"""</span>
+     // 当负载因子超过阈值时，执行扩容
+      <span class="hljs-keyword">if</span> self.load_factor() &gt; self.load_thres:
+          self.extend()
+     // 搜索 key 对应的桶索引
+      index = self.find_bucket(key)
+     // 若找到键值对，则覆盖 val 并返回
+      <span class="hljs-keyword">if</span> self.buckets[index] <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> [<span class="hljs-keyword">None</span>, self.TOMBSTONE]:
+          self.buckets[index].val = val
+          <span class="hljs-keyword">return</span>
+     // 若键值对不存在，则添加该键值对
+      self.buckets[index] = Pair(key, val)
+      self.size += <span class="hljs-number">1</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">remove</span><span class="hljs-params">(self, key: int)</span>:</span>
+      <span class="hljs-string">"""删除操作"""</span>
+     // 搜索 key 对应的桶索引
+      index = self.find_bucket(key)
+     // 若找到键值对，则用删除标记覆盖它
+      <span class="hljs-keyword">if</span> self.buckets[index] <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> [<span class="hljs-keyword">None</span>, self.TOMBSTONE]:
+          self.buckets[index] = self.TOMBSTONE
+          self.size -= <span class="hljs-number">1</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">extend</span><span class="hljs-params">(self)</span>:</span>
+      <span class="hljs-string">"""扩容哈希表"""</span>
+     // 暂存原哈希表
+      buckets_tmp = self.buckets
+     // 初始化扩容后的新哈希表
+      self.capacity *= self.extend_ratio
+      self.buckets = [<span class="hljs-keyword">None</span>] * self.capacity
+      self.size = <span class="hljs-number">0</span>
+     // 将键值对从原哈希表搬运至新哈希表
+      <span class="hljs-keyword">for</span> pair <span class="hljs-keyword">in</span> buckets_tmp:
+          <span class="hljs-keyword">if</span> pair <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> [<span class="hljs-keyword">None</span>, self.TOMBSTONE]:
+              self.put(pair.key, pair.val)
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print</span><span class="hljs-params">(self)</span>:</span>
+      <span class="hljs-string">"""打印哈希表"""</span>
+      <span class="hljs-keyword">for</span> pair <span class="hljs-keyword">in</span> self.buckets:
+          <span class="hljs-keyword">if</span> pair <span class="hljs-keyword">is</span> <span class="hljs-keyword">None</span>:
+              print(<span class="hljs-string">"None"</span>)
+          <span class="hljs-keyword">elif</span> pair <span class="hljs-keyword">is</span> self.TOMBSTONE:
+              print(<span class="hljs-string">"TOMBSTONE"</span>)
+          <span class="hljs-keyword">else</span>:
+              print(pair.key, <span class="hljs-string">"-&gt;"</span>, pair.val)
+</code></pre>
+</li>
+<li><p>"C++"</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/* 开放寻址哈希表 */</span>
+<span class="hljs-keyword">class</span> HashMapOpenAddressing {
+<span class="hljs-keyword">private</span>:
+  <span class="hljs-keyword">int</span> size;                             <span class="hljs-comment">// 键值对数量</span>
+  <span class="hljs-keyword">int</span> capacity = <span class="hljs-number">4</span>;                     <span class="hljs-comment">// 哈希表容量</span>
+  <span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> loadThres = <span class="hljs-number">2.0</span> / <span class="hljs-number">3.0</span>;     <span class="hljs-comment">// 触发扩容的负载因子阈值</span>
+  <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> extendRatio = <span class="hljs-number">2</span>;            <span class="hljs-comment">// 扩容倍数</span>
+  <span class="hljs-built_in">vector</span>&lt;Pair *&gt; buckets;               <span class="hljs-comment">// 桶数组</span>
+  Pair *TOMBSTONE = <span class="hljs-keyword">new</span> Pair(-<span class="hljs-number">1</span>, <span class="hljs-string">"-1"</span>); <span class="hljs-comment">// 删除标记</span>
+
+<span class="hljs-keyword">public</span>:
+  <span class="hljs-comment">/* 构造方法 */</span>
+  HashMapOpenAddressing() : size(<span class="hljs-number">0</span>), buckets(capacity, <span class="hljs-literal">nullptr</span>) {
+  }
+
+  <span class="hljs-comment">/* 析构方法 */</span>
+  ~HashMapOpenAddressing() {
+      <span class="hljs-keyword">for</span> (Pair *pair : buckets) {
+          <span class="hljs-keyword">if</span> (pair != <span class="hljs-literal">nullptr</span> &amp;&amp; pair != TOMBSTONE) {
+              <span class="hljs-keyword">delete</span> pair;
+          }
+      }
+      <span class="hljs-keyword">delete</span> TOMBSTONE;
+  }
+
+  <span class="hljs-comment">/* 哈希函数 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">hashFunc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-keyword">return</span> key % capacity;
+  }
+
+  <span class="hljs-comment">/* 负载因子 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">loadFactor</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">return</span> (<span class="hljs-keyword">double</span>)size / capacity;
+  }
+
+  <span class="hljs-comment">/* 搜索 key 对应的桶索引 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">findBucket</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-keyword">int</span> index = hashFunc(key);
+      <span class="hljs-keyword">int</span> firstTombstone = -<span class="hljs-number">1</span>;
+      <span class="hljs-comment">// 线性探测，当遇到空桶时跳出</span>
+      <span class="hljs-keyword">while</span> (buckets[index] != <span class="hljs-literal">nullptr</span>) {
+          <span class="hljs-comment">// 若遇到 key ，返回对应的桶索引</span>
+          <span class="hljs-keyword">if</span> (buckets[index]-&gt;key == key) {
+              <span class="hljs-comment">// 若之前遇到了删除标记，则将键值对移动至该索引处</span>
+              <span class="hljs-keyword">if</span> (firstTombstone != -<span class="hljs-number">1</span>) {
+                  buckets[firstTombstone] = buckets[index];
+                  buckets[index] = TOMBSTONE;
+                  <span class="hljs-keyword">return</span> firstTombstone; <span class="hljs-comment">// 返回移动后的桶索引</span>
+              }
+              <span class="hljs-keyword">return</span> index; <span class="hljs-comment">// 返回桶索引</span>
+          }
+          <span class="hljs-comment">// 记录遇到的首个删除标记</span>
+          <span class="hljs-keyword">if</span> (firstTombstone == -<span class="hljs-number">1</span> &amp;&amp; buckets[index] == TOMBSTONE) {
+              firstTombstone = index;
+          }
+          <span class="hljs-comment">// 计算桶索引，越过尾部则返回头部</span>
+          index = (index + <span class="hljs-number">1</span>) % capacity;
+      }
+      <span class="hljs-comment">// 若 key 不存在，则返回添加点的索引</span>
+      <span class="hljs-keyword">return</span> firstTombstone == -<span class="hljs-number">1</span> ? index : firstTombstone;
+  }
+
+  <span class="hljs-comment">/* 查询操作 */</span>
+  <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-comment">// 搜索 key 对应的桶索引</span>
+      <span class="hljs-keyword">int</span> index = findBucket(key);
+      <span class="hljs-comment">// 若找到键值对，则返回对应 val</span>
+      <span class="hljs-keyword">if</span> (buckets[index] != <span class="hljs-literal">nullptr</span> &amp;&amp; buckets[index] != TOMBSTONE) {
+          <span class="hljs-keyword">return</span> buckets[index]-&gt;val;
+      }
+      <span class="hljs-comment">// 若键值对不存在，则返回空字符串</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-string">""</span>;
+  }
+
+  <span class="hljs-comment">/* 添加操作 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">put</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key, <span class="hljs-built_in">string</span> val)</span> </span>{
+      <span class="hljs-comment">// 当负载因子超过阈值时，执行扩容</span>
+      <span class="hljs-keyword">if</span> (loadFactor() &gt; loadThres) {
+          extend();
+      }
+      <span class="hljs-comment">// 搜索 key 对应的桶索引</span>
+      <span class="hljs-keyword">int</span> index = findBucket(key);
+      <span class="hljs-comment">// 若找到键值对，则覆盖 val 并返回</span>
+      <span class="hljs-keyword">if</span> (buckets[index] != <span class="hljs-literal">nullptr</span> &amp;&amp; buckets[index] != TOMBSTONE) {
+          buckets[index]-&gt;val = val;
+          <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-comment">// 若键值对不存在，则添加该键值对</span>
+      buckets[index] = <span class="hljs-keyword">new</span> Pair(key, val);
+      size++;
+  }
+
+  <span class="hljs-comment">/* 删除操作 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-comment">// 搜索 key 对应的桶索引</span>
+      <span class="hljs-keyword">int</span> index = findBucket(key);
+      <span class="hljs-comment">// 若找到键值对，则用删除标记覆盖它</span>
+      <span class="hljs-keyword">if</span> (buckets[index] != <span class="hljs-literal">nullptr</span> &amp;&amp; buckets[index] != TOMBSTONE) {
+          <span class="hljs-keyword">delete</span> buckets[index];
+          buckets[index] = TOMBSTONE;
+          size--;
+      }
+  }
+
+  <span class="hljs-comment">/* 扩容哈希表 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">extend</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-comment">// 暂存原哈希表</span>
+      <span class="hljs-built_in">vector</span>&lt;Pair *&gt; bucketsTmp = buckets;
+      <span class="hljs-comment">// 初始化扩容后的新哈希表</span>
+      capacity *= extendRatio;
+      buckets = <span class="hljs-built_in">vector</span>&lt;Pair *&gt;(capacity, <span class="hljs-literal">nullptr</span>);
+      size = <span class="hljs-number">0</span>;
+      <span class="hljs-comment">// 将键值对从原哈希表搬运至新哈希表</span>
+      <span class="hljs-keyword">for</span> (Pair *pair : bucketsTmp) {
+          <span class="hljs-keyword">if</span> (pair != <span class="hljs-literal">nullptr</span> &amp;&amp; pair != TOMBSTONE) {
+              put(pair-&gt;key, pair-&gt;val);
+              <span class="hljs-keyword">delete</span> pair;
+          }
+      }
+  }
+
+  <span class="hljs-comment">/* 打印哈希表 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">for</span> (Pair *pair : buckets) {
+          <span class="hljs-keyword">if</span> (pair == <span class="hljs-literal">nullptr</span>) {
+              <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"nullptr"</span> &lt;&lt; endl;
+          } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (pair == TOMBSTONE) {
+              <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"TOMBSTONE"</span> &lt;&lt; endl;
+          } <span class="hljs-keyword">else</span> {
+              <span class="hljs-built_in">cout</span> &lt;&lt; pair-&gt;key &lt;&lt; <span class="hljs-string">" -&gt; "</span> &lt;&lt; pair-&gt;val &lt;&lt; endl;
+          }
+      }
+  }
+};
+</code></pre>
+</li>
+<li><p>"Java"</p>
+<pre><code class="lang-java"><span class="hljs-comment">/* 开放寻址哈希表 */</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HashMapOpenAddressing</span> </span>{
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> size; <span class="hljs-comment">// 键值对数量</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> capacity = <span class="hljs-number">4</span>; <span class="hljs-comment">// 哈希表容量</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">double</span> loadThres = <span class="hljs-number">2.0</span> / <span class="hljs-number">3.0</span>; <span class="hljs-comment">// 触发扩容的负载因子阈值</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> extendRatio = <span class="hljs-number">2</span>; <span class="hljs-comment">// 扩容倍数</span>
+  <span class="hljs-keyword">private</span> Pair[] buckets; <span class="hljs-comment">// 桶数组</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Pair TOMBSTONE = <span class="hljs-keyword">new</span> Pair(-<span class="hljs-number">1</span>, <span class="hljs-string">"-1"</span>); <span class="hljs-comment">// 删除标记</span>
+
+  <span class="hljs-comment">/* 构造方法 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">HashMapOpenAddressing</span><span class="hljs-params">()</span> </span>{
+      size = <span class="hljs-number">0</span>;
+      buckets = <span class="hljs-keyword">new</span> Pair[capacity];
+  }
+
+  <span class="hljs-comment">/* 哈希函数 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">hashFunc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-keyword">return</span> key % capacity;
+  }
+
+  <span class="hljs-comment">/* 负载因子 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">double</span> <span class="hljs-title">loadFactor</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">return</span> (<span class="hljs-keyword">double</span>) size / capacity;
+  }
+
+  <span class="hljs-comment">/* 搜索 key 对应的桶索引 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">findBucket</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-keyword">int</span> index = hashFunc(key);
+      <span class="hljs-keyword">int</span> firstTombstone = -<span class="hljs-number">1</span>;
+      <span class="hljs-comment">// 线性探测，当遇到空桶时跳出</span>
+      <span class="hljs-keyword">while</span> (buckets[index] != <span class="hljs-keyword">null</span>) {
+          <span class="hljs-comment">// 若遇到 key ，返回对应的桶索引</span>
+          <span class="hljs-keyword">if</span> (buckets[index].key == key) {
+              <span class="hljs-comment">// 若之前遇到了删除标记，则将键值对移动至该索引处</span>
+              <span class="hljs-keyword">if</span> (firstTombstone != -<span class="hljs-number">1</span>) {
+                  buckets[firstTombstone] = buckets[index];
+                  buckets[index] = TOMBSTONE;
+                  <span class="hljs-keyword">return</span> firstTombstone; <span class="hljs-comment">// 返回移动后的桶索引</span>
+              }
+              <span class="hljs-keyword">return</span> index; <span class="hljs-comment">// 返回桶索引</span>
+          }
+          <span class="hljs-comment">// 记录遇到的首个删除标记</span>
+          <span class="hljs-keyword">if</span> (firstTombstone == -<span class="hljs-number">1</span> &amp;&amp; buckets[index] == TOMBSTONE) {
+              firstTombstone = index;
+          }
+          <span class="hljs-comment">// 计算桶索引，越过尾部则返回头部</span>
+          index = (index + <span class="hljs-number">1</span>) % capacity;
+      }
+      <span class="hljs-comment">// 若 key 不存在，则返回添加点的索引</span>
+      <span class="hljs-keyword">return</span> firstTombstone == -<span class="hljs-number">1</span> ? index : firstTombstone;
+  }
+
+  <span class="hljs-comment">/* 查询操作 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-comment">// 搜索 key 对应的桶索引</span>
+      <span class="hljs-keyword">int</span> index = findBucket(key);
+      <span class="hljs-comment">// 若找到键值对，则返回对应 val</span>
+      <span class="hljs-keyword">if</span> (buckets[index] != <span class="hljs-keyword">null</span> &amp;&amp; buckets[index] != TOMBSTONE) {
+          <span class="hljs-keyword">return</span> buckets[index].val;
+      }
+      <span class="hljs-comment">// 若键值对不存在，则返回 null</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+  }
+
+  <span class="hljs-comment">/* 添加操作 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">put</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key, String val)</span> </span>{
+      <span class="hljs-comment">// 当负载因子超过阈值时，执行扩容</span>
+      <span class="hljs-keyword">if</span> (loadFactor() &gt; loadThres) {
+          extend();
+      }
+      <span class="hljs-comment">// 搜索 key 对应的桶索引</span>
+      <span class="hljs-keyword">int</span> index = findBucket(key);
+      <span class="hljs-comment">// 若找到键值对，则覆盖 val 并返回</span>
+      <span class="hljs-keyword">if</span> (buckets[index] != <span class="hljs-keyword">null</span> &amp;&amp; buckets[index] != TOMBSTONE) {
+          buckets[index].val = val;
+          <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-comment">// 若键值对不存在，则添加该键值对</span>
+      buckets[index] = <span class="hljs-keyword">new</span> Pair(key, val);
+      size++;
+  }
+
+  <span class="hljs-comment">/* 删除操作 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key)</span> </span>{
+      <span class="hljs-comment">// 搜索 key 对应的桶索引</span>
+      <span class="hljs-keyword">int</span> index = findBucket(key);
+      <span class="hljs-comment">// 若找到键值对，则用删除标记覆盖它</span>
+      <span class="hljs-keyword">if</span> (buckets[index] != <span class="hljs-keyword">null</span> &amp;&amp; buckets[index] != TOMBSTONE) {
+          buckets[index] = TOMBSTONE;
+          size--;
+      }
+  }
+
+  <span class="hljs-comment">/* 扩容哈希表 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">extend</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-comment">// 暂存原哈希表</span>
+      Pair[] bucketsTmp = buckets;
+      <span class="hljs-comment">// 初始化扩容后的新哈希表</span>
+      capacity *= extendRatio;
+      buckets = <span class="hljs-keyword">new</span> Pair[capacity];
+      size = <span class="hljs-number">0</span>;
+      <span class="hljs-comment">// 将键值对从原哈希表搬运至新哈希表</span>
+      <span class="hljs-keyword">for</span> (Pair pair : bucketsTmp) {
+          <span class="hljs-keyword">if</span> (pair != <span class="hljs-keyword">null</span> &amp;&amp; pair != TOMBSTONE) {
+              put(pair.key, pair.val);
+          }
+      }
+  }
+
+  <span class="hljs-comment">/* 打印哈希表 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">for</span> (Pair pair : buckets) {
+          <span class="hljs-keyword">if</span> (pair == <span class="hljs-keyword">null</span>) {
+              System.out.println(<span class="hljs-string">"null"</span>);
+          } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (pair == TOMBSTONE) {
+              System.out.println(<span class="hljs-string">"TOMBSTONE"</span>);
+          } <span class="hljs-keyword">else</span> {
+              System.out.println(pair.key + <span class="hljs-string">" -&gt; "</span> + pair.val);
+          }
+      }
+  }
+}
+</code></pre>
+</li>
+</ul>
+<h3 id="平方探测">平方探测</h3>
+<p>平方探测与线性探测类似，都是开放寻址的常见策略之一。当发生冲突时，平方探测不是简单地跳过一个固定的步数，而是跳过“探测次数的平方”的步数，即 $1, 4, 9, \dots$ 步。</p>
+<p>平方探测主要具有以下优势。</p>
+<ul>
+<li>平方探测通过跳过探测次数平方的距离，试图缓解线性探测的聚集效应。</li>
+<li>平方探测会跳过更大的距离来寻找空位置，有助于数据分布得更加均匀。</li>
+</ul>
+<p>然而，平方探测并不是完美的。</p>
+<ul>
+<li>仍然存在聚集现象，即某些位置比其他位置更容易被占用。</li>
+<li>由于平方的增长，平方探测可能不会探测整个哈希表，这意味着即使哈希表中有空桶，平方探测也可能无法访问到它。</li>
+</ul>
+<h3 id="多次哈希">多次哈希</h3>
+<p>顾名思义，多次哈希方法使用多个哈希函数 $f_1(x)$、$f_2(x)$、$f_3(x)$、$\dots$ 进行探测。</p>
+<ul>
+<li><strong>插入元素</strong>：若哈希函数 $f_1(x)$ 出现冲突，则尝试 $f_2(x)$ ，以此类推，直到找到空位后插入元素。</li>
+<li><strong>查找元素</strong>：在相同的哈希函数顺序下进行查找，直到找到目标元素时返回；若遇到空位或已尝试所有哈希函数，说明哈希表中不存在该元素，则返回 <code>None</code> 。</li>
+</ul>
+<p>与线性探测相比，多次哈希方法不易产生聚集，但多个哈希函数会带来额外的计算量。</p>
+<p>!!! tip</p>
+<pre><code>请注意，开放寻址（线性探测、平方探测和多次哈希）哈希表都存在“不能直接删除元素”的问题。
+</code></pre><h2 id="编程语言的选择">编程语言的选择</h2>
+<p>各种编程语言采取了不同的哈希表实现策略，下面举几个例子。</p>
+<ul>
+<li>Python 采用开放寻址。字典 <code>dict</code> 使用伪随机数进行探测。</li>
+<li>Java 采用链式地址。自 JDK 1.8 以来，当 <code>HashMap</code> 内数组长度达到 64 且链表长度达到 8 时，链表会转换为红黑树以提升查找性能。</li>
+<li>Go 采用链式地址。Go 规定每个桶最多存储 8 个键值对，超出容量则连接一个溢出桶；当溢出桶过多时，会执行一次特殊的等量扩容操作，以确保性能。</li>
+</ul>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="hash_map.html" class="navigation navigation-prev " aria-label="Previous page: 哈希表">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="hash_algorithm.html" class="navigation navigation-next " aria-label="Next page: 哈希算法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"哈希冲突","level":"1.1.7.2","depth":3,"next":{"title":"哈希算法","level":"1.1.7.3","depth":3,"path":"chapter_hashing/hash_algorithm.md","ref":"chapter_hashing/hash_algorithm.md","articles":[]},"previous":{"title":"哈希表","level":"1.1.7.1","depth":3,"path":"chapter_hashing/hash_map.md","ref":"chapter_hashing/hash_map.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"chapter_hashing/hash_collision.md","mtime":"2024-01-07T12:06:17.906Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:05.926Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

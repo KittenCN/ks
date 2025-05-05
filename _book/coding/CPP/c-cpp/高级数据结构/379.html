@@ -1,0 +1,631 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>多维树数据结构 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="380.html" />
+    
+    
+    <link rel="prev" href="378.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="378.html">
+            
+                <a href="378.html">
+            
+                    
+                    高级树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.2" data-path="379.html">
+            
+                <a href="379.html">
+            
+                    
+                    多维树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="380.html">
+            
+                <a href="380.html">
+            
+                    
+                    树型数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="381.html">
+            
+                <a href="381.html">
+            
+                    
+                    堆数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="382.html">
+            
+                <a href="382.html">
+            
+                    
+                    实现堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="383.html">
+            
+                <a href="383.html">
+            
+                    
+                    TRIE 数据结构示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="384.html">
+            
+                <a href="384.html">
+            
+                    
+                    B 树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="385.html">
+            
+                <a href="385.html">
+            
+                    
+                    B- 树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="386.html">
+            
+                <a href="386.html">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="387.html">
+            
+                <a href="387.html">
+            
+                    
+                    图介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="388.html">
+            
+                <a href="388.html">
+            
+                    
+                    图表示——邻接矩阵和列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="389.html">
+            
+                <a href="389.html">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="390.html">
+            
+                <a href="390.html">
+            
+                    
+                    哈希表数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >多维树数据结构</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="多维树数据结构">多维树数据结构</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/advanced-data-structures/nary-tree" target="_blank">https://www.studytonight.com/advanced-data-structures/nary-tree</a></p>
+</blockquote>
+<p>N 元树是一种允许我们拥有特定节点的<code>n</code>个子节点的树，因此得名 <strong>N 元</strong>，这使得它<strong>比非常常见的二叉树</strong>稍微复杂一些，后者允许我们最多拥有一个特定节点的 2 个子节点。</p>
+<p>N 元树的图示如下所示:</p>
+<p><img src="img/353d1fd6fd89cddd588fc0c70ab389c6.png" alt="N-ary Tree"></img></p>
+<p>在上面显示的 N 元树中，我们可以注意到总共有 <strong>11 个节点</strong>和<strong>有些节点有三个子节点</strong>，有些只有一个。在二叉树的情况下，更容易存储这些子节点，因为我们可以将两个节点(即左节点和右节点)分配给一个特定的节点来标记它的子节点，但这里并没有那么简单。为了存储任何树节点的子节点，我们使用了另一种数据结构，主要是 C++ 中的 vector 和 Java 中的 LinkedList。</p>
+<h2 id="多维树的实现">多维树的实现</h2>
+<p>当我们处理非线性数据结构时，首先要做的是为它们创建我们自己的结构(Java 中的构造器)。就像在二叉树的情况下，我们使用一个类<code>TreeNode</code>，在这个类中，我们创建我们的构造器并拥有我们的类级变量。</p>
+<p>考虑下面的代码片段:</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> TreeNode{
+        <span class="hljs-keyword">int</span> val;
+        List&lt;TreeNode&gt; children = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+
+        TreeNode(<span class="hljs-keyword">int</span> data){
+            val = data;
+        }
+
+        TreeNode(<span class="hljs-keyword">int</span> data,List&lt;TreeNode&gt; child){
+            val = data;
+            children = child;
+        }
+}
+</code></pre>
+<p>在上面的代码片段中，我们有一个名为<code>TreeNode</code>的类，该类又包含两个同名的构造器，但它们本质上是重载的(方法名相同但参数不同)。我们还有两个标识符，其中一个是存储任何特定节点的值的 val，然后我们有一个 List 来存储树的任何节点的子节点。</p>
+<p>上面的片段包含了我们的树的基本结构，现在只剩下制作一个，然后稍后我们将看到如何使用级别顺序遍历来打印树。为了构建一棵树，我们将使用我们在上面的类中定义的构造器。</p>
+<p>考虑下面的代码片段:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        <span class="hljs-comment">// creating an exact replica of the above pictorial N-ary Tree</span>
+        TreeNode root = <span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">1</span>);
+        root.children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">2</span>));
+        root.children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">3</span>));
+        root.children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">4</span>));
+        root.children.get(<span class="hljs-number">0</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">5</span>));
+        root.children.get(<span class="hljs-number">0</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">6</span>));
+        root.children.get(<span class="hljs-number">0</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">7</span>));
+        root.children.get(<span class="hljs-number">1</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">8</span>));
+        root.children.get(<span class="hljs-number">2</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">9</span>));
+        root.children.get(<span class="hljs-number">2</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">10</span>));
+        root.children.get(<span class="hljs-number">2</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">11</span>));
+        printNAryTree(root);
+}
+</code></pre>
+<p>首先，我们创建了我们的 N 元树的<strong>根节点，然后我们必须给这个根节点分配一些子节点，我们通过使用点(<code>.</code>)操作符和访问根节点的子属性来实现这一点，然后使用<code>List</code>接口提供的添加方法向根节点添加不同的子节点。一旦我们添加了根节点的所有子节点，就到了添加每个新级别节点的子节点的时候了，我们首先使用列表接口提供的 get 方法访问该节点，然后将相应的子节点添加到该节点。</strong></p>
+<p>最后，我们打印这个 N 元树，我们通过调用<code>printNAryTree</code>方法来完成。</p>
+<p>现在，由于打印一棵树并不像遍历一组项目那么简单，我们有不同的技术(精确地说是算法)可以使用。这些主要是:</p>
+<ul>
+<li><p><strong>有序遍历</strong></p>
+</li>
+<li><p><strong>前序遍历</strong></p>
+</li>
+<li><p><strong>后序遍历</strong></p>
+</li>
+<li><p><strong>层级顺序遍历</strong></p>
+</li>
+</ul>
+<p>出于本教程的目的，我们将使用级别顺序遍历方法，因为它更容易理解，前提是您之前已经看过它在二叉树上的工作方式。</p>
+<h3 id="层级顺序遍历打印-n-元树">层级顺序遍历(打印 N 元树)</h3>
+<p>任何树的级别顺序遍历都考虑到这样一个事实，即我们希望首先在根级别打印节点，然后前进到下一个级别，并不断重复这个过程，直到我们到达最后一个级别。我们利用队列数据结构来存储特定级别的节点。</p>
+<p>考虑一个简单的 N 元树，如下所示:</p>
+<p><img src="img/b1fb19d5ebcc9c44b424bec7e34ac9d7.png" alt="N-ary Tree "></img></p>
+<p>上述树的级别顺序遍历如下所示:</p>
+<pre><code class="lang-cpp"><span class="hljs-number">1</span>
+<span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span>
+</code></pre>
+<p>考虑下面的代码片段:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printNAryTree</span><span class="hljs-params">(TreeNode root)</span></span>{
+        <span class="hljs-keyword">if</span>(root == null) <span class="hljs-keyword">return</span>;
+        Queue&lt;TreeNode&gt; <span class="hljs-built_in">queue</span> = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+        <span class="hljs-built_in">queue</span>.offer(root);
+        <span class="hljs-keyword">while</span>(!<span class="hljs-built_in">queue</span>.isEmpty()) {
+            <span class="hljs-keyword">int</span> len = <span class="hljs-built_in">queue</span>.size();
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;len;i++) { <span class="hljs-comment">// so that we can reach each level</span>
+                TreeNode node = <span class="hljs-built_in">queue</span>.poll();
+                System.out.print(node.val + <span class="hljs-string">" "</span>);
+                <span class="hljs-keyword">for</span> (TreeNode item : node.children) { <span class="hljs-comment">// for-Each loop to iterate over all childrens</span>
+                    <span class="hljs-built_in">queue</span>.offer(item);
+                }
+            }
+            System.out.println();
+        }
+}
+</code></pre>
+<p>整个代码如下所示:</p>
+<pre><code class="lang-cpp">import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> NAryTree {
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> TreeNode{
+        <span class="hljs-keyword">int</span> val;
+        List&lt;TreeNode&gt; children = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+
+        TreeNode(<span class="hljs-keyword">int</span> data){
+            val = data;
+        }
+
+        TreeNode(<span class="hljs-keyword">int</span> data,List&lt;TreeNode&gt; child){
+            val = data;
+            children = child;
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printNAryTree</span><span class="hljs-params">(TreeNode root)</span></span>{
+        <span class="hljs-keyword">if</span>(root == null) <span class="hljs-keyword">return</span>;
+        Queue&lt;TreeNode&gt; <span class="hljs-built_in">queue</span> = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+        <span class="hljs-built_in">queue</span>.offer(root);
+        <span class="hljs-keyword">while</span>(!<span class="hljs-built_in">queue</span>.isEmpty()) {
+            <span class="hljs-keyword">int</span> len = <span class="hljs-built_in">queue</span>.size();
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;len;i++) {
+                TreeNode node = <span class="hljs-built_in">queue</span>.poll();
+                assert node != null;
+                System.out.print(node.val + <span class="hljs-string">" "</span>);
+                <span class="hljs-keyword">for</span> (TreeNode item : node.children) {
+                    <span class="hljs-built_in">queue</span>.offer(item);
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        TreeNode root = <span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">1</span>);
+        root.children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">2</span>));
+        root.children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">3</span>));
+        root.children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">4</span>));
+        root.children.get(<span class="hljs-number">0</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">5</span>));
+        root.children.get(<span class="hljs-number">0</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">6</span>));
+        root.children.get(<span class="hljs-number">0</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">7</span>));
+        root.children.get(<span class="hljs-number">1</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">8</span>));
+        root.children.get(<span class="hljs-number">2</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">9</span>));
+        root.children.get(<span class="hljs-number">2</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">10</span>));
+        root.children.get(<span class="hljs-number">2</span>).children.add(<span class="hljs-keyword">new</span> TreeNode(<span class="hljs-number">11</span>));
+        printNAryTree(root);
+    }
+}
+</code></pre>
+<p>上面代码的输出是:</p>
+<p>1
+2 3 4
+5 6 7 8 9 10 11</p>
+<p>我们可以将这个输出与开始时 N 元树的图形表示进行比较，每个级别节点都包含相同的值。</p>
+<h2 id="二叉树的类型">二叉树的类型</h2>
+<p>以下是二叉树的类型:</p>
+<h3 id="1-全-n-和树">1. 全 N 和树</h3>
+<p>全 N 元树是一种 N 元树，它允许每个节点有 0 或 N 个子节点。</p>
+<p>考虑如下所示的完整 N 元树的图示:</p>
+<p><img src="img/957f873483089dcacb00ef4f8cfd6e49.png" alt="full N-ary Tree"></img></p>
+<p>请注意，上述 N 元的所有节点都有 4 个子节点或 0 个子节点，因此满足该属性。</p>
+<h3 id="2完全-n-元树">2.完全 N 元树</h3>
+<p>一个完整的 N 元树是一个 N 元树，在这个树中，除了最后一级节点之外，树的每一级节点都应该是完整的(应该正好有 <strong>N 个子节点</strong>)，如果最后一级节点不完整，那么这些节点必须是“尽可能左边的”。</p>
+<p>考虑如下所示的完整 N 元树的图形表示:</p>
+<p><img src="img/d3848729009d85d79829c40e96b59928.png" alt="complete N ary tree"></img></p>
+<h3 id="3完美-n-元树">3.完美 N 元树</h3>
+<p>一个完美的 N 元树是一个完整的 N 元树，但是叶节点的级别必须相同。</p>
+<p>考虑如下所示的完美 N 元树的图形表示:</p>
+<p><img src="img/8769bbc4aa4e15dae1a34478d53942c4.png" alt="perfect n-ary tree"></img></p>
+<h2 id="结论">结论</h2>
+<ul>
+<li>我们了解了什么是二叉树。</li>
+<li>我们还学习了如何在 Java 中实现 N 元树(通过级别顺序遍历)。</li>
+<li>然后我们了解了总共有哪些不同类型的 N 元树。</li>
+</ul>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="378.html" class="navigation navigation-prev " aria-label="Previous page: 高级树">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="380.html" class="navigation navigation-next " aria-label="Next page: 树型数据结构">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"多维树数据结构","level":"1.1.2","depth":2,"next":{"title":"树型数据结构","level":"1.1.3","depth":2,"path":"380.md","ref":"380.md","articles":[]},"previous":{"title":"高级树","level":"1.1.1","depth":2,"path":"378.md","ref":"378.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"379.md","mtime":"2025-04-30T01:08:58.903Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:13.112Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

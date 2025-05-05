@@ -1,0 +1,2153 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Pandas 数据帧combine_first()方法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="351.html" />
+    
+    
+    <link rel="prev" href="349.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Pandas
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="326.html">
+            
+                <a href="326.html">
+            
+                    
+                    Pandas 介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="327.html">
+            
+                <a href="327.html">
+            
+                    
+                    Pandas 的特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="328.html">
+            
+                <a href="328.html">
+            
+                    
+                    Pandas 在数据科学产业中的应用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="329.html">
+            
+                <a href="329.html">
+            
+                    
+                    使用 Pandas 的利弊
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="330.html">
+            
+                <a href="330.html">
+            
+                    
+                    Pandas 数据帧参考
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="331.html">
+            
+                <a href="331.html">
+            
+                    
+                    Pandas 数据帧abs()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="332.html">
+            
+                <a href="332.html">
+            
+                    
+                    Pandas 数据帧agg()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="333.html">
+            
+                <a href="333.html">
+            
+                    
+                    Pandas 数据帧align()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="334.html">
+            
+                <a href="334.html">
+            
+                    
+                    Pandas 数据帧all()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="335.html">
+            
+                <a href="335.html">
+            
+                    
+                    Pandas 数据帧any()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="336.html">
+            
+                <a href="336.html">
+            
+                    
+                    Pandas 数据帧append()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="337.html">
+            
+                <a href="337.html">
+            
+                    
+                    Pandas 数据帧apply()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="338.html">
+            
+                <a href="338.html">
+            
+                    
+                    Pandas 数据帧applymap()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="339.html">
+            
+                <a href="339.html">
+            
+                    
+                    Pandas 数据帧asfreq()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="340.html">
+            
+                <a href="340.html">
+            
+                    
+                    Pandas 数据帧asof()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="341.html">
+            
+                <a href="341.html">
+            
+                    
+                    Pandas 数据帧assign()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="342.html">
+            
+                <a href="342.html">
+            
+                    
+                    Pandas 数据帧astype()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="343.html">
+            
+                <a href="343.html">
+            
+                    
+                    Pandas 数据帧at_time()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="344.html">
+            
+                <a href="344.html">
+            
+                    
+                    Pandas 数据帧backfill()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="345.html">
+            
+                <a href="345.html">
+            
+                    
+                    Pandas 数据帧between_time()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="346.html">
+            
+                <a href="346.html">
+            
+                    
+                    Pandas 数据帧boxplot()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="347.html">
+            
+                <a href="347.html">
+            
+                    
+                    Pandas 数据帧clip()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="348.html">
+            
+                <a href="348.html">
+            
+                    
+                    Pandas 数据帧bool()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="349.html">
+            
+                <a href="349.html">
+            
+                    
+                    Pandas 数据帧combine()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.25" data-path="350.html">
+            
+                <a href="350.html">
+            
+                    
+                    Pandas 数据帧combine_first()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="351.html">
+            
+                <a href="351.html">
+            
+                    
+                    Pandas 数据帧compare()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="352.html">
+            
+                <a href="352.html">
+            
+                    
+                    Pandas 数据帧convert_dtypes()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="353.html">
+            
+                <a href="353.html">
+            
+                    
+                    Pandas 数据帧corr()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="354.html">
+            
+                <a href="354.html">
+            
+                    
+                    Pandas 数据帧copy()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="355.html">
+            
+                <a href="355.html">
+            
+                    
+                    Pandas 数据帧corrwith()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="356.html">
+            
+                <a href="356.html">
+            
+                    
+                    Pandas 数据帧count()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="357.html">
+            
+                <a href="357.html">
+            
+                    
+                    Pandas 数据帧cov()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="358.html">
+            
+                <a href="358.html">
+            
+                    
+                    Pandas 数据帧cummax()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="359.html">
+            
+                <a href="359.html">
+            
+                    
+                    Pandas 数据帧cummin()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="360.html">
+            
+                <a href="360.html">
+            
+                    
+                    Pandas 数据帧cumprod()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="361.html">
+            
+                <a href="361.html">
+            
+                    
+                    Pandas 数据帧cumsum()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="362.html">
+            
+                <a href="362.html">
+            
+                    
+                    Pandas 数据帧describe()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="363.html">
+            
+                <a href="363.html">
+            
+                    
+                    Pandas 数据帧diff()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="364.html">
+            
+                <a href="364.html">
+            
+                    
+                    Pandas 数据帧div()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="365.html">
+            
+                <a href="365.html">
+            
+                    
+                    Pandas 数据帧dot()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="366.html">
+            
+                <a href="366.html">
+            
+                    
+                    Pandas 数据帧drop()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="367.html">
+            
+                <a href="367.html">
+            
+                    
+                    Pandas 数据帧drop_duplicates()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="368.html">
+            
+                <a href="368.html">
+            
+                    
+                    Pandas 数据帧droplevel()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="369.html">
+            
+                <a href="369.html">
+            
+                    
+                    Pandas 数据帧dropna()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="370.html">
+            
+                <a href="370.html">
+            
+                    
+                    Pandas 数据帧duplicated()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.46" data-path="371.html">
+            
+                <a href="371.html">
+            
+                    
+                    Pandas 数据帧eq()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.47" data-path="372.html">
+            
+                <a href="372.html">
+            
+                    
+                    Pandas 数据帧equals()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.48" data-path="373.html">
+            
+                <a href="373.html">
+            
+                    
+                    Pandas 数据帧expanding()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.49" data-path="374.html">
+            
+                <a href="374.html">
+            
+                    
+                    Pandas 数据帧explode()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.50" data-path="375.html">
+            
+                <a href="375.html">
+            
+                    
+                    Pandas 数据帧ffill()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.51" data-path="376.html">
+            
+                <a href="376.html">
+            
+                    
+                    Pandas 数据帧fillna()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.52" data-path="377.html">
+            
+                <a href="377.html">
+            
+                    
+                    Pandas 数据帧filter()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.53" data-path="378.html">
+            
+                <a href="378.html">
+            
+                    
+                    Pandas 数据帧first()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.54" data-path="379.html">
+            
+                <a href="379.html">
+            
+                    
+                    Pandas 数据帧first_valid_index()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.55" data-path="380.html">
+            
+                <a href="380.html">
+            
+                    
+                    Pandas 数据帧floordiv()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.56" data-path="381.html">
+            
+                <a href="381.html">
+            
+                    
+                    Pandas 数据帧from_dict()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.57" data-path="382.html">
+            
+                <a href="382.html">
+            
+                    
+                    Pandas 数据帧from_records()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.58" data-path="383.html">
+            
+                <a href="383.html">
+            
+                    
+                    Pandas 数据帧ge()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.59" data-path="384.html">
+            
+                <a href="384.html">
+            
+                    
+                    Pandas 数据帧get()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.60" data-path="385.html">
+            
+                <a href="385.html">
+            
+                    
+                    Pandas 数据帧groupby()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.61" data-path="386.html">
+            
+                <a href="386.html">
+            
+                    
+                    Pandas 数据帧gt()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.62" data-path="387.html">
+            
+                <a href="387.html">
+            
+                    
+                    Pandas 数据帧head()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.63" data-path="388.html">
+            
+                <a href="388.html">
+            
+                    
+                    Pandas 数据帧hist()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.64" data-path="389.html">
+            
+                <a href="389.html">
+            
+                    
+                    Pandas 数据帧idxmax()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.65" data-path="390.html">
+            
+                <a href="390.html">
+            
+                    
+                    Pandas 数据帧idxmin()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.66" data-path="391.html">
+            
+                <a href="391.html">
+            
+                    
+                    Pandas 数据帧infer_objects()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.67" data-path="392.html">
+            
+                <a href="392.html">
+            
+                    
+                    Pandas 数据帧info()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.68" data-path="393.html">
+            
+                <a href="393.html">
+            
+                    
+                    Pandas 数据帧insert()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.69" data-path="394.html">
+            
+                <a href="394.html">
+            
+                    
+                    Pandas 数据帧interpolate()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.70" data-path="395.html">
+            
+                <a href="395.html">
+            
+                    
+                    Pandas 数据帧isin()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.71" data-path="396.html">
+            
+                <a href="396.html">
+            
+                    
+                    Pandas 数据帧isna()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.72" data-path="397.html">
+            
+                <a href="397.html">
+            
+                    
+                    Pandas 数据帧isnull()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.73" data-path="398.html">
+            
+                <a href="398.html">
+            
+                    
+                    Pandas 数据帧items()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.74" data-path="399.html">
+            
+                <a href="399.html">
+            
+                    
+                    Pandas 数据帧iteritems()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.75" data-path="400.html">
+            
+                <a href="400.html">
+            
+                    
+                    Pandas 数据帧iterrows()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.76" data-path="401.html">
+            
+                <a href="401.html">
+            
+                    
+                    Pandas 数据帧itertuples()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.77" data-path="402.html">
+            
+                <a href="402.html">
+            
+                    
+                    Pandas 数据帧join()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.78" data-path="403.html">
+            
+                <a href="403.html">
+            
+                    
+                    Pandas 数据帧keys()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.79" data-path="404.html">
+            
+                <a href="404.html">
+            
+                    
+                    Pandas 数据帧kurt()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.80" data-path="405.html">
+            
+                <a href="405.html">
+            
+                    
+                    Pandas 数据帧kurtosis()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.81" data-path="406.html">
+            
+                <a href="406.html">
+            
+                    
+                    Pandas 数据帧last()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.82" data-path="407.html">
+            
+                <a href="407.html">
+            
+                    
+                    Pandas 数据帧last_valid_index()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.83" data-path="408.html">
+            
+                <a href="408.html">
+            
+                    
+                    Pandas 数据帧le()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.84" data-path="409.html">
+            
+                <a href="409.html">
+            
+                    
+                    Pandas 数据帧lt()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.85" data-path="410.html">
+            
+                <a href="410.html">
+            
+                    
+                    Pandas 数据帧mad()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.86" data-path="411.html">
+            
+                <a href="411.html">
+            
+                    
+                    Pandas 数据帧max()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.87" data-path="412.html">
+            
+                <a href="412.html">
+            
+                    
+                    Pandas 数据帧mean()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.88" data-path="413.html">
+            
+                <a href="413.html">
+            
+                    
+                    Pandas 数据帧median()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.89" data-path="414.html">
+            
+                <a href="414.html">
+            
+                    
+                    Pandas 数据帧memory_usage()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.90" data-path="415.html">
+            
+                <a href="415.html">
+            
+                    
+                    Pandas 数据帧min()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.91" data-path="416.html">
+            
+                <a href="416.html">
+            
+                    
+                    Pandas 数据帧mod()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.92" data-path="417.html">
+            
+                <a href="417.html">
+            
+                    
+                    Pandas 数据帧mul()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.93" data-path="418.html">
+            
+                <a href="418.html">
+            
+                    
+                    Pandas 数据帧multiply()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.94" data-path="419.html">
+            
+                <a href="419.html">
+            
+                    
+                    Pandas 数据帧ne()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.95" data-path="420.html">
+            
+                <a href="420.html">
+            
+                    
+                    Pandas 数据帧notna()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.96" data-path="421.html">
+            
+                <a href="421.html">
+            
+                    
+                    Pandas 数据帧nlargest()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.97" data-path="422.html">
+            
+                <a href="422.html">
+            
+                    
+                    Pandas 数据帧notnull()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.98" data-path="423.html">
+            
+                <a href="423.html">
+            
+                    
+                    Pandas 数据帧nsmallest()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.99" data-path="424.html">
+            
+                <a href="424.html">
+            
+                    
+                    Pandas 数据帧nunique()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.100" data-path="425.html">
+            
+                <a href="425.html">
+            
+                    
+                    Pandas 数据帧pad()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.101" data-path="426.html">
+            
+                <a href="426.html">
+            
+                    
+                    Pandas 数据帧pop()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.102" data-path="427.html">
+            
+                <a href="427.html">
+            
+                    
+                    Pandas 数据帧pow()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.103" data-path="428.html">
+            
+                <a href="428.html">
+            
+                    
+                    Pandas 数据帧prod()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.104" data-path="429.html">
+            
+                <a href="429.html">
+            
+                    
+                    Pandas 数据帧product()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.105" data-path="430.html">
+            
+                <a href="430.html">
+            
+                    
+                    Pandas 数据帧quantile()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.106" data-path="431.html">
+            
+                <a href="431.html">
+            
+                    
+                    Pandas 数据帧query()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.107" data-path="432.html">
+            
+                <a href="432.html">
+            
+                    
+                    Pandas 数据帧radd()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.108" data-path="433.html">
+            
+                <a href="433.html">
+            
+                    
+                    Pandas 数据帧pct_change()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.109" data-path="434.html">
+            
+                <a href="434.html">
+            
+                    
+                    Pandas 数据帧mode()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.110" data-path="435.html">
+            
+                <a href="435.html">
+            
+                    
+                    Pandas 数据帧pipe()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.111" data-path="436.html">
+            
+                <a href="436.html">
+            
+                    
+                    Pandas 数据帧rank()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.112" data-path="437.html">
+            
+                <a href="437.html">
+            
+                    
+                    Pandas 数据帧rdiv()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.113" data-path="438.html">
+            
+                <a href="438.html">
+            
+                    
+                    Pandas 数据帧reindex()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.114" data-path="439.html">
+            
+                <a href="439.html">
+            
+                    
+                    Pandas 数据帧pivot()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.115" data-path="440.html">
+            
+                <a href="440.html">
+            
+                    
+                    Pandas 数据帧pivot_table()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.116" data-path="441.html">
+            
+                <a href="441.html">
+            
+                    
+                    Pandas 数据帧rename()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.117" data-path="442.html">
+            
+                <a href="442.html">
+            
+                    
+                    Pandas 序列参考
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.118" data-path="443.html">
+            
+                <a href="443.html">
+            
+                    
+                    Pandas 序列abs()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.119" data-path="444.html">
+            
+                <a href="444.html">
+            
+                    
+                    Pandas 序列add()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.120" data-path="445.html">
+            
+                <a href="445.html">
+            
+                    
+                    Pandas 序列agg()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.121" data-path="446.html">
+            
+                <a href="446.html">
+            
+                    
+                    Pandas 序列aggregate()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.122" data-path="447.html">
+            
+                <a href="447.html">
+            
+                    
+                    Pandas 序列add_prefix()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.123" data-path="448.html">
+            
+                <a href="448.html">
+            
+                    
+                    Pandas 序列add_suffix()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.124" data-path="449.html">
+            
+                <a href="449.html">
+            
+                    
+                    Pandas 序列all()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.125" data-path="450.html">
+            
+                <a href="450.html">
+            
+                    
+                    Pandas 序列any()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.126" data-path="451.html">
+            
+                <a href="451.html">
+            
+                    
+                    Pandas 序列append()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.127" data-path="452.html">
+            
+                <a href="452.html">
+            
+                    
+                    Pandas 序列apply()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.128" data-path="453.html">
+            
+                <a href="453.html">
+            
+                    
+                    Pandas 序列argmax()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.129" data-path="454.html">
+            
+                <a href="454.html">
+            
+                    
+                    Pandas 序列argmin()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.130" data-path="455.html">
+            
+                <a href="455.html">
+            
+                    
+                    Pandas 序列argsort()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.131" data-path="456.html">
+            
+                <a href="456.html">
+            
+                    
+                    Pandas 序列asfreq()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.132" data-path="457.html">
+            
+                <a href="457.html">
+            
+                    
+                    Pandas 序列astype()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.133" data-path="458.html">
+            
+                <a href="458.html">
+            
+                    
+                    Pandas 序列at_time()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.134" data-path="459.html">
+            
+                <a href="459.html">
+            
+                    
+                    Pandas 序列backfill()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.135" data-path="460.html">
+            
+                <a href="460.html">
+            
+                    
+                    Pandas 序列bfill()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.136" data-path="461.html">
+            
+                <a href="461.html">
+            
+                    
+                    Pandas 序列between_time()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.137" data-path="462.html">
+            
+                <a href="462.html">
+            
+                    
+                    Pandas 序列bool()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.138" data-path="463.html">
+            
+                <a href="463.html">
+            
+                    
+                    Pandas 序列clip()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Pandas 数据帧combine_first()方法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="pandas-数据帧combinefirst方法">Pandas 数据帧<code>combine_first()</code>方法</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/pandas/pandas-dataframe-combine_first-method" target="_blank">https://www.studytonight.com/pandas/pandas-dataframe-combine_first-method</a></p>
+</blockquote>
+<p>在本教程中，我们将学习 Pandas<code>DataFrame.combine_first()</code>的方法。它用其他中相同位置的值更新空元素，并返回数据帧。它通过用另一个数据帧中的非空值填充一个数据帧中的空值来组合两个数据帧对象。结果数据帧的行和列索引将是这两者的并集。</p>
+<p>下图显示了<code>DataFrame.combine_first()</code>方法的语法。</p>
+<h3 id="句法">句法</h3>
+<pre><code class="lang-py">DataFrame.combine_first(other)
+</code></pre>
+<h3 id="因素">因素</h3>
+<p><strong>其他:</strong>它表示用于填充空值的其他提供的数据帧。</p>
+<h2 id="示例-1使用dataframecombinefirst方法组合数据帧">示例 1:使用<code>DataFrame.combine_first()</code>方法组合数据帧</h2>
+<p>下面的例子展示了<code>DataFrame.combine_first()</code>方法。</p>
+<pre><code class="lang-py"><span class="hljs-comment">#importing pandas as pd</span>
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+df1 = pd.DataFrame({<span class="hljs-string">'A'</span>: [<span class="hljs-keyword">None</span>, <span class="hljs-number">0</span>], <span class="hljs-string">'B'</span>: [<span class="hljs-keyword">None</span>, <span class="hljs-number">4</span>]})
+df2 = pd.DataFrame({<span class="hljs-string">'A'</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], <span class="hljs-string">'B'</span>: [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>]})
+print(df1.combine_first(df2))
+</code></pre>
+<p>一旦我们运行程序，我们将得到以下结果。</p>
+<p>甲乙
+0 1.0 3.0
+1 0.0 4.0</p>
+<h2 id="示例-2使用dataframecombinefirst方法组合数据帧">示例 2:使用<code>DataFrame.combine_first()</code>方法组合数据帧</h2>
+<p>下面的例子和上一个例子类似，在这个例子中尝试用<code>df2</code>数据帧添加<code>df1</code>数据帧，看看有什么不同。</p>
+<pre><code class="lang-py"><span class="hljs-comment">#importing pandas as pd</span>
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+df1 = pd.DataFrame({<span class="hljs-string">'A'</span>: [<span class="hljs-keyword">None</span>, <span class="hljs-number">0</span>], <span class="hljs-string">'B'</span>: [<span class="hljs-keyword">None</span>, <span class="hljs-number">4</span>]})
+df2 = pd.DataFrame({<span class="hljs-string">'A'</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], <span class="hljs-string">'B'</span>: [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>]})
+print(df2.combine_first(df1))
+</code></pre>
+<p>一旦我们运行程序，我们将得到以下结果。</p>
+<p>甲乙
+0 1 3
+1 1 3</p>
+<h2 id="示例-3如果两个数据帧中的同一元素为none">示例 3:如果两个数据帧中的同一元素为<code>None</code></h2>
+<p>如果两个数据帧中的相同元素为<code>None i</code> t，则两个数据帧对象以相同的空值组合。</p>
+<pre><code class="lang-py"><span class="hljs-comment">#importing pandas as pd</span>
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+df1 = pd.DataFrame({<span class="hljs-string">'A'</span>: [<span class="hljs-keyword">None</span>, <span class="hljs-number">0</span>], <span class="hljs-string">'B'</span>: [<span class="hljs-keyword">None</span>, <span class="hljs-number">4</span>]})
+df2 = pd.DataFrame({<span class="hljs-string">'A'</span>: [<span class="hljs-keyword">None</span>, <span class="hljs-number">1</span>], <span class="hljs-string">'B'</span>: [<span class="hljs-keyword">None</span>, <span class="hljs-number">3</span>]})
+print(df1.combine_first(df2))
+</code></pre>
+<p>一旦我们运行程序，我们将得到以下结果。</p>
+<p>A B
+0 NaN NaN
+1 0.0 4.0</p>
+<h2 id="示例-4使用dataframecombinefirst方法组合数据帧">示例 4:使用<code>DataFrame.combine_first()</code>方法组合数据帧</h2>
+<p>如果该空值的位置不存在于其他中，则空值仍然保留在数据帧中。</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+df1 = pd.DataFrame({<span class="hljs-string">'A'</span>: [<span class="hljs-keyword">None</span>, <span class="hljs-number">0</span>], <span class="hljs-string">'B'</span>: [<span class="hljs-number">4</span>, <span class="hljs-keyword">None</span>]})
+df2 = pd.DataFrame({<span class="hljs-string">'B'</span>: [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], <span class="hljs-string">'C'</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>]}, index=[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>])
+print(df1.combine_first(df2))
+</code></pre>
+<p>一旦我们运行程序，我们将得到以下结果。</p>
+<p>A B C
+0 NaN 4.0 NaN
+1 0.0 3.0 1.0
+2 NaN 3.0 1.0</p>
+<h3 id="结论">结论</h3>
+<p>在本教程中，我们学习了 Pandas<code>DataFrame.combine_first()</code>方法。我们解决了一些例子，理解了<code>DataFrame.combine_first()</code>方法有效地填充了数据帧中的空值，并为第一个数据帧中不存在的索引和列提供了值。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="349.html" class="navigation navigation-prev " aria-label="Previous page: Pandas 数据帧combine()方法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="351.html" class="navigation navigation-next " aria-label="Next page: Pandas 数据帧compare()方法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Pandas 数据帧combine_first()方法","level":"1.1.25","depth":2,"next":{"title":"Pandas 数据帧compare()方法","level":"1.1.26","depth":2,"path":"351.md","ref":"351.md","articles":[]},"previous":{"title":"Pandas 数据帧combine()方法","level":"1.1.24","depth":2,"path":"349.md","ref":"349.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"350.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:45.456Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

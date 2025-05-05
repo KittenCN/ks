@@ -1,0 +1,462 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>AdaBoost · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="GBDT.html" />
+    
+    
+    <link rel="prev" href="RandomForest.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    常见机器学习算法的数学推导
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="LinearRegression.html">
+            
+                <a href="LinearRegression.html">
+            
+                    
+                    线性回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="LogisticRegression.html">
+            
+                <a href="LogisticRegression.html">
+            
+                    
+                    逻辑回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="SimpleBayes.html">
+            
+                <a href="SimpleBayes.html">
+            
+                    
+                    朴素贝叶斯
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="KNN.html">
+            
+                <a href="KNN.html">
+            
+                    
+                    K近邻
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="DecisionTrees.html">
+            
+                <a href="DecisionTrees.html">
+            
+                    
+                    决策树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="RandomForest.html">
+            
+                <a href="RandomForest.html">
+            
+                    
+                    随机森林
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.7" data-path="AdaBoost.html">
+            
+                <a href="AdaBoost.html">
+            
+                    
+                    AdaBoost
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="GBDT.html">
+            
+                <a href="GBDT.html">
+            
+                    
+                    梯度提升树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="XGBoost.html">
+            
+                <a href="XGBoost.html">
+            
+                    
+                    XGBoost
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >AdaBoost</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="adaboost">AdaBoost</h1>
+<p><strong>约定：</strong></p>
+<ul>
+<li><font color="F66A65">红色：</font>对名词进行解释的重点</li>
+<li><font color="FDA63E">黄色：</font>各部分总结中的重点</li>
+<li><font color="62D257">绿色：</font>算法基本假设与解释</li>
+</ul>
+<p><strong>摘要：</strong></p>
+<ol>
+<li>详细介绍了算法的各个步骤（<a href="#32-算法过程">算法过程</a>）</li>
+</ol>
+<p><strong>原理实现：</strong>
+<a href="algorithms/ai/ai_math/Extra6.html">AdaBoost的决策过程</a></p>
+<h2 id="一、一句话概括">一、一句话概括</h2>
+<p>1995年提出（和作者同龄）的AdaBoost是指：每一轮算法的任务重点关注之前错误比较多的哪些样本。通过赋予样本权重来衡量「之前错误比较多」这件事，错误次数越多，权重越高。</p>
+<h2 id="二、boosting">二、Boosting</h2>
+<h3 id="21-boosting类算法发展">2.1 Boosting类算法发展</h3>
+<ol>
+<li>1990 Schapire</li>
+<li>1993 Drunker 和 Schapire 应用Boosting解决OCR问题</li>
+<li>1995 Freund 和 Schapire 提出AdaBoost<h3 id="22-boosting的本质">2.2 Boosting的本质</h3>
+Boosting意为提升：每个个体学习器都在弥补集成学习器的欠缺<h2 id="三、adaboost">三、AdaBoost</h2>
+<h3 id="31-ada的含义">3.1 ada的含义</h3>
+ada指的是：样本的权重在不断变化，每一轮重点关注权重比较大的样本（分错了的惩罚会比较高）。这样做的好处是，即使权重低（意味着之前很多模型都分对了）的样本分错了，最后加权的时候，通过其他模型也能把结果拉回来。<h3 id="32-算法过程">3.2 算法过程</h3>
+<h4 id="321-初始化权重">3.2.1 初始化权重</h4>
+最开始各样本的权重都是一样的（之后每一轮都会重新计算所有样本的权重）
+$$w_i = \frac{1}{样本数}$$<h4 id="322-找到最佳分类器">3.2.2 找到最佳分类器</h4>
+每一轮分类器的目标都是一样的：使得分类错误的样本的权重和最小（这样会使得每一轮的分类器都有一些重点关注的样本）<h4 id="323-计算该分类器权重">3.2.3 计算该分类器权重</h4>
+简单粗暴，错的多的话权重低，错的少的话权重高(err是分类错误样本的权重和)
+$$\alpha_i = \frac{1}{2}ln(\frac{1-err}{err})$$<h4 id="324-查看模型总效果">3.2.4 查看模型总效果</h4>
+看一下当前模型（累计的弱分类器）的正确率是否已经达标了（可以提前停止）其中
+$sign(x) = \frac{x}{|x|}$ 也就是说只取最后结果的符号作为分类的依据
+$$predict = sign(w_i * predict_i)$$<h4 id="325-重新计算数据集中样本的权重">3.2.5 重新计算数据集中样本的权重</h4>
+如果不用继续计算，算法停止，如果还需要计算下一轮，重新计算数据的分布</li>
+<li>和之前的权重有关</li>
+<li>和这次的对错有关</li>
+<li>和当前算法的权重有关
+$$sample_i(正确) = w_i <em> e^{alpha_i </em> 1}$$<br></br>$$sample_i(错误) = w_i <em> e^{alpha_i </em> (-1)}$$  </li>
+</ol>
+<p>计算完成后重新寻找最佳分类器（3.2.3）</p>
+<h2 id="四、效率证明">四、效率证明</h2>
+<p>这部分见《统计学习方法》 目前把这部分用自己的话吃透，先挖个坑。</p>
+<h2 id="五、总结">五、总结</h2>
+<blockquote>
+<ol>
+<li>AdaBoost提出：可以<font color="FDA63E">给样本以权重，从而随着训练的进行改变了样本的分布</font></li>
+<li>虽然每个模型都能看到所有数据，但<font color="FDA63E">看到的数据的分布不同</font></li>
+</ol>
+</blockquote>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="RandomForest.html" class="navigation navigation-prev " aria-label="Previous page: 随机森林">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="GBDT.html" class="navigation navigation-next " aria-label="Next page: 梯度提升树">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"AdaBoost","level":"1.1.7","depth":2,"next":{"title":"梯度提升树","level":"1.1.8","depth":2,"path":"GBDT.md","ref":"GBDT.md","articles":[]},"previous":{"title":"随机森林","level":"1.1.6","depth":2,"path":"RandomForest.md","ref":"RandomForest.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"AdaBoost.md","mtime":"2025-04-21T03:09:04.302Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:43.273Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

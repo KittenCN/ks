@@ -1,0 +1,679 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>联合概率 边际概率 双变数期望值 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch06.html" />
+    
+    
+    <link rel="prev" href="ch04.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    概率论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    离散机率分布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    连续机率分布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    期望值 条件概率 失忆性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    联合概率 边际概率 双变数期望值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    多个随机变量之和的概率分布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    随机数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >联合概率 边际概率 双变数期望值</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <p><a href="...menustart"></a></p>
+<ul>
+<li><a href="#e843c56c869db7fe719b4a98d2dceadd">Week 8  联合概率，边际概率，双变数期望值</a><ul>
+<li><a href="#7a6e0b2a0774b9a999a5e891f7cc3d2c">8.1 联合概率分布</a><ul>
+<li><a href="#ecfdf56b8825bb6021bc398b2687da18">联合 PMF (Joint PMF)</a></li>
+<li><a href="#12c3181de32d16311d0a1a1c713d480c">联合 PMF 的性质</a></li>
+<li><a href="#ae2555933cfea0bde5a2585b0d731631">联合 CDF (Joint CDF)</a></li>
+<li><a href="#2ddfa5d23aecf6d8e642c4f5063fa615">联合 CDF 的性质</a></li>
+<li><a href="#82a4552a73f360a69c244464918476f9">联合 PDF 例子</a></li>
+<li><a href="#62cff33c593fc9c62714039fbd68d2f3">若𝑿, 𝒀 皆为连续随机变数怎办?</a></li>
+<li><a href="#81b351c0506c1a71878441a0a81088d1">连续联合 PDF 的性质</a></li>
+</ul>
+</li>
+<li><a href="#2ddbe1ee6b0b9481c8a52627056fedd5">8.2 边际机率分布</a><ul>
+<li><a href="#41d4f6592d31a4b16ba8e2d84689f26b">已知联合 PMF，欲得个别 PMF</a></li>
+<li><a href="#88467bd1b22479904c4cda0b92cbed46">边际 PMF (Marginal PMF)</a></li>
+<li><a href="#dcfc73f8fb33ef1e323fa7af282e7f12">边际 PDF (Marginal PDF)</a></li>
+</ul>
+</li>
+<li><a href="#b7c12c38cf6f0bd638bb87f785c54a6b">8.3 双变数期望值</a></li>
+<li><a href="#e1f7ff5183a361cd3b41e3ab5e647cb5">QUIZ</a></li>
+</ul>
+</li>
+</ul>
+<p><a href="...menuend"></a></p>
+<h2 id="e843c56c869db7fe719b4a98d2dceadd"></h2>
+
+<h1 id="week-8--联合概率，边际概率，双变数期望值">Week 8  联合概率，边际概率，双变数期望值</h1>
+<h2 id="7a6e0b2a0774b9a999a5e891f7cc3d2c"></h2>
+
+<h2 id="81-联合概率分布">8.1 联合概率分布</h2>
+<p>JOINT PROBABILITY DISTRIBUTION</p>
+<ul>
+<li>当小明出国去交换时<ul>
+<li>𝑿: 小美脸书/QQ 脱机时间，𝑿~𝑼𝑵𝑰𝑭(𝟖, 𝟏𝟐)</li>
+<li>𝒀: 小华脸书/QQ 脱机时间，𝒀~𝑼𝑵𝑰𝑭(𝟖, 𝟏𝟐)</li>
+<li>𝒁: 小园脸书/QQ 离线时间，𝒁~𝑼𝑵𝑰𝑭(𝟖, 𝟏𝟐)</li>
+<li>假设 𝑿, 𝒀, 𝒁 都是离散随机变数</li>
+</ul>
+</li>
+<li>若将小美脱机时间 𝑿 与小园脱机时间 𝒁一起看呢?<ul>
+<li>画出𝑷𝑿=𝒙,𝒁=𝒛:</li>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.1_01.png" alt=""></img></li>
+</ul>
+</li>
+<li>若将小美脱机时间 𝑿 与小园脱机时间 𝒀一起看呢?<ul>
+<li>画出𝑷 𝑿=𝒙,𝒀=𝒚 ，赫然发现!</li>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.1_02.png" alt=""></img></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>同时将多个随机变量的行为一起拿来看， 我们可以看出更多以往看不到的信息!</li>
+<li>同时考虑多个随机变量的机率分布称之为联合机率分布 (joint probability distribution)</li>
+</ul>
+<h2 id="ecfdf56b8825bb6021bc398b2687da18"></h2>
+
+<h3 id="联合-pmf-joint-pmf">联合 PMF (Joint PMF)</h3>
+<ul>
+<li>若𝑿,𝒀皆为离散随机变量，我们 可以定义他们的联合PMF<ul>
+<li>p<sub>X,Y</sub>(x,y) = P( X=x 且 Y=y )</li>
+<li>联合PMF决定了𝑿,𝒀的联合机率分布</li>
+</ul>
+</li>
+<li>Ex: 小美脱机时间 𝑿 与小华脱机时间 𝒀 的联合 PMF:<ul>
+<li>p<sub>X,Y</sub>(x,y) = P( X=x, Y=y )</li>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.1_02.png" alt=""></img></li>
+</ul>
+</li>
+</ul>
+<h2 id="12c3181de32d16311d0a1a1c713d480c"></h2>
+
+<h3 id="联合-pmf-的性质">联合 PMF 的性质</h3>
+<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.1_03.png" alt=""></img></li>
+</ul>
+<h2 id="ae2555933cfea0bde5a2585b0d731631"></h2>
+
+<h3 id="联合-cdf-joint-cdf">联合 CDF (Joint CDF)</h3>
+<ul>
+<li><p>若考虑两个随机变数 𝑿, 𝒀 的联合机率分布， 我们也可定义出所谓的联合 CDF:</p>
+</li>
+<li><p><img src="../../ap/calculus/imgs/TU_prob2_8.1_04.png" alt=""></img></p>
+</li>
+<li><p>即, (X,Y) 会落在黄色区域的几率</p>
+</li>
+</ul>
+<h2 id="2ddfa5d23aecf6d8e642c4f5063fa615"></h2>
+
+<h3 id="联合-cdf-的性质">联合 CDF 的性质</h3>
+<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_joint_CDF_prop1.png" alt=""></img></li>
+<li><p>if X and Y are independent, then F<sub>X,Y</sub>(x,y) = F<sub>X</sub>(x)·F<sub>X</sub>(y)</p>
+<ul>
+<li>反之亦然 !!!</li>
+</ul>
+</li>
+<li><p>四方格性质</p>
+<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_joint_CDF_prop2.png" alt=""></img></li>
+<li>你只需要知道4个顶点的 cdf 值</li>
+</ul>
+</li>
+</ul>
+<h2 id="82a4552a73f360a69c244464918476f9"></h2>
+
+<h3 id="联合-pdf-例子">联合 PDF 例子</h3>
+<ul>
+<li>Ex:小美等公交车时间为 𝑿, 小园等公交车时间为 𝒀 𝑿, 𝒀 两者独立且皆为连续之机率分布 𝑼𝑵𝑰𝑭 𝟎, 𝟏𝟎 。则 𝑿, 𝒀之联合 PDF 为<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_joint_ex1.png" alt=""></img></li>
+</ul>
+</li>
+<li>其他的联合pdf例子<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_joint_ex2.png" alt=""></img></li>
+</ul>
+</li>
+</ul>
+<h2 id="62cff33c593fc9c62714039fbd68d2f3"></h2>
+
+<h3 id="若𝑿-𝒀-皆为连续随机变数怎办">若𝑿, 𝒀 皆为连续随机变数怎办?</h3>
+<ul>
+<li><p><img src="../../ap/calculus/imgs/TU_prob2_8.1_cont_joint_pdf1.png" alt=""></img></p>
+</li>
+<li><p>若 𝑿, 𝒀 皆为连续随机变量，我们可以定义联合 PDF:</p>
+<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.1_cont_joint_pdf2.png" alt=""></img></li>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.1_cont_joint_pdf3.png" alt=""></img></li>
+</ul>
+</li>
+</ul>
+<h2 id="81b351c0506c1a71878441a0a81088d1"></h2>
+
+<h3 id="连续联合-pdf-的性质">连续联合 PDF 的性质</h3>
+<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_cont_joint_pdf_prop.png" alt=""></img><ul>
+<li>P(B) 是圆锥体体积</li>
+</ul>
+</li>
+</ul>
+<h2 id="2ddbe1ee6b0b9481c8a52627056fedd5"></h2>
+
+<h2 id="82-边际机率分布">8.2 边际机率分布</h2>
+<p>MARGINAL PROBABILITY DISTRIBUTION</p>
+<h2 id="41d4f6592d31a4b16ba8e2d84689f26b"></h2>
+
+<h3 id="已知联合-pmf，欲得个别-pmf">已知联合 PMF，欲得个别 PMF</h3>
+<ul>
+<li>Ex: 𝑿,𝒀分别为小美、小丽脸书/QQ 脱机时间。联合 PMF 如下:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>p<sub>X,Y</sub>(x,y)</th>
+<th>X = 8</th>
+<th>X = 9</th>
+<th>X = 10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Y = 8</td>
+<td>0.2</td>
+<td>0.1</td>
+<td>0.05</td>
+</tr>
+<tr>
+<td>Y = 9</td>
+<td>0.05</td>
+<td>0.2</td>
+<td>0.1</td>
+</tr>
+<tr>
+<td>Y = 10</td>
+<td>0.05</td>
+<td>0.1</td>
+<td>0.15</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>p<sub>X</sub>(x) = ?   p<sub>Y</sub>(y) = ?<ul>
+<li>p<sub>X</sub>(8) = 0.2 + 0.05 + 0.05 = 0.3</li>
+<li>p<sub>X</sub>(9) = 0.1 + 0.2 + 0.1 = 0.4</li>
+<li>p<sub>X</sub>(10) = 0.05 + 0.1 + 0.15 = 0.3</li>
+</ul>
+</li>
+<li>整列加起来，然后(在它的边缘)写上数字，这就是 "边际"的由来</li>
+</ul>
+<h2 id="88467bd1b22479904c4cda0b92cbed46"></h2>
+
+<h3 id="边际-pmf-marginal-pmf">边际 PMF (Marginal PMF)</h3>
+<ul>
+<li>已知联合PMF p<sub>X,Y</sub>(𝒙,𝒚)，则可求得 p<sub>X</sub>(x), p<sub>Y</sub>(y) ，称之为边际 PMF</li>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.2_02.png" alt=""></img></li>
+</ul>
+<h2 id="dcfc73f8fb33ef1e323fa7af282e7f12"></h2>
+
+<h3 id="边际-pdf-marginal-pdf">边际 PDF (Marginal PDF)</h3>
+<ul>
+<li>已知联合PDF f<sub>X,Y</sub>(𝒙,𝒚)，则可求得 f<sub>X</sub>(x), f<sub>Y</sub>(y) ，称之为边际 PDF</li>
+<li><p><img src="../../ap/calculus/imgs/TU_prob2_8.2_01.png" alt=""></img></p>
+</li>
+<li><p>Ex:</p>
+<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.2_ex1.png" alt=""></img></li>
+</ul>
+</li>
+</ul>
+<h2 id="b7c12c38cf6f0bd638bb87f785c54a6b"></h2>
+
+<h2 id="83-双变数期望值">8.3 双变数期望值</h2>
+<ul>
+<li><p>离散</p>
+<ul>
+<li>回想只考虑一个离散随机变数𝑿时 其任意函数 g(x)的期望值是:<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.1_E1.png" alt=""></img></li>
+</ul>
+</li>
+<li>若同时考虑两个离散随机变量𝑿,𝒀时，他们的任 意函数 h(X,Y) 的期望值是<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.1_E2.png" alt=""></img></li>
+</ul>
+</li>
+<li>Ex. 参考上面 小美、小丽脸书/QQ 脱机 时间的例子, 求 E[ |X-Y| ]<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.1_E3.png" alt=""></img></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>连续</p>
+<ul>
+<li>回想只考虑一个连续随机变量𝑿时 其任意函数 g(X) 的期望值是:<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.1_E4.png" alt=""></img></li>
+</ul>
+</li>
+<li>若同时考虑两个连续随机变数𝑿,𝒀时，他们的任 意函数 h(X,Y) 的期望值是<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_8.1_E5.png" alt=""></img></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>性质</p>
+<ul>
+<li>E[ αh₁(X,Y) + βh₂(X,Y) ] =  αE[h₁(X,Y)] + βE[h₂(X,Y)]</li>
+<li>若 X,Y 独立， 则<ul>
+<li>E[g(X)h(Y)] = E[g(X)]·E[h(Y)]</li>
+</ul>
+</li>
+<li><p><img src="../../ap/calculus/imgs/TU_prob2_8.1_var.png" alt=""></img></p>
+</li>
+<li><p>Var[aX+bY] = a²Var[X] + b²Var[Y] + 2Cov[X,Y]</p>
+</li>
+<li><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/b82a8c24b0063ffd95d8624f460acaaacb2a99b3" alt=""></img></li>
+<li>如果X，Y独立<ul>
+<li>Var[aX+bY] = a²Var[X] + b²Var[Y]</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="e1f7ff5183a361cd3b41e3ab5e647cb5"></h2>
+
+<h2 id="quiz">QUIZ</h2>
+<details>
+<summary>
+quiz
+</summary>
+
+1. ![](../../ap/calculus/imgs/TU_prob2_8_quiz_1.png)
+2. 某便利超商今天早上09:00開始推出兩款限量的商品，一個是可愛的馬克杯，另外一個是熱門卡通玩偶，假設限量商品全部賣完所需的時間都是Exponential Distribution的隨機變數，而且互相獨立，馬克杯和玩偶賣完所需的時間分別是T_1,T_2 (單位是hr)，而兩者的λ 分别为 1/12, 1/6. 請幫店長估計，平均需要幾個小時才能把兩項商品都賣完。
+    - A:
+        - U = max(X,Y)
+        - F<sub>U</sub>(u) = P(U≤u) = P(max(X,Y)≤u) = P(X≤u, Y≤u) 
+            - = P(X≤u)P(Y≤u) = F<sub>X</sub>(u)F<sub>Y</sub>(u)
+        - 两边求导，得
+            - f<sub>U</sub>(u) = f<sub>X</sub>(u)F<sub>Y</sub>(u) + F<sub>X</sub>(u)f<sub>Y</sub>(u)
+        - scipy
+            ```python
+            &gt;&gt;&gt; x = scipy.linspace(0,1000,100000)
+            &gt;&gt;&gt; pdf = scipy.stats.expon.pdf( x , scale=12 )*scipy.stats.expon.cdf( x , scale=6 ) + 
+                scipy.stats.expon.pdf( x , scale=6 )*scipy.stats.expon.cdf( x , scale=12 )
+            &gt;&gt;&gt; delta = 1000./100000
+            &gt;&gt;&gt; delta
+            0.01
+            &gt;&gt;&gt; (pdf * delta * x ).sum() # E[U]
+            14.001260126012166
+            ```
+        - for min(X,Y)
+            - ![](../../ap/calculus/imgs/TU_prob2_min_expon.png)
+3. 圈圈擲公正六面骰子兩次，隨機變數X代表兩次的點數和，隨機變數Y代表兩次點數的相差值 (不會是負數)，X,Y的join PDF 为P<sub>X,Y</sub>(x,y), 请问下列何者敘述正確?  (敘述正確的選項只有一個)
+    - F<sub>X,Y</sub>(4,1) = 1/9
+    - E[X] = 6   ❌  E[X] = 3.5 + 3.5 = 7
+    - P<sub>Y</sub>(2)  = 1/9  ❌   1-3,2-4,3-5,4-6, 3-1,4-2,5-3,6-4  = 2/9
+    - P<sub>Y|X=4</sub>(0) = 1/9  ❌  1/3
+    - P<sub>X</sub>(4) = 1/9  ❌ 应为 1/12 , 只有1+3,2+2,3+1 3中组合的可能
+
+
+</details>
+
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch04.html" class="navigation navigation-prev " aria-label="Previous page: 期望值 条件概率 失忆性">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch06.html" class="navigation navigation-next " aria-label="Next page: 多个随机变量之和的概率分布">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"联合概率 边际概率 双变数期望值","level":"1.6","depth":1,"next":{"title":"多个随机变量之和的概率分布","level":"1.7","depth":1,"path":"ch06.md","ref":"ch06.md","articles":[]},"previous":{"title":"期望值 条件概率 失忆性","level":"1.5","depth":1,"path":"ch04.md","ref":"ch04.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch05.md","mtime":"2025-04-20T02:39:37.908Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:18:34.382Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

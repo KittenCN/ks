@@ -1,0 +1,556 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ch04. 程序流程控制（上） · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch05.html" />
+    
+    
+    <link rel="prev" href="ch03.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    ch01. Java概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    ch02. Java关键字和保留字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    ch03. 运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.4" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    ch04. 程序流程控制（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    ch05. 程序流程控制（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    ch06. 数学函数、字符和字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    ch07. 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="ch08.html">
+            
+                <a href="ch08.html">
+            
+                    
+                    ch08. 数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="ch09.html">
+            
+                <a href="ch09.html">
+            
+                    
+                    ch09. Java面向对象（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="ch10.html">
+            
+                <a href="ch10.html">
+            
+                    
+                    ch10. Java面向对象（中）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ch11.html">
+            
+                <a href="ch11.html">
+            
+                    
+                    ch11. Java面向对象（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="ch12.html">
+            
+                <a href="ch12.html">
+            
+                    
+                    ch12. Java异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ch00.html">
+            
+                <a href="ch00.html">
+            
+                    
+                    ch00. 易错点
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ch04. 程序流程控制（上）</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="（四）程序流程控制（上）">（四）程序流程控制（上）</h1>
+<blockquote>
+<p>顺序结构，选择结构，循环结构。</p>
+<p>顺序结构省略。</p>
+</blockquote>
+<h3 id="10-if-else-语句">1.0 <code>if-else</code> 语句</h3>
+<p>1.1 <code>if</code>, <code>if-else</code>, <code>if-else if- else</code></p>
+<pre><code class="lang-Java"><span class="hljs-keyword">if</span>(条件表达式){
+        <span class="hljs-comment">//代码块</span>
+}
+
+<span class="hljs-keyword">if</span>(条件表达式){
+    <span class="hljs-comment">//代码块</span>
+}<span class="hljs-keyword">else</span>{
+        <span class="hljs-comment">//代码块</span>
+}
+
+<span class="hljs-keyword">if</span>(条件表达式){
+        <span class="hljs-comment">//代码块</span>
+}<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>{
+        <span class="hljs-comment">//代码块</span>
+}<span class="hljs-keyword">else</span>{
+        <span class="hljs-comment">//代码块</span>
+}
+</code></pre>
+<p>当有多个条件表达式的时候</p>
+<ul>
+<li>若多个条件表达式为互斥关系，哪个判断语句执行语句在上在下无所谓</li>
+<li>若多个条件表达式之间是交交集关系，根据实际情况判断哪个在前面</li>
+<li>若有包含关系，通常是范围小的声明在上面</li>
+</ul>
+<p>1.2 使用 <code>Scanner</code> 获取键盘输出</p>
+<pre><code class="lang-Java"><span class="hljs-comment">// 1.导包</span>
+inport Java.util.Scanner;
+<span class="hljs-comment">// 2.构造对象，Scanner实例化</span>
+Scanner scan = <span class="hljs-keyword">new</span> Scanner(System.in);
+<span class="hljs-comment">// 3. 数据类型对应存入</span>
+String name = scan.next();
+<span class="hljs-keyword">int</span> age = scan.nexInt();
+<span class="hljs-keyword">byte</span> b1 = scan.nextByte();
+<span class="hljs-keyword">short</span> s1 = scan.nextShort();
+<span class="hljs-keyword">long</span> l1 = scan.nextLong();
+<span class="hljs-keyword">boolean</span> bb1 = scan.nextBoolean();
+<span class="hljs-keyword">double</span> d1 = scan.nextDouble();
+</code></pre>
+<blockquote>
+<p>对于 char 类型，Scanner没有提供相关烦啊烦，只能获取一个字符串</p>
+<p>获取索引为0位置上的字符：</p>
+<p><code>char c1 = s1.charAt(0)</code></p>
+</blockquote>
+<p>1.3 使用 <code>Math.random()</code> 获得随机数值</p>
+<p><code>Math.random()</code> : [0.0, 1.0)</p>
+<p><code>(int)(Math.random() * (b - a + 1)+a)</code>: [a, b]</p>
+<p>1.4 判断字符串是否相等：<code>str.equals()</code></p>
+<pre><code class="lang-Java">String name = <span class="hljs-string">"Murphy"</span>;
+<span class="hljs-keyword">if</span>(name.equals(<span class="hljs-string">"Murphy"</span>){
+        <span class="hljs-comment">//代码</span>
+}
+</code></pre>
+<h3 id="20-switch-case">2.0 <code>switch-case</code></h3>
+<pre><code class="lang-Java"><span class="hljs-keyword">switch</span>(expression){
+        <span class="hljs-keyword">case</span> value1:
+                <span class="hljs-comment">//语句</span>
+                <span class="hljs-keyword">break</span>;
+        <span class="hljs-keyword">case</span> value2:
+                <span class="hljs-comment">//语句</span>
+                <span class="hljs-keyword">break</span>;
+                ...
+        <span class="hljs-keyword">default</span>:<span class="hljs-comment">//可选</span>
+                <span class="hljs-comment">//语句</span>
+}
+</code></pre>
+<p>说明：</p>
+<p>① <code>expression</code> 可以是 <code>byte</code>, <code>short</code>, <code>int</code>, <code>char</code>, <code>枚举类型</code>, <code>String</code></p>
+<p>② <code>case</code> 后面只能是常量，不能是范围</p>
+<p>③ <code>break</code> 关键字是可选的</p>
+<p>④ <code>default</code> 可选</p>
+<p>⑤ 凡是 <code>switch-case</code> 结构，都能用 <code>if-else</code> 写，反之不成立；两者都能用且 <code>case</code> 的情况不多，推荐使用 <code>switch-case</code> (<code>switch-case</code> 的效率更高)</p>
+<h3 id="30-for循环">3.0 <code>for</code>循环</h3>
+<p>3.1 循环结构的四个要素</p>
+<ul>
+<li>① 初始化条件</li>
+<li>② 循环条件</li>
+<li>③ 循环体</li>
+<li>④ 迭代条件</li>
+</ul>
+<p>3.2 <code>for</code> 循环</p>
+<pre><code class="lang-Java"><span class="hljs-keyword">for</span>(①初始化条件; ②循环条件; ④迭代条件){
+        ③循环体;
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch03.html" class="navigation navigation-prev " aria-label="Previous page: ch03. 运算符">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch05.html" class="navigation navigation-next " aria-label="Next page: ch05. 程序流程控制（下）">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ch04. 程序流程控制（上）","level":"1.1.4","depth":2,"next":{"title":"ch05. 程序流程控制（下）","level":"1.1.5","depth":2,"path":"ch05.md","ref":"ch05.md","articles":[]},"previous":{"title":"ch03. 运算符","level":"1.1.3","depth":2,"path":"ch03.md","ref":"ch03.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch04.md","mtime":"2025-04-20T02:13:13.210Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:28.596Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

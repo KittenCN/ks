@@ -1,0 +1,783 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Python 字符串rindex() · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="099.html" />
+    
+    
+    <link rel="prev" href="097.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Python 库
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="091.html">
+            
+                <a href="091.html">
+            
+                    
+                    字符串函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="092.html">
+            
+                <a href="092.html">
+            
+                    
+                    Python 字符串center()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="093.html">
+            
+                <a href="093.html">
+            
+                    
+                    Python 字符串isnumeric()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="094.html">
+            
+                <a href="094.html">
+            
+                    
+                    Python 字符串isprintable()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="095.html">
+            
+                <a href="095.html">
+            
+                    
+                    Python 字符串partition()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="096.html">
+            
+                <a href="096.html">
+            
+                    
+                    Python 字符串maketrans()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="097.html">
+            
+                <a href="097.html">
+            
+                    
+                    Python 字符串istitle()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.8" data-path="098.html">
+            
+                <a href="098.html">
+            
+                    
+                    Python 字符串rindex()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="099.html">
+            
+                <a href="099.html">
+            
+                    
+                    Python 字符串splitlines()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="100.html">
+            
+                <a href="100.html">
+            
+                    
+                    Python 字符串rfind()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="101.html">
+            
+                <a href="101.html">
+            
+                    
+                    Python 字符串rsplit()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="102.html">
+            
+                <a href="102.html">
+            
+                    
+                    Python 字符串isspace()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="103.html">
+            
+                <a href="103.html">
+            
+                    
+                    Python 字符串zfill()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="104.html">
+            
+                <a href="104.html">
+            
+                    
+                    Python 字符串isupper()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="105.html">
+            
+                <a href="105.html">
+            
+                    
+                    Python 字符串islower()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="106.html">
+            
+                <a href="106.html">
+            
+                    
+                    Python 字符串startswith()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="107.html">
+            
+                <a href="107.html">
+            
+                    
+                    Python 字符串strip()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="108.html">
+            
+                <a href="108.html">
+            
+                    
+                    Python 字符串format()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="109.html">
+            
+                <a href="109.html">
+            
+                    
+                    Python 字符串capitalize()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="110.html">
+            
+                <a href="110.html">
+            
+                    
+                    Python 字符串join()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="111.html">
+            
+                <a href="111.html">
+            
+                    
+                    Python 字符串split()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="112.html">
+            
+                <a href="112.html">
+            
+                    
+                    Python 字符串find()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="113.html">
+            
+                <a href="113.html">
+            
+                    
+                    Python 字符串replace()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="114.html">
+            
+                <a href="114.html">
+            
+                    
+                    Python 字符串count()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="115.html">
+            
+                <a href="115.html">
+            
+                    
+                    Python 字符串index()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="116.html">
+            
+                <a href="116.html">
+            
+                    
+                    Python 字符串swapcase()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="117.html">
+            
+                <a href="117.html">
+            
+                    
+                    Python 字符串title()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="118.html">
+            
+                <a href="118.html">
+            
+                    
+                    Python 字符串encode()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="119.html">
+            
+                <a href="119.html">
+            
+                    
+                    Python 字符串endswith()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="120.html">
+            
+                <a href="120.html">
+            
+                    
+                    Python 字符串upper()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="121.html">
+            
+                <a href="121.html">
+            
+                    
+                    Python 字符串lower()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="122.html">
+            
+                <a href="122.html">
+            
+                    
+                    Python 字符串isaplha()
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Python 字符串rindex()</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="python-字符串rindex">Python 字符串<code>rindex()</code></h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/python-library-functions/python-string-rindex" target="_blank">https://www.studytonight.com/python-library-functions/python-string-rindex</a></p>
+</blockquote>
+<p>Python 字符串<code>rindex()</code>函数用于<strong>返回给定字符串中任何子字符串</strong>的最高索引。最高索引的意思是，如果一个给定的子串在一个字符串中出现两次或三次，那么该子串最右边的出现或最后一次出现，该索引将由<code>rindex()</code>方法返回。你可以把它记为<strong>最右边的索引</strong>。</p>
+<p>这是一个内置的<strong>字符串处理功能</strong>。</p>
+<ul>
+<li><p>如果作为参数传递的子字符串<strong>不在主字符串中，在这种情况下，</strong>函数抛出异常<strong>。</strong></p>
+</li>
+<li><p>在这个函数中，传递了三个参数:</p>
+<ul>
+<li><p>第一个参数是<strong>子串</strong>，</p>
+</li>
+<li><p>第二个和第三个参数是<strong>主字符串</strong>的开始和结束索引，我们必须在其中搜索子字符串</p>
+</li>
+</ul>
+</li>
+<li><p>由于开始和结束索引是可选参数，因此如果没有通过这些参数，则开始被视为 <strong>0</strong> ，而长度被视为 <strong>-1</strong> 。</p>
+</li>
+<li><p>这个方法是<strong>区分大小写的</strong>，比如它会把<em>书房</em>和<em>书房</em>当成两个不同的词。</p>
+</li>
+</ul>
+<h2 id="python-字符串rindex语法">Python 字符串<code>rindex()</code>:语法</h2>
+<p>下面我们有一个 Python 中字符串<code>rindex()</code>函数的基本语法:</p>
+<pre><code class="lang-py">str.rindex(substr, beginning_index, ending_index)
+</code></pre>
+<p><u><strong>注:</strong></u> 在上图中，<code>str</code>表示我们搜索子串的主串。</p>
+<h3 id="python-字符串-rindex参数">Python 字符串 <code>rindex()</code>:参数</h3>
+<p><code>rindex()</code>功能接受 3 个参数，如下所示:</p>
+<ul>
+<li><p><strong>子字符串</strong></p>
+<p>这用于指定子字符串，它是主字符串的一部分，我们将使用这个<code>rindex()</code>函数找到它的索引。</p>
+</li>
+<li><p><strong>开始 _ 索引</strong></p>
+<p>这是一个可选参数，用于指示搜索从何处开始<strong>默认值为 0</strong> 。</p>
+</li>
+<li><p><strong>ending_index</strong></p>
+<p>这也是我们搜索结束时的可选参数。</p>
+</li>
+</ul>
+<p>如果您想将子字符串的搜索限制在字符串的定义部分内，例如，如果您有一个长度为 150 的字符串，并且您想搜索从第 25 个字符到第 75 个字符的子字符串，那么<strong>开始 _ 索引</strong>和<strong>结束 _ 索引</strong>是有用的，您可以使用<strong>开始 _ 索引</strong>和<strong>结束 _ 索引</strong>参数。</p>
+<h3 id="python-字符串-rindex返回值">Python 字符串 <code>rindex()</code>:返回值</h3>
+<p>如果在主字符串中找到子字符串，那么它的最高索引(最右边的出现)将被返回。否则，如果字符串中不存在子字符串，将引发<a href="https://www.studytonight.com/python/exception-handling-python" target="_blank">异常</a>。</p>
+<h2 id="python-字符串rindex基本示例">Python 字符串<code>rindex()</code>:基本示例</h2>
+<p>下面我们有一个例子来展示 python 中<code>rindex()</code>方法的工作原理:</p>
+<pre><code class="lang-py">str1 = <span class="hljs-string">"I love StudyTonight"</span>
+
+str2 = <span class="hljs-string">"I love Python"</span>
+str3 = <span class="hljs-string">"Python language doesn't bite"</span>
+
+print(<span class="hljs-string">"String: "</span>, str1, <span class="hljs-string">"Highest Index: "</span>, str1.rindex(<span class="hljs-string">"love"</span>))
+
+print(<span class="hljs-string">"String: "</span>, str2, <span class="hljs-string">"Highest Index: "</span>, str2.rindex(<span class="hljs-string">"Python"</span>))
+print(<span class="hljs-string">"String: "</span>, str3, <span class="hljs-string">"Highest Index: "</span>, str3.rindex(<span class="hljs-string">"drink"</span>))
+</code></pre>
+<p>上述示例的输出如下所示:</p>
+<p>字符串:我爱学习今晚最高指数:2
+字符串:我爱 Python 最高指数:7</p>
+<p>回溯(最近一次调用最后一次):
+文件“&lt; pyshell#12 &gt;”，第 1 行，在&lt;模块&gt;
+打印(“字符串:、str3、”最高指数:“、str3.rindex(“喝”))
+值错误:未找到子字符串</p>
+<h2 id="python-rindex和rfind">Python <code>rindex()</code>和<code>rfind()</code></h2>
+<p><code>rindex()</code>和<code>rfind()</code>彼此相似，因为这两种方法都从主字符串中返回子字符串的最高索引<strong>(多次出现时最右边的一次)。</strong></p>
+<p> <strong>但是也有一个主要的区别，那就是如果他们不能找到子串<code>rfind()</code>返回， </strong>-1<strong> 作为输出，而<code>rindex()</code>方法</strong>抛出一个异常**。</p>
+<h2 id="是时候做一个活生生的例子了！">是时候做一个活生生的例子了！</h2>
+<p>让我们看一个真实的例子，看看不同情况下的代码输出:</p>
+<h2 id="摘要">摘要</h2>
+<p>在本教程中，我们了解到 python <code>rindex()</code>字符串函数用于<strong>返回子字符串的最高索引，该子字符串在此函数中作为参数传递给</strong>。此外，我们通过一个实例看到了它的语法、该函数获取的参数以及该函数返回的值。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="097.html" class="navigation navigation-prev " aria-label="Previous page: Python 字符串istitle()">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="099.html" class="navigation navigation-next " aria-label="Next page: Python 字符串splitlines()">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Python 字符串rindex()","level":"1.1.8","depth":2,"next":{"title":"Python 字符串splitlines()","level":"1.1.9","depth":2,"path":"099.md","ref":"099.md","articles":[]},"previous":{"title":"Python 字符串istitle()","level":"1.1.7","depth":2,"path":"097.md","ref":"097.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"098.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:12.206Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

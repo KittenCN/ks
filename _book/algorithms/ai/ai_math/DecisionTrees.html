@@ -1,0 +1,567 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>决策树 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="RandomForest.html" />
+    
+    
+    <link rel="prev" href="KNN.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    常见机器学习算法的数学推导
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="LinearRegression.html">
+            
+                <a href="LinearRegression.html">
+            
+                    
+                    线性回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="LogisticRegression.html">
+            
+                <a href="LogisticRegression.html">
+            
+                    
+                    逻辑回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="SimpleBayes.html">
+            
+                <a href="SimpleBayes.html">
+            
+                    
+                    朴素贝叶斯
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="KNN.html">
+            
+                <a href="KNN.html">
+            
+                    
+                    K近邻
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.5" data-path="DecisionTrees.html">
+            
+                <a href="DecisionTrees.html">
+            
+                    
+                    决策树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="RandomForest.html">
+            
+                <a href="RandomForest.html">
+            
+                    
+                    随机森林
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="AdaBoost.html">
+            
+                <a href="AdaBoost.html">
+            
+                    
+                    AdaBoost
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="GBDT.html">
+            
+                <a href="GBDT.html">
+            
+                    
+                    梯度提升树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="XGBoost.html">
+            
+                <a href="XGBoost.html">
+            
+                    
+                    XGBoost
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >决策树</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="决策树">决策树</h1>
+<p><strong>约定：</strong></p>
+<ul>
+<li><font color="F66A65">红色：</font>对名词进行解释的重点</li>
+<li><font color="FDA63E">黄色：</font>各部分总结中的重点</li>
+<li><font color="62D257">绿色：</font>算法基本假设与解释</li>
+</ul>
+<p><strong>摘要：</strong></p>
+<ol>
+<li>熵的概念详解（<a href="#零熵">熵</a>）</li>
+<li>三种核心的决策树算法（<a href="#21-信息增益与ID3">信息增益与ID3</a>、<a href="#22-信息增益率与C4.5">信息增益率与C4.5</a>、<a href="#23-GINI系数与CART">GINI系数与CART</a>）</li>
+<li>工程优化总结和剪枝（<a href="#四工程优化总结">工程优化总结</a>，<a href="#剪枝">剪枝</a>）</li>
+</ol>
+<p><strong>名词解释：</strong><code>树</code>、<code>ID3/C4.5/CART</code>、<code>熵</code>、<code>条件熵</code>、<code>信息增益</code>、<code>信息增益率</code>、<code>GINI系数</code>、<code>剪枝</code></p>
+<blockquote>
+<ol>
+<li>树：一种数据结构，在决策树中利用这种数据结构<font color="F66A65">可视化构建整个决策过程</font></li>
+<li>ID3/C4.5/CART：三种知名的决策树算法，分别基于信息增益、信息增益率和GINI系数作为特征排序的标准<font color="F66A65">对于先验的修正</font>，即$P(Y|X=xx)$</li>
+<li>熵：信息论中的消息的平均量，决策树中借用以表达数据集中<font color="F66A65">标签的分布的混乱程度</font></li>
+<li>条件熵：<font color="F66A65">给定一定的信息后熵的大小</font>，和“后验概率”的思想有点像</li>
+<li>信息增益：给定条件后（某一个特征的具体取值），<font color="F66A65">熵的减小程度</font>，<font color="F66A65">ID3</font>就通过这个指标进行特征选择，即找到信息增益最大的特征作为第一个特征，以此类推</li>
+<li>信息增益率：解决信息增益倾向于找特征项最多的那个特征，所以给<font color="F66A65">信息增益除以了特征项的个数</font>，类似于调整R方和R方的关系。<font color="F66A65">C4.5</font>中基于这个指标进行特征排序</li>
+<li>GINI系数：解决信息增益率直接除以特征项个数可能不准，以及「熵」引入的对数计算的复杂度高的问题。GINI系数的本质是，<font color="F66A65">从训练集中任选两个样本，其标签不同的概率</font>，这个概率越大说明数据越混乱（和「熵」的判断过程类似，但出发点完全不一样）</li>
+<li>剪枝：决策树考虑了所有特征，极其容易过拟合，所以需要一些工程化的操作防止过拟合。<font color="F66A65">决策树中防止过拟合的常用手段就是「剪枝」</font></li>
+</ol>
+</blockquote>
+<p><strong>原理实现：</strong>
+<a href="algorithms/ai/ai_math/Extra1.html">决策树的实现ID3、C4.5</a></p>
+<h2 id="零、熵">零、熵</h2>
+<blockquote>
+<p>在开始决策树的部分之前，我决定先花一定篇幅将明白「熵」的概念，这是一个很熟悉但又有些陌生的概念（至少对于我来说），所以把第零章的内容祭奠给这个一直说不清道不明的概念。</p>
+<h3 id="00-entropy与熵">0.0 “entropy”与“熵”</h3>
+<ol>
+<li>entropy: 是一个自造词，最开始取自希腊语 “trope”意味转换（英文trans前缀的来源）克劳修斯（热力学熵的发明者）又添加了en（能量的前缀）和后缀（y）得到了“entropy”</li>
+<li>熵：中文也是一个自造字，普朗克在中国讲学时（1923年），当时的翻译（胡刚复）用「火」表示能量，用「商」表示比值，创造了这个字<h3 id="01-熵概念的发展">0.1 熵概念的发展</h3>
+</li>
+<li>热力学：1865年（克劳修斯）：克劳修斯用entropy的概念描述：在一个可逆过程里，被用在恒温的热的总数，$\Delta S=\frac{\Delta Q}{T}$\
+ 热量与温度的比值</li>
+<li>统计力学：1877年（玻尔兹曼）：将熵和微观状态联系起来: $S=k(ln \Omega)$\
+ k: 玻尔兹曼常数，$\Omega$: 微观状态数量</li>
+<li>信息论：1948年（香农）：每条消息中包含的信息量的平均: 对于离散事件：$信息熵 = \sum_{i}^{n}p_i * 信息量_i$\
+ 不确定性的度量</li>
+</ol>
+</blockquote>
+<h3 id="02-信息熵的公式">0.2 信息熵的公式</h3>
+<ol>
+<li>根据定义，信息熵是信息量的平均，在搞明白信息熵之前，先看一下信息量</li>
+<li>信息量表示一件事情发生后带来的信息量，显然需要满足以下几个特性\
+ a. 信息量为正：即：<font color="FDA63E">$信息量_a &gt; 0$</font>\
+ b. 信息量的独立可加性（发生两件事带来的信息量等于发生这两件事带来的信息量的和）即：<font color="FDA63E">$信息量_{ab} = 信息量_a+信息量_b$</font>\
+ c. 一件事情的信息量和这件事情的概率有关（狗咬人不是新闻，人咬狗才是）：<font color="FDA63E">$p_a 越大，信息熵_i越小$</font></li>
+<li>负对数是一个比较简单可以满足的公式：$-log(p<em>i)$\
+ a. 取「对数」：比较重要的一条就是 $信息量</em>{ab} = 信息量_a+信息量_b$ 对数可以满足 $log(ab) = log(a)+log(b)$\
+ b. 取「负」对数：可以让信息量为正的同时（底数大于1），满足概率越大，信息量越小</li>
+<li>此时得到「熵」的定义：$$\mathrm{H}(X)=\sum<em>{i} \mathrm{P}\left(x</em>{i}\right) \mathrm{I}\left(x<em>{i}\right)=-\sum</em>{i} \mathrm{P}\left(x<em>{i}\right) \log </em>{b} \mathrm{P}\left(x_{i}\right)$$</li>
+<li>至于最后取2为底，是因为 （常用的）信息熵的单位是bit（binary digit）。还有其他底数，如以e为底，单位nart，以10为底，单位Hart</li>
+</ol>
+<p><strong>信息熵的总结</strong></p>
+<blockquote>
+<ol>
+<li>热力学（克劳修斯1865） 「entropy」和「熵」名称的来源</li>
+<li>统计力学（玻尔兹曼1877） 将熵和混乱从微观熵联系起来</li>
+<li>信息论（香农1948） 将熵带入信息的考量【概率的负对数】（<font color="FDA63E">取对数为了满足独立可加性，取负数为了满足整体非负性和随概率递减的性质</font>）</li>
+</ol>
+</blockquote>
+<h2 id="一、一句话概括">一、一句话概括</h2>
+<p>通过将标签纯度最大化的方式，进行特征的划分，从而构建一颗树。核心是特征的重要性排序和最佳切分点的划分（只有CART需要考虑切分点）</p>
+<h2 id="二、特征选择标准与决策树发展">二、特征选择标准与决策树发展</h2>
+<h3 id="21-信息增益与id3">2.1 信息增益与ID3</h3>
+<blockquote>
+<p>核心思想：基于信息熵的概念，<font color="FDA63E">按照能够快速降低数据集熵的特征方向进行选择</font></p>
+<p>$$g(D, A)=H(D)-H(D \mid A)$$</p>
+<ol>
+<li>信息增益就是知道特征的值后，系统的熵减小程度（衡量了特征的重要性）</li>
+<li>条件熵的定义为：特征的每一个取值下系统熵的均值\
+ a. 特征=a时会取出一部分样本计算其熵\
+ b. 特征=b时会取出一部分样本计算其熵\
+ c. 以上两个结果取加权平均（如果该特征只有两个取值的话）<h3 id="22-信息增益率与c45">2.2 信息增益率与C4.5</h3>
+核心思想：<font color="FDA63E">改善信息增益倾向于选择不同特征项最多的特征</font></li>
+<li>计算信息增益</li>
+<li>除以该特征的「熵」</li>
+</ol>
+</blockquote>
+<p><strong>信息增益率的讨论</strong></p>
+<blockquote>
+<ol>
+<li>从定义上来看，不同特征项越多的特征确实会被照顾（切分的细小，类别的纯度越纯的概率越高）</li>
+<li>但是直接除以「特征的熵」是否”公平“值得商榷，是不是这样一来又会选择特征较为规整（不同特征项较少的特征），也许是一个经验上的方法</li>
+<li>题外话：作者本人描述到这里的时候也只是简单说，“我们需要一个类似正则化项的手段对不同特征项个数很多的特征进行惩罚” 选择熵作为衡量不同特征项的混乱程度的度量，似乎「师出同门」，简单作为分母也许也只是随意为之。</li>
+</ol>
+</blockquote>
+<h3 id="23-gini系数与cart">2.3 GINI系数与CART</h3>
+<blockquote>
+<p>核心思想：<font color="FDA63E">改善对数不易计算的问题</font></p>
+</blockquote>
+<ol>
+<li>从信息论的熵引入系统用来判断「纯度」开始，对数的计算就被引入了整个过程</li>
+<li>和之前算法需要梯度下降求偏导不一样，这里并不需要log来优化求导过程，反而加大了计算难度</li>
+<li>于是这个思路就变成了：从数据集中连续取出两个样本，标签不一样的概率，显然这个计算大大降低$$\operatorname{Gini}(p)=\sum<em>{k=1}^{K} p</em>{k}\left(1-p<em>{k}\right)=1-\sum</em>{k=1}^{K} p_{k}^{2}$$</li>
+<li>公式也很好理解：用1减去，两次拿到同样标签的样本的概率</li>
+<li>二分类问题也可以进行简化：正着思考问题，第一次A第二次B或者第一次B第二次A
+$$\operatorname{Gini}(p)=p(1-p)+(1-p)p=2p(1-p)$$<h2 id="三、特征最佳切分点">三、特征最佳切分点</h2>
+</li>
+<li><font color="FDA63E">只有基尼系数的CART有最佳切分点的问题</font>（可能是因为log的计算太复杂，寻找最佳切分点的计算过程时间复杂度太高，所以ID3和C4.5并没有引入）</li>
+<li>因为只有CART树有最佳切分点，所以<font color="FDA63E">只有CART树是二叉树</font>，ID3和C4.5根据信息增益或者信息增益率排好序之后直接就构建好了（多叉树）</li>
+<li>利用OVR（one vs rest）的思想在一个特征下进行多次GINI系数的计算，取最小的作为该特征的GINI系数，参与和其他特征的GINI系数的比较。同时取得这个最小的GINI系数的特征项，就是该特征的最佳切分点<h2 id="四、工程优化总结">四、工程优化总结</h2>
+</li>
+<li>ID3：没有什么优化（有一个很简单的前剪枝过程 增益效果），容易过拟合</li>
+<li><p>C4.5\
+ a.  <font color="FDA63E">处理连续性数据</font>（使用阈值把样本分为两部分）\
+ b. 处理缺失性数据（属性值缺失的样本在计算熵减时被忽略）\
+ c. 剪枝（合并无法产生大量信息增益的节点）【前剪枝】</p>
+</li>
+<li><p>CART\
+ a.  <font color="FDA63E">可用于回归</font>（此时损失函数是平方误差）\
+ b. 剪枝的优化（从需要多次扫描的悲观剪枝变为了从下往上的剪枝策略）</p>
+<h2 id="五、剪枝">五、剪枝</h2>
+<h3 id="51-前剪枝">5.1 前剪枝</h3>
+<blockquote>
+<p>核心：生成树的时候差不多行了（不要竭泽而渔）</p>
+</blockquote>
+</li>
+<li>限制高度</li>
+<li>限制叶子节点个数</li>
+<li>系统性能：比如标准是信息增益，那么信息增不了多少益的时候<h3 id="52-后剪枝">5.2 后剪枝</h3>
+<blockquote>
+<p>核心：给定一个损失函数 $C(T) + alpha * T$ 对生成后的树按着这个公式比较「效益」进行剪枝</p>
+<h3 id="521-c45：剪坏了就撤销">5.2.1 C4.5：剪坏了就撤销</h3>
+<p>核心：<font color="FDA63E">给树定义一个损失函数，试着剪</font>（有提升就Ctrl+s，没提升就Ctrl+z）</p>
+</blockquote>
+</li>
+<li>叶子节点的熵 + alpha * 叶子节点个数     相当于 熵+惩罚项</li>
+<li>剪一下带入损失函数算一下<h3 id="522-cart：边剪边保存">5.2.2 CART：边剪边保存</h3>
+<blockquote>
+<p>核心：<font color="FDA63E">剪出一堆树，带入数据进行测试</font>（树是越来越小的：后面的树是前面的子树，边剪树，边Ctrl+s）</p>
+</blockquote>
+</li>
+<li>分类：$GINI + \alpha * 叶子节点个数$</li>
+<li>回归：$MSE + \alpha * 叶子节点个数$</li>
+<li>结果就是：从一个树，派生出很多模型，挑最好的那个</li>
+<li>具体过程：考虑所有的倒数第二层节点（所有叶子节点的父亲）\
+ a. 膨胀 alpha，会有某一个 Node 中招（此时损失函数为0）\
+ b. 记录此时的alpha，并把它的子节点剪掉\
+ c. 最终就得到一系列的alpha和一系列的子树\<h2 id="六、总结">六、总结</h2>
+<blockquote>
+<ol>
+<li><font color="FDA63E">决策树的核心目标是想让标签的「纯度」最大化从而构建一个决策过程</font>，「树」只是其可视化的手段</li>
+<li><font color="FDA63E">不同的决策树算法的核心不同就在于对「纯度」的不同依据</font>：从信息论的「熵」触发逐步优化思想和减少计算的过程。</li>
+<li>决策树真正的用武之地在于之后的集成学习（随机森林和各种提升算法中）</li>
+<li>一个简单的计算示例在<a href="algorithms/ai/ai_math/Extra1.html">番外-一次决策过程（ID3和CART）</a> 中</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="KNN.html" class="navigation navigation-prev " aria-label="Previous page: K近邻">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="RandomForest.html" class="navigation navigation-next " aria-label="Next page: 随机森林">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"决策树","level":"1.1.5","depth":2,"next":{"title":"随机森林","level":"1.1.6","depth":2,"path":"RandomForest.md","ref":"RandomForest.md","articles":[]},"previous":{"title":"K近邻","level":"1.1.4","depth":2,"path":"KNN.md","ref":"KNN.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"DecisionTrees.md","mtime":"2025-04-21T03:09:26.344Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:43.273Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

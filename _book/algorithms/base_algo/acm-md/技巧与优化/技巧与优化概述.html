@@ -1,0 +1,551 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>技巧与优化 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="位运算技巧.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="技巧与优化概述.html">
+            
+                <a href="技巧与优化概述.html">
+            
+                    
+                    技巧与优化
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="位运算技巧.html">
+            
+                <a href="位运算技巧.html">
+            
+                    
+                    位运算技巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="STL使用技巧.html">
+            
+                <a href="STL使用技巧.html">
+            
+                    
+                    STL使用技巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="常见算法优化思路.html">
+            
+                <a href="常见算法优化思路.html">
+            
+                    
+                    常见算法优化思路
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >技巧与优化</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="技巧与优化概述">技巧与优化概述</h1>
+<h2 id="引言">引言</h2>
+<p>在算法竞赛中，掌握基本算法和数据结构只是成功的第一步。要在有限的时间内高效解决复杂问题，你还需要掌握各种编程技巧和算法优化方法。本章将介绍一系列在ACM竞赛中常用的技巧与优化方法，帮助你编写更简洁、高效的代码。</p>
+<h2 id="为什么需要技巧与优化？">为什么需要技巧与优化？</h2>
+<p>在竞赛环境下，程序的效率和正确性同样重要。以下几点说明了技巧与优化的必要性：</p>
+<ol>
+<li><strong>时间限制</strong>：大多数竞赛题目都有严格的时间限制，通常为1-2秒</li>
+<li><strong>内存限制</strong>：同样存在内存使用上限，通常为64MB-256MB</li>
+<li><strong>复杂问题</strong>：一些问题需要处理大量数据或执行复杂计算</li>
+<li><strong>代码简洁性</strong>：简洁的代码更易于编写和调试，减少出错几率</li>
+<li><strong>特殊测试数据</strong>：某些测试用例可能专门设计来测试你的程序效率</li>
+</ol>
+<h2 id="本章涵盖的内容">本章涵盖的内容</h2>
+<h3 id="1-位运算技巧">1. 位运算技巧</h3>
+<p>位运算操作直接作用于二进制位，比普通的算术运算更高效。在许多场景（如状态压缩DP、集合运算等）中，位运算可以大幅提升代码效率和简洁度。</p>
+<p>【详细内容】：<a href="位运算技巧.html">位运算技巧</a></p>
+<h3 id="2-stl使用技巧">2. STL使用技巧</h3>
+<p>C++的标准模板库(STL)提供了丰富的容器和算法，正确使用STL可以大大简化代码编写过程。然而，STL的不恰当使用也可能导致性能下降。</p>
+<p>【详细内容】：<a href="STL使用技巧.html">STL使用技巧</a></p>
+<h3 id="3-常见算法优化思路">3. 常见算法优化思路</h3>
+<p>许多经典算法都有特定的优化技巧，可以显著提升其效率。例如，对于动态规划可以使用滚动数组减少空间复杂度，对于搜索算法可以使用剪枝技术减少搜索空间。</p>
+<p>【详细内容】：<a href="常见算法优化思路.html">常见算法优化思路</a></p>
+<h2 id="编程技巧与优化方法概览">编程技巧与优化方法概览</h2>
+<h3 id="输入输出优化">输入输出优化</h3>
+<p>在处理大量数据的题目中，输入输出的效率可能成为程序的瓶颈。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 关闭同步，加速cin/cout（可以使cin/cout比scanf/printf快）</span>
+ios::sync_with_stdio(<span class="hljs-literal">false</span>);
+<span class="hljs-built_in">cin</span>.tie(<span class="hljs-literal">nullptr</span>);
+
+<span class="hljs-comment">// 对于非常大的输入输出，可以使用快速读写函数</span>
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">read</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>, f = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">char</span> ch = getchar();
+    <span class="hljs-keyword">while</span> (ch &lt; <span class="hljs-string">'0'</span> || ch &gt; <span class="hljs-string">'9'</span>) {
+        <span class="hljs-keyword">if</span> (ch == <span class="hljs-string">'-'</span>) f = -<span class="hljs-number">1</span>;
+        ch = getchar();
+    }
+    <span class="hljs-keyword">while</span> (ch &gt;= <span class="hljs-string">'0'</span> &amp;&amp; ch &lt;= <span class="hljs-string">'9'</span>) {
+        x = x * <span class="hljs-number">10</span> + ch - <span class="hljs-string">'0'</span>;
+        ch = getchar();
+    }
+    <span class="hljs-keyword">return</span> x * f;
+}
+</code></pre>
+<h3 id="内存优化">内存优化</h3>
+<p>内存管理在竞赛中同样重要，特别是当题目有严格的内存限制时。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 使用静态数组替代动态分配</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">1e5</span> + <span class="hljs-number">5</span>;
+<span class="hljs-keyword">int</span> dp[MAXN];  <span class="hljs-comment">// 比 vector&lt;int&gt; dp(n) 更高效</span>
+
+<span class="hljs-comment">// 动态规划中使用滚动数组</span>
+<span class="hljs-comment">// 原始二维DP: dp[n][m]</span>
+<span class="hljs-comment">// 优化后: dp[2][m] 或 dp[m]（根据依赖关系）</span>
+</code></pre>
+<h3 id="算法设计优化">算法设计优化</h3>
+<p>合理的算法设计可以大大提高程序效率。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 预计算优化（如前缀和、差分）</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; preSum(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+    preSum[i] = preSum[i-<span class="hljs-number">1</span>] + arr[i-<span class="hljs-number">1</span>];
+}
+<span class="hljs-comment">// 区间和查询: O(1)</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rangeSum</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+    <span class="hljs-keyword">return</span> preSum[r+<span class="hljs-number">1</span>] - preSum[l];
+}
+
+<span class="hljs-comment">// 剪枝优化（以DFS为例）</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> state, <span class="hljs-keyword">int</span> depth)</span> </span>{
+    <span class="hljs-keyword">if</span> (!promising(state)) <span class="hljs-keyword">return</span>;  <span class="hljs-comment">// 剪枝</span>
+    <span class="hljs-comment">// 继续搜索...</span>
+}
+</code></pre>
+<h3 id="常量优化">常量优化</h3>
+<p>有时，即使算法复杂度相同，但通过减少常数因子也能显著提升性能。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 避免重复计算</span>
+<span class="hljs-keyword">int</span> size = v.size();  <span class="hljs-comment">// 避免在循环中反复调用size()</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) {
+    <span class="hljs-comment">// 处理v[i]...</span>
+}
+
+<span class="hljs-comment">// 使用 emplace_back 替代 push_back</span>
+v.emplace_back(x);  <span class="hljs-comment">// 直接构造，避免临时对象的创建</span>
+</code></pre>
+<h3 id="数据结构选择">数据结构选择</h3>
+<p>合适的数据结构选择可以大大提升算法效率。</p>
+<table>
+<thead>
+<tr>
+<th>需求</th>
+<th>最佳选择</th>
+<th>次优选择</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>快速访问任意元素</td>
+<td>数组/vector</td>
+<td>-</td>
+</tr>
+<tr>
+<td>频繁在两端操作</td>
+<td>deque</td>
+<td>两个栈/队列模拟</td>
+</tr>
+<tr>
+<td>需要保持元素有序</td>
+<td>set/map</td>
+<td>手动排序的数组</td>
+</tr>
+<tr>
+<td>需要快速查找</td>
+<td>unordered_map</td>
+<td>map</td>
+</tr>
+<tr>
+<td>区间查询和修改</td>
+<td>线段树/树状数组</td>
+<td>分块处理</td>
+</tr>
+</tbody>
+</table>
+<h2 id="编程习惯与技巧">编程习惯与技巧</h2>
+<p>良好的编程习惯能减少错误，提高效率。</p>
+<ol>
+<li><strong>使用模板</strong>：准备好常用算法和数据结构的模板，节省编码时间</li>
+<li><strong>变量命名</strong>：使用有意义的变量名，但保持简洁</li>
+<li><strong>代码结构</strong>：保持逻辑清晰，使用函数分割复杂逻辑</li>
+<li><strong>注释关键部分</strong>：特别是复杂算法和易错点</li>
+<li><strong>调试技巧</strong>：<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> DEBUG</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">ifdef</span> DEBUG</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> dbg(x) cout &lt;&lt; #x &lt;&lt; <span class="hljs-string">" = "</span> &lt;&lt; x &lt;&lt; endl</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">else</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> dbg(x)</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">endif</span></span>
+</code></pre>
+</li>
+</ol>
+<h2 id="常见错误及其避免方法">常见错误及其避免方法</h2>
+<ol>
+<li><strong>整数溢出</strong>：对于可能很大的结果，使用<code>long long</code>而不是<code>int</code></li>
+<li><strong>数组越界</strong>：总是检查索引范围，数组大小预留额外空间</li>
+<li><strong>精度问题</strong>：浮点数比较时使用eps（如<code>fabs(a - b) &lt; 1e-9</code>）</li>
+<li><strong>死循环</strong>：确保循环条件最终会被满足</li>
+<li><strong>内存限制</strong>：注意大数组的静态分配可能导致栈溢出</li>
+</ol>
+<h2 id="案例分析：优化前后的对比">案例分析：优化前后的对比</h2>
+<h3 id="例1：求区间和">例1：求区间和</h3>
+<p><strong>未优化版本</strong>：每次查询都重新计算区间和</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rangeSum</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; arr, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+    <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l; i &lt;= r; i++) {
+        sum += arr[i];
+    }
+    <span class="hljs-keyword">return</span> sum;
+}
+<span class="hljs-comment">// 时间复杂度：O(n) 每次查询</span>
+</code></pre>
+<p><strong>优化版本</strong>：使用前缀和</p>
+<pre><code class="lang-cpp"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; buildPrefixSum(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; arr) {
+    <span class="hljs-keyword">int</span> n = arr.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; prefix(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        prefix[i+<span class="hljs-number">1</span>] = prefix[i] + arr[i];
+    }
+    <span class="hljs-keyword">return</span> prefix;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rangeSum</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; prefix, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+    <span class="hljs-keyword">return</span> prefix[r+<span class="hljs-number">1</span>] - prefix[l];
+}
+<span class="hljs-comment">// 预处理时间：O(n)，查询时间：O(1)</span>
+</code></pre>
+<h3 id="例2：查找元素">例2：查找元素</h3>
+<p><strong>未优化版本</strong>：线性查找</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">contains</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; arr, <span class="hljs-keyword">int</span> target)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : arr) {
+        <span class="hljs-keyword">if</span> (x == target) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+}
+<span class="hljs-comment">// 时间复杂度：O(n)</span>
+</code></pre>
+<p><strong>优化版本</strong>：使用哈希表</p>
+<pre><code class="lang-cpp"><span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-keyword">int</span>&gt; buildSet(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; arr) {
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-keyword">int</span>&gt;(arr.begin(), arr.end());
+}
+
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">contains</span><span class="hljs-params">(<span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; s, <span class="hljs-keyword">int</span> target)</span> </span>{
+    <span class="hljs-keyword">return</span> s.count(target) &gt; <span class="hljs-number">0</span>;
+}
+<span class="hljs-comment">// 预处理时间：O(n)，查询时间：O(1)平均</span>
+</code></pre>
+<h2 id="学习建议">学习建议</h2>
+<ol>
+<li><strong>实践为王</strong>：通过解题训练掌握各种技巧</li>
+<li><strong>对比学习</strong>：比较不同实现方法的时间和空间效率</li>
+<li><strong>参考他人代码</strong>：学习优秀竞赛选手的代码风格和技巧</li>
+<li><strong>系统整理</strong>：建立自己的代码模板库，包含各种优化技巧</li>
+<li><strong>特殊边界</strong>：注意测试代码在边界情况下的行为</li>
+</ol>
+<h2 id="小结">小结</h2>
+<p>技巧与优化是竞赛编程的重要组成部分，能够帮助你在有限的时间和空间约束下解决复杂问题。然而，优化应该建立在正确理解问题和算法基础上，过早的优化可能会增加代码复杂性而不必要地引入错误。</p>
+<p>在接下来的章节中，我们将详细探讨位运算技巧、STL使用技巧以及各种常见算法的优化思路，帮助你成为更全面的竞赛程序员。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="位运算技巧.html" class="navigation navigation-next " aria-label="Next page: 位运算技巧">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"技巧与优化","level":"1.2","depth":1,"next":{"title":"位运算技巧","level":"1.2.1","depth":2,"path":"位运算技巧.md","ref":"位运算技巧.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"articles":[{"title":"位运算技巧","level":"1.2.1","depth":2,"path":"位运算技巧.md","ref":"位运算技巧.md","articles":[]},{"title":"STL使用技巧","level":"1.2.2","depth":2,"path":"STL使用技巧.md","ref":"STL使用技巧.md","articles":[]},{"title":"常见算法优化思路","level":"1.2.3","depth":2,"path":"常见算法优化思路.md","ref":"常见算法优化思路.md","articles":[]}],"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"技巧与优化概述.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:31.791Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

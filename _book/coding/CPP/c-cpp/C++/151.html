@@ -1,0 +1,943 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>C++ 中的变量 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="152.html" />
+    
+    
+    <link rel="prev" href="150.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    C++
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="146.html">
+            
+                <a href="146.html">
+            
+                    
+                    基本 C++ 概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="147.html">
+            
+                <a href="147.html">
+            
+                    
+                    C++ 入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="148.html">
+            
+                <a href="148.html">
+            
+                    
+                    C++ 中的面向对象编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="149.html">
+            
+                <a href="149.html">
+            
+                    
+                    C++ 的基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="150.html">
+            
+                <a href="150.html">
+            
+                    
+                    C++ 中的数据类型和修饰符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.6" data-path="151.html">
+            
+                <a href="151.html">
+            
+                    
+                    C++ 中的变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="152.html">
+            
+                <a href="152.html">
+            
+                    
+                    C++ 中的运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="153.html">
+            
+                <a href="153.html">
+            
+                    
+                    C++ 中的sizeOf和typedef运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="154.html">
+            
+                <a href="154.html">
+            
+                    
+                    C++ 中的决策——if，else和else if
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="155.html">
+            
+                <a href="155.html">
+            
+                    
+                    C++ 循环——while，for和do while循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="156.html">
+            
+                <a href="156.html">
+            
+                    
+                    C++ 中的存储类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="157.html">
+            
+                <a href="157.html">
+            
+                    
+                    C++ 中的函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="158.html">
+            
+                <a href="158.html">
+            
+                    
+                    OOP 的概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="159.html">
+            
+                <a href="159.html">
+            
+                    
+                    C++ 类和对象简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="160.html">
+            
+                <a href="160.html">
+            
+                    
+                    C++ 中的访问控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="161.html">
+            
+                <a href="161.html">
+            
+                    
+                    定义类和创建对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="162.html">
+            
+                <a href="162.html">
+            
+                    
+                    在 C++ 中访问类的数据成员
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="163.html">
+            
+                <a href="163.html">
+            
+                    
+                    C++ 中类的成员函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="164.html">
+            
+                <a href="164.html">
+            
+                    
+                    C++ 中类成员函数的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="165.html">
+            
+                <a href="165.html">
+            
+                    
+                    C++ 中的内联函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="166.html">
+            
+                <a href="166.html">
+            
+                    
+                    C++ 中的函数重载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="167.html">
+            
+                <a href="167.html">
+            
+                    
+                    C++ 中的构造器和析构器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="168.html">
+            
+                <a href="168.html">
+            
+                    
+                    C++ 中的初始化列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="169.html">
+            
+                <a href="169.html">
+            
+                    
+                    在 C++ 中创建和使用命名空间
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="170.html">
+            
+                <a href="170.html">
+            
+                    
+                    C++ 中的static关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="171.html">
+            
+                <a href="171.html">
+            
+                    
+                    C++ 中的const关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="172.html">
+            
+                <a href="172.html">
+            
+                    
+                    C++ 中的引用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="173.html">
+            
+                <a href="173.html">
+            
+                    
+                    C++ 中的复制构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="174.html">
+            
+                <a href="174.html">
+            
+                    
+                    C++ 中指向类成员的指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="175.html">
+            
+                <a href="175.html">
+            
+                    
+                    高级概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="176.html">
+            
+                <a href="176.html">
+            
+                    
+                    C++ 中的继承
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="177.html">
+            
+                <a href="177.html">
+            
+                    
+                    C++ 中的继承类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="178.html">
+            
+                <a href="178.html">
+            
+                    
+                    C++ 中带继承的构造器调用顺序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="179.html">
+            
+                <a href="179.html">
+            
+                    
+                    C++ 中的向上转换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="180.html">
+            
+                <a href="180.html">
+            
+                    
+                    C++ 中的多态和方法覆盖
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="181.html">
+            
+                <a href="181.html">
+            
+                    
+                    C++ 中的虚函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="182.html">
+            
+                <a href="182.html">
+            
+                    
+                    C++ 中的抽象类和纯虚函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="183.html">
+            
+                <a href="183.html">
+            
+                    
+                    C++ 中的虚析构器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="184.html">
+            
+                <a href="184.html">
+            
+                    
+                    C++ 中的运算符重载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="185.html">
+            
+                <a href="185.html">
+            
+                    
+                    C++ 中使用文件流的文件处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="186.html">
+            
+                <a href="186.html">
+            
+                    
+                    C++ 中的异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="187.html">
+            
+                <a href="187.html">
+            
+                    
+                    C++ 中的动态内存分配
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="188.html">
+            
+                <a href="188.html">
+            
+                    
+                    C++ 中的多线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >C++ 中的变量</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="c-中的变量">C++ 中的变量</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/cpp/variables-scope-details.php" target="_blank">https://www.studytonight.com/cpp/variables-scope-details.php</a></p>
+</blockquote>
+<p>变量在 C++ 中使用，在 c++ 中，我们需要存储任何值，这些值将在程序中改变。变量可以用多种方式声明，每种方式都有不同的内存需求和功能。变量是编译器根据变量的数据类型分配的内存位置的名称。</p>
+<p><img src="img/4a8b02bb205d034f59a9577fcb7b690a.png" alt="variables in C++"></img></p>
+<hr></hr>
+<h3 id="变量的基本类型">变量的基本类型</h3>
+<p>每个变量 while 声明必须给定一个<a href="datatypes-and-modifiers-in-cpp.php">数据类型</a>，分配给该变量的内存依赖于该数据类型。以下是变量的基本类型，</p>
+<p>| <code>bool</code> | 用于存储布尔值的变量(真或假) |
+| <code>char</code> | 用于存储字符类型的变量。 |
+| <code>int</code> | 对于整数值变量 |
+| <code>float</code>和<code>double</code>也是具有大浮点值的变量类型 |</p>
+<hr></hr>
+<h3 id="声明和初始化">声明和初始化</h3>
+<p>变量必须在使用前声明。通常最好在程序开始时声明它们，但是在 C++ 中，它们也可以在程序中间声明，但是必须在使用它们之前完成。</p>
+<p>例如:</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">int</span> i;      <span class="hljs-comment">// declared but not initialised</span>
+<span class="hljs-keyword">char</span> c; 
+<span class="hljs-keyword">int</span> i, j, k;  <span class="hljs-comment">// Multiple declaration</span>
+</code></pre>
+<p>初始化意味着给已经声明的变量赋值，</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">int</span> i;   <span class="hljs-comment">// declaration</span>
+i = <span class="hljs-number">10</span>;  <span class="hljs-comment">// initialization</span>
+</code></pre>
+<p>初始化和声明也可以在一个步骤中完成，</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">int</span> i=<span class="hljs-number">10</span>;         <span class="hljs-comment">//initialization and declaration in same step</span>
+<span class="hljs-keyword">int</span> i=<span class="hljs-number">10</span>, j=<span class="hljs-number">11</span>;
+</code></pre>
+<p>如果一个变量被声明并且没有被默认初始化，那么它将保存一个垃圾值。此外，如果一个变量被声明了一次，如果我们试图再次声明它，我们会得到一个编译时错误。</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">int</span> i,j;
+i=<span class="hljs-number">10</span>;
+j=<span class="hljs-number">20</span>;
+<span class="hljs-keyword">int</span> j=i+j;   <span class="hljs-comment">//compile time error, cannot redeclare a variable in same scope</span>
+</code></pre>
+<hr></hr>
+<h3 id="变量的范围">变量的范围</h3>
+<p>所有的变量都有它们的作用区域，在这个边界之外，它们不保持它们的值，这个边界被称为变量的范围。在大多数情况下，它在花括号之间，在花括号中，变量被声明为变量存在，而不是在它之外。我们将在后面研究存储类，但是到目前为止，我们可以将变量大致分为两种主要类型，</p>
+<ul>
+<li>全局变量</li>
+<li>局部变量</li>
+</ul>
+<hr></hr>
+<h3 id="全局变量">全局变量</h3>
+<p>全局变量是那些一旦声明就可以被任何类或函数在程序的整个生命周期中使用的变量。它们必须在<code>main()</code>函数之外声明。如果只声明，它们可以在程序生命周期的不同时间被赋予不同的值。但是，即使它们在 main()函数之外同时被声明和初始化，它们也可以在程序的任何点被赋值。</p>
+<p>例如:仅声明，未初始化</p>
+<pre><code class="lang-cpp">include &lt;iostream&gt;
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-keyword">int</span> x;                <span class="hljs-comment">// Global variable declared</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    x=<span class="hljs-number">10</span>;                 <span class="hljs-comment">// Initialized once</span>
+    <span class="hljs-built_in">cout</span> &lt;
+</code></pre>
+<hr></hr>
+<h3 id="局部变量">局部变量</h3>
+<p>局部变量是只存在于花括号之间的变量，它在花括号中声明。除此之外，它们不可用并导致编译时错误。</p>
+<p><em>例</em>:</p>
+<pre><code class="lang-cpp">include &lt;iostream&gt;
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> i=<span class="hljs-number">10</span>;
+    <span class="hljs-keyword">if</span>(i&lt;<span class="hljs-number">20</span>)        <span class="hljs-comment">// if condition scope starts</span>
+    {
+        <span class="hljs-keyword">int</span> n=<span class="hljs-number">100</span>;   <span class="hljs-comment">// Local variable declared and initialized</span>
+    }              <span class="hljs-comment">// if condition scope ends</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; n;      <span class="hljs-comment">// Compile time error, n not available here</span>
+}
+</code></pre>
+<hr></hr>
+<h3 id="一些特殊类型的变量">一些特殊类型的变量</h3>
+<p>还有一些特殊的关键字，赋予程序中的变量独特的特征。下面两个是最常用的，我们以后再详细讨论。</p>
+<ol>
+<li><strong>最终</strong> -一旦初始化，其值不能改变。</li>
+<li><strong><a href="static-keyword.php">【静态】</a></strong> -这些变量在函数调用之间保持它们的值。</li>
+</ol>
+<p><em>例</em>:</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    final <span class="hljs-keyword">int</span> i=<span class="hljs-number">10</span>;
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> y=<span class="hljs-number">20</span>;
+}
+</code></pre>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="150.html" class="navigation navigation-prev " aria-label="Previous page: C++ 中的数据类型和修饰符">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="152.html" class="navigation navigation-next " aria-label="Next page: C++ 中的运算符">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"C++ 中的变量","level":"1.1.6","depth":2,"next":{"title":"C++ 中的运算符","level":"1.1.7","depth":2,"path":"152.md","ref":"152.md","articles":[]},"previous":{"title":"C++ 中的数据类型和修饰符","level":"1.1.5","depth":2,"path":"150.md","ref":"150.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"151.md","mtime":"2025-04-30T01:08:58.538Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:23:38.915Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

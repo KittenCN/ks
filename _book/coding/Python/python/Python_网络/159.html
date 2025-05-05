@@ -1,0 +1,995 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>requests模块简介 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="160.html" />
+    
+    
+    <link rel="prev" href="158.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Python 网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="124.html">
+            
+                <a href="124.html">
+            
+                    
+                    简介和基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="125.html">
+            
+                <a href="125.html">
+            
+                    
+                    网络编程导论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="126.html">
+            
+                <a href="126.html">
+            
+                    
+                    常见网络术语
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="127.html">
+            
+                <a href="127.html">
+            
+                    
+                    安装 Python 第三方库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="128.html">
+            
+                <a href="128.html">
+            
+                    
+                    解释和交互式 Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="129.html">
+            
+                <a href="129.html">
+            
+                    
+                    套接字基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="130.html">
+            
+                <a href="130.html">
+            
+                    
+                    Python 套接字——SOCK_STREAM和SOCK_DGRAM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="131.html">
+            
+                <a href="131.html">
+            
+                    
+                    使用 TCP 套接字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="132.html">
+            
+                <a href="132.html">
+            
+                    
+                    使用 UDP 套接字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="133.html">
+            
+                <a href="133.html">
+            
+                    
+                    通过 TCP 套接字处理接收的客户端数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="134.html">
+            
+                <a href="134.html">
+            
+                    
+                    阻塞和非阻塞套接字输入/输出
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="135.html">
+            
+                <a href="135.html">
+            
+                    
+                    通过 TSL/SSL 保护套接字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="136.html">
+            
+                <a href="136.html">
+            
+                    
+                    从网络分析开始
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="137.html">
+            
+                <a href="137.html">
+            
+                    
+                    使用套接字构建自定义端口扫描器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="138.html">
+            
+                <a href="138.html">
+            
+                    
+                    在 Python 中使用 Nmap 端口扫描器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="139.html">
+            
+                <a href="139.html">
+            
+                    
+                    使用命令行输入的 Nmap 端口扫描脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="140.html">
+            
+                <a href="140.html">
+            
+                    
+                    什么是横幅抓取？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="141.html">
+            
+                <a href="141.html">
+            
+                    
+                    Wireshark 网络流量分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="142.html">
+            
+                <a href="142.html">
+            
+                    
+                    Wireshark 数据包分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="143.html">
+            
+                <a href="143.html">
+            
+                    
+                    使用dpkt库分析网络流量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="144.html">
+            
+                <a href="144.html">
+            
+                    
+                    scapy 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="145.html">
+            
+                <a href="145.html">
+            
+                    
+                    实际应用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="146.html">
+            
+                <a href="146.html">
+            
+                    
+                    是时候干活了
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="147.html">
+            
+                <a href="147.html">
+            
+                    
+                    从 PDF 文件中提取元数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="148.html">
+            
+                <a href="148.html">
+            
+                    
+                    使用pyGeoIP模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="149.html">
+            
+                <a href="149.html">
+            
+                    
+                    什么是网页抓取？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="150.html">
+            
+                <a href="150.html">
+            
+                    
+                    实现网页抓取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="151.html">
+            
+                <a href="151.html">
+            
+                    
+                    什么是 API？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="152.html">
+            
+                <a href="152.html">
+            
+                    
+                    使用脸书 GraphAPI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="153.html">
+            
+                <a href="153.html">
+            
+                    
+                    挖掘自己的脸书账户
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="154.html">
+            
+                <a href="154.html">
+            
+                    
+                    Python 的mechanize库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="155.html">
+            
+                <a href="155.html">
+            
+                    
+                    使用mechanize库更改浏览器的用户代理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="156.html">
+            
+                <a href="156.html">
+            
+                    
+                    Web 爬取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="157.html">
+            
+                <a href="157.html">
+            
+                    
+                    入门指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="158.html">
+            
+                <a href="158.html">
+            
+                    
+                    网页抓取简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.36" data-path="159.html">
+            
+                <a href="159.html">
+            
+                    
+                    requests模块简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="160.html">
+            
+                <a href="160.html">
+            
+                    
+                    beautifulsoup模块简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="161.html">
+            
+                <a href="161.html">
+            
+                    
+                    进阶
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="162.html">
+            
+                <a href="162.html">
+            
+                    
+                    探索 BeautifulSoap 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="163.html">
+            
+                <a href="163.html">
+            
+                    
+                    使用 BeautifulSoap 查找 HTML 标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="164.html">
+            
+                <a href="164.html">
+            
+                    
+                    从消费者报告网站抓取产品名称
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="165.html">
+            
+                <a href="165.html">
+            
+                    
+                    高级
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="166.html">
+            
+                <a href="166.html">
+            
+                    
+                    网页抓取：将数据写入文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="167.html">
+            
+                <a href="167.html">
+            
+                    
+                    网页抓取：抓取多个网址
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="168.html">
+            
+                <a href="168.html">
+            
+                    
+                    从 StudyTonight 教程网页中抓取主题名称
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >requests模块简介</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="requests模块简介"><code>requests</code>模块简介</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/python/web-scraping/introduction-to-requests-module" target="_blank">https://www.studytonight.com/python/web-scraping/introduction-to-requests-module</a></p>
+</blockquote>
+<p><code>requests</code>模块用于向任意服务器发送 <strong>HTTP 请求</strong>并接收回 <strong>HTTP 响应</strong>。因此我们将使用<code>requests</code>模块使用网站的网址发送 HTTP 请求并返回响应，为此我们将使用<strong>美汤</strong>模块从响应中取出网站的有用数据/信息/内容。</p>
+<p>那么我们来学习一下如何使用<code>requests</code>模块发送 HTTP 请求和接收服务器的响应。</p>
+<hr></hr>
+<h2 id="一些有用的request模块方法">一些有用的<code>request</code>模块方法</h2>
+<p>以下是<code>requests</code>模块中用于发出 HTTP 请求的一些常用方法。</p>
+<ol>
+<li>requests.get()</li>
+<li>requests.post()</li>
+<li>requests.put()</li>
+<li>requests.delete()</li>
+<li>requests.head()</li>
+<li>requests.options()</li>
+</ol>
+<p>在本教程中，我们将使用<code>requests.get()</code>和<code>requests.post()</code>方法对网页抓取进行 HTTP 请求。</p>
+<p>如果你是 HTTP 请求新手，想知道 <strong>GET</strong> 和 <strong>POST</strong> 请求是什么，这里有一个简单的解释:</p>
+<ol>
+<li><strong>GET</strong> :用于使用 URL 检索信息(网页)。</li>
+<li><strong>POST</strong> :用于向某个 URL 发送信息。</li>
+</ol>
+<hr></hr>
+<h3 id="使用requestsget提出请求">使用<code>requests.get</code>提出请求</h3>
+<p><code>requests.get(URL)</code>方法用于发送 HTTP 请求并接收数据作为响应。它需要一个网址或任何 API。</p>
+<p><code>response.content</code>是存储响应内容的变量，是<code>get()</code>方法的响应。</p>
+<p>让我们举个例子，</p>
+<pre><code class="lang-py"><span class="hljs-comment">## import requests module</span>
+<span class="hljs-keyword">import</span> requests
+
+<span class="hljs-comment">## send a request and receive the information from https://www.google.com</span>
+response = requests.get(<span class="hljs-string">"https://www.google.com"</span>)
+
+<span class="hljs-comment">## printing the response</span>
+print(response.content)
+</code></pre>
+<p>上述脚本的输出将是指定网址的整个<strong>页面源</strong>(或源代码)，我们已经将其存储在下面的 <a href="resources/requests-get-response.txt"><strong>文件</strong></a> 中(因为太长)。</p>
+<p>你一定想知道我们怎么能从这里读到任何东西，因为它太复杂了。为了使响应内容可读，我们使用了<strong>BeautifulSoap</strong>模块，这将在接下来的教程中介绍。</p>
+<p>我们可以使用<code>response.headers</code>方法打印网站在回复中发送的<strong>标题</strong>信息。</p>
+<p>对于新手来说，<strong>头</strong>信息包含关于 HTTP 连接的一般元信息以及一些连接属性。</p>
+<p>让我们为上面的 get 请求打印标题:</p>
+<pre><code class="lang-py"><span class="hljs-comment">## import requests module</span>
+<span class="hljs-keyword">import</span> requests
+
+<span class="hljs-comment">## send a request and receive the information from https://www.google.com</span>
+response = requests.get(<span class="hljs-string">"https://www.google.com"</span>)
+
+<span class="hljs-comment">## headers of the website</span>
+print(response.headers)
+</code></pre>
+<p>{ ' Date ':' 2018 年 11 月 07 日星期三 08:56:29 GMT '，' Expires ':-1 '，' Cache-Control': 'private，max-age=0 '，' Content-Type ':' text/html；charset=ISO-8859-1 '，' P3P': 'CP= '这不是 P3P 的政策！更多信息请见 g.co/p3phelp。”、“内容编码”:“gzip”、“服务器”:“gws”、“X-XSS-保护”:“1；mode=block '，' X-Frame-Options': 'SAMEORIGIN '，' Set-Cookie ':' 1P <em> JAR = 2018-11-07-08；到期=Fri，07-12-2018 08:56:29 格林尼治时间；路径=/；domain=.google.com，NID = 144 = cpba w4 rax5 tzbz3 wtdnn 54 qgut 198 ovtvdywyx0ifipo-MLX </em> qcq 8 djzxqnko 7 wqrd4d kognxshyh 9 tfmmzktoz0 oonbu-9nlw 50 ocpogmxvt 9 snrzgxpujgmv 0 d5a 7 urfesv 0 blihlp 24 upnwhoqjmo 5 sbznndc 0 dvd3d vr5s；到期时间= 2019 年 05 月 09 日星期四格林尼治时间 08:56:29；路径=/；domain = .google.comHttpOnly '，' Alt-Svc ':' quic = ":443 "；ma = 2592000v="44，43，39，35 " '，'传输编码':'分块' }</p>
+<p>为了以更易读的格式打印值，我们可以使用方法<code>response.headers.items()</code>分别访问每个值，并使用 <a href="python/looping-in-python"><code>for</code>循环</a>打印每个值。</p>
+<pre><code class="lang-py"><span class="hljs-comment">## import requests module</span>
+<span class="hljs-keyword">import</span> requests
+
+<span class="hljs-comment">## send a request and receive the information from https://www.google.com</span>
+response = requests.get(<span class="hljs-string">"https://www.google.com"</span>)
+
+<span class="hljs-comment">## headers of the website</span>
+<span class="hljs-keyword">for</span> key, value <span class="hljs-keyword">in</span> response.headers.items():
+    print(key, <span class="hljs-string">'\t\t'</span>, value)
+</code></pre>
+<p>日期:2018 年 11 月 7 日星期三格林尼治时间 08:56:29 到期-1 缓存-控制私有，最大年龄=0 内容类型文本/html；charset=ISO-8859-1 P3P CP= "这不是 P3P 的政策！更多信息请见 g.co/p3phelp。”内容编码 gzip 服务器 GWS X-XSS-保护 1；模式=块 X-帧-选项 same origin Set-Cookie 1P <em> JAR = 2018-11-07-08；到期=Fri，07-12-2018 08:56:29 格林尼治时间；路径=/；domain=.google.com，NID = 144 = cpba w4 rax5 tzbz3 wtdnn 54 qgut 198 ovtvdywyx0ifipo-MLX </em> qcq 8 djzxqnko 7 wqrd4d kognxshyh 9 tfmmzktoz0 oonbu-9nlw 50 ocpogmxvt 9 snrzgxpujgmv 0 d5a 7 urfesv 0 blihlp 24 upnwhoqjmo 5 sbznndc 0 dvd3d vr5s；到期时间= 2019 年 05 月 09 日星期四格林尼治时间 08:56:29；路径=/；domain = .google.comHttpOnly Alt-Svc quic = ":443 "；ma = 2592000v =“44，43，39，35”传输编码分块</p>
+<h4 id="请求的状态">请求的状态</h4>
+<p>当我们使用<code>requests.get()</code>方法发出 GET 请求时，请求可能会失败，被重定向到其他网址，可能会在客户端或服务器端失败，也可能会成功完成。</p>
+<p>要了解请求的状态，我们可以查看收到的响应的<strong>状态代码</strong>。</p>
+<p>这可以使用<code>response.status_code</code>值来完成。很简单，</p>
+<pre><code class="lang-py"><span class="hljs-comment">## import requests module</span>
+<span class="hljs-keyword">import</span> requests
+
+<span class="hljs-comment">## send a request and receive the information from https://www.google.com</span>
+response = requests.get(<span class="hljs-string">"https://www.google.com"</span>)
+
+<span class="hljs-comment">## status of request</span>
+print(response.status_code)
+</code></pre>
+<p>Two hundred</p>
+<p>以下是您可能在响应中获得的不同状态值:</p>
+<p>| 状态代码 | 描述 |
+| 1XX | 报告的 |
+| 2XX | 成功 |
+| 3XX | 重寄 |
+| 4XX | 客户端错误 |
+| 5XX | 服务器错误 |</p>
+<p>例如: <strong>200</strong> 状态码为成功。鉴于， <strong>201</strong> 状态代码用于已创建(当我们发送创建某个资源的请求时)等。</p>
+<p>就像 GET 请求一样，我们可以使用<code>requests.post(URL)</code>方法发出 POST 请求，处理响应也是一样的。</p>
+<p>对于网页抓取，我们将主要使用 GET 请求。</p>
+<hr></hr>
+<h2 id="设置用户代理">设置用户代理</h2>
+<p>当我们试图使用程序访问网站时，出于安全原因，一些网站不允许这样做，因为这使得网站容易受到通过程序生成的不必要请求的影响，在极端情况下，这些程序甚至会通过发送大量请求来加重网站服务器的负担。</p>
+<p>为了克服这一点，我们将使用伪造用户代理模块，该模块用于伪造对服务器的请求，就好像它是由用户而不是程序发起的一样。</p>
+<p>要安装模块 <strong>fake_useragent</strong> ，运行以下命令:</p>
+<pre><code class="lang-py">pip install fake_useragent
+</code></pre>
+<p>一旦安装完成，我们就可以用它来生成一个虚假的用户请求，如下所示:</p>
+<pre><code class="lang-py"><span class="hljs-comment">## import UserAgent from the fake_useragent module</span>
+<span class="hljs-keyword">from</span> fake_useragent <span class="hljs-keyword">import</span> UserAgent
+
+<span class="hljs-comment">## create an instance of the 'UserAgent' class</span>
+obj = UserAgent()
+
+<span class="hljs-comment">## create a dictionary with key 'user-agent' and value 'obj.chrome'</span>
+header = {<span class="hljs-string">'user-agent'</span>: obj.chrome}
+
+<span class="hljs-comment">## send request by passing 'header' to the 'headers' parameter in 'get' method</span>
+r = requests.get(<span class="hljs-string">'https://google.com'</span>, headers=header)
+
+print(r.content)
+</code></pre>
+<p>这个请求的输出将是网页<strong><a href="https://google.com" target="_blank">https://google.com</a></strong>的源代码，就好像它是由用户使用 <strong>Chrome</strong> 浏览器打开的一样。</p>
+<p>所以现在我们知道如何使用<code>requests</code>模块向任何网址发送一个 HTTP 请求并接收响应。在下一个教程中，我们将学习如何使用<strong>BeautifulSoap</strong>模块从 HTTP 响应中获取真正有用的内容。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="158.html" class="navigation navigation-prev " aria-label="Previous page: 网页抓取简介">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="160.html" class="navigation navigation-next " aria-label="Next page: beautifulsoup模块简介">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"requests模块简介","level":"1.1.36","depth":2,"next":{"title":"beautifulsoup模块简介","level":"1.1.37","depth":2,"path":"160.md","ref":"160.md","articles":[]},"previous":{"title":"网页抓取简介","level":"1.1.35","depth":2,"path":"158.md","ref":"158.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"159.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:16.781Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

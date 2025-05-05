@@ -1,0 +1,705 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 8 Collectors类 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0812.html" />
+    
+    
+    <link rel="prev" href="0810.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0807.html">
+            
+                <a href="0807.html">
+            
+                    
+                    Java 8 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0808.html">
+            
+                <a href="0808.html">
+            
+                    
+                    Java 8 Lambda 表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0809.html">
+            
+                <a href="0809.html">
+            
+                    
+                    Java 反射 API——Parameter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0810.html">
+            
+                <a href="0810.html">
+            
+                    
+                    Java 8 Base64类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.5" data-path="0811.html">
+            
+                <a href="0811.html">
+            
+                    
+                    Java 8 Collectors类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0812.html">
+            
+                <a href="0812.html">
+            
+                    
+                    Java 8 并行数组排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0813.html">
+            
+                <a href="0813.html">
+            
+                    
+                    Java 8 方法引用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0814.html">
+            
+                <a href="0814.html">
+            
+                    
+                    Java 8 forEach()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0815.html">
+            
+                <a href="0815.html">
+            
+                    
+                    Java 8 StringJoiner类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0816.html">
+            
+                <a href="0816.html">
+            
+                    
+                    Java 接口默认和静态方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0817.html">
+            
+                <a href="0817.html">
+            
+                    
+                    Java 8 函数式接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0818.html">
+            
+                <a href="0818.html">
+            
+                    
+                    Java Optional类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0819.html">
+            
+                <a href="0819.html">
+            
+                    
+                    Java 8 流 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0820.html">
+            
+                <a href="0820.html">
+            
+                    
+                    Java 8 改进的类型推断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0821.html">
+            
+                <a href="0821.html">
+            
+                    
+                    Java 8 日期和时间 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0822.html">
+            
+                <a href="0822.html">
+            
+                    
+                    Java 谓词
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 8 Collectors类</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-8-collectors类">Java 8 <code>Collectors</code>类</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-8/java-8-collectors-class" target="_blank">https://www.studytonight.com/java-8/java-8-collectors-class</a></p>
+</blockquote>
+<p>在 Java 8 版本中，增加了一个新的类来执行约简操作，例如将元素累积到集合中，根据各种标准汇总元素等。</p>
+<p><code>Collectors</code>类适用于 Java 流，因此我们建议您了解<a href="https://www.studytonight.com/java-8/java-8-stream-api" target="_blank">流</a>、<a href="https://www.studytonight.com/java-8/java-8-lambda-expression" target="_blank">Lambda 表达式</a>、<a href="https://www.studytonight.com/java-8/java-8-method-reference" target="_blank">方法引用</a>。如果您不熟悉这些内容，您可以在我们的门户网站上通过单击主题来阅读这些主题。</p>
+<p><code>Collectors</code>是扩展对象类的最终类，位于 <strong>java.util.stream</strong> 包中。</p>
+<h2 id="申报">申报</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Collectors</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Object</span>
+</span></code></pre>
+<h2 id="collectors类方法"><code>Collectors</code>类方法</h2>
+<p>以下是<code>Collectors</code>类的方法。</p>
+<p>| </p>
+<p>修饰符和类型</p>
+<p> | </p>
+<p>方法和描述</p>
+<p> |
+| 静态<t>收集器<t>平均双倍(到双倍函数 super T&gt;映射器)</t>&lt;/t&gt; | 它返回一个收集器，该收集器产生应用于输入元素的双值函数的算术平均值。 |
+| 静态<t>收集器<t>平均积分(到函数 super T&gt;映射器)</t>&lt;/t&gt; | 它返回一个收集器，该收集器生成应用于输入元素的整数值函数的算术平均值。 |
+| 静态<t>收集器<t>平均长(ToLongFunction super T&gt;映射器)</t>&lt;/t&gt; | 它返回一个收集器，该收集器产生应用于输入元素的长值函数的算术平均值。 |
+| 静态<t>收集器<t>收集深度(收集器<t>下游，功能<r>整理器)</r></t>&lt;/t&gt;&lt;/t&gt; | 它调整收集器以执行额外的整理转换。 |
+| 静态<t>采集器<t>计数()</t>&lt;/t&gt; | 它返回一个接受 T 类型元素的收集器，该收集器计算输入元素的数量。 |
+| 静态<t>收集器<t>&gt; &gt;分组 By(功能 super T,? extends K&gt;分类器)</t>&lt;/t&gt; | 它返回一个收集器，该收集器对类型为 T 的输入元素执行“分组依据”操作，根据分类函数对元素进行分组，并在映射中返回结果。 |
+| 静态<t>收集器<t>&gt;</t>&lt;/t&gt;分组(功能 super T,? extends K&gt;分类器，收集器 super T,A,D&gt;下游) | 它返回一个 Collector，该 Collector 对 T 类型的输入元素执行级联“分组依据”操作，根据分类函数对元素进行分组，然后使用指定的下游 Collector 对与给定键相关联的值执行约简操作。 |
+| 静 <t extends="" map="">&gt;
+采集器&lt; T、？，M &gt;</t>分组(功能 super T,? extends K&gt;分类器，供应商<m>映射工厂，收集器 super T,A,D&gt;下游)</m> | 它返回一个 Collector，该 Collector 对 T 类型的输入元素执行级联“分组依据”操作，根据分类函数对元素进行分组，然后使用指定的下游 Collector 对与给定键相关联的值执行约简操作。 |
+| 静态<t>收集器<t>&gt; &gt;分组当前(功能 super T,? extends K&gt;分类器)</t>&lt;/t&gt; | 它返回一个并发收集器，该收集器对类型为 T 的输入元素执行“分组依据”操作，根据分类函数对元素进行分组。 |
+| 静态<t>收集器<t>&gt;</t>&lt;/t&gt;groupingByConcurrent(功能 super T,? extends K&gt;分类器，收集器 super T,A,D&gt;下游) | 它返回一个并发收集器，该收集器对类型为 T 的输入元素执行级联“分组”操作，根据分类函数对元素进行分组，然后使用指定的下游收集器对与给定键相关联的值执行约简操作。 |
+| 静 <t extends="" concurrentmap="">&gt;
+采集器&lt; T、？，M &gt;</t>groupingByConcurrent(功能 super T,? extends K&gt;分类器，供应商<m>映射工厂，收集器 super T,A,D&gt;下游)</m> | 它返回一个并发收集器，该收集器对类型为 T 的输入元素执行级联“分组”操作，根据分类函数对元素进行分组，然后使用指定的下游收集器对与给定键相关联的值执行约简操作。 |
+| 静态收集器<charsequence>连接()</charsequence> | 它返回一个收集器，按照相遇顺序将输入元素连接成一个字符串。 |
+| 静态收集器<charsequence>连接(字符序列分隔符)</charsequence> | 它返回一个 Collector，按照相遇顺序连接由指定分隔符分隔的输入元素。 |
+| 静态收集器<charsequence>连接(字符序列分隔符、字符序列前缀、字符序列后缀)</charsequence> | 它返回一个 Collector，该 Collector 按照相遇顺序将由指定分隔符分隔的输入元素与指定前缀和后缀连接起来。 |
+| 静态<t>收集器</t>映射(功能 super T,? extends U&gt;映射器，收集器 super U,A,R&gt;下游) | 它通过在累加之前对每个输入元素应用一个映射函数，使接受 U 类型元素的收集器适应接受 T 类型元素的收集器。 |
+| 静态<t>采集器<t>&gt;最大比(<code>Comparator</code> super T&gt;<code>Comparator</code>)</t>&lt;/t&gt; | 它返回一个收集器，根据给定的<code>Comparator</code>产生最大元素，描述为可选的<t>。</t> |
+| 静态<t>收集器 <t>&gt; minBy(<code>Comparator</code> super T&gt;<code>Comparator</code>)</t>&lt;/t&gt; | 它返回一个收集器，根据给定的<code>Comparator</code>产生最小元素，描述为可选的<t>。</t> |
+| 静态<t>收集器<t>&gt; &gt;分区 By(谓词 super T&gt;谓词)</t>&lt;/t&gt; | 它返回一个收集器，该收集器根据一个谓词对输入元素进行划分，并将它们组织成一个映射<boolean list="">&gt;。</boolean> |
+| 静态<t>收集器<t>&gt;</t>&lt;/t&gt;划分依据(谓词 super T&gt;谓词，收集器 super T,A,D&gt;下游) | 它返回一个收集器，该收集器根据一个谓词对输入元素进行分区，根据另一个收集器减少每个分区中的值，并将它们组织成一个映射<boolean d="">，其值是下游减少的结果。</boolean> |
+| 静态<t>收集器<t>&gt;还原(双操作器<t>操作)</t>&lt;/t&gt;&lt;/t&gt; | 它返回一个收集器，该收集器在一个指定的二进制运算符下执行输入元素的缩减。 |
+| 静态<t>采集器<t>还原(T 身份，双处理器 <t>op)</t>&lt;/t&gt;&lt;/t&gt; | 它返回一个 Collector，该 Collector 使用提供的标识在指定的 BinaryOperator 下执行其输入元素的缩减。 |
+| 静态<t>收集器</t>减少(U 标识，函数 super T,? extends U&gt;映射器，二进制运算符<u>运算)</u> | 它返回一个收集器，该收集器在指定的映射函数和 BinaryOperator 下执行输入元素的缩减。 |
+| 静态<t>收集器<t>汇总双(到双功能 super T&gt;映射器)</t>&lt;/t&gt; | 它返回一个收集器，该收集器对每个输入元素应用一个双产生映射函数，并返回结果值的汇总统计信息。 |
+| 静态<t>收集器<t>摘要开始(到功能 super T&gt;映射器)</t>&lt;/t&gt; | 它返回一个收集器，该收集器对每个输入元素应用一个产生整数的映射函数，并返回结果值的汇总统计信息。 |
+| 静态<t>收集器<t>汇总图形(图形功能 super T&gt;映射器)</t>&lt;/t&gt; | 它返回一个收集器，该收集器对每个输入元素应用一个长时间产生的映射函数，并返回结果值的汇总统计信息。 |
+| 静态<t>收集器<t>求和双(到双功能 super T&gt;映射器)</t>&lt;/t&gt; | 它返回一个收集器，该收集器产生应用于输入元素的双值函数的和。 |
+| 静态<t>收集器<t>求和(到函数 super T&gt;映射器)</t>&lt;/t&gt; | 它返回一个收集器，该收集器生成应用于输入元素的整数值函数的和。 |
+| 静态<t>收集器<t>汇总龙(ToLongFunction super T&gt;映射器)</t>&lt;/t&gt; | 它返回一个收集器，该收集器产生应用于输入元素的长值函数的和。 |
+| 静 <t extends="" collection="">&gt;
+采集器&lt; T、？，丙&gt;至集采(供应商&lt;丙&gt;集采厂)</t> | 它返回一个收集器，该收集器按照相遇顺序将输入元素累积到一个新的集合中。 |
+| 静态<t>收集器<t>&gt;</t>&lt;/t&gt;至当前映射(功能 super T,? extends K&gt;键映射器，功能 super T,? extends U&gt;值映射器) | 它返回一个并发收集器，该收集器将元素累积到一个并发映射中，该映射的键和值是将提供的映射函数应用于输入元素的结果。 |
+| 静态<t>收集器<t>&gt;</t>&lt;/t&gt;到当前映射(函数 super T,? extends K&gt;键映射器，函数 super T,? extends U&gt;值映射器，二进制运算符<u>合并函数)</u> | 它返回一个并发收集器，该收集器将元素累积到一个并发映射中，该映射的键和值是将提供的映射函数应用于输入元素的结果。 |
+| 静 <t extends="" concurrentmap="">&gt;
+采集器&lt; T、？，M &gt;</t>到当前映射(功能 super T,? extends K&gt;键映射器，功能 super T,? extends U&gt;值映射器，二进制操作器<u>合并功能，供应商<m>映射供应商)</m></u> | 它返回一个并发收集器，该收集器将元素累积到一个并发映射中，该映射的键和值是将提供的映射函数应用于输入元素的结果。 |
+| 静态<t>收集器 <t>&gt; toList()</t>&lt;/t&gt; | 它返回一个收集器，该收集器将输入元素累积到一个新列表中。 |
+| 静态<t>收集器<t>&gt;</t>&lt;/t&gt;函数 super T,? extends K&gt;键映射器，函数 super T,? extends U&gt;值映射器 | 它返回一个收集器，该收集器将元素累积到一个映射中，该映射的键和值是将提供的映射函数应用于输入元素的结果。 |
+| 静态<t>收集器<t>&gt;</t>&lt;/t&gt;函数 super T,? extends K&gt;键映射器，函数 super T,? extends U&gt;值映射器，二进制运算符<u>合并函数)</u> | 它返回一个收集器，该收集器将元素累积到一个映射中，该映射的键和值是将提供的映射函数应用于输入元素的结果。 |
+| 静 <t extends="" map="">&gt;
+采集器&lt; T、？，M &gt;</t>toMap(功能 super T,? extends K&gt;键映射器，功能 super T,? extends U&gt;值映射器，二进制操作器<u>合并功能，供应商<m>映射供应商)</m></u> | 它返回一个收集器，该收集器将元素累积到一个映射中，该映射的键和值是将提供的映射函数应用于输入元素的结果。 |
+| 静态<t>收集器 <t>&gt; toSet()</t>&lt;/t&gt; | 它返回一个收集器，该收集器将输入元素累积成一个新的集合。 |</t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></t></p>
+<p>在所有这些例子中，我们使用一个类 <strong>Employee</strong> ，它包含员工的 <strong>id</strong> 、<strong>名称</strong>和<strong>工资</strong>作为实例变量，并使用一个<strong>构造器</strong>和 <strong>getter</strong> 、 <strong>setter</strong> 方法作为所有实例变量。让我们看看如何在<code>Collectors</code>类中使用它。</p>
+<h2 id="例子">例子</h2>
+<p>在这个例子中，我们使用<code>Collectors</code>类的<code>toList()</code>方法收集所有员工的姓名并将其存储到列表中。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Collectors;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Employee</span></span>{
+    String id;
+    String name;
+    <span class="hljs-keyword">double</span> salary;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Employee</span><span class="hljs-params">(String id, String name, <span class="hljs-keyword">double</span> salary)</span> </span>{
+        <span class="hljs-keyword">this</span>.id = id;
+        <span class="hljs-keyword">this</span>.name = name;
+        <span class="hljs-keyword">this</span>.salary = salary;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getId</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> id;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setId</span><span class="hljs-params">(String id)</span> </span>{
+        <span class="hljs-keyword">this</span>.id = id;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> name;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>{
+        <span class="hljs-keyword">this</span>.name = name;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">getSalary</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> salary;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setSalary</span><span class="hljs-params">(<span class="hljs-keyword">double</span> salary)</span> </span>{
+        <span class="hljs-keyword">this</span>.salary = salary;
+    }
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        List&lt;Employee&gt; emp = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"100"</span>, <span class="hljs-string">"Sohan"</span>, <span class="hljs-number">120000</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"101"</span>, <span class="hljs-string">"Mohan"</span>, <span class="hljs-number">100050</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"102"</span>, <span class="hljs-string">"Rohan"</span>, <span class="hljs-number">500050</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"103"</span>, <span class="hljs-string">"John"</span>,  <span class="hljs-number">5000.20</span>));
+
+        List&lt;String&gt; names = emp.stream().map(Employee::getName).collect(Collectors.toList());
+
+        System.out.println(names);
+    }
+}
+</code></pre>
+<p>【素汉、莫汉、罗翰、约翰】</p>
+<h2 id="示例treeset">示例:TreeSet</h2>
+<p>在这个例子中，我们将所有员工的名字放入一个集合<code>TreeSet</code>。该集合用于存储唯一元素，并查看结果是否包含员工的重复姓名。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.Set;
+<span class="hljs-keyword">import</span> java.util.TreeSet;
+<span class="hljs-keyword">import</span> java.util.stream.Collectors;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        List&lt;Employee&gt; emp = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"100"</span>, <span class="hljs-string">"Sohan"</span>, <span class="hljs-number">120000</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"101"</span>, <span class="hljs-string">"Mohan"</span>, <span class="hljs-number">100050</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"102"</span>, <span class="hljs-string">"Rohan"</span>, <span class="hljs-number">500050</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"103"</span>, <span class="hljs-string">"Sohan"</span>,  <span class="hljs-number">5000.20</span>));
+
+        Set&lt;String&gt; names = emp.stream().map(Employee::getName).collect(Collectors.toCollection(TreeSet::<span class="hljs-keyword">new</span>));
+
+        System.out.println(names);
+    }
+}
+</code></pre>
+<p>【莫汉、罗翰、索山】</p>
+<h2 id="示例以字符串形式收集数据">示例:以字符串形式收集数据</h2>
+<p>在本例中，我们使用<code>joining()</code>方法收集所有员工的姓名，并用逗号分隔。方法在收集记录后返回一个字符串。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Collectors;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        List&lt;Employee&gt; emp = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"100"</span>, <span class="hljs-string">"Sohan"</span>, <span class="hljs-number">120000</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"101"</span>, <span class="hljs-string">"Mohan"</span>, <span class="hljs-number">100050</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"102"</span>, <span class="hljs-string">"Rohan"</span>, <span class="hljs-number">500050</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"103"</span>, <span class="hljs-string">"Sohan"</span>,  <span class="hljs-number">5000.20</span>));
+
+        String names = emp.stream().map(Employee::getName).collect(Collectors.joining(<span class="hljs-string">", "</span>));
+
+        System.out.println(names);
+    }
+}
+</code></pre>
+<p>索山、莫汉、罗翰、索山</p>
+<h2 id="示例">示例:</h2>
+<p>在这个例子中，我们使用 Collectors 类的<code>summingDouble()</code>方法得到所有员工的工资总和。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Collectors;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        List&lt;Employee&gt; emp = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"100"</span>, <span class="hljs-string">"Sohan"</span>, <span class="hljs-number">120000</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"101"</span>, <span class="hljs-string">"Mohan"</span>, <span class="hljs-number">100050</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"102"</span>, <span class="hljs-string">"Rohan"</span>, <span class="hljs-number">500050</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"103"</span>, <span class="hljs-string">"Sohan"</span>,  <span class="hljs-number">5000.20</span>));
+
+        <span class="hljs-keyword">double</span> totalSalary = emp.stream()
+                .collect(Collectors.summingDouble((Employee::getSalary)));
+
+        System.out.println(totalSalary);
+    }
+}
+</code></pre>
+<p>725100.2</p>
+<h2 id="示例">示例:</h2>
+<p>我们可以使用<code>maxBy()</code>方法从工资列表中获得最高的工资。它根据提供的元素顺序返回列表中可用的最高记录。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.Comparator;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.Optional;
+<span class="hljs-keyword">import</span> java.util.stream.Collectors;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        List&lt;Employee&gt; emp = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"100"</span>, <span class="hljs-string">"Sohan"</span>, <span class="hljs-number">120000</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"101"</span>, <span class="hljs-string">"Mohan"</span>, <span class="hljs-number">100050</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"102"</span>, <span class="hljs-string">"Rohan"</span>, <span class="hljs-number">500050</span>));
+        emp.add(<span class="hljs-keyword">new</span> Employee(<span class="hljs-string">"103"</span>, <span class="hljs-string">"Sohan"</span>,  <span class="hljs-number">5000.20</span>));
+
+        Optional&lt;Double&gt; highSalary = emp.stream().map(Employee::getSalary).collect(Collectors.maxBy(Comparator.naturalOrder()));
+
+        System.out.println(<span class="hljs-string">"Highest Salary : "</span>+highSalary.get());
+    }
+}
+</code></pre>
+<p>最高工资:500050.0</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0810.html" class="navigation navigation-prev " aria-label="Previous page: Java 8 Base64类">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0812.html" class="navigation navigation-next " aria-label="Next page: Java 8 并行数组排序">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 8 Collectors类","level":"1.1.5","depth":2,"next":{"title":"Java 8 并行数组排序","level":"1.1.6","depth":2,"path":"0812.md","ref":"0812.md","articles":[]},"previous":{"title":"Java 8 Base64类","level":"1.1.4","depth":2,"path":"0810.md","ref":"0810.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0811.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:51.159Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

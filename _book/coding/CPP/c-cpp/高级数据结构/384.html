@@ -1,0 +1,636 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>B 树数据结构 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="385.html" />
+    
+    
+    <link rel="prev" href="383.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="378.html">
+            
+                <a href="378.html">
+            
+                    
+                    高级树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="379.html">
+            
+                <a href="379.html">
+            
+                    
+                    多维树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="380.html">
+            
+                <a href="380.html">
+            
+                    
+                    树型数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="381.html">
+            
+                <a href="381.html">
+            
+                    
+                    堆数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="382.html">
+            
+                <a href="382.html">
+            
+                    
+                    实现堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="383.html">
+            
+                <a href="383.html">
+            
+                    
+                    TRIE 数据结构示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.7" data-path="384.html">
+            
+                <a href="384.html">
+            
+                    
+                    B 树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="385.html">
+            
+                <a href="385.html">
+            
+                    
+                    B- 树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="386.html">
+            
+                <a href="386.html">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="387.html">
+            
+                <a href="387.html">
+            
+                    
+                    图介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="388.html">
+            
+                <a href="388.html">
+            
+                    
+                    图表示——邻接矩阵和列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="389.html">
+            
+                <a href="389.html">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="390.html">
+            
+                <a href="390.html">
+            
+                    
+                    哈希表数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >B 树数据结构</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="b-树数据结构">B 树数据结构</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/advanced-data-structures/b-trees-mway-trees-data-structure" target="_blank">https://www.studytonight.com/advanced-data-structures/b-trees-mway-trees-data-structure</a></p>
+</blockquote>
+<h3 id="b-树是一种特殊类型的-m-路搜索树。">B 树是一种特殊类型的 M 路搜索树。</h3>
+<h1 id="双向树">双向树</h1>
+<p>在学习 B-Trees 之前，我们需要知道什么是 M-way 树，以及 B-tree 是一种特殊类型的 M-way 树。多路(多路)树是具有以下属性的树:</p>
+<ul>
+<li><p>树中每个节点最多可以有 <strong>m 个</strong>子节点。</p>
+</li>
+<li><p>树中的节点最多有 <strong>(m-1)</strong> 个关键字段和指向子节点的指针(引用)。</p>
+</li>
+</ul>
+<p>考虑下图所示的 <strong>M 路树</strong>的图示。</p>
+<p><img src="img/a22351ae24ce4833b83360bf2904c692.png" alt="M-way Tree data structure"></img></p>
+<p>上图为 <strong>4 向树</strong>，每个节点最多可以有 <strong>3(4-1)个关键字段</strong>和最多 <strong>4 个</strong>子节点。也是 <strong>4 向搜索树</strong>。</p>
+<h1 id="双向搜索树">双向搜索树</h1>
+<p>M 路搜索树是一种更受约束的 M 路树，这些约束主要应用于关键字段及其值。使其成为多路搜索树的<strong>多路</strong>树的约束条件是:</p>
+<ul>
+<li><p>树中的每个节点可以与 <strong>m</strong> 子节点和 <strong>m-1</strong> 关键字段相关联。</p>
+</li>
+<li><p>树的任何节点中的键都是按排序顺序排列的(<strong>升序</strong>)。</p>
+</li>
+<li><p>第一个 <strong>K</strong> 子节点中的键是<strong>小于这个节点的**</strong>Kth**键。</p>
+</li>
+<li><p>最后一个 <strong>(m-K</strong> )孩子的按键高于<strong>第 K 个</strong>按键。</p>
+</li>
+</ul>
+<p>考虑下面显示的 M 路搜索树的图示:</p>
+<p><img src="img/a821363a08e26509702cdcc09e0dd93c.png" alt="3-way search tree"></img></p>
+<p>M-way 搜索树与 M-way 树具有相同的优势，这使得搜索和更新操作更加高效。尽管如此，它们可能会变得不平衡，这反过来又让我们面临同样的问题，即在一棵倾斜的树上寻找一把钥匙，这并不是一个很大的优势。</p>
+<h2 id="在双向搜索树中搜索">在双向搜索树中搜索:</h2>
+<p>如果我们想要在 M 路搜索树中搜索一个值，比如说 <strong>X</strong> ，并且当前我们处于包含来自 <strong>Y1、Y2、Y3，.....，Yk</strong> 。那么总共有 4 种情况可以处理这种情况，它们是:</p>
+<ul>
+<li><p>如果 <strong>X &lt; Y1</strong> ，那么我们需要递归遍历 <strong>Y1</strong> 的左子树。</p>
+</li>
+<li><p>如果 <strong>X &gt; Yk</strong> ，那么我们需要递归遍历 <strong>Yk</strong> 的右子树。</p>
+</li>
+<li><p>如果 <strong>X = Yi</strong> ，对于一些 <strong>i</strong> ，那么我们就完了，可以回归了。</p>
+</li>
+<li><p>最后也是唯一剩下的情况是，当对于某些 <strong>i</strong> 我们有 <strong>Yi &lt; X &lt; Y(i+1)</strong> 时，那么在这种情况下我们需要递归地遍历存在于 <strong>Yi</strong> 和 <strong>Y(i+1)</strong> 之间的子树。</p>
+</li>
+</ul>
+<p>例如，考虑上面显示的 3 向搜索树，比如说，我们想要搜索一个关键字(X)等于 60 的节点。然后，考虑到上述情况，对于根节点，第二个条件适用， <strong>(60 &gt; 40)</strong> ，因此我们向下移动到 <strong>40</strong> 的右子树。现在，最后一个条件仅有效，因此我们遍历位于 <strong>55</strong> 和 <strong>70</strong> 之间的子树。最后，在向下遍历时，我们有了我们一直在寻找的价值。</p>
+<h1 id="二叉树数据结构">二叉树数据结构:</h1>
+<p>B 树是 M 路搜索树的扩展。除了具有 M 路搜索树的所有属性之外，它还具有自己的一些属性，这些属性主要是:</p>
+<ul>
+<li><p>B 树中的所有叶节点都在同一级别。</p>
+</li>
+<li><p>所有内部节点必须有 <strong>M/2</strong> 子节点。</p>
+</li>
+<li><p>如果根节点是非叶节点，则它必须至少有两个子节点。</p>
+</li>
+<li><p>除根节点外，所有节点必须至少有<strong>【M/2】-1</strong>键，最多有 <strong>M-1</strong> 键。</p>
+</li>
+</ul>
+<p>考虑如下所示的 B 树的图示:</p>
+<p><img src="img/0cf45f1f9938830a0df2294b8ccf8130.png" alt="B Tree"></img></p>
+<h2 id="在-b-树中搜索">在 B 树中搜索:</h2>
+<p>在 B 树中搜索关键字就像在 M 路搜索树中搜索一样，我们刚刚在上面看到过。考虑下图所示的 B 树的图示，假设我们想在下图所示的 B 树中搜索一个键 49。我们按照以下方式进行:</p>
+<ul>
+<li><p>将项目 <strong>49 与根节点 75</strong> 进行比较。自 <strong>49 &lt; 75</strong> 遂，移至其左子树。</p>
+</li>
+<li><p>此后， <strong>40 &lt; 49 &lt; 58</strong> ，遍历右子树 40。</p>
+</li>
+<li><p><strong>49 &gt; 44</strong> ，向右移动。对比 <strong>49</strong> 。</p>
+</li>
+<li><p>我们找到了 49 个，所以回来了。</p>
+</li>
+</ul>
+<p>考虑如下所示的图示:</p>
+<p><img src="img/9614bf8585cd6eee08ef29fb164c9dfa.png" alt="B Tree Search"></img></p>
+<h2 id="在-b-树中插入">在 B 树中插入:</h2>
+<p>在 B 树中插入是在叶节点级别完成的。我们按照给定的步骤来确保插入后 B 树是有效的，这些步骤是:</p>
+<ul>
+<li><p>首先，我们遍历 B 树，找到要插入的键适合的节点。</p>
+</li>
+<li><p>如果该节点包含少于 <strong>M-1</strong> 个键，那么我们以递增的顺序插入该键。</p>
+</li>
+<li><p>如果那个节点恰好包含 <strong>M-1</strong> 键，那么我们有两种情况？按照递增的顺序插入新元素，通过中值将节点拆分为两个节点，将中值元素向上推至其父节点，最后如果父节点还包含 <strong>M-1 键</strong>，那么我们需要重复这些步骤。</p>
+</li>
+</ul>
+<p>考虑如下所示的图示:</p>
+<p><img src="img/a74b2fae2bd365fe9e8d10a4be95a7bc.png" alt="Inserting B Tree"></img></p>
+<p>现在，考虑我们要在上面显示的 B 树中插入一个键 9，插入键 9 后的树看起来像这样:</p>
+<p><img src="img/47d65022f7ddbbf5acb2703445bacdca.png" alt="Violation in B Tree"></img></p>
+<p>由于发生了违规，我们需要将中间节点推送到父节点，然后将节点分成两部分，因此 B 树的最终外观是:</p>
+<p><img src="img/5f50720a662ae00ce80ce378238a5e87.png" alt="Updated B Tree"></img></p>
+<h2 id="在-b-树中删除">在 B 树中删除:</h2>
+<p>删除 B 树中的一个键包括两种情况，它们是:</p>
+<ul>
+<li><p><strong>从叶节点删除密钥</strong></p>
+</li>
+<li><p><strong>从内部节点删除密钥</strong></p>
+</li>
+</ul>
+<h3 id="从叶节点删除密钥">从叶节点删除密钥:</h3>
+<p>如果我们想要删除存在于 B 树的叶节点中的键，那么我们有两种可能的情况，它们是:</p>
+<ul>
+<li>如果包含我们想要删除的键的节点反过来<strong>包含的键数超过了有效 B 树所需的最小键数</strong>，那么我们可以简单地删除该键。</li>
+</ul>
+<p>考虑如下所示的图示:</p>
+<p><img src="img/3d3b750b5722b6772e09be698af32df7.png" alt="Delete operation B Tree"></img></p>
+<p>比方说，我们想要删除键 64，并且其中存在 64 的节点的节点数超过了 B 树所需的最小节点数，即 2。所以，我们可以简单地删除这个节点。</p>
+<p>删除 64 后的最终树如下所示:</p>
+<p><img src="img/4ace98f1fcc0ccdadff5fb134341b6e0.png" alt="Delete B Tree-1"></img></p>
+<ul>
+<li><p>如果包含我们想要删除的键的节点反过来<strong>包含有效 B 树所需的最小键数</strong>，那么有三种情况是可能的:</p>
+<ul>
+<li><p>为了从 B 树中删除这个键，我们可以从紧邻的左节点(左兄弟)借用一个键。这个过程是我们将最高值的键从左边的兄弟移动到父节点，然后将最高值的父键移动到我们刚刚删除键的节点。</p>
+</li>
+<li><p>在另一种情况下，我们可能不得不从紧邻的右节点(右兄弟)借用一个键。这个过程是我们将最低值的键从右边的兄弟节点移动到父节点，然后将最高值的父键移动到我们刚刚删除键的节点。</p>
+</li>
+<li><p>最后一种情况是，左兄弟或右兄弟都不处于给当前节点任何值的状态，因此在这一步中，我们将与他们中的任何一个进行合并，并且合并还将包括来自父节点的键，然后我们可以从节点中删除该键。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>案例 1 绘画作品:</strong></p>
+<p><img src="img/373df46fda1d7cbafb199c81e8f853e8.png" alt="Deletion B Tree 3"></img></p>
+<p>在我们删除 23 之后，我们询问左边的兄弟，然后将 16 移动到父节点，然后向下推 20，得到的 B 树是:</p>
+<p><img src="img/ed44b8cb3c02649e8ff219f03b6a8984.png" alt="Delete B Tree 6"></img></p>
+<p><strong>案例 2 绘画作品:</strong></p>
+<p><img src="img/ffeb2adfa5ede50524dae16c260b7f88.png" alt="simple-1"></img></p>
+<p>在我们删除 72 之后，我们询问右边的兄弟，然后将 77 移动到父节点，然后将 75 向下推，得到的 B 树是:</p>
+<p><img src="img/08e78d6cf30e9535f9edba33d1e51ede.png" alt="Delete 8"></img></p>
+<p><strong>案例 3 绘画作品:</strong></p>
+<p><img src="img/847cac7d688c3f3492ccafdb20e8a873.png" alt="Delete 11"></img></p>
+<p>从叶节点中删除 65 后，我们将得到最终的 B 树，如下所示:</p>
+<p><img src="img/d157722b03e8cbe78485fcc0aedb2de5.png" alt="Delete B Tree Final"></img></p>
+<h3 id="从内部节点删除密钥">从内部节点删除密钥:</h3>
+<ul>
+<li><p>如果我们想删除一个存在于内部节点中的键，那么我们可以取这个键的顺序<strong>前置</strong>的值，或者如果取那个顺序前置违反了 B 树属性，我们可以取这个键的<strong>顺序后续</strong>。</p>
+</li>
+<li><p>在有序前身方法中，我们在存在我们的键的节点的左子节点中提取最高值。</p>
+</li>
+<li><p>在有序后继方法中，我们提取密钥所在节点的右子节点中的最低值。</p>
+</li>
+</ul>
+<p><strong>上述情况的图示:</strong></p>
+<ul>
+<li><strong>内部前身进场</strong>
+<img src="img/07536838816d9061830020f2a9fb5d15.png" alt="Internal"></img>
+删除后，我们的 B 树:
+<img src="img/26ea2caab1fbe46b351b972a310363c8.png" alt="Internal 2"></img></li>
+<li><strong>内部继任者进场</strong>
+<img src="img/99e95892a6372b8f8a5815a485160172.png" alt="Internal 3"></img>
+删除 95 后，我们的树会是这样的:
+<img src="img/bfe53c1cfd167b57163204723879afe0.png" alt=""></img></li>
+</ul>
+<h2 id="要点">要点:</h2>
+<ul>
+<li><p>B 树中搜索、插入和删除操作的时间复杂度为 <strong>O(log n)。</strong></p>
+</li>
+<li><p>B 树中的最小键数应该是<strong>[</strong>]T2【M/2]-1。</p>
+</li>
+<li><p>B 树中最大键数应为 <strong>M-1。</strong></p>
+</li>
+<li><p>B 树中的所有叶节点应该在同一级别。</p>
+</li>
+<li><p>二叉树中节点的所有键都是按升序排列的。</p>
+</li>
+<li><p>在 SQL 中使用 b 树来提高查询效率。</p>
+</li>
+<li><p>B 树中的每个节点最多只能有 <strong>M 个</strong>子节点。</p>
+</li>
+</ul>
+<h2 id="结论">结论:</h2>
+<p>在本文中，我们了解了什么是 M 路树，M 路树和 M 路搜索树有什么区别。此外，我们还学习了应用于 M 路树的约束，以使其成为 B 树。然后我们学习了搜索、插入和删除操作。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="383.html" class="navigation navigation-prev " aria-label="Previous page: TRIE 数据结构示例">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="385.html" class="navigation navigation-next " aria-label="Next page: B- 树数据结构">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"B 树数据结构","level":"1.1.7","depth":2,"next":{"title":"B- 树数据结构","level":"1.1.8","depth":2,"path":"385.md","ref":"385.md","articles":[]},"previous":{"title":"TRIE 数据结构示例","level":"1.1.6","depth":2,"path":"383.md","ref":"383.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"384.md","mtime":"2025-04-30T01:08:58.913Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:13.112Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

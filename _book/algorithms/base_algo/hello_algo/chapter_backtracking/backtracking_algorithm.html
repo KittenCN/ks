@@ -1,0 +1,2437 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>回溯算法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="permutations_problem.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href="../.." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Hello 算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1.1" data-path="../chapter_preface/about_the_book.html">
+            
+                <a href="../chapter_preface/about_the_book.html">
+            
+                    
+                    关于本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.1.2" data-path="../chapter_preface/suggestions.html">
+            
+                <a href="../chapter_preface/suggestions.html">
+            
+                    
+                    如何使用本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.1.3" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    初识算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.2.1" data-path="../chapter_introduction/algorithms_are_everywhere.html">
+            
+                <a href="../chapter_introduction/algorithms_are_everywhere.html">
+            
+                    
+                    算法无处不在
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2.2" data-path="../chapter_introduction/what_is_dsa.html">
+            
+                <a href="../chapter_introduction/what_is_dsa.html">
+            
+                    
+                    算法是什么
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2.3" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="../chapter_computational_complexity/">
+            
+                <a href="../chapter_computational_complexity/">
+            
+                    
+                    复杂度分析
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.3.1" data-path="../chapter_computational_complexity/performance_evaluation.html">
+            
+                <a href="../chapter_computational_complexity/performance_evaluation.html">
+            
+                    
+                    算法效率评估
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.2" data-path="../chapter_computational_complexity/iteration_and_recursion.html">
+            
+                <a href="../chapter_computational_complexity/iteration_and_recursion.html">
+            
+                    
+                    迭代与递归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.3" data-path="../chapter_computational_complexity/time_complexity.html">
+            
+                <a href="../chapter_computational_complexity/time_complexity.html">
+            
+                    
+                    时间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.4" data-path="../chapter_computational_complexity/space_complexity.html">
+            
+                <a href="../chapter_computational_complexity/space_complexity.html">
+            
+                    
+                    空间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.5" data-path="../chapter_computational_complexity/">
+            
+                <a href="../chapter_computational_complexity/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="../chapter_data_structure/">
+            
+                <a href="../chapter_data_structure/">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.4.1" data-path="../chapter_data_structure/classification_of_data_structure.html">
+            
+                <a href="../chapter_data_structure/classification_of_data_structure.html">
+            
+                    
+                    数据结构分类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.2" data-path="../chapter_data_structure/basic_data_types.html">
+            
+                <a href="../chapter_data_structure/basic_data_types.html">
+            
+                    
+                    基本数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.3" data-path="../chapter_data_structure/number_encoding.html">
+            
+                <a href="../chapter_data_structure/number_encoding.html">
+            
+                    
+                    数字编码 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.4" data-path="../chapter_data_structure/character_encoding.html">
+            
+                <a href="../chapter_data_structure/character_encoding.html">
+            
+                    
+                    字符编码 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.5" data-path="../chapter_data_structure/">
+            
+                <a href="../chapter_data_structure/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="../chapter_array_and_linkedlist/">
+            
+                <a href="../chapter_array_and_linkedlist/">
+            
+                    
+                    数组与链表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.5.1" data-path="../chapter_array_and_linkedlist/array.html">
+            
+                <a href="../chapter_array_and_linkedlist/array.html">
+            
+                    
+                    数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.2" data-path="../chapter_array_and_linkedlist/linked_list.html">
+            
+                <a href="../chapter_array_and_linkedlist/linked_list.html">
+            
+                    
+                    链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.3" data-path="../chapter_array_and_linkedlist/list.html">
+            
+                <a href="../chapter_array_and_linkedlist/list.html">
+            
+                    
+                    列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.4" data-path="../chapter_array_and_linkedlist/ram_and_cache.html">
+            
+                <a href="../chapter_array_and_linkedlist/ram_and_cache.html">
+            
+                    
+                    内存与缓存 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.5" data-path="../chapter_array_and_linkedlist/">
+            
+                <a href="../chapter_array_and_linkedlist/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="../chapter_stack_and_queue/">
+            
+                <a href="../chapter_stack_and_queue/">
+            
+                    
+                    栈与队列
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.6.1" data-path="../chapter_stack_and_queue/stack.html">
+            
+                <a href="../chapter_stack_and_queue/stack.html">
+            
+                    
+                    栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.2" data-path="../chapter_stack_and_queue/queue.html">
+            
+                <a href="../chapter_stack_and_queue/queue.html">
+            
+                    
+                    队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.3" data-path="../chapter_stack_and_queue/deque.html">
+            
+                <a href="../chapter_stack_and_queue/deque.html">
+            
+                    
+                    双向队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.4" data-path="../chapter_stack_and_queue/">
+            
+                <a href="../chapter_stack_and_queue/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="../chapter_hashing/">
+            
+                <a href="../chapter_hashing/">
+            
+                    
+                    哈希表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.7.1" data-path="../chapter_hashing/hash_map.html">
+            
+                <a href="../chapter_hashing/hash_map.html">
+            
+                    
+                    哈希表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.2" data-path="../chapter_hashing/hash_collision.html">
+            
+                <a href="../chapter_hashing/hash_collision.html">
+            
+                    
+                    哈希冲突
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.3" data-path="../chapter_hashing/hash_algorithm.html">
+            
+                <a href="../chapter_hashing/hash_algorithm.html">
+            
+                    
+                    哈希算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.4" data-path="../chapter_hashing/">
+            
+                <a href="../chapter_hashing/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="../chapter_tree/">
+            
+                <a href="../chapter_tree/">
+            
+                    
+                    树
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.8.1" data-path="../chapter_tree/binary_tree.html">
+            
+                <a href="../chapter_tree/binary_tree.html">
+            
+                    
+                    二叉树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.2" data-path="../chapter_tree/binary_tree_traversal.html">
+            
+                <a href="../chapter_tree/binary_tree_traversal.html">
+            
+                    
+                    二叉树遍历
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.3" data-path="../chapter_tree/array_representation_of_tree.html">
+            
+                <a href="../chapter_tree/array_representation_of_tree.html">
+            
+                    
+                    二叉树数组表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.4" data-path="../chapter_tree/binary_search_tree.html">
+            
+                <a href="../chapter_tree/binary_search_tree.html">
+            
+                    
+                    二叉搜索树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.5" data-path="../chapter_tree/avl_tree.html">
+            
+                <a href="../chapter_tree/avl_tree.html">
+            
+                    
+                    AVL 树 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.6" data-path="../chapter_tree/">
+            
+                <a href="../chapter_tree/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="../chapter_heap/">
+            
+                <a href="../chapter_heap/">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.9.1" data-path="../chapter_heap/heap.html">
+            
+                <a href="../chapter_heap/heap.html">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.2" data-path="../chapter_heap/build_heap.html">
+            
+                <a href="../chapter_heap/build_heap.html">
+            
+                    
+                    建堆操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.3" data-path="../chapter_heap/top_k.html">
+            
+                <a href="../chapter_heap/top_k.html">
+            
+                    
+                    Top-k 问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.4" data-path="../chapter_heap/">
+            
+                <a href="../chapter_heap/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="../chapter_graph/">
+            
+                <a href="../chapter_graph/">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.10.1" data-path="../chapter_graph/graph.html">
+            
+                <a href="../chapter_graph/graph.html">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.2" data-path="../chapter_graph/graph_operations.html">
+            
+                <a href="../chapter_graph/graph_operations.html">
+            
+                    
+                    图基础操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.3" data-path="../chapter_graph/graph_traversal.html">
+            
+                <a href="../chapter_graph/graph_traversal.html">
+            
+                    
+                    图的遍历
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.4" data-path="../chapter_graph/">
+            
+                <a href="../chapter_graph/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="../chapter_searching/">
+            
+                <a href="../chapter_searching/">
+            
+                    
+                    搜索
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.11.1" data-path="../chapter_searching/binary_search.html">
+            
+                <a href="../chapter_searching/binary_search.html">
+            
+                    
+                    二分查找
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.2" data-path="../chapter_searching/binary_search_insertion.html">
+            
+                <a href="../chapter_searching/binary_search_insertion.html">
+            
+                    
+                    二分查找插入点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.3" data-path="../chapter_searching/binary_search_edge.html">
+            
+                <a href="../chapter_searching/binary_search_edge.html">
+            
+                    
+                    二分查找边界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.4" data-path="../chapter_searching/replace_linear_by_hashing.html">
+            
+                <a href="../chapter_searching/replace_linear_by_hashing.html">
+            
+                    
+                    哈希优化策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.5" data-path="../chapter_searching/searching_algorithm_revisited.html">
+            
+                <a href="../chapter_searching/searching_algorithm_revisited.html">
+            
+                    
+                    重识搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.6" data-path="../chapter_searching/">
+            
+                <a href="../chapter_searching/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="../chapter_sorting/">
+            
+                <a href="../chapter_sorting/">
+            
+                    
+                    排序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.12.1" data-path="../chapter_sorting/sorting_algorithm.html">
+            
+                <a href="../chapter_sorting/sorting_algorithm.html">
+            
+                    
+                    排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.2" data-path="../chapter_sorting/selection_sort.html">
+            
+                <a href="../chapter_sorting/selection_sort.html">
+            
+                    
+                    选择排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.3" data-path="../chapter_sorting/bubble_sort.html">
+            
+                <a href="../chapter_sorting/bubble_sort.html">
+            
+                    
+                    冒泡排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.4" data-path="../chapter_sorting/insertion_sort.html">
+            
+                <a href="../chapter_sorting/insertion_sort.html">
+            
+                    
+                    插入排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.5" data-path="../chapter_sorting/quick_sort.html">
+            
+                <a href="../chapter_sorting/quick_sort.html">
+            
+                    
+                    快速排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.6" data-path="../chapter_sorting/merge_sort.html">
+            
+                <a href="../chapter_sorting/merge_sort.html">
+            
+                    
+                    归并排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.7" data-path="../chapter_sorting/heap_sort.html">
+            
+                <a href="../chapter_sorting/heap_sort.html">
+            
+                    
+                    堆排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.8" data-path="../chapter_sorting/bucket_sort.html">
+            
+                <a href="../chapter_sorting/bucket_sort.html">
+            
+                    
+                    桶排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.9" data-path="../chapter_sorting/counting_sort.html">
+            
+                <a href="../chapter_sorting/counting_sort.html">
+            
+                    
+                    计数排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.10" data-path="../chapter_sorting/radix_sort.html">
+            
+                <a href="../chapter_sorting/radix_sort.html">
+            
+                    
+                    基数排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.11" data-path="../chapter_sorting/">
+            
+                <a href="../chapter_sorting/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="../chapter_divide_and_conquer/">
+            
+                <a href="../chapter_divide_and_conquer/">
+            
+                    
+                    分治
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.13.1" data-path="../chapter_divide_and_conquer/divide_and_conquer.html">
+            
+                <a href="../chapter_divide_and_conquer/divide_and_conquer.html">
+            
+                    
+                    分治算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.2" data-path="../chapter_divide_and_conquer/binary_search_recur.html">
+            
+                <a href="../chapter_divide_and_conquer/binary_search_recur.html">
+            
+                    
+                    分治搜索策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.3" data-path="../chapter_divide_and_conquer/build_binary_tree_problem.html">
+            
+                <a href="../chapter_divide_and_conquer/build_binary_tree_problem.html">
+            
+                    
+                    构建二叉树问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.4" data-path="../chapter_divide_and_conquer/hanota_problem.html">
+            
+                <a href="../chapter_divide_and_conquer/hanota_problem.html">
+            
+                    
+                    汉诺塔问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.5" data-path="../chapter_divide_and_conquer/">
+            
+                <a href="../chapter_divide_and_conquer/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    回溯
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.1.14.1" data-path="backtracking_algorithm.html">
+            
+                <a href="backtracking_algorithm.html">
+            
+                    
+                    回溯算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.2" data-path="permutations_problem.html">
+            
+                <a href="permutations_problem.html">
+            
+                    
+                    全排列问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.3" data-path="subset_sum_problem.html">
+            
+                <a href="subset_sum_problem.html">
+            
+                    
+                    子集和问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.4" data-path="n_queens_problem.html">
+            
+                <a href="n_queens_problem.html">
+            
+                    
+                    N 皇后问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.5" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="../chapter_dynamic_programming/">
+            
+                <a href="../chapter_dynamic_programming/">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.15.1" data-path="../chapter_dynamic_programming/intro_to_dynamic_programming.html">
+            
+                <a href="../chapter_dynamic_programming/intro_to_dynamic_programming.html">
+            
+                    
+                    初探动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.2" data-path="../chapter_dynamic_programming/dp_problem_features.html">
+            
+                <a href="../chapter_dynamic_programming/dp_problem_features.html">
+            
+                    
+                    动态规划问题特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.3" data-path="../chapter_dynamic_programming/dp_solution_pipeline.html">
+            
+                <a href="../chapter_dynamic_programming/dp_solution_pipeline.html">
+            
+                    
+                    动态规划解题思路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.4" data-path="../chapter_dynamic_programming/knapsack_problem.html">
+            
+                <a href="../chapter_dynamic_programming/knapsack_problem.html">
+            
+                    
+                    0-1 背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.5" data-path="../chapter_dynamic_programming/unbounded_knapsack_problem.html">
+            
+                <a href="../chapter_dynamic_programming/unbounded_knapsack_problem.html">
+            
+                    
+                    完全背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.6" data-path="../chapter_dynamic_programming/edit_distance_problem.html">
+            
+                <a href="../chapter_dynamic_programming/edit_distance_problem.html">
+            
+                    
+                    编辑距离问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.7" data-path="../chapter_dynamic_programming/">
+            
+                <a href="../chapter_dynamic_programming/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="../chapter_greedy/">
+            
+                <a href="../chapter_greedy/">
+            
+                    
+                    贪心
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.16.1" data-path="../chapter_greedy/greedy_algorithm.html">
+            
+                <a href="../chapter_greedy/greedy_algorithm.html">
+            
+                    
+                    贪心算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.2" data-path="../chapter_greedy/fractional_knapsack_problem.html">
+            
+                <a href="../chapter_greedy/fractional_knapsack_problem.html">
+            
+                    
+                    分数背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.3" data-path="../chapter_greedy/max_capacity_problem.html">
+            
+                <a href="../chapter_greedy/max_capacity_problem.html">
+            
+                    
+                    最大容量问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.4" data-path="../chapter_greedy/max_product_cutting_problem.html">
+            
+                <a href="../chapter_greedy/max_product_cutting_problem.html">
+            
+                    
+                    最大切分乘积问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.5" data-path="../chapter_greedy/">
+            
+                <a href="../chapter_greedy/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="../chapter_appendix/">
+            
+                <a href="../chapter_appendix/">
+            
+                    
+                    附录
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.17.1" data-path="../chapter_appendix/installation.html">
+            
+                <a href="../chapter_appendix/installation.html">
+            
+                    
+                    编程环境安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17.2" data-path="../chapter_appendix/terminology.html">
+            
+                <a href="../chapter_appendix/terminology.html">
+            
+                    
+                    术语表
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >回溯算法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="回溯算法">回溯算法</h1>
+<p>「回溯算法 backtracking algorithm」是一种通过穷举来解决问题的方法，它的核心思想是从一个初始状态出发，暴力搜索所有可能的解决方案，当遇到正确的解则将其记录，直到找到解或者尝试了所有可能的选择都无法找到解为止。</p>
+<p>回溯算法通常采用“深度优先搜索”来遍历解空间。在“二叉树”章节中，我们提到前序、中序和后序遍历都属于深度优先搜索。接下来，我们利用前序遍历构造一个回溯问题，逐步了解回溯算法的工作原理。</p>
+<p>!!! question "例题一"</p>
+<pre><code>给定一棵二叉树，搜索并记录所有值为 $7$ 的节点，请返回节点列表。
+</code></pre><p>对于此题，我们前序遍历这棵树，并判断当前节点的值是否为 $7$ ，若是，则将该节点的值加入结果列表 <code>res</code> 之中。相关过程实现如下图和以下代码所示：</p>
+<ul>
+<li><p>"Python"
+```python title=""
+def pre_order(root: TreeNode):
+  """前序遍历：例题一"""
+  if root is None:</p>
+<pre><code>  return
+</code></pre><p>  if root.val == 7:</p>
+<pre><code> // 记录解
+  res.append(root)
+</code></pre><p>  pre_order(root.left)
+  pre_order(root.right)
+```  </p>
+</li>
+<li><p>"C++"
+```cpp title=""
+/<em> 前序遍历：例题一 </em>/
+void preOrder(TreeNode *root) {
+  if (root == nullptr) {</p>
+<pre><code>  return;
+</code></pre><p>  }
+  if (root-&gt;val == 7) {</p>
+<pre><code>  // 记录解
+  res.push_back(root);
+</code></pre><p>  }
+  preOrder(root-&gt;left);
+  preOrder(root-&gt;right);
+}
+```  </p>
+</li>
+<li><p>"Java"
+```java title=""
+/<em> 前序遍历：例题一 </em>/
+void preOrder(TreeNode root) {
+  if (root == null) {</p>
+<pre><code>  return;
+</code></pre><p>  }
+  if (root.val == 7) {</p>
+<pre><code>  // 记录解
+  res.add(root);
+</code></pre><p>  }
+  preOrder(root.left);
+  preOrder(root.right);
+}
+```  </p>
+</li>
+</ul>
+<p><img src="backtracking_algorithm.assets/preorder_find_nodes.png" alt="在前序遍历中搜索节点"></img></p>
+<h2 id="尝试与回退">尝试与回退</h2>
+<p><strong>之所以称之为回溯算法，是因为该算法在搜索解空间时会采用“尝试”与“回退”的策略</strong>。当算法在搜索过程中遇到某个状态无法继续前进或无法得到满足条件的解时，它会撤销上一步的选择，退回到之前的状态，并尝试其他可能的选择。</p>
+<p>对于例题一，访问每个节点都代表一次“尝试”，而越过叶节点或返回父节点的 <code>return</code> 则表示“回退”。</p>
+<p>值得说明的是，<strong>回退并不仅仅包括函数返回</strong>。为解释这一点，我们对例题一稍作拓展。</p>
+<p>!!! question "例题二"</p>
+<pre><code>在二叉树中搜索所有值为 $7$ 的节点，**请返回根节点到这些节点的路径**。
+</code></pre><p>在例题一代码的基础上，我们需要借助一个列表 <code>path</code> 记录访问过的节点路径。当访问到值为 $7$ 的节点时，则复制 <code>path</code> 并添加进结果列表 <code>res</code> 。遍历完成后，<code>res</code> 中保存的就是所有的解。代码如下所示：</p>
+<ul>
+<li><p>"Python"
+```python title=""
+def pre_order(root: TreeNode):
+  """前序遍历：例题二"""
+  if root is None:</p>
+<pre><code>  return
+</code></pre><p> // 尝试
+  path.append(root)
+  if root.val == 7:</p>
+<pre><code> // 记录解
+  res.append(list(path))
+</code></pre><p>  pre_order(root.left)
+  pre_order(root.right)
+ // 回退
+  path.pop()
+```  </p>
+</li>
+<li><p>"C++"
+```cpp title=""
+/<em> 前序遍历：例题二 </em>/
+void preOrder(TreeNode *root) {
+  if (root == nullptr) {</p>
+<pre><code>  return;
+</code></pre><p>  }
+  // 尝试
+  path.push_back(root);
+  if (root-&gt;val == 7) {</p>
+<pre><code>  // 记录解
+  res.push_back(path);
+</code></pre><p>  }
+  preOrder(root-&gt;left);
+  preOrder(root-&gt;right);
+  // 回退
+  path.pop_back();
+}
+```  </p>
+</li>
+<li><p>"Java"
+```java title=""
+/<em> 前序遍历：例题二 </em>/
+void preOrder(TreeNode root) {
+  if (root == null) {</p>
+<pre><code>  return;
+</code></pre><p>  }
+  // 尝试
+  path.add(root);
+  if (root.val == 7) {</p>
+<pre><code>  // 记录解
+  res.add(new ArrayList&lt;&gt;(path));
+</code></pre><p>  }
+  preOrder(root.left);
+  preOrder(root.right);
+  // 回退
+  path.remove(path.size() - 1);
+}
+```  </p>
+</li>
+</ul>
+<p>在每次“尝试”中，我们通过将当前节点添加进 <code>path</code> 来记录路径；而在“回退”前，我们需要将该节点从 <code>path</code> 中弹出，<strong>以恢复本次尝试之前的状态</strong>。</p>
+<p>观察下图所示的过程，<strong>我们可以将尝试和回退理解为“前进”与“撤销”</strong>，两个操作互为逆向。</p>
+<ul>
+<li><p>"&lt;1&gt;"
+  <img src="backtracking_algorithm.assets/preorder_find_paths_step1.png" alt="尝试与回退"></img></p>
+</li>
+<li><p>"&lt;2&gt;"
+  <img src="backtracking_algorithm.assets/preorder_find_paths_step2.png" alt="preorder_find_paths_step2"></img></p>
+</li>
+<li><p>"&lt;3&gt;"
+  <img src="backtracking_algorithm.assets/preorder_find_paths_step3.png" alt="preorder_find_paths_step3"></img></p>
+</li>
+<li><p>"&lt;4&gt;"
+  <img src="backtracking_algorithm.assets/preorder_find_paths_step4.png" alt="preorder_find_paths_step4"></img></p>
+</li>
+<li><p>"&lt;5&gt;"
+  <img src="backtracking_algorithm.assets/preorder_find_paths_step5.png" alt="preorder_find_paths_step5"></img></p>
+</li>
+<li><p>"&lt;6&gt;"
+  <img src="backtracking_algorithm.assets/preorder_find_paths_step6.png" alt="preorder_find_paths_step6"></img></p>
+</li>
+<li><p>"&lt;7&gt;"
+  <img src="backtracking_algorithm.assets/preorder_find_paths_step7.png" alt="preorder_find_paths_step7"></img></p>
+</li>
+<li><p>"&lt;8&gt;"
+  <img src="backtracking_algorithm.assets/preorder_find_paths_step8.png" alt="preorder_find_paths_step8"></img></p>
+</li>
+<li><p>"&lt;9&gt;"
+  <img src="backtracking_algorithm.assets/preorder_find_paths_step9.png" alt="preorder_find_paths_step9"></img></p>
+</li>
+<li><p>"&lt;10&gt;"
+  <img src="backtracking_algorithm.assets/preorder_find_paths_step10.png" alt="preorder_find_paths_step10"></img></p>
+</li>
+<li><p>"&lt;11&gt;"
+  <img src="backtracking_algorithm.assets/preorder_find_paths_step11.png" alt="preorder_find_paths_step11"></img></p>
+</li>
+</ul>
+<h2 id="剪枝">剪枝</h2>
+<p>复杂的回溯问题通常包含一个或多个约束条件，<strong>约束条件通常可用于“剪枝”</strong>。</p>
+<p>!!! question "例题三"</p>
+<pre><code>在二叉树中搜索所有值为 $7$ 的节点，请返回根节点到这些节点的路径，**并要求路径中不包含值为 $3$ 的节点**。
+</code></pre><p>为了满足以上约束条件，<strong>我们需要添加剪枝操作</strong>：在搜索过程中，若遇到值为 $3$ 的节点，则提前返回，不再继续搜索。代码如下所示：</p>
+<ul>
+<li><p>"Python"
+```python title=""
+def pre_order(root: TreeNode):
+  """前序遍历：例题三"""
+ // 剪枝
+  if root is None or root.val == 3:</p>
+<pre><code>  return
+</code></pre><p> // 尝试
+  path.append(root)
+  if root.val == 7:</p>
+<pre><code> // 记录解
+  res.append(list(path))
+</code></pre><p>  pre_order(root.left)
+  pre_order(root.right)
+ // 回退
+  path.pop()
+```  </p>
+</li>
+<li><p>"C++"
+```cpp title=""
+/<em> 前序遍历：例题三 </em>/
+void preOrder(TreeNode *root) {
+  // 剪枝
+  if (root == nullptr || root-&gt;val == 3) {</p>
+<pre><code>  return;
+</code></pre><p>  }
+  // 尝试
+  path.push_back(root);
+  if (root-&gt;val == 7) {</p>
+<pre><code>  // 记录解
+  res.push_back(path);
+</code></pre><p>  }
+  preOrder(root-&gt;left);
+  preOrder(root-&gt;right);
+  // 回退
+  path.pop_back();
+}
+```  </p>
+</li>
+<li><p>"Java"
+```java title=""
+/<em> 前序遍历：例题三 </em>/
+void preOrder(TreeNode root) {
+  // 剪枝
+  if (root == null || root.val == 3) {</p>
+<pre><code>  return;
+</code></pre><p>  }
+  // 尝试
+  path.add(root);
+  if (root.val == 7) {</p>
+<pre><code>  // 记录解
+  res.add(new ArrayList&lt;&gt;(path));
+</code></pre><p>  }
+  preOrder(root.left);
+  preOrder(root.right);
+  // 回退
+  path.remove(path.size() - 1);
+}
+```  </p>
+</li>
+</ul>
+<p>“剪枝”是一个非常形象的名词。如下图所示，在搜索过程中，<strong>我们“剪掉”了不满足约束条件的搜索分支</strong>，避免许多无意义的尝试，从而提高了搜索效率。</p>
+<p><img src="backtracking_algorithm.assets/preorder_find_constrained_paths.png" alt="根据约束条件剪枝"></img></p>
+<h2 id="框架代码">框架代码</h2>
+<p>接下来，我们尝试将回溯的“尝试、回退、剪枝”的主体框架提炼出来，提升代码的通用性。</p>
+<p>在以下框架代码中，<code>state</code> 表示问题的当前状态，<code>choices</code> 表示当前状态下可以做出的选择：</p>
+<ul>
+<li><p>"Python"</p>
+<p>  ```python title=""
+  def backtrack(state: State, choices: list[choice], res: list[state]):</p>
+<pre><code>  """回溯算法框架"""
+ // 判断是否为解
+  if is_solution(state):
+     // 记录解
+      record_solution(state, res)
+     // 不再继续搜索
+      return
+ // 遍历所有选择
+  for choice in choices:
+     // 剪枝：判断选择是否合法
+      if is_valid(state, choice):
+         // 尝试：做出选择，更新状态
+          make_choice(state, choice)
+          backtrack(state, choices, res)
+         // 回退：撤销选择，恢复到之前的状态
+          undo_choice(state, choice)
+</code></pre><p>  ```</p>
+</li>
+<li><p>"C++"</p>
+<p>  ```cpp title=""
+  /<em> 回溯算法框架 </em>/
+  void backtrack(State <em>state, vector&lt;Choice </em>&gt; &amp;choices, vector<state *=""> &amp;res) {</state></p>
+<pre><code>  // 判断是否为解
+  if (isSolution(state)) {
+      // 记录解
+      recordSolution(state, res);
+      // 不再继续搜索
+      return;
+  }
+  // 遍历所有选择
+  for (Choice choice : choices) {
+      // 剪枝：判断选择是否合法
+      if (isValid(state, choice)) {
+          // 尝试：做出选择，更新状态
+          makeChoice(state, choice);
+          backtrack(state, choices, res);
+          // 回退：撤销选择，恢复到之前的状态
+          undoChoice(state, choice);
+      }
+  }
+</code></pre><p>  }
+  ```</p>
+</li>
+<li><p>"Java"</p>
+<p>  ```java title=""
+  /<em> 回溯算法框架 </em>/
+  void backtrack(State state, List<choice> choices, List<state> res) {</state></choice></p>
+<pre><code>  // 判断是否为解
+  if (isSolution(state)) {
+      // 记录解
+      recordSolution(state, res);
+      // 不再继续搜索
+      return;
+  }
+  // 遍历所有选择
+  for (Choice choice : choices) {
+      // 剪枝：判断选择是否合法
+      if (isValid(state, choice)) {
+          // 尝试：做出选择，更新状态
+          makeChoice(state, choice);
+          backtrack(state, choices, res);
+          // 回退：撤销选择，恢复到之前的状态
+          undoChoice(state, choice);
+      }
+  }
+</code></pre><p>  }
+  ```</p>
+</li>
+<li><p>"C#"</p>
+<p>  ```csharp title=""
+  /<em> 回溯算法框架 </em>/
+  void Backtrack(State state, List<choice> choices, List<state> res) {</state></choice></p>
+<pre><code>  // 判断是否为解
+  if (IsSolution(state)) {
+      // 记录解
+      RecordSolution(state, res);
+      // 不再继续搜索
+      return;
+  }
+  // 遍历所有选择
+  foreach (Choice choice in choices) {
+      // 剪枝：判断选择是否合法
+      if (IsValid(state, choice)) {
+          // 尝试：做出选择，更新状态
+          MakeChoice(state, choice);
+          Backtrack(state, choices, res);
+          // 回退：撤销选择，恢复到之前的状态
+          UndoChoice(state, choice);
+      }
+  }
+</code></pre><p>  }
+  ```</p>
+</li>
+<li><p>"Go"</p>
+<p>  ```go title=""
+  /<em> 回溯算法框架 </em>/
+  func backtrack(state <em>State, choices []Choice, res </em>[]State) {</p>
+<pre><code>  // 判断是否为解
+  if isSolution(state) {
+      // 记录解
+      recordSolution(state, res)
+      // 不再继续搜索
+      return
+  }
+  // 遍历所有选择
+  for _, choice := range choices {
+      // 剪枝：判断选择是否合法
+      if isValid(state, choice) {
+          // 尝试：做出选择，更新状态
+          makeChoice(state, choice)
+          backtrack(state, choices, res)
+          // 回退：撤销选择，恢复到之前的状态
+          undoChoice(state, choice)
+      }
+  }
+</code></pre><p>  }
+  ```</p>
+</li>
+<li><p>"Swift"</p>
+<p>  ```swift title=""
+  /<em> 回溯算法框架 </em>/
+  func backtrack(state: inout State, choices: [Choice], res: inout [State]) {</p>
+<pre><code>  // 判断是否为解
+  if isSolution(state: state) {
+      // 记录解
+      recordSolution(state: state, res: &amp;res)
+      // 不再继续搜索
+      return
+  }
+  // 遍历所有选择
+  for choice in choices {
+      // 剪枝：判断选择是否合法
+      if isValid(state: state, choice: choice) {
+          // 尝试：做出选择，更新状态
+          makeChoice(state: &amp;state, choice: choice)
+          backtrack(state: &amp;state, choices: choices, res: &amp;res)
+          // 回退：撤销选择，恢复到之前的状态
+          undoChoice(state: &amp;state, choice: choice)
+      }
+  }
+</code></pre><p>  }
+  ```</p>
+</li>
+<li><p>"JS"</p>
+<p>  ```javascript title=""
+  /<em> 回溯算法框架 </em>/
+  function backtrack(state, choices, res) {</p>
+<pre><code>  // 判断是否为解
+  if (isSolution(state)) {
+      // 记录解
+      recordSolution(state, res);
+      // 不再继续搜索
+      return;
+  }
+  // 遍历所有选择
+  for (let choice of choices) {
+      // 剪枝：判断选择是否合法
+      if (isValid(state, choice)) {
+          // 尝试：做出选择，更新状态
+          makeChoice(state, choice);
+          backtrack(state, choices, res);
+          // 回退：撤销选择，恢复到之前的状态
+          undoChoice(state, choice);
+      }
+  }
+</code></pre><p>  }
+  ```</p>
+</li>
+<li><p>"TS"</p>
+<p>  ```typescript title=""
+  /<em> 回溯算法框架 </em>/
+  function backtrack(state: State, choices: Choice[], res: State[]): void {</p>
+<pre><code>  // 判断是否为解
+  if (isSolution(state)) {
+      // 记录解
+      recordSolution(state, res);
+      // 不再继续搜索
+      return;
+  }
+  // 遍历所有选择
+  for (let choice of choices) {
+      // 剪枝：判断选择是否合法
+      if (isValid(state, choice)) {
+          // 尝试：做出选择，更新状态
+          makeChoice(state, choice);
+          backtrack(state, choices, res);
+          // 回退：撤销选择，恢复到之前的状态
+          undoChoice(state, choice);
+      }
+  }
+</code></pre><p>  }
+  ```</p>
+</li>
+<li><p>"Dart"</p>
+<p>  ```dart title=""
+  /<em> 回溯算法框架 </em>/
+  void backtrack(State state, List<choice>, List<state> res) {</state></choice></p>
+<pre><code>// 判断是否为解
+if (isSolution(state)) {
+  // 记录解
+  recordSolution(state, res);
+  // 不再继续搜索
+  return;
+}
+// 遍历所有选择
+for (Choice choice in choices) {
+  // 剪枝：判断选择是否合法
+  if (isValid(state, choice)) {
+    // 尝试：做出选择，更新状态
+    makeChoice(state, choice);
+    backtrack(state, choices, res);
+    // 回退：撤销选择，恢复到之前的状态
+    undoChoice(state, choice);
+  }
+}
+</code></pre><p>  }
+  ```</p>
+</li>
+<li><p>"Rust"</p>
+<p>  ```rust title=""
+  /<em> 回溯算法框架 </em>/
+  fn backtrack(state: &amp;mut State, choices: &amp;Vec<choice>, res: &amp;mut Vec<state>) {</state></choice></p>
+<pre><code>  // 判断是否为解
+  if is_solution(state) {
+      // 记录解
+      record_solution(state, res);
+      // 不再继续搜索
+      return;
+  }
+  // 遍历所有选择
+  for choice in choices {
+      // 剪枝：判断选择是否合法
+      if is_valid(state, choice) {
+          // 尝试：做出选择，更新状态
+          make_choice(state, choice);
+          backtrack(state, choices, res);
+          // 回退：撤销选择，恢复到之前的状态
+          undo_choice(state, choice);
+      }
+  }
+</code></pre><p>  }
+  ```</p>
+</li>
+<li><p>"C"</p>
+<p>  ```c title=""
+  /<em> 回溯算法框架 </em>/
+  void backtrack(State <em>state, Choice </em>choices, int numChoices, State *res, int numRes) {</p>
+<pre><code>  // 判断是否为解
+  if (isSolution(state)) {
+      // 记录解
+      recordSolution(state, res, numRes);
+      // 不再继续搜索
+      return;
+  }
+  // 遍历所有选择
+  for (int i = 0; i &lt; numChoices; i++) {
+      // 剪枝：判断选择是否合法
+      if (isValid(state, &amp;choices[i])) {
+          // 尝试：做出选择，更新状态
+          makeChoice(state, &amp;choices[i]);
+          backtrack(state, choices, numChoices, res, numRes);
+          // 回退：撤销选择，恢复到之前的状态
+          undoChoice(state, &amp;choices[i]);
+      }
+  }
+</code></pre><p>  }
+  ```</p>
+</li>
+<li><p>"Zig"</p>
+<p>  ```zig title=""</p>
+<p>  ```</p>
+</li>
+</ul>
+<p>接下来，我们基于框架代码来解决例题三。状态 <code>state</code> 为节点遍历路径，选择 <code>choices</code> 为当前节点的左子节点和右子节点，结果 <code>res</code> 是路径列表：</p>
+<ul>
+<li>"Python"
+```python title=""
+def is_solution(state: list[TreeNode]) -&gt; bool:
+  """判断当前状态是否为解"""
+  return state and state[-1].val == 7</li>
+</ul>
+<p>def record_solution(state: list[TreeNode], res: list[list[TreeNode]]):
+    """记录解"""
+    res.append(list(state))</p>
+<p>def is_valid(state: list[TreeNode], choice: TreeNode) -&gt; bool:
+    """判断在当前状态下，该选择是否合法"""
+    return choice is not None and choice.val != 3</p>
+<p>def make_choice(state: list[TreeNode], choice: TreeNode):
+    """更新状态"""
+    state.append(choice)</p>
+<p>def undo_choice(state: list[TreeNode], choice: TreeNode):
+    """恢复状态"""
+    state.pop()</p>
+<p>def backtrack(
+    state: list[TreeNode], choices: list[TreeNode], res: list[list[TreeNode]]
+):
+    """回溯算法：例题三"""
+   // 检查是否为解
+    if is_solution(state):
+       // 记录解
+        record_solution(state, res)
+   // 遍历所有选择
+    for choice in choices:
+       // 剪枝：检查选择是否合法
+        if is_valid(state, choice):
+           // 尝试：做出选择，更新状态
+            make_choice(state, choice)
+           // 进行下一轮选择
+            backtrack(state, [choice.left, choice.right], res)
+           // 回退：撤销选择，恢复到之前的状态
+            undo_choice(state, choice)</p>
+<pre><code>
+- "C++"
+```cpp title=""
+/* 判断当前状态是否为解 */
+bool isSolution(vector&lt;TreeNode *&gt; &amp;state) {
+    return !state.empty() &amp;&amp; state.back()-&gt;val == 7;
+}
+
+/* 记录解 */
+void recordSolution(vector&lt;TreeNode *&gt; &amp;state, vector&lt;vector&lt;TreeNode *&gt;&gt; &amp;res) {
+    res.push_back(state);
+}
+
+/* 判断在当前状态下，该选择是否合法 */
+bool isValid(vector&lt;TreeNode *&gt; &amp;state, TreeNode *choice) {
+    return choice != nullptr &amp;&amp; choice-&gt;val != 3;
+}
+
+/* 更新状态 */
+void makeChoice(vector&lt;TreeNode *&gt; &amp;state, TreeNode *choice) {
+    state.push_back(choice);
+}
+
+/* 恢复状态 */
+void undoChoice(vector&lt;TreeNode *&gt; &amp;state, TreeNode *choice) {
+    state.pop_back();
+}
+
+/* 回溯算法：例题三 */
+void backtrack(vector&lt;TreeNode *&gt; &amp;state, vector&lt;TreeNode *&gt; &amp;choices, vector&lt;vector&lt;TreeNode *&gt;&gt; &amp;res) {
+    // 检查是否为解
+    if (isSolution(state)) {
+        // 记录解
+        recordSolution(state, res);
+    }
+    // 遍历所有选择
+    for (TreeNode *choice : choices) {
+        // 剪枝：检查选择是否合法
+        if (isValid(state, choice)) {
+            // 尝试：做出选择，更新状态
+            makeChoice(state, choice);
+            // 进行下一轮选择
+            vector&lt;TreeNode *&gt; nextChoices{choice-&gt;left, choice-&gt;right};
+            backtrack(state, nextChoices, res);
+            // 回退：撤销选择，恢复到之前的状态
+            undoChoice(state, choice);
+        }
+    }
+}
+</code></pre><ul>
+<li>"Java"
+```java title=""
+/<em> 判断当前状态是否为解 </em>/
+boolean isSolution(List<treenode> state) {
+  return !state.isEmpty() &amp;&amp; state.get(state.size() - 1).val == 7;
+}</treenode></li>
+</ul>
+<p>/<em> 记录解 </em>/
+void recordSolution(List<treenode> state, List<list<treenode>&gt; res) {
+    res.add(new ArrayList&lt;&gt;(state));
+}</list<treenode></treenode></p>
+<p>/<em> 判断在当前状态下，该选择是否合法 </em>/
+boolean isValid(List<treenode> state, TreeNode choice) {
+    return choice != null &amp;&amp; choice.val != 3;
+}</treenode></p>
+<p>/<em> 更新状态 </em>/
+void makeChoice(List<treenode> state, TreeNode choice) {
+    state.add(choice);
+}</treenode></p>
+<p>/<em> 恢复状态 </em>/
+void undoChoice(List<treenode> state, TreeNode choice) {
+    state.remove(state.size() - 1);
+}</treenode></p>
+<p>/<em> 回溯算法：例题三 </em>/
+void backtrack(List<treenode> state, List<treenode> choices, List<list<treenode>&gt; res) {
+    // 检查是否为解
+    if (isSolution(state)) {
+        // 记录解
+        recordSolution(state, res);
+    }
+    // 遍历所有选择
+    for (TreeNode choice : choices) {
+        // 剪枝：检查选择是否合法
+        if (isValid(state, choice)) {
+            // 尝试：做出选择，更新状态
+            makeChoice(state, choice);
+            // 进行下一轮选择
+            backtrack(state, Arrays.asList(choice.left, choice.right), res);
+            // 回退：撤销选择，恢复到之前的状态
+            undoChoice(state, choice);
+        }
+    }
+}
+```  </list<treenode></treenode></treenode></p>
+<p>根据题意，我们在找到值为 $7$ 的节点后应该继续搜索，<strong>因此需要将记录解之后的 <code>return</code> 语句删除</strong>。下图对比了保留或删除 <code>return</code> 语句的搜索过程。</p>
+<p><img src="backtracking_algorithm.assets/backtrack_remove_return_or_not.png" alt="保留与删除 return 的搜索过程对比"></img></p>
+<p>相比基于前序遍历的代码实现，基于回溯算法框架的代码实现虽然显得啰唆，但通用性更好。实际上，<strong>许多回溯问题可以在该框架下解决</strong>。我们只需根据具体问题来定义 <code>state</code> 和 <code>choices</code> ，并实现框架中的各个方法即可。</p>
+<h2 id="常用术语">常用术语</h2>
+<p>为了更清晰地分析算法问题，我们总结一下回溯算法中常用术语的含义，并对照例题三给出对应示例，如下表所示。</p>
+<p align="center"> 表 <id> &nbsp; 常见的回溯算法术语 </id></p>
+
+<table>
+<thead>
+<tr>
+<th>名词</th>
+<th>定义</th>
+<th>例题三</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>解（solution）</td>
+<td>解是满足问题特定条件的答案，可能有一个或多个</td>
+<td>根节点到节点 $7$ 的满足约束条件的所有路径</td>
+</tr>
+<tr>
+<td>约束条件（constraint）</td>
+<td>约束条件是问题中限制解的可行性的条件，通常用于剪枝</td>
+<td>路径中不包含节点 $3$</td>
+</tr>
+<tr>
+<td>状态（state）</td>
+<td>状态表示问题在某一时刻的情况，包括已经做出的选择</td>
+<td>当前已访问的节点路径，即 <code>path</code> 节点列表</td>
+</tr>
+<tr>
+<td>尝试（attempt）</td>
+<td>尝试是根据可用选择来探索解空间的过程，包括做出选择，更新状态，检查是否为解</td>
+<td>递归访问左（右）子节点，将节点添加进 <code>path</code> ，判断节点的值是否为 $7$</td>
+</tr>
+<tr>
+<td>回退（backtracking）</td>
+<td>回退指遇到不满足约束条件的状态时，撤销前面做出的选择，回到上一个状态</td>
+<td>当越过叶节点、结束节点访问、遇到值为 $3$ 的节点时终止搜索，函数返回</td>
+</tr>
+<tr>
+<td>剪枝（pruning）</td>
+<td>剪枝是根据问题特性和约束条件避免无意义的搜索路径的方法，可提高搜索效率</td>
+<td>当遇到值为 $3$ 的节点时，则不再继续搜索</td>
+</tr>
+</tbody>
+</table>
+<p>!!! tip</p>
+<pre><code>问题、解、状态等概念是通用的，在分治、回溯、动态规划、贪心等算法中都有涉及。
+</code></pre><h2 id="优点与局限性">优点与局限性</h2>
+<p>回溯算法本质上是一种深度优先搜索算法，它尝试所有可能的解决方案直到找到满足条件的解。这种方法的优点在于能够找到所有可能的解决方案，而且在合理的剪枝操作下，具有很高的效率。</p>
+<p>然而，在处理大规模或者复杂问题时，<strong>回溯算法的运行效率可能难以接受</strong>。</p>
+<ul>
+<li><strong>时间</strong>：回溯算法通常需要遍历状态空间的所有可能，时间复杂度可以达到指数阶或阶乘阶。</li>
+<li><strong>空间</strong>：在递归调用中需要保存当前的状态（例如路径、用于剪枝的辅助变量等），当深度很大时，空间需求可能会变得很大。</li>
+</ul>
+<p>即便如此，<strong>回溯算法仍然是某些搜索问题和约束满足问题的最佳解决方案</strong>。对于这些问题，由于无法预测哪些选择可生成有效的解，因此我们必须对所有可能的选择进行遍历。在这种情况下，<strong>关键是如何优化效率</strong>，常见的效率优化方法有两种。</p>
+<ul>
+<li><strong>剪枝</strong>：避免搜索那些肯定不会产生解的路径，从而节省时间和空间。</li>
+<li><strong>启发式搜索</strong>：在搜索过程中引入一些策略或者估计值，从而优先搜索最有可能产生有效解的路径。</li>
+</ul>
+<h2 id="回溯典型例题">回溯典型例题</h2>
+<p>回溯算法可用于解决许多搜索问题、约束满足问题和组合优化问题。</p>
+<p><strong>搜索问题</strong>：这类问题的目标是找到满足特定条件的解决方案。</p>
+<ul>
+<li>全排列问题：给定一个集合，求出其所有可能的排列组合。</li>
+<li>子集和问题：给定一个集合和一个目标和，找到集合中所有和为目标和的子集。</li>
+<li>汉诺塔问题：给定三根柱子和一系列大小不同的圆盘，要求将所有圆盘从一根柱子移动到另一根柱子，每次只能移动一个圆盘，且不能将大圆盘放在小圆盘上。</li>
+</ul>
+<p><strong>约束满足问题</strong>：这类问题的目标是找到满足所有约束条件的解。</p>
+<ul>
+<li>$n$ 皇后：在 $n \times n$ 的棋盘上放置 $n$ 个皇后，使得它们互不攻击。</li>
+<li>数独：在 $9 \times 9$ 的网格中填入数字 $1$ ~ $9$ ，使得每行、每列和每个 $3 \times 3$ 子网格中的数字不重复。</li>
+<li>图着色问题：给定一个无向图，用最少的颜色给图的每个顶点着色，使得相邻顶点颜色不同。</li>
+</ul>
+<p><strong>组合优化问题</strong>：这类问题的目标是在一个组合空间中找到满足某些条件的最优解。</p>
+<ul>
+<li>0-1 背包问题：给定一组物品和一个背包，每个物品有一定的价值和重量，要求在背包容量限制内，选择物品使得总价值最大。</li>
+<li>旅行商问题：在一个图中，从一个点出发，访问所有其他点恰好一次后返回起点，求最短路径。</li>
+<li>最大团问题：给定一个无向图，找到最大的完全子图，即子图中的任意两个顶点之间都有边相连。</li>
+</ul>
+<p>请注意，对于许多组合优化问题，回溯不是最优解决方案。</p>
+<ul>
+<li>0-1 背包问题通常使用动态规划解决，以达到更高的时间效率。</li>
+<li>旅行商是一个著名的 NP-Hard 问题，常用解法有遗传算法和蚁群算法等。</li>
+<li>最大团问题是图论中的一个经典问题，可用贪心算法等启发式算法来解决。</li>
+</ul>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 回溯">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="permutations_problem.html" class="navigation navigation-next " aria-label="Next page: 全排列问题">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"回溯算法","level":"1.1.14.1","depth":3,"next":{"title":"全排列问题","level":"1.1.14.2","depth":3,"path":"chapter_backtracking/permutations_problem.md","ref":"chapter_backtracking/permutations_problem.md","articles":[]},"previous":{"title":"回溯","level":"1.1.14","depth":2,"path":"chapter_backtracking/index.md","ref":"chapter_backtracking/index.md","articles":[{"title":"回溯算法","level":"1.1.14.1","depth":3,"path":"chapter_backtracking/backtracking_algorithm.md","ref":"chapter_backtracking/backtracking_algorithm.md","articles":[]},{"title":"全排列问题","level":"1.1.14.2","depth":3,"path":"chapter_backtracking/permutations_problem.md","ref":"chapter_backtracking/permutations_problem.md","articles":[]},{"title":"子集和问题","level":"1.1.14.3","depth":3,"path":"chapter_backtracking/subset_sum_problem.md","ref":"chapter_backtracking/subset_sum_problem.md","articles":[]},{"title":"N 皇后问题","level":"1.1.14.4","depth":3,"path":"chapter_backtracking/n_queens_problem.md","ref":"chapter_backtracking/n_queens_problem.md","articles":[]},{"title":"小结","level":"1.1.14.5","depth":3,"path":"chapter_backtracking/README.md","ref":"chapter_backtracking/README.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"chapter_backtracking/backtracking_algorithm.md","mtime":"2024-01-07T12:04:25.560Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:05.926Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

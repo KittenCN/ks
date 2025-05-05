@@ -1,0 +1,2627 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>时间复杂度 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="space_complexity.html" />
+    
+    
+    <link rel="prev" href="iteration_and_recursion.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href="../.." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Hello 算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1.1" data-path="../chapter_preface/about_the_book.html">
+            
+                <a href="../chapter_preface/about_the_book.html">
+            
+                    
+                    关于本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.1.2" data-path="../chapter_preface/suggestions.html">
+            
+                <a href="../chapter_preface/suggestions.html">
+            
+                    
+                    如何使用本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.1.3" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    初识算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.2.1" data-path="../chapter_introduction/algorithms_are_everywhere.html">
+            
+                <a href="../chapter_introduction/algorithms_are_everywhere.html">
+            
+                    
+                    算法无处不在
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2.2" data-path="../chapter_introduction/what_is_dsa.html">
+            
+                <a href="../chapter_introduction/what_is_dsa.html">
+            
+                    
+                    算法是什么
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2.3" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    复杂度分析
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.3.1" data-path="performance_evaluation.html">
+            
+                <a href="performance_evaluation.html">
+            
+                    
+                    算法效率评估
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.2" data-path="iteration_and_recursion.html">
+            
+                <a href="iteration_and_recursion.html">
+            
+                    
+                    迭代与递归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.3.3" data-path="time_complexity.html">
+            
+                <a href="time_complexity.html">
+            
+                    
+                    时间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.4" data-path="space_complexity.html">
+            
+                <a href="space_complexity.html">
+            
+                    
+                    空间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.5" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="../chapter_data_structure/">
+            
+                <a href="../chapter_data_structure/">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.4.1" data-path="../chapter_data_structure/classification_of_data_structure.html">
+            
+                <a href="../chapter_data_structure/classification_of_data_structure.html">
+            
+                    
+                    数据结构分类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.2" data-path="../chapter_data_structure/basic_data_types.html">
+            
+                <a href="../chapter_data_structure/basic_data_types.html">
+            
+                    
+                    基本数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.3" data-path="../chapter_data_structure/number_encoding.html">
+            
+                <a href="../chapter_data_structure/number_encoding.html">
+            
+                    
+                    数字编码 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.4" data-path="../chapter_data_structure/character_encoding.html">
+            
+                <a href="../chapter_data_structure/character_encoding.html">
+            
+                    
+                    字符编码 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.5" data-path="../chapter_data_structure/">
+            
+                <a href="../chapter_data_structure/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="../chapter_array_and_linkedlist/">
+            
+                <a href="../chapter_array_and_linkedlist/">
+            
+                    
+                    数组与链表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.5.1" data-path="../chapter_array_and_linkedlist/array.html">
+            
+                <a href="../chapter_array_and_linkedlist/array.html">
+            
+                    
+                    数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.2" data-path="../chapter_array_and_linkedlist/linked_list.html">
+            
+                <a href="../chapter_array_and_linkedlist/linked_list.html">
+            
+                    
+                    链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.3" data-path="../chapter_array_and_linkedlist/list.html">
+            
+                <a href="../chapter_array_and_linkedlist/list.html">
+            
+                    
+                    列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.4" data-path="../chapter_array_and_linkedlist/ram_and_cache.html">
+            
+                <a href="../chapter_array_and_linkedlist/ram_and_cache.html">
+            
+                    
+                    内存与缓存 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.5" data-path="../chapter_array_and_linkedlist/">
+            
+                <a href="../chapter_array_and_linkedlist/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="../chapter_stack_and_queue/">
+            
+                <a href="../chapter_stack_and_queue/">
+            
+                    
+                    栈与队列
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.6.1" data-path="../chapter_stack_and_queue/stack.html">
+            
+                <a href="../chapter_stack_and_queue/stack.html">
+            
+                    
+                    栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.2" data-path="../chapter_stack_and_queue/queue.html">
+            
+                <a href="../chapter_stack_and_queue/queue.html">
+            
+                    
+                    队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.3" data-path="../chapter_stack_and_queue/deque.html">
+            
+                <a href="../chapter_stack_and_queue/deque.html">
+            
+                    
+                    双向队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.4" data-path="../chapter_stack_and_queue/">
+            
+                <a href="../chapter_stack_and_queue/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="../chapter_hashing/">
+            
+                <a href="../chapter_hashing/">
+            
+                    
+                    哈希表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.7.1" data-path="../chapter_hashing/hash_map.html">
+            
+                <a href="../chapter_hashing/hash_map.html">
+            
+                    
+                    哈希表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.2" data-path="../chapter_hashing/hash_collision.html">
+            
+                <a href="../chapter_hashing/hash_collision.html">
+            
+                    
+                    哈希冲突
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.3" data-path="../chapter_hashing/hash_algorithm.html">
+            
+                <a href="../chapter_hashing/hash_algorithm.html">
+            
+                    
+                    哈希算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.4" data-path="../chapter_hashing/">
+            
+                <a href="../chapter_hashing/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="../chapter_tree/">
+            
+                <a href="../chapter_tree/">
+            
+                    
+                    树
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.8.1" data-path="../chapter_tree/binary_tree.html">
+            
+                <a href="../chapter_tree/binary_tree.html">
+            
+                    
+                    二叉树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.2" data-path="../chapter_tree/binary_tree_traversal.html">
+            
+                <a href="../chapter_tree/binary_tree_traversal.html">
+            
+                    
+                    二叉树遍历
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.3" data-path="../chapter_tree/array_representation_of_tree.html">
+            
+                <a href="../chapter_tree/array_representation_of_tree.html">
+            
+                    
+                    二叉树数组表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.4" data-path="../chapter_tree/binary_search_tree.html">
+            
+                <a href="../chapter_tree/binary_search_tree.html">
+            
+                    
+                    二叉搜索树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.5" data-path="../chapter_tree/avl_tree.html">
+            
+                <a href="../chapter_tree/avl_tree.html">
+            
+                    
+                    AVL 树 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.6" data-path="../chapter_tree/">
+            
+                <a href="../chapter_tree/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="../chapter_heap/">
+            
+                <a href="../chapter_heap/">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.9.1" data-path="../chapter_heap/heap.html">
+            
+                <a href="../chapter_heap/heap.html">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.2" data-path="../chapter_heap/build_heap.html">
+            
+                <a href="../chapter_heap/build_heap.html">
+            
+                    
+                    建堆操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.3" data-path="../chapter_heap/top_k.html">
+            
+                <a href="../chapter_heap/top_k.html">
+            
+                    
+                    Top-k 问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.4" data-path="../chapter_heap/">
+            
+                <a href="../chapter_heap/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="../chapter_graph/">
+            
+                <a href="../chapter_graph/">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.10.1" data-path="../chapter_graph/graph.html">
+            
+                <a href="../chapter_graph/graph.html">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.2" data-path="../chapter_graph/graph_operations.html">
+            
+                <a href="../chapter_graph/graph_operations.html">
+            
+                    
+                    图基础操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.3" data-path="../chapter_graph/graph_traversal.html">
+            
+                <a href="../chapter_graph/graph_traversal.html">
+            
+                    
+                    图的遍历
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.4" data-path="../chapter_graph/">
+            
+                <a href="../chapter_graph/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="../chapter_searching/">
+            
+                <a href="../chapter_searching/">
+            
+                    
+                    搜索
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.11.1" data-path="../chapter_searching/binary_search.html">
+            
+                <a href="../chapter_searching/binary_search.html">
+            
+                    
+                    二分查找
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.2" data-path="../chapter_searching/binary_search_insertion.html">
+            
+                <a href="../chapter_searching/binary_search_insertion.html">
+            
+                    
+                    二分查找插入点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.3" data-path="../chapter_searching/binary_search_edge.html">
+            
+                <a href="../chapter_searching/binary_search_edge.html">
+            
+                    
+                    二分查找边界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.4" data-path="../chapter_searching/replace_linear_by_hashing.html">
+            
+                <a href="../chapter_searching/replace_linear_by_hashing.html">
+            
+                    
+                    哈希优化策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.5" data-path="../chapter_searching/searching_algorithm_revisited.html">
+            
+                <a href="../chapter_searching/searching_algorithm_revisited.html">
+            
+                    
+                    重识搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.6" data-path="../chapter_searching/">
+            
+                <a href="../chapter_searching/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="../chapter_sorting/">
+            
+                <a href="../chapter_sorting/">
+            
+                    
+                    排序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.12.1" data-path="../chapter_sorting/sorting_algorithm.html">
+            
+                <a href="../chapter_sorting/sorting_algorithm.html">
+            
+                    
+                    排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.2" data-path="../chapter_sorting/selection_sort.html">
+            
+                <a href="../chapter_sorting/selection_sort.html">
+            
+                    
+                    选择排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.3" data-path="../chapter_sorting/bubble_sort.html">
+            
+                <a href="../chapter_sorting/bubble_sort.html">
+            
+                    
+                    冒泡排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.4" data-path="../chapter_sorting/insertion_sort.html">
+            
+                <a href="../chapter_sorting/insertion_sort.html">
+            
+                    
+                    插入排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.5" data-path="../chapter_sorting/quick_sort.html">
+            
+                <a href="../chapter_sorting/quick_sort.html">
+            
+                    
+                    快速排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.6" data-path="../chapter_sorting/merge_sort.html">
+            
+                <a href="../chapter_sorting/merge_sort.html">
+            
+                    
+                    归并排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.7" data-path="../chapter_sorting/heap_sort.html">
+            
+                <a href="../chapter_sorting/heap_sort.html">
+            
+                    
+                    堆排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.8" data-path="../chapter_sorting/bucket_sort.html">
+            
+                <a href="../chapter_sorting/bucket_sort.html">
+            
+                    
+                    桶排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.9" data-path="../chapter_sorting/counting_sort.html">
+            
+                <a href="../chapter_sorting/counting_sort.html">
+            
+                    
+                    计数排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.10" data-path="../chapter_sorting/radix_sort.html">
+            
+                <a href="../chapter_sorting/radix_sort.html">
+            
+                    
+                    基数排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.11" data-path="../chapter_sorting/">
+            
+                <a href="../chapter_sorting/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="../chapter_divide_and_conquer/">
+            
+                <a href="../chapter_divide_and_conquer/">
+            
+                    
+                    分治
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.13.1" data-path="../chapter_divide_and_conquer/divide_and_conquer.html">
+            
+                <a href="../chapter_divide_and_conquer/divide_and_conquer.html">
+            
+                    
+                    分治算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.2" data-path="../chapter_divide_and_conquer/binary_search_recur.html">
+            
+                <a href="../chapter_divide_and_conquer/binary_search_recur.html">
+            
+                    
+                    分治搜索策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.3" data-path="../chapter_divide_and_conquer/build_binary_tree_problem.html">
+            
+                <a href="../chapter_divide_and_conquer/build_binary_tree_problem.html">
+            
+                    
+                    构建二叉树问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.4" data-path="../chapter_divide_and_conquer/hanota_problem.html">
+            
+                <a href="../chapter_divide_and_conquer/hanota_problem.html">
+            
+                    
+                    汉诺塔问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.5" data-path="../chapter_divide_and_conquer/">
+            
+                <a href="../chapter_divide_and_conquer/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="../chapter_backtracking/">
+            
+                <a href="../chapter_backtracking/">
+            
+                    
+                    回溯
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.14.1" data-path="../chapter_backtracking/backtracking_algorithm.html">
+            
+                <a href="../chapter_backtracking/backtracking_algorithm.html">
+            
+                    
+                    回溯算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.2" data-path="../chapter_backtracking/permutations_problem.html">
+            
+                <a href="../chapter_backtracking/permutations_problem.html">
+            
+                    
+                    全排列问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.3" data-path="../chapter_backtracking/subset_sum_problem.html">
+            
+                <a href="../chapter_backtracking/subset_sum_problem.html">
+            
+                    
+                    子集和问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.4" data-path="../chapter_backtracking/n_queens_problem.html">
+            
+                <a href="../chapter_backtracking/n_queens_problem.html">
+            
+                    
+                    N 皇后问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.5" data-path="../chapter_backtracking/">
+            
+                <a href="../chapter_backtracking/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="../chapter_dynamic_programming/">
+            
+                <a href="../chapter_dynamic_programming/">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.15.1" data-path="../chapter_dynamic_programming/intro_to_dynamic_programming.html">
+            
+                <a href="../chapter_dynamic_programming/intro_to_dynamic_programming.html">
+            
+                    
+                    初探动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.2" data-path="../chapter_dynamic_programming/dp_problem_features.html">
+            
+                <a href="../chapter_dynamic_programming/dp_problem_features.html">
+            
+                    
+                    动态规划问题特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.3" data-path="../chapter_dynamic_programming/dp_solution_pipeline.html">
+            
+                <a href="../chapter_dynamic_programming/dp_solution_pipeline.html">
+            
+                    
+                    动态规划解题思路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.4" data-path="../chapter_dynamic_programming/knapsack_problem.html">
+            
+                <a href="../chapter_dynamic_programming/knapsack_problem.html">
+            
+                    
+                    0-1 背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.5" data-path="../chapter_dynamic_programming/unbounded_knapsack_problem.html">
+            
+                <a href="../chapter_dynamic_programming/unbounded_knapsack_problem.html">
+            
+                    
+                    完全背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.6" data-path="../chapter_dynamic_programming/edit_distance_problem.html">
+            
+                <a href="../chapter_dynamic_programming/edit_distance_problem.html">
+            
+                    
+                    编辑距离问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.7" data-path="../chapter_dynamic_programming/">
+            
+                <a href="../chapter_dynamic_programming/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="../chapter_greedy/">
+            
+                <a href="../chapter_greedy/">
+            
+                    
+                    贪心
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.16.1" data-path="../chapter_greedy/greedy_algorithm.html">
+            
+                <a href="../chapter_greedy/greedy_algorithm.html">
+            
+                    
+                    贪心算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.2" data-path="../chapter_greedy/fractional_knapsack_problem.html">
+            
+                <a href="../chapter_greedy/fractional_knapsack_problem.html">
+            
+                    
+                    分数背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.3" data-path="../chapter_greedy/max_capacity_problem.html">
+            
+                <a href="../chapter_greedy/max_capacity_problem.html">
+            
+                    
+                    最大容量问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.4" data-path="../chapter_greedy/max_product_cutting_problem.html">
+            
+                <a href="../chapter_greedy/max_product_cutting_problem.html">
+            
+                    
+                    最大切分乘积问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.5" data-path="../chapter_greedy/">
+            
+                <a href="../chapter_greedy/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="../chapter_appendix/">
+            
+                <a href="../chapter_appendix/">
+            
+                    
+                    附录
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.17.1" data-path="../chapter_appendix/installation.html">
+            
+                <a href="../chapter_appendix/installation.html">
+            
+                    
+                    编程环境安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17.2" data-path="../chapter_appendix/terminology.html">
+            
+                <a href="../chapter_appendix/terminology.html">
+            
+                    
+                    术语表
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >时间复杂度</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="时间复杂度">时间复杂度</h1>
+<p>运行时间可以直观且准确地反映算法的效率。如果我们想准确预估一段代码的运行时间，应该如何操作呢？</p>
+<ol>
+<li><strong>确定运行平台</strong>，包括硬件配置、编程语言、系统环境等，这些因素都会影响代码的运行效率。</li>
+<li><strong>评估各种计算操作所需的运行时间</strong>，例如加法操作 <code>+</code> 需要 1 ns ，乘法操作 <code>*</code> 需要 10 ns ，打印操作 <code>print()</code> 需要 5 ns 等。</li>
+<li><strong>统计代码中所有的计算操作</strong>，并将所有操作的执行时间求和，从而得到运行时间。</li>
+</ol>
+<p>例如在以下代码中，输入数据大小为 $n$ ：</p>
+<p>=== "Python"</p>
+<pre><code>```python title=""
+</code></pre><p>   // 在某运行平台下
+    def algorithm(n: int):
+        a = 2     // 1 ns
+        a = a + 1 // 1 ns
+        a = a * 2 // 10 ns
+       // 循环 n 次
+        for _ in range(n): // 1 ns
+            print(0)       // 5 ns</p>
+<pre><code>```
+</code></pre><p>=== "C++"</p>
+<pre><code>```cpp title=""
+// 在某运行平台下
+void algorithm(int n) {
+    int a = 2;  // 1 ns
+    a = a + 1;  // 1 ns
+    a = a * 2;  // 10 ns
+    // 循环 n 次
+    for (int i = 0; i &lt; n; i++) {  // 1 ns ，每轮都要执行 i++
+        cout &lt;&lt; 0 &lt;&lt; endl;         // 5 ns
+    }
+}
+```
+</code></pre><p>=== "Java"</p>
+<pre><code>```java title=""
+// 在某运行平台下
+void algorithm(int n) {
+    int a = 2;  // 1 ns
+    a = a + 1;  // 1 ns
+    a = a * 2;  // 10 ns
+    // 循环 n 次
+    for (int i = 0; i &lt; n; i++) {  // 1 ns ，每轮都要执行 i++
+        System.out.println(0);     // 5 ns
+    }
+}
+```
+</code></pre><p>=== "C#"</p>
+<pre><code>```csharp title=""
+// 在某运行平台下
+void Algorithm(int n) {
+    int a = 2;  // 1 ns
+    a = a + 1;  // 1 ns
+    a = a * 2;  // 10 ns
+    // 循环 n 次
+    for (int i = 0; i &lt; n; i++) {  // 1 ns ，每轮都要执行 i++
+        Console.WriteLine(0);      // 5 ns
+    }
+}
+```
+</code></pre><p>=== "Go"</p>
+<pre><code>```go title=""
+// 在某运行平台下
+func algorithm(n int) {
+    a := 2     // 1 ns
+    a = a + 1  // 1 ns
+    a = a * 2  // 10 ns
+    // 循环 n 次
+    for i := 0; i &lt; n; i++ {  // 1 ns
+        fmt.Println(a)        // 5 ns
+    }
+}
+```
+</code></pre><p>=== "Swift"</p>
+<pre><code>```swift title=""
+// 在某运行平台下
+func algorithm(n: Int) {
+    var a = 2 // 1 ns
+    a = a + 1 // 1 ns
+    a = a * 2 // 10 ns
+    // 循环 n 次
+    for _ in 0 ..&lt; n { // 1 ns
+        print(0) // 5 ns
+    }
+}
+```
+</code></pre><p>=== "JS"</p>
+<pre><code>```javascript title=""
+// 在某运行平台下
+function algorithm(n) {
+    var a = 2; // 1 ns
+    a = a + 1; // 1 ns
+    a = a * 2; // 10 ns
+    // 循环 n 次
+    for(let i = 0; i &lt; n; i++) { // 1 ns ，每轮都要执行 i++
+        console.log(0); // 5 ns
+    }
+}
+```
+</code></pre><p>=== "TS"</p>
+<pre><code>```typescript title=""
+// 在某运行平台下
+function algorithm(n: number): void {
+    var a: number = 2; // 1 ns
+    a = a + 1; // 1 ns
+    a = a * 2; // 10 ns
+    // 循环 n 次
+    for(let i = 0; i &lt; n; i++) { // 1 ns ，每轮都要执行 i++
+        console.log(0); // 5 ns
+    }
+}
+```
+</code></pre><p>=== "Dart"</p>
+<pre><code>```dart title=""
+// 在某运行平台下
+void algorithm(int n) {
+  int a = 2; // 1 ns
+  a = a + 1; // 1 ns
+  a = a * 2; // 10 ns
+  // 循环 n 次
+  for (int i = 0; i &lt; n; i++) { // 1 ns ，每轮都要执行 i++
+    print(0); // 5 ns
+  }
+}
+```
+</code></pre><p>=== "Rust"</p>
+<pre><code>```rust title=""
+// 在某运行平台下
+fn algorithm(n: i32) {
+    let mut a = 2;      // 1 ns
+    a = a + 1;          // 1 ns
+    a = a * 2;          // 10 ns
+    // 循环 n 次
+    for _ in 0..n {     // 1 ns ，每轮都要执行 i++
+        println!("{}", 0);  // 5 ns
+    }
+}
+```
+</code></pre><p>=== "C"</p>
+<pre><code>```c title=""
+// 在某运行平台下
+void algorithm(int n) {
+    int a = 2;  // 1 ns
+    a = a + 1;  // 1 ns
+    a = a * 2;  // 10 ns
+    // 循环 n 次
+    for (int i = 0; i &lt; n; i++) {   // 1 ns ，每轮都要执行 i++
+        printf("%d", 0);            // 5 ns
+    }
+}
+```
+</code></pre><p>=== "Zig"</p>
+<pre><code>```zig title=""
+// 在某运行平台下
+fn algorithm(n: usize) void {
+    var a: i32 = 2; // 1 ns
+    a += 1; // 1 ns
+    a *= 2; // 10 ns
+    // 循环 n 次
+    for (0..n) |_| { // 1 ns
+        std.debug.print("{}\n", .{0}); // 5 ns
+    }
+}
+```
+</code></pre><p>根据以上方法，可以得到算法的运行时间为 $(6n + 12)$ ns ：</p>
+<p>$$
+1 + 1 + 10 + (1 + 5) \times n = 6n + 12</p>
+<p>$$</p>
+<p>但实际上，<strong>统计算法的运行时间既不合理也不现实</strong>。首先，我们不希望将预估时间和运行平台绑定，因为算法需要在各种不同的平台上运行。其次，我们很难获知每种操作的运行时间，这给预估过程带来了极大的难度。</p>
+<h2 id="统计时间增长趋势">统计时间增长趋势</h2>
+<p>时间复杂度分析统计的不是算法运行时间，<strong>而是算法运行时间随着数据量变大时的增长趋势</strong>。</p>
+<p>“时间增长趋势”这个概念比较抽象，我们通过一个例子来加以理解。假设输入数据大小为 $n$ ，给定三个算法 <code>A</code>、<code>B</code> 和 <code>C</code> ：</p>
+<p>=== "Python"</p>
+<pre><code>```python title=""
+</code></pre><p>   // 算法 A 的时间复杂度：常数阶
+    def algorithm<em>A(n: int):
+        print(0)
+   // 算法 B 的时间复杂度：线性阶
+    def algorithm_B(n: int):
+        for </em> in range(n):
+            print(0)
+   // 算法 C 的时间复杂度：常数阶
+    def algorithm<em>C(n: int):
+        for </em> in range(1000000):
+            print(0)</p>
+<pre><code>```
+</code></pre><p>=== "C++"</p>
+<pre><code>```cpp title=""
+// 算法 A 的时间复杂度：常数阶
+void algorithm_A(int n) {
+    cout &lt;&lt; 0 &lt;&lt; endl;
+}
+// 算法 B 的时间复杂度：线性阶
+void algorithm_B(int n) {
+    for (int i = 0; i &lt; n; i++) {
+        cout &lt;&lt; 0 &lt;&lt; endl;
+    }
+}
+// 算法 C 的时间复杂度：常数阶
+void algorithm_C(int n) {
+    for (int i = 0; i &lt; 1000000; i++) {
+        cout &lt;&lt; 0 &lt;&lt; endl;
+    }
+}
+```
+</code></pre><p>=== "Java"</p>
+<pre><code>```java title=""
+// 算法 A 的时间复杂度：常数阶
+void algorithm_A(int n) {
+    System.out.println(0);
+}
+// 算法 B 的时间复杂度：线性阶
+void algorithm_B(int n) {
+    for (int i = 0; i &lt; n; i++) {
+        System.out.println(0);
+    }
+}
+// 算法 C 的时间复杂度：常数阶
+void algorithm_C(int n) {
+    for (int i = 0; i &lt; 1000000; i++) {
+        System.out.println(0);
+    }
+}
+```
+</code></pre><p>=== "C#"</p>
+<pre><code>```csharp title=""
+// 算法 A 的时间复杂度：常数阶
+void AlgorithmA(int n) {
+    Console.WriteLine(0);
+}
+// 算法 B 的时间复杂度：线性阶
+void AlgorithmB(int n) {
+    for (int i = 0; i &lt; n; i++) {
+        Console.WriteLine(0);
+    }
+}
+// 算法 C 的时间复杂度：常数阶
+void AlgorithmC(int n) {
+    for (int i = 0; i &lt; 1000000; i++) {
+        Console.WriteLine(0);
+    }
+}
+```
+</code></pre><p>=== "Go"</p>
+<pre><code>```go title=""
+// 算法 A 的时间复杂度：常数阶
+func algorithm_A(n int) {
+    fmt.Println(0)
+}
+// 算法 B 的时间复杂度：线性阶
+func algorithm_B(n int) {
+    for i := 0; i &lt; n; i++ {
+        fmt.Println(0)
+    }
+}
+// 算法 C 的时间复杂度：常数阶
+func algorithm_C(n int) {
+    for i := 0; i &lt; 1000000; i++ {
+        fmt.Println(0)
+    }
+}
+```
+</code></pre><p>=== "Swift"</p>
+<pre><code>```swift title=""
+// 算法 A 的时间复杂度：常数阶
+func algorithmA(n: Int) {
+    print(0)
+}
+
+// 算法 B 的时间复杂度：线性阶
+func algorithmB(n: Int) {
+    for _ in 0 ..&lt; n {
+        print(0)
+    }
+}
+
+// 算法 C 的时间复杂度：常数阶
+func algorithmC(n: Int) {
+    for _ in 0 ..&lt; 1000000 {
+        print(0)
+    }
+}
+```
+</code></pre><p>=== "JS"</p>
+<pre><code>```javascript title=""
+// 算法 A 的时间复杂度：常数阶
+function algorithm_A(n) {
+    console.log(0);
+}
+// 算法 B 的时间复杂度：线性阶
+function algorithm_B(n) {
+    for (let i = 0; i &lt; n; i++) {
+        console.log(0);
+    }
+}
+// 算法 C 的时间复杂度：常数阶
+function algorithm_C(n) {
+    for (let i = 0; i &lt; 1000000; i++) {
+        console.log(0);
+    }
+}
+
+```
+</code></pre><p>=== "TS"</p>
+<pre><code>```typescript title=""
+// 算法 A 的时间复杂度：常数阶
+function algorithm_A(n: number): void {
+    console.log(0);
+}
+// 算法 B 的时间复杂度：线性阶
+function algorithm_B(n: number): void {
+    for (let i = 0; i &lt; n; i++) {
+        console.log(0);
+    }
+}
+// 算法 C 的时间复杂度：常数阶
+function algorithm_C(n: number): void {
+    for (let i = 0; i &lt; 1000000; i++) {
+        console.log(0);
+    }
+}
+```
+</code></pre><p>=== "Dart"</p>
+<pre><code>```dart title=""
+// 算法 A 的时间复杂度：常数阶
+void algorithmA(int n) {
+  print(0);
+}
+// 算法 B 的时间复杂度：线性阶
+void algorithmB(int n) {
+  for (int i = 0; i &lt; n; i++) {
+    print(0);
+  }
+}
+// 算法 C 的时间复杂度：常数阶
+void algorithmC(int n) {
+  for (int i = 0; i &lt; 1000000; i++) {
+    print(0);
+  }
+}
+```
+</code></pre><p>=== "Rust"</p>
+<pre><code>```rust title=""
+// 算法 A 的时间复杂度：常数阶
+fn algorithm_A(n: i32) {
+    println!("{}", 0);
+}
+// 算法 B 的时间复杂度：线性阶
+fn algorithm_B(n: i32) {
+    for _ in 0..n {
+        println!("{}", 0);
+    }
+}
+// 算法 C 的时间复杂度：常数阶
+fn algorithm_C(n: i32) {
+    for _ in 0..1000000 {
+        println!("{}", 0);
+    }
+}
+```
+</code></pre><p>=== "C"</p>
+<pre><code>```c title=""
+// 算法 A 的时间复杂度：常数阶
+void algorithm_A(int n) {
+    printf("%d", 0);
+}
+// 算法 B 的时间复杂度：线性阶
+void algorithm_B(int n) {
+    for (int i = 0; i &lt; n; i++) {
+        printf("%d", 0);
+    }
+}
+// 算法 C 的时间复杂度：常数阶
+void algorithm_C(int n) {
+    for (int i = 0; i &lt; 1000000; i++) {
+        printf("%d", 0);
+    }
+}
+```
+</code></pre><p>=== "Zig"</p>
+<pre><code>```zig title=""
+// 算法 A 的时间复杂度：常数阶
+fn algorithm_A(n: usize) void {
+    _ = n;
+    std.debug.print("{}\n", .{0});
+}
+// 算法 B 的时间复杂度：线性阶
+fn algorithm_B(n: i32) void {
+    for (0..n) |_| {
+        std.debug.print("{}\n", .{0});
+    }
+}
+// 算法 C 的时间复杂度：常数阶
+fn algorithm_C(n: i32) void {
+    _ = n;
+    for (0..1000000) |_| { 
+        std.debug.print("{}\n", .{0});
+    }
+}
+```
+</code></pre><p>下图展示了以上三个算法函数的时间复杂度。</p>
+<ul>
+<li>算法 <code>A</code> 只有 $1$ 个打印操作，算法运行时间不随着 $n$ 增大而增长。我们称此算法的时间复杂度为“常数阶”。</li>
+<li>算法 <code>B</code> 中的打印操作需要循环 $n$ 次，算法运行时间随着 $n$ 增大呈线性增长。此算法的时间复杂度被称为“线性阶”。</li>
+<li>算法 <code>C</code> 中的打印操作需要循环 $1000000$ 次，虽然运行时间很长，但它与输入数据大小 $n$ 无关。因此 <code>C</code> 的时间复杂度和 <code>A</code> 相同，仍为“常数阶”。</li>
+</ul>
+<p><img src="time_complexity.assets/time_complexity_simple_example.png" alt="算法 A、B 和 C 的时间增长趋势"></img></p>
+<p>相较于直接统计算法的运行时间，时间复杂度分析有哪些特点呢？</p>
+<ul>
+<li><strong>时间复杂度能够有效评估算法效率</strong>。例如，算法 <code>B</code> 的运行时间呈线性增长，在 $n &gt; 1$ 时比算法 <code>A</code> 更慢，在 $n &gt; 1000000$ 时比算法 <code>C</code> 更慢。事实上，只要输入数据大小 $n$ 足够大，复杂度为“常数阶”的算法一定优于“线性阶”的算法，这正是时间增长趋势的含义。</li>
+<li><strong>时间复杂度的推算方法更简便</strong>。显然，运行平台和计算操作类型都与算法运行时间的增长趋势无关。因此在时间复杂度分析中，我们可以简单地将所有计算操作的执行时间视为相同的“单位时间”，从而将“计算操作运行时间统计”简化为“计算操作数量统计”，这样一来估算难度就大大降低了。</li>
+<li><strong>时间复杂度也存在一定的局限性</strong>。例如，尽管算法 <code>A</code> 和 <code>C</code> 的时间复杂度相同，但实际运行时间差别很大。同样，尽管算法 <code>B</code> 的时间复杂度比 <code>C</code> 高，但在输入数据大小 $n$ 较小时，算法 <code>B</code> 明显优于算法 <code>C</code> 。在这些情况下，我们很难仅凭时间复杂度判断算法效率的高低。当然，尽管存在上述问题，复杂度分析仍然是评判算法效率最有效且常用的方法。</li>
+</ul>
+<h2 id="函数渐近上界">函数渐近上界</h2>
+<p>给定一个输入大小为 $n$ 的函数：</p>
+<p>=== "Python"</p>
+<pre><code>```python title=""
+def algorithm(n: int):
+    a = 1     // +1
+    a = a + 1 // +1
+    a = a * 2 // +1
+   // 循环 n 次
+    for i in range(n): // +1
+        print(0)       // +1
+```
+</code></pre><p>=== "C++"</p>
+<pre><code>```cpp title=""
+void algorithm(int n) {
+    int a = 1;  // +1
+    a = a + 1;  // +1
+    a = a * 2;  // +1
+    // 循环 n 次
+    for (int i = 0; i &lt; n; i++) { // +1（每轮都执行 i ++）
+        cout &lt;&lt; 0 &lt;&lt; endl;    // +1
+    }
+}
+```
+</code></pre><p>=== "Java"</p>
+<pre><code>```java title=""
+void algorithm(int n) {
+    int a = 1;  // +1
+    a = a + 1;  // +1
+    a = a * 2;  // +1
+    // 循环 n 次
+    for (int i = 0; i &lt; n; i++) { // +1（每轮都执行 i ++）
+        System.out.println(0);    // +1
+    }
+}
+```
+</code></pre><p>=== "C#"</p>
+<pre><code>```csharp title=""
+void Algorithm(int n) {
+    int a = 1;  // +1
+    a = a + 1;  // +1
+    a = a * 2;  // +1
+    // 循环 n 次
+    for (int i = 0; i &lt; n; i++) {   // +1（每轮都执行 i ++）
+        Console.WriteLine(0);   // +1
+    }
+}
+```
+</code></pre><p>=== "Go"</p>
+<pre><code>```go title=""
+func algorithm(n int) {
+    a := 1      // +1
+    a = a + 1   // +1
+    a = a * 2   // +1
+    // 循环 n 次
+    for i := 0; i &lt; n; i++ {   // +1
+        fmt.Println(a)         // +1
+    }
+}
+```
+</code></pre><p>=== "Swift"</p>
+<pre><code>```swift title=""
+func algorithm(n: Int) {
+    var a = 1 // +1
+    a = a + 1 // +1
+    a = a * 2 // +1
+    // 循环 n 次
+    for _ in 0 ..&lt; n { // +1
+        print(0) // +1
+    }
+}
+```
+</code></pre><p>=== "JS"</p>
+<pre><code>```javascript title=""
+function algorithm(n) {
+    var a = 1; // +1
+    a += 1; // +1
+    a *= 2; // +1
+    // 循环 n 次
+    for(let i = 0; i &lt; n; i++){ // +1（每轮都执行 i ++）
+        console.log(0); // +1
+    }
+}
+```
+</code></pre><p>=== "TS"</p>
+<pre><code>```typescript title=""
+function algorithm(n: number): void{
+    var a: number = 1; // +1
+    a += 1; // +1
+    a *= 2; // +1
+    // 循环 n 次
+    for(let i = 0; i &lt; n; i++){ // +1（每轮都执行 i ++）
+        console.log(0); // +1
+    }
+}
+```
+</code></pre><p>=== "Dart"</p>
+<pre><code>```dart title=""
+void algorithm(int n) {
+  int a = 1; // +1
+  a = a + 1; // +1
+  a = a * 2; // +1
+  // 循环 n 次
+  for (int i = 0; i &lt; n; i++) { // +1（每轮都执行 i ++）
+    print(0); // +1
+  }
+}
+```
+</code></pre><p>=== "Rust"</p>
+<pre><code>```rust title=""
+fn algorithm(n: i32) {
+    let mut a = 1;   // +1
+    a = a + 1;      // +1
+    a = a * 2;      // +1
+
+    // 循环 n 次
+    for _ in 0..n { // +1（每轮都执行 i ++）
+        println!("{}", 0); // +1
+    }
+}
+```
+</code></pre><p>=== "C"</p>
+<pre><code>```c title=""
+void algorithm(int n) {
+    int a = 1;  // +1
+    a = a + 1;  // +1
+    a = a * 2;  // +1
+    // 循环 n 次
+    for (int i = 0; i &lt; n; i++) {   // +1（每轮都执行 i ++）
+        printf("%d", 0);            // +1
+    }
+}  
+```
+</code></pre><p>=== "Zig"</p>
+<pre><code>```zig title=""
+fn algorithm(n: usize) void {
+    var a: i32 = 1; // +1
+    a += 1; // +1
+    a *= 2; // +1
+    // 循环 n 次
+    for (0..n) |_| { // +1（每轮都执行 i ++）
+        std.debug.print("{}\n", .{0}); // +1
+    }
+}
+```
+</code></pre><p>设算法的操作数量是一个关于输入数据大小 $n$ 的函数，记为 $T(n)$ ，则以上函数的操作数量为：</p>
+<p>$$
+T(n) = 3 + 2n</p>
+<p>$$</p>
+<p>$T(n)$ 是一次函数，说明其运行时间的增长趋势是线性的，因此它的时间复杂度是线性阶。</p>
+<p>我们将线性阶的时间复杂度记为 $O(n)$ ，这个数学符号称为「大 $O$ 记号 big-$O$ notation」，表示函数 $T(n)$ 的「渐近上界 asymptotic upper bound」。</p>
+<p>时间复杂度分析本质上是计算“操作数量 $T(n)$”的渐近上界，它具有明确的数学定义。</p>
+<p>!!! abstract "函数渐近上界"</p>
+<pre><code>若存在正实数 $c$ 和实数 $n_0$ ，使得对于所有的 $n &gt; n_0$ ，均有 $T(n) \leq c \cdot f(n)$ ，则可认为 $f(n)$ 给出了 $T(n)$ 的一个渐近上界，记为 $T(n) = O(f(n))$ 。
+</code></pre><p>如下图所示，计算渐近上界就是寻找一个函数 $f(n)$ ，使得当 $n$ 趋向于无穷大时，$T(n)$ 和 $f(n)$ 处于相同的增长级别，仅相差一个常数项 $c$ 的倍数。</p>
+<p><img src="time_complexity.assets/asymptotic_upper_bound.png" alt="函数的渐近上界"></img></p>
+<h2 id="推算方法">推算方法</h2>
+<p>渐近上界的数学味儿有点重，如果你感觉没有完全理解，也无须担心。我们可以先掌握推算方法，在不断的实践中，就可以逐渐领悟其数学意义。</p>
+<p>根据定义，确定 $f(n)$ 之后，我们便可得到时间复杂度 $O(f(n))$ 。那么如何确定渐近上界 $f(n)$ 呢？总体分为两步：首先统计操作数量，然后判断渐近上界。</p>
+<h3 id="第一步：统计操作数量">第一步：统计操作数量</h3>
+<p>针对代码，逐行从上到下计算即可。然而，由于上述 $c \cdot f(n)$ 中的常数项 $c$ 可以取任意大小，<strong>因此操作数量 $T(n)$ 中的各种系数、常数项都可以忽略</strong>。根据此原则，可以总结出以下计数简化技巧。</p>
+<ol>
+<li><strong>忽略 $T(n)$ 中的常数项</strong>。因为它们都与 $n$ 无关，所以对时间复杂度不产生影响。</li>
+<li><strong>省略所有系数</strong>。例如，循环 $2n$ 次、$5n + 1$ 次等，都可以简化记为 $n$ 次，因为 $n$ 前面的系数对时间复杂度没有影响。</li>
+<li><strong>循环嵌套时使用乘法</strong>。总操作数量等于外层循环和内层循环操作数量之积，每一层循环依然可以分别套用第 <code>1.</code> 点和第 <code>2.</code> 点的技巧。</li>
+</ol>
+<p>给定一个函数，我们可以用上述技巧来统计操作数量：</p>
+<p>=== "Python"</p>
+<pre><code>```python title=""
+def algorithm(n: int):
+    a = 1     // +0（技巧 1）
+    a = a + n // +0（技巧 1）
+   // +n（技巧 2）
+    for i in range(5 * n + 1):
+        print(0)
+   // +n*n（技巧 3）
+    for i in range(2 * n):
+        for j in range(n + 1):
+            print(0)
+```
+</code></pre><p>=== "C++"</p>
+<pre><code>```cpp title=""
+void algorithm(int n) {
+    int a = 1;  // +0（技巧 1）
+    a = a + n;  // +0（技巧 1）
+    // +n（技巧 2）
+    for (int i = 0; i &lt; 5 * n + 1; i++) {
+        cout &lt;&lt; 0 &lt;&lt; endl;
+    }
+    // +n*n（技巧 3）
+    for (int i = 0; i &lt; 2 * n; i++) {
+        for (int j = 0; j &lt; n + 1; j++) {
+            cout &lt;&lt; 0 &lt;&lt; endl;
+        }
+    }
+}
+```
+</code></pre><p>=== "Java"</p>
+<pre><code>```java title=""
+void algorithm(int n) {
+    int a = 1;  // +0（技巧 1）
+    a = a + n;  // +0（技巧 1）
+    // +n（技巧 2）
+    for (int i = 0; i &lt; 5 * n + 1; i++) {
+        System.out.println(0);
+    }
+    // +n*n（技巧 3）
+    for (int i = 0; i &lt; 2 * n; i++) {
+        for (int j = 0; j &lt; n + 1; j++) {
+            System.out.println(0);
+        }
+    }
+}
+```
+</code></pre><p>=== "C#"</p>
+<pre><code>```csharp title=""
+void Algorithm(int n) {
+    int a = 1;  // +0（技巧 1）
+    a = a + n;  // +0（技巧 1）
+    // +n（技巧 2）
+    for (int i = 0; i &lt; 5 * n + 1; i++) {
+        Console.WriteLine(0);
+    }
+    // +n*n（技巧 3）
+    for (int i = 0; i &lt; 2 * n; i++) {
+        for (int j = 0; j &lt; n + 1; j++) {
+            Console.WriteLine(0);
+        }
+    }
+}
+```
+</code></pre><p>=== "Go"</p>
+<pre><code>```go title=""
+func algorithm(n int) {
+    a := 1     // +0（技巧 1）
+    a = a + n  // +0（技巧 1）
+    // +n（技巧 2）
+    for i := 0; i &lt; 5 * n + 1; i++ {
+        fmt.Println(0)
+    }
+    // +n*n（技巧 3）
+    for i := 0; i &lt; 2 * n; i++ {
+        for j := 0; j &lt; n + 1; j++ {
+            fmt.Println(0)
+        }
+    }
+}
+```
+</code></pre><p>=== "Swift"</p>
+<pre><code>```swift title=""
+func algorithm(n: Int) {
+    var a = 1 // +0（技巧 1）
+    a = a + n // +0（技巧 1）
+    // +n（技巧 2）
+    for _ in 0 ..&lt; (5 * n + 1) {
+        print(0)
+    }
+    // +n*n（技巧 3）
+    for _ in 0 ..&lt; (2 * n) {
+        for _ in 0 ..&lt; (n + 1) {
+            print(0)
+        }
+    }
+}
+```
+</code></pre><p>=== "JS"</p>
+<pre><code>```javascript title=""
+function algorithm(n) {
+    let a = 1;  // +0（技巧 1）
+    a = a + n;  // +0（技巧 1）
+    // +n（技巧 2）
+    for (let i = 0; i &lt; 5 * n + 1; i++) {
+        console.log(0);
+    }
+    // +n*n（技巧 3）
+    for (let i = 0; i &lt; 2 * n; i++) {
+        for (let j = 0; j &lt; n + 1; j++) {
+            console.log(0);
+        }
+    }
+}
+```
+</code></pre><p>=== "TS"</p>
+<pre><code>```typescript title=""
+function algorithm(n: number): void {
+    let a = 1;  // +0（技巧 1）
+    a = a + n;  // +0（技巧 1）
+    // +n（技巧 2）
+    for (let i = 0; i &lt; 5 * n + 1; i++) {
+        console.log(0);
+    }
+    // +n*n（技巧 3）
+    for (let i = 0; i &lt; 2 * n; i++) {
+        for (let j = 0; j &lt; n + 1; j++) {
+            console.log(0);
+        }
+    }
+}
+```
+</code></pre><p>=== "Dart"</p>
+<pre><code>```dart title=""
+void algorithm(int n) {
+  int a = 1; // +0（技巧 1）
+  a = a + n; // +0（技巧 1）
+  // +n（技巧 2）
+  for (int i = 0; i &lt; 5 * n + 1; i++) {
+    print(0);
+  }
+  // +n*n（技巧 3）
+  for (int i = 0; i &lt; 2 * n; i++) {
+    for (int j = 0; j &lt; n + 1; j++) {
+      print(0);
+    }
+  }
+}
+```
+</code></pre><p>=== "Rust"</p>
+<pre><code>```rust title=""
+fn algorithm(n: i32) {
+    let mut a = 1;     // +0（技巧 1）
+    a = a + n;        // +0（技巧 1）
+
+    // +n（技巧 2）
+    for i in 0..(5 * n + 1) {
+        println!("{}", 0);
+    }
+
+    // +n*n（技巧 3）
+    for i in 0..(2 * n) {
+        for j in 0..(n + 1) {
+            println!("{}", 0);
+        }
+    }
+}
+```
+</code></pre><p>=== "C"</p>
+<pre><code>```c title=""
+void algorithm(int n) {
+    int a = 1;  // +0（技巧 1）
+    a = a + n;  // +0（技巧 1）
+    // +n（技巧 2）
+    for (int i = 0; i &lt; 5 * n + 1; i++) {
+        printf("%d", 0);
+    }
+    // +n*n（技巧 3）
+    for (int i = 0; i &lt; 2 * n; i++) {
+        for (int j = 0; j &lt; n + 1; j++) {
+            printf("%d", 0);
+        }
+    }
+}
+```
+</code></pre><p>=== "Zig"</p>
+<pre><code>```zig title=""
+fn algorithm(n: usize) void {
+    var a: i32 = 1;     // +0（技巧 1）
+    a = a + @as(i32, @intCast(n));        // +0（技巧 1）
+
+    // +n（技巧 2）
+    for(0..(5 * n + 1)) |_| {
+        std.debug.print("{}\n", .{0}); 
+    }
+
+    // +n*n（技巧 3）
+    for(0..(2 * n)) |_| {
+        for(0..(n + 1)) |_| {
+            std.debug.print("{}\n", .{0}); 
+        }
+    }
+}
+```
+</code></pre><p>以下公式展示了使用上述技巧前后的统计结果，两者推算出的时间复杂度都为 $O(n^2)$ 。</p>
+<p>$$
+\begin{aligned}
+T(n) &amp; = 2n(n + 1) + (5n + 1) + 2 &amp; \text{完整统计 (-.-|||)} \newline
+&amp; = 2n^2 + 7n + 3 \newline
+T(n) &amp; = n^2 + n &amp; \text{偷懒统计 (o.O)}
+\end{aligned}</p>
+<p>$$</p>
+<h3 id="第二步：判断渐近上界">第二步：判断渐近上界</h3>
+<p><strong>时间复杂度由 $T(n)$ 中最高阶的项来决定</strong>。这是因为在 $n$ 趋于无穷大时，最高阶的项将发挥主导作用，其他项的影响都可以忽略。</p>
+<p>下表展示了一些例子，其中一些夸张的值是为了强调“系数无法撼动阶数”这一结论。当 $n$ 趋于无穷大时，这些常数变得无足轻重。</p>
+<p align="center"> 表 <id> &nbsp; 不同操作数量对应的时间复杂度 </id></p>
+
+<table>
+<thead>
+<tr>
+<th>操作数量 $T(n)$</th>
+<th>时间复杂度 $O(f(n))$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$100000$</td>
+<td>$O(1)$</td>
+</tr>
+<tr>
+<td>$3n + 2$</td>
+<td>$O(n)$</td>
+</tr>
+<tr>
+<td>$2n^2 + 3n + 2$</td>
+<td>$O(n^2)$</td>
+</tr>
+<tr>
+<td>$n^3 + 10000n^2$</td>
+<td>$O(n^3)$</td>
+</tr>
+<tr>
+<td>$2^n + 10000n^{10000}$</td>
+<td>$O(2^n)$</td>
+</tr>
+</tbody>
+</table>
+<h2 id="常见类型">常见类型</h2>
+<p>设输入数据大小为 $n$ ，常见的时间复杂度类型如下图所示（按照从低到高的顺序排列）。</p>
+<p>$$
+\begin{aligned}
+O(1) &lt; O(\log n) &lt; O(n) &lt; O(n \log n) &lt; O(n^2) &lt; O(2^n) &lt; O(n!) \newline
+\text{常数阶} &lt; \text{对数阶} &lt; \text{线性阶} &lt; \text{线性对数阶} &lt; \text{平方阶} &lt; \text{指数阶} &lt; \text{阶乘阶}
+\end{aligned}</p>
+<p>$$</p>
+<p><img src="time_complexity.assets/time_complexity_common_types.png" alt="常见的时间复杂度类型"></img></p>
+<h3 id="常数阶-o1">常数阶 $O(1)$</h3>
+<p>常数阶的操作数量与输入数据大小 $n$ 无关，即不随着 $n$ 的变化而变化。</p>
+<p>在以下函数中，尽管操作数量 <code>size</code> 可能很大，但由于其与输入数据大小 $n$ 无关，因此时间复杂度仍为 $O(1)$ ：</p>
+<pre><code class="lang-src">[file]{time_complexity}-[class]{}-[func]{constant}
+</code></pre>
+<h3 id="线性阶-on">线性阶 $O(n)$</h3>
+<p>线性阶的操作数量相对于输入数据大小 $n$ 以线性级别增长。线性阶通常出现在单层循环中：</p>
+<pre><code class="lang-src">[file]{time_complexity}-[class]{}-[func]{linear}
+</code></pre>
+<p>遍历数组和遍历链表等操作的时间复杂度均为 $O(n)$ ，其中 $n$ 为数组或链表的长度：</p>
+<pre><code class="lang-src">[file]{time_complexity}-[class]{}-[func]{array_traversal}
+</code></pre>
+<p>值得注意的是，<strong>输入数据大小 $n$ 需根据输入数据的类型来具体确定</strong>。比如在第一个示例中，变量 $n$ 为输入数据大小；在第二个示例中，数组长度 $n$ 为数据大小。</p>
+<h3 id="平方阶-on2">平方阶 $O(n^2)$</h3>
+<p>平方阶的操作数量相对于输入数据大小 $n$ 以平方级别增长。平方阶通常出现在嵌套循环中，外层循环和内层循环的时间复杂度都为 $O(n)$ ，因此总体的时间复杂度为 $O(n^2)$ ：</p>
+<pre><code class="lang-src">[file]{time_complexity}-[class]{}-[func]{quadratic}
+</code></pre>
+<p>下图对比了常数阶、线性阶和平方阶三种时间复杂度。</p>
+<p><img src="time_complexity.assets/time_complexity_constant_linear_quadratic.png" alt="常数阶、线性阶和平方阶的时间复杂度"></img></p>
+<p>以冒泡排序为例，外层循环执行 $n - 1$ 次，内层循环执行 $n-1$、$n-2$、$\dots$、$2$、$1$ 次，平均为 $n / 2$ 次，因此时间复杂度为 $O((n - 1) n / 2) = O(n^2)$ ：</p>
+<pre><code class="lang-src">[file]{time_complexity}-[class]{}-[func]{bubble_sort}
+</code></pre>
+<h3 id="指数阶-o2n">指数阶 $O(2^n)$</h3>
+<p>生物学的“细胞分裂”是指数阶增长的典型例子：初始状态为 $1$ 个细胞，分裂一轮后变为 $2$ 个，分裂两轮后变为 $4$ 个，以此类推，分裂 $n$ 轮后有 $2^n$ 个细胞。</p>
+<p>下图和以下代码模拟了细胞分裂的过程，时间复杂度为 $O(2^n)$ ：</p>
+<pre><code class="lang-src">[file]{time_complexity}-[class]{}-[func]{exponential}
+</code></pre>
+<p><img src="time_complexity.assets/time_complexity_exponential.png" alt="指数阶的时间复杂度"></img></p>
+<p>在实际算法中，指数阶常出现于递归函数中。例如在以下代码中，其递归地一分为二，经过 $n$ 次分裂后停止：</p>
+<pre><code class="lang-src">[file]{time_complexity}-[class]{}-[func]{exp_recur}
+</code></pre>
+<p>指数阶增长非常迅速，在穷举法（暴力搜索、回溯等）中比较常见。对于数据规模较大的问题，指数阶是不可接受的，通常需要使用动态规划或贪心算法等来解决。</p>
+<h3 id="对数阶-olog-n">对数阶 $O(\log n)$</h3>
+<p>与指数阶相反，对数阶反映了“每轮缩减到一半”的情况。设输入数据大小为 $n$ ，由于每轮缩减到一半，因此循环次数是 $\log_2 n$ ，即 $2^n$ 的反函数。</p>
+<p>下图和以下代码模拟了“每轮缩减到一半”的过程，时间复杂度为 $O(\log_2 n)$ ，简记为 $O(\log n)$ ：</p>
+<pre><code class="lang-src">[file]{time_complexity}-[class]{}-[func]{logarithmic}
+</code></pre>
+<p><img src="time_complexity.assets/time_complexity_logarithmic.png" alt="对数阶的时间复杂度"></img></p>
+<p>与指数阶类似，对数阶也常出现于递归函数中。以下代码形成了一棵高度为 $\log_2 n$ 的递归树：</p>
+<pre><code class="lang-src">[file]{time_complexity}-[class]{}-[func]{log_recur}
+</code></pre>
+<p>对数阶常出现于基于分治策略的算法中，体现了“一分为多”和“化繁为简”的算法思想。它增长缓慢，是仅次于常数阶的理想的时间复杂度。</p>
+<p>!!! tip "$O(\log n)$ 的底数是多少？"</p>
+<pre><code>准确来说，“一分为 $m$”对应的时间复杂度是 $O(\log_m n)$ 。而通过对数换底公式，我们可以得到具有不同底数、相等的时间复杂度：
+
+$$
+O(\log_m n) = O(\log_k n / \log_k m) = O(\log_k n)
+$$
+
+也就是说，底数 $m$ 可以在不影响复杂度的前提下转换。因此我们通常会省略底数 $m$ ，将对数阶直接记为 $O(\log n)$ 。
+</code></pre><h3 id="线性对数阶-on-log-n">线性对数阶 $O(n \log n)$</h3>
+<p>线性对数阶常出现于嵌套循环中，两层循环的时间复杂度分别为 $O(\log n)$ 和 $O(n)$ 。相关代码如下：</p>
+<pre><code class="lang-src">[file]{time_complexity}-[class]{}-[func]{linear_log_recur}
+</code></pre>
+<p>下图展示了线性对数阶的生成方式。二叉树的每一层的操作总数都为 $n$ ，树共有 $\log_2 n + 1$ 层，因此时间复杂度为 $O(n \log n)$ 。</p>
+<p><img src="time_complexity.assets/time_complexity_logarithmic_linear.png" alt="线性对数阶的时间复杂度"></img></p>
+<p>主流排序算法的时间复杂度通常为 $O(n \log n)$ ，例如快速排序、归并排序、堆排序等。</p>
+<h3 id="阶乘阶-on">阶乘阶 $O(n!)$</h3>
+<p>阶乘阶对应数学上的“全排列”问题。给定 $n$ 个互不重复的元素，求其所有可能的排列方案，方案数量为：</p>
+<p>$$
+n! = n \times (n - 1) \times (n - 2) \times \dots \times 2 \times 1</p>
+<p>$$</p>
+<p>阶乘通常使用递归实现。如下图和以下代码所示，第一层分裂出 $n$ 个，第二层分裂出 $n - 1$ 个，以此类推，直至第 $n$ 层时停止分裂：</p>
+<pre><code class="lang-src">[file]{time_complexity}-[class]{}-[func]{factorial_recur}
+</code></pre>
+<p><img src="time_complexity.assets/time_complexity_factorial.png" alt="阶乘阶的时间复杂度"></img></p>
+<p>请注意，因为当 $n \geq 4$ 时恒有 $n! &gt; 2^n$ ，所以阶乘阶比指数阶增长得更快，在 $n$ 较大时也是不可接受的。</p>
+<h2 id="最差、最佳、平均时间复杂度">最差、最佳、平均时间复杂度</h2>
+<p><strong>算法的时间效率往往不是固定的，而是与输入数据的分布有关</strong>。假设输入一个长度为 $n$ 的数组 <code>nums</code> ，其中 <code>nums</code> 由从 $1$ 至 $n$ 的数字组成，每个数字只出现一次；但元素顺序是随机打乱的，任务目标是返回元素 $1$ 的索引。我们可以得出以下结论。</p>
+<ul>
+<li>当 <code>nums = [?, ?, ..., 1]</code> ，即当末尾元素是 $1$ 时，需要完整遍历数组，<strong>达到最差时间复杂度 $O(n)$</strong> 。</li>
+<li>当 <code>nums = [1, ?, ?, ...]</code> ，即当首个元素为 $1$ 时，无论数组多长都不需要继续遍历，<strong>达到最佳时间复杂度 $\Omega(1)$</strong> 。</li>
+</ul>
+<p>“最差时间复杂度”对应函数渐近上界，使用大 $O$ 记号表示。相应地，“最佳时间复杂度”对应函数渐近下界，用 $\Omega$ 记号表示：</p>
+<pre><code class="lang-src">[file]{worst_best_time_complexity}-[class]{}-[func]{find_one}
+</code></pre>
+<p>值得说明的是，我们在实际中很少使用最佳时间复杂度，因为通常只有在很小概率下才能达到，可能会带来一定的误导性。<strong>而最差时间复杂度更为实用，因为它给出了一个效率安全值</strong>，让我们可以放心地使用算法。</p>
+<p>从上述示例可以看出，最差时间复杂度和最佳时间复杂度只出现于“特殊的数据分布”，这些情况的出现概率可能很小，并不能真实地反映算法运行效率。相比之下，<strong>平均时间复杂度可以体现算法在随机输入数据下的运行效率</strong>，用 $\Theta$ 记号来表示。</p>
+<p>对于部分算法，我们可以简单地推算出随机数据分布下的平均情况。比如上述示例，由于输入数组是被打乱的，因此元素 $1$ 出现在任意索引的概率都是相等的，那么算法的平均循环次数就是数组长度的一半 $n / 2$ ，平均时间复杂度为 $\Theta(n / 2) = \Theta(n)$ 。</p>
+<p>但对于较为复杂的算法，计算平均时间复杂度往往比较困难，因为很难分析出在数据分布下的整体数学期望。在这种情况下，我们通常使用最差时间复杂度作为算法效率的评判标准。</p>
+<p>!!! question "为什么很少看到 $\Theta$ 符号？"</p>
+<pre><code>可能由于 $O$ 符号过于朗朗上口，因此我们常常使用它来表示平均时间复杂度。但从严格意义上讲，这种做法并不规范。在本书和其他资料中，若遇到类似“平均时间复杂度 $O(n)$”的表述，请将其直接理解为 $\Theta(n)$ 。
+</code></pre>
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="iteration_and_recursion.html" class="navigation navigation-prev " aria-label="Previous page: 迭代与递归">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="space_complexity.html" class="navigation navigation-next " aria-label="Next page: 空间复杂度">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"时间复杂度","level":"1.1.3.3","depth":3,"next":{"title":"空间复杂度","level":"1.1.3.4","depth":3,"path":"chapter_computational_complexity/space_complexity.md","ref":"chapter_computational_complexity/space_complexity.md","articles":[]},"previous":{"title":"迭代与递归","level":"1.1.3.2","depth":3,"path":"chapter_computational_complexity/iteration_and_recursion.md","ref":"chapter_computational_complexity/iteration_and_recursion.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"chapter_computational_complexity/time_complexity.md","mtime":"2024-01-07T12:05:04.824Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:05.926Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

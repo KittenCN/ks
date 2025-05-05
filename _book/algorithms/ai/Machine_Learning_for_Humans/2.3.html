@@ -1,0 +1,564 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>2.3 监督学习 III · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="3.html" />
+    
+    
+    <link rel="prev" href="2.2.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    写给人类的机器学习
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="READ_ME.html">
+            
+                <a href="READ_ME.html">
+            
+                    
+                    写给人类的机器学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="1.html">
+            
+                <a href="1.html">
+            
+                    
+                    一、为什么机器学习重要
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="2.1.html">
+            
+                <a href="2.1.html">
+            
+                    
+                    2.1 监督学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="2.2.html">
+            
+                <a href="2.2.html">
+            
+                    
+                    2.2 监督学习 II
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.5" data-path="2.3.html">
+            
+                <a href="2.3.html">
+            
+                    
+                    2.3 监督学习 III
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="3.html">
+            
+                <a href="3.html">
+            
+                    
+                    三、无监督学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="4.html">
+            
+                <a href="4.html">
+            
+                    
+                    四、神经网络和深度学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="5.html">
+            
+                <a href="5.html">
+            
+                    
+                    五、强化学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="6.html">
+            
+                <a href="6.html">
+            
+                    
+                    六、最好的机器学习资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >2.3 监督学习 III</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="23-监督学习-iii">2.3 监督学习 III</h1>
+<blockquote>
+<p>原文：<a href="https://medium.com/machine-learning-for-humans/supervised-learning-3-b1551b9c4930" target="_blank">Machine_Learning_for_Humans, Part 2.3: Supervised Learning III</a></p>
+<p>作者：<a href="mailto:ml4humans@gmail.com" target="_blank">Vishal Maini</a></p>
+<p>译者：<a href="https://github.com/wizardforcel" target="_blank">飞龙</a></p>
+<p>协议：<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></p>
+<p>非参数化模型：KNN、决策树和随机森林。包含交叉验证、超参数调优和集成模型。</p>
+</blockquote>
+<h2 id="非参数学习器">非参数学习器</h2>
+<blockquote>
+<p>事情变得有点...扭曲了。</p>
+</blockquote>
+<p>我们目前为止涉及的方法，线性回归，对率回归和 SVM ，它们的模型形式是预定义的。与之相反，非参数学习器事先没有特定的模型结构。在训练模型之前，我们不会推测我们尝试习得的函数<code>f</code>的形式，就像之前的线性回归那样。反之，模型结构纯粹由数据定义。</p>
+<p>这些模型对于训练数据的形状更加灵活，但是有时会有可解释性的代价。不久你就会更理解它。让我们继续吧。</p>
+<h2 id="k-最近邻（knn）">K 最近邻（KNN）</h2>
+<blockquote>
+<p>你是你的最亲密的 K 个朋友的均值。</p>
+</blockquote>
+<p>KNN 看起来图样图森破，不像是机器学习算法。它的思路是，通过寻找 K 个最近的数据点的标签，来标记测试数据点<code>x</code>。</p>
+<p>看一看下面的图像。让我们假设，你想知道，迷之绿色圆圈是红色三角还是蓝色方块。你怎么做呢？</p>
+<p>你可以尝试提出一个迷之方程，它查看绿色圆圈在坐标平面的哪里，并作出相应的预测。或者，你可以仅仅查看三个最近的邻居，并猜测绿色圆圈可能是个红色三角。你也可以进一步扩展圆圈，并查看五个最近邻，并这样作出预测（五个最近邻里面，有三个蓝色方块，所以我们猜测，<code>k=5</code>时迷之绿色圆圈是蓝色方块。</p>
+<p><img src="img/2-3-1.png" alt=""></img></p>
+<blockquote>
+<p>KNN 的演示，其中<code>k=1, 3, 5</code>。为了划分上面的迷之绿色圆圈（<code>x</code>），查看它的单个最近邻，是个“红色三角”。所以我们猜测<code>ŷ</code>为“红色三角”。<code>k=3</code>时，查看三个最近邻：这里的众数仍然是“红色三角”，所以<code>ŷ</code>为“红色三角”。<code>k=5</code>时，我们选取五个最近邻的众数，要注意<code>ŷ</code>变为了“蓝色方块”。图片来自维基百科。</p>
+</blockquote>
+<p>就是这样。这就是 KNN。你查看了 K 个最近的数据点，如果变量是连续的（例如房价），取它们的均值；如果变量是离散的（例如猫或者狗），取它们的众数。</p>
+<p>如果你打算猜测未知房价，你可以选取一些地理上邻近的房子，然后取平均，你就会得到一些很棒的猜测。这可能甚至优于参数化回归模型，一些经济学家构建了它们来估计卧室/浴室、邻近的学校、公共交通的距离，以及其它的数量的参数。</p>
+<blockquote>
+<p>如何使用 KNN 来预测房价：</p>
+<p>1) 储存训练集。<code>X</code>是特征，例如邮政编码、邻居、卧室数量、面积、公共交通的距离，以及其它。<code>Y</code>是对应的售价。</p>
+<p>2) 将你的训练集排序，按照与测试集中的房子的相似性，基于<code>X</code>中的特征。我们下面会定义“相似性”。</p>
+<p>3) 计算 K 个最邻近的房子的均值。这就是你对售价（也就是<code>ŷ</code>）的猜测。</p>
+</blockquote>
+<p>KNN 不需要预定义的参数化函数<code>f(X)</code>，它用于将<code>Y</code>与<code>X</code>相关联。这使得它更适合关系过于复杂，不能用简单的线性模型表示的情况。</p>
+<h3 id="距离度量：定义和计算邻近性">距离度量：定义和计算“邻近性”</h3>
+<p>在寻找“最近邻”的时候，你如何计算问题中的数据点的距离呢？你如何在数学上判断，示例中的哪个蓝色方块和红色三角更接近绿色圆圈？尤其是，如果你无法画出一幅漂亮的二维图像，用眼睛观测它？</p>
+<p>最直接的度量是欧氏（几何）距离（“像乌鸦飞过”的一条直线）。另一个是曼哈顿（街区）距离，就像在城市块中行走。你可以想象，在涉及到 Uber 司机的费用计算的模型中，曼哈顿距离更加实用。</p>
+<p><img src="img/2-3-2.png" alt=""></img></p>
+<blockquote>
+<p>绿色直线为欧氏距离。蓝色直线为曼哈顿距离。来源：维基百科</p>
+</blockquote>
+<p>还记得用于寻找直角三角形斜边长度的毕达哥拉斯（勾股）定理嘛？</p>
+<p><img src="img/2-3-3.png" alt=""></img></p>
+<blockquote>
+<p><code>c</code>为斜边（上面的绿色直线），<code>a</code>和<code>b</code>是两个直角边（上面的红色直线）。</p>
+</blockquote>
+<p>通过计算<code>a</code>和<code>b</code>长度的平方和的平方根，我们就解出了<code>c</code>，求出了斜边长度。这里<code>a</code>和<code>b</code>是三角形的直角（正交）边（也就是，它们互为 90 度角，在空间中垂直）。</p>
+<p><img src="img/2-3-4.png" alt=""></img></p>
+<p>给定两个正交方向的向量的情况下，求解斜边长度的思路，可以推广到多维。这就是 N 维空间的点<code>p</code>和<code>q</code>的欧氏距离<code>d(p,q)</code>的推导方式：</p>
+<p><img src="img/2-3-5.png" alt=""></img></p>
+<blockquote>
+<p>欧氏距离的公式，由勾股定理推出。</p>
+</blockquote>
+<p>使用这个公式，你可以计算所有训练数据点，到你尝试标注的数据点的邻近度，并选取 K 个最近邻的均值或众数，来做出你的预测。</p>
+<p>通常你不需要手动计算任何距离，用搜索引擎简单搜索一下，你就能在 NumPy 或者 SciPy 找到预构建的函数，会为你做这个事情，例如，<code>euclidean_dist = numpy.linalg.norm(p-q)</code>。但是看到八年级的集合概念如何有助于构建当今的 ML 模型，这很有趣。</p>
+<h3 id="选取k：使用交叉验证调优超参数">选取<code>k</code>：使用交叉验证调优超参数</h3>
+<p>为了决定我们使用哪个<code>k</code>，你可以测试不同的 KNN 模型，使用交叉验证以及<code>k</code>的不同值。</p>
+<ul>
+<li><p>将你的训练集分成两部分，在一部分上训练模型，将保留的部分用作测试集。</p>
+</li>
+<li><p>通过将模型的预测（<code>ŷ</code>），与测试数据的真实值（<code>y</code>）相比，看看你的模型表现如何。</p>
+</li>
+<li><p>在所有迭代中，通常选取误差最小的模型。</p>
+</li>
+</ul>
+<p><img src="img/2-3-6.png" alt=""></img></p>
+<blockquote>
+<p>交叉验证的演示。分块和迭代的数量可以修改。</p>
+</blockquote>
+<h3 id="k-的较高值防止过拟合">K 的较高值防止过拟合</h3>
+<p>K 的较高值能防止过拟合，但是如果 K 太高的话，你的模型会有很大偏差，并且不灵活。选取一个极端的示例：如果<code>k=N</code>（数据点的总数），模型就失效了，将所有测试数据分类为训练数据的均值或者众数。</p>
+<p>如果动物数据集中的单个最常见的动物是苏格兰折耳猫，<code>k=N</code>（训练观测值数量）的 KNN 会将实际上的每个其它动物预测成它。在 Vishal 看来，这个很棒，但 Samer 不同意。</p>
+<p><img src="img/2-3-7.gif" alt=""></img></p>
+<blockquote>
+<p>完全没有来由的苏格兰折耳猫<code>.gif</code>。我们可以休息一下。</p>
+</blockquote>
+<h3 id="真实世界中使用-knn-的地方">真实世界中使用 KNN 的地方</h3>
+<p>一些你可以使用 KNN 的地方：</p>
+<ul>
+<li><p>分类：诈骗检测。模型可以使用新的训练样本马上更新，因为你仅仅是存储新的数据点，这允许你快速适应新的诈骗方法。</p>
+</li>
+<li><p>回归：预测房价。在房价预测中，字面上的“最近邻”实际上很好暗示了价格上的相似。KNN 在物理相似性很重要的领域很实用。</p>
+</li>
+<li><p>填充缺失的训练数据。如果你的<code>.csv</code>中的一列有大量缺失值，你可以通过选取均值或者众数填充数据。KNN 可能会给你每个缺失值的更加准确的猜测。</p>
+</li>
+</ul>
+<h2 id="决策树和随机森林">决策树和随机森林</h2>
+<blockquote>
+<p>制作一颗好的决策树就像玩“20个问题”的游戏。</p>
+</blockquote>
+<p><img src="img/2-3-8.png" alt=""></img></p>
+<blockquote>
+<p>右边的决策树描述了泰坦尼克号的生还者规律。</p>
+</blockquote>
+<p>决策树根节点的第一次分割，就像是 20 个问题中的第一个问题：你打算尽可能干净地分隔数据，所以这个分割的信息增益应该最大。</p>
+<p>如果你的朋友说，“我正在想一个名词，问我 20 个是或不是的问题来猜猜它”，并且你的第一个问题是“它是土豆嘛？”，你就太蠢了。因为如果它们说“不是”，你没有获得任何信息。除非你知道你的朋友整天都在想土豆，或者刚刚在想它，那么你就猜对了。</p>
+<p>反之，类似“这是一个物体嘛？”的问题可能更有意义。</p>
+<p>这有点类似医院分类病人，或者做出不同的诊断的方式。它们先问一些问题，并检查一些重要的指标来判断你是否马上就要挂了，还是不是。当你进门的时候，它们不会一开始就做切片检查，或者检查你是否得了胰腺癌。</p>
+<p>有几种方式来量化信息增益，以便你能根本上求解训练集的每个可能的分割，以及每个分割的信息增益。你可以用这个方式，尽可能高效地预测每个标签或值。</p>
+<p>现在，让我们查看一个特定的数据集，并讨论我们如何选择分割。</p>
+<h3 id="泰坦尼克数据集">泰坦尼克数据集</h3>
+<p>Kaggle 的泰坦尼克数据集大量用于机器学习入门。当泰坦尼克沉没时，2224 个乘客和乘员中有 1502 个死亡。虽然包含一些运气成分，女人、孩子和头等舱更有可能生还。如果你回去看看上面的决策树，你会看到，它某些程度上反映了性别、年龄和舱位的变化。</p>
+<h3 id="选择决策树中的分割">选择决策树中的分割</h3>
+<p>熵是集合中的无序的总数，由<a href="https://en.wikipedia.org/wiki/Gini_coefficient" target="_blank">基尼系数</a>和<a href="https://en.wikipedia.org/wiki/Cross_entropy" target="_blank">交叉熵</a>度量。如果值相当混杂，熵就很大；如果你能干净地分割数据，就没有熵。对于父节点的每个分割，你需要让子节点尽可能纯粹，也就是熵最小。例如，在泰坦尼克中，性别是生还者的重要决定因素，所以将这个特征用于第一次分割十分有意义，并且它是拥有最大信息增益的特征。</p>
+<p>让我们看一看泰坦尼克的变量：</p>
+<p><img src="img/2-3-9.png" alt=""></img></p>
+<blockquote>
+<p>来源：Kaggle</p>
+</blockquote>
+<p>我们通过选取这些变量之一，以及根据它分割数据集，来构建决策树。</p>
+<p><img src="img/2-3-10.png" alt=""></img></p>
+<p>第一次分割将我们的数据集分为男性和女性。之后女性分支又按照年龄分割（使熵最小的分割）。与之类似，男性分支按照舱位分割。通过对新的乘客遍历这棵树，你可以使用它来猜测它们是否挂了。</p>
+<p>泰坦尼克的示例解决了分类问题（生存或者死亡）。如果我们将决策树用于回归，例如预测房价，我们可以分割决定房价的最重要的特征。面积：大于或小于 xxx？卧室或者浴室数量：大于或小于 xxx？</p>
+<p>之后，在测试期间，你需要用特定的房子遍历所有分割，并取叶子节点的所有房价的均值（最底下的节点），这些房子就会成为你的售价预测。</p>
+<p>决策树是高效的，因为它们易于解读，即使对凌乱的数据也很强大，并且一旦训练完成，部署的开销很小。决策树也擅长于处理混合数据（数值或类别）。</p>
+<p>也就是说，决策树的训练开销很大，过拟合的风险很大，并且容易找到局部最优，因为它们在分割之后就不能回溯了。为了解决这些缺陷，我们转向了一种方式，它演示了将多个决策树整合为一个模型的力量。</p>
+<h2 id="随机森林：决策树的集成">随机森林：决策树的集成</h2>
+<p>由多个模型整合的模型叫做集成模型，这通常是一个制胜策略。</p>
+<p>单个决策树可能做出很多错误判断，因为它有很多非黑即白的判断。随机森林是个元估计其，它继承了多个决策树，并拥有一些可观的改进：</p>
+<ul>
+<li><p>每个节点上分割的特征数量限制为总体的一定百分比（这是个可以调整的超参数，详见 <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html" target="_blank">scikit-learn 的文档</a>）。这确保了继承模型不会过度依赖单个特征，并且公平地利用所有潜在的预测性特征。</p>
+</li>
+<li><p>每棵树从原始数据集抽取随机样本，来生成自己的分割，这添加了进一步的随机元素来防止过拟合。</p>
+</li>
+</ul>
+<p>这些改进也防止了树的高度相关。如果没有上面的第一条和第二条，每棵树都是相同的，因为递归的二元分割时决定性的。</p>
+<p>为了演示，看看下面的九个决策树分类器：</p>
+<p><img src="img/2-3-11.png" alt=""></img></p>
+<blockquote>
+<p>来源：<a href="http://xenon.stanford.edu/~jianzh/ml/" target="_blank">http://xenon.stanford.edu/~jianzh/ml/</a></p>
+</blockquote>
+<p>这些决策树分类器可以集成到随机森林中，它整合了这些输入。将横轴和纵轴看做特征<code>x1</code>和<code>x2</code>。对于每个特征的特定值，决策树输出“蓝色”、“绿色”和“红色”的分类。</p>
+<p><img src="img/2-3-12.png" alt=""></img></p>
+<p>这些结果通过众数（分类）或者均值（回归）整合为单个集成模型，它优于单个决策树的输出。</p>
+<p>随机森林是建模过程的一个非常不错的起始点，因为它们对于不整洁的数据拥有高容忍度的强大表现。并且，对于在众多特征中找到最重要的特征非常实用。</p>
+<p>也有很多机智的继承模型，它组合了决策树并产生非常棒的表现。请查看 XGBoost（eXtreme Gradient Boosting）的示例。</p>
+<h2 id="之后，我们就完成了监督学习的学习">之后，我们就完成了监督学习的学习</h2>
+<p>非常不错。这一节中我们涉及了：</p>
+<ul>
+<li>两个非参数监督学习算法：KNN 和决策树</li>
+<li>距离和信息增益的度量</li>
+<li>随机森林，它是集成模型的示例</li>
+<li>交叉验证和超参数调优</li>
+</ul>
+<p>我希望，你现在有了一些可靠的直觉，对于在给定训练集的情况下，我们如何习得<code>f</code>，以及使用它和测试数据做出预测。</p>
+<p>在“第三部分：无监督学习”中，我们讨论当我们拥有不带标签的训练集时，如何解决问题。</p>
+<h2 id="练习材料和扩展阅读">练习材料和扩展阅读</h2>
+<h3 id="23a-实现-knn">2.3a 实现 KNN</h3>
+<p>尝试<a href="https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/" target="_blank">这个攻略</a>，在 Python 中从零开始实现 KNN。你可能也打算看一看 scikit-learn 的文档，来体验预构建的实现的工作方式。</p>
+<h3 id="23b-决策树">2.3b 决策树</h3>
+<p>尝试<a href="https://www-bcf.usc.edu/~gareth/ISL/" target="_blank">《An Introduction to Statistical Learning》</a>中的第八章的决策树实验。你可以使用泰坦尼克训练集来玩玩，并且查看<a href="https://www.analyticsvidhya.com/blog/2016/04/complete-tutorial-tree-based-modeling-scratch-in-python/" target="_blank">这个教程</a>，它涵盖了与上面相同的概念和代码。这里是随机森林的 <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html" target="_blank">scikit-learn 实现</a>，可以在数据集上开箱即用。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="2.2.html" class="navigation navigation-prev " aria-label="Previous page: 2.2 监督学习 II">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="3.html" class="navigation navigation-next " aria-label="Next page: 三、无监督学习">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"2.3 监督学习 III","level":"1.1.5","depth":2,"next":{"title":"三、无监督学习","level":"1.1.6","depth":2,"path":"3.md","ref":"3.md","articles":[]},"previous":{"title":"2.2 监督学习 II","level":"1.1.4","depth":2,"path":"2.2.md","ref":"2.2.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"2.3.md","mtime":"2025-04-20T03:02:22.162Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:49.176Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

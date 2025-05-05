@@ -1,0 +1,1092 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>C++ STL 中的修改算法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="213.html" />
+    
+    
+    <link rel="prev" href="211.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    STL
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="190.html">
+            
+                <a href="190.html">
+            
+                    
+                    容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="191.html">
+            
+                <a href="191.html">
+            
+                    
+                    STL 简介:标准模板库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="192.html">
+            
+                <a href="192.html">
+            
+                    
+                    什么是 STL 中的容器？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="193.html">
+            
+                <a href="193.html">
+            
+                    
+                    STL 中的偶对模板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="194.html">
+            
+                <a href="194.html">
+            
+                    
+                    STL 中的元组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="195.html">
+            
+                <a href="195.html">
+            
+                    
+                    STL 中的数组容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="196.html">
+            
+                <a href="196.html">
+            
+                    
+                    STL 中的向量容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="197.html">
+            
+                <a href="197.html">
+            
+                    
+                    STL 中的列表容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="198.html">
+            
+                <a href="198.html">
+            
+                    
+                    STL 中的映射容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="199.html">
+            
+                <a href="199.html">
+            
+                    
+                    C++ STL 中的栈容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="200.html">
+            
+                <a href="200.html">
+            
+                    
+                    STL 中的队列容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="201.html">
+            
+                <a href="201.html">
+            
+                    
+                    C++ STL 中的优先级队列容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="202.html">
+            
+                <a href="202.html">
+            
+                    
+                    C++ STL 中的 DEQUE 容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="203.html">
+            
+                <a href="203.html">
+            
+                    
+                    迭代器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="204.html">
+            
+                <a href="204.html">
+            
+                    
+                    C++ STL 中迭代器概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="205.html">
+            
+                <a href="205.html">
+            
+                    
+                    STL 中迭代器的运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="206.html">
+            
+                <a href="206.html">
+            
+                    
+                    STL 中的算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="207.html">
+            
+                <a href="207.html">
+            
+                    
+                    C++ STL 算法概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="208.html">
+            
+                <a href="208.html">
+            
+                    
+                    STL 中的排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="209.html">
+            
+                <a href="209.html">
+            
+                    
+                    STL 中的二分搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="210.html">
+            
+                <a href="210.html">
+            
+                    
+                    STL 中的上界和下界搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="211.html">
+            
+                <a href="211.html">
+            
+                    
+                    C++ STL 中的非修改算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.23" data-path="212.html">
+            
+                <a href="212.html">
+            
+                    
+                    C++ STL 中的修改算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="213.html">
+            
+                <a href="213.html">
+            
+                    
+                    C++ STL 中的数值算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="214.html">
+            
+                <a href="214.html">
+            
+                    
+                    STL 中的最小和最大操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="215.html">
+            
+                <a href="215.html">
+            
+                    
+                    最小最大值和置换运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >C++ STL 中的修改算法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="c-stl-中的修改算法">C++ STL 中的修改算法</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/cpp/stl/stl-modifying-algorithms" target="_blank">https://www.studytonight.com/cpp/stl/stl-modifying-algorithms</a></p>
+</blockquote>
+<p>以下是我们将介绍的标准模板库中的一些修改算法:</p>
+<ul>
+<li>复制和复制 _n</li>
+<li>填充和填充 _n</li>
+<li>移动</li>
+<li>改变</li>
+<li>产生</li>
+<li>交换</li>
+<li>交换范围</li>
+<li>反面的</li>
+<li>反向复制</li>
+<li>辐状的</li>
+<li>独一无二的</li>
+<li>唯一副本</li>
+</ul>
+<hr></hr>
+<h2 id="copy和copyn"><code>copy</code>和<code>copy_n</code></h2>
+<p>让我们从<code>copy</code>方法开始，逐一介绍每种方法:</p>
+<h3 id="copy方法"><code>copy</code>方法</h3>
+<p>这个方法将元素从两个迭代器<strong>第一个</strong>和<strong>最后一个</strong>定义的范围复制到迭代器<strong>第一个 2</strong> 开始的范围。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span> 
+</span>{
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v1,v2;
+
+    v1.push(<span class="hljs-number">2</span>);
+    v1.push(<span class="hljs-number">4</span>); 
+    v1.push(<span class="hljs-number">6</span>);
+    v1.push(<span class="hljs-number">8</span>);
+    v1.push(<span class="hljs-number">10</span>);
+
+    **copy**(v1.begin(), v1.end(), v2.begin());
+
+    *<span class="hljs-comment">/* v2 is now 2,4,6,8,10 */</span>*
+}
+</code></pre>
+<h3 id="copyn方法"><code>copy_n</code>方法</h3>
+<p>该函数将第一个 <strong>n</strong> 元素从迭代器首先定义的位置复制到迭代器<strong>第一个 2</strong> 开始的范围内。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span> 
+</span>{
+    <span class="hljs-keyword">int</span> values[] = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>}; 
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; **v1**(values, values+<span class="hljs-number">9</span>), **v2**;
+
+    **copy_n**(v1.begin(), <span class="hljs-number">5</span>, v2.begin()); *<span class="hljs-comment">// copies first 5 elements from v1 to v2.*</span>
+    <span class="hljs-comment">/* v2 is now 1,2,3,4,5 */</span> 
+}
+</code></pre>
+<hr></hr>
+<h2 id="fill和filln"><code>fill</code>和<code>fill_n</code></h2>
+<p>让我们从<code>fill</code>方法开始，逐一介绍每种方法:</p>
+<h3 id="fill方法"><code>fill</code>方法</h3>
+<p>这个方法在两个迭代器<strong>第一个</strong>和<strong>最后一个</strong>定义的范围内给元素赋值。 <strong>fill()</strong> 的语法是，<code>fill(iterator first, iterator last, int value)</code>。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span> 
+</span>{
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v1(<span class="hljs-number">10</span>); *<span class="hljs-comment">// v1 is now 0,0,0,0,0,0,0,0,0,0*</span>
+
+    **fill**(v.begin(), v.end(), <span class="hljs-number">5</span>);
+
+    *<span class="hljs-comment">/* now v1 is 5,5,5,5,5,5,5,5,5,5 */</span>*
+
+    **fill**(v.begin(), v.end() - <span class="hljs-number">5</span>, <span class="hljs-number">3</span>);
+
+    *<span class="hljs-comment">/* now v11 is 3,3,3,3,3,5,5,5,5,5 */</span>*
+}
+</code></pre>
+<h3 id="filln方法"><code>fill_n</code>方法</h3>
+<p>这个方法从迭代器<strong>第一个</strong>定义的位置给第一个 <strong>n 个</strong>元素一个给定值。 <strong>fill_n</strong> 的语法为<code>fill_n(iterator first, iterator last, int value)</code></p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span> 
+</span>{
+    <span class="hljs-keyword">int</span> values[] = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>}; 
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v1(values, values+<span class="hljs-number">9</span>);
+
+    **fill_n**(v1.begin(), <span class="hljs-number">5</span> ,<span class="hljs-number">10</span>);
+    *<span class="hljs-comment">/* v1 is now 10,10,10,10,10,6,7,8,9 */</span>* 
+}
+</code></pre>
+<hr></hr>
+<h2 id="move方法"><code>move</code>方法</h2>
+<p>该方法将元素从当前容器中移出，并返回其<strong>值</strong>参考。<strong>移动</strong>的语法是<code>move(element)</code>。move()在 C++ 11 及更高版本中可用。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span> 
+</span>{
+    <span class="hljs-built_in">string</span> a = <span class="hljs-string">"nicky"</span>;
+    <span class="hljs-built_in">string</span> b = <span class="hljs-string">"Vicky"</span>;
+
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; **name**;
+
+    <span class="hljs-comment">// inserts "nicky" in name , a is still = nicky</span>
+    name.push_back(a);        
+    <span class="hljs-comment">// inserts "Vicky" in name , b is now NULL</span>
+    name.push_back(**move**(b));  
+}
+</code></pre>
+<hr></hr>
+<h2 id="transform"><code>transform</code></h2>
+<p>transform 对给定的范围应用一元/二元运算，并将结果复制到从迭代器 <strong>res</strong> 开始的范围中。transform()有两种版本，它们因对元素执行的操作类型而异。</p>
+<ul>
+<li><code>transform(iterator first1, iterator last1, iterator res, unaryoperation op)</code>:此方法对范围【first1，last1】内的元素执行一元运算 <strong>op</strong> ，并将结果存储在从 <strong>res</strong> 开始的范围内。</li>
+<li><code>transform(iterator first1, iterator last1, iterator first2, iterator res, unaryoperation op)</code>:该方法对范围【first1，last1】内的元素执行二进制运算 <strong>op</strong> ，范围内的元素从迭代器 <strong>first2</strong> 开始，并将结果存储在范围 <strong>res</strong> 开始。</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-keyword">int</span> **unaryoperation** (<span class="hljs-keyword">int</span> a)
+{
+    <span class="hljs-keyword">return</span> a*<span class="hljs-number">2</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v1;
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v2;
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; res1;
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; res2;
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++)
+    {
+        v2.push_back(i);
+        v1.push_back(i*<span class="hljs-number">10</span>); 
+    }
+
+    *<span class="hljs-comment">/*   v2 : 1,2,3,4,5,6,7,8,9  */</span>* 
+    *<span class="hljs-comment">/*   v1 : 10,20,30,40,50,60,70,80,90  */</span>*
+
+    res2.resize(<span class="hljs-number">10</span>);
+
+    transform(v2.begin(), v2.end(), res1.begin(), unaryoperation);
+    *<span class="hljs-comment">/* now res1 is : 2,4,6,8,10,12,14,16,18 */</span>*
+}
+</code></pre>
+<hr></hr>
+<h2 id="generate和generaten"><code>generate</code>和<code>generate_n</code></h2>
+<p>让我们从<code>generate</code>方法开始，逐一介绍每种方法:</p>
+<h3 id="generate方法"><code>generate</code>方法</h3>
+<p>此方法将给定范围内的所有元素分配给对函数 generate_element 的连续调用所返回的值。<strong>生成</strong>的语法是<code>generate(iterator first, iterator last, generator_function generate_element)</code>。</p>
+<h3 id="generaten方法"><code>generate_n</code>方法</h3>
+<p>该方法将给定范围内的第一个 <strong>n</strong> 元素赋给对函数 generate_element 的连续调用所返回的值。<strong>生成</strong>的语法为<code>generate(iterator first, int n, generator_function generate_element)</code>。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;time.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;cstdlib&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-keyword">int</span> **generate_random**()
+{
+    <span class="hljs-keyword">return</span> rand()%<span class="hljs-number">10</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    **srand**(time(<span class="hljs-literal">NULL</span>));
+
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v1 , v2;
+    v1.resize(<span class="hljs-number">10</span>);
+    v2.resize(<span class="hljs-number">10</span>);
+
+    **generate**(v1.begin(), v1.end(), generate_random) ;
+
+    *<span class="hljs-comment">/* this assign each element a random value generated 
+    by the generate_random() */</span>*
+
+    **generate_n**(v2.begin(), <span class="hljs-number">5</span>, generate_random);
+
+    *<span class="hljs-comment">/* this assign first 5 elements a random value 
+    and rest of the elements are un changed */</span>* 
+}
+</code></pre>
+<hr></hr>
+<h2 id="swap方法"><code>swap</code>方法</h2>
+<p>此方法交换两个相同类型容器的元素。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;utility&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> a = <span class="hljs-number">6</span>;
+    <span class="hljs-keyword">int</span> b = <span class="hljs-number">9</span>;
+
+    **swap**(a,b);
+    *<span class="hljs-comment">/* a = 9 , b=6 */</span>* 
+
+    *<span class="hljs-comment">/* you can also swap an entire container with swap */</span>*
+
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; **v**, **c**;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>; j &lt; <span class="hljs-number">10</span>; j++)
+    {
+        v.push_back(j);
+        c.push_back(j+<span class="hljs-number">1</span>);
+    }
+
+    **swap**(v,c);
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-built_in">vector</span>&gt;<span class="hljs-keyword">int</span>&gt;::iterator i = **v**.begin(); i! = **v**.end(); i++)
+    <span class="hljs-built_in">cout</span>&lt;&lt;*i&lt;&lt;<span class="hljs-string">" "</span>;
+
+    <span class="hljs-built_in">cout</span>&lt;&lt;endl;
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;::iterator k = **c**.begin(); k! = **c**.end(); k++)
+    <span class="hljs-built_in">cout</span>&lt;&lt; *k &lt;&lt;<span class="hljs-string">" "</span>;
+}
+</code></pre>
+<hr></hr>
+<h2 id="swapranges方法"><code>swap_ranges</code>方法</h2>
+<p><code>swap_ranges(iterator first1, iterato last1, iterato first2)</code>:从<strong>第一个 2</strong> 开始，它将范围【第一个 1，最后一个 1】中的元素与范围中的元素交换。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;utility&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v, c;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>; j &lt; <span class="hljs-number">10</span>; j++)
+    {
+        v.push_back(j);
+        c.push_back(j+<span class="hljs-number">1</span>);
+    }
+
+    **swap_ranges**(v.begin(), v.begin()+<span class="hljs-number">5</span>, c.begin());
+
+    *<span class="hljs-comment">/* swaps the first five element of 
+    vector v by the elements of vector c */</span>*
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;::iterator i = v.begin(); i!= v.end(); i++)
+    <span class="hljs-built_in">cout</span>&lt;&lt; *i &lt;<span class="hljs-string">" "</span>;
+
+    <span class="hljs-built_in">cout</span>&lt;&lt;endl;
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;::iterator k = c.begin(); k!= c.end(); k++)
+    <span class="hljs-built_in">cout</span>&lt;&lt;*k&lt;&lt;<span class="hljs-string">" "</span>;
+}
+</code></pre>
+<hr></hr>
+<h2 id="reverse方法"><code>reverse</code>方法</h2>
+<p><code>reverse(iterator first, iterator last)</code>用于反转范围内元素的顺序[第一个，最后一个]。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span> 
+</span>{
+    <span class="hljs-keyword">int</span> a[] = {<span class="hljs-number">1</span>,<span class="hljs-number">5</span>,<span class="hljs-number">4</span>,<span class="hljs-number">9</span>,<span class="hljs-number">8</span>,<span class="hljs-number">6</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">4</span>};
+
+    **reverse**(a, a+<span class="hljs-number">10</span>);
+
+    *<span class="hljs-comment">/* reverse all the elements of the array a*/</span> 
+    <span class="hljs-comment">/* now a is : 4,5,3,1,6,8,9,4,5,1 */</span>*
+
+    **reverse**(a, a+<span class="hljs-number">5</span>);
+
+    *<span class="hljs-comment">/* reverse first 5 elements of the array a */</span>
+    <span class="hljs-comment">/* now a is : 6,1,3,5,4,8,9,4 */</span>* 
+
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v(a, a+<span class="hljs-number">10</span>);
+
+    **reverse**(v.begin(), v.end());
+
+    *<span class="hljs-comment">/* reverse the elements of the vector v */</span>
+    <span class="hljs-comment">/* vector is now 4,9,8,4,5,3,1,6 */</span>*
+}
+</code></pre>
+<hr></hr>
+<h2 id="reversecopy方法"><code>reverse_copy</code>方法</h2>
+<p>此方法以相反的顺序复制给定范围内的元素。它不会改变原始容器的顺序。 <strong>reverse_copy</strong> 的语法是<code>reverse_copy(iterator first ,iterator last ,iterator res)</code>，通过迭代器 <strong>res</strong> 以相反的顺序将范围【第一个，最后一个】中的元素复制到范围中。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>; 
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> values[] = {<span class="hljs-number">1</span>,<span class="hljs-number">4</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">2</span>,<span class="hljs-number">7</span>,<span class="hljs-number">4</span>,<span class="hljs-number">1</span>};
+
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v1(values, values+<span class="hljs-number">10</span>);
+    *<span class="hljs-comment">/* v1 is now 1,4,8,9,5,6,2,7,4,1  */</span>*
+
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v2;
+
+    v2.resize(v1.size());   *<span class="hljs-comment">// allocate size for v2*</span>
+
+    **reverse_copy**(v1.begin(), v1.end(), v2.begin());
+    *<span class="hljs-comment">/* copies elements of v1 in reverse order in v2 */</span>* 
+
+    *<span class="hljs-comment">/* now v2 is : 1,4,7,2,6,5,9,8,4,1  */</span>*
+}
+</code></pre>
+<hr></hr>
+<h2 id="rotate方法"><code>rotate</code>方法</h2>
+<p>该方法用于<code>rotate(iterator first, iterator middle, iterator last)</code>给定范围【第一个，最后一个】内的元素，使得<strong>中间</strong>迭代器指向的元素成为第一个元素。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span> </span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span> 
+</span>{
+    <span class="hljs-keyword">int</span> a[] = {<span class="hljs-number">1</span>,<span class="hljs-number">5</span>,<span class="hljs-number">9</span>,<span class="hljs-number">8</span>,<span class="hljs-number">4</span>,<span class="hljs-number">6</span>,<span class="hljs-number">9</span>,<span class="hljs-number">2</span>};
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v(a,a+<span class="hljs-number">8</span>);
+
+    **rotate**(a,a+<span class="hljs-number">4</span>,a+<span class="hljs-number">8</span>);
+    *<span class="hljs-comment">/* rotate a such that a[4] is now the first element of array a */</span>
+    <span class="hljs-comment">/* now a is : 4,6,9,2,1,5,9,8 */</span>*
+
+    **rotate**(v.begin(), v.begin()+<span class="hljs-number">5</span>, v.end());
+    *<span class="hljs-comment">/* now vector v is :6,9,2,1,5,9,8,4  */</span>*
+}
+</code></pre>
+<hr></hr>
+<h2 id="unique方法"><code>unique</code>方法</h2>
+<p>此方法从给定范围中移除连续的重复元素。它有两种变体。它将迭代器返回到新范围最后一个元素的旁边。<code>resize()</code>可用于调整容器尺寸后的唯一()。</p>
+<ul>
+<li><code>unique(iterator first, iterator last)</code>:除了[第一个，最后一个]范围内的第一个元素外，删除所有连续的重复元素。运算符<code>==</code>，用于检查金属线是否重复。</li>
+<li><code>unique(iterator first, iterator last, bool compare_function)</code>:在这个版本中，我们使用 <strong>compare_function</strong> 来检查元素是否重复。</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;utility&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-keyword">bool</span> **cmp_function**(<span class="hljs-keyword">int</span> a , <span class="hljs-keyword">int</span> b )
+{
+    <span class="hljs-keyword">return</span> a+b;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> values[] = {<span class="hljs-number">10</span>,<span class="hljs-number">5</span>,<span class="hljs-number">5</span>,<span class="hljs-number">5</span>,<span class="hljs-number">9</span>,<span class="hljs-number">6</span>,<span class="hljs-number">6</span>,<span class="hljs-number">4</span>,<span class="hljs-number">4</span>};
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v (values,values+<span class="hljs-number">9</span>) , v4;
+
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;::iterator it;
+
+    it = **unique**(v.begin(), v.end());
+    *<span class="hljs-comment">/* vector v is now : 10,5,9,6,4,-,-,-,-  */</span>*
+
+    *<span class="hljs-comment">/* - indicates that the elements are removed from the vector 
+    and next elements are shifted to their position */</span>
+
+    <span class="hljs-comment">/* now it is pointing to the first occurrence of the “-“ in 
+    the vector , i.e the position next to the last element (4) */</span>
+
+    <span class="hljs-comment">/* adjusting the size of vector v */</span>*
+
+    v.resize(distance(v.begin(),it));
+    *<span class="hljs-comment">/* resize the vector by the size returned by distance function, 
+    which returns the distance between the two iterators  */</span>
+
+    <span class="hljs-comment">/* vector v is now 10,5,9,6,4  */</span>
+
+    <span class="hljs-comment">/* using compare_function */</span>*
+
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v3(values, values+<span class="hljs-number">9</span>);
+
+    it = **unique**(v3.begin(), v3.end(), cmp_function);
+    v3.resize(distance(v3.begin(), it));
+
+    *<span class="hljs-comment">/* removes copies the duplicate  elements from v3*/</span>*
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<hr></hr>
+<h2 id="uniquecopy方法"><code>unique_copy</code>方法</h2>
+<p>此方法从范围[第一个，最后一个]复制唯一元素，并将迭代器返回到新范围中最后一个元素旁边的位置。它有两种变体。它将迭代器返回到新范围最后一个元素的旁边。<code>resize()</code>可用于调整容器尺寸后的唯一()。</p>
+<ul>
+<li><code>unique_copy(iterator first, iterator last)</code>:除了[第一个，最后一个]范围内的第一个元素外，删除所有连续的重复元素。运算符<code>==</code>，用于检查金属线是否重复。</li>
+<li><code>unique_copy(iterator first, iterator last, bool compare_function)</code>:在这个版本中，我们使用 compare_function 检查元素是否重复。</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span>     </span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;algorithm&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-keyword">bool</span> **cmp_fuction**(<span class="hljs-keyword">int</span> a , <span class="hljs-keyword">int</span> b )
+{
+    <span class="hljs-keyword">return</span> a+b;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> values[] = {<span class="hljs-number">10</span>,<span class="hljs-number">5</span>,<span class="hljs-number">5</span>,<span class="hljs-number">5</span>,<span class="hljs-number">9</span>,<span class="hljs-number">6</span>,<span class="hljs-number">6</span>,<span class="hljs-number">4</span>,<span class="hljs-number">4</span>};
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v (values,values+<span class="hljs-number">9</span>);
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v2;
+    v2.resize(v.size());
+
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;::iterator it;
+
+    it = **unique**(v.begin(), v.end());
+    *<span class="hljs-comment">/* vector v2 is now : 10,5,9,6,4,-,-,-,-  */</span>
+
+    <span class="hljs-comment">/* - indicates that the elements are removed from the vector 
+    and next elements are shifted to their position */</span>
+
+    <span class="hljs-comment">/* now it is pointing to the first occurrence of the “-“ 
+    in the vector, i.e the position next to the last element (4) */</span>
+
+    <span class="hljs-comment">/* adjusting the size of vector v */</span>*
+
+    v.**resize**(distance(v.begin(), it));
+    *<span class="hljs-comment">/* resize the vector by the size returned by distance function, 
+    which returns the distance between the two iterators  */</span>
+
+    <span class="hljs-comment">/* vector v is now 10,5,9,6,4  */</span>
+
+    <span class="hljs-comment">/* using compare_function */</span>*
+
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v3(values,values+<span class="hljs-number">9</span>),v4;
+    v4.resize(v3.size());
+
+    it = **unique_copy**(v3.begin(), v3.end(), v4.begin(), cmp_fuction);
+    v4.resize(distance(v4.begin(), it));
+
+    *<span class="hljs-comment">/* copies the unique elements from v3 to v4 */</span>*
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="211.html" class="navigation navigation-prev " aria-label="Previous page: C++ STL 中的非修改算法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="213.html" class="navigation navigation-next " aria-label="Next page: C++ STL 中的数值算法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"C++ STL 中的修改算法","level":"1.1.23","depth":2,"next":{"title":"C++ STL 中的数值算法","level":"1.1.24","depth":2,"path":"213.md","ref":"213.md","articles":[]},"previous":{"title":"C++ STL 中的非修改算法","level":"1.1.22","depth":2,"path":"211.md","ref":"211.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"212.md","mtime":"2025-04-30T01:08:58.629Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:05.064Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

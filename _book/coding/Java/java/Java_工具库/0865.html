@@ -1,0 +1,828 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java Arrays.parallelSort()方法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0866.html" />
+    
+    
+    <link rel="prev" href="0864.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 工具库
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0849.html">
+            
+                <a href="0849.html">
+            
+                    
+                    Java Arrays类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0850.html">
+            
+                <a href="0850.html">
+            
+                    
+                    Java Arrays类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0851.html">
+            
+                <a href="0851.html">
+            
+                    
+                    数组方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0852.html">
+            
+                <a href="0852.html">
+            
+                    
+                    Java Arrays.copyOf()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0853.html">
+            
+                <a href="0853.html">
+            
+                    
+                    Java Arrays.deepToString()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0854.html">
+            
+                <a href="0854.html">
+            
+                    
+                    Java Arrays.deepHashCode()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0855.html">
+            
+                <a href="0855.html">
+            
+                    
+                    Java Arrays.deepEquals()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0856.html">
+            
+                <a href="0856.html">
+            
+                    
+                    Java Arrays.copyOfRange()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0857.html">
+            
+                <a href="0857.html">
+            
+                    
+                    Java Arrays.compare()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0858.html">
+            
+                <a href="0858.html">
+            
+                    
+                    Java Arrays.binarySearch()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0859.html">
+            
+                <a href="0859.html">
+            
+                    
+                    Java Arrays.asList()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0860.html">
+            
+                <a href="0860.html">
+            
+                    
+                    Java Arrays.setAll()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0861.html">
+            
+                <a href="0861.html">
+            
+                    
+                    Java Arrays.parallelPrefix()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0862.html">
+            
+                <a href="0862.html">
+            
+                    
+                    Java Arrays.parallelPrefix()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0863.html">
+            
+                <a href="0863.html">
+            
+                    
+                    Java Arrays.mismatch()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0864.html">
+            
+                <a href="0864.html">
+            
+                    
+                    Java Arrays.hashCode()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.17" data-path="0865.html">
+            
+                <a href="0865.html">
+            
+                    
+                    Java Arrays.parallelSort()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="0866.html">
+            
+                <a href="0866.html">
+            
+                    
+                    Java Arrays.fill()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="0867.html">
+            
+                <a href="0867.html">
+            
+                    
+                    Java Arrays.equals()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="0868.html">
+            
+                <a href="0868.html">
+            
+                    
+                    Java Arrays.sort()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="0869.html">
+            
+                <a href="0869.html">
+            
+                    
+                    Java Arrays.stream()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="0870.html">
+            
+                <a href="0870.html">
+            
+                    
+                    Java Arrays.toString()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="0871.html">
+            
+                <a href="0871.html">
+            
+                    
+                    Java Arrays.spliterator()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="0872.html">
+            
+                <a href="0872.html">
+            
+                    
+                    Java Arrays.compareUnsigned()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java Arrays.parallelSort()方法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-arraysparallelsort方法">Java <code>Arrays.parallelSort()</code>方法</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-util/java-arrays-parallelsort-method" target="_blank">https://www.studytonight.com/java-util/java-arrays-parallelsort-method</a></p>
+</blockquote>
+<p>在本教程中，我们将学习 <a href="https://www.studytonight.com/java/" target="_blank">Java</a> 中<a href="https://studytonight.com/java-util-package/java-arrays-class" target="_blank">数组</a>类的<code>parallelSort()</code>方法。这种排序技术非常快，因为它可以并行地对给定数组的元素进行排序。这种排序算法是弗拉基米尔·雅罗斯拉夫斯基、乔恩·本特利和乔什·布洛赫的双枢轴快速排序。该算法在所有数据集上提供 O(n log(n))性能，通常比传统的(单轴)快速排序实现更快。</p>
+<h2 id="句法">句法</h2>
+<pre><code class="lang-java">parallelSort(datatype[] array)
+</code></pre>
+<p>此方法接受数组作为参数，并在排序后返回它。</p>
+<h3 id="parallelsort方法重载方法列表"><code>parallelSort()</code>方法重载方法列表</h3>
+<p>此表包含<code>parallelSort()</code>方法的所有重载变体。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>静态无效并行启动(字节[] a)</td>
+<td>此方法将指定的数组按升序排列。</td>
+</tr>
+<tr>
+<td>静态 void parallelSort(字节[] a，int fromIndex，int toIndex)</td>
+<td>此方法将数组的指定范围按升序排列。</td>
+</tr>
+<tr>
+<td>静态无效并行测试(char[] a)</td>
+<td>此方法将指定的数组按升序排列。</td>
+</tr>
+<tr>
+<td>静态空平行(char[] a，int fromIndex， int toIndex）</td>
+<td>此方法将数组的指定范围按升序排列。</td>
+</tr>
+<tr>
+<td>静态空位平行测试(双[] a)</td>
+<td>此方法将指定的数组按升序排列。</td>
+</tr>
+<tr>
+<td>静态空平行(双[] a，int fromIndex， int toIndex）</td>
+<td>此方法将数组的指定范围按升序排列。</td>
+</tr>
+<tr>
+<td>静态空平行启动(浮动[] a)</td>
+<td>此方法将指定的数组按升序排列。</td>
+</tr>
+<tr>
+<td>静态空平行(浮动[] a，int fromIndex， int toIndex）</td>
+<td>此方法将数组的指定范围按升序排列。</td>
+</tr>
+<tr>
+<td>静态无效并行测试(int[] a)</td>
+<td>此方法将指定的数组按升序排列。</td>
+</tr>
+<tr>
+<td>静态空平行(int[] a，int fromIndex， int toIndex）</td>
+<td>此方法将数组的指定范围按升序排列。</td>
+</tr>
+<tr>
+<td>静态空平行(长[] a)</td>
+<td>此方法将指定的数组按升序排列。</td>
+</tr>
+<tr>
+<td>静态空隙平行(长[] a，int fromIndex， int toIndex）</td>
+<td>此方法将数组的指定范围按升序排列。</td>
+</tr>
+<tr>
+<td>静态空隙平行测试(短[] a)</td>
+<td>此方法将指定的数组按升序排列。</td>
+</tr>
+<tr>
+<td>静态空隙平行测试(简称[] a，int fromIndex， int toIndex）</td>
+<td>此方法将数组的指定范围按升序排列。</td>
+</tr>
+<tr>
+<td>静态<t extends="" comparable="" super="" t="">&gt;无效并行(T[] a)</t></td>
+<td>此方法根据元素的自然顺序，将指定的对象数组按升序排序。</td>
+</tr>
+<tr>
+<td>静态<t extends="" comparable="" super="" t="">&gt;无效</t>平行排序？(T[] a，int fromIndex，int toIndex)</td>
+<td>此方法根据元素的自然顺序，将指定对象数组的指定范围按升序排序。</td>
+</tr>
+<tr>
+<td>静态<t>无效并行(T[] a，int fromIndex，</t>int toIndex，<code>Comparator</code> super T&gt; cmp)</td>
+<td>此方法根据指定<code>Comparator</code>引发的顺序对指定对象数组的指定范围进行排序。</td>
+</tr>
+<tr>
+<td>静态<t>无效并行(T[] a，</t><code>Comparator</code> super T&gt; cmp)</td>
+<td>此方法根据指定<code>Comparator</code>引发的顺序对指定的对象数组进行排序。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<h3 id="【parallelsort是如何工作的？">【parallelSort()是如何工作的？</h3>
+<p>该方法在以下步骤中工作</p>
+<ol>
+<li>递归划分数组，直到到达单个元素。</li>
+<li>所有单独的元素都在多个线程上排序。</li>
+<li>所有的子数组被合并得到一个排序的数组。</li>
+</ol>
+</blockquote>
+<h2 id="示例使用parallelsort方法对数组进行排序">示例:使用<code>parallelSort()</code>方法对数组进行排序</h2>
+<p>在下面的例子中，首先我们有一个未排序的整数数组。应用<code>parallelSort()</code> 方法后，所有元素都被排序，并且可以在从数组中打印每个元素后进行验证。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span> 
+    </span>{ 
+        <span class="hljs-keyword">int</span> arr[] = {<span class="hljs-number">1</span>, <span class="hljs-number">46</span>, <span class="hljs-number">165</span>, <span class="hljs-number">6</span>, <span class="hljs-number">78</span>, <span class="hljs-number">6</span>, <span class="hljs-number">65</span>, <span class="hljs-number">955</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">323</span>, <span class="hljs-number">256</span>, <span class="hljs-number">5</span>, <span class="hljs-number">99</span>, <span class="hljs-number">22</span>, <span class="hljs-number">33</span>};
+        <span class="hljs-comment">//sorting an array</span>
+        Arrays.parallelSort(arr);        
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> num:arr)
+        {
+            System.out.print(num+<span class="hljs-string">" "</span>);
+        }
+    } 
+}
+</code></pre>
+<p>1 4 5 6 6 22 33 46 65 78 99 165 256 323 955</p>
+<h2 id="示例使用具有特定范围的parallelsort方法对数组进行排序">示例:使用具有特定范围的<code>parallelSort()</code>方法对数组进行排序</h2>
+<p>在下面的程序中，我们可以看到给定的未排序数组 <strong>arr</strong> 只排序到前八个元素，这是因为我们在方法中传递了一个 <strong>startIndex</strong> 和 <strong>endIndex</strong> ，这是一个<code>parallelSort()</code>的重载方法。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span> 
+    </span>{ 
+        <span class="hljs-keyword">int</span> arr[] = {<span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">1</span>, <span class="hljs-number">9</span>, <span class="hljs-number">8</span>, <span class="hljs-number">11</span>, <span class="hljs-number">2</span>, <span class="hljs-number">36</span>, <span class="hljs-number">1</span>, <span class="hljs-number">22</span>, <span class="hljs-number">34</span>, <span class="hljs-number">18</span>, <span class="hljs-number">17</span>, <span class="hljs-number">22</span>, <span class="hljs-number">13</span> };
+        <span class="hljs-comment">//sorting first eight array elements only</span>
+        Arrays.parallelSort(arr, <span class="hljs-number">0</span>, <span class="hljs-number">7</span>);        
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> num:arr)
+        {
+            System.out.print(num+<span class="hljs-string">" "</span>);
+        }
+    } 
+}
+</code></pre>
+<p>1 2 5 7 8 9 11 36 1 22 34 18 17 22 13</p>
+<h2 id="示例使用带变量的parallelsort对数组进行排序">示例:使用带变量的<code>parallelSort()</code>对数组进行排序</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span> 
+    </span>{ 
+        <span class="hljs-keyword">float</span> arr[] = {<span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">1</span>, <span class="hljs-number">9</span>, <span class="hljs-number">8</span>, <span class="hljs-number">11</span>, <span class="hljs-number">2</span>, <span class="hljs-number">36</span>, <span class="hljs-number">1</span>, <span class="hljs-number">22</span>, <span class="hljs-number">34</span>, <span class="hljs-number">18</span>, <span class="hljs-number">17</span>, <span class="hljs-number">22</span>, <span class="hljs-number">13</span> };
+        System.out.println(<span class="hljs-string">"Array Before Sorting:"</span>);
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">float</span> num:arr)
+        {
+            System.out.print(num+<span class="hljs-string">" "</span>);
+        }
+        System.out.println(<span class="hljs-string">"\nArray Sorting from 0 to 6:"</span>);
+        Arrays.parallelSort(arr, <span class="hljs-number">0</span>, <span class="hljs-number">7</span>);        
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">float</span> num:arr)
+        {
+            System.out.print(num+<span class="hljs-string">" "</span>);
+        }
+        System.out.println(<span class="hljs-string">"\nArray After Sorting as a Whole:"</span>);
+        Arrays.parallelSort(arr);        
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">float</span> num:arr)
+        {
+            System.out.print(num+<span class="hljs-string">" "</span>);
+        } 
+    } 
+}
+</code></pre>
+<p>排序前数组:
+5.0 7.0 1.0 9.0 8.0 11.0 2.0 36.0 1.0 22.0 34.0 18.0 17.0 22.0 13.0
+从 0 到 6 的数组排序:
+1.0 2.0 5.0 7.0 8.0 9.0 11.0 36.0 1.0 22.0 34.0 18.0 17.0 22.0 10</p>
+<h2 id="parallelsort的所有重载方法示例">parallelSort()的所有重载方法示例</h2>
+<p>在下面的程序中，我们一起实现了<code>parallelSort()</code> 的所有重载方法。我们在不同的数据类型和不同的范围上实现了这个方法。从这个程序的输出，我们可以很容易地关联排序是如何在不同的数组上执行的。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span> 
+</span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> 
+    </span>{
+        <span class="hljs-keyword">byte</span> byteArray[] = {<span class="hljs-number">5</span>, <span class="hljs-number">10</span>, <span class="hljs-number">15</span>, <span class="hljs-number">20</span>, <span class="hljs-number">25</span>, <span class="hljs-number">30</span>, <span class="hljs-number">35</span>, <span class="hljs-number">40</span>, <span class="hljs-number">45</span>, <span class="hljs-number">50</span>, <span class="hljs-number">55</span>, <span class="hljs-number">60</span>}; 
+        Arrays.parallelSort(byteArray,<span class="hljs-number">0</span>,<span class="hljs-number">5</span>);
+        System.out.println(<span class="hljs-string">"Arrays.parallelSort(byteArray,0,5): "</span>+Arrays.toString(byteArray));
+        Arrays.parallelSort(byteArray);
+        System.out.println(<span class="hljs-string">"Arrays.parallelSort(byteArray): "</span>+Arrays.toString(byteArray));        
+
+        <span class="hljs-keyword">char</span> charArray[] = {<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'e'</span>, <span class="hljs-string">'f'</span>, <span class="hljs-string">'g'</span>, <span class="hljs-string">'h'</span>, <span class="hljs-string">'i'</span>, <span class="hljs-string">'j'</span>, <span class="hljs-string">'k'</span>}; 
+        Arrays.parallelSort(charArray,<span class="hljs-number">0</span>,<span class="hljs-number">5</span>);
+        System.out.println(<span class="hljs-string">"Arrays.parallelSort(charArray,0,5): "</span>+Arrays.toString(charArray));
+        Arrays.parallelSort(charArray);
+        System.out.println(<span class="hljs-string">"Arrays.parallelSort(charArray): "</span>+Arrays.toString(charArray));
+
+        <span class="hljs-keyword">int</span> intArray[] = {<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>, <span class="hljs-number">60</span>, <span class="hljs-number">70</span>, <span class="hljs-number">80</span>, <span class="hljs-number">90</span>, <span class="hljs-number">100</span>, <span class="hljs-number">110</span>, <span class="hljs-number">120</span>, <span class="hljs-number">130</span>, <span class="hljs-number">140</span>, <span class="hljs-number">150</span>};
+        Arrays.parallelSort(intArray,<span class="hljs-number">0</span>,<span class="hljs-number">5</span>);
+        System.out.println(<span class="hljs-string">"Arrays.parallelSort(intArray,0,5): "</span>+Arrays.toString(intArray));
+        Arrays.parallelSort(intArray);
+        System.out.println(<span class="hljs-string">"Arrays.parallelSort(intArray): "</span>+Arrays.toString(intArray));
+
+        <span class="hljs-keyword">double</span> doubleArray[] = {<span class="hljs-number">5.1</span>, <span class="hljs-number">6.2</span>, <span class="hljs-number">7.2</span>, <span class="hljs-number">8.1</span>, <span class="hljs-number">9.4</span>, <span class="hljs-number">10.2</span>, <span class="hljs-number">11.6</span>, <span class="hljs-number">12.96</span>, <span class="hljs-number">13.2</span>, <span class="hljs-number">14.25</span>, <span class="hljs-number">15.6</span>, <span class="hljs-number">16.4</span>, <span class="hljs-number">17.2</span>}; 
+        Arrays.parallelSort(doubleArray,<span class="hljs-number">0</span>,<span class="hljs-number">5</span>);
+        System.out.println(<span class="hljs-string">"Arrays.parallelSort(doubleArray,0,5): "</span>+Arrays.toString(doubleArray));
+        Arrays.parallelSort(intArray);
+        System.out.println(<span class="hljs-string">"Arrays.parallelSort(doubleArray): "</span>+Arrays.toString(doubleArray));
+
+        <span class="hljs-keyword">float</span> floatArray[] = {<span class="hljs-number">1f</span>, <span class="hljs-number">2f</span>, <span class="hljs-number">3f</span>, <span class="hljs-number">4f</span>, <span class="hljs-number">5f</span>, <span class="hljs-number">6f</span>, <span class="hljs-number">7f</span>, <span class="hljs-number">8f</span>, <span class="hljs-number">9f</span>, <span class="hljs-number">10f</span>}; 
+        Arrays.parallelSort(floatArray,<span class="hljs-number">0</span>,<span class="hljs-number">5</span>);
+        System.out.println(<span class="hljs-string">"Arrays.parallelSort(floatArray,0,5): "</span>+Arrays.toString(floatArray));
+        Arrays.parallelSort(floatArray);
+        System.out.println(<span class="hljs-string">"Arrays.parallelSort(floatArray): "</span>+Arrays.toString(floatArray));
+
+        <span class="hljs-keyword">short</span> shortArray[] = {<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>, <span class="hljs-number">10</span> ,<span class="hljs-number">12</span>, <span class="hljs-number">14</span>, <span class="hljs-number">16</span>, <span class="hljs-number">18</span>, <span class="hljs-number">20</span>}; 
+        Arrays.parallelSort(shortArray,<span class="hljs-number">0</span>,<span class="hljs-number">5</span>);
+        System.out.println(<span class="hljs-string">"Arrays.parallelSort(shortArray,0,5): "</span>+Arrays.toString(shortArray));
+        Arrays.parallelSort(shortArray);
+        System.out.println(<span class="hljs-string">"Arrays.parallelSort(shortArray): "</span>+Arrays.toString(shortArray));
+    }
+}
+</code></pre>
+<p>数组。并行排序(字节数组，0，5): [5，10，15，20，25，30，35，40，45，50，55，60]
+数组。并行排序(字节数组):[5，10，15，20，25，30，35，40，45，50，55，60]
+数组。并行排序(字符数组，0，5): [a，b，c 90，100，110，120，130，140，150]
+数组. parallels art(double array，0，5):【5.1，6.2，7.2，8.1，9.4，10.2，11.6，12.96，13.2，14.25，15.6，16.4，17.2】
+数组. parallels art(double array):【5.1，6.2</p>
+<h3 id="结论">结论</h3>
+<p>在本教程中，我们学习了如何使用<code>parallelSort()</code> 对给定的未排序数组进行高效排序。该方法使用分叉/连接概念对数组进行排序。这种排序算法是弗拉基米尔·雅罗斯拉夫斯基、乔恩·本特利和乔什·布洛赫的双枢轴快速排序。该算法在所有数据集上提供 O(n log(n))性能，通常比传统的(单轴)快速排序实现更快。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0864.html" class="navigation navigation-prev " aria-label="Previous page: Java Arrays.hashCode()方法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0866.html" class="navigation navigation-next " aria-label="Next page: Java Arrays.fill()方法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java Arrays.parallelSort()方法","level":"1.1.17","depth":2,"next":{"title":"Java Arrays.fill()方法","level":"1.1.18","depth":2,"path":"0866.md","ref":"0866.md","articles":[]},"previous":{"title":"Java Arrays.hashCode()方法","level":"1.1.16","depth":2,"path":"0864.md","ref":"0864.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0865.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:21:02.278Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

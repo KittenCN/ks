@@ -1,0 +1,458 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>CH08_01_Deeper_Discussion_About_Recurrence_Relations · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    --CH08_Advanced_Counting_Techniques--
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.1" data-path="CH08_01_Deeper_Discussion_About_Recurrence_Relations.html">
+            
+                <a href="CH08_01_Deeper_Discussion_About_Recurrence_Relations.html">
+            
+                    
+                    CH08_01_Deeper_Discussion_About_Recurrence_Relations
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >CH08_01_Deeper_Discussion_About_Recurrence_Relations</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <font size="6">Chaptcer 08 Advanced Counting Techniques 高级计数技术</font>
+
+<p>Part 01 Deeper Discussion About Recurrence Relations 递归关系的深入探讨</p>
+<p>covering 8.1 ~ 8.2</p>
+<hr></hr>
+<h1 id="applications-of-recurrence-relations-递归关系的应用">Applications of Recurrence Relations 递归关系的应用</h1>
+<p>跟DP里找状态转移方程比较类似，此处略去。</p>
+<h1 id="solving-linear-recurrence-relations-求解线性递归关系">Solving Linear Recurrence Relations 求解线性递归关系</h1>
+<h2 id="i-terminologies-术语">I. Terminologies 术语</h2>
+<ul>
+<li><strong>linear</strong>（<strong>线性</strong>）：即所有含未知量的项都是<strong>一次</strong></li>
+<li><strong>homogeneous</strong>（<strong>齐次</strong>）：所有未知量移动到左边后，右边为0</li>
+<li><strong>constant coefficients</strong>（<strong>常系数</strong>）：系数为常数</li>
+<li><strong>degree</strong>（<strong>阶</strong>）：$a_n$与前面多少项相关</li>
+</ul>
+<h2 id="ii-solution-解法">II. Solution 解法</h2>
+<blockquote>
+<p><strong>基本思路</strong>：</p>
+<p>先求通解，再由初始条件（初值）求出定解</p>
+<p><em>以下部分只讨论通解的求解</em></p>
+</blockquote>
+<p><img src="../img/CH08/01_mindmap.png" alt=""></img></p>
+<h5 id="characteristic-equation-and-characteristic-roots-特征方程与特征根">Characteristic Equation and Characteristic Roots 特征方程与特征根</h5>
+<p>$
+a<em>{n}=c</em>{1} a<em>{n-1}+c</em>{2} a<em>{n-2}+\cdots+c</em>{k} a_{n-k}
+$</p>
+<p>对于上述递推关系，其<strong>特征方程</strong>为：
+$
+r^{n}=c<em>{1} r^{n-1}+c</em>{2} r^{n-2}+\cdots+c<em>{k} r^{n-k}
+$
+也即
+$
+r^{k}-c</em>{1} r^{k-1}-c<em>{2} r^{k-2}-\cdots-c</em>{k-1} r-c_{k}=0
+$
+其中 $r$ 就是此方程的<strong>特征根</strong></p>
+<blockquote>
+<p>背后的原理其实就是我们认为有一个初步的解的形态$a_n=r^n$，我们只需要在这个形态上按需调整即可。</p>
+<p>之后的求解都是建立在这一认知之上的。</p>
+</blockquote>
+<h3 id="1-homogeneous-齐次情况">1. Homogeneous 齐次情况</h3>
+<h4 id="11-二阶（入门、特殊）">1.1 二阶（入门、特殊）</h4>
+<p>$
+a<em>{n}=c</em>{1} a<em>{n-1}+c</em>{2} a_{n-2}
+$</p>
+<p>首先求出特征根$r<em>1$、$r_2$，它们满足：
+$
+r^{2}-c</em>{1} r-c_{2}=0
+$
+接下来分两种情况</p>
+<h5 id="情况1--两个特征根不同">情况1  两个特征根不同</h5>
+<p>此情况最基本，其解为：
+$
+a<em>{n}=\alpha</em>{1} r<em>{1}^{n}+\alpha</em>{2} r_{2}^{n}
+$
+其中$a_1$、$a_2$为常数</p>
+<blockquote>
+<p><strong>原理</strong>：</p>
+<p>$a<em>n=r_1^n$、$a_n=r_2^n$都满足$a</em>{n}=c<em>{1} a</em>{n-1}+c<em>{2} a</em>{n-2}$，由于是线性关系，因此它们的线性和也满足关系式</p>
+<p><strong>证明</strong>：</p>
+<ol>
+<li><p>$a<em>n=\alpha</em>{1} r<em>{1}^{n}+\alpha</em>{2} r<em>{2}^{n}$是解
+$
+\begin{aligned} c</em>{1} a<em>{n-1}+c</em>{2} a<em>{n-2} &amp;=c</em>{1}\left(\alpha<em>{1} r</em>{1}^{n-1}+\alpha<em>{2} r</em>{2}^{n-1}\right)+c<em>{2}\left(\alpha</em>{1} r<em>{1}^{n-2}+\alpha</em>{2} r<em>{2}^{n-2}\right) \ &amp;=\alpha</em>{1} r<em>{1}^{n-2}\left(c</em>{1} r<em>{1}+c</em>{2}\right)+\alpha<em>{2} r</em>{2}^{n-2}\left(c<em>{1} r</em>{2}+c<em>{2}\right) \ &amp;=\alpha</em>{1} r<em>{1}^{n-2} r</em>{1}^{2}+\alpha<em>{2} r</em>{2}^{n-2} r<em>{2}^{2} \ &amp;=\alpha</em>{1} r<em>{1}^{n}+\alpha</em>{2} r<em>{2}^{n} \ &amp;=a</em>{n} \end{aligned}
+$</p>
+</li>
+<li><p>给定初值后，解一定是$a<em>{n}=\alpha</em>{1} r<em>{1}^{n}+\alpha</em>{2} r_{2}^{n}$（或者说每个解都有这种形式）</p>
+</li>
+</ol>
+<p>等价于说明$\alpha_1$、$\alpha_2$唯一确定</p>
+<p>假设初始条件为$a<em>{0}=C</em>{0}, a<em>{1}=c</em>{1}$，则：
+$
+\begin{array}{l}{a<em>{0}=C</em>{0}=\alpha<em>{1}+\alpha</em>{2} } \ {a<em>{1}=C</em>{1}=\alpha<em>{1} r</em>{1}+\alpha<em>{2} r</em>{2} }\end{array}
+$</p>
+<p>解得：$\alpha<em>{1}=\frac{C</em>{1}-C<em>{0} r</em>{2} }{r<em>{1}-r</em>{2} }, \alpha<em>{2}=\frac{C</em>{0} r<em>{1}-C</em>{1} }{r<em>{1}-r</em>{2} }$</p>
+<p>在这样的一组$\alpha<em>1$、$\alpha_2$之下，所有$\alpha</em>{1} r<em>{1}^{n}+\alpha</em>{2} r<em>{2}^{n}$满足要求，由于解的唯一性可知$a</em>{n}=\alpha<em>{1} r</em>{1}^{n}+\alpha<em>{2} r</em>{2}^{n}$</p>
+</blockquote>
+<p>注意到$\alpha_1$、$\alpha_2$的值依赖于$r_1\neq r_2$，由此引出情况2</p>
+<h5 id="情况2--两个特征根相同">情况2  两个特征根相同</h5>
+<p>记$r<em>0=r_1=r_2$，则解为：
+$
+a</em>{n}=\alpha<em>{1} r</em>{0}^{n}+\alpha<em>{2} n r</em>{0}^{n}
+$</p>
+<h4 id="12-高阶（一般化、推广）">1.2 高阶（一般化、推广）</h4>
+<h5 id="情况1--无重根">情况1  无重根</h5>
+<p>$
+a<em>{n}=\alpha</em>{1} r<em>{1}^{n}+\alpha</em>{2} r<em>{2}^{n}+\cdots+\alpha</em>{k} r_{k}^{n}
+$</p>
+<h5 id="情况2--有重根">情况2  有重根</h5>
+<p>设有$t$个不等根$r<em>{1}, r</em>{2}, \cdots, r<em>{t}$，其重数分别为$m</em>{1},  m<em>{2}, \dots, m</em>{t}$ ($m<em>{i} \geqslant 1, i = 1,2,...,t$ 且$m</em>{1}+m<em>{2}+\dots+m</em>{t}=k$)，则解为：
+$
+\begin{aligned} a<em>{n}=&amp;\left(\alpha</em>{1,0}+\alpha<em>{1,1} n+\cdots+\alpha</em>{1, m<em>{1}-1} n^{m</em>{1}-1}\right) r<em>{1}^{n} \ &amp;+\left(\alpha</em>{2,0}+\alpha<em>{2,1} n+\cdots+\alpha</em>{2, m<em>{2}-1} n^{m</em>{2}-1}\right) r<em>{2}^{n} \ &amp;+\cdots+\left(\alpha</em>{t, 0}+\alpha<em>{t, 1} n+\cdots+\alpha</em>{t, m<em>{t}-1} n^{m</em>{t}-1}\right) r_{t}^{n} \end{aligned}
+$</p>
+<h3 id="2-nonhomogeneous-非齐次情况">2. Nonhomogeneous 非齐次情况</h3>
+<blockquote>
+<p><strong>解法</strong>：</p>
+<p>化归，转化为齐次情况（<em>与线性代数中对付非齐次方程组的思想完全一致</em>）</p>
+</blockquote>
+<h4 id="21--基本思想">2.1  基本思想</h4>
+<p>对于<strong>常系数线性非齐次递推关系</strong> (<strong>linear nonhomogeneous recurrence relation with constant coefficients</strong>)
+$
+a<em>{n}=c</em>{1} a<em>{n-1}+c</em>{2} a<em>{n-2}+\cdots+c</em>{k} a<em>{n-k}+F(n)
+$
+我们假设自己已经“求得”一个<strong>特解</strong> (<strong>particular solution</strong>) $\left{a</em>{n}^{(p)}\right}$</p>
+<p>同时，它也存在一个<strong>相伴的齐次递推关系</strong> (<strong>associated homogeneous recurrence relation</strong>)
+$
+a<em>{n}=c</em>{1} a<em>{n-1}+c</em>{2} a<em>{n-2}+\cdots+c</em>{k} a<em>{n-k}
+$
+利用之前的知识我们已经可以求出其解$\left{a</em>{n}^{(h)}\right}$</p>
+<p>那么对于这个非齐次的递推关系，我们有通解</p>
+<p>$
+\left{a<em>{n}^{(p)}+a</em>{n}^{(h)}\right}
+$</p>
+<blockquote>
+<p><strong>证明</strong>：</p>
+<p>假设有一个特解$\left{a<em>{n}^{(p)}\right}$以及通解的某种形式$\left{b</em>{n}\right}$
+$
+a<em>{n}^{(p)}=c</em>{1} a<em>{n-1}^{(p)}+c</em>{2} a<em>{n-2}^{(p)}+\dots+c</em>{k} a_{n-k}^{(p)}+F(n)
+$</p>
+<p>$
+b<em>{n}=c</em>{1} b<em>{n-1}+c</em>{2} b<em>{n-2}+\cdots+c</em>{k} b_{n-k}+F(n)
+$</p>
+<p>做差：
+$
+b<em>{n}-a</em>{n}^{(p)}=c<em>{1}\left(b</em>{n-1}-a<em>{n-1}^{(p)}\right)+c</em>{2}\left(b<em>{n-2}-a</em>{n-2}^{(p)}\right)+\cdots+c<em>{k}\left(b</em>{n-k}-a<em>{n-k}^{(p)}\right)
+$
+由此注意到$\left{b</em>{n}-a<em>{n}^{(p)}\right}$是相伴的齐次递推关系的通解，即$\left{a</em>{n}^{(h)}\right}$</p>
+<p>由解的唯一性知：$b<em>{n}-a</em>{n}^{(p)} = a<em>{n}^{(h)}$，即：
+$
+b</em>{n}=a<em>{n}^{(p)}+a</em>{n}^{(h)}
+$</p>
+</blockquote>
+<p>现在问题转化为了<strong>齐次通解 + 非齐次特解</strong>。齐次通解已经可求；对于简单的递推关系，非齐次特解可以通过拼凑获得，但是复杂的式子特解并不容易直接看出，由此引出下一个话题——<strong>特解的求解</strong>。</p>
+<h4 id="22-求特解">2.2 求特解</h4>
+<p>研究$F(n)$
+$
+F(n)=\left(b<em>{t} n^{t}+b</em>{t-1} n^{t-1}+\cdots+b<em>{1} n+b</em>{0}\right) s^{n}
+$
+此时又分两种情况：</p>
+<h5 id="情况1--s不是相伴齐次递推关系的根">情况1  s不是相伴齐次递推关系的根</h5>
+<p>此时有如下形式的特解：
+$
+\left(p<em>{t} n^{t}+p</em>{t-1} n^{t-1}+\cdots+p<em>{1} n+p</em>{0}\right) s^{n}
+$</p>
+<h5 id="情况2--s是相伴齐次递推关系的根">情况2  s是相伴齐次递推关系的根</h5>
+<p>假设此根的重数为$m$，则有如下形式的特解：
+$
+n^{m}\left(p<em>{t} n^{t}+p</em>{t-1} n^{t-1}+\cdots+p<em>{1} n+p</em>{0}\right) s^{n}
+$</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"CH08_01_Deeper_Discussion_About_Recurrence_Relations","level":"1.2.1","depth":2,"previous":{"title":"--CH08_Advanced_Counting_Techniques--","level":"1.2","depth":1,"ref":"","articles":[{"title":"CH08_01_Deeper_Discussion_About_Recurrence_Relations","level":"1.2.1","depth":2,"path":"CH08_01_Deeper_Discussion_About_Recurrence_Relations.md","ref":"CH08_01_Deeper_Discussion_About_Recurrence_Relations.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"CH08_01_Deeper_Discussion_About_Recurrence_Relations.md","mtime":"2025-04-25T11:48:51.923Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:18:51.665Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

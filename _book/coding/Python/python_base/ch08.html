@@ -1,0 +1,562 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ch08. Python 标准库和扩展库 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch09.html" />
+    
+    
+    <link rel="prev" href="ch07.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Python基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    ch01. 初识 Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    ch02. Python 运算符与基本数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    ch03. 玩转 Python 字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    ch04. Python 序列结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    ch05. Python 的三种格式化输出方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    ch06. Python 常用内置函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    ch07. Python 程序流程控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.8" data-path="ch08.html">
+            
+                <a href="ch08.html">
+            
+                    
+                    ch08. Python 标准库和扩展库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="ch09.html">
+            
+                <a href="ch09.html">
+            
+                    
+                    ch09. 常用 Python 标准库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="ch10.html">
+            
+                <a href="ch10.html">
+            
+                    
+                    ch10. 函数Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ch11.html">
+            
+                <a href="ch11.html">
+            
+                    
+                    ch11. 面向对象程序设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="ch12.html">
+            
+                <a href="ch12.html">
+            
+                    
+                    ch12. 文件和异常
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ch13.html">
+            
+                <a href="ch13.html">
+            
+                    
+                    ch13. 迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="ch14.html">
+            
+                <a href="ch14.html">
+            
+                    
+                    ch14. Python 奇技淫巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ch08. Python 标准库和扩展库</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="（八）python-标准库和扩展库（第三方库）">（八）Python 标准库和扩展库（第三方库）</h1>
+<blockquote>
+<p>在 Python 中，库或模块是指一个包含函数定义、类定义、或常量的 Python 程序文件。Python 安装包中自带的库称为标准库，需要另外安装的库是扩展库（第三方库）。Python 有成千上万的扩展库，而且每天都在增长。</p>
+</blockquote>
+<h2 id="1-扩展库的安装工具-pip">1. 扩展库的安装工具 <code>pip</code></h2>
+<p><code>pip</code> 是 Python 的一个非常好用的包管理工具，可以用来很方便地安装和管理各种三方库。一般 python3.4+ 版本都自带 <code>pip</code> 工具。</p>
+<h3 id="11-检查安装">1.1 检查安装</h3>
+<p>查看版本，判断是否安装</p>
+<pre><code class="lang-bash">pip3 --version
+pip --version
+</code></pre>
+<p>对于 Windows 系统，到 <a href="https://www.Python.org/" target="_blank">python官网</a> 下载符合自己系统的最新版本，安装的时候勾选 <code>安装pip</code> 即可。</p>
+<p>对于 ubuntu/wsl(ubuntu)，使用以下命令安装</p>
+<pre><code class="lang-bash">sudo apt install python3-pip
+</code></pre>
+<h3 id="12-pip-常用命令">1.2 <code>pip</code> 常用命令</h3>
+<p>命令帮助</p>
+<pre><code class="lang-bash">pip --help
+</code></pre>
+<p>查看版本</p>
+<pre><code class="lang-bash">pip --version
+</code></pre>
+<p>升级 pip
+Windows</p>
+<pre><code class="lang-bash">Python -m pip install -U pip   <span class="hljs-comment"># python2.x</span>
+Python -m pip3 install -U pip    <span class="hljs-comment"># python3.x</span>
+</code></pre>
+<p>linux/wsl</p>
+<pre><code class="lang-bash">pip install --upgrade pip    <span class="hljs-comment"># python2.x</span>
+pip3 install --upgrade pip   <span class="hljs-comment"># python3.x</span>
+</code></pre>
+<p>若升级遇见问题，则使用</p>
+<pre><code class="lang-bash">sudo easy_install --upgrade pip
+</code></pre>
+<p>查看已经通过pip安装的包</p>
+<pre><code class="lang-bash">pip list
+pip freeze
+</code></pre>
+<p>下载安装库</p>
+<pre><code class="lang-bash">pip install SomePackage        <span class="hljs-comment"># 最新版本</span>
+pip install SomePackage==<span class="hljs-number">1.4</span>   <span class="hljs-comment"># 指定版本</span>
+</code></pre>
+<p>升级包</p>
+<pre><code class="lang-bash">pip install --upgrade SomePackage
+</code></pre>
+<p>卸载包</p>
+<pre><code class="lang-bash">pip uninstall SomePackage
+</code></pre>
+<p>搜索包</p>
+<pre><code class="lang-bash">pip search SomePackage
+</code></pre>
+<p>显示包详情</p>
+<pre><code class="lang-bash">pip show SomePackage
+</code></pre>
+<p>查看可升级的包</p>
+<pre><code class="lang-bash">pip list -o
+</code></pre>
+<p>pip 清华大学开源软件镜像站
+临时使用</p>
+<pre><code class="lang-bash">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple SomePackage
+</code></pre>
+<p>如果 Python2 和 Python3 同时有 pip，则使用方法如下
+Python2：</p>
+<pre><code class="lang-bash">python2 -m pip install XXX
+</code></pre>
+<p>Python2：</p>
+<pre><code class="lang-bash">python3 -m pip install XXX
+</code></pre>
+<h2 id="2-标准库与扩展库的导入和使用">2. 标准库与扩展库的导入和使用</h2>
+<ul>
+<li><code>import 模块名 (as 别名)</code></li>
+<li><code>from 模块名 import 对象名 (as 别名)</code></li>
+<li><code>from 模块名 import *</code></li>
+</ul>
+<h3 id="21-import-模块名-as-别名">2.1 import 模块名 (as 别名)</h3>
+<p>使用此方法导入库后，使用对象的方式是 <code>模块名.对象名</code>。若还使用了 <code>as 别名</code>，则方式是 <code>别名.对象名</code>。</p>
+<h3 id="22-from-模块名-import-对象名-as-别名">2.2 from 模块名 import 对象名 (as 别名)</h3>
+<p>使用此方法可减少查询次数，提高访问速度。同时使用了 <code>as 别名</code> 则可减少代码量，提高开发效率。</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">from</span> numpy <span class="hljs-keyword">import</span> array <span class="hljs-keyword">as</span> arr
+</code></pre>
+<h3 id="23-form-模块名-import-">2.3 form 模块名 import *</h3>
+<p>一次性引入指定模块中的所有对象，方便许多，但不推荐。</p>
+<pre><code class="lang-Python">form math <span class="hljs-keyword">import</span> *
+</code></pre>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch07.html" class="navigation navigation-prev " aria-label="Previous page: ch07. Python 程序流程控制">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch09.html" class="navigation navigation-next " aria-label="Next page: ch09. 常用 Python 标准库">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ch08. Python 标准库和扩展库","level":"1.1.8","depth":2,"next":{"title":"ch09. 常用 Python 标准库","level":"1.1.9","depth":2,"path":"ch09.md","ref":"ch09.md","articles":[]},"previous":{"title":"ch07. Python 程序流程控制","level":"1.1.7","depth":2,"path":"ch07.md","ref":"ch07.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch08.md","mtime":"2025-04-20T02:13:02.373Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:34.729Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

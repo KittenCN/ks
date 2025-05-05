@@ -1,0 +1,2659 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>4.5. 权重衰减 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="dropout.html" />
+    
+    
+    <link rel="prev" href="underfit-overfit.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href="../.." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../d2l.md">
+            
+                <span>
+            
+                    
+                    动手学深度学习
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../chapter_installation/">
+            
+                <a href="../chapter_installation/">
+            
+                    
+                    安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../chapter_notation/">
+            
+                <a href="../chapter_notation/">
+            
+                    
+                    符号
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    1. 引言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../chapter_preliminaries/">
+            
+                <a href="../chapter_preliminaries/">
+            
+                    
+                    2. 预备知识
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.5.1" data-path="../chapter_preliminaries/ndarray.html">
+            
+                <a href="../chapter_preliminaries/ndarray.html">
+            
+                    
+                    2.1. 数据操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.2" data-path="../chapter_preliminaries/pandas.html">
+            
+                <a href="../chapter_preliminaries/pandas.html">
+            
+                    
+                    2.2. 数据预处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.3" data-path="../chapter_preliminaries/linear-algebra.html">
+            
+                <a href="../chapter_preliminaries/linear-algebra.html">
+            
+                    
+                    2.3. 线性代数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.4" data-path="../chapter_preliminaries/calculus.html">
+            
+                <a href="../chapter_preliminaries/calculus.html">
+            
+                    
+                    2.4. 微积分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.5" data-path="../chapter_preliminaries/autograd.html">
+            
+                <a href="../chapter_preliminaries/autograd.html">
+            
+                    
+                    2.5. 自动微分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.6" data-path="../chapter_preliminaries/probability.html">
+            
+                <a href="../chapter_preliminaries/probability.html">
+            
+                    
+                    2.6. 概率
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5.7" data-path="../chapter_preliminaries/lookup-api.html">
+            
+                <a href="../chapter_preliminaries/lookup-api.html">
+            
+                    
+                    2.7. 查阅文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../chapter_linear-networks/">
+            
+                <a href="../chapter_linear-networks/">
+            
+                    
+                    3. 线性神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.6.1" data-path="../chapter_linear-networks/linear-regression.html">
+            
+                <a href="../chapter_linear-networks/linear-regression.html">
+            
+                    
+                    3.1. 线性回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.2" data-path="../chapter_linear-networks/linear-regression-scratch.html">
+            
+                <a href="../chapter_linear-networks/linear-regression-scratch.html">
+            
+                    
+                    3.2. 线性回归的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.3" data-path="../chapter_linear-networks/linear-regression-concise.html">
+            
+                <a href="../chapter_linear-networks/linear-regression-concise.html">
+            
+                    
+                    3.3. 线性回归的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.4" data-path="../chapter_linear-networks/softmax-regression.html">
+            
+                <a href="../chapter_linear-networks/softmax-regression.html">
+            
+                    
+                    3.4. softmax回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.5" data-path="../chapter_linear-networks/image-classification-dataset.html">
+            
+                <a href="../chapter_linear-networks/image-classification-dataset.html">
+            
+                    
+                    3.5. 图像分类数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.6" data-path="../chapter_linear-networks/softmax-regression-scratch.html">
+            
+                <a href="../chapter_linear-networks/softmax-regression-scratch.html">
+            
+                    
+                    3.6. softmax回归的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6.7" data-path="../chapter_linear-networks/softmax-regression-concise.html">
+            
+                <a href="../chapter_linear-networks/softmax-regression-concise.html">
+            
+                    
+                    3.7. softmax回归的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    4. 多层感知机
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.7.1" data-path="mlp.html">
+            
+                <a href="mlp.html">
+            
+                    
+                    4.1. 多层感知机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.2" data-path="mlp-scratch.html">
+            
+                <a href="mlp-scratch.html">
+            
+                    
+                    4.2. 多层感知机的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.3" data-path="mlp-concise.html">
+            
+                <a href="mlp-concise.html">
+            
+                    
+                    4.3. 多层感知机的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.4" data-path="underfit-overfit.html">
+            
+                <a href="underfit-overfit.html">
+            
+                    
+                    4.4. 模型选择、欠拟合和过拟合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.7.5" data-path="weight-decay.html">
+            
+                <a href="weight-decay.html">
+            
+                    
+                    4.5. 权重衰减
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.6" data-path="dropout.html">
+            
+                <a href="dropout.html">
+            
+                    
+                    4.6. 暂退法（Dropout）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.7" data-path="backprop.html">
+            
+                <a href="backprop.html">
+            
+                    
+                    4.7. 前向传播、反向传播和计算图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.8" data-path="numerical-stability-and-init.html">
+            
+                <a href="numerical-stability-and-init.html">
+            
+                    
+                    4.8. 数值稳定性和模型初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.9" data-path="environment.html">
+            
+                <a href="environment.html">
+            
+                    
+                    4.9. 环境和分布偏移
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7.10" data-path="kaggle-house-price.html">
+            
+                <a href="kaggle-house-price.html">
+            
+                    
+                    4.10. 实战Kaggle比赛：预测房价
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../chapter_deep-learning-computation/">
+            
+                <a href="../chapter_deep-learning-computation/">
+            
+                    
+                    5. 深度学习计算
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.8.1" data-path="../chapter_deep-learning-computation/model-construction.html">
+            
+                <a href="../chapter_deep-learning-computation/model-construction.html">
+            
+                    
+                    5.1. 层和块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.2" data-path="../chapter_deep-learning-computation/parameters.html">
+            
+                <a href="../chapter_deep-learning-computation/parameters.html">
+            
+                    
+                    5.2. 参数管理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.3" data-path="../chapter_deep-learning-computation/deferred-init.html">
+            
+                <a href="../chapter_deep-learning-computation/deferred-init.html">
+            
+                    
+                    5.3. 延后初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.4" data-path="../chapter_deep-learning-computation/custom-layer.html">
+            
+                <a href="../chapter_deep-learning-computation/custom-layer.html">
+            
+                    
+                    5.4. 自定义层
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.5" data-path="../chapter_deep-learning-computation/read-write.html">
+            
+                <a href="../chapter_deep-learning-computation/read-write.html">
+            
+                    
+                    5.5. 读写文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8.6" data-path="../chapter_deep-learning-computation/use-gpu.html">
+            
+                <a href="../chapter_deep-learning-computation/use-gpu.html">
+            
+                    
+                    5.6. GPU计算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../chapter_convolutional-neural-networks/">
+            
+                <a href="../chapter_convolutional-neural-networks/">
+            
+                    
+                    6. 卷积神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.9.1" data-path="../chapter_convolutional-neural-networks/why-conv.html">
+            
+                <a href="../chapter_convolutional-neural-networks/why-conv.html">
+            
+                    
+                    6.1. 从全连接层到卷积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.2" data-path="../chapter_convolutional-neural-networks/conv-layer.html">
+            
+                <a href="../chapter_convolutional-neural-networks/conv-layer.html">
+            
+                    
+                    6.2. 图像卷积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.3" data-path="../chapter_convolutional-neural-networks/padding-and-strides.html">
+            
+                <a href="../chapter_convolutional-neural-networks/padding-and-strides.html">
+            
+                    
+                    6.3. 填充和步幅
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.4" data-path="../chapter_convolutional-neural-networks/channels.html">
+            
+                <a href="../chapter_convolutional-neural-networks/channels.html">
+            
+                    
+                    6.4. 多输入多输出通道
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.5" data-path="../chapter_convolutional-neural-networks/pooling.html">
+            
+                <a href="../chapter_convolutional-neural-networks/pooling.html">
+            
+                    
+                    6.5. 汇聚层
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9.6" data-path="../chapter_convolutional-neural-networks/lenet.html">
+            
+                <a href="../chapter_convolutional-neural-networks/lenet.html">
+            
+                    
+                    6.6. 卷积神经网络（LeNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../chapter_convolutional-modern/">
+            
+                <a href="../chapter_convolutional-modern/">
+            
+                    
+                    7. 现代卷积神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.10.1" data-path="../chapter_convolutional-modern/alexnet.html">
+            
+                <a href="../chapter_convolutional-modern/alexnet.html">
+            
+                    
+                    7.1. 深度卷积神经网络（AlexNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.2" data-path="../chapter_convolutional-modern/vgg.html">
+            
+                <a href="../chapter_convolutional-modern/vgg.html">
+            
+                    
+                    7.2. 使用块的网络（VGG）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.3" data-path="../chapter_convolutional-modern/nin.html">
+            
+                <a href="../chapter_convolutional-modern/nin.html">
+            
+                    
+                    7.3. 网络中的网络（NiN）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.4" data-path="../chapter_convolutional-modern/googlenet.html">
+            
+                <a href="../chapter_convolutional-modern/googlenet.html">
+            
+                    
+                    7.4. 含并行连结的网络（GoogLeNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.5" data-path="../chapter_convolutional-modern/batch-norm.html">
+            
+                <a href="../chapter_convolutional-modern/batch-norm.html">
+            
+                    
+                    7.5. 批量规范化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.6" data-path="../chapter_convolutional-modern/resnet.html">
+            
+                <a href="../chapter_convolutional-modern/resnet.html">
+            
+                    
+                    7.6. 残差网络（ResNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10.7" data-path="../chapter_convolutional-modern/densenet.html">
+            
+                <a href="../chapter_convolutional-modern/densenet.html">
+            
+                    
+                    7.7. 稠密连接网络（DenseNet）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="../chapter_recurrent-neural-networks/">
+            
+                <a href="../chapter_recurrent-neural-networks/">
+            
+                    
+                    8. 循环神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.11.1" data-path="../chapter_recurrent-neural-networks/sequence.html">
+            
+                <a href="../chapter_recurrent-neural-networks/sequence.html">
+            
+                    
+                    8.1. 序列模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.2" data-path="../chapter_recurrent-neural-networks/text-preprocessing.html">
+            
+                <a href="../chapter_recurrent-neural-networks/text-preprocessing.html">
+            
+                    
+                    8.2. 文本预处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.3" data-path="../chapter_recurrent-neural-networks/language-models-and-dataset.html">
+            
+                <a href="../chapter_recurrent-neural-networks/language-models-and-dataset.html">
+            
+                    
+                    8.3. 语言模型和数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.4" data-path="../chapter_recurrent-neural-networks/rnn.html">
+            
+                <a href="../chapter_recurrent-neural-networks/rnn.html">
+            
+                    
+                    8.4. 循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.5" data-path="../chapter_recurrent-neural-networks/rnn-scratch.html">
+            
+                <a href="../chapter_recurrent-neural-networks/rnn-scratch.html">
+            
+                    
+                    8.5. 循环神经网络的从零开始实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.6" data-path="../chapter_recurrent-neural-networks/rnn-concise.html">
+            
+                <a href="../chapter_recurrent-neural-networks/rnn-concise.html">
+            
+                    
+                    8.6. 循环神经网络的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11.7" data-path="../chapter_recurrent-neural-networks/bptt.html">
+            
+                <a href="../chapter_recurrent-neural-networks/bptt.html">
+            
+                    
+                    8.7. 通过时间反向传播
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="../chapter_recurrent-modern/">
+            
+                <a href="../chapter_recurrent-modern/">
+            
+                    
+                    9. 现代循环神经网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.12.1" data-path="../chapter_recurrent-modern/gru.html">
+            
+                <a href="../chapter_recurrent-modern/gru.html">
+            
+                    
+                    9.1. 门控循环单元（GRU）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.2" data-path="../chapter_recurrent-modern/lstm.html">
+            
+                <a href="../chapter_recurrent-modern/lstm.html">
+            
+                    
+                    9.2. 长短期记忆（LSTM）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.3" data-path="../chapter_recurrent-modern/deep-rnn.html">
+            
+                <a href="../chapter_recurrent-modern/deep-rnn.html">
+            
+                    
+                    9.3. 深度循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.4" data-path="../chapter_recurrent-modern/bi-rnn.html">
+            
+                <a href="../chapter_recurrent-modern/bi-rnn.html">
+            
+                    
+                    9.4. 双向循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.5" data-path="../chapter_recurrent-modern/machine-translation-and-dataset.html">
+            
+                <a href="../chapter_recurrent-modern/machine-translation-and-dataset.html">
+            
+                    
+                    9.5. 机器翻译及数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.6" data-path="../chapter_recurrent-modern/encoder-decoder.html">
+            
+                <a href="../chapter_recurrent-modern/encoder-decoder.html">
+            
+                    
+                    9.6. 编码器—解码器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.7" data-path="../chapter_recurrent-modern/seq2seq.html">
+            
+                <a href="../chapter_recurrent-modern/seq2seq.html">
+            
+                    
+                    9.7. 序列到序列学习（seq2seq）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12.8" data-path="../chapter_recurrent-modern/beam-search.html">
+            
+                <a href="../chapter_recurrent-modern/beam-search.html">
+            
+                    
+                    9.8. 束搜索
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="../chapter_attention-mechanisms/">
+            
+                <a href="../chapter_attention-mechanisms/">
+            
+                    
+                    10. 注意力机制
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.13.1" data-path="../chapter_attention-mechanisms/attention-cues.html">
+            
+                <a href="../chapter_attention-mechanisms/attention-cues.html">
+            
+                    
+                    10.1. 注意力提示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.2" data-path="../chapter_attention-mechanisms/nadaraya-waston.html">
+            
+                <a href="../chapter_attention-mechanisms/nadaraya-waston.html">
+            
+                    
+                    10.2. 注意力汇聚：Nadaraya-Watson 核回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.3" data-path="../chapter_attention-mechanisms/attention-scoring-functions.html">
+            
+                <a href="../chapter_attention-mechanisms/attention-scoring-functions.html">
+            
+                    
+                    10.3. 注意力评分函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.4" data-path="../chapter_attention-mechanisms/bahdanau-attention.html">
+            
+                <a href="../chapter_attention-mechanisms/bahdanau-attention.html">
+            
+                    
+                    10.4. Bahdanau 注意力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.5" data-path="../chapter_attention-mechanisms/multihead-attention.html">
+            
+                <a href="../chapter_attention-mechanisms/multihead-attention.html">
+            
+                    
+                    10.5. 多头注意力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.6" data-path="../chapter_attention-mechanisms/self-attention-and-positional-encoding.html">
+            
+                <a href="../chapter_attention-mechanisms/self-attention-and-positional-encoding.html">
+            
+                    
+                    10.6. 自注意力和位置编码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13.7" data-path="../chapter_attention-mechanisms/transformer.html">
+            
+                <a href="../chapter_attention-mechanisms/transformer.html">
+            
+                    
+                    10.7. Transformer
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14" data-path="../chapter_optimization/">
+            
+                <a href="../chapter_optimization/">
+            
+                    
+                    11. 优化算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.14.1" data-path="../chapter_optimization/optimization-intro.html">
+            
+                <a href="../chapter_optimization/optimization-intro.html">
+            
+                    
+                    11.1. 优化与深度学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.2" data-path="../chapter_optimization/convexity.html">
+            
+                <a href="../chapter_optimization/convexity.html">
+            
+                    
+                    11.2. 凸性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.3" data-path="../chapter_optimization/gd.html">
+            
+                <a href="../chapter_optimization/gd.html">
+            
+                    
+                    11.3. 梯度下降
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.4" data-path="../chapter_optimization/sgd.html">
+            
+                <a href="../chapter_optimization/sgd.html">
+            
+                    
+                    11.4. 随机梯度下降
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.5" data-path="../chapter_optimization/minibatch-sgd.html">
+            
+                <a href="../chapter_optimization/minibatch-sgd.html">
+            
+                    
+                    11.5. 小批量随机梯度下降
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.6" data-path="../chapter_optimization/momentum.html">
+            
+                <a href="../chapter_optimization/momentum.html">
+            
+                    
+                    11.6. 动量法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.7" data-path="../chapter_optimization/adagrad.html">
+            
+                <a href="../chapter_optimization/adagrad.html">
+            
+                    
+                    11.7. AdaGrad算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.8" data-path="../chapter_optimization/rmsprop.html">
+            
+                <a href="../chapter_optimization/rmsprop.html">
+            
+                    
+                    11.8. RMSProp算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.9" data-path="../chapter_optimization/adadelta.html">
+            
+                <a href="../chapter_optimization/adadelta.html">
+            
+                    
+                    11.9. Adadelta
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.10" data-path="../chapter_optimization/adam.html">
+            
+                <a href="../chapter_optimization/adam.html">
+            
+                    
+                    11.10. Adam算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.14.11" data-path="../chapter_optimization/lr-scheduler.html">
+            
+                <a href="../chapter_optimization/lr-scheduler.html">
+            
+                    
+                    11.11. 学习率调度器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15" data-path="../chapter_computational-performance/">
+            
+                <a href="../chapter_computational-performance/">
+            
+                    
+                    12. 计算性能
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.15.1" data-path="../chapter_computational-performance/hybridize.html">
+            
+                <a href="../chapter_computational-performance/hybridize.html">
+            
+                    
+                    12.1. 编译器和解释器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.2" data-path="../chapter_computational-performance/async-computation.html">
+            
+                <a href="../chapter_computational-performance/async-computation.html">
+            
+                    
+                    12.2. 异步计算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.3" data-path="../chapter_computational-performance/auto-parallelism.html">
+            
+                <a href="../chapter_computational-performance/auto-parallelism.html">
+            
+                    
+                    12.3. 自动并行
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.4" data-path="../chapter_computational-performance/hardware.html">
+            
+                <a href="../chapter_computational-performance/hardware.html">
+            
+                    
+                    12.4. 硬件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.5" data-path="../chapter_computational-performance/multiple-gpus.html">
+            
+                <a href="../chapter_computational-performance/multiple-gpus.html">
+            
+                    
+                    12.5. 多GPU训练
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.6" data-path="../chapter_computational-performance/multiple-gpus-concise.html">
+            
+                <a href="../chapter_computational-performance/multiple-gpus-concise.html">
+            
+                    
+                    12.6. 多GPU的简洁实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.15.7" data-path="../chapter_computational-performance/parameterserver.html">
+            
+                <a href="../chapter_computational-performance/parameterserver.html">
+            
+                    
+                    12.7. 参数服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16" data-path="../chapter_computer-vision/">
+            
+                <a href="../chapter_computer-vision/">
+            
+                    
+                    13. 计算机视觉
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.16.1" data-path="../chapter_computer-vision/image-augmentation.html">
+            
+                <a href="../chapter_computer-vision/image-augmentation.html">
+            
+                    
+                    13.1. 图像增广
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.2" data-path="../chapter_computer-vision/fine-tuning.html">
+            
+                <a href="../chapter_computer-vision/fine-tuning.html">
+            
+                    
+                    13.2. 微调
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.3" data-path="../chapter_computer-vision/bounding-box.html">
+            
+                <a href="../chapter_computer-vision/bounding-box.html">
+            
+                    
+                    13.3. 目标检测和边界框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.4" data-path="../chapter_computer-vision/anchor.html">
+            
+                <a href="../chapter_computer-vision/anchor.html">
+            
+                    
+                    13.4. 锚框
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.5" data-path="../chapter_computer-vision/multiscale-object-detection.html">
+            
+                <a href="../chapter_computer-vision/multiscale-object-detection.html">
+            
+                    
+                    13.5. 多尺度目标检测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.6" data-path="../chapter_computer-vision/object-detection-dataset.html">
+            
+                <a href="../chapter_computer-vision/object-detection-dataset.html">
+            
+                    
+                    13.6. 目标检测数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.7" data-path="../chapter_computer-vision/ssd.html">
+            
+                <a href="../chapter_computer-vision/ssd.html">
+            
+                    
+                    13.7. 单发多框检测（SSD）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.8" data-path="../chapter_computer-vision/rcnn.html">
+            
+                <a href="../chapter_computer-vision/rcnn.html">
+            
+                    
+                    13.8. 区域卷积神经网络（R-CNN）系列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.9" data-path="../chapter_computer-vision/semantic-segmentation-and-dataset.html">
+            
+                <a href="../chapter_computer-vision/semantic-segmentation-and-dataset.html">
+            
+                    
+                    13.9. 语义分割和数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.10" data-path="../chapter_computer-vision/transposed-conv.html">
+            
+                <a href="../chapter_computer-vision/transposed-conv.html">
+            
+                    
+                    13.10. 转置卷积
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.11" data-path="../chapter_computer-vision/fcn.html">
+            
+                <a href="../chapter_computer-vision/fcn.html">
+            
+                    
+                    13.11. 全卷积网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.12" data-path="../chapter_computer-vision/neural-style.html">
+            
+                <a href="../chapter_computer-vision/neural-style.html">
+            
+                    
+                    13.12. 风格迁移
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.13" data-path="../chapter_computer-vision/kaggle-cifar10.html">
+            
+                <a href="../chapter_computer-vision/kaggle-cifar10.html">
+            
+                    
+                    13.13. 实战 Kaggle 比赛：图像分类 (CIFAR-10.md)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.16.14" data-path="../chapter_computer-vision/kaggle-dog.html">
+            
+                <a href="../chapter_computer-vision/kaggle-dog.html">
+            
+                    
+                    13.14. 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17" data-path="../chapter_natural-language-processing-pretraining/">
+            
+                <a href="../chapter_natural-language-processing-pretraining/">
+            
+                    
+                    14. 自然语言处理：预训练
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.17.1" data-path="../chapter_natural-language-processing-pretraining/word2vec.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/word2vec.html">
+            
+                    
+                    14.1. 词嵌入（word2vec）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.2" data-path="../chapter_natural-language-processing-pretraining/approx-training.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/approx-training.html">
+            
+                    
+                    14.2. 近似训练
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.3" data-path="../chapter_natural-language-processing-pretraining/word-embedding-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/word-embedding-dataset.html">
+            
+                    
+                    14.3. 用于预训练词嵌入的数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.4" data-path="../chapter_natural-language-processing-pretraining/word2vec-pretraining.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/word2vec-pretraining.html">
+            
+                    
+                    14.4. 预训练word2vec
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.5" data-path="../chapter_natural-language-processing-pretraining/glove.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/glove.html">
+            
+                    
+                    14.5. 全局向量的词嵌入（GloVe）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.6" data-path="../chapter_natural-language-processing-pretraining/subword-embedding.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/subword-embedding.html">
+            
+                    
+                    14.6. 子词嵌入
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.7" data-path="../chapter_natural-language-processing-pretraining/similarity-analogy.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/similarity-analogy.html">
+            
+                    
+                    14.7. 词的相似性和类比任务
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.8" data-path="../chapter_natural-language-processing-pretraining/bert.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/bert.html">
+            
+                    
+                    14.8. 来自Transformers的双向编码器表示（BERT）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.9" data-path="../chapter_natural-language-processing-pretraining/bert-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/bert-dataset.html">
+            
+                    
+                    14.9. 用于预训练BERT的数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.17.10" data-path="../chapter_natural-language-processing-pretraining/bert-pretraining.html">
+            
+                <a href="../chapter_natural-language-processing-pretraining/bert-pretraining.html">
+            
+                    
+                    14.10. 预训练BERT
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18" data-path="../chapter_natural-language-processing-applications/">
+            
+                <a href="../chapter_natural-language-processing-applications/">
+            
+                    
+                    15. 自然语言处理：应用
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.18.1" data-path="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset.html">
+            
+                    
+                    15.1. 情感分析及数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.2" data-path="../chapter_natural-language-processing-applications/sentiment-analysis-rnn.html">
+            
+                <a href="../chapter_natural-language-processing-applications/sentiment-analysis-rnn.html">
+            
+                    
+                    15.2. 情感分析：使用循环神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.3" data-path="../chapter_natural-language-processing-applications/sentiment-analysis-cnn.html">
+            
+                <a href="../chapter_natural-language-processing-applications/sentiment-analysis-cnn.html">
+            
+                    
+                    15.3. 情感分析：使用卷积神经网络
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.4" data-path="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset.html">
+            
+                <a href="../chapter_natural-language-processing-applications/natural-language-inference-and-dataset.html">
+            
+                    
+                    15.4. 自然语言推断与数据集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.5" data-path="../chapter_natural-language-processing-applications/natural-language-inference-attention.html">
+            
+                <a href="../chapter_natural-language-processing-applications/natural-language-inference-attention.html">
+            
+                    
+                    15.5. 自然语言推断：使用注意力
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.6" data-path="../chapter_natural-language-processing-applications/finetuning-bert.html">
+            
+                <a href="../chapter_natural-language-processing-applications/finetuning-bert.html">
+            
+                    
+                    15.6. 针对序列级和词元级应用微调BERT
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.18.7" data-path="../chapter_natural-language-processing-applications/natural-language-inference-bert.html">
+            
+                <a href="../chapter_natural-language-processing-applications/natural-language-inference-bert.html">
+            
+                    
+                    15.7. 自然语言推断：微调BERT
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19" data-path="../chapter_appendix-tools-for-deep-learning/">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/">
+            
+                    
+                    16. 附录：深度学习工具
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.19.1" data-path="../chapter_appendix-tools-for-deep-learning/jupyter.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/jupyter.html">
+            
+                    
+                    16.1. 使用Jupyter Notebook
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.2" data-path="../chapter_appendix-tools-for-deep-learning/sagemaker.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/sagemaker.html">
+            
+                    
+                    16.2. 使用Amazon SageMaker
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.3" data-path="../chapter_appendix-tools-for-deep-learning/aws.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/aws.html">
+            
+                    
+                    16.3. 使用Amazon EC2实例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.4" data-path="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html">
+            
+                    
+                    16.4. 选择服务器和GPU
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.5" data-path="../chapter_appendix-tools-for-deep-learning/contributing.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/contributing.html">
+            
+                    
+                    16.5. 为本书做贡献
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.19.6" data-path="../chapter_appendix-tools-for-deep-learning/d2l.html">
+            
+                <a href="../chapter_appendix-tools-for-deep-learning/d2l.html">
+            
+                    
+                    16.6. d2l API 文档
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.20" data-path="../chapter_references/zreferences.html">
+            
+                <a href="../chapter_references/zreferences.html">
+            
+                    
+                    参考文献
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >4.5. 权重衰减</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="权重衰减">权重衰减</h1>
+<p>:label:<code>sec_weight_decay</code></p>
+<p>前一节我们描述了过拟合的问题，本节我们将介绍一些正则化模型的技术。
+我们总是可以通过去收集更多的训练数据来缓解过拟合。
+但这可能成本很高，耗时颇多，或者完全超出我们的控制，因而在短期内不可能做到。
+假设我们已经拥有尽可能多的高质量数据，我们便可以将重点放在正则化技术上。</p>
+<p>回想一下，在多项式回归的例子（ :numref:<code>sec_model_selection</code>）中，
+我们可以通过调整拟合多项式的阶数来限制模型的容量。
+实际上，限制特征的数量是缓解过拟合的一种常用技术。
+然而，简单地丢弃特征对这项工作来说可能过于生硬。
+我们继续思考多项式回归的例子，考虑高维输入可能发生的情况。
+多项式对多变量数据的自然扩展称为<em>单项式</em>（monomials），
+也可以说是变量幂的乘积。
+单项式的阶数是幂的和。
+例如，$x_1^2 x_2$和$x_3 x_5^2$都是3次单项式。</p>
+<p>注意，随着阶数$d$的增长，带有阶数$d$的项数迅速增加。 
+给定$k$个变量，阶数为$d$的项的个数为
+${k - 1 + d} \choose {k - 1}$，即$C^{k-1}_{k-1+d} = \frac{(k-1+d)!}{(d)!(k-1)!}$。
+因此即使是阶数上的微小变化，比如从$2$到$3$，也会显著增加我们模型的复杂性。
+仅仅通过简单的限制特征数量（在多项式回归中体现为限制阶数），可能仍然使模型在过简单和过复杂中徘徊，
+我们需要一个更细粒度的工具来调整函数的复杂性，使其达到一个合适的平衡位置。</p>
+<h2 id="范数与权重衰减">范数与权重衰减</h2>
+<p>在 :numref:<code>subsec_lin-algebra-norms</code>中，
+我们已经描述了$L_2$范数和$L_1$范数，
+它们是更为一般的$L_p$范数的特殊情况。
+(<del>权重衰减是最广泛使用的正则化的技术之一</del>)
+在训练参数化机器学习模型时，
+<em>权重衰减</em>（weight decay）是最广泛使用的正则化的技术之一，
+它通常也被称为$L_2$<em>正则化</em>。
+这项技术通过函数与零的距离来衡量函数的复杂度，
+因为在所有函数$f$中，函数$f = 0$（所有输入都得到值$0$）
+在某种意义上是最简单的。
+但是我们应该如何精确地测量一个函数和零之间的距离呢？
+没有一个正确的答案。
+事实上，函数分析和巴拿赫空间理论的研究，都在致力于回答这个问题。</p>
+<p>一种简单的方法是通过线性函数
+$f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x}$
+中的权重向量的某个范数来度量其复杂性，
+例如$| \mathbf{w} |^2$。
+要保证权重向量比较小，
+最常用方法是将其范数作为惩罚项加到最小化损失的问题中。
+将原来的训练目标<em>最小化训练标签上的预测损失</em>，
+调整为<em>最小化预测损失和惩罚项之和</em>。
+现在，如果我们的权重向量增长的太大，
+我们的学习算法可能会更集中于最小化权重范数$| \mathbf{w} |^2$。
+这正是我们想要的。
+让我们回顾一下 :numref:<code>sec_linear_regression</code>中的线性回归例子。
+我们的损失由下式给出：</p>
+<p>$$L(\mathbf{w}, b) = \frac{1}{n}\sum_{i=1}^n \frac{1}{2}\left(\mathbf{w}^\top \mathbf{x}^{(i)} + b - y^{(i)}\right)^2.$$</p>
+<p>回想一下，$\mathbf{x}^{(i)}$是样本$i$的特征，
+$y^{(i)}$是样本$i$的标签，
+$(\mathbf{w}, b)$是权重和偏置参数。
+为了惩罚权重向量的大小，
+我们必须以某种方式在损失函数中添加$| \mathbf{w} |^2$，
+但是模型应该如何平衡这个新的额外惩罚的损失？
+实际上，我们通过<em>正则化常数</em>$\lambda$来描述这种权衡，
+这是一个非负超参数，我们使用验证数据拟合：</p>
+<p>$$L(\mathbf{w}, b) + \frac{\lambda}{2} |\mathbf{w}|^2,$$</p>
+<p>对于$\lambda = 0$，我们恢复了原来的损失函数。
+对于$\lambda &gt; 0$，我们限制$| \mathbf{w} |$的大小。
+这里我们仍然除以$2$：当我们取一个二次函数的导数时，
+$2$和$1/2$会抵消，以确保更新表达式看起来既漂亮又简单。
+为什么在这里我们使用平方范数而不是标准范数（即欧几里得距离）？
+我们这样做是为了便于计算。
+通过平方$L_2$范数，我们去掉平方根，留下权重向量每个分量的平方和。
+这使得惩罚的导数很容易计算：导数的和等于和的导数。</p>
+<p>此外，为什么我们首先使用$L_2$范数，而不是$L_1$范数。
+事实上，这个选择在整个统计领域中都是有效的和受欢迎的。
+$L_2$正则化线性模型构成经典的<em>岭回归</em>（ridge regression）算法，
+$L_1$正则化线性回归是统计学中类似的基本模型，
+通常被称为<em>套索回归</em>（lasso regression）。
+使用$L_2$范数的一个原因是它对权重向量的大分量施加了巨大的惩罚。
+这使得我们的学习算法偏向于在大量特征上均匀分布权重的模型。
+在实践中，这可能使它们对单个变量中的观测误差更为稳定。
+相比之下，$L_1$惩罚会导致模型将权重集中在一小部分特征上，
+而将其他权重清除为零。
+这称为<em>特征选择</em>（feature selection），这可能是其他场景下需要的。</p>
+<p>使用与 :eqref:<code>eq_linreg_batch_update</code>中的相同符号，
+$L_2$正则化回归的小批量随机梯度下降更新如下式：</p>
+<p>$$
+\begin{aligned}
+\mathbf{w} &amp; \leftarrow \left(1- \eta\lambda \right) \mathbf{w} - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B} } \mathbf{x}^{(i)} \left(\mathbf{w}^\top \mathbf{x}^{(i)} + b - y^{(i)}\right).
+\end{aligned}</p>
+<p>$$</p>
+<p>根据之前章节所讲的，我们根据估计值与观测值之间的差异来更新$\mathbf{w}$。
+然而，我们同时也在试图将$\mathbf{w}$的大小缩小到零。
+这就是为什么这种方法有时被称为<em>权重衰减</em>。
+我们仅考虑惩罚项，优化算法在训练的每一步<em>衰减</em>权重。
+与特征选择相比，权重衰减为我们提供了一种连续的机制来调整函数的复杂度。
+较小的$\lambda$值对应较少约束的$\mathbf{w}$，
+而较大的$\lambda$值对$\mathbf{w}$的约束更大。</p>
+<p>是否对相应的偏置$b^2$进行惩罚在不同的实践中会有所不同，
+在神经网络的不同层中也会有所不同。
+通常，网络输出层的偏置项不会被正则化。</p>
+<h2 id="高维线性回归">高维线性回归</h2>
+<p>我们通过一个简单的例子来演示权重衰减。</p>
+<pre><code class="lang-python">%matplotlib inline
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> mxnet <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">from</span> mxnet <span class="hljs-keyword">import</span> autograd, gluon, init, np, npx
+<span class="hljs-keyword">from</span> mxnet.gluon <span class="hljs-keyword">import</span> nn
+npx.set_np()
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+%matplotlib inline
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> torch <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> torch
+<span class="hljs-keyword">from</span> torch <span class="hljs-keyword">import</span> nn
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+%matplotlib inline
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> tensorflow <span class="hljs-keyword">as</span> tf
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+%matplotlib inline
+<span class="hljs-keyword">from</span> d2l <span class="hljs-keyword">import</span> paddle <span class="hljs-keyword">as</span> d2l
+<span class="hljs-keyword">import</span> warnings
+warnings.filterwarnings(<span class="hljs-string">"ignore"</span>)
+<span class="hljs-keyword">import</span> paddle
+<span class="hljs-keyword">from</span> paddle <span class="hljs-keyword">import</span> nn
+</code></pre>
+<p>首先，我们[<strong>像以前一样生成一些数据</strong>]，生成公式如下：</p>
+<p>(<strong>$$y = 0.05 + \sum_{i = 1}^d 0.01 x_i + \epsilon \text{ where }
+\epsilon \sim \mathcal{N}(0, 0.01^2).$$</strong>)</p>
+<p>我们选择标签是关于输入的线性函数。
+标签同时被均值为0，标准差为0.01高斯噪声破坏。
+为了使过拟合的效果更加明显，我们可以将问题的维数增加到$d = 200$，
+并使用一个只包含20个样本的小训练集。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+n_train, n_test, num_inputs, batch_size = <span class="hljs-number">20</span>, <span class="hljs-number">100</span>, <span class="hljs-number">200</span>, <span class="hljs-number">5</span>
+true_w, true_b = d2l.ones((num_inputs, <span class="hljs-number">1</span>)) * <span class="hljs-number">0.01</span>, <span class="hljs-number">0.05</span>
+train_data = d2l.synthetic_data(true_w, true_b, n_train)
+train_iter = d2l.load_array(train_data, batch_size)
+test_data = d2l.synthetic_data(true_w, true_b, n_test)
+test_iter = d2l.load_array(test_data, batch_size, is_train=<span class="hljs-keyword">False</span>)
+</code></pre>
+<h2 id="从零开始实现">从零开始实现</h2>
+<p>下面我们将从头开始实现权重衰减，只需将$L_2$的平方惩罚添加到原始目标函数中。</p>
+<h3 id="初始化模型参数">[<strong>初始化模型参数</strong>]</h3>
+<p>首先，我们将定义一个函数来随机初始化模型参数。</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">init_params</span><span class="hljs-params">()</span>:</span>
+    w = np.random.normal(scale=<span class="hljs-number">1</span>, size=(num_inputs, <span class="hljs-number">1</span>))
+    b = np.zeros(<span class="hljs-number">1</span>)
+    w.attach_grad()
+    b.attach_grad()
+    <span class="hljs-keyword">return</span> [w, b]
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">init_params</span><span class="hljs-params">()</span>:</span>
+    w = torch.normal(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, size=(num_inputs, <span class="hljs-number">1</span>), requires_grad=<span class="hljs-keyword">True</span>)
+    b = torch.zeros(<span class="hljs-number">1</span>, requires_grad=<span class="hljs-keyword">True</span>)
+    <span class="hljs-keyword">return</span> [w, b]
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">init_params</span><span class="hljs-params">()</span>:</span>
+    w = tf.Variable(tf.random.normal(mean=<span class="hljs-number">1</span>, shape=(num_inputs, <span class="hljs-number">1</span>)))
+    b = tf.Variable(tf.zeros(shape=(<span class="hljs-number">1</span>, )))
+    <span class="hljs-keyword">return</span> [w, b]
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">init_params</span><span class="hljs-params">()</span>:</span>
+    w = paddle.normal(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, shape=(num_inputs, <span class="hljs-number">1</span>))
+    w.stop_gradient = <span class="hljs-keyword">False</span>
+    b = paddle.zeros(shape=[<span class="hljs-number">1</span>])
+    b.stop_gradient = <span class="hljs-keyword">False</span>
+    <span class="hljs-keyword">return</span> [w, b]
+</code></pre>
+<h3 id="定义l2范数惩罚">(<strong>定义$L_2$范数惩罚</strong>)</h3>
+<p>实现这一惩罚最方便的方法是对所有项求平方后并将它们求和。</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">l2_penalty</span><span class="hljs-params">(w)</span>:</span>
+    <span class="hljs-keyword">return</span> (w**<span class="hljs-number">2</span>).sum() / <span class="hljs-number">2</span>
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">l2_penalty</span><span class="hljs-params">(w)</span>:</span>
+    <span class="hljs-keyword">return</span> torch.sum(w.pow(<span class="hljs-number">2</span>)) / <span class="hljs-number">2</span>
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">l2_penalty</span><span class="hljs-params">(w)</span>:</span>
+    <span class="hljs-keyword">return</span> tf.reduce_sum(tf.pow(w, <span class="hljs-number">2</span>)) / <span class="hljs-number">2</span>
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">l2_penalty</span><span class="hljs-params">(w)</span>:</span>
+    <span class="hljs-keyword">return</span> paddle.sum(w.pow(<span class="hljs-number">2</span>)) / <span class="hljs-number">2</span>
+</code></pre>
+<h3 id="定义训练代码实现">[<strong>定义训练代码实现</strong>]</h3>
+<p>下面的代码将模型拟合训练数据集，并在测试数据集上进行评估。
+从 :numref:<code>chap_linear</code>以来，线性网络和平方损失没有变化，
+所以我们通过<code>d2l.linreg</code>和<code>d2l.squared_loss</code>导入它们。
+唯一的变化是损失现在包括了惩罚项。</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train</span><span class="hljs-params">(lambd)</span>:</span>
+    w, b = init_params()
+    net, loss = <span class="hljs-keyword">lambda</span> X: d2l.linreg(X, w, b), d2l.squared_loss
+    num_epochs, lr = <span class="hljs-number">100</span>, <span class="hljs-number">0.003</span>
+    animator = d2l.Animator(xlabel=<span class="hljs-string">'epochs'</span>, ylabel=<span class="hljs-string">'loss'</span>, yscale=<span class="hljs-string">'log'</span>,
+                            xlim=[<span class="hljs-number">5</span>, num_epochs], legend=[<span class="hljs-string">'train'</span>, <span class="hljs-string">'test'</span>])
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> range(num_epochs):
+        <span class="hljs-keyword">for</span> X, y <span class="hljs-keyword">in</span> train_iter:
+            <span class="hljs-keyword">with</span> autograd.record():
+                <span class="hljs-comment"># 增加了L2范数惩罚项，</span>
+                <span class="hljs-comment"># 广播机制使l2_penalty(w)成为一个长度为batch_size的向量</span>
+                l = loss(net(X), y) + lambd * l2_penalty(w)
+            l.backward()
+            d2l.sgd([w, b], lr, batch_size)
+        <span class="hljs-keyword">if</span> (epoch + <span class="hljs-number">1</span>) % <span class="hljs-number">5</span> == <span class="hljs-number">0</span>:
+            animator.add(epoch + <span class="hljs-number">1</span>, (d2l.evaluate_loss(net, train_iter, loss),
+                                     d2l.evaluate_loss(net, test_iter, loss)))
+    print(<span class="hljs-string">'w的L2范数是：'</span>, np.linalg.norm(w))
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train</span><span class="hljs-params">(lambd)</span>:</span>
+    w, b = init_params()
+    net, loss = <span class="hljs-keyword">lambda</span> X: d2l.linreg(X, w, b), d2l.squared_loss
+    num_epochs, lr = <span class="hljs-number">100</span>, <span class="hljs-number">0.003</span>
+    animator = d2l.Animator(xlabel=<span class="hljs-string">'epochs'</span>, ylabel=<span class="hljs-string">'loss'</span>, yscale=<span class="hljs-string">'log'</span>,
+                            xlim=[<span class="hljs-number">5</span>, num_epochs], legend=[<span class="hljs-string">'train'</span>, <span class="hljs-string">'test'</span>])
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> range(num_epochs):
+        <span class="hljs-keyword">for</span> X, y <span class="hljs-keyword">in</span> train_iter:
+            <span class="hljs-comment"># 增加了L2范数惩罚项，</span>
+            <span class="hljs-comment"># 广播机制使l2_penalty(w)成为一个长度为batch_size的向量</span>
+            l = loss(net(X), y) + lambd * l2_penalty(w)
+            l.sum().backward()
+            d2l.sgd([w, b], lr, batch_size)
+        <span class="hljs-keyword">if</span> (epoch + <span class="hljs-number">1</span>) % <span class="hljs-number">5</span> == <span class="hljs-number">0</span>:
+            animator.add(epoch + <span class="hljs-number">1</span>, (d2l.evaluate_loss(net, train_iter, loss),
+                                     d2l.evaluate_loss(net, test_iter, loss)))
+    print(<span class="hljs-string">'w的L2范数是：'</span>, torch.norm(w).item())
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train</span><span class="hljs-params">(lambd)</span>:</span>
+    w, b = init_params()
+    net, loss = <span class="hljs-keyword">lambda</span> X: d2l.linreg(X, w, b), d2l.squared_loss
+    num_epochs, lr = <span class="hljs-number">100</span>, <span class="hljs-number">0.003</span>
+    animator = d2l.Animator(xlabel=<span class="hljs-string">'epochs'</span>, ylabel=<span class="hljs-string">'loss'</span>, yscale=<span class="hljs-string">'log'</span>,
+                            xlim=[<span class="hljs-number">5</span>, num_epochs], legend=[<span class="hljs-string">'train'</span>, <span class="hljs-string">'test'</span>])
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> range(num_epochs):
+        <span class="hljs-keyword">for</span> X, y <span class="hljs-keyword">in</span> train_iter:
+            <span class="hljs-keyword">with</span> tf.GradientTape() <span class="hljs-keyword">as</span> tape:
+                <span class="hljs-comment"># 增加了L2范数惩罚项，</span>
+                <span class="hljs-comment"># 广播机制使l2_penalty(w)成为一个长度为batch_size的向量</span>
+                l = loss(net(X), y) + lambd * l2_penalty(w)
+            grads = tape.gradient(l, [w, b])
+            d2l.sgd([w, b], grads, lr, batch_size)
+        <span class="hljs-keyword">if</span> (epoch + <span class="hljs-number">1</span>) % <span class="hljs-number">5</span> == <span class="hljs-number">0</span>:
+            animator.add(epoch + <span class="hljs-number">1</span>, (d2l.evaluate_loss(net, train_iter, loss),
+                                     d2l.evaluate_loss(net, test_iter, loss)))
+    print(<span class="hljs-string">'w的L2范数是：'</span>, tf.norm(w).numpy())
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train</span><span class="hljs-params">(lambd)</span>:</span>
+    w, b = init_params()
+    net, loss = <span class="hljs-keyword">lambda</span> X: d2l.linreg(X, w, b), d2l.squared_loss
+    num_epochs, lr = <span class="hljs-number">100</span>, <span class="hljs-number">0.003</span>
+    animator = d2l.Animator(xlabel=<span class="hljs-string">'epochs'</span>, ylabel=<span class="hljs-string">'loss'</span>, yscale=<span class="hljs-string">'log'</span>,
+                            xlim=[<span class="hljs-number">5</span>, num_epochs], legend=[<span class="hljs-string">'train'</span>, <span class="hljs-string">'test'</span>])
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> range(num_epochs):
+        <span class="hljs-keyword">for</span> X, y <span class="hljs-keyword">in</span> train_iter():
+            <span class="hljs-comment"># 增加了L2范数惩罚项,</span>
+            <span class="hljs-comment"># 广播机制使l2_penalty(w)成为一个长度为`batch_size`的向量</span>
+            l = loss(net(X), y) + lambd * l2_penalty(w)
+            l.sum().backward()
+            d2l.sgd([w, b], lr, batch_size)
+        <span class="hljs-keyword">if</span> (epoch + <span class="hljs-number">1</span>) % <span class="hljs-number">5</span> == <span class="hljs-number">0</span>:
+            animator.add(epoch + <span class="hljs-number">1</span>, (d2l.evaluate_loss(net, train_iter, loss),
+                                     d2l.evaluate_loss(net, test_iter, loss)))
+    print(<span class="hljs-string">'w的L2范数是：'</span>, paddle.norm(w).item())
+</code></pre>
+<h3 id="忽略正则化直接训练">[<strong>忽略正则化直接训练</strong>]</h3>
+<p>我们现在用<code>lambd = 0</code>禁用权重衰减后运行这个代码。
+注意，这里训练误差有了减少，但测试误差没有减少，
+这意味着出现了严重的过拟合。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+train(lambd=<span class="hljs-number">0</span>)
+</code></pre>
+<h3 id="使用权重衰减">[<strong>使用权重衰减</strong>]</h3>
+<p>下面，我们使用权重衰减来运行代码。
+注意，在这里训练误差增大，但测试误差减小。
+这正是我们期望从正则化中得到的效果。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+train(lambd=<span class="hljs-number">3</span>)
+</code></pre>
+<h2 id="简洁实现">[<strong>简洁实现</strong>]</h2>
+<p>由于权重衰减在神经网络优化中很常用，
+深度学习框架为了便于我们使用权重衰减，
+将权重衰减集成到优化算法中，以便与任何损失函数结合使用。
+此外，这种集成还有计算上的好处，
+允许在不增加任何额外的计算开销的情况下向算法中添加权重衰减。
+由于更新的权重衰减部分仅依赖于每个参数的当前值，
+因此优化器必须至少接触每个参数一次。</p>
+<p>:begin_tab:<code>mxnet</code>
+在下面的代码中，我们在实例化<code>Trainer</code>时直接通过<code>wd</code>指定weight decay超参数。
+默认情况下，Gluon同时衰减权重和偏置。
+注意，更新模型参数时，超参数<code>wd</code>将乘以<code>wd_mult</code>。
+因此，如果我们将<code>wd_mult</code>设置为零，则偏置参数$b$将不会被衰减。
+:end_tab:</p>
+<p>:begin_tab:<code>pytorch</code>
+在下面的代码中，我们在实例化优化器时直接通过<code>weight_decay</code>指定weight decay超参数。
+默认情况下，PyTorch同时衰减权重和偏移。
+这里我们只为权重设置了<code>weight_decay</code>，所以偏置参数$b$不会衰减。
+:end_tab:</p>
+<p>:begin_tab:<code>tensorflow</code>
+在下面的代码中，我们使用权重衰减超参数<code>wd</code>创建一个$L_2$正则化器，
+并通过<code>kernel_regularizer</code>参数将其应用于网络层。
+:end_tab:</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train_concise</span><span class="hljs-params">(wd)</span>:</span>
+    net = nn.Sequential()
+    net.add(nn.Dense(<span class="hljs-number">1</span>))
+    net.initialize(init.Normal(sigma=<span class="hljs-number">1</span>))
+    loss = gluon.loss.L2Loss()
+    num_epochs, lr = <span class="hljs-number">100</span>, <span class="hljs-number">0.003</span>
+    trainer = gluon.Trainer(net.collect_params(), <span class="hljs-string">'sgd'</span>,
+                            {<span class="hljs-string">'learning_rate'</span>: lr, <span class="hljs-string">'wd'</span>: wd})
+    <span class="hljs-comment"># 偏置参数没有衰减。偏置名称通常以“bias”结尾</span>
+    net.collect_params(<span class="hljs-string">'.*bias'</span>).setattr(<span class="hljs-string">'wd_mult'</span>, <span class="hljs-number">0</span>)
+    animator = d2l.Animator(xlabel=<span class="hljs-string">'epochs'</span>, ylabel=<span class="hljs-string">'loss'</span>, yscale=<span class="hljs-string">'log'</span>,
+                            xlim=[<span class="hljs-number">5</span>, num_epochs], legend=[<span class="hljs-string">'train'</span>, <span class="hljs-string">'test'</span>])
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> range(num_epochs):
+        <span class="hljs-keyword">for</span> X, y <span class="hljs-keyword">in</span> train_iter:
+            <span class="hljs-keyword">with</span> autograd.record():
+                l = loss(net(X), y)
+            l.backward()
+            trainer.step(batch_size)
+        <span class="hljs-keyword">if</span> (epoch + <span class="hljs-number">1</span>) % <span class="hljs-number">5</span> == <span class="hljs-number">0</span>:
+            animator.add(epoch + <span class="hljs-number">1</span>, (d2l.evaluate_loss(net, train_iter, loss),
+                                     d2l.evaluate_loss(net, test_iter, loss)))
+    print(<span class="hljs-string">'w的L2范数：'</span>, np.linalg.norm(net[<span class="hljs-number">0</span>].weight.data()))
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab pytorch</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train_concise</span><span class="hljs-params">(wd)</span>:</span>
+    net = nn.Sequential(nn.Linear(num_inputs, <span class="hljs-number">1</span>))
+    <span class="hljs-keyword">for</span> param <span class="hljs-keyword">in</span> net.parameters():
+        param.data.normal_()
+    loss = nn.MSELoss(reduction=<span class="hljs-string">'none'</span>)
+    num_epochs, lr = <span class="hljs-number">100</span>, <span class="hljs-number">0.003</span>
+    <span class="hljs-comment"># 偏置参数没有衰减</span>
+    trainer = torch.optim.SGD([
+        {<span class="hljs-string">"params"</span>:net[<span class="hljs-number">0</span>].weight,<span class="hljs-string">'weight_decay'</span>: wd},
+        {<span class="hljs-string">"params"</span>:net[<span class="hljs-number">0</span>].bias}], lr=lr)
+    animator = d2l.Animator(xlabel=<span class="hljs-string">'epochs'</span>, ylabel=<span class="hljs-string">'loss'</span>, yscale=<span class="hljs-string">'log'</span>,
+                            xlim=[<span class="hljs-number">5</span>, num_epochs], legend=[<span class="hljs-string">'train'</span>, <span class="hljs-string">'test'</span>])
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> range(num_epochs):
+        <span class="hljs-keyword">for</span> X, y <span class="hljs-keyword">in</span> train_iter:
+            trainer.zero_grad()
+            l = loss(net(X), y)
+            l.mean().backward()
+            trainer.step()
+        <span class="hljs-keyword">if</span> (epoch + <span class="hljs-number">1</span>) % <span class="hljs-number">5</span> == <span class="hljs-number">0</span>:
+            animator.add(epoch + <span class="hljs-number">1</span>,
+                         (d2l.evaluate_loss(net, train_iter, loss),
+                          d2l.evaluate_loss(net, test_iter, loss)))
+    print(<span class="hljs-string">'w的L2范数：'</span>, net[<span class="hljs-number">0</span>].weight.norm().item())
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab tensorflow</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train_concise</span><span class="hljs-params">(wd)</span>:</span>
+    net = tf.keras.models.Sequential()
+    net.add(tf.keras.layers.Dense(
+        <span class="hljs-number">1</span>, kernel_regularizer=tf.keras.regularizers.l2(wd)))
+    net.build(input_shape=(<span class="hljs-number">1</span>, num_inputs))
+    w, b = net.trainable_variables
+    loss = tf.keras.losses.MeanSquaredError()
+    num_epochs, lr = <span class="hljs-number">100</span>, <span class="hljs-number">0.003</span>
+    trainer = tf.keras.optimizers.SGD(learning_rate=lr)
+    animator = d2l.Animator(xlabel=<span class="hljs-string">'epochs'</span>, ylabel=<span class="hljs-string">'loss'</span>, yscale=<span class="hljs-string">'log'</span>,
+                            xlim=[<span class="hljs-number">5</span>, num_epochs], legend=[<span class="hljs-string">'train'</span>, <span class="hljs-string">'test'</span>])
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> range(num_epochs):
+        <span class="hljs-keyword">for</span> X, y <span class="hljs-keyword">in</span> train_iter:
+            <span class="hljs-keyword">with</span> tf.GradientTape() <span class="hljs-keyword">as</span> tape:
+                <span class="hljs-comment"># tf.keras需要为自定义训练代码手动添加损失。</span>
+                l = loss(net(X), y) + net.losses
+            grads = tape.gradient(l, net.trainable_variables)
+            trainer.apply_gradients(zip(grads, net.trainable_variables))
+        <span class="hljs-keyword">if</span> (epoch + <span class="hljs-number">1</span>) % <span class="hljs-number">5</span> == <span class="hljs-number">0</span>:
+            animator.add(epoch + <span class="hljs-number">1</span>, (d2l.evaluate_loss(net, train_iter, loss),
+                                     d2l.evaluate_loss(net, test_iter, loss)))
+    print(<span class="hljs-string">'w的L2范数：'</span>, tf.norm(net.get_weights()[<span class="hljs-number">0</span>]).numpy())
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab paddle</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">train_concise</span><span class="hljs-params">(wd)</span>:</span>
+    weight_attr = paddle.framework.ParamAttr(initializer=paddle.nn.initializer.Normal(mean=<span class="hljs-number">0.0</span>, std=<span class="hljs-number">1.0</span>))
+    bias_attr = paddle.framework.ParamAttr(initializer=paddle.nn.initializer.Normal(mean=<span class="hljs-number">0.0</span>, std=<span class="hljs-number">1.0</span>))
+    net = nn.Sequential(nn.Linear(num_inputs, <span class="hljs-number">1</span>, weight_attr=weight_attr, bias_attr=bias_attr))
+    loss = nn.MSELoss()
+    num_epochs, lr = <span class="hljs-number">100</span>, <span class="hljs-number">0.003</span>
+    <span class="hljs-comment"># 偏置参数没有衰减。</span>
+    trainer = paddle.optimizer.SGD(parameters=net[<span class="hljs-number">0</span>].parameters(), learning_rate=lr, weight_decay=wd*<span class="hljs-number">1.0</span>)
+    animator = d2l.Animator(xlabel=<span class="hljs-string">'epochs'</span>, ylabel=<span class="hljs-string">'loss'</span>, yscale=<span class="hljs-string">'log'</span>,
+                            xlim=[<span class="hljs-number">5</span>, num_epochs], legend=[<span class="hljs-string">'train'</span>, <span class="hljs-string">'test'</span>])
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> range(num_epochs):
+        <span class="hljs-keyword">for</span> X, y <span class="hljs-keyword">in</span> train_iter:
+            l = loss(net(X), y)
+            l.backward()
+            trainer.step()
+            trainer.clear_grad()
+        <span class="hljs-keyword">if</span> (epoch + <span class="hljs-number">1</span>) % <span class="hljs-number">5</span> == <span class="hljs-number">0</span>:
+            animator.add(epoch + <span class="hljs-number">1</span>, (d2l.evaluate_loss(net, train_iter, loss),
+                                     d2l.evaluate_loss(net, test_iter, loss)))
+    print(<span class="hljs-string">'w的L2范数：'</span>, net[<span class="hljs-number">0</span>].weight.norm().item())
+</code></pre>
+<p>[<strong>这些图看起来和我们从零开始实现权重衰减时的图相同</strong>]。
+然而，它们运行得更快，更容易实现。
+对于更复杂的问题，这一好处将变得更加明显。</p>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+train_concise(<span class="hljs-number">0</span>)
+</code></pre>
+<pre><code class="lang-python"><span class="hljs-comment">#@tab all</span>
+train_concise(<span class="hljs-number">3</span>)
+</code></pre>
+<p>到目前为止，我们只接触到一个简单线性函数的概念。
+此外，由什么构成一个简单的非线性函数可能是一个更复杂的问题。
+例如，<a href="https://en.wikipedia.org/wiki/Reproducing_kernel_Hilbert_space" target="_blank">再生核希尔伯特空间（RKHS）</a>
+允许在非线性环境中应用为线性函数引入的工具。
+不幸的是，基于RKHS的算法往往难以应用到大型、高维的数据。
+在这本书中，我们将默认使用简单的启发式方法，即在深层网络的所有层上应用权重衰减。</p>
+<h2 id="小结">小结</h2>
+<ul>
+<li>正则化是处理过拟合的常用方法：在训练集的损失函数中加入惩罚项，以降低学习到的模型的复杂度。</li>
+<li>保持模型简单的一个特别的选择是使用$L_2$惩罚的权重衰减。这会导致学习算法更新步骤中的权重衰减。</li>
+<li>权重衰减功能在深度学习框架的优化器中提供。</li>
+<li>在同一训练代码实现中，不同的参数集可以有不同的更新行为。</li>
+</ul>
+<h2 id="练习">练习</h2>
+<ol>
+<li>在本节的估计问题中使用$\lambda$的值进行实验。绘制训练和测试精度关于$\lambda$的函数。观察到了什么？</li>
+<li>使用验证集来找到最佳值$\lambda$。它真的是最优值吗？这有关系吗？</li>
+<li>如果我们使用$\sum_i |w_i|$作为我们选择的惩罚（$L_1$正则化），那么更新方程会是什么样子？</li>
+<li>我们知道$|\mathbf{w}|^2 = \mathbf{w}^\top \mathbf{w}$。能找到类似的矩阵方程吗（见 :numref:<code>subsec_lin-algebra-norms</code> 中的Frobenius范数）？</li>
+<li>回顾训练误差和泛化误差之间的关系。除了权重衰减、增加训练数据、使用适当复杂度的模型之外，还能想出其他什么方法来处理过拟合？</li>
+<li>在贝叶斯统计中，我们使用先验和似然的乘积，通过公式$P(w \mid x) \propto P(x \mid w) P(w)$得到后验。如何得到带正则化的$P(w)$？</li>
+</ol>
+<p>:begin_tab:<code>mxnet</code>
+<a href="https://discuss.d2l.ai/t/1810" target="_blank">Discussions</a>
+:end_tab:</p>
+<p>:begin_tab:<code>pytorch</code>
+<a href="https://discuss.d2l.ai/t/1808" target="_blank">Discussions</a>
+:end_tab:</p>
+<p>:begin_tab:<code>tensorflow</code>
+<a href="https://discuss.d2l.ai/t/1809" target="_blank">Discussions</a>
+:end_tab:</p>
+<p>:begin_tab:<code>paddle</code>
+<a href="https://discuss.d2l.ai/t/11773" target="_blank">Discussions</a>
+:end_tab:</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="underfit-overfit.html" class="navigation navigation-prev " aria-label="Previous page: 4.4. 模型选择、欠拟合和过拟合">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="dropout.html" class="navigation navigation-next " aria-label="Next page: 4.6. 暂退法（Dropout）">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"4.5. 权重衰减","level":"1.2.7.5","depth":3,"next":{"title":"4.6. 暂退法（Dropout）","level":"1.2.7.6","depth":3,"path":"chapter_multilayer-perceptrons/dropout.md","ref":"chapter_multilayer-perceptrons/dropout.md","articles":[]},"previous":{"title":"4.4. 模型选择、欠拟合和过拟合","level":"1.2.7.4","depth":3,"path":"chapter_multilayer-perceptrons/underfit-overfit.md","ref":"chapter_multilayer-perceptrons/underfit-overfit.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"chapter_multilayer-perceptrons/weight-decay.md","mtime":"2025-04-25T11:45:23.941Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:47.289Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

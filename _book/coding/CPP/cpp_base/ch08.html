@@ -1,0 +1,686 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ch08. CPP 内存模型与名称空间 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch09.html" />
+    
+    
+    <link rel="prev" href="ch07.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    CPP 基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="ch00.html">
+            
+                <a href="ch00.html">
+            
+                    
+                    ch00. CPP 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    ch01. CPP 指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    ch02. CPP 函数指针与回调函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    ch03. CPP 结构体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    ch04. CPP 枚举和共用体
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    ch05. CPP 调试中输出代码所在文件、函数和行数的方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    ch06. CPP 实现单向链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    ch07. CPP 模板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.9" data-path="ch08.html">
+            
+                <a href="ch08.html">
+            
+                    
+                    ch08. CPP 内存模型与名称空间
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="ch09.html">
+            
+                <a href="ch09.html">
+            
+                    
+                    ch09. CPP 大端小端
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ch10.html">
+            
+                <a href="ch10.html">
+            
+                    
+                    ch10. CPP 基础入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="ch11.html">
+            
+                <a href="ch11.html">
+            
+                    
+                    ch11. CPP 学习笔记
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ch12.html">
+            
+                <a href="ch12.html">
+            
+                    
+                    ch12. CPP 核心编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="ch13.html">
+            
+                <a href="ch13.html">
+            
+                    
+                    ch13. CPP 深入理解
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ch08. CPP 内存模型与名称空间</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="cpp内存模型与名称空间">CPP内存模型与名称空间</h1>
+<h2 id="主要内容">主要内容</h2>
+<ul>
+<li>单独编译</li>
+<li>存储持续性、作用域、链接性</li>
+<li>定位（placement）new运算符</li>
+<li>名称空间</li>
+</ul>
+<h2 id="单独编译">单独编译</h2>
+<h3 id="程序文件结构">程序文件结构</h3>
+<ul>
+<li>头文件：包含结构声明和使用这些结构的函数的原型<ul>
+<li>函数原型</li>
+<li>使用#define或const定义的符号常量</li>
+<li>结构声明</li>
+<li>类声明</li>
+<li>模板声明</li>
+<li>内联函数</li>
+</ul>
+</li>
+<li>源代码文件：包含与结构有关的函数的代码</li>
+<li>源代码文件：包含调用与结构相关的函数的代码</li>
+</ul>
+<p>❗❗❗<strong>注意</strong>：</p>
+<ul>
+<li><p><myhead.h>代表在标准头文件的目录中查找；包含自定义头文件，使用"myhead.h"，代表在当前工作目录和源代码目录查找，如果没找到则到标准位置查找</myhead.h></p>
+</li>
+<li><p>使用预处理指令避免多次包含同一头文件</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">ifndef</span> COORDIN_H</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> COORDIN_H</span>
+<span class="hljs-comment">//place include file contents here</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">endif</span></span>
+</code></pre>
+</li>
+</ul>
+<h2 id="存储持续性、作用域、链接性">存储持续性、作用域、链接性</h2>
+<h3 id="cpp11四种存储方案">CPP11四种存储方案</h3>
+<ul>
+<li><strong>自动存储持续性</strong>：在函数定义中声明的变量（包括函数参数）的存储持续性为自动的。它们在程序开始执行其所属的函数或代码块时被创建，在执行完函数或代码块时，它们使用的内存被释放。</li>
+<li><strong>静态存储持续性</strong>：在函数定义外定义的变量和使用关键字static定义的变量的存储持续性都为静态。它们在程序整个运行过程中都存在。</li>
+<li><strong>线程存储持续性（CPP11）</strong>：当前，多核处理器很常见，这些CPU可同时处理多个执行任务。这让程序能够将计算放在可并行处理的不同线程中。如果变量是使用关键字thread_local声明的，则其生命周期与所属的线程一样长。</li>
+<li><strong>动态存储持续性</strong>：用new运算符分配的内存将一直存在，直到使用delete运算符将其释放或程序结束为止。这种内存的存储持续性为动态，有时被称为自由存储（free store）或堆（heap）。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>存储描述</th>
+<th>持续性</th>
+<th>作用域</th>
+<th>链接性</th>
+<th>如何声明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自动</td>
+<td>自动</td>
+<td>代码块</td>
+<td>无</td>
+<td>在代码块中</td>
+</tr>
+<tr>
+<td>寄存器</td>
+<td>自动</td>
+<td>代码块</td>
+<td>无</td>
+<td>在代码块中，使用关键字register</td>
+</tr>
+<tr>
+<td>静态，无链接性</td>
+<td>静态</td>
+<td>代码块</td>
+<td>无</td>
+<td>在代码块中，使用关键字static</td>
+</tr>
+<tr>
+<td>静态，外部链接性</td>
+<td>静态</td>
+<td>文件</td>
+<td>外部</td>
+<td>不在任何函数内</td>
+</tr>
+<tr>
+<td>静态，内部链接性</td>
+<td>静态</td>
+<td>文件</td>
+<td>内部</td>
+<td>不在任何函数内，使用关键字static</td>
+</tr>
+</tbody>
+</table>
+<p>❗❗❗<strong>注意</strong>：静态变量默认初始化为0</p>
+<h3 id="说明符和限定符">说明符和限定符</h3>
+<p><strong>说明符</strong></p>
+<ul>
+<li><p>auto：自动类型推断</p>
+</li>
+<li><p>register：在声明中指示寄存器存储</p>
+</li>
+<li><p>static：用在作用域为整个文件的声明中时，表示内部链接性；被用于局部声明中，表示局部变量的存储持续性为静态的</p>
+</li>
+<li><p>extern：引用声明，即声明引用在其他地方定义的变量</p>
+</li>
+<li><p>thread_local（CPP11新增）：变量的持续性与其所属线程的持续性相同</p>
+</li>
+<li><p>mutable：结构（或类）变量为const，其mutable成员也可以被修改</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> data 
+{
+    <span class="hljs-keyword">char</span> name[<span class="hljs-number">30</span>];
+    <span class="hljs-keyword">mutable</span> <span class="hljs-keyword">int</span> accesses;
+}
+
+<span class="hljs-keyword">const</span> data veep = {<span class="hljs-string">"claybourne Clodde"</span>, <span class="hljs-number">0</span>, ...}; 
+<span class="hljs-built_in">strcpy</span>(veep.name, <span class="hljs-string">"Joye Joux"</span>);  <span class="hljs-comment">//not allowed</span>
+veep.accesses++;                 <span class="hljs-comment">//allowed</span>
+</code></pre>
+</li>
+</ul>
+<p><strong>限定符</strong></p>
+<ul>
+<li>const：内存被初始化后，程序便不能再对它进行修改；const全局变量的链接性为内部的，每个文件都有自己的一组常量，而不是所有文件共享一组常量，每个定义都是其所属文件私有的，这就是能够将常量定义放在头文件中的原因</li>
+<li>volatile：不将值缓存到寄存器中，从内存中获取变量的值</li>
+</ul>
+<h3 id="动态分配">动态分配</h3>
+<ul>
+<li><p>使用new运算符初始化</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">int</span> *pi = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span> (<span class="hljs-number">6</span>);                   <span class="hljs-comment">//*pi set to 6</span>
+<span class="hljs-keyword">double</span> *pd = <span class="hljs-keyword">new</span> <span class="hljs-keyword">double</span> (<span class="hljs-number">99.99</span>);         <span class="hljs-comment">//*pd set to 99.99</span>
+<span class="hljs-keyword">struct</span> where {<span class="hljs-keyword">double</span> x; <span class="hljs-keyword">double</span> y; <span class="hljs-keyword">double</span> z;};
+where *one = <span class="hljs-keyword">new</span> where {<span class="hljs-number">2.5</span>, <span class="hljs-number">5.3</span>, <span class="hljs-number">7.2</span>};  <span class="hljs-comment">//CPP11</span>
+<span class="hljs-keyword">int</span> *ar = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">4</span>] {<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>};       <span class="hljs-comment">//CPP11</span>
+</code></pre>
+</li>
+<li><p>new失败：抛出异常std::bad_alloc</p>
+</li>
+<li><p>new运算符重载</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-keyword">operator</span> <span class="hljs-title">new</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::size_t)</span></span>;    <span class="hljs-comment">//used by new</span>
+<span class="hljs-keyword">void</span> *<span class="hljs-keyword">operator</span> <span class="hljs-keyword">new</span>[](<span class="hljs-built_in">std</span>::<span class="hljs-keyword">size_t</span>);  <span class="hljs-comment">//used by new[]</span>
+</code></pre>
+</li>
+</ul>
+<h2 id="定位（placement）new运算符">定位（placement）new运算符</h2>
+<p>new负责在堆（heap）中找到一个足以能够满足要求的内存块。new运算符还有另一种变体，被称为定位（placement）new运算符，能够指定要使用的位置。</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">int</span> *p1 = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>;              <span class="hljs-comment">//invokes new(sizeof(int))</span>
+<span class="hljs-keyword">int</span> *p2 = <span class="hljs-keyword">new</span>(buffer) <span class="hljs-keyword">int</span>;      <span class="hljs-comment">//invokes new(sizeof(int), buffer)</span>
+<span class="hljs-keyword">int</span> *p3 = <span class="hljs-keyword">new</span>(buffer) <span class="hljs-keyword">int</span>[<span class="hljs-number">40</span>];  <span class="hljs-comment">//invokes new(40*sizeof(int), buffer)</span>
+</code></pre>
+<h2 id="名称空间">名称空间</h2>
+<h3 id="using声明和using编译指令">using声明和using编译指令</h3>
+<ul>
+<li><p>using声明由被限定的名称和它前面的关键字using组成：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">using</span> Jill::fetch;  <span class="hljs-comment">//a using declaration</span>
+</code></pre>
+</li>
+<li><p>using声明使一个名称可用，而using编译指令使所有的名称都可用</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> Jack;  <span class="hljs-comment">//make all the names in Jack available</span>
+</code></pre>
+</li>
+<li><p>可以给名称空间创建别名</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">namespace</span> my_very_favorite_things {...};
+<span class="hljs-keyword">namespace</span> mvft = my_very_favorite_things;
+
+<span class="hljs-keyword">namespace</span> MEF = myth::elements::fire;
+<span class="hljs-keyword">using</span> MEF::flame;
+</code></pre>
+</li>
+<li><p>匿名名称空间：提供了链接性为内部的静态变量的替代品</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> counts;  <span class="hljs-comment">//static storage, internal 1inkage</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">other</span><span class="hljs-params">()</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    ...
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">other</span><span class="hljs-params">()</span>
+</span>{
+    ...
+}
+<span class="hljs-comment">//采用名称空间的方法如下</span>
+<span class="hljs-keyword">namespace</span>
+{
+    <span class="hljs-keyword">int</span> counts;  <span class="hljs-comment">//static storage, internal linkage</span>
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">other</span><span class="hljs-params">()</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    ...
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">other</span><span class="hljs-params">()</span>
+</span>{
+    ...
+}
+</code></pre>
+</li>
+</ul>
+<h3 id="命名空间使用建议">命名空间使用建议</h3>
+<ul>
+<li>使用在已命名的名称空间中声明的变量，而不是使用外部全局变量</li>
+<li>使用在已命名的名称空间中声明的变量，而不是使用静态全局变量</li>
+<li>如果开发了一个函数库或类库，将其放在一个名称空间中。事实上，CPP当前提倡将标准函数库放在名称空间std中，这种做法扩展到了来自C语言中的函数。例如，头文件math.h是与C语言兼容的，没有使用名称空间，但CPP头文件cmath应将各种数学库函数放在名称空间std中</li>
+<li>仅将编译指令using作为一种将旧代码转换为使用名称空间的权宜之计</li>
+<li>不要在头文件中使用using编译指令。首先，这样做掩盖了要让哪些名称可用；另外，包含头文件的顺序可能影响程序的行为。如果非要使用编译指令using，应将其放在所有预处理器编译指令#include之后</li>
+<li>导入名称时，首选使用作用域解析运算符或using声明的方法</li>
+<li>对于using声明，首选将其作用域设置为局部而不是全局</li>
+</ul>
+<h2 id="参考文献">参考文献</h2>
+<p>《CPP Primer Plus》</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch07.html" class="navigation navigation-prev " aria-label="Previous page: ch07. CPP 模板">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch09.html" class="navigation navigation-next " aria-label="Next page: ch09. CPP 大端小端">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ch08. CPP 内存模型与名称空间","level":"1.1.9","depth":2,"next":{"title":"ch09. CPP 大端小端","level":"1.1.10","depth":2,"path":"ch09.md","ref":"ch09.md","articles":[]},"previous":{"title":"ch07. CPP 模板","level":"1.1.8","depth":2,"path":"ch07.md","ref":"ch07.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch08.md","mtime":"2025-04-20T02:08:08.040Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:23:31.082Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

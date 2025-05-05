@@ -1,0 +1,742 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 8 流 API · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0820.html" />
+    
+    
+    <link rel="prev" href="0818.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0807.html">
+            
+                <a href="0807.html">
+            
+                    
+                    Java 8 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0808.html">
+            
+                <a href="0808.html">
+            
+                    
+                    Java 8 Lambda 表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0809.html">
+            
+                <a href="0809.html">
+            
+                    
+                    Java 反射 API——Parameter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0810.html">
+            
+                <a href="0810.html">
+            
+                    
+                    Java 8 Base64类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0811.html">
+            
+                <a href="0811.html">
+            
+                    
+                    Java 8 Collectors类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0812.html">
+            
+                <a href="0812.html">
+            
+                    
+                    Java 8 并行数组排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0813.html">
+            
+                <a href="0813.html">
+            
+                    
+                    Java 8 方法引用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0814.html">
+            
+                <a href="0814.html">
+            
+                    
+                    Java 8 forEach()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0815.html">
+            
+                <a href="0815.html">
+            
+                    
+                    Java 8 StringJoiner类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0816.html">
+            
+                <a href="0816.html">
+            
+                    
+                    Java 接口默认和静态方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0817.html">
+            
+                <a href="0817.html">
+            
+                    
+                    Java 8 函数式接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0818.html">
+            
+                <a href="0818.html">
+            
+                    
+                    Java Optional类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.13" data-path="0819.html">
+            
+                <a href="0819.html">
+            
+                    
+                    Java 8 流 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0820.html">
+            
+                <a href="0820.html">
+            
+                    
+                    Java 8 改进的类型推断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0821.html">
+            
+                <a href="0821.html">
+            
+                    
+                    Java 8 日期和时间 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0822.html">
+            
+                <a href="0822.html">
+            
+                    
+                    Java 谓词
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 8 流 API</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-8-流-api">Java 8 流 API</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-8/java-8-stream-api" target="_blank">https://www.studytonight.com/java-8/java-8-stream-api</a></p>
+</blockquote>
+<p>Java <code>Stream</code>是 Java 8 版本中加入的一个新概念，它允许我们对元素流执行函数式操作，比如集合上的 map-reduce 转换。</p>
+<p>Java 增加了一个新的包 <strong>java.util.stream</strong> ，它由几个类、接口组成，用于执行基于流的操作。</p>
+<p>Java 流是一个能够执行其元素内部操作的组件。例如，它可以自己迭代它的元素。</p>
+<p><strong>流操作</strong>分为中间操作和终端操作。流源可以是集合、数组、生成器函数或输入/输出通道。</p>
+<p><strong>中间操作</strong>是懒操作，返回新的流。例如，执行诸如<code>filter()</code>的中间操作实际上并不执行任何过滤，而是创建一个新的流。</p>
+<p><strong>终端操作</strong>执行操作后终止流源管道。例如，<code>Stream.forEach</code>或<code>IntStream.sum</code>可以遍历流以产生结果。</p>
+<h2 id="河流的特征">河流的特征</h2>
+<p><strong>本质上是功能性的</strong></p>
+<p>流本质上是功能性的，它允许我们执行功能性风格的操作。对流的操作会产生结果，但不会修改其源。例如，过滤从集合中获得的流会生成一个没有过滤元素的新流，而不是从源集合中移除元素。</p>
+<p><strong>寻懒</strong></p>
+<p>Stream 使用惰性加载来提高性能。我们可以在许多流操作中使用延迟加载，如过滤、映射或重复删除等。流中间操作总是懒惰的。</p>
+<p><strong>无储存</strong></p>
+<p>流不是存储元素的数据结构，但它通过计算操作的管道传递来自源(如集合、数组或生成器函数)的元素。</p>
+<p><strong>可能无界</strong></p>
+<p>虽然 Java 集合的大小是有限的，但是流不需要。limit(n)或 findFirst()等短路操作可以允许在有限时间内完成对无限流的计算。</p>
+<p><strong>消耗品</strong></p>
+<p>在流的生命周期中，流的元素只被访问一次。再次重用流引用不起作用。我们需要创建一个新的流来重新访问源的相同元素。</p>
+<h2 id="如何创建流？">如何创建流？</h2>
+<p>在集合中，我们可以通过<code>stream()</code>和<code>parallelStream()</code>方法创建流，并通过<code>Arrays.stream(Object[])</code>方法从数组中创建流。我们将在这里看到创建流的实际例子。</p>
+<h2 id="javautilstream-的接口">Java.util.stream 的接口</h2>
+<p>以下是 <strong>java.util.stream</strong> 包的接口。我们可以在各种编程场景中使用这些来获取流。</p>
+<p>| </p>
+<p>连接</p>
+<p> | </p>
+<p>描述</p>
+<p> |
+| 基流〔t0〕 | 它是流的基本接口，流是支持顺序和并行聚合操作的元素序列。 |
+| 收集器 | 一种可变的约简操作，将输入元素累积到可变的结果容器中，在处理完所有输入元素后，可选地将累积的结果转换为最终表示。 |
+| 双流 | 支持顺序和并行聚合操作的原始双值元素序列。 |
+| DoubleStream。建设者 | 双流的可变生成器。 |
+| IntStream | 支持顺序和并行聚合操作的一系列原始 int 值元素。 |
+| IntStream(串流)。Builder(构建器) | IntStream 的可变生成器。 |
+| 软件复读机 | 支持顺序和并行聚合操作的原始长值元素序列。 |
+| LongStream。建设者 | 长流的可变构建器。 |
+| 流 | 支持顺序和并行聚合操作的元素序列。 |
+| 小溪。建筑商 | 流的可变构建器。 |</p>
+<h2 id="javautilstream-的类">Java.util.stream 的类</h2>
+<p>以下是 <strong>java.util.stream</strong> 包的类。我们可以使用这些类来收集中间数据和操作流。</p>
+<p>| 班级 | 描述 |
+| 收集者 | 实现各种有用的约简操作的收集器的实现，例如将元素累积到集合中，根据各种标准汇总元素等。 |
+| StreamSupport | 用于创建和操作流的低级实用方法。 |</p>
+<h2 id="举例时间">举例时间:</h2>
+<p>让我们举一个从列表创建流的例子。在这里，我们将所有列表元素转换成小写，并使用<code>forEach()</code>方法进行迭代。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Stream;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        List&lt;String&gt; fruits = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();
+
+        fruits.add(<span class="hljs-string">"APPLE"</span>);
+        fruits.add(<span class="hljs-string">"BANANA"</span>);
+        fruits.add(<span class="hljs-string">"CHERRY"</span>);
+
+        Stream&lt;String&gt; stream = fruits.stream();
+
+        Stream&lt;String&gt; stringStream =
+            stream.map((value) -&gt; { <span class="hljs-keyword">return</span> value.toLowerCase(); });
+        stringStream.forEach(System.out::println);
+    }
+}
+</code></pre>
+<p>苹果
+香蕉
+樱桃</p>
+<h2 id="示例筛选列表元素">示例:筛选列表元素</h2>
+<p>我们可以使用流来过滤集合元素。在这里，我们使用<code>filter()</code>方法，并收集结果作为列表。filter()方法将 lambda 表达式作为参数。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Collectors;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        List&lt;Integer&gt; numbers = <span class="hljs-keyword">new</span> ArrayList&lt;Integer&gt;();  
+        numbers.add(<span class="hljs-number">100</span>);
+        numbers.add(<span class="hljs-number">110</span>);
+        numbers.add(<span class="hljs-number">120</span>);
+        numbers.add(<span class="hljs-number">150</span>);
+
+        List&lt;Integer&gt; newlist =numbers.stream()  
+                                      .filter(n-&gt;n&gt;<span class="hljs-number">110</span>)
+                                      .collect(Collectors.toList());
+        System.out.println(newlist);  
+    }
+}
+</code></pre>
+<p>【120，150】</p>
+<h2 id="示例迭代元素">示例:迭代元素</h2>
+<p>在流中遍历集合元素非常容易。我们只需要调用<code>forEach()</code>方法，得到遍历的所有元素。看，我们在 forEach()方法中传递了一个方法引用来<code>PrintStream</code>结果。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Stream;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        List&lt;Integer&gt; numbers = <span class="hljs-keyword">new</span> ArrayList&lt;Integer&gt;();  
+        numbers.add(<span class="hljs-number">100</span>);
+        numbers.add(<span class="hljs-number">110</span>);
+        numbers.add(<span class="hljs-number">120</span>);
+        numbers.add(<span class="hljs-number">150</span>);
+        Stream&lt;Integer&gt; stream = numbers.stream();
+        stream.forEach(System.out::println); 
+    }
+}
+</code></pre>
+<p>100
+110
+120
+150</p>
+<h2 id="示例最小值和最大值">示例:最小值和最大值</h2>
+<p>如果我们想获得集合的最小值或最大值，那么通过使用流，我们可以很容易地做到这一点。这里，我们使用<code>min()</code>和<code>max()</code>方法从流中获取结果。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Stream;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        List&lt;Integer&gt; numbers = <span class="hljs-keyword">new</span> ArrayList&lt;Integer&gt;();  
+        numbers.add(<span class="hljs-number">100</span>);
+        numbers.add(<span class="hljs-number">110</span>);
+        numbers.add(<span class="hljs-number">120</span>);
+        numbers.add(<span class="hljs-number">150</span>);
+        Stream&lt;Integer&gt; stream = numbers.stream();
+        <span class="hljs-keyword">int</span> max_val = stream.max((x,y)-&gt;x&gt;y?<span class="hljs-number">1</span>:-<span class="hljs-number">1</span>).get();
+        System.out.println(<span class="hljs-string">"Max Value : "</span>+max_val);
+        <span class="hljs-keyword">int</span> min_val = numbers.stream().min((x,y)-&gt;x&lt;y?-<span class="hljs-number">1</span>:<span class="hljs-number">1</span>).get();
+        System.out.println(<span class="hljs-string">"Min Value : "</span>+min_val);
+
+    }
+}
+</code></pre>
+<p>最大值:150
+最小值:100</p>
+<h2 id="示例使用-reduce方法求和">示例:使用 reduce()方法求和</h2>
+<p><code>reduce()</code>是一种将流中的元素简化为单个元素的方法，可用于获取所有元素的总和。见下面的例子。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.Optional;
+<span class="hljs-keyword">import</span> java.util.stream.Stream;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        List&lt;Integer&gt; numbers = <span class="hljs-keyword">new</span> ArrayList&lt;Integer&gt;();  
+        numbers.add(<span class="hljs-number">100</span>);
+        numbers.add(<span class="hljs-number">110</span>);
+        numbers.add(<span class="hljs-number">120</span>);
+        numbers.add(<span class="hljs-number">150</span>);
+        System.out.println(numbers);
+        Stream&lt;Integer&gt; stream = numbers.stream();
+        Optional&lt;Integer&gt; sum = stream.reduce(Integer::sum); 
+        System.out.println(<span class="hljs-string">"Sum = "</span>+sum.get());
+
+    }
+}
+</code></pre>
+<p>【100，110，120，150】
+总和= 480</p>
+<h2 id="示例计算流元素">示例:计算流元素</h2>
+<p>有一个<code>count()</code>方法可以用来知道流中元素的数量。请看下面的例子。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Stream;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        List&lt;Integer&gt; numbers = <span class="hljs-keyword">new</span> ArrayList&lt;Integer&gt;();  
+        numbers.add(<span class="hljs-number">100</span>);
+        numbers.add(<span class="hljs-number">110</span>);
+        numbers.add(<span class="hljs-number">120</span>);
+        numbers.add(<span class="hljs-number">150</span>);
+        System.out.println(numbers);
+        Stream&lt;Integer&gt; stream = numbers.stream();
+        <span class="hljs-keyword">long</span> count = stream.count(); 
+        System.out.println(<span class="hljs-string">"Total Values = "</span>+count);
+
+    }
+}
+</code></pre>
+<p>【100，110，120，150】
+总值= 4</p>
+<h2 id="示例列表到集合转换">示例:列表到集合转换</h2>
+<p>有时我们需要将流从一种类型转换成另一种类型，然后我们在 Collectors 类中有预定义的方法。例如，要将列表转换为集合，我们可以使用<code>toSet()</code>方法。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.Set;
+<span class="hljs-keyword">import</span> java.util.stream.Collectors;
+<span class="hljs-keyword">import</span> java.util.stream.Stream;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        List&lt;Integer&gt; numbers = <span class="hljs-keyword">new</span> ArrayList&lt;Integer&gt;();  
+        numbers.add(<span class="hljs-number">100</span>);
+        numbers.add(<span class="hljs-number">110</span>);
+        numbers.add(<span class="hljs-number">120</span>);
+        numbers.add(<span class="hljs-number">150</span>);
+        numbers.add(<span class="hljs-number">110</span>);
+        System.out.println(numbers);
+        Stream&lt;Integer&gt; stream = numbers.stream();
+        Set&lt;Integer&gt; set = stream.collect(Collectors.toSet());
+        System.out.println(<span class="hljs-string">"Set Values = "</span>+set);
+
+    }
+}
+</code></pre>
+<p>【100，110，120，150，110】
+设定值=【100，150，120，110】</p>
+<h2 id="示例列表到数组的转换">示例:列表到数组的转换</h2>
+<p>这是从一种类型转换到另一种类型的另一个例子。这里，我们使用流的<code>toArray()</code>方法将列表转换为数组。它返回一个对象数组。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Stream;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        List&lt;Integer&gt; numbers = <span class="hljs-keyword">new</span> ArrayList&lt;Integer&gt;();  
+        numbers.add(<span class="hljs-number">100</span>);
+        numbers.add(<span class="hljs-number">110</span>);
+        numbers.add(<span class="hljs-number">120</span>);
+        numbers.add(<span class="hljs-number">150</span>);
+        numbers.add(<span class="hljs-number">110</span>);
+        System.out.println(numbers);
+        Stream&lt;Integer&gt; stream = numbers.stream();
+        Object[] intArray = stream.toArray();
+        <span class="hljs-keyword">for</span>(Object element:intArray) {
+            System.out.print(element+<span class="hljs-string">" "</span>);
+        }
+    }
+}
+</code></pre>
+<p>【100、110、120、150、110】
+100 110 120 150 110</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0818.html" class="navigation navigation-prev " aria-label="Previous page: Java Optional类">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0820.html" class="navigation navigation-next " aria-label="Next page: Java 8 改进的类型推断">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 8 流 API","level":"1.1.13","depth":2,"next":{"title":"Java 8 改进的类型推断","level":"1.1.14","depth":2,"path":"0820.md","ref":"0820.md","articles":[]},"previous":{"title":"Java Optional类","level":"1.1.12","depth":2,"path":"0818.md","ref":"0818.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0819.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:51.159Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

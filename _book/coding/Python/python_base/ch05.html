@@ -1,0 +1,702 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ch05. Python 的三种格式化输出方法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch06.html" />
+    
+    
+    <link rel="prev" href="ch04.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Python基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    ch01. 初识 Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    ch02. Python 运算符与基本数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    ch03. 玩转 Python 字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    ch04. Python 序列结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.5" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    ch05. Python 的三种格式化输出方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    ch06. Python 常用内置函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    ch07. Python 程序流程控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="ch08.html">
+            
+                <a href="ch08.html">
+            
+                    
+                    ch08. Python 标准库和扩展库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="ch09.html">
+            
+                <a href="ch09.html">
+            
+                    
+                    ch09. 常用 Python 标准库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="ch10.html">
+            
+                <a href="ch10.html">
+            
+                    
+                    ch10. 函数Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ch11.html">
+            
+                <a href="ch11.html">
+            
+                    
+                    ch11. 面向对象程序设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="ch12.html">
+            
+                <a href="ch12.html">
+            
+                    
+                    ch12. 文件和异常
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ch13.html">
+            
+                <a href="ch13.html">
+            
+                    
+                    ch13. 迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="ch14.html">
+            
+                <a href="ch14.html">
+            
+                    
+                    ch14. Python 奇技淫巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ch05. Python 的三种格式化输出方法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="（五）python语句的格式化输出">（五）Python语句的格式化输出</h1>
+<blockquote>
+<p>格式化数据的三种方法</p>
+<ol>
+<li><code>%</code></li>
+<li><code>format</code></li>
+<li><code>f-string</code>（Python version &gt;= 3.6）</li>
+</ol>
+</blockquote>
+<h2 id="1--方法">1. <code>%</code> 方法</h2>
+<h3 id="11-整数的输出">1.1 整数的输出</h3>
+<p>① 整数的格式化输出</p>
+<p>整数使用 <code>%d</code> （同样适用于八进制和十六进制）进行格式化输出。</p>
+<p>语法：<code>print('%nd' % num)</code></p>
+<p>扩展：<code>print('%nd %-md ...' % (num1, num2 ...))</code></p>
+<p>含义：<code>%</code> 相当于占位符，<code>m, n</code> 是所占的位数， 占位符和实际数字（num1,num2）之间的 <code>%</code> 是分隔符。默认情况下数字输出的是向右边对齐，少位的自动补充。在 <code>m,n</code> 前加上 <code>-</code> 号则向左对齐。</p>
+<p>② 整数的按照指定进制输出</p>
+<ul>
+<li>输出数字的十进制：<code>print('%d' % num1)</code></li>
+<li>输出数字的八进制：<code>print('%o' % num1)</code></li>
+<li>输出数字的十六进制：<code>print('%x' % num3)</code></li>
+<li>输出数字的十六进制（大写）：<code>print('%X' % num3)</code></li>
+</ul>
+<h3 id="12-浮点数输出">1.2 浮点数输出</h3>
+<p>①  <code>%m.nf</code> </p>
+<p><code>m</code> 指浮点数所占的总位数，前面不加 <code>-</code> 号则向右对齐，加了则向左对齐，不足则自动补充。<code>n</code> 是指小数点后保留的位数，按照四舍五入舍去多余位数，且默认是包留6位小数。</p>
+<p>② <code>%m.ne</code> </p>
+<p><code>%e</code> 是以科学计数法输出。<code>m</code> 是指整个科学计数法的位数，例如 <code>1.23e+03</code> 的位数为 <code>8</code>。<code>n</code> 是保留小数点的位数。</p>
+<p>③ <code>%g</code></p>
+<p><code>%g</code> 是 <code>%f</code> 和 <code>%e</code> 的简写。在保证六位有效数字的前提下，使用小数方式，否则使用科学计数法。</p>
+<h3 id="13-字符串输出">1.3 字符串输出</h3>
+<p>语法：<code>%m.ns</code></p>
+<p>含义：<code>m</code> 是字符串所占的位数，默认向右对齐，在 <code>m</code> 前面加上 <code>-</code> 号则向左对齐，不够则自动补齐。 <code>n</code> 是截取字符串的个数（从前往后）。</p>
+<h2 id="2-format-函数">2. <code>format()</code> 函数</h2>
+<blockquote>
+<p>相对上述基本格式化输出方法，<code>format</code> 的方法虽然繁琐些，但功能更加强大。 <code>format()</code> 函数把字符串当作一个模板，通过传入的参数（可传入的参数无限制）进行格式化，使用 <code>{}</code> 和  <code>:</code> 当作占位符。</p>
+</blockquote>
+<h3 id="21-格式化字符串">2.1 格式化字符串</h3>
+<p>语法：<code>str.format(params)</code> </p>
+<p>说明：<code>str</code> 是模板字符串，<code>params</code> 是以逗号 <code>,</code> 隔开的一个个的参数。</p>
+<h4 id="①-位置匹配">① 位置匹配</h4>
+<ul>
+<li><p>无编号位置匹配</p>
+<pre><code class="lang-Python">print(<span class="hljs-string">'{} {}'</span>.format(<span class="hljs-string">'hello'</span>, <span class="hljs-string">'world'</span>)) <span class="hljs-comment"># hello world</span>
+</code></pre>
+</li>
+<li><p>有编号位置匹配（可打乱顺序）</p>
+<pre><code class="lang-Python">print(<span class="hljs-string">'{1} {1} {0}'</span>.format(<span class="hljs-string">'hello'</span>, <span class="hljs-string">'world'</span>)) <span class="hljs-comment"># world hello hello</span>
+</code></pre>
+</li>
+<li><p>带关键字位置匹配</p>
+<pre><code class="lang-Python">print(<span class="hljs-string">'{name},{tool}'</span>.format(name=<span class="hljs-string">'murphy'</span>,tool=<span class="hljs-string">'vscode'</span>)) <span class="hljs-comment"># murphy,vscode</span>
+</code></pre>
+</li>
+</ul>
+<h4 id="②-通过列表（元组）索引设置参数">② 通过列表（元组）索引设置参数</h4>
+<pre><code class="lang-Python">sites = [<span class="hljs-string">'zhihu'</span>, <span class="hljs-string">'google'</span>, <span class="hljs-string">'jetbrians'</span>]
+print(<span class="hljs-string">'{0[1]} {0[0]} {0[2]}'</span>.format(sites)) <span class="hljs-comment"># google zhihu jetbrians</span>
+</code></pre>
+<h4 id="③-通过字典设置参数（-不能少）">③ 通过字典设置参数（<code>**</code> 不能少）</h4>
+<pre><code class="lang-Python">dict = {<span class="hljs-string">'a'</span>: <span class="hljs-string">'Alan'</span>, <span class="hljs-string">'b'</span>: <span class="hljs-string">'Brown'</span>}
+print(<span class="hljs-string">'{a} and {b}'</span>.format(**dict)) <span class="hljs-comment"># Alan and Brown</span>
+</code></pre>
+<h4 id="④-截取和格式化字符串">④ 截取和格式化字符串</h4>
+<p>语法：<code>str.format()</code></p>
+<p>模板字符串<code>str</code>：<code>&lt;序号&gt;:&lt;填充字符&gt;&lt;对齐方式&gt;&lt;宽度&gt;&lt;截取位数&gt;&lt;s&gt;</code></p>
+<pre><code>print('{:*^9.3s}'.format('hello'))
+# 意思是截取前3位，共占9位，截取的字符串居中，多余的位置用*填充
+# output:***hell***
+
+print('{:@&gt;10s}'.format('world'))
+# output:@@@@@world
+</code></pre><h3 id="22-格式化数字">2.2 格式化数字</h3>
+<p>语法：<code>str.format(params)</code></p>
+<p>说明：模板字符串 <code>str</code> 不仅包括了<strong>参数序号</strong>（从<code>0</code> 开始），还包括了<strong>格式控制标记</strong>（可选）信息。</p>
+<p><code>str</code> 的格式：<code>{&lt;参数序号&gt;:&lt;格式控制标记&gt;}</code>   ==  <code>{&lt;参数序号&gt;:&lt;填充字符&gt;&lt;对齐方向&gt;&lt;宽度&gt;&lt;,&gt;&lt;.精度&gt;&lt;数字类型&gt;</code>}</p>
+<p>具体参考如下表：（注意各项标记信息的形式，<code>&lt;&gt;</code> 只是为了提高可读性）</p>
+<table>
+<thead>
+<tr>
+<th><code>&lt;参数序号&gt;</code></th>
+<th><code>:</code></th>
+<th><code>&lt;填充&gt;</code></th>
+<th><code>&lt;对齐&gt;</code></th>
+<th><code>&lt;宽度&gt;</code></th>
+<th><code>&lt;,&gt;</code></th>
+<th><code>&lt;.精度&gt;</code></th>
+<th><code>&lt;类型&gt;</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>当<code>format()</code> 接收多个数字时使用</td>
+<td>分隔符</td>
+<td>用于填充多余位置的字符</td>
+<td>指定了数字的对齐方向；<code>&lt;</code> 指向左对齐，<code>&gt;</code> 指向右对齐，<code>^</code> 居中对齐</td>
+<td>输出数所占位位数</td>
+<td>开启数字（整数和浮点数）的千分位分隔符</td>
+<td>浮点数小数部分的精度或字串符截取的长度</td>
+<td>整数类型（<code>d</code>,<code>b</code>,<code>o</code>,<code>x</code>,<code>X</code>），浮点数类型（<code>f</code>）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="①-格式化整数">① 格式化整数</h4>
+<ul>
+<li><p>以 <code>,</code> 分隔千分位</p>
+<pre><code class="lang-Python">print(<span class="hljs-string">'{:,d}'</span>.format(<span class="hljs-number">10000000</span>)) 
+<span class="hljs-comment"># output:10,000,000</span>
+</code></pre>
+</li>
+<li><p>以科学计数法输出（默认包留6位小数）</p>
+<pre><code class="lang-Python">print(<span class="hljs-string">'{:e}'</span>.format(<span class="hljs-number">12345678</span>))
+<span class="hljs-comment"># output:1.234568e+07</span>
+</code></pre>
+</li>
+<li><p>进制转换格式化</p>
+<ul>
+<li>十进制输出：<code>{:d}.format(n)</code> </li>
+<li>二进制输出：<code>{:b}.format(n)</code></li>
+<li>二进制输出（带前缀 <code>0b</code> ）：<code>{:#b}.format(n)</code></li>
+<li>八进制输出：<code>{:o}.format(n)</code></li>
+<li>八进制输出（带前缀 <code>0o</code> ）：<code>{:#o}.format(n)</code></li>
+<li>十六进制输出：<code>{:x}.format(n)</code></li>
+<li>十进制输出（大写）：<code>{:X}.format(n)</code></li>
+<li>十进制输出（带前缀 <code>0x</code>）：<code>{:#x}.format(n)</code></li>
+</ul>
+<blockquote>
+<p>使用 <code>format()</code> 进制转换还有另一种形式：</p>
+<p><code>print(format(n, 'x')</code></p>
+<p><code>print(format(n, 'X'))</code></p>
+<p><code>print(format(n, '#X'))</code></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="②-格式化浮点数">② 格式化浮点数</h4>
+<ul>
+<li><p>包留小数点后3位（四舍五入）</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">import</span> math
+print(<span class="hljs-string">'{:.3f}'</span>.format(math.pi))
+<span class="hljs-comment"># output:3.142</span>
+</code></pre>
+</li>
+<li><p>科学计数法</p>
+<pre><code class="lang-Python">print(<span class="hljs-string">'{:.3e}'</span>.format(<span class="hljs-number">12345.678976</span>))
+<span class="hljs-comment"># output:1.235e+04</span>
+</code></pre>
+</li>
+<li><p>舍去小数部分（不循序四舍五入）</p>
+<pre><code class="lang-Python">print(<span class="hljs-string">'{:.0f}.format(2020.6562)'</span>)
+<span class="hljs-comment"># output:2020</span>
+</code></pre>
+</li>
+<li><p>百分比 <code>{:.2%}</code></p>
+<pre><code class="lang-Python">print(<span class="hljs-string">'{:.2%}'</span>.format(<span class="hljs-number">0.25678</span>))
+<span class="hljs-comment"># output:25.68%</span>
+</code></pre>
+</li>
+<li><p>带符号包留小数点后2位</p>
+<pre><code class="lang-Python">print(<span class="hljs-string">'{:+.2f}.format(3.14159)'</span>)
+<span class="hljs-comment"># output:+3.14</span>
+</code></pre>
+</li>
+</ul>
+<h2 id="3-f-string-方法">3. <code>f-string</code> 方法</h2>
+<p><code>f-string</code>，亦称为格式化字符串常量（formatted string literals），是Python3.6新引入的一种字符串格式化方法，该方法源于<a href="https://Python.org/dev/peps/pep-0498/" target="_blank">PEP 498 – Literal String Interpolation</a>，主要目的是使格式化字符串的操作更加简便。<code>`f-string</code> 在形式上是以 <code>f</code> 或 <code>F</code> 修饰符引领的字符串（<code>f'xxx'</code> 或 <code>F'xxx'</code>），以大括号 <code>{}</code> 标明被替换的字段；<code>f-string</code> 在本质上并不是字符串常量，而是一个在运行时运算求值的表达式：</p>
+<blockquote>
+<p>While other string literals always have a constant value, formatted strings are really expressions evaluated at run time.
+（与具有恒定值的其它字符串常量不同，格式化字符串实际上是运行时运算求值的表达式。）</p>
+<p>—— <a href="https://docs.Python.org/3/reference/lexical_analysis.html#formatted-string-literals" target="_blank">Python Documentation</a></p>
+</blockquote>
+<p><code>f-string</code>在功能方面不逊于传统的<code>%-formatting</code>语句和<code>str.format()</code>函数，同时性能又优于二者，且使用起来也更加简洁明了，因此对于Python3.6及以后的版本，推荐使用<code>f-string</code>进行字符串格式化。</p>
+<h3 id="简单使用">简单使用</h3>
+<p><code>f-string</code>用大括号 <code>{}</code> 表示被替换字段，其中直接填入替换内容：</p>
+<pre><code class="lang-cpp">&gt;&gt;&gt; name = 'Eric'
+&gt;&gt;&gt; f'Hello, my name is {name}'
+'Hello, my name is Eric'
+
+&gt;&gt;&gt; number = 7
+&gt;&gt;&gt; f'My lucky number is {number}'
+'My lucky number is 7'
+
+&gt;&gt;&gt; price = 19.99
+&gt;&gt;&gt; f'The price of this book is {price}'
+'The price of this book is 19.99'
+</code></pre>
+<h3 id="表达式求值与函数调用">表达式求值与函数调用</h3>
+<p><code>f-string</code>的大括号<code>{}</code>可以填入表达式或调用函数，Python会求出其结果并填入返回的字符串内：</p>
+<pre><code class="lang-cpp">&gt;&gt;&gt; f'A total number of {24 * 8 + 4}'
+'A total number of 196'
+
+&gt;&gt;&gt; f'Complex number {(2 + 2j) / (2 - 3j)}'
+'Complex number (-0.15384615384615388+0.7692307692307692j)'
+
+&gt;&gt;&gt; name = 'ERIC'
+&gt;&gt;&gt; f'My name is {name.lower()}'
+'My name is eric'
+
+&gt;&gt;&gt; import math
+&gt;&gt;&gt; f'The answer is {math.log(math.pi)}'
+'The answer is 1.1447298858494002'
+</code></pre>
+<h3 id="引号、大括号与反斜杠">引号、大括号与反斜杠</h3>
+<p><code>f-string</code>大括号内所用的引号不能和大括号外的引号定界符冲突，可根据情况灵活切换 <code>'</code>和 <code>"</code>：</p>
+<pre><code class="lang-cpp">&gt;&gt;&gt; f'I am {"Eric"}'
+'I am Eric'
+&gt;&gt;&gt; f'I am {'Eric'}'
+  File "&amp;lt;stdin&amp;gt;", line 1
+    f'I am {'Eric'}'
+               ^
+</code></pre>
+<h2 id="4-关于-print-函数">4. 关于 <code>print()</code> 函数</h2>
+<h3 id="41-print-函数配合-，format-进行数据格式化">4.1 <code>print()</code> 函数配合 <code>%</code>，<code>format()</code> 进行数据格式化</h3>
+<blockquote>
+<p>见上文</p>
+</blockquote>
+<h3 id="42-printn-end">4.2 <code>print(n, end='')</code></h3>
+<p><code>print()</code> 函数输出的时候默认换行，可加上 <code>end=''</code> 使其不换行。</p>
+<pre><code class="lang-Python">print(<span class="hljs-string">'hello'</span>, end=<span class="hljs-string">''</span>)
+</code></pre>
+<p>除此之外，<code>end</code> 还可以是其他值。</p>
+<pre><code>print('hello', end=',')
+</code></pre><h3 id="43-printn1-n2--sep-">4.3 <code>print(n1, n2, ... sep=' ')</code></h3>
+<p><code>sep</code> 指定了数据（n1,n2,...）之间的分隔符</p>
+<h2 id="5-eval">5. <code>eval()</code></h2>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch04.html" class="navigation navigation-prev " aria-label="Previous page: ch04. Python 序列结构">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch06.html" class="navigation navigation-next " aria-label="Next page: ch06. Python 常用内置函数">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ch05. Python 的三种格式化输出方法","level":"1.1.5","depth":2,"next":{"title":"ch06. Python 常用内置函数","level":"1.1.6","depth":2,"path":"ch06.md","ref":"ch06.md","articles":[]},"previous":{"title":"ch04. Python 序列结构","level":"1.1.4","depth":2,"path":"ch04.md","ref":"ch04.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch05.md","mtime":"2025-04-20T02:13:02.373Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:34.729Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

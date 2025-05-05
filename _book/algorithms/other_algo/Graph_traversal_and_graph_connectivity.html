@@ -1,0 +1,609 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>图的遍历和图的连通性 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="Searching.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    算法杂谈
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="Sorting.html">
+            
+                <a href="Sorting.html">
+            
+                    
+                    10 大排序算法总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="Searching.html">
+            
+                <a href="Searching.html">
+            
+                    
+                    七大查找算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.3" data-path="Graph_traversal_and_graph_connectivity.html">
+            
+                <a href="Graph_traversal_and_graph_connectivity.html">
+            
+                    
+                    图的遍历和图的连通性
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >图的遍历和图的连通性</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="图的遍历">图的遍历</h1>
+<h2 id="概念：">概念：</h2>
+<p>从图中某一顶点出发访遍图中其余顶点，且使每一个顶点仅被访问一次（图的遍历算法是求解图的连通性问题、拓扑排序和求关键路径等算法的基础。）</p>
+<h2 id="深度优先搜索dfs">深度优先搜索(DFS)</h2>
+<ul>
+<li>基本思想:<ul>
+<li>(1)在访问图中某一起始顶点 v 后，由 v 出发，访问它的任一邻接顶点 w1；</li>
+<li>(2)再从 w1 出发，访问与 w1邻接但还未被访问过的顶点 w2；</li>
+<li>(3)然后再从 w2 出发，进行类似的访问，… </li>
+<li>(4)如此进行下去，直至到达所有的邻接顶点都被访问过为止。</li>
+<li>(5)接着，退回一步，退到前一次刚访问过的顶点，看是否还有其它没有被访问的邻接顶点。如果有，则访问此顶点，之后再从此顶点出发，进行与前述类似的访问；如果没有，就再退回一步进行搜索。重复上述过程，直到连通图中所有顶点都被访问过为止。</li>
+</ul>
+</li>
+<li>算法实现(明显是要用到(栈)递归):              <pre><code class="lang-cpp">  Void DFSTraverse( Graph  G, Status (*Visit) (int v))
+  {         // 对图G做深度优先遍历
+      for (v=0; v&lt;G.vexnum; ++v)  
+          visited[v] = FALSE;      // 访问标志数组初始化
+      for (v=0; v&lt;G.vexnum; ++v) //这个循环是防止图是非连通的
+          if (!visited[v])   DFS(G,v);  // 对尚未访问的顶点调用DFS
+  }
+  void DFS (Graph G,int v)//从第v个顶点出发递归地深度优先遍历图G
+  {
+  visited[v]=TRUE ;  Visit(v);  //访问第v个顶点 
+  for(w=FirstAdjVex(G,v)/*从图的第v个结点开始*/; w&gt;=0; w=NextAdjVex(G,v,w)/*v结点开始的w结点的下一个结点*/)
+      if (!visited[w])   DFS(G,w); 
+      //对v的尚未访问的邻接顶点w递归调用DFS 
+  }
+</code></pre>
+</li>
+<li>DFS时间复杂度分析：<ul>
+<li>(1)如果用邻接矩阵来表示图，遍历图中每一个顶点都要从头扫描该顶点所在行，因此遍历全部顶点所需的时间为O(n2)。</li>
+<li>(2)如果用邻接表来表示图，虽然有 2e 个表结点，但只需扫描 e 个结点即可完成遍历，加上访问 n 个头结点的时间，因此遍历图的时间复杂度为O(n+e)。<h2 id="广度优先搜索bfs">广度优先搜索(BFS)</h2>
+</li>
+</ul>
+</li>
+<li>基本思想：<ul>
+<li>(1)从图中某个顶点V0出发，并在访问此顶点后依次访问V0的所有未被访问过的邻接点，之后按这些顶点被访问的先后次序依次访问它们的邻接点，直至图中所有和V0                                     有 路径相通的顶点都被访问到；</li>
+<li>(2)若此时图中尚有顶点未被访问(非连通图)，则另选图中一个未曾被访问的顶点作起始点；</li>
+<li>(3)重复上述过程，直至图中所有顶点都被访问到为止。</li>
+</ul>
+</li>
+<li>算法实现(明显是要用到队列)       <pre><code class="lang-cpp">  void BFSTraverse(Graph G, Status (*Visit)(int v)){
+              //使用辅助队列Q和访问标志数组visited[v] 
+  for (v=0; v&lt;G.vexnum; ++v)  visited[v] = FALSE; 
+  InitQueue(Q); // 置空的辅助队列Q
+  for ( v=0; v&lt;G.vexnum; ++v )//外层for循环是防止有非连通图的情况
+      if ( !visited[v]) {   // v尚未访问
+      visited[v] = TRUE;   Visit(v);
+      EnQueue(Q, v);    // v入队列 
+      while (!QueueEmpty(Q)) {
+          DeQueue(Q, u);  // 队头元素出队并置为u
+          for (w=FirstAdjVex(G,u);w&gt;=0;w=NextAdjVex(G,u,w)）
+          if ( ! visited[w]){  
+          //w为u的尚未访问的邻接顶点
+              visited[w] = TRUE; Visit(w);
+              EnQueue(Q, w);
+          }   //if
+      }   //while
+  }if
+  }  // BFSTraverse
+</code></pre>
+</li>
+<li>BFS时间复杂度分析：<ul>
+<li>(1) 如果使用邻接表来表示图，则BFS循环的总时间代价为 d0 + d1 + … + dn-1 = 2e=O(e)，其中的 di 是顶点 i 的度</li>
+<li>(2)如果使用邻接矩阵，则BFS对于每一个被访问到的顶点，都要循环检测矩阵中的整整一行（ n 个元素），总的时间代价为O(n2)。</li>
+</ul>
+</li>
+</ul>
+<h1 id="图的连通性问题：">图的连通性问题：</h1>
+<h2 id="相关术语：">相关术语：</h2>
+<ul>
+<li>连通分量的顶点集：即从该连通分量的某一顶点出发进行搜索所得到的顶点访问序列；</li>
+<li>生成树：某连通分量的极小连通子图(深度优先搜索生成树和广度优先搜索生成树)；</li>
+<li>生成森林：非连通图的各个连通分量的极小连通子图构成的集合。<h2 id="最小生成树：">最小生成树：</h2>
+<h3 id="kruskal算法">Kruskal算法:</h3>
+</li>
+<li>先构造一个只含n个顶点的森林，然后依权值从小到大从连通网中选择边加入到森林中去，并使森林中不产生回路，直至森林变成一棵树为止(详细代码见尾文)。
+<img src="img/20140219121512625.jpg" alt=""></img><h3 id="prim算法（还是看上图理解）：">Prim算法（还是看上图理解）：</h3>
+</li>
+<li>假设原来所有节点集合为V,生成的最小生成树的结点集合为U,则首先把起始点V1加入到U中,然后看比较V1的所有相邻边，选择一条最小的V3结点加入到集合U中,
+然后看剩下的v-U结点与U中结点的距离，同样选择最小的.........一直进行下去直到边数=n-1即可。
+<img src="img/20140219122554125.jpg" alt=""></img><h4 id="算法设计思路">算法设计思路:</h4>
+</li>
+<li>增设一辅助数组Closedge[ n ]，每个数组分量都有两个域：
+<img src="img/20140219122738859.jpg" alt=""></img>
+要求：求最小的Colsedge[ i ].lowcost<br></br><img src="img/20140219123652625.jpg" alt=""></img><h2 id="两种算法比较：">两种算法比较：</h2>
+</li>
+<li>普里姆算法的时间复杂度为 O(n2)，与网中的边数无关,适于稠密图；</li>
+<li>克鲁斯卡尔算法需对 e 条边按权值进行排序，其时间复杂度为 O(eloge)，e为网中的边数,适于稀疏图。                  <h2 id="完整最小生成树两种算法实现：">完整最小生成树两种算法实现：</h2>
+</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>; 
+
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> MAX_VERTEX_NUM <span class="hljs-number">20</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> OK <span class="hljs-number">1</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> ERROR <span class="hljs-number">0</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">define</span> MAX <span class="hljs-number">1000</span></span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> Arcell
+{
+    <span class="hljs-keyword">double</span> adj;<span class="hljs-comment">//顶点类型</span>
+}Arcell,AdjMatrix[MAX_VERTEX_NUM][MAX_VERTEX_NUM];
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span>
+{
+    <span class="hljs-keyword">char</span> vexs[MAX_VERTEX_NUM]; <span class="hljs-comment">//节点数组,</span>
+    AdjMatrix arcs; <span class="hljs-comment">//邻接矩阵</span>
+    <span class="hljs-keyword">int</span> vexnum,arcnum; <span class="hljs-comment">//图的当前节点数和弧数</span>
+}MGraph;
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> Pnode <span class="hljs-comment">//用于普利姆算法</span>
+{
+    <span class="hljs-keyword">char</span> adjvex; <span class="hljs-comment">//节点</span>
+    <span class="hljs-keyword">double</span> lowcost; <span class="hljs-comment">//权值</span>
+}Pnode,Closedge[MAX_VERTEX_NUM]; <span class="hljs-comment">//记录顶点集U到V-U的代价最小的边的辅助数组定义</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> Knode <span class="hljs-comment">//用于克鲁斯卡尔算法中存储一条边及其对应的2个节点</span>
+{
+    <span class="hljs-keyword">char</span> ch1; <span class="hljs-comment">//节点1</span>
+    <span class="hljs-keyword">char</span> ch2; <span class="hljs-comment">//节点2</span>
+    <span class="hljs-keyword">double</span> value;<span class="hljs-comment">//权值</span>
+}Knode,Dgevalue[MAX_VERTEX_NUM];
+<span class="hljs-comment">//-----------------------------------------------------------------------------------</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">CreateUDG</span><span class="hljs-params">(MGraph &amp; G,Dgevalue &amp; dgevalue)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">LocateVex</span><span class="hljs-params">(MGraph G,<span class="hljs-keyword">char</span> ch)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">Minimum</span><span class="hljs-params">(MGraph G,Closedge closedge)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MiniSpanTree_PRIM</span><span class="hljs-params">(MGraph G,<span class="hljs-keyword">char</span> u)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Sortdge</span><span class="hljs-params">(Dgevalue &amp; dgevalue,MGraph G)</span></span>;
+<span class="hljs-comment">//-----------------------------------------------------------------------------------</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">CreateUDG</span><span class="hljs-params">(MGraph &amp; G,Dgevalue &amp; dgevalue)</span> <span class="hljs-comment">//构造无向加权图的邻接矩阵</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j,k;
+    <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"请输入图中节点个数和边/弧的条数："</span>;
+    <span class="hljs-built_in">cin</span>&gt;&gt;G.vexnum&gt;&gt;G.arcnum;
+    <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"请输入节点："</span>;
+    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;i&lt;G.vexnum;++i)
+        <span class="hljs-built_in">cin</span>&gt;&gt;G.vexs[i];
+    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;i&lt;G.vexnum;++i)<span class="hljs-comment">//初始化数组</span>
+    {
+        <span class="hljs-keyword">for</span>(j=<span class="hljs-number">0</span>;j&lt;G.vexnum;++j)
+        {
+            G.arcs[i][j].adj=MAX;
+        }
+    }
+    <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"请输入一条边依附的定点及边的权值："</span>&lt;&lt;endl;
+    <span class="hljs-keyword">for</span>(k=<span class="hljs-number">0</span>;k&lt;G.arcnum;++k)
+    {
+        <span class="hljs-built_in">cin</span> &gt;&gt; dgevalue[k].ch1 &gt;&gt; dgevalue[k].ch2 &gt;&gt; dgevalue[k].value;
+        i = LocateVex(G,dgevalue[k].ch1);
+        j = LocateVex(G,dgevalue[k].ch2);
+        G.arcs[i][j].adj = dgevalue[k].value;
+        G.arcs[j][i].adj = G.arcs[i][j].adj;
+    }
+    <span class="hljs-keyword">return</span> OK;
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">LocateVex</span><span class="hljs-params">(MGraph G,<span class="hljs-keyword">char</span> ch)</span> <span class="hljs-comment">//确定节点ch在图G.vexs中的位置</span>
+</span>{
+    <span class="hljs-keyword">int</span> a ;
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;G.vexnum; i++)
+    {
+        <span class="hljs-keyword">if</span>(G.vexs[i] == ch)
+            a=i;
+    }
+    <span class="hljs-keyword">return</span> a;
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MiniSpanTree_PRIM</span><span class="hljs-params">(MGraph G,<span class="hljs-keyword">char</span> u)</span><span class="hljs-comment">//普利姆算法求最小生成树</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j,k;
+    Closedge closedge;
+    k = LocateVex(G,u);
+    <span class="hljs-keyword">for</span>(j=<span class="hljs-number">0</span>; j&lt;G.vexnum; j++)
+    {
+        <span class="hljs-keyword">if</span>(j != k)
+        {
+            closedge[j].adjvex = u;
+            closedge[j].lowcost = G.arcs[k][j].adj;
+        }
+    }
+    closedge[k].lowcost = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>; i&lt;G.vexnum; i++)
+    {
+        k = Minimum(G,closedge);
+        <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"("</span>&lt;&lt;closedge[k].adjvex&lt;&lt;<span class="hljs-string">","</span>&lt;&lt;G.vexs[k]&lt;&lt;<span class="hljs-string">","</span>&lt;&lt;closedge[k].lowcost&lt;&lt;<span class="hljs-string">")"</span>&lt;&lt;endl;
+        closedge[k].lowcost = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(j=<span class="hljs-number">0</span>; j&lt;G.vexnum; ++j)<span class="hljs-comment">//新顶点并入U后重新选择最小边</span>
+        {
+            <span class="hljs-keyword">if</span>(G.arcs[k][j].adj &lt; closedge[j].lowcost)
+            {
+                closedge[j].adjvex = G.vexs[k];
+                closedge[j].lowcost= G.arcs[k][j].adj;
+            }
+        }
+    }
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">Minimum</span><span class="hljs-params">(MGraph G,Closedge closedge)</span> <span class="hljs-comment">//求closedge中权值最小的边，并返回其顶点在vexs中的位置</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j;
+    <span class="hljs-keyword">double</span> k = <span class="hljs-number">1000</span>;
+    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i&lt;G.vexnum; i++)
+    {
+        <span class="hljs-keyword">if</span>(closedge[i].lowcost != <span class="hljs-number">0</span> &amp;&amp; closedge[i].lowcost &lt; k)
+        {
+            k = closedge[i].lowcost;
+            j = i;
+        }
+    }
+    <span class="hljs-keyword">return</span> j;
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MiniSpanTree_KRSL</span><span class="hljs-params">(MGraph G,Dgevalue &amp; dgevalue)</span><span class="hljs-comment">//克鲁斯卡尔算法求最小生成树</span>
+</span>{
+    <span class="hljs-keyword">int</span> p1,p2,i,j;
+    <span class="hljs-keyword">int</span> bj[MAX_VERTEX_NUM]; <span class="hljs-comment">//标记数组</span>
+    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i&lt;G.vexnum; i++) <span class="hljs-comment">//标记数组初始化</span>
+        bj[i]=i;
+    Sortdge(dgevalue,G);<span class="hljs-comment">//将所有权值按从小到大排序</span>
+    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i&lt;G.arcnum; i++)
+    {
+        p1 = bj[LocateVex(G,dgevalue[i].ch1)];
+        p2 = bj[LocateVex(G,dgevalue[i].ch2)];
+        <span class="hljs-keyword">if</span>(p1!=p2)
+        {
+            <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"("</span>&lt;&lt;dgevalue[i].ch1&lt;&lt;<span class="hljs-string">","</span>&lt;&lt;dgevalue[i].ch2&lt;&lt;<span class="hljs-string">","</span>
+                &lt;&lt;dgevalue[i].value&lt;&lt;<span class="hljs-string">")"</span>&lt;&lt;endl;
+            <span class="hljs-keyword">for</span>(j=<span class="hljs-number">0</span>; j&lt;G.vexnum; j++)
+            {
+                <span class="hljs-keyword">if</span>(bj[j] == p2)
+                    bj[j] = p1;
+            }
+        }
+    }
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Sortdge</span><span class="hljs-params">(Dgevalue &amp; dgevalue,MGraph G)</span><span class="hljs-comment">//对dgevalue中各元素按权值按从小到大排序</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j;
+    <span class="hljs-keyword">double</span> temp;
+    <span class="hljs-keyword">char</span> ch1,ch2;
+    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i&lt;G.arcnum; i++)
+    {
+        <span class="hljs-keyword">for</span>(j=i; j&lt;G.arcnum; j++)
+        {
+            <span class="hljs-keyword">if</span>(dgevalue[i].value &gt; dgevalue[j].value)
+            {
+                temp = dgevalue[i].value;
+                dgevalue[i].value = dgevalue[j].value;
+                dgevalue[j].value = temp;
+                ch1 = dgevalue[i].ch1;
+                dgevalue[i].ch1 = dgevalue[j].ch1;
+                dgevalue[j].ch1 = ch1;
+                ch2 = dgevalue[i].ch2;
+                dgevalue[i].ch2 = dgevalue[j].ch2;
+                dgevalue[j].ch2 = ch2;
+            }
+        }
+    }
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">int</span> i,j;
+    MGraph G;
+    <span class="hljs-keyword">char</span> u;
+    Dgevalue dgevalue;
+    CreateUDG(G,dgevalue);
+    <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"图的邻接矩阵为："</span>&lt;&lt;endl;
+    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i&lt;G.vexnum; i++)
+    {
+        <span class="hljs-keyword">for</span>(j=<span class="hljs-number">0</span>; j&lt;G.vexnum; j++)
+            <span class="hljs-built_in">cout</span> &lt;&lt; G.arcs[i][j].adj&lt;&lt;<span class="hljs-string">" "</span>;
+        <span class="hljs-built_in">cout</span>&lt;&lt;endl;
+    }
+    <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"=============普利姆算法===============\n"</span>;
+    <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"请输入起始点："</span>;
+    <span class="hljs-built_in">cin</span>&gt;&gt;u;
+    <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"构成最小代价生成树的边集为：\n"</span>;
+    MiniSpanTree_PRIM(G,u);
+    <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"============克鲁斯科尔算法=============\n"</span>;
+    <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"构成最小代价生成树的边集为：\n"</span>;
+    MiniSpanTree_KRSL(G,dgevalue);
+}
+</code></pre>
+<p>运行结果：<br></br><img src="img/20140219123300296.jpg" alt=""></img></p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Searching.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 七大查找算法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"图的遍历和图的连通性","level":"1.1.3","depth":2,"previous":{"title":"七大查找算法","level":"1.1.2","depth":2,"path":"Searching.md","ref":"Searching.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"Graph_traversal_and_graph_connectivity.md","mtime":"2024-01-20T07:01:11.389Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:58.808Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

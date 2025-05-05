@@ -1,0 +1,623 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 接口默认和静态方法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0817.html" />
+    
+    
+    <link rel="prev" href="0815.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0807.html">
+            
+                <a href="0807.html">
+            
+                    
+                    Java 8 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0808.html">
+            
+                <a href="0808.html">
+            
+                    
+                    Java 8 Lambda 表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0809.html">
+            
+                <a href="0809.html">
+            
+                    
+                    Java 反射 API——Parameter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0810.html">
+            
+                <a href="0810.html">
+            
+                    
+                    Java 8 Base64类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0811.html">
+            
+                <a href="0811.html">
+            
+                    
+                    Java 8 Collectors类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0812.html">
+            
+                <a href="0812.html">
+            
+                    
+                    Java 8 并行数组排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0813.html">
+            
+                <a href="0813.html">
+            
+                    
+                    Java 8 方法引用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0814.html">
+            
+                <a href="0814.html">
+            
+                    
+                    Java 8 forEach()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0815.html">
+            
+                <a href="0815.html">
+            
+                    
+                    Java 8 StringJoiner类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.10" data-path="0816.html">
+            
+                <a href="0816.html">
+            
+                    
+                    Java 接口默认和静态方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0817.html">
+            
+                <a href="0817.html">
+            
+                    
+                    Java 8 函数式接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0818.html">
+            
+                <a href="0818.html">
+            
+                    
+                    Java Optional类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0819.html">
+            
+                <a href="0819.html">
+            
+                    
+                    Java 8 流 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0820.html">
+            
+                <a href="0820.html">
+            
+                    
+                    Java 8 改进的类型推断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0821.html">
+            
+                <a href="0821.html">
+            
+                    
+                    Java 8 日期和时间 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0822.html">
+            
+                <a href="0822.html">
+            
+                    
+                    Java 谓词
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 接口默认和静态方法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-接口默认和静态方法">Java 接口默认和静态方法</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-8/java-interface-default-and-static-methods" target="_blank">https://www.studytonight.com/java-8/java-interface-default-and-static-methods</a></p>
+</blockquote>
+<p>Java 中的接口是一个用来实现抽象的概念。它只包含抽象方法，不提供任何实现，但是在 Java 8 中，通过添加默认和静态方法来改进接口。现在让我们看看什么是默认和静态方法。</p>
+<h2 id="默认方法">默认方法</h2>
+<p>在界面内使用<strong>默认</strong>关键字声明的方法称为默认方法。这些方法是非抽象方法。添加默认方法的原因是允许开发人员向接口添加新方法，而不影响实现这些接口的类。</p>
+<p>来看看如何在界面中<strong>声明默认方法</strong>。</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Printable</span></span>{
+    <span class="hljs-comment">// Default method</span>
+     <span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> </span>{
+         System.out.println(<span class="hljs-string">"Printing..."</span>);
+     }
+}
+</code></pre>
+<p>我们可以看到上面的界面包含了一个默认的 print()方法，其中包含了 body。</p>
+<p>我们可以在一个界面中拥有<strong>任意数量的默认方法</strong>和抽象方法，看看如何？</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Printable</span></span>{
+    <span class="hljs-comment">// Default method</span>
+     <span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> </span>{
+         System.out.println(<span class="hljs-string">"Printing..."</span>);
+     }
+     <span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print2D</span><span class="hljs-params">()</span> </span>{
+         System.out.println(<span class="hljs-string">"Printing 2D..."</span>);
+     }
+     <span class="hljs-comment">// Abstract methods</span>
+     <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print3D</span><span class="hljs-params">()</span></span>;
+}
+</code></pre>
+<h2 id="示例如何实现具有默认方法的接口">示例:如何实现具有默认方法的接口</h2>
+<p>让我们举一个例子来理解具有默认方法的接口的实现。可以使用实现类对象调用默认方法。这里我们有一个可打印的接口，它包含两个默认方法和一个抽象方法。</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Printable</span></span>{
+    <span class="hljs-comment">// Default method</span>
+     <span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> </span>{
+         System.out.println(<span class="hljs-string">"Printing..."</span>);
+     }
+     <span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print2D</span><span class="hljs-params">()</span> </span>{
+         System.out.println(<span class="hljs-string">"Printing 2D..."</span>);
+     }
+     <span class="hljs-comment">// Abstract methods</span>
+     <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print3D</span><span class="hljs-params">()</span></span>;
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Printable</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print3D</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"Printing 3D..."</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{  
+
+        Demo demo = <span class="hljs-keyword">new</span> Demo();
+        <span class="hljs-comment">// Calling Default Methods</span>
+        demo.print();
+        demo.print2D();
+        <span class="hljs-comment">// Calling Abstract Methods</span>
+        demo.print3D();
+
+    }
+}
+</code></pre>
+<p>印刷...
+印刷 2D...
+3D 打印...</p>
+<h2 id="静态方法">静态方法</h2>
+<p>像默认方法一样，接口允许向其中添加静态方法。我们可以使用 static 关键字在接口内部定义静态方法，并用于定义实用方法。来看看如何在界面中<strong>声明静态方法</strong>。</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Printable</span></span>{
+    <span class="hljs-comment">// Static method</span>
+     <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> </span>{
+         System.out.println(<span class="hljs-string">"Printing..."</span>);
+     }
+}
+</code></pre>
+<p>我们可以在接口中有任意数量的静态方法。从 Java 8 开始，接口可以包含默认的、静态的、抽象的和非抽象的方法。</p>
+<h2 id="示例具有静态方法的接口">示例:具有静态方法的接口</h2>
+<p>在这个例子中，我们有多个静态方法、默认方法和抽象方法。静态方法不会继承到实现类中，因此我们使用接口名称来调用它们。</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Printable</span></span>{
+    <span class="hljs-comment">// Static method</span>
+     <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> </span>{
+         System.out.println(<span class="hljs-string">"Printing..."</span>);
+     }
+     <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print2D</span><span class="hljs-params">()</span> </span>{
+         System.out.println(<span class="hljs-string">"Printing 2D..."</span>);
+     }
+     <span class="hljs-comment">// Default Method</span>
+     <span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print3D</span><span class="hljs-params">()</span> </span>{
+         System.out.println(<span class="hljs-string">"Printing 3D..."</span>);
+     }
+     <span class="hljs-comment">// Abstract Method</span>
+     <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">getInfo</span><span class="hljs-params">()</span></span>;
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Printable</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getInfo</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"This is new style Java 8 Interface"</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{  
+
+        Demo demo = <span class="hljs-keyword">new</span> Demo();
+        <span class="hljs-comment">// Calling static Methods</span>
+        Printable.print();
+        Printable.print2D();
+        <span class="hljs-comment">// Calling default method</span>
+        demo.print3D();
+        <span class="hljs-comment">// Calling Abstract Methods</span>
+        demo.getInfo();
+
+    }
+
+}
+</code></pre>
+<p>印刷...
+印刷 2D...
+3D 打印...
+这是新样式的 Java 8 接口</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0815.html" class="navigation navigation-prev " aria-label="Previous page: Java 8 StringJoiner类">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0817.html" class="navigation navigation-next " aria-label="Next page: Java 8 函数式接口">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 接口默认和静态方法","level":"1.1.10","depth":2,"next":{"title":"Java 8 函数式接口","level":"1.1.11","depth":2,"path":"0817.md","ref":"0817.md","articles":[]},"previous":{"title":"Java 8 StringJoiner类","level":"1.1.9","depth":2,"path":"0815.md","ref":"0815.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0816.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:51.159Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,658 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>图表示——邻接矩阵和列表 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="389.html" />
+    
+    
+    <link rel="prev" href="387.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="378.html">
+            
+                <a href="378.html">
+            
+                    
+                    高级树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="379.html">
+            
+                <a href="379.html">
+            
+                    
+                    多维树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="380.html">
+            
+                <a href="380.html">
+            
+                    
+                    树型数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="381.html">
+            
+                <a href="381.html">
+            
+                    
+                    堆数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="382.html">
+            
+                <a href="382.html">
+            
+                    
+                    实现堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="383.html">
+            
+                <a href="383.html">
+            
+                    
+                    TRIE 数据结构示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="384.html">
+            
+                <a href="384.html">
+            
+                    
+                    B 树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="385.html">
+            
+                <a href="385.html">
+            
+                    
+                    B- 树数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="386.html">
+            
+                <a href="386.html">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="387.html">
+            
+                <a href="387.html">
+            
+                    
+                    图介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.11" data-path="388.html">
+            
+                <a href="388.html">
+            
+                    
+                    图表示——邻接矩阵和列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="389.html">
+            
+                <a href="389.html">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="390.html">
+            
+                <a href="390.html">
+            
+                    
+                    哈希表数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >图表示——邻接矩阵和列表</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="图表示——邻接矩阵和列表">图表示——邻接矩阵和列表</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/advanced-data-structures/graph-representations-adjacency-matrix-and-list" target="_blank">https://www.studytonight.com/advanced-data-structures/graph-representations-adjacency-matrix-and-list</a></p>
+</blockquote>
+<p>我们有两种方法来表示图，它们是:</p>
+<ul>
+<li><p>邻接矩阵</p>
+</li>
+<li><p>邻接表</p>
+</li>
+</ul>
+<p>这两者各有利弊。在本教程中，我们将介绍这两种图表示以及如何实现它们。</p>
+<h2 id="邻接矩阵">邻接矩阵</h2>
+<p>邻接矩阵表示使用矩阵(表)，其中矩阵的第一行和第一列表示图的节点(顶点)。其余单元格的<strong>包含 0 或 1</strong> (如果是加权图，可以包含关联的<strong>权重 w</strong> )。</p>
+<p>每个<strong>行 X 列</strong>的交点指向一个单元格，该单元格的值将帮助我们确定该行所表示的顶点与该列所表示的顶点是否相连。如果 v1 X v2 的单元格的值等于 1，那么我们可以得出结论，这两个顶点 v1 和 v2 通过一条边相连，否则它们根本不相连。</p>
+<p>考虑下面给出的图表:</p>
+<p><img src="img/dad2a2780a79859f399fc78e2db3074f.png" alt="Adjacency Matrix"></img></p>
+<p>上图是一个无向图，其邻接矩阵如下:</p>
+<p><img src="img/d86c9f77e1eddc3b141a9ca181213c72.png" alt="Matrix"></img></p>
+<p>上面的矩阵是上图的邻接矩阵表示。如果我们仔细观察，我们可以看到矩阵是对称的。现在让我们看看有向图的邻接矩阵是如何变化的。</p>
+<p>考虑下面给出的图表:</p>
+<p><img src="img/38692bf51d5a35e6038e3db52ac68823.png" alt="Directed Graph"></img></p>
+<p>对于上面显示的有向图，邻接矩阵看起来像这样:</p>
+<p><img src="img/2dca82e4afae81ab986a2d335a79c4bc.png" alt="Directed Adjacency Matrix"></img></p>
+<h3 id="邻接矩阵的实现">邻接矩阵的实现</h3>
+<p>邻接矩阵的结构(Java 中的<a href="https://www.studytonight.com/java/constructor-in-java.php" target="_blank">构造器</a>)如下所示:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AdjacencyMatrix</span><span class="hljs-params">(<span class="hljs-keyword">int</span> vertex)</span></span>{
+        <span class="hljs-keyword">this</span>.vertex = vertex;
+        matrix = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[vertex][vertex];
+}
+</code></pre>
+<p>还应该注意的是，我们有两个类级变量，比如:</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">int</span> vertex;
+<span class="hljs-keyword">int</span>[][] matrix;
+</code></pre>
+<p>上面我们有一个名为 AdjacencyMatrix 的构造器，它计算图中存在的顶点的数量，然后为我们的全局顶点变量赋值，并创建一个相同大小的 2D 矩阵。现在，由于我们的结构部分已经完成，我们只需要将边添加到一起，我们的方法是:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start,<span class="hljs-keyword">int</span> destination)</span></span>{
+        matrix[start][destination] = <span class="hljs-number">1</span>;
+        matrix[destination][start] = <span class="hljs-number">1</span>; <span class="hljs-comment">// for un-directed graph</span>
+}
+</code></pre>
+<p>在上面的<code>addEdge</code>函数中，我们还为从目的地到开始节点的方向指定了 1，就像在这段代码中我们看到的无向图的例子一样，其中的关系是一个双向过程。如果它是一个有向图，那么我们可以简单地使这个值等于 0，我们就会有一个有效的邻接矩阵。</p>
+<p>现在只剩下打印图表了。</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printGraph</span><span class="hljs-params">()</span></span>{
+        System.out.println(<span class="hljs-string">"Adjacency Matrix : "</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; vertex; i++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;vertex ; j++) {
+                System.out.print(matrix[i][j]+ <span class="hljs-string">" "</span>);
+            }
+            System.out.println();
+        }
+}
+</code></pre>
+<p>整个代码如下所示:</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> AdjacencyMatrix {
+    <span class="hljs-keyword">int</span> vertex;
+    <span class="hljs-keyword">int</span>[][] matrix;
+
+    <span class="hljs-comment">// constructor</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AdjacencyMatrix</span><span class="hljs-params">(<span class="hljs-keyword">int</span> vertex)</span></span>{
+        <span class="hljs-keyword">this</span>.vertex = vertex;
+        matrix = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[vertex][vertex];
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start,<span class="hljs-keyword">int</span> destination)</span></span>{
+        matrix[start][destination] = <span class="hljs-number">1</span>;
+        matrix[destination][start] = <span class="hljs-number">1</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printGraph</span><span class="hljs-params">()</span></span>{
+        System.out.println(<span class="hljs-string">"Adjacency Matrix : "</span>);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; vertex; i++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;vertex ; j++) {
+                System.out.print(matrix[i][j]+ <span class="hljs-string">" "</span>);
+            }
+            System.out.println();
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        AdjacencyMatrix adj = <span class="hljs-keyword">new</span> AdjacencyMatrix(<span class="hljs-number">4</span>);
+        adj.addEdge(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>); <span class="hljs-comment">// 0 as the array is 0-indexed</span>
+        adj.addEdge(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>);
+        adj.addEdge(<span class="hljs-number">2</span>,<span class="hljs-number">3</span>);
+        adj.printGraph();
+    }
+}
+</code></pre>
+<p>上面的输出如下所示:</p>
+<p>邻接矩阵:
+0 1 0 0
+1 0 1 0
+0 1 0 1
+0 0 1 0</p>
+<h2 id="邻接表">邻接表</h2>
+<p>在邻接表表示中，我们有一个链表数组，其中数组的大小是图中顶点(节点)的数量。每个顶点都有自己的链表，其中包含它所连接的节点。</p>
+<p>考虑以下图表:</p>
+<p><img src="img/dad2a2780a79859f399fc78e2db3074f.png" alt="Adjacency Matrix"></img></p>
+<p>上图是一个无向图，它的邻接表如下:</p>
+<p><img src="img/e7d1ba04d9028f764719b6fde9921a3a.png" alt="Adjacency List"></img></p>
+<p>第一列包含我们在上面的图中拥有的所有顶点，然后这些顶点中的每一个都包含一个链表，该链表又包含每个顶点所连接的节点。对于有向图而言，唯一的变化是链表将只包含出现入射边的节点。</p>
+<p>考虑以下图表:</p>
+<p><img src="img/38692bf51d5a35e6038e3db52ac68823.png" alt="Directed Graph"></img></p>
+<p>上图是有向图，其邻接表如下所示:</p>
+<p><img src="img/a6add8f7ef36da11b3ce0caf11fdf5da.png" alt="Adjacency List"></img></p>
+<h3 id="邻接表的实现">邻接表的实现</h3>
+<p>邻接表的结构(Java 中的构造器)如下所示:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AdjacencyList</span><span class="hljs-params">(<span class="hljs-keyword">int</span> vertex)</span></span>{
+        <span class="hljs-keyword">this</span>.vertex = vertex;
+        <span class="hljs-built_in">list</span> = <span class="hljs-keyword">new</span> LinkedList[vertex];
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;vertex;i++){
+            <span class="hljs-built_in">list</span>[i] = <span class="hljs-keyword">new</span> LinkedList&lt;Integer&gt;();
+        }
+}
+</code></pre>
+<p>上面的构造器将顶点的数量作为一个参数，然后将这个值赋给类级变量，然后我们创建一个图中顶点大小的链表数组。最后，我们为链表数组中的每一项创建一个空链表。</p>
+<p>还应该注意的是，我们有两个类级变量，比如:</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">int</span> vertex;
+LinkedList&lt;Integer&gt; []<span class="hljs-built_in">list</span>;
+</code></pre>
+<p>现在我们已经打好了基础，剩下的唯一事情就是把边加在一起，我们是这样做的:</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start,<span class="hljs-keyword">int</span> destination)</span></span>{
+        <span class="hljs-built_in">list</span>[start].addFirst(destination);
+        <span class="hljs-built_in">list</span>[destination].addFirst(start); <span class="hljs-comment">// un-directed graph</span>
+}
+</code></pre>
+<p>我们取一条边的起点和终点的顶点，我们只需将目标顶点插入起点顶点的链表中，反之亦然(无向图也是如此)。</p>
+<p>现在只剩下打印图表了。</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printGraph</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; vertex ; i++) {
+            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">list</span>[i].size()&gt;<span class="hljs-number">0</span>) {
+                System.out.print(<span class="hljs-string">"Node "</span> + i + <span class="hljs-string">" is connected to: "</span>);
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-built_in">list</span>[i].size(); j++) {
+                    System.out.print(<span class="hljs-built_in">list</span>[i].get(j) + <span class="hljs-string">" "</span>);
+                }
+                System.out.println();
+            }
+        }
+}
+</code></pre>
+<p>整个代码如下所示:</p>
+<pre><code class="lang-cpp">import java.util.LinkedList;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> AdjacencyList {
+    <span class="hljs-keyword">int</span> vertex;
+    LinkedList&lt;Integer&gt; []<span class="hljs-built_in">list</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AdjacencyList</span><span class="hljs-params">(<span class="hljs-keyword">int</span> vertex)</span></span>{
+        <span class="hljs-keyword">this</span>.vertex = vertex;
+        <span class="hljs-built_in">list</span> = <span class="hljs-keyword">new</span> LinkedList[vertex];
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;vertex;i++){
+            <span class="hljs-built_in">list</span>[i] = <span class="hljs-keyword">new</span> LinkedList&lt;Integer&gt;();
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start,<span class="hljs-keyword">int</span> destination)</span></span>{
+        <span class="hljs-built_in">list</span>[start].addFirst(destination);
+        <span class="hljs-built_in">list</span>[destination].addFirst(start); <span class="hljs-comment">// un-directed graph</span>
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printGraph</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; vertex ; i++) {
+            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">list</span>[i].size()&gt;<span class="hljs-number">0</span>) {
+                System.out.print(<span class="hljs-string">"Node "</span> + i + <span class="hljs-string">" is connected to: "</span>);
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-built_in">list</span>[i].size(); j++) {
+                    System.out.print(<span class="hljs-built_in">list</span>[i].get(j) + <span class="hljs-string">" "</span>);
+                }
+                System.out.println();
+            }
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        AdjacencyList adl = <span class="hljs-keyword">new</span> AdjacencyList(<span class="hljs-number">4</span>);
+        adl.addEdge(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>);
+        adl.addEdge(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>);
+        adl.addEdge(<span class="hljs-number">2</span>,<span class="hljs-number">3</span>);
+        adl.printGraph();
+    }
+
+}
+</code></pre>
+<p>上面的输出如下所示:</p>
+<p>节点 0 连接到:1
+节点 1 连接到:2 0
+节点 2 连接到:3 1
+节点 3 连接到:2</p>
+<h2 id="结论">结论</h2>
+<ul>
+<li>我们学习了如何在编程中通过邻接矩阵和邻接表来表示图。</li>
+</ul>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="387.html" class="navigation navigation-prev " aria-label="Previous page: 图介绍">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="389.html" class="navigation navigation-next " aria-label="Next page: 其他">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"图表示——邻接矩阵和列表","level":"1.1.11","depth":2,"next":{"title":"其他","level":"1.1.12","depth":2,"path":"389.md","ref":"389.md","articles":[]},"previous":{"title":"图介绍","level":"1.1.10","depth":2,"path":"387.md","ref":"387.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"388.md","mtime":"2025-04-30T01:08:58.929Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:13.112Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

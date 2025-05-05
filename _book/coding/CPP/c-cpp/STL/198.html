@@ -1,0 +1,764 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>STL 中的映射容器 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="199.html" />
+    
+    
+    <link rel="prev" href="197.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    STL
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="190.html">
+            
+                <a href="190.html">
+            
+                    
+                    容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="191.html">
+            
+                <a href="191.html">
+            
+                    
+                    STL 简介:标准模板库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="192.html">
+            
+                <a href="192.html">
+            
+                    
+                    什么是 STL 中的容器？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="193.html">
+            
+                <a href="193.html">
+            
+                    
+                    STL 中的偶对模板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="194.html">
+            
+                <a href="194.html">
+            
+                    
+                    STL 中的元组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="195.html">
+            
+                <a href="195.html">
+            
+                    
+                    STL 中的数组容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="196.html">
+            
+                <a href="196.html">
+            
+                    
+                    STL 中的向量容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="197.html">
+            
+                <a href="197.html">
+            
+                    
+                    STL 中的列表容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.9" data-path="198.html">
+            
+                <a href="198.html">
+            
+                    
+                    STL 中的映射容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="199.html">
+            
+                <a href="199.html">
+            
+                    
+                    C++ STL 中的栈容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="200.html">
+            
+                <a href="200.html">
+            
+                    
+                    STL 中的队列容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="201.html">
+            
+                <a href="201.html">
+            
+                    
+                    C++ STL 中的优先级队列容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="202.html">
+            
+                <a href="202.html">
+            
+                    
+                    C++ STL 中的 DEQUE 容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="203.html">
+            
+                <a href="203.html">
+            
+                    
+                    迭代器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="204.html">
+            
+                <a href="204.html">
+            
+                    
+                    C++ STL 中迭代器概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="205.html">
+            
+                <a href="205.html">
+            
+                    
+                    STL 中迭代器的运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="206.html">
+            
+                <a href="206.html">
+            
+                    
+                    STL 中的算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="207.html">
+            
+                <a href="207.html">
+            
+                    
+                    C++ STL 算法概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="208.html">
+            
+                <a href="208.html">
+            
+                    
+                    STL 中的排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="209.html">
+            
+                <a href="209.html">
+            
+                    
+                    STL 中的二分搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="210.html">
+            
+                <a href="210.html">
+            
+                    
+                    STL 中的上界和下界搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="211.html">
+            
+                <a href="211.html">
+            
+                    
+                    C++ STL 中的非修改算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="212.html">
+            
+                <a href="212.html">
+            
+                    
+                    C++ STL 中的修改算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="213.html">
+            
+                <a href="213.html">
+            
+                    
+                    C++ STL 中的数值算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="214.html">
+            
+                <a href="214.html">
+            
+                    
+                    STL 中的最小和最大操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="215.html">
+            
+                <a href="215.html">
+            
+                    
+                    最小最大值和置换运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >STL 中的映射容器</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="stl-中的映射容器">STL 中的映射容器</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/cpp/stl/stl-container-map" target="_blank">https://www.studytonight.com/cpp/stl/stl-container-map</a></p>
+</blockquote>
+<p><strong>映射</strong>用于复制关联数组。映射包含排序的<strong>键值</strong>对，其中每个键都是唯一的，不能更改，可以插入或删除，但不能更改。与键关联的值可以更改。我们可以在<code>O(n)</code>时间复杂度内搜索、移除和插入映射。</p>
+<p>例如:以<strong>卷号</strong>为键，以<strong>名</strong>为值的学生映射，可以图形化表示为:</p>
+<p><img src="img/1cce261a6f16c4d665160c2c2098d38a.png" alt="First example of Maps in STL"></img></p>
+<p>请注意，键是按升序排列的，因为映射总是按排序顺序排列键。如果键是字符串类型的，则按字典顺序排序。</p>
+<hr></hr>
+<h2 id="用-c-stl-创建映射">用 C++ STL 创建映射</h2>
+<p>使用以下语句可以轻松创建映射:</p>
+<pre><code class="lang-cpp">**<span class="hljs-built_in">map</span>**&lt;key_type , value_type&gt; *map_name*;
+</code></pre>
+<p>这将创建一个键类型为<strong>键类型为</strong>值类型为<strong>值类型为</strong>的映射。需要记住的一点是，映射的键和相应的值总是成对插入，您不能在映射中只插入键或值。</p>
+<p>下面是一个程序，将说明如何以不同的方式创建映射:</p>
+<pre><code class="lang-cpp"> <span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;map&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+    **<span class="hljs-built_in">map</span>**&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt; m{ {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>} , {<span class="hljs-number">2</span>,<span class="hljs-number">3</span>} , {<span class="hljs-number">3</span>,<span class="hljs-number">4</span>} };
+    *<span class="hljs-comment">/* creates a map m with keys 1,2,3 and 
+        their corresponding values 2,3,4 */</span>*  
+
+    **<span class="hljs-built_in">map</span>**&lt;<span class="hljs-built_in">string</span>,<span class="hljs-keyword">int</span>&gt; map1; 
+    *<span class="hljs-comment">/*  creates a map with keys of type character and 
+      values of type integer */</span>*
+
+    map1[<span class="hljs-string">"abc"</span>]=<span class="hljs-number">100</span>;    *<span class="hljs-comment">// inserts key = "abc" with value = 100*</span>
+    map1[<span class="hljs-string">"b"</span>]=<span class="hljs-number">200</span>;      *<span class="hljs-comment">// inserts key = "b" with value = 200*</span>
+    map1[<span class="hljs-string">"c"</span>]=<span class="hljs-number">300</span>;      *<span class="hljs-comment">// inserts key = "c" with value = 300*</span>
+    map1[<span class="hljs-string">"def"</span>]=<span class="hljs-number">400</span>;    *<span class="hljs-comment">// inserts key = "def" with value = 400*</span>
+
+    **<span class="hljs-built_in">map</span>**&lt;<span class="hljs-keyword">char</span>,<span class="hljs-keyword">int</span>&gt; map2 (map1.begin(), map1.end());
+    *<span class="hljs-comment">/* creates a map map2 which have entries copied 
+        from map1.begin() to map1.end() */</span>* 
+
+    **<span class="hljs-built_in">map</span>**&lt;<span class="hljs-keyword">char</span>,<span class="hljs-keyword">int</span>&gt; map3 (m);
+    *<span class="hljs-comment">/* creates map map3 which is a copy of map m */</span>*
+}
+</code></pre>
+<hr></hr>
+<h3 id="c-stl-中映射的成员函数">C++ STL 中映射的成员函数</h3>
+<p>以下是 STL 中映射容器的一些常用功能:</p>
+<h3 id="at和-"><code>at</code>和<code>[ ]</code></h3>
+<p>位于和<code>[ ]</code>的<strong>都用于访问映射中的元素。它们之间唯一的区别是</strong>处的<strong>在被访问的键不在映射中时抛出异常，另一方面，如果该键不在映射中，运算符<code>[ ]</code>将该键插入到映射中。</strong></p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;map&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+    **<span class="hljs-built_in">map</span>**&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">string</span>&gt; m{ {<span class="hljs-number">1</span>,”nikhilesh”} , {<span class="hljs-number">2</span>,”shrikant”} , {<span class="hljs-number">3</span>,”ashish”} };
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; m.**at**(<span class="hljs-number">1</span>) ;  *<span class="hljs-comment">// prints value associated with key 1 ,i.e nikhilesh*</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; m.**at**(<span class="hljs-number">2</span>) ;  *<span class="hljs-comment">// prints value associated with key 2 ,i.e shrikant*</span>
+
+    *<span class="hljs-comment">/* note that the parameters in the above at() are the keys not the index */</span>*
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; m[<span class="hljs-number">3</span>] ; *<span class="hljs-comment">// prints value associated with key 3 , i.e ashish*</span>
+
+    m.**at**(<span class="hljs-number">1</span>) = <span class="hljs-string">"vikas"</span>;   *<span class="hljs-comment">// changes the value associated with key 1 to vikas*</span>
+    m[<span class="hljs-number">2</span>] = <span class="hljs-string">"navneet"</span>;   *<span class="hljs-comment">// changes the value associated with key 2 to navneet*</span>
+
+    m[<span class="hljs-number">4</span>] = <span class="hljs-string">"doodrah"</span>;   
+    *<span class="hljs-comment">/* since there is no key with value 4 in the map, 
+        it insert a key-value pair in map with key=4 and value = doodrah */</span>*
+
+    m.**at**(<span class="hljs-number">5</span>) = <span class="hljs-string">"umeshwa"</span>; 
+    *<span class="hljs-comment">/* since there is no key with value 5 in the map , 
+     it throws an exception  */</span>* 
+}
+</code></pre>
+<h3 id="empty、size和maxsize"><code>empty</code>、<code>size</code>和<code>max_size</code></h3>
+<p><code>empty()</code>如果映射为空，则返回布尔真，否则返回布尔假。<code>size()</code>返回映射中的条目数，一个条目由一个键和值组成。<code>max_size()</code>根据分配给映射的内存，返回映射可以包含的条目上限(最大可能条目数)。</p>
+<h3 id="insert和insertorassign"><code>insert</code>和<code>insert_or_assign</code></h3>
+<p><code>insert()</code>用于在映射中插入条目。因为键在映射中是唯一的，所以它首先检查给定的键是否已经存在于映射中，如果存在，则不在映射中插入条目，并且返回现有键的迭代器，否则在映射中插入新的条目。</p>
+<p>insert()有两种变体:</p>
+<ul>
+<li><code>insert(pair&lt;key_type value_type=""&gt;)&lt;/key_type&gt;</code> :在这个变体中，一对键和值被插入到映射中。插入的键对总是被插入到适当的位置，因为键是按排序顺序排列的。</li>
+<li><code>insert(start_itr , end_itr)</code>:该变体在另一个映射的 <strong>start_itr</strong> 和 <strong>end_itr</strong> 定义的范围内插入条目。</li>
+</ul>
+<p><code>insert_or_assing()</code>的工作方式与 insert()完全相同，只是如果给定的键已经存在于映射中，那么它的值会被修改。</p>
+<pre><code class="lang-cpp">#include &lt;iostream&gt;
+#include &lt;map&gt;
+
+using namespace std;
+
+int main ()
+{
+    **map**&lt;int,int&gt; m{{1,2} , {2,3} , {3,4} };
+
+    m.**insert**( pair&lt;int,int&gt; (4,5));
+    */* inserts a new entry of key = 4 and value = 5 in map m */*
+
+    */* make_pair() can also be used for creating a pair */*
+    m.**insert**( make_pair(5, 6));
+    */* inserts a new entry of key = 5 and value = 6 */*
+
+    map&lt;int&gt;::iterator i , j;
+    i = m.**find**(2);   * // points to entry having key =2*
+    j = m.**find**(5);    *// points to entry having key =5*
+
+    **map**&lt;int,int&gt; new_m;
+
+    new_m.**insert**(i,j);
+    * /* insert all the entries which are pointed 
+     by iterator i to iterator j*/* 
+
+    m.**insert**( make_pair(3,6));  
+    * // do not insert the pair as map m already contain key = 3 */* 
+
+    m.**insert_or_assign**( make_pair(3,6));  *// assign value = 6 to key =3  * 
+}&lt;/int&gt;
+</code></pre>
+<h3 id="erase和clear"><code>erase</code>和<code>clear</code></h3>
+<p><code>erase()</code>从迭代器指向的映射中移除条目(作为参数传递)，但是如果我们想从映射中移除所有元素，我们可以使用<code>clear()</code>，它会清除映射并将其大小设置为 0。</p>
+<p>擦除有两种变体:</p>
+<ul>
+<li><code>erase(iterator_itr)</code>:这将从迭代器<strong>迭代器 _itr</strong> 指向的映射中移除条目，将映射的大小减少 1。</li>
+<li><code>erase(start_iterator, end_iterator)</code>:删除<strong>开始迭代器</strong>和<strong>结束迭代器</strong>指定范围内的元素。</li>
+</ul>
+<h3 id="begin、end和find"><code>begin</code>、<code>end</code>和<code>find</code></h3>
+<p>begin、end 和 find 返回一个迭代器。<code>begin()</code>将迭代器返回到映射的起始条目，<code>end()</code>将迭代器返回到映射中最后一个条目旁边，<code>find()</code>将迭代器返回到具有等于给定键的键的条目(作为参数传递)。</p>
+<p><img src="img/310b9764fa4dcc3f1cb4ce4fb4272915.png" alt="begin, end and find function for maps"></img></p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="197.html" class="navigation navigation-prev " aria-label="Previous page: STL 中的列表容器">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="199.html" class="navigation navigation-next " aria-label="Next page: C++ STL 中的栈容器">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"STL 中的映射容器","level":"1.1.9","depth":2,"next":{"title":"C++ STL 中的栈容器","level":"1.1.10","depth":2,"path":"199.md","ref":"199.md","articles":[]},"previous":{"title":"STL 中的列表容器","level":"1.1.8","depth":2,"path":"197.md","ref":"197.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"198.md","mtime":"2025-04-30T01:08:58.609Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:05.064Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

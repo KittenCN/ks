@@ -1,0 +1,964 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>分块算法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="平衡树.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="基础数据结构.html">
+            
+                <a href="基础数据结构.html">
+            
+                    
+                    基础数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="高级数据结构概述.html">
+            
+                <a href="高级数据结构概述.html">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="并查集.html">
+            
+                <a href="并查集.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="单调栈和单调队列.html">
+            
+                <a href="单调栈和单调队列.html">
+            
+                    
+                    单调栈/单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="线段树.html">
+            
+                <a href="线段树.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="线段树懒标记.html">
+            
+                <a href="线段树懒标记.html">
+            
+                    
+                    线段树懒标记
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="树状数组.html">
+            
+                <a href="树状数组.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="ST表.html">
+            
+                <a href="ST表.html">
+            
+                    
+                    ST表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="堆.html">
+            
+                <a href="堆.html">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="二叉树.html">
+            
+                <a href="二叉树.html">
+            
+                    
+                    二叉树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="红黑树.html">
+            
+                <a href="红黑树.html">
+            
+                    
+                    红黑树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="跳表.html">
+            
+                <a href="跳表.html">
+            
+                    
+                    跳表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="平衡树.html">
+            
+                <a href="平衡树.html">
+            
+                    
+                    平衡树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.13" data-path="分块算法.html">
+            
+                <a href="分块算法.html">
+            
+                    
+                    分块算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >分块算法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="分块算法">分块算法</h1>
+<p>分块算法是一种重要的优化策略，通过将数据分成若干个小块，在每个块上进行特定的预处理，可以大大提高算法的效率。本文将介绍分块算法的基本思想、常见应用场景和实现技巧。</p>
+<h2 id="基本思想">基本思想</h2>
+<p>分块算法的核心思想是将长度为n的数据序列分成大小为sqrt(n)的连续块，然后对每个块进行单独的维护。这样，对于涉及范围操作的问题，我们可以：</p>
+<ol>
+<li>对于完全包含在某个块内的查询/修改操作，直接在块内处理</li>
+<li>对于跨越多个块的操作，将其分解为"完整块"和"块内零散部分"两种情况处理</li>
+</ol>
+<p>这种数据结构设计在时间复杂度和空间复杂度之间取得了良好的平衡，通常可以达到O(sqrt(n))的查询和修改复杂度。</p>
+<h2 id="数组分块">数组分块</h2>
+<h3 id="基本结构">基本结构</h3>
+<p>对于一个长度为n的数组，我们将其分为sqrt(n)个块，每个块包含sqrt(n)个元素。</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> BLOCK_SIZE = <span class="hljs-number">320</span>;  <span class="hljs-comment">// 大约是sqrt(MAXN)</span>
+
+<span class="hljs-keyword">int</span> n;                  <span class="hljs-comment">// 数组长度</span>
+<span class="hljs-keyword">int</span> arr[MAXN];         <span class="hljs-comment">// 原始数组</span>
+<span class="hljs-keyword">int</span> block[BLOCK_SIZE]; <span class="hljs-comment">// 块的信息（如和、最大值等）</span>
+<span class="hljs-keyword">int</span> block_size;        <span class="hljs-comment">// 每个块的大小</span>
+<span class="hljs-keyword">int</span> num_blocks;        <span class="hljs-comment">// 块的数量</span>
+
+<span class="hljs-comment">// 初始化分块</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
+    block_size = <span class="hljs-built_in">sqrt</span>(n);  <span class="hljs-comment">// 确定每个块的大小</span>
+    num_blocks = (n + block_size - <span class="hljs-number">1</span>) / block_size;  <span class="hljs-comment">// 向上取整得到块数</span>
+
+    <span class="hljs-comment">// 初始化每个块的信息</span>
+    <span class="hljs-built_in">memset</span>(block, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(block));
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        block[i / block_size] += arr[i];  <span class="hljs-comment">// 计算每个块的和</span>
+    }
+}
+</code></pre>
+<h3 id="区间查询">区间查询</h3>
+<p>以区间和查询为例：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 查询区间[l, r]的和</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+    <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> start_block = l / block_size;
+    <span class="hljs-keyword">int</span> end_block = r / block_size;
+
+    <span class="hljs-keyword">if</span> (start_block == end_block) {
+        <span class="hljs-comment">// 如果查询的区间在同一个块内</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l; i &lt;= r; i++) {
+            sum += arr[i];
+        }
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// 处理第一个块的右边部分</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l; i &lt; (start_block + <span class="hljs-number">1</span>) * block_size; i++) {
+            sum += arr[i];
+        }
+
+        <span class="hljs-comment">// 处理完整的中间块</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start_block + <span class="hljs-number">1</span>; i &lt; end_block; i++) {
+            sum += block[i];
+        }
+
+        <span class="hljs-comment">// 处理最后一个块的左边部分</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = end_block * block_size; i &lt;= r; i++) {
+            sum += arr[i];
+        }
+    }
+
+    <span class="hljs-keyword">return</span> sum;
+}
+</code></pre>
+<h3 id="单点修改">单点修改</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 将位置pos的值修改为val</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pos, <span class="hljs-keyword">int</span> val)</span> </span>{
+    <span class="hljs-keyword">int</span> delta = val - arr[pos];
+    arr[pos] = val;  <span class="hljs-comment">// 更新原数组</span>
+    block[pos / block_size] += delta;  <span class="hljs-comment">// 更新对应的块</span>
+}
+</code></pre>
+<h2 id="区间修改与懒标记">区间修改与懒标记</h2>
+<p>如果需要支持区间修改，我们可以结合懒标记技术：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">int</span> lazy[BLOCK_SIZE];  <span class="hljs-comment">// 懒标记数组，记录每个块的待更新值</span>
+
+<span class="hljs-comment">// 对区间[l, r]的所有元素加上val</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rangeAdd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> val)</span> </span>{
+    <span class="hljs-keyword">int</span> start_block = l / block_size;
+    <span class="hljs-keyword">int</span> end_block = r / block_size;
+
+    <span class="hljs-keyword">if</span> (start_block == end_block) {
+        <span class="hljs-comment">// 如果修改区间在同一个块内</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l; i &lt;= r; i++) {
+            arr[i] += val;
+            block[start_block] += val;  <span class="hljs-comment">// 更新块的和</span>
+        }
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// 处理第一个块的右边部分</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l; i &lt; (start_block + <span class="hljs-number">1</span>) * block_size; i++) {
+            arr[i] += val;
+            block[start_block] += val;
+        }
+
+        <span class="hljs-comment">// 对于完整的中间块，使用懒标记</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start_block + <span class="hljs-number">1</span>; i &lt; end_block; i++) {
+            lazy[i] += val;
+            block[i] += val * block_size;  <span class="hljs-comment">// 更新块的和</span>
+        }
+
+        <span class="hljs-comment">// 处理最后一个块的左边部分</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = end_block * block_size; i &lt;= r; i++) {
+            arr[i] += val;
+            block[end_block] += val;
+        }
+    }
+}
+
+<span class="hljs-comment">// 查询时需要考虑懒标记</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">queryWithLazy</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+    <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> start_block = l / block_size;
+    <span class="hljs-keyword">int</span> end_block = r / block_size;
+
+    <span class="hljs-keyword">if</span> (start_block == end_block) {
+        <span class="hljs-comment">// 如果查询区间在同一个块内</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l; i &lt;= r; i++) {
+            sum += arr[i] + lazy[start_block];  <span class="hljs-comment">// 加上懒标记值</span>
+        }
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// 处理第一个块的右边部分</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l; i &lt; (start_block + <span class="hljs-number">1</span>) * block_size; i++) {
+            sum += arr[i] + lazy[start_block];
+        }
+
+        <span class="hljs-comment">// 处理完整的中间块</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start_block + <span class="hljs-number">1</span>; i &lt; end_block; i++) {
+            sum += block[i];  <span class="hljs-comment">// 块的和已经在rangeAdd中更新过了</span>
+        }
+
+        <span class="hljs-comment">// 处理最后一个块的左边部分</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = end_block * block_size; i &lt;= r; i++) {
+            sum += arr[i] + lazy[end_block];
+        }
+    }
+
+    <span class="hljs-keyword">return</span> sum;
+}
+</code></pre>
+<h2 id="根号分治">根号分治</h2>
+<p>分块算法的一个变种是根号分治，它将查询分为根号个批次处理，每批次包含根号个查询。</p>
+<p>以莫队算法为例，莫队算法是一种离线查询算法，用于处理区间查询问题：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> Query {
+    <span class="hljs-keyword">int</span> l, r, idx;  <span class="hljs-comment">// 查询区间的左右端点和查询的原始编号</span>
+
+    <span class="hljs-comment">// 按块的编号和右端点排序</span>
+    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-keyword">const</span> Query&amp; other) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">int</span> block_l = l / block_size;
+        <span class="hljs-keyword">int</span> block_other = other.l / block_size;
+        <span class="hljs-keyword">if</span> (block_l != block_other)
+            <span class="hljs-keyword">return</span> block_l &lt; block_other;
+        <span class="hljs-keyword">return</span> r &lt; other.r;
+    }
+};
+
+<span class="hljs-comment">// 使用莫队算法处理区间查询</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">processMoQueries</span><span class="hljs-params">(<span class="hljs-keyword">int</span> arr[], <span class="hljs-keyword">int</span> n, Query queries[], <span class="hljs-keyword">int</span> q)</span> </span>{
+    block_size = <span class="hljs-built_in">sqrt</span>(n);
+    sort(queries, queries + q);  <span class="hljs-comment">// 按照分块排序查询</span>
+
+    <span class="hljs-keyword">int</span> answers[q];
+    <span class="hljs-keyword">int</span> currentL = <span class="hljs-number">0</span>, currentR = -<span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> currentResult = <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// 移动指针的辅助函数</span>
+    <span class="hljs-keyword">auto</span> add = [&amp;](<span class="hljs-keyword">int</span> pos) {
+        <span class="hljs-comment">// 将位置pos的元素加入当前结果</span>
+        <span class="hljs-comment">// 具体实现取决于问题</span>
+    };
+
+    <span class="hljs-keyword">auto</span> remove = [&amp;](<span class="hljs-keyword">int</span> pos) {
+        <span class="hljs-comment">// 将位置pos的元素从当前结果中移除</span>
+        <span class="hljs-comment">// 具体实现取决于问题</span>
+    };
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; q; i++) {
+        Query&amp; query = queries[i];
+
+        <span class="hljs-comment">// 调整当前的查询区间</span>
+        <span class="hljs-keyword">while</span> (currentL &gt; query.l) {
+            currentL--;
+            add(currentL);
+        }
+        <span class="hljs-keyword">while</span> (currentR &lt; query.r) {
+            currentR++;
+            add(currentR);
+        }
+        <span class="hljs-keyword">while</span> (currentL &lt; query.l) {
+            remove(currentL);
+            currentL++;
+        }
+        <span class="hljs-keyword">while</span> (currentR &gt; query.r) {
+            remove(currentR);
+            currentR--;
+        }
+
+        <span class="hljs-comment">// 保存当前查询的结果</span>
+        answers[query.idx] = currentResult;
+    }
+
+    <span class="hljs-comment">// 按原始顺序输出结果</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; q; i++) {
+        <span class="hljs-built_in">cout</span> &lt;&lt; answers[i] &lt;&lt; endl;
+    }
+}
+</code></pre>
+<h2 id="分块排序">分块排序</h2>
+<p>对于需要频繁区间询问和单点修改的问题，我们可以对每个块单独排序：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">int</span> arr[MAXN];            <span class="hljs-comment">// 原始数组</span>
+<span class="hljs-keyword">int</span> sorted[MAXN];         <span class="hljs-comment">// 排序后的数组副本</span>
+<span class="hljs-keyword">int</span> block_id[MAXN];       <span class="hljs-comment">// 每个元素所属的块编号</span>
+
+<span class="hljs-comment">// 初始化并对每个块排序</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">initAndSort</span><span class="hljs-params">()</span> </span>{
+    block_size = <span class="hljs-built_in">sqrt</span>(n);
+    num_blocks = (n + block_size - <span class="hljs-number">1</span>) / block_size;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        block_id[i] = i / block_size;
+        sorted[i] = arr[i];
+    }
+
+    <span class="hljs-comment">// 对每个块单独排序</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; num_blocks; i++) {
+        <span class="hljs-keyword">int</span> left = i * block_size;
+        <span class="hljs-keyword">int</span> right = min((i + <span class="hljs-number">1</span>) * block_size - <span class="hljs-number">1</span>, n - <span class="hljs-number">1</span>);
+        sort(sorted + left, sorted + right + <span class="hljs-number">1</span>);
+    }
+}
+
+<span class="hljs-comment">// 单点修改后重新排序对应的块</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pos, <span class="hljs-keyword">int</span> val)</span> </span>{
+    arr[pos] = val;
+    <span class="hljs-keyword">int</span> bID = block_id[pos];
+    <span class="hljs-keyword">int</span> left = bID * block_size;
+    <span class="hljs-keyword">int</span> right = min((bID + <span class="hljs-number">1</span>) * block_size - <span class="hljs-number">1</span>, n - <span class="hljs-number">1</span>);
+
+    <span class="hljs-comment">// 重新拷贝并排序该块</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = left; i &lt;= right; i++) {
+        sorted[i] = arr[i];
+    }
+    sort(sorted + left, sorted + right + <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-comment">// 查询区间[l,r]中小于等于val的元素个数</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">countLessEqual</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> val)</span> </span>{
+    <span class="hljs-keyword">int</span> result = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> start_block = l / block_size;
+    <span class="hljs-keyword">int</span> end_block = r / block_size;
+
+    <span class="hljs-keyword">if</span> (start_block == end_block) {
+        <span class="hljs-comment">// 如果在同一个块内，直接暴力统计</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l; i &lt;= r; i++) {
+            <span class="hljs-keyword">if</span> (arr[i] &lt;= val) result++;
+        }
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// 处理第一个块的部分元素</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l; i &lt; (start_block + <span class="hljs-number">1</span>) * block_size; i++) {
+            <span class="hljs-keyword">if</span> (arr[i] &lt;= val) result++;
+        }
+
+        <span class="hljs-comment">// 处理完整的中间块（利用排序后的数组二分查找）</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start_block + <span class="hljs-number">1</span>; i &lt; end_block; i++) {
+            <span class="hljs-keyword">int</span> left = i * block_size;
+            <span class="hljs-keyword">int</span> right = (i + <span class="hljs-number">1</span>) * block_size - <span class="hljs-number">1</span>;
+            result += upper_bound(sorted + left, sorted + right + <span class="hljs-number">1</span>, val) - (sorted + left);
+        }
+
+        <span class="hljs-comment">// 处理最后一个块的部分元素</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = end_block * block_size; i &lt;= r; i++) {
+            <span class="hljs-keyword">if</span> (arr[i] &lt;= val) result++;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h2 id="分块应用：区间众数查询">分块应用：区间众数查询</h2>
+<p>使用分块算法处理区间众数查询问题：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+<span class="hljs-keyword">int</span> arr[MAXN], n;
+<span class="hljs-keyword">int</span> block_size, num_blocks;
+<span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; freq;  <span class="hljs-comment">// 用于统计频率</span>
+
+<span class="hljs-comment">// 处理区间[l, r]的众数查询</span>
+pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; queryMostFrequent(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r) {
+    freq.clear();
+    <span class="hljs-keyword">int</span> max_freq = <span class="hljs-number">0</span>, mode = -<span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">int</span> start_block = l / block_size;
+    <span class="hljs-keyword">int</span> end_block = r / block_size;
+
+    <span class="hljs-keyword">if</span> (start_block == end_block) {
+        <span class="hljs-comment">// 如果在同一个块内，直接暴力统计</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l; i &lt;= r; i++) {
+            freq[arr[i]]++;
+            <span class="hljs-keyword">if</span> (freq[arr[i]] &gt; max_freq || (freq[arr[i]] == max_freq &amp;&amp; arr[i] &lt; mode)) {
+                max_freq = freq[arr[i]];
+                mode = arr[i];
+            }
+        }
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-comment">// 处理第一个块的部分元素</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = l; i &lt; (start_block + <span class="hljs-number">1</span>) * block_size; i++) {
+            freq[arr[i]]++;
+        }
+
+        <span class="hljs-comment">// 处理完整的中间块（可以预处理每个块的频率信息）</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start_block + <span class="hljs-number">1</span>; i &lt; end_block; i++) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i * block_size; j &lt; (i + <span class="hljs-number">1</span>) * block_size &amp;&amp; j &lt; n; j++) {
+                freq[arr[j]]++;
+            }
+        }
+
+        <span class="hljs-comment">// 处理最后一个块的部分元素</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = end_block * block_size; i &lt;= r; i++) {
+            freq[arr[i]]++;
+        }
+
+        <span class="hljs-comment">// 找出最高频率的元素</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; p : freq) {
+            <span class="hljs-keyword">if</span> (p.second &gt; max_freq || (p.second == max_freq &amp;&amp; p.first &lt; mode)) {
+                max_freq = p.second;
+                mode = p.first;
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> {mode, max_freq};
+}
+</code></pre>
+<h2 id="块状链表">块状链表</h2>
+<p>块状链表是分块思想的另一种实现，每个节点包含一个子链表，适合处理频繁插入删除的问题：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> BlockNode {
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; data;       <span class="hljs-comment">// 块中存储的数据</span>
+    BlockNode* next;        <span class="hljs-comment">// 指向下一个块</span>
+
+    BlockNode() : next(<span class="hljs-literal">nullptr</span>) {}
+};
+
+<span class="hljs-keyword">class</span> BlockList {
+<span class="hljs-keyword">private</span>:
+    BlockNode* head;
+    <span class="hljs-keyword">int</span> block_size;
+    <span class="hljs-keyword">int</span> size;
+
+<span class="hljs-keyword">public</span>:
+    BlockList(<span class="hljs-keyword">int</span> n) {
+        head = <span class="hljs-literal">nullptr</span>;
+        block_size = <span class="hljs-built_in">sqrt</span>(n);
+        size = <span class="hljs-number">0</span>;
+    }
+
+    <span class="hljs-comment">// 在位置pos插入值val</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pos, <span class="hljs-keyword">int</span> val)</span> </span>{
+        <span class="hljs-keyword">if</span> (pos &gt; size) {
+            pos = size;  <span class="hljs-comment">// 如果位置超出当前大小，则在末尾插入</span>
+        }
+
+        <span class="hljs-comment">// 找到要插入的块和在块中的位置</span>
+        BlockNode* current = head;
+        BlockNode* prev = <span class="hljs-literal">nullptr</span>;
+        <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">while</span> (current &amp;&amp; count + current-&gt;data.size() &lt; pos) {
+            count += current-&gt;data.size();
+            prev = current;
+            current = current-&gt;next;
+        }
+
+        <span class="hljs-keyword">if</span> (!current) {
+            <span class="hljs-comment">// 如果需要在末尾创建新块</span>
+            current = <span class="hljs-keyword">new</span> BlockNode();
+            <span class="hljs-keyword">if</span> (prev) {
+                prev-&gt;next = current;
+            } <span class="hljs-keyword">else</span> {
+                head = current;
+            }
+        }
+
+        <span class="hljs-comment">// 在块中的位置</span>
+        <span class="hljs-keyword">int</span> block_pos = pos - count;
+        current-&gt;data.insert(current-&gt;data.begin() + block_pos, val);
+        size++;
+
+        <span class="hljs-comment">// 如果一个块太大，则分裂</span>
+        <span class="hljs-keyword">if</span> (current-&gt;data.size() &gt; <span class="hljs-number">2</span> * block_size) {
+            BlockNode* new_node = <span class="hljs-keyword">new</span> BlockNode();
+            <span class="hljs-keyword">int</span> half = current-&gt;data.size() / <span class="hljs-number">2</span>;
+
+            <span class="hljs-comment">// 移动后半部分到新块</span>
+            new_node-&gt;data.assign(current-&gt;data.begin() + half, current-&gt;data.end());
+            current-&gt;data.resize(half);
+
+            <span class="hljs-comment">// 将新块插入链表</span>
+            new_node-&gt;next = current-&gt;next;
+            current-&gt;next = new_node;
+        }
+    }
+
+    <span class="hljs-comment">// 删除位置pos的元素</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pos)</span> </span>{
+        <span class="hljs-keyword">if</span> (pos &gt;= size) <span class="hljs-keyword">return</span>;
+
+        <span class="hljs-comment">// 找到要删除的块和在块中的位置</span>
+        BlockNode* current = head;
+        BlockNode* prev = <span class="hljs-literal">nullptr</span>;
+        <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">while</span> (current &amp;&amp; count + current-&gt;data.size() &lt;= pos) {
+            count += current-&gt;data.size();
+            prev = current;
+            current = current-&gt;next;
+        }
+
+        <span class="hljs-keyword">if</span> (!current) <span class="hljs-keyword">return</span>;  <span class="hljs-comment">// 超出范围</span>
+
+        <span class="hljs-comment">// 在块中的位置</span>
+        <span class="hljs-keyword">int</span> block_pos = pos - count;
+        current-&gt;data.erase(current-&gt;data.begin() + block_pos);
+        size--;
+
+        <span class="hljs-comment">// 如果块太小，则合并或重分布</span>
+        <span class="hljs-keyword">if</span> (current-&gt;data.empty()) {
+            <span class="hljs-keyword">if</span> (prev) {
+                prev-&gt;next = current-&gt;next;
+            } <span class="hljs-keyword">else</span> {
+                head = current-&gt;next;
+            }
+            <span class="hljs-keyword">delete</span> current;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (current-&gt;data.size() &lt; block_size/<span class="hljs-number">2</span> &amp;&amp; current-&gt;next) {
+            <span class="hljs-comment">// 尝试与下一个块合并</span>
+            <span class="hljs-keyword">if</span> (current-&gt;data.size() + current-&gt;next-&gt;data.size() &lt;= block_size) {
+                current-&gt;data.insert(current-&gt;data.end(), current-&gt;next-&gt;data.begin(), current-&gt;next-&gt;data.end());
+                BlockNode* temp = current-&gt;next;
+                current-&gt;next = temp-&gt;next;
+                <span class="hljs-keyword">delete</span> temp;
+            }
+        }
+    }
+
+    <span class="hljs-comment">// 获取位置pos的元素</span>
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pos)</span> </span>{
+        <span class="hljs-keyword">if</span> (pos &gt;= size) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;  <span class="hljs-comment">// 超出范围</span>
+
+        BlockNode* current = head;
+        <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">while</span> (current &amp;&amp; count + current-&gt;data.size() &lt;= pos) {
+            count += current-&gt;data.size();
+            current = current-&gt;next;
+        }
+
+        <span class="hljs-keyword">if</span> (!current) <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;  <span class="hljs-comment">// 超出范围</span>
+
+        <span class="hljs-keyword">return</span> current-&gt;data[pos - count];
+    }
+};
+</code></pre>
+<h2 id="分块技巧与优化">分块技巧与优化</h2>
+<ol>
+<li><p><strong>块大小的选择</strong>：通常sqrt(n)是个好的选择，但在实际问题中可能需要根据问题特性和数据规模微调。</p>
+</li>
+<li><p><strong>预处理与缓存</strong>：对每个块预先计算常用统计信息，如和、最大值、最小值等。</p>
+</li>
+<li><p><strong>延迟重构</strong>：对于频繁更新的情况，可以使用懒标记延迟块内元素的实际更新。</p>
+</li>
+<li><p><strong>分块排序</strong>：对每个块单独排序，可以提高区间查询的效率。</p>
+</li>
+<li><p><strong>自适应分块</strong>：根据操作频率动态调整块的大小或结构。</p>
+</li>
+</ol>
+<h2 id="复杂度分析">复杂度分析</h2>
+<p>对于长度为n的数组，将其分为大小为sqrt(n)的块：</p>
+<ul>
+<li>空间复杂度：O(n)</li>
+<li>单点修改时间复杂度：O(1)</li>
+<li>区间查询时间复杂度：O(sqrt(n))</li>
+<li>区间修改时间复杂度：O(sqrt(n))</li>
+</ul>
+<h2 id="练习题目推荐">练习题目推荐</h2>
+<ol>
+<li>POJ 2104: K-th Number (分块排序应用)</li>
+<li>SPOJ DQUERY: D-Query (莫队算法)</li>
+<li>Codeforces 617E: XOR and Favorite Number (分块查询)</li>
+<li>SPOJ GIVEAWAY: Give Away (分块排序/树状数组)</li>
+<li>Codeforces 940F: Machine Learning (带修改的莫队算法)</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>分块算法是一种强大的优化策略，特别适合处理区间查询和修改的问题。它通过将数据分成固定大小的块，在时间和空间复杂度之间取得良好的平衡。相比于线段树、树状数组等高级数据结构，分块算法实现简单，思想直观，维护成本低，而且在某些特定问题上更加灵活。掌握分块算法及其变种，可以帮助解决许多复杂的算法问题。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="平衡树.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 平衡树">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"分块算法","level":"1.2.13","depth":2,"previous":{"title":"平衡树","level":"1.2.12","depth":2,"path":"平衡树.md","ref":"平衡树.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"分块算法.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:40.626Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

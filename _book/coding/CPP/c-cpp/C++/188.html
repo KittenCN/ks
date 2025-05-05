@@ -1,0 +1,1013 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>C++ 中的多线程 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="187.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    C++
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="146.html">
+            
+                <a href="146.html">
+            
+                    
+                    基本 C++ 概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="147.html">
+            
+                <a href="147.html">
+            
+                    
+                    C++ 入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="148.html">
+            
+                <a href="148.html">
+            
+                    
+                    C++ 中的面向对象编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="149.html">
+            
+                <a href="149.html">
+            
+                    
+                    C++ 的基本概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="150.html">
+            
+                <a href="150.html">
+            
+                    
+                    C++ 中的数据类型和修饰符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="151.html">
+            
+                <a href="151.html">
+            
+                    
+                    C++ 中的变量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="152.html">
+            
+                <a href="152.html">
+            
+                    
+                    C++ 中的运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="153.html">
+            
+                <a href="153.html">
+            
+                    
+                    C++ 中的sizeOf和typedef运算符
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="154.html">
+            
+                <a href="154.html">
+            
+                    
+                    C++ 中的决策——if，else和else if
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="155.html">
+            
+                <a href="155.html">
+            
+                    
+                    C++ 循环——while，for和do while循环
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="156.html">
+            
+                <a href="156.html">
+            
+                    
+                    C++ 中的存储类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="157.html">
+            
+                <a href="157.html">
+            
+                    
+                    C++ 中的函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="158.html">
+            
+                <a href="158.html">
+            
+                    
+                    OOP 的概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="159.html">
+            
+                <a href="159.html">
+            
+                    
+                    C++ 类和对象简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="160.html">
+            
+                <a href="160.html">
+            
+                    
+                    C++ 中的访问控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="161.html">
+            
+                <a href="161.html">
+            
+                    
+                    定义类和创建对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="162.html">
+            
+                <a href="162.html">
+            
+                    
+                    在 C++ 中访问类的数据成员
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="163.html">
+            
+                <a href="163.html">
+            
+                    
+                    C++ 中类的成员函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="164.html">
+            
+                <a href="164.html">
+            
+                    
+                    C++ 中类成员函数的类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="165.html">
+            
+                <a href="165.html">
+            
+                    
+                    C++ 中的内联函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="166.html">
+            
+                <a href="166.html">
+            
+                    
+                    C++ 中的函数重载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="167.html">
+            
+                <a href="167.html">
+            
+                    
+                    C++ 中的构造器和析构器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="168.html">
+            
+                <a href="168.html">
+            
+                    
+                    C++ 中的初始化列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="169.html">
+            
+                <a href="169.html">
+            
+                    
+                    在 C++ 中创建和使用命名空间
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="170.html">
+            
+                <a href="170.html">
+            
+                    
+                    C++ 中的static关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="171.html">
+            
+                <a href="171.html">
+            
+                    
+                    C++ 中的const关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="172.html">
+            
+                <a href="172.html">
+            
+                    
+                    C++ 中的引用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="173.html">
+            
+                <a href="173.html">
+            
+                    
+                    C++ 中的复制构造器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="174.html">
+            
+                <a href="174.html">
+            
+                    
+                    C++ 中指向类成员的指针
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="175.html">
+            
+                <a href="175.html">
+            
+                    
+                    高级概念
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="176.html">
+            
+                <a href="176.html">
+            
+                    
+                    C++ 中的继承
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="177.html">
+            
+                <a href="177.html">
+            
+                    
+                    C++ 中的继承类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="178.html">
+            
+                <a href="178.html">
+            
+                    
+                    C++ 中带继承的构造器调用顺序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="179.html">
+            
+                <a href="179.html">
+            
+                    
+                    C++ 中的向上转换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="180.html">
+            
+                <a href="180.html">
+            
+                    
+                    C++ 中的多态和方法覆盖
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="181.html">
+            
+                <a href="181.html">
+            
+                    
+                    C++ 中的虚函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="182.html">
+            
+                <a href="182.html">
+            
+                    
+                    C++ 中的抽象类和纯虚函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="183.html">
+            
+                <a href="183.html">
+            
+                    
+                    C++ 中的虚析构器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="184.html">
+            
+                <a href="184.html">
+            
+                    
+                    C++ 中的运算符重载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="185.html">
+            
+                <a href="185.html">
+            
+                    
+                    C++ 中使用文件流的文件处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="186.html">
+            
+                <a href="186.html">
+            
+                    
+                    C++ 中的异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="187.html">
+            
+                <a href="187.html">
+            
+                    
+                    C++ 中的动态内存分配
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.43" data-path="188.html">
+            
+                <a href="188.html">
+            
+                    
+                    C++ 中的多线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >C++ 中的多线程</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="c-中的多线程">C++ 中的多线程</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/cpp/multithreading-in-cpp.php" target="_blank">https://www.studytonight.com/cpp/multithreading-in-cpp.php</a></p>
+</blockquote>
+<p>多线程意味着两个或多个线程同时运行，每个线程处理不同的任务。当你登录你的脸书个人资料时，在你的新闻提要上，你可以看到实时视频，你可以评论或点击一个喜欢的按钮，一切都同时进行。这是多线程的最好例子。多线程环境允许您同时运行许多活动；其中不同的线程负责不同的活动。</p>
+<p>多线程有多种用途，其中一些是:</p>
+<ul>
+<li>更好的资源利用。</li>
+<li>更简单的程序设计。</li>
+<li>反应更灵敏的程序。</li>
+</ul>
+<hr></hr>
+<h2 id="什么是线？">什么是线？</h2>
+<p>线程通常被称为轻量进程。每个线程执行程序的不同部分。每个线程共享内存、文件描述符和其他系统资源。在 Linux 中，所有线程函数都是在 <strong>&lt; pthread.h &gt;</strong> 头文件中声明的。但是它在标准的 C++ 库中不可用。</p>
+<hr></hr>
+<h2 id="在-linuxc中创建线程">在 Linux(C++)中创建线程</h2>
+<ol>
+<li><p><code>pthread_create()</code>: It creates a new thread. Below is the syntax:</p>
+<pre><code class="lang-cpp">pthread_create(threadID, attr, start_routine, arg)
+</code></pre>
+<p>在上面的代码中:</p>
+<p><strong>线程号</strong>:是每个线程的唯一标识符。使用<code>pthread_equal()</code>功能比较线程的线程 ID。</p>
+<p><strong>属性</strong>:可以用来设置各种线程属性的属性对象。它控制线程与程序其余部分的交互。</p>
+<p><strong>start_routine</strong> :线程一旦创建就要执行的 C++ 例程。</p>
+<p><strong>arg</strong> :单个参数必须作为 void 类型的指针通过引用传递。如果不传递参数，可以使用 null。</p>
+</li>
+<li><p><code>pthread_exit()</code>:用于终止任意线程。</p>
+</li>
+</ol>
+<p>下面是一个用 C++ 创建线程的简单程序:</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-keyword">char</span>* str = <span class="hljs-string">"Child thread"</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span>* <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *str)</span>
+</span>{
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Child thread Created: "</span> &lt;&lt; (<span class="hljs-keyword">char</span>*)str;
+}
+<span class="hljs-comment">// main function</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    s = ctime(&amp;Time);
+    <span class="hljs-comment">// Step 1: Declaring thread</span>
+    <span class="hljs-keyword">pthread_t</span> t;    
+    <span class="hljs-comment">// Step 2: Calling create thread function</span>
+    pthread_create(&amp;t, <span class="hljs-literal">NULL</span>, &amp;func, (<span class="hljs-keyword">void</span>*)str); 
+    <span class="hljs-comment">/*
+        Syntax for pthread_create is:
+        pthread_create(threadID,attr,start_routine,arg)
+        Here,
+        threadID = t, arg = (void*)str, atrr = Null, start_routine = func
+    */</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Main thread created"</span> &lt;&lt; endl;
+    pthread_join(t, <span class="hljs-literal">NULL</span>);
+    <span class="hljs-comment">//Exiting after completion</span>
+    <span class="hljs-built_in">exit</span>(EXIT_SUCCESS); 
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>主线程已创建子线程已创建:子线程</p>
+<hr></hr>
+<h2 id="连接和分离螺纹">连接和分离螺纹</h2>
+<p>我们可以使用两种方法来连接或分离线程:</p>
+<h3 id="join功能"><code>join()</code>功能</h3>
+<p>通过使用线程类的<code>join()</code>函数来连接线程。它使主线程和子线程相互依赖。主线程仅在子线程终止后终止，即主线程等待子线程完成执行。</p>
+<p><strong>语法:</strong></p>
+<pre><code class="lang-cpp">threadname.join();
+</code></pre>
+<p>一旦所有功能完成，它就会返回。当一个线程被分配给另一个线程或调用<code>join()</code>或<code>detach()</code>时，它是不可连接的。</p>
+<p><strong>语法:</strong></p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/* 
+    It checks whether a thread is joinable. 
+    It returns bool value.
+*/</span>
+threadname.joinable();
+</code></pre>
+<h3 id="detach功能"><code>detach()</code>功能</h3>
+<p><code>detach()</code>函数从父线程中分离一个线程。它允许主线程和子线程独立执行。</p>
+<p><strong>语法:</strong></p>
+<pre><code class="lang-cpp">threadname.detach();
+</code></pre>
+<hr></hr>
+<h3 id="使用join方法的程序示例">使用<code>join()</code>方法的程序示例</h3>
+<p>让我们举一个简单的例子来演示使用<code>join()</code>函数连接两个线程:</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span>   // To <span class="hljs-keyword">include</span> sleep function</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;ctime&gt;</span>   // To get system time</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-built_in">string</span> s;
+<span class="hljs-keyword">time_t</span> Time = time(<span class="hljs-number">0</span>);
+
+<span class="hljs-function"><span class="hljs-keyword">void</span>* <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">void</span>*)</span>
+</span>{
+    s = ctime(&amp;Time);
+    sleep(<span class="hljs-number">1</span>);   <span class="hljs-comment">//C alls sleep function</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Child thread Created "</span> &lt;&lt; s &lt;&lt; endl;
+}
+
+<span class="hljs-comment">// main function</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    s = ctime(&amp;Time);
+    <span class="hljs-comment">//Step 1: Declaring thread</span>
+    <span class="hljs-keyword">pthread_t</span> t1[<span class="hljs-number">5</span>];
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">5</span>; i++)
+    {
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Thread T["</span> &lt;&lt; i &lt;&lt; <span class="hljs-string">"] is Created "</span> &lt;&lt; s &lt;&lt; endl;
+        <span class="hljs-comment">// Step 2: calling create thread function</span>
+        pthread_create(&amp;t1[i], <span class="hljs-literal">NULL</span>, &amp;func, <span class="hljs-literal">NULL</span>); 
+        <span class="hljs-comment">// Joining threads, main thread waits for child thread to complete</span>
+        pthread_join(t1[i], <span class="hljs-literal">NULL</span>); 
+}
+<span class="hljs-comment">//Exiting after completion</span>
+<span class="hljs-built_in">exit</span>(EXIT_SUCCESS); 
+<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>线程 T[0]于 2017 年 11 月 1 日星期三 02:30:57 创建子线程于 2017 年 11 月 1 日星期三 02:30:57 创建线程 T[1]于 2017 年 11 月 1 日星期三 02:30:57 创建子线程于 2017 年 11 月 1 日星期三 02:30:57 创建线程 T[2]于 2017 年 11 月 1 日星期三 02:30:57 创建子线程 T[3]于 2017 年星期三创建</p>
+<hr></hr>
+<h3 id="使用detach方法的程序示例">使用<code>detach()</code>方法的程序示例</h3>
+<p>让我们举一个简单的例子来演示使用<code>join()</code>函数分离两个线程:</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span>   // To <span class="hljs-keyword">include</span> sleep function</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;ctime&gt;</span>   // To get system time</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;pthread.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-built_in">string</span> s;
+<span class="hljs-keyword">time_t</span> Time = time(<span class="hljs-number">0</span>);
+
+<span class="hljs-function"><span class="hljs-keyword">void</span>* <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">void</span>*)</span>
+</span>{
+    s = ctime(&amp;Time);
+    sleep(<span class="hljs-number">1</span>);   <span class="hljs-comment">// Calls sleep function</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Child thread Created "</span> &lt;&lt; s &lt;&lt; endl;
+}
+
+<span class="hljs-comment">// main function</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    s = ctime(&amp;Time);
+    <span class="hljs-comment">// Step 1: Declaring thread</span>
+    <span class="hljs-keyword">pthread_t</span> t1[<span class="hljs-number">5</span>]; 
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">5</span>; i++)
+    {
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Thread T["</span> &lt;&lt; i &lt;&lt; <span class="hljs-string">"] is Created "</span> &lt;&lt; s &lt;&lt; endl;
+        <span class="hljs-comment">// Step 2: Calling create thread function</span>
+        pthread_create(&amp;t1[i], <span class="hljs-literal">NULL</span>, &amp;func, <span class="hljs-literal">NULL</span>); 
+        <span class="hljs-comment">// Step 3: main thread doesn't waits for child thread to complete</span>
+        pthread_detach(t1[i]); 
+}
+<span class="hljs-comment">// Exiting after completion</span>
+<span class="hljs-built_in">exit</span>(EXIT_SUCCESS); 
+<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>线程 T[0]于 2017 年 11 月 1 日星期三 02:38:14 创建线程 T[1]于 2017 年 11 月 1 日 02:38:14 创建线程 T[2]于 2017 年 11 月 1 日 02:38:14 创建线程 T[3]于 2017 年 11 月 1 日 02:38:14 创建线程 T[4]于 2017 年 11 月 1 日 02:38:14 创建</p>
+<p>Hoope 你已经理解了 C++ 中线程创建的概念。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="187.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: C++ 中的动态内存分配">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"C++ 中的多线程","level":"1.1.43","depth":2,"previous":{"title":"C++ 中的动态内存分配","level":"1.1.42","depth":2,"path":"187.md","ref":"187.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"188.md","mtime":"2025-04-30T01:08:58.598Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:23:38.915Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

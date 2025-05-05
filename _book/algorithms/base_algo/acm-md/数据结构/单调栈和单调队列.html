@@ -1,0 +1,708 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>单调栈/单调队列 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="线段树.html" />
+    
+    
+    <link rel="prev" href="并查集.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="基础数据结构.html">
+            
+                <a href="基础数据结构.html">
+            
+                    
+                    基础数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="高级数据结构概述.html">
+            
+                <a href="高级数据结构概述.html">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="并查集.html">
+            
+                <a href="并查集.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.3" data-path="单调栈和单调队列.html">
+            
+                <a href="单调栈和单调队列.html">
+            
+                    
+                    单调栈/单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="线段树.html">
+            
+                <a href="线段树.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="线段树懒标记.html">
+            
+                <a href="线段树懒标记.html">
+            
+                    
+                    线段树懒标记
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="树状数组.html">
+            
+                <a href="树状数组.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="ST表.html">
+            
+                <a href="ST表.html">
+            
+                    
+                    ST表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="堆.html">
+            
+                <a href="堆.html">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="二叉树.html">
+            
+                <a href="二叉树.html">
+            
+                    
+                    二叉树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="红黑树.html">
+            
+                <a href="红黑树.html">
+            
+                    
+                    红黑树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="跳表.html">
+            
+                <a href="跳表.html">
+            
+                    
+                    跳表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="平衡树.html">
+            
+                <a href="平衡树.html">
+            
+                    
+                    平衡树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="分块算法.html">
+            
+                <a href="分块算法.html">
+            
+                    
+                    分块算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >单调栈/单调队列</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="单调栈和单调队列">单调栈和单调队列</h1>
+<h2 id="算法概述">算法概述</h2>
+<p>【单调栈】和【单调队列】是栈和队列的变种，它们在保持基本操作的同时，额外维护了元素的单调性：</p>
+<ul>
+<li>单调栈：栈内元素始终保持单调递增或单调递减</li>
+<li>单调队列：队列中的元素始终保持单调递增或单调递减</li>
+</ul>
+<p>这两种数据结构在处理区间最值问题时特别高效。</p>
+<h2 id="单调栈">单调栈</h2>
+<h3 id="算法设计思路">算法设计思路</h3>
+<p>单调栈的核心思想是：入栈时弹出违反单调性的元素，确保栈中元素始终满足单调性条件。常用于解决以下问题：</p>
+<ol>
+<li>寻找数组中每个元素的下一个更大/更小元素</li>
+<li>直方图中最大矩形面积</li>
+<li>区间内的最大值最小值等</li>
+</ol>
+<h3 id="代码实现与解析">代码实现与解析</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 以求解数组中每个元素的下一个更大元素为例</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; nextGreaterElement(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums) {
+    <span class="hljs-keyword">int</span> n = nums.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; result(n, -<span class="hljs-number">1</span>); <span class="hljs-comment">// 初始化结果数组，默认值为-1表示没有更大元素</span>
+    <span class="hljs-built_in">stack</span>&lt;<span class="hljs-keyword">int</span>&gt; st; <span class="hljs-comment">// 单调栈，存储元素的索引</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-comment">// 当栈不为空且当前元素大于栈顶元素时</span>
+        <span class="hljs-keyword">while</span> (!st.empty() &amp;&amp; nums[i] &gt; nums[st.top()]) {
+            <span class="hljs-keyword">int</span> idx = st.top();
+            st.pop();
+            result[idx] = nums[i]; <span class="hljs-comment">// nums[i]是nums[idx]的下一个更大元素</span>
+        }
+        st.push(i); <span class="hljs-comment">// 当前索引入栈</span>
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h3 id="时间复杂度分析">时间复杂度分析</h3>
+<ul>
+<li>时间复杂度：O(n)，虽然有两层循环，但每个元素最多入栈、出栈各一次</li>
+<li>空间复杂度：O(n)，栈的大小</li>
+</ul>
+<h2 id="单调队列">单调队列</h2>
+<h3 id="算法设计思路">算法设计思路</h3>
+<p>单调队列通常用于求解滑动窗口中的最大值或最小值问题。其核心思想是：</p>
+<ol>
+<li>入队时，从队尾开始，移除所有不满足单调性的元素</li>
+<li>出队时，如果队首元素是要出队的元素，则将其移除</li>
+</ol>
+<h3 id="代码实现与解析">代码实现与解析</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 以求解滑动窗口最大值为例</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; maxSlidingWindow(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> k) {
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; result;
+    <span class="hljs-built_in">deque</span>&lt;<span class="hljs-keyword">int</span>&gt; dq; <span class="hljs-comment">// 双端队列存储元素索引，队首到队尾为递减顺序</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.size(); i++) {
+        <span class="hljs-comment">// 移除不在当前窗口的元素</span>
+        <span class="hljs-keyword">if</span> (!dq.empty() &amp;&amp; dq.front() &lt;= i - k) {
+            dq.pop_front();
+        }
+
+        <span class="hljs-comment">// 从队尾移除小于当前元素的所有元素，保持单调递减</span>
+        <span class="hljs-keyword">while</span> (!dq.empty() &amp;&amp; nums[dq.back()] &lt; nums[i]) {
+            dq.pop_back();
+        }
+
+        dq.push_back(i); <span class="hljs-comment">// 当前索引入队</span>
+
+        <span class="hljs-comment">// 当窗口大小达到k时，记录结果</span>
+        <span class="hljs-keyword">if</span> (i &gt;= k - <span class="hljs-number">1</span>) {
+            result.push_back(nums[dq.front()]); <span class="hljs-comment">// 队首元素为当前窗口最大值</span>
+        }
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h3 id="时间复杂度分析">时间复杂度分析</h3>
+<ul>
+<li>时间复杂度：O(n)，每个元素最多入队和出队一次</li>
+<li>空间复杂度：O(k)，队列的大小不超过滑动窗口的大小</li>
+</ul>
+<h2 id="应用场景比较">应用场景比较</h2>
+<table>
+<thead>
+<tr>
+<th>问题类型</th>
+<th>适用数据结构</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>下一个更大/更小元素</td>
+<td>单调栈</td>
+<td>维护一个单调递减/递增的栈</td>
+</tr>
+<tr>
+<td>滑动窗口最值问题</td>
+<td>单调队列</td>
+<td>队首始终是当前窗口的最值</td>
+</tr>
+<tr>
+<td>直方图最大矩形</td>
+<td>单调栈</td>
+<td>栈中存储高度递增的柱子索引</td>
+</tr>
+</tbody>
+</table>
+<h2 id="典型例题分析">典型例题分析</h2>
+<h3 id="单调栈例题：接雨水问题">单调栈例题：接雨水问题</h3>
+<p>给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">trap</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; height)</span> </span>{
+    <span class="hljs-keyword">int</span> n = height.size();
+    <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">int</span> result = <span class="hljs-number">0</span>;
+    <span class="hljs-built_in">stack</span>&lt;<span class="hljs-keyword">int</span>&gt; st; <span class="hljs-comment">// 单调递减栈，存储索引</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-comment">// 当栈不为空且当前高度大于栈顶高度</span>
+        <span class="hljs-keyword">while</span> (!st.empty() &amp;&amp; height[i] &gt; height[st.top()]) {
+            <span class="hljs-keyword">int</span> bottom = st.top();
+            st.pop();
+
+            <span class="hljs-keyword">if</span> (st.empty()) <span class="hljs-keyword">break</span>; <span class="hljs-comment">// 左边没有边界，无法形成水槽</span>
+
+            <span class="hljs-comment">// 计算宽度和高度</span>
+            <span class="hljs-keyword">int</span> width = i - st.top() - <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">int</span> h = min(height[st.top()], height[i]) - height[bottom];
+            result += width * h; <span class="hljs-comment">// 累加当前形成的水量</span>
+        }
+        st.push(i);
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h3 id="单调队列例题：滑动窗口最大值">单调队列例题：滑动窗口最大值</h3>
+<p>给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。滑动窗口每次只向右移动一位。返回滑动窗口中的最大值。</p>
+<pre><code class="lang-cpp"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; maxSlidingWindow(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> k) {
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; result;
+    <span class="hljs-built_in">deque</span>&lt;<span class="hljs-keyword">int</span>&gt; dq;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.size(); i++) {
+        <span class="hljs-comment">// 移除不在当前窗口的元素</span>
+        <span class="hljs-keyword">if</span> (!dq.empty() &amp;&amp; dq.front() &lt;= i - k) {
+            dq.pop_front();
+        }
+
+        <span class="hljs-comment">// 维护单调递减队列</span>
+        <span class="hljs-keyword">while</span> (!dq.empty() &amp;&amp; nums[dq.back()] &lt; nums[i]) {
+            dq.pop_back();
+        }
+
+        dq.push_back(i);
+
+        <span class="hljs-comment">// 当窗口大小达到k时，记录结果</span>
+        <span class="hljs-keyword">if</span> (i &gt;= k - <span class="hljs-number">1</span>) {
+            result.push_back(nums[dq.front()]);
+        }
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h2 id="易错点与调试技巧">易错点与调试技巧</h2>
+<ol>
+<li><p>【单调性方向】根据问题选择正确的单调方向（递增或递减）</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 求下一个较大元素用单调递减栈</span>
+<span class="hljs-keyword">while</span> (!st.empty() &amp;&amp; nums[i] &gt; nums[st.top()]) {...}
+
+<span class="hljs-comment">// 求下一个较小元素用单调递增栈</span>
+<span class="hljs-keyword">while</span> (!st.empty() &amp;&amp; nums[i] &lt; nums[st.top()]) {...}
+</code></pre>
+</li>
+<li><p>【边界处理】特别是窗口大小关系和初始化问题</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 注意滑动窗口最值问题中的窗口边界条件</span>
+<span class="hljs-keyword">if</span> (i &gt;= k - <span class="hljs-number">1</span>) { <span class="hljs-comment">// 当i从0开始时，i=k-1时窗口刚好形成完整窗口</span>
+    result.push_back(nums[dq.front()]);
+}
+</code></pre>
+</li>
+<li><p>【入队出队顺序】在处理单调队列时，先处理过期元素，再维护单调性</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 错误顺序</span>
+<span class="hljs-keyword">while</span> (!dq.empty() &amp;&amp; nums[dq.back()] &lt; nums[i]) {
+    dq.pop_back();
+}
+<span class="hljs-keyword">if</span> (!dq.empty() &amp;&amp; dq.front() &lt;= i - k) { <span class="hljs-comment">// 可能出现队列为空的错误判断</span>
+    dq.pop_front();
+}
+
+<span class="hljs-comment">// 正确顺序</span>
+<span class="hljs-keyword">if</span> (!dq.empty() &amp;&amp; dq.front() &lt;= i - k) {
+    dq.pop_front();
+}
+<span class="hljs-keyword">while</span> (!dq.empty() &amp;&amp; nums[dq.back()] &lt; nums[i]) {
+    dq.pop_back();
+}
+</code></pre>
+</li>
+</ol>
+<h2 id="优化与扩展">优化与扩展</h2>
+<h3 id="stl优化技巧">STL优化技巧</h3>
+<p>在C++中，使用<code>deque</code>实现单调队列更加高效，因为它支持两端快速插入和删除操作。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// C++中deque的使用技巧</span>
+<span class="hljs-built_in">deque</span>&lt;<span class="hljs-keyword">int</span>&gt; dq;
+dq.push_back(value); <span class="hljs-comment">// 从尾部添加元素</span>
+dq.pop_back();       <span class="hljs-comment">// 从尾部删除元素</span>
+dq.push_front(value);<span class="hljs-comment">// 从头部添加元素</span>
+dq.pop_front();      <span class="hljs-comment">// 从头部删除元素</span>
+dq.front();          <span class="hljs-comment">// 获取队列头部元素</span>
+dq.back();           <span class="hljs-comment">// 获取队列尾部元素</span>
+</code></pre>
+<h3 id="应用扩展">应用扩展</h3>
+<p>单调栈和单调队列还可以解决以下问题：</p>
+<ul>
+<li>最大矩形面积（单调栈）</li>
+<li>O(n)时间内求解股票买卖的最大收益（单调栈）</li>
+<li>任意区间最值查询（单调队列 + 分块或线段树）</li>
+</ul>
+<h2 id="练习题推荐">练习题推荐</h2>
+<ol>
+<li>LeetCode 42: 接雨水（单调栈）</li>
+<li>LeetCode 84: 柱状图中最大的矩形（单调栈）</li>
+<li>LeetCode 239: 滑动窗口最大值（单调队列）</li>
+<li>LeetCode 739: 每日温度（单调栈）</li>
+<li>LeetCode 901: 股票价格跨度（单调栈）</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>单调栈和单调队列是处理特定问题时的强大工具，它们通过牺牲一部分通用性，换取了在特定场景下更高的性能。核心思想是通过维护数据结构的单调性，快速定位区间内的最值元素。在处理滑动窗口最值和"下一个更大/更小元素"等问题时，它们的时间复杂度优势尤为明显。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="并查集.html" class="navigation navigation-prev " aria-label="Previous page: 并查集">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="线段树.html" class="navigation navigation-next " aria-label="Next page: 线段树">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"单调栈/单调队列","level":"1.2.3","depth":2,"next":{"title":"线段树","level":"1.2.4","depth":2,"path":"线段树.md","ref":"线段树.md","articles":[]},"previous":{"title":"并查集","level":"1.2.2","depth":2,"path":"并查集.md","ref":"并查集.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"单调栈和单调队列.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:40.626Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

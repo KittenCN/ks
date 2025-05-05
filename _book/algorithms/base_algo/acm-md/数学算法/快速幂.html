@@ -1,0 +1,480 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>快速幂 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="最大公约数与最小公倍数.html" />
+    
+    
+    <link rel="prev" href="素数筛法.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="数学算法概述.html">
+            
+                <a href="数学算法概述.html">
+            
+                    
+                    数学算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="素数筛法.md">
+            
+                <span>
+            
+                    
+                    素数筛法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.2" data-path="快速幂.html">
+            
+                <a href="快速幂.html">
+            
+                    
+                    快速幂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="最大公约数与最小公倍数.html">
+            
+                <a href="最大公约数与最小公倍数.html">
+            
+                    
+                    最大公约数与最小公倍数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >快速幂</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="快速幂">快速幂</h1>
+<p>【快速幂】是一种高效计算大数幂的算法技术，可以将计算时间从 O(n) 降低到 O(log n)。在ACM竞赛中，它是解决大数乘方问题的必备技能。</p>
+<h2 id="基本原理">基本原理</h2>
+<p>快速幂的核心思想是利用幂运算的性质，将指数分解为二进制表示，从而减少计算次数。</p>
+<p>例如，计算 a^11：</p>
+<ul>
+<li>11 的二进制表示为 1011</li>
+<li>因此 a^11 = a^8 <em> a^2 </em> a^1</li>
+<li>只需要计算 a^1, a^2, a^4, a^8 即可</li>
+</ul>
+<h2 id="迭代实现">迭代实现</h2>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 计算 a^b 的值</span>
+<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">quickPow</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> b)</span> </span>{
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> res = <span class="hljs-number">1</span>; <span class="hljs-comment">// 初始化结果为1</span>
+
+    <span class="hljs-keyword">while</span> (b &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">if</span> (b &amp; <span class="hljs-number">1</span>) {  <span class="hljs-comment">// 如果b的当前最低位为1</span>
+            res = res * a;  <span class="hljs-comment">// 将当前的a累乘到结果中</span>
+        }
+        a = a * a;  <span class="hljs-comment">// a平方</span>
+        b &gt;&gt;= <span class="hljs-number">1</span>;  <span class="hljs-comment">// b右移一位，即b = b/2</span>
+    }
+
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h2 id="递归实现">递归实现</h2>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">quickPow</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> b)</span> </span>{
+    <span class="hljs-keyword">if</span> (b == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> half = quickPow(a, b / <span class="hljs-number">2</span>);
+
+    <span class="hljs-keyword">if</span> (b % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span> half * half;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> half * half * a;
+    }
+}
+</code></pre>
+<h2 id="取模快速幂">取模快速幂</h2>
+<p>在实际竞赛中，通常需要对结果取模，以避免整数溢出：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 计算 (a^b) % mod</span>
+<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">quickPowMod</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> b, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> mod)</span> </span>{
+    a %= mod;
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> res = <span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">while</span> (b &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">if</span> (b &amp; <span class="hljs-number">1</span>) {
+            res = (res * a) % mod;
+        }
+        a = (a * a) % mod;
+        b &gt;&gt;= <span class="hljs-number">1</span>;
+    }
+
+    <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+<h2 id="时间复杂度分析">时间复杂度分析</h2>
+<ul>
+<li>普通幂运算：O(n)</li>
+<li>快速幂：O(log n)</li>
+</ul>
+<p>对于大指数，快速幂的效率提升是非常显著的。</p>
+<h2 id="应用场景">应用场景</h2>
+<ol>
+<li><strong>大数幂模运算</strong>：如 RSA 加密算法</li>
+<li><strong>矩阵快速幂</strong>：解决斐波那契数列、路径计数等问题</li>
+<li><strong>组合数学</strong>：计算大组合数</li>
+<li><strong>乘法逆元</strong>：在模运算中求解乘法逆元</li>
+</ol>
+<h2 id="典型例题">典型例题</h2>
+<h3 id="例题1：模幂运算">例题1：模幂运算</h3>
+<p><strong>问题</strong>：计算 (a^b) % m，其中 1 ≤ a, b, m ≤ 10^9</p>
+<p><strong>解法</strong>：直接应用取模快速幂算法</p>
+<h3 id="例题2：矩阵快速幂计算斐波那契数列">例题2：矩阵快速幂计算斐波那契数列</h3>
+<p><strong>问题</strong>：计算第n个斐波那契数 F(n)，其中 F(1) = F(2) = 1，F(n) = F(n-1) + F(n-2)</p>
+<p><strong>解法</strong>：</p>
+<ol>
+<li>将状态转移方程表示为矩阵乘法形式</li>
+<li>使用矩阵快速幂求解</li>
+</ol>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> Matrix {
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a[<span class="hljs-number">2</span>][<span class="hljs-number">2</span>];
+    Matrix() { <span class="hljs-built_in">memset</span>(a, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(a)); }
+    Matrix <span class="hljs-keyword">operator</span>*(<span class="hljs-keyword">const</span> Matrix&amp; other) <span class="hljs-keyword">const</span> {
+        Matrix res;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">2</span>; ++i)
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-number">2</span>; ++j)
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>; k &lt; <span class="hljs-number">2</span>; ++k)
+                    res.a[i][j] = (res.a[i][j] + a[i][k] * other.a[k][j]) % MOD;
+        <span class="hljs-keyword">return</span> res;
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">fibonacci</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> n)</span> </span>{
+    <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+
+    Matrix base;
+    base.a[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = base.a[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] = base.a[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+    base.a[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;
+
+    Matrix res;
+    res.a[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = res.a[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;
+
+    n -= <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">while</span> (n) {
+        <span class="hljs-keyword">if</span> (n &amp; <span class="hljs-number">1</span>) res = res * base;
+        base = base * base;
+        n &gt;&gt;= <span class="hljs-number">1</span>;
+    }
+
+    <span class="hljs-keyword">return</span> (res.a[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] + res.a[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>]) % MOD;
+}
+</code></pre>
+<h2 id="注意事项">注意事项</h2>
+<ol>
+<li>【防止溢出】：在计算过程中注意取模，避免中间结果溢出</li>
+<li>【处理特殊情况】：注意处理b=0，a=0等边界情况</li>
+<li>【负指数】：当需要计算负指数时，可以利用 a^(-b) = 1/(a^b)</li>
+</ol>
+<h2 id="常见错误">常见错误</h2>
+<ol>
+<li>中间计算结果溢出</li>
+<li>忘记对中间结果取模</li>
+<li>递归实现时没有正确处理基础情况</li>
+</ol>
+<h2 id="练习题目推荐">练习题目推荐</h2>
+<ol>
+<li>POJ 1995 - Raising Modulo Numbers</li>
+<li>CodeForces 630I - Parking Lot</li>
+<li>SPOJ - LASTDIG</li>
+</ol>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="素数筛法.html" class="navigation navigation-prev " aria-label="Previous page: 素数筛法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="最大公约数与最小公倍数.html" class="navigation navigation-next " aria-label="Next page: 最大公约数与最小公倍数">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"快速幂","level":"1.2.2","depth":2,"next":{"title":"最大公约数与最小公倍数","level":"1.2.3","depth":2,"path":"最大公约数与最小公倍数.md","ref":"最大公约数与最小公倍数.md","articles":[]},"previous":{"title":"素数筛法","level":"1.2.1","depth":2,"path":"素数筛法.md","ref":"素数筛法.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"快速幂.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:37.547Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

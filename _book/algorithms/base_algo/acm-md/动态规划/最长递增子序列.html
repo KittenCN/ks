@@ -1,0 +1,648 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>最长递增子序列 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="最长公共子序列.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="动态规划概述.html">
+            
+                <a href="动态规划概述.html">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="动态规划基础.html">
+            
+                <a href="动态规划基础.html">
+            
+                    
+                    动态规划基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="背包问题.html">
+            
+                <a href="背包问题.html">
+            
+                    
+                    背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="最长公共子序列.html">
+            
+                <a href="最长公共子序列.html">
+            
+                    
+                    最长公共子序列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.4" data-path="最长递增子序列.html">
+            
+                <a href="最长递增子序列.html">
+            
+                    
+                    最长递增子序列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >最长递增子序列</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="最长递增子序列">最长递增子序列</h1>
+<p>最长递增子序列(Longest Increasing Subsequence, LIS)是动态规划中的经典问题，在众多应用场景中有重要意义。</p>
+<h2 id="问题定义">问题定义</h2>
+<p>【定义】给定一个数字序列，找出其中最长的严格递增子序列的长度。子序列是从原序列中删除零个或多个元素后得到的序列，保持剩余元素的相对顺序不变。</p>
+<p>例如：</p>
+<ul>
+<li>序列[10, 9, 2, 5, 3, 7, 101, 18]的最长递增子序列是[2, 3, 7, 18]或[2, 3, 7, 101]，长度为4。</li>
+</ul>
+<h2 id="动态规划解法">动态规划解法</h2>
+<h3 id="方法一：基本dp解法（on²）">方法一：基本DP解法（O(n²)）</h3>
+<h4 id="状态定义">状态定义</h4>
+<p>设dp[i]表示以第i个元素结尾的最长递增子序列的长度。</p>
+<h4 id="状态转移方程">状态转移方程</h4>
+<p>对于每个位置i，我们需要找出所有满足j &lt; i且nums[j] &lt; nums[i]的位置j，取其中dp[j]的最大值，然后加1：</p>
+<p>dp[i] = max(dp[j] + 1) for all j &lt; i where nums[j] &lt; nums[i]</p>
+<p>如果不存在这样的j，则dp[i] = 1（只包含元素自身）。</p>
+<h4 id="代码实现">代码实现</h4>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 使用DP求最长递增子序列，O(n²)算法</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLIS</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+    <span class="hljs-keyword">int</span> n = nums.size();
+    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// dp[i]表示以nums[i]结尾的最长递增子序列的长度</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(n, <span class="hljs-number">1</span>);  <span class="hljs-comment">// 初始化为1，因为单个元素也是递增子序列</span>
+
+    <span class="hljs-keyword">int</span> maxLength = <span class="hljs-number">1</span>;  <span class="hljs-comment">// 记录最长长度</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j++) {
+            <span class="hljs-keyword">if</span> (nums[i] &gt; nums[j]) {
+                dp[i] = max(dp[i], dp[j] + <span class="hljs-number">1</span>);
+            }
+        }
+        maxLength = max(maxLength, dp[i]);
+    }
+
+    <span class="hljs-keyword">return</span> maxLength;
+}
+</code></pre>
+<h3 id="方法二：二分查找优化（on-log-n）">方法二：二分查找优化（O(n log n)）</h3>
+<p>方法一的时间复杂度为O(n²)，在处理大规模数据时效率不高。我们可以使用二分查找来优化。</p>
+<h4 id="算法思想">算法思想</h4>
+<p>维护一个数组tails，其中tails[i]表示长度为i+1的递增子序列的末尾元素的最小值。</p>
+<p>对于每个元素x，我们可以在tails数组中使用二分查找，找到tails中第一个大于等于x的位置，并更新该位置的值为x。</p>
+<h4 id="代码实现">代码实现</h4>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 使用二分查找优化的最长递增子序列，O(n log n)算法</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLIS_optimized</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+    <span class="hljs-keyword">int</span> n = nums.size();
+    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// tails[i]表示长度为i+1的递增子序列的末尾元素的最小值</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; tails(n, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">int</span> len = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 当前找到的最长递增子序列的长度</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> num : nums) {
+        <span class="hljs-comment">// 在tails中二分查找第一个大于等于num的位置</span>
+        <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = len;
+        <span class="hljs-keyword">while</span> (left &lt; right) {
+            <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span> (tails[mid] &lt; num) {
+                left = mid + <span class="hljs-number">1</span>;
+            } <span class="hljs-keyword">else</span> {
+                right = mid;
+            }
+        }
+
+        <span class="hljs-comment">// 更新tails数组</span>
+        tails[left] = num;
+
+        <span class="hljs-comment">// 如果我们在当前的末尾添加一个新元素，则增加长度</span>
+        <span class="hljs-keyword">if</span> (left == len) {
+            len++;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> len;
+}
+</code></pre>
+<h2 id="输出最长递增子序列">输出最长递增子序列</h2>
+<p>除了求解LIS的长度外，有时还需要输出具体的最长递增子序列。</p>
+<h3 id="方法一：基于基本dp解法输出">方法一：基于基本DP解法输出</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 输出最长递增子序列</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; findLIS(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums) {
+    <span class="hljs-keyword">int</span> n = nums.size();
+    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> {};
+
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(n, <span class="hljs-number">1</span>);  <span class="hljs-comment">// dp[i]表示以nums[i]结尾的LIS长度</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; prev(n, -<span class="hljs-number">1</span>);  <span class="hljs-comment">// prev[i]表示LIS中nums[i]的前一个元素的索引</span>
+
+    <span class="hljs-keyword">int</span> maxLength = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">int</span> endIndex = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 最长子序列的结束索引</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j++) {
+            <span class="hljs-keyword">if</span> (nums[i] &gt; nums[j] &amp;&amp; dp[j] + <span class="hljs-number">1</span> &gt; dp[i]) {
+                dp[i] = dp[j] + <span class="hljs-number">1</span>;
+                prev[i] = j;  <span class="hljs-comment">// 记录前一个元素的索引</span>
+            }
+        }
+
+        <span class="hljs-comment">// 更新最长长度和结束索引</span>
+        <span class="hljs-keyword">if</span> (dp[i] &gt; maxLength) {
+            maxLength = dp[i];
+            endIndex = i;
+        }
+    }
+
+    <span class="hljs-comment">// 回溯构建LIS</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; lis;
+    <span class="hljs-keyword">while</span> (endIndex != -<span class="hljs-number">1</span>) {
+        lis.push_back(nums[endIndex]);
+        endIndex = prev[endIndex];
+    }
+
+    <span class="hljs-comment">// 逆序得到正确的LIS</span>
+    reverse(lis.begin(), lis.end());
+    <span class="hljs-keyword">return</span> lis;
+}
+</code></pre>
+<h3 id="方法二：基于二分查找解法输出">方法二：基于二分查找解法输出</h3>
+<p>使用二分查找优化的方法也可以输出LIS，但需要额外的记录：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 使用二分查找并输出最长递增子序列</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; findLIS_optimized(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums) {
+    <span class="hljs-keyword">int</span> n = nums.size();
+    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> {};
+
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; tails(n, <span class="hljs-number">0</span>);  <span class="hljs-comment">// tails[i]表示长度为i+1的LIS的末尾最小值</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; indices(n, <span class="hljs-number">0</span>);  <span class="hljs-comment">// indices[i]表示长度为i+1的LIS的末尾元素在nums中的索引</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; prev(n, -<span class="hljs-number">1</span>);  <span class="hljs-comment">// prev[i]表示nums[i]前一个元素在LIS中的索引</span>
+
+    <span class="hljs-keyword">int</span> len = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 当前LIS长度</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = len;
+        <span class="hljs-keyword">while</span> (left &lt; right) {
+            <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span> (tails[mid] &lt; nums[i]) {
+                left = mid + <span class="hljs-number">1</span>;
+            } <span class="hljs-keyword">else</span> {
+                right = mid;
+            }
+        }
+
+        <span class="hljs-comment">// 如果当前位置前有元素，记录前驱</span>
+        <span class="hljs-keyword">if</span> (left &gt; <span class="hljs-number">0</span>) {
+            prev[i] = indices[left - <span class="hljs-number">1</span>];
+        }
+
+        tails[left] = nums[i];
+        indices[left] = i;
+
+        <span class="hljs-keyword">if</span> (left == len) {
+            len++;
+        }
+    }
+
+    <span class="hljs-comment">// 回溯构建LIS</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; lis;
+    <span class="hljs-keyword">int</span> index = indices[len - <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">while</span> (index != -<span class="hljs-number">1</span>) {
+        lis.push_back(nums[index]);
+        index = prev[index];
+    }
+
+    reverse(lis.begin(), lis.end());
+    <span class="hljs-keyword">return</span> lis;
+}
+</code></pre>
+<h2 id="变种问题">变种问题</h2>
+<h3 id="最长递减子序列-lds">最长递减子序列 (LDS)</h3>
+<p>只需将原序列取负或反向比较即可转化为LIS问题。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 最长递减子序列</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLDS</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; reversed(nums);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span>&amp; num : reversed) {
+        num = -num;  <span class="hljs-comment">// 取负转换为LIS问题</span>
+    }
+    <span class="hljs-keyword">return</span> lengthOfLIS(reversed);
+}
+</code></pre>
+<h3 id="最长不降子序列（可以包含相等元素）">最长不降子序列（可以包含相等元素）</h3>
+<p>只需修改比较条件：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 最长不降子序列</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLNDS</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+    <span class="hljs-keyword">int</span> n = nums.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(n, <span class="hljs-number">1</span>);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j++) {
+            <span class="hljs-keyword">if</span> (nums[i] &gt;= nums[j]) {  <span class="hljs-comment">// 允许相等</span>
+                dp[i] = max(dp[i], dp[j] + <span class="hljs-number">1</span>);
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> *max_element(dp.begin(), dp.end());
+}
+</code></pre>
+<h3 id="最长交替子序列（最长摆动子序列）">最长交替子序列（最长摆动子序列）</h3>
+<p>找出序列中最长的子序列，使得子序列中相邻元素的差交替出现正负。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 最长交替子序列</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLAS</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+    <span class="hljs-keyword">int</span> n = nums.size();
+    <span class="hljs-keyword">if</span> (n &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> n;
+
+    <span class="hljs-comment">// dp[i][0]表示以nums[i]结尾且最后一个差为负的最长交替子序列长度</span>
+    <span class="hljs-comment">// dp[i][1]表示以nums[i]结尾且最后一个差为正的最长交替子序列长度</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; dp(n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>));
+
+    <span class="hljs-keyword">int</span> result = <span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j++) {
+            <span class="hljs-keyword">if</span> (nums[i] &gt; nums[j]) {
+                <span class="hljs-comment">// 当前差为正，前一个差应为负</span>
+                dp[i][<span class="hljs-number">1</span>] = max(dp[i][<span class="hljs-number">1</span>], dp[j][<span class="hljs-number">0</span>] + <span class="hljs-number">1</span>);
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[i] &lt; nums[j]) {
+                <span class="hljs-comment">// 当前差为负，前一个差应为正</span>
+                dp[i][<span class="hljs-number">0</span>] = max(dp[i][<span class="hljs-number">0</span>], dp[j][<span class="hljs-number">1</span>] + <span class="hljs-number">1</span>);
+            }
+        }
+        result = max({result, dp[i][<span class="hljs-number">0</span>], dp[i][<span class="hljs-number">1</span>]});
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h3 id="二维lis（信封问题）">二维LIS（信封问题）</h3>
+<p>给定一组信封的宽度和高度，一个信封可以放入另一个信封当且仅当它的宽度和高度都小于另一个信封。求最多可以嵌套的信封数量。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 信封嵌套问题</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxEnvelopes</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; envelopes)</span> </span>{
+    <span class="hljs-comment">// 按宽度升序排序，宽度相同时按高度降序排序</span>
+    sort(envelopes.begin(), envelopes.end(), [](<span class="hljs-keyword">const</span> <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; a, <span class="hljs-keyword">const</span> <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; b) {
+        <span class="hljs-keyword">return</span> a[<span class="hljs-number">0</span>] &lt; b[<span class="hljs-number">0</span>] || (a[<span class="hljs-number">0</span>] == b[<span class="hljs-number">0</span>] &amp;&amp; a[<span class="hljs-number">1</span>] &gt; b[<span class="hljs-number">1</span>]);
+    });
+
+    <span class="hljs-comment">// 在高度上应用LIS算法</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; heights;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; env : envelopes) {
+        heights.push_back(env[<span class="hljs-number">1</span>]);
+    }
+
+    <span class="hljs-keyword">return</span> lengthOfLIS_optimized(heights);
+}
+</code></pre>
+<h2 id="时间和空间复杂度">时间和空间复杂度</h2>
+<ul>
+<li><p><strong>基本DP算法</strong></p>
+<ul>
+<li>时间复杂度：O(n²)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+</li>
+<li><p><strong>二分查找优化</strong></p>
+<ul>
+<li>时间复杂度：O(n log n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+</li>
+</ul>
+<h2 id="实战技巧">实战技巧</h2>
+<ol>
+<li><strong>识别问题类型</strong>：许多看似不相关的问题可以转化为LIS问题</li>
+<li><strong>使用二分查找优化</strong>：当处理大规模数据时，二分查找优化至关重要</li>
+<li><strong>灵活变形</strong>：根据问题需求灵活调整比较条件（如不降序、交替等）</li>
+<li><strong>多维情况</strong>：对于多维问题，可先排序然后在一个维度上应用LIS</li>
+</ol>
+<h2 id="实际应用">实际应用</h2>
+<ol>
+<li><strong>序列分析</strong>：在金融数据、基因序列等领域分析趋势</li>
+<li><strong>塔堆叠问题</strong>：物体按特定条件堆叠的最大高度</li>
+<li><strong>网络包分析</strong>：分析网络流中的有序事件</li>
+<li><strong>游戏设计</strong>：解决策略游戏中的升级路径问题</li>
+</ol>
+<h2 id="练习题目推荐">练习题目推荐</h2>
+<ol>
+<li>LeetCode 300: Longest Increasing Subsequence (经典LIS问题)</li>
+<li>LeetCode 354: Russian Doll Envelopes (二维LIS问题)</li>
+<li>LeetCode 673: Number of Longest Increasing Subsequence (计算LIS数量)</li>
+<li>LeetCode 1048: Longest String Chain (字符串链的LIS变种)</li>
+<li>LeetCode 674: Longest Continuous Increasing Subsequence (连续递增子序列)</li>
+<li>POJ 2533: Longest Ordered Subsequence (基础LIS练习)</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>最长递增子序列问题是动态规划中的经典问题，通过本章的学习，你应该:</p>
+<ol>
+<li>理解LIS问题的基本定义和解法</li>
+<li>掌握O(n²)动态规划解法和O(n log n)二分查找优化方法</li>
+<li>能够解决LIS的各种变种问题</li>
+<li>学会将其他问题转化为LIS问题来解决</li>
+<li>熟练掌握LIS问题在实际应用中的常见技巧</li>
+</ol>
+<p>通过不断练习和应用，你将能够灵活运用LIS算法解决更复杂的实际问题。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="最长公共子序列.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 最长公共子序列">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"最长递增子序列","level":"1.2.4","depth":2,"previous":{"title":"最长公共子序列","level":"1.2.3","depth":2,"path":"最长公共子序列.md","ref":"最长公共子序列.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"最长递增子序列.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:12.158Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

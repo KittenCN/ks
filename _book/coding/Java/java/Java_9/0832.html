@@ -1,0 +1,553 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>流 API 改进 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0833.html" />
+    
+    
+    <link rel="prev" href="0831.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 9
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0824.html">
+            
+                <a href="0824.html">
+            
+                    
+                    Java 9 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0825.html">
+            
+                <a href="0825.html">
+            
+                    
+                    Java 模块——Java 平台模块系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0826.html">
+            
+                <a href="0826.html">
+            
+                    
+                    Java REPL——JShell
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0827.html">
+            
+                <a href="0827.html">
+            
+                    
+                    接口私有方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0828.html">
+            
+                <a href="0828.html">
+            
+                    
+                    日期 API 改进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0829.html">
+            
+                <a href="0829.html">
+            
+                    
+                    进程 API 改进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0830.html">
+            
+                <a href="0830.html">
+            
+                    
+                    下划线关键字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0831.html">
+            
+                <a href="0831.html">
+            
+                    
+                    匿名内部类改进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.9" data-path="0832.html">
+            
+                <a href="0832.html">
+            
+                    
+                    流 API 改进
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0833.html">
+            
+                <a href="0833.html">
+            
+                    
+                    集合工厂方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0834.html">
+            
+                <a href="0834.html">
+            
+                    
+                    资源试用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0835.html">
+            
+                <a href="0835.html">
+            
+                    
+                    @SafeVarargs注解
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >流 API 改进</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="流-api-改进">流 API 改进</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-9/stream-api-improvement" target="_blank">https://www.studytonight.com/java-9/stream-api-improvement</a></p>
+</blockquote>
+<p>Java 在 Java 9 版本的 流 API 中加入了一些新的方法。这些方法返回一个集合流，例如，我们希望获得一个带有指定谓词的集合流。我们将借助示例来讨论这些，但是首先，让我们看看 Java 9 在 流 API 中添加了什么(方法)。</p>
+<ul>
+<li>takeWhile()</li>
+<li>dropWhile()</li>
+<li>迭代()</li>
+<li>ofNullable()</li>
+</ul>
+<h2 id="java-takewhile方法">Java takeWhile()方法</h2>
+<p>此方法用于获取一个流，该流由从该流中获取的与给定谓词匹配的元素子集组成。</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">default</span> Stream&lt;T&gt; <span class="hljs-title">takeWhile</span><span class="hljs-params">(Predicate&lt;<span class="hljs-keyword">super</span> T&gt; predicate)</span>
+</span></code></pre>
+<h2 id="示例takewhile方法">示例:Takewhile()方法</h2>
+<p>此方法将元素带到指定的谓词。例如，如果我们向 10 提供谓词，那么它将元素保持到 10，并停止进一步遍历。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Collectors;
+<span class="hljs-keyword">import</span> java.util.stream.Stream;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{  
+         List&lt;Integer&gt; list   
+            = Stream.of(<span class="hljs-number">20</span>,<span class="hljs-number">15</span>,<span class="hljs-number">30</span>,<span class="hljs-number">10</span>,<span class="hljs-number">50</span>)  
+                    .takeWhile(i -&gt; (i&gt;<span class="hljs-number">10</span>)).collect(Collectors.toList());     
+        System.out.println(list);  
+    }
+}
+</code></pre>
+<p>【20，15，30】</p>
+<h2 id="示例-2-takewhile方法">示例 2: takeWhile()方法</h2>
+<p>在这个例子中，我们有一个字符流，并获得该流的一个子集，直到<strong>‘h’</strong>并收集到一个列表中。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Collectors;
+<span class="hljs-keyword">import</span> java.util.stream.Stream;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{  
+         List&lt;String&gt; list   
+            = Stream.of(<span class="hljs-string">"a"</span>, <span class="hljs-string">"b"</span>, <span class="hljs-string">"c"</span>, <span class="hljs-string">"d"</span>, <span class="hljs-string">"e"</span>, <span class="hljs-string">"f"</span>, <span class="hljs-string">"g"</span>, <span class="hljs-string">"h"</span>, <span class="hljs-string">"i"</span>)  
+                    .takeWhile(a-&gt;!a.equals(<span class="hljs-string">"h"</span>)).collect(Collectors.toList());     
+        System.out.println(list);  
+    }
+}
+</code></pre>
+<p>【a、b、c、d、e、f、g】</p>
+<h2 id="java-dropwhile方法">Java dropWhile()方法</h2>
+<p>此方法用于获取指定谓词后的流子集。它会删除指定元素之前累积的所有元素。</p>
+<p>换句话说，我们可以说，在删除了与给定谓词匹配的元素子集后，它返回了一个由该流的剩余元素组成的流。</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">default</span> Stream&lt;T&gt; <span class="hljs-title">dropWhile</span><span class="hljs-params">(Predicate&lt;<span class="hljs-keyword">super</span> T&gt; predicate)</span>
+</span></code></pre>
+<h2 id="示例dropwhile方法">示例:dropWhile()方法</h2>
+<p>在本例中，我们通过使用 dropWhile()方法获得了出现在“h”之后的元素列表。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Collectors;
+<span class="hljs-keyword">import</span> java.util.stream.Stream;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{  
+         List&lt;String&gt; list   
+            = Stream.of(<span class="hljs-string">"a"</span>, <span class="hljs-string">"b"</span>, <span class="hljs-string">"c"</span>, <span class="hljs-string">"d"</span>, <span class="hljs-string">"e"</span>, <span class="hljs-string">"f"</span>, <span class="hljs-string">"g"</span>, <span class="hljs-string">"h"</span>, <span class="hljs-string">"i"</span>)  
+                    .dropWhile(a-&gt;!a.equals(<span class="hljs-string">"h"</span>)).collect(Collectors.toList());     
+        System.out.println(list);  
+    }
+}
+</code></pre>
+<p>【h，I】</p>
+<h2 id="示例-2-dropwhile">示例 2: dropWhile()</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{  
+         List&lt;Integer&gt; list   
+            = Stream.of(<span class="hljs-number">20</span>,<span class="hljs-number">15</span>,<span class="hljs-number">30</span>,<span class="hljs-number">10</span>,<span class="hljs-number">50</span>)  
+                    .dropWhile(i -&gt; (i&gt;<span class="hljs-number">10</span>)).collect(Collectors.toList());     
+        System.out.println(list);  
+    }
+}
+</code></pre>
+<p>【10，50】</p>
+<h2 id="流新的迭代方法">流:新的迭代方法</h2>
+<p>Java 9 流接口增加了一个新的重载方法<strong>迭代</strong>。这个方法允许我们迭代流元素直到指定的条件。</p>
+<p>它需要三个参数，seed、hasNext 和 Next。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">iterate</span><span class="hljs-params">(T seed, Predicate&lt;<span class="hljs-keyword">super</span> T&gt; hasNext, UnaryOperator&lt;T&gt; next)</span>
+</span></code></pre>
+<h2 id="示例">示例:</h2>
+<p>在这个例子中，我们通过迭代 <strong>iterate()</strong> 方法将奇数元素收集到一个列表中。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Collectors;
+<span class="hljs-keyword">import</span> java.util.stream.Stream;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{    
+         Stream&lt;Integer&gt; listN = Stream.iterate(<span class="hljs-number">1</span>, i-&gt;i&lt;<span class="hljs-number">10</span>, i-&gt;i+<span class="hljs-number">2</span>);
+         List&lt;Integer&gt; list = listN.collect(Collectors.toList());
+         System.out.println(list);   
+    }
+}
+</code></pre>
+<p>【1，3，5，7，9】</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0831.html" class="navigation navigation-prev " aria-label="Previous page: 匿名内部类改进">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0833.html" class="navigation navigation-next " aria-label="Next page: 集合工厂方法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"流 API 改进","level":"1.1.9","depth":2,"next":{"title":"集合工厂方法","level":"1.1.10","depth":2,"path":"0833.md","ref":"0833.md","articles":[]},"previous":{"title":"匿名内部类改进","level":"1.1.8","depth":2,"path":"0831.md","ref":"0831.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0832.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:54.669Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

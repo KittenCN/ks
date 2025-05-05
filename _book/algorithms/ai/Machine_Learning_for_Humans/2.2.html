@@ -1,0 +1,538 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>2.2 监督学习 II · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="2.3.html" />
+    
+    
+    <link rel="prev" href="2.1.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    写给人类的机器学习
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="READ_ME.html">
+            
+                <a href="READ_ME.html">
+            
+                    
+                    写给人类的机器学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="1.html">
+            
+                <a href="1.html">
+            
+                    
+                    一、为什么机器学习重要
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="2.1.html">
+            
+                <a href="2.1.html">
+            
+                    
+                    2.1 监督学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.4" data-path="2.2.html">
+            
+                <a href="2.2.html">
+            
+                    
+                    2.2 监督学习 II
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="2.3.html">
+            
+                <a href="2.3.html">
+            
+                    
+                    2.3 监督学习 III
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="3.html">
+            
+                <a href="3.html">
+            
+                    
+                    三、无监督学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="4.html">
+            
+                <a href="4.html">
+            
+                    
+                    四、神经网络和深度学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="5.html">
+            
+                <a href="5.html">
+            
+                    
+                    五、强化学习
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="6.html">
+            
+                <a href="6.html">
+            
+                    
+                    六、最好的机器学习资源
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >2.2 监督学习 II</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="22-监督学习-ii">2.2 监督学习 II</h1>
+<blockquote>
+<p>原文：<a href="https://medium.com/machine-learning-for-humans/supervised-learning-2-5c1c23f3560d" target="_blank">Machine_Learning_for_Humans, Part 2.1: Supervised Learning</a></p>
+<p>作者：<a href="mailto:ml4humans@gmail.com" target="_blank">Vishal Maini</a></p>
+<p>译者：<a href="https://github.com/wizardforcel" target="_blank">飞龙</a></p>
+<p>协议：<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></p>
+<p>使用对数几率回归（LR）和支持向量机（SVM）的分类。</p>
+</blockquote>
+<h2 id="分类：预测标签">分类：预测标签</h2>
+<p>这个邮件是不是垃圾邮件？贷款者能否偿还它们的贷款？用户是否会点击广告？你的 Fackbook 照片中那个人是谁？</p>
+<p>分类预测离散的目标标签<code>Y</code>。分类是一种问题，将新的观测值分配给它们最有可能属于的类，基于从带标签的训练集中构建的模型。</p>
+<p>你的分类的准确性取决于所选的算法的有效性，你应用它的方式，以及你有多少有用的训练数据。</p>
+<p><img src="img/2-2-1.png" alt=""></img></p>
+<h2 id="对数几率回归：0-还是-1？">对数几率回归：0 还是 1？</h2>
+<blockquote>
+<p>只要胆子大，LR 打天下（译者注）。</p>
+</blockquote>
+<p>对数几率（logistic）回归是个分类方法：模型输出目标变量<code>Y</code>属于某个特定类的概率。</p>
+<blockquote>
+<p>分类的一个很好的例子是，判断贷款申请人是不是骗子。</p>
+<p>最终，出借人想要知道，它们是否应该贷给借款人，以及它们拥有一些容忍度，用于抵抗申请人的确是骗子的风险。这里，对数几率回归的目标就是计算申请人是骗子的概率（0%~100%）。使用这些概率，我们可以设定一些阈值，我们愿意借给高于它的借款人，对于低于它的借款人，我们拒绝他们的贷款申请，或者标记它们以便后续观察。</p>
+</blockquote>
+<p>虽然对数几率回归通常用于二元分类，其中只存在两个类，要注意，分类可以拥有任意数量的类（例如，为手写数字分配 0~9 的标签，或者使用人脸识别来检测 Fackbook 图片中是哪个朋友）。</p>
+<h3 id="我可以使用普通最小二乘嘛？">我可以使用普通最小二乘嘛？</h3>
+<p>不能。如果你在大量样本上训练线性回归模型，其中<code>Y = 0</code>或者<code>1</code>，你最后可能预测出一些小于 0 或者大于 1 的概率，这毫无意义。反之，我们使用对数几率回归模型（或者对率（logit）模型），它为分配“<code>Y</code>属于某个特定类”的概率而设计，范围是 0%~100%。</p>
+<h3 id="数学原理是什么？">数学原理是什么？</h3>
+<p>注意：这一节中的数学很有意思，但是更加技术化。如果你对高阶的高年不感兴趣，请尽管跳过它。</p>
+<p>对率模型是个线性回归的改良，通过应用 sigmoid 函数，确保输出 0 和 1 之间的概率。如果把它画出来，它就像 S 型的曲线，稍后可以看到。</p>
+<p><img src="img/2-2-2.png" alt=""></img></p>
+<blockquote>
+<p>sigmoid 函数，它将值压缩到 0 和 1 之间。</p>
+</blockquote>
+<p>回忆我们的简单线性回归模型的原始形式，我们现在叫它<code>g(X)</code>，因为我们打算在复合函数中使用它。</p>
+<p><img src="img/2-2-3.png" alt=""></img></p>
+<p>现在，为了解决模型输出小于 0 或者大于 1 的问题，我们打算定义一个新的函数<code>F(g(X))</code>，它将现行回归的输出压缩到<code>[0,1]</code>区间，来转换<code>g(X)</code>。你可以想到一个能这样做的函数吗？</p>
+<p>你想到了 sigmoid 函数吗？太棒了，这就对了！</p>
+<p>所以我们将<code>g(x)</code>插入 sigmoid 函数中，得到了原始函数的一个函数（对，事情变得高阶了），它输出 0 和 1 之间的概率。</p>
+<p><img src="img/2-2-4.png" alt=""></img></p>
+<blockquote>
+<p>换句话说，我们正在计算“训练样本属于特定类”的概率：<code>P(Y=1)</code>。</p>
+</blockquote>
+<p>这里我们分离了<code>p</code>，它是<code>Y=1</code>的概率，在等式左边。如果我们打算求解等式右边的，非常整洁的<code>β0 + β1x + ϵ</code>，以便我们能够直接解释我们习得的<code>beta</code>参数，我们会得到对数几率比值，简称对率，它在左边。这就是“对率模型”的由来。</p>
+<p><img src="img/2-2-5.png" alt=""></img></p>
+<p>对数几率比值仅仅是概率比值<code>p/(1-p)</code>的自然对数，它会出现在我们每天的对话中。</p>
+<blockquote>
+<p>在这一季的“权力的游戏”中，你认为小恶魔挂掉的几率有多大？</p>
+<p>嗯...挂掉的可能性是不挂掉的两倍。几率是 2 比 1。的确，他太重要，不会被杀，但是我们都看到了他们对 Ned Stark 做的事情...</p>
+</blockquote>
+<p><img src="img/2-2-6.png" alt=""></img></p>
+<blockquote>
+<p>要注意在对率模型中，<code>β1</code>表示当<code>X</code>变化时，对率的变化比例。换句话说，它是对率的斜率，并不是概率的斜率。</p>
+</blockquote>
+<p>对率可能有点不直观，但是值得理解，因为当你解释执行分类任务的神经网络的输出时，它会再次出现。</p>
+<h3 id="使用对率回归模型的输出来做决策">使用对率回归模型的输出来做决策</h3>
+<p>对率回归模型的输出，就像 S 型曲线，基于<code>X</code>的值展示了<code>P(Y=1)</code>。</p>
+<p><img src="img/2-2-7.png" alt=""></img></p>
+<p>为了预测<code>Y</code>标签，是不是垃圾邮件，有没有癌症，是不是骗子，以及其他，你需要（为正的结果）设置一个概率截断值，或者叫阈值（不是）。例如，如果模型认为，邮件是垃圾邮件的概率高于 70%，就将其标为垃圾。否则就不是垃圾。</p>
+<p>这个阈值取决于你对假阳性（误报）和假阴性（漏报）的容忍度。如果你在诊断癌症，你对假阴性有极低的容忍度，因为如果病人有极小的几率得癌症，你都需要进一步的测试来确认。所以你需要为正向结果设置一个很低的阈值。</p>
+<p>另一方面，在欺诈性贷款申请的例子中，假阳性的容忍度更高，也别是对于小额贷款，因为进一步的审查开销很大，并且小额贷款不值得额外的操作成本，以及对于非欺骗性的申请者来说是个障碍，它们正在等待进一步的处理。</p>
+<h3 id="对数几率回归的最小损失">对数几率回归的最小损失</h3>
+<p>就像线性回归的例子那样，我们使用梯度下降来习得使损失最小的<code>beta</code>参数。</p>
+<p>在对率回归中，成本函数是这样的度量，当真实答案是<code>0</code>时，你有多么经常将其预测为 1，或者反过来。下面是正则化的成本函数，就像我们对线性回归所做的那样。</p>
+<p><img src="img/2-2-8.png" alt=""></img></p>
+<p>当你看到像这样的长式子时，不要惊慌。将其拆成小部分，并从概念上思考每个部分都是什么。之后就能理解了。</p>
+<p>第一个部分是数据损失，也就是，模型预测值和实际值之间有多少差异。第二个部分就是正则损失，也就是，我们以什么程度，惩罚模型的较大参数，它过于看重特定的特征（要记得，这可以阻止过拟合）。</p>
+<p>我们使用低度下降，使损失函数最小，就是像上面这样。我们构建了一个对数几率回归模型，来尽可能准确地预测分类。</p>
+<h2 id="支持向量机">支持向量机</h2>
+<blockquote>
+<p>我们再次位于一个充满弹球的房间里。为什么我们总是在充满弹球的房间里呢？我可以发誓我已经把它们丢掉了。</p>
+</blockquote>
+<p>SVM 是我们涉及的最后一个参数化模型。它通常与对率回归解决相同的问题，二元分类，并产生相似的效果。它值得理解，因为算法本质上是由几何驱动的，并不是由概率思维驱动的。</p>
+<p>SVM 可解决的一些问题示例：</p>
+<ul>
+<li>这个图片是猫还是狗？</li>
+<li>这个评论是正面还是负面的？</li>
+<li>二维图片上的点是红色还是蓝色？</li>
+</ul>
+<p>我们使用第三个例子，来展示 SVM 的工作方式。像这样的问题叫做玩具问题，因为它们不是真实的。但是没有东西是真实的，所以也没关系。</p>
+<p><img src="img/2-2-9.png" alt=""></img></p>
+<p>这个例子中，我们的二维空间中有一些点，它们是红色或者蓝色的，并且我们打算将二者干净地分开。</p>
+<p>训练集画在了上面的图片中。我们打算在这个平面上划分新的未分类的点。为了实现它，SVM 使用分隔直线（在高维里面是个多维的超平面），将空间分成红色区域和蓝色区域。你可以想象，分隔直线在上面的图里面是什么样。</p>
+<p>具体一些，我们如何选取画这条线的位置？</p>
+<p>下面是这条直线的两个示例：</p>
+<p><img src="img/2-2-10.png" alt=""></img></p>
+<blockquote>
+<p>这些图表使用 MicrosoftPaint 制作，在不可思议的 32 年之后，它在几个星期之前废弃了。R.I.P Paint :(</p>
+</blockquote>
+<p><img src="img/2-2-11.png" alt=""></img></p>
+<p>我希望你拥有一种直觉，觉得第一条线更好。直线到每一边的最近的点的距离叫做间距，而 SVM 尝试使间距最大。你可以将其看做安全空间：空间越大，嘈杂的点就越不可能被错误分类。</p>
+<p>基于这个简单的解释，一个巨大的问题来了。</p>
+<p>(1) 背后的数学原理是什么？</p>
+<p>我们打算寻找最优超平面（在我们的二维示例中是直线）。这个超平面需要（1）干净地分隔数据，将蓝色的点分到一边，红色的点分到另一边，以及（2）使间距最大。这是个最优化问题。按照（2）的需求使间距最大的时候，解需要遵循约束（1）。</p>
+<p>求解这个问题的人类版本，就是拿一个尺子，尝试不同的直线来分隔所有点，直到你得到了使间距最大的那条。</p>
+<p>人们发现，存在求解这个最大化的数学方式，但是它超出了我们的范围。为了进一步解释它，<a href="https://www.youtube.com/watch?v=_PwhiWxHK8o" target="_blank">这里是个视频讲义</a>，使用<a href="https://en.wikipedia.org/wiki/Lagrange_multiplier" target="_blank">拉格朗日优化</a>展示了它的工作原理。</p>
+<p>你最后求解的超平面的定义，有关它相对于特定<code>x_i</code>的位置，它们就叫做支持向量，并且它们通常是最接近超平面的点。</p>
+<p>(2) 如果你不能干净地分隔数据，会发生什么？</p>
+<p>处理这个问题有两个方式。</p>
+<p>2.1 软化“分隔”的定义</p>
+<p>我们允许一些错误，也就是我们允许红色区域里面有一些蓝色点，或者蓝色区域里有一些红色点。我们向损失函数中。为错误分类的样本添加成本<code>C</code>来实现。基本上我们说，错误分类是可以接受的，只是会产生一些成本。</p>
+<p>2.2 将数据放到高维</p>
+<p>我们可以创建非线性的分类器，通过增加维数，也就是，包含<code>x^2</code>，<code>x^3</code>，甚至是<code>cos(x)</code>，以及其它。突然，你就有了一个边界，当我们将其带回低维表示时，它看起来有些弯曲。</p>
+<p>本质上，这就类似红的和蓝色的弹球都在地面上，它们不能用一条直线分隔。但是如果你让所有红色的弹球离开地面，像右图这样，你就能画一个平面来分隔它们。之后你让他们落回地面，就知道了蓝色和红色的边界。</p>
+<p><img src="img/2-2-12.png" alt=""></img></p>
+<blockquote>
+<p>二维空间<code>R^2</code>中的非线性可分的数据集，以及映射到高维的相同数据集，第三个维度是<code>x^2+y^2</code>（来源：<a href="http://www.eric-kim.net/eric-kim-net/posts/1/kernel_trick.html" target="_blank">http://www.eric-kim.net/eric-kim-net/posts/1/kernel_trick.html</a>）</p>
+</blockquote>
+<p><img src="img/2-2-13.png" alt=""></img></p>
+<blockquote>
+<p>决策边界展示为绿色，左边是三维空间，右边是二维空间。与上一张来源相同。</p>
+</blockquote>
+<p>总之，SVM 用于二元分类。它们尝试寻找一个平面，干净地分隔两个类。如果这不可能，我们可以软化“分隔”的定义，或者我们把数据放到高维，以便我们可以干净地分隔数据。</p>
+<h2 id="好的！">好的！</h2>
+<p>这一节中我们涉及了：</p>
+<ul>
+<li>监督学习的分类任务</li>
+<li>两种基础的分类方法：对数几率回归（LR）和支持向量机（SVM）</li>
+<li>常见概念：sigmoid 函数，对数几率（对率），以及假阳性（误报）和假阴性（漏报）</li>
+</ul>
+<p>在“2.3：监督学习 III”中，我们会深入非参数化监督学习，其中算法背后的概念都非常直观，并且对于特定类型的问题，表现都很优秀，但是模型可能难以解释。</p>
+<h2 id="练习材料和扩展阅读">练习材料和扩展阅读</h2>
+<h3 id="22a-对数几率回归">2.2a 对数几率回归</h3>
+<p>Data School 拥有一个对数几率回归的非常棒的深入指南。我们也继续向你推荐<a href="https://www-bcf.usc.edu/~gareth/ISL/" target="_blank">《An Introduction to Statistical Learning》</a>。对数几率回归请见第四章，支持向量机请见第九章。</p>
+<p>为了解释对数几率回归，我们推荐你处理<a href="https://datahack.analyticsvidhya.com/contest/practice-problem-1/" target="_blank">这个问题集</a>。你需要注册站点来完成它。很不幸，这就是人生。</p>
+<h3 id="22b-深入-svm">2.2b 深入 SVM</h3>
+<p>为了深入 SVM 背后的数学，在 MIT 6.034：人工智能课程中观看 <a href="https://www.youtube.com/watch?v=_PwhiWxHK8o" target="_blank">Patrick Winston 教授的讲义</a>，并查看<a href="https://pythonprogramming.net/svm-in-python-machine-learning-tutorial/" target="_blank">这个教程</a>来完成 Python 实现。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="2.1.html" class="navigation navigation-prev " aria-label="Previous page: 2.1 监督学习">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="2.3.html" class="navigation navigation-next " aria-label="Next page: 2.3 监督学习 III">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"2.2 监督学习 II","level":"1.1.4","depth":2,"next":{"title":"2.3 监督学习 III","level":"1.1.5","depth":2,"path":"2.3.md","ref":"2.3.md","articles":[]},"previous":{"title":"2.1 监督学习","level":"1.1.3","depth":2,"path":"2.1.md","ref":"2.1.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"2.2.md","mtime":"2025-04-20T03:02:22.162Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:49.176Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

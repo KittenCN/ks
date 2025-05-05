@@ -1,0 +1,692 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>拓扑排序 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="最小生成树.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="图论概述.html">
+            
+                <a href="图论概述.html">
+            
+                    
+                    图论算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="图的表示.html">
+            
+                <a href="图的表示.html">
+            
+                    
+                    图的表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="最短路径算法.html">
+            
+                <a href="最短路径算法.html">
+            
+                    
+                    最短路径算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="最小生成树.html">
+            
+                <a href="最小生成树.html">
+            
+                    
+                    最小生成树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.4" data-path="拓扑排序.html">
+            
+                <a href="拓扑排序.html">
+            
+                    
+                    拓扑排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >拓扑排序</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="拓扑排序">拓扑排序</h1>
+<p>拓扑排序是一种针对有向无环图(DAG, Directed Acyclic Graph)的重要算法，常用于处理具有依赖关系的任务调度问题。</p>
+<h2 id="基本概念">基本概念</h2>
+<p>【定义】拓扑排序是将有向无环图中的所有顶点排成一个线性序列，使得图中任意一对顶点u和v，如果存在一条从u到v的路径，那么在序列中u一定出现在v之前。</p>
+<h3 id="关键特性">关键特性</h3>
+<ol>
+<li>拓扑排序只适用于有向无环图（DAG）</li>
+<li>如果图中存在环，则无法进行拓扑排序</li>
+<li>对同一个图，可能存在多个合法的拓扑排序序列</li>
+<li>拓扑排序可以用来检测图中是否存在环</li>
+</ol>
+<h2 id="应用场景">应用场景</h2>
+<ol>
+<li><strong>任务调度</strong>：确定具有依赖关系的任务的执行顺序</li>
+<li><strong>编译系统</strong>：确定程序模块的编译顺序</li>
+<li><strong>课程安排</strong>：根据课程的先修关系安排学习顺序</li>
+<li><strong>数据处理管道</strong>：确定数据流的处理顺序</li>
+</ol>
+<h2 id="bfs实现（kahn算法）">BFS实现（Kahn算法）</h2>
+<p>Kahn算法是基于广度优先搜索的拓扑排序算法，其核心思想是不断移除没有入边的节点。</p>
+<h3 id="算法步骤">算法步骤</h3>
+<ol>
+<li>计算图中每个顶点的入度</li>
+<li>将所有入度为0的顶点加入队列</li>
+<li>取出队列中的一个顶点，将其加入结果序列</li>
+<li>将该顶点的所有出边删除，更新相邻顶点的入度</li>
+<li>如果有新的入度为0的顶点，将其加入队列</li>
+<li>重复步骤3-5，直到队列为空</li>
+<li>如果结果序列的长度等于图中顶点数，则得到一个拓扑排序；否则，图中存在环，无法进行拓扑排序</li>
+</ol>
+<h3 id="代码实现">代码实现</h3>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; graph[MAXN];       <span class="hljs-comment">// 邻接表表示的有向图</span>
+<span class="hljs-keyword">int</span> inDegree[MAXN];            <span class="hljs-comment">// 记录每个顶点的入度</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; topologicalOrder;  <span class="hljs-comment">// 存储拓扑排序的结果</span>
+
+<span class="hljs-comment">// 返回true表示成功找到拓扑排序，false表示图中存在环</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">kahnsAlgorithm</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-comment">// 初始化入度</span>
+    <span class="hljs-built_in">memset</span>(inDegree, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(inDegree));
+
+    <span class="hljs-comment">// 计算每个顶点的入度</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> u = <span class="hljs-number">1</span>; u &lt;= n; u++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> v : graph[u]) {
+            inDegree[v]++;
+        }
+    }
+
+    <span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; q;
+
+    <span class="hljs-comment">// 将所有入度为0的顶点加入队列</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">if</span> (inDegree[i] == <span class="hljs-number">0</span>) {
+            q.push(i);
+        }
+    }
+
+    <span class="hljs-comment">// 处理队列中的顶点</span>
+    <span class="hljs-keyword">while</span> (!q.empty()) {
+        <span class="hljs-keyword">int</span> u = q.front();
+        q.pop();
+        topologicalOrder.push_back(u);  <span class="hljs-comment">// 将顶点加入拓扑序列</span>
+
+        <span class="hljs-comment">// 移除所有从u出发的边</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> v : graph[u]) {
+            inDegree[v]--;
+
+            <span class="hljs-comment">// 如果v的入度变为0，将其加入队列</span>
+            <span class="hljs-keyword">if</span> (inDegree[v] == <span class="hljs-number">0</span>) {
+                q.push(v);
+            }
+        }
+    }
+
+    <span class="hljs-comment">// 检查是否所有顶点都已加入拓扑序列</span>
+    <span class="hljs-keyword">return</span> topologicalOrder.size() == n;
+}
+
+<span class="hljs-comment">// 打印拓扑排序结果</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printTopologicalOrder</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> vertex : topologicalOrder) {
+        <span class="hljs-built_in">cout</span> &lt;&lt; vertex &lt;&lt; <span class="hljs-string">" "</span>;
+    }
+    <span class="hljs-built_in">cout</span> &lt;&lt; endl;
+}
+</code></pre>
+<h3 id="时间复杂度分析">时间复杂度分析</h3>
+<ul>
+<li>时间复杂度：O(V+E)，其中V是顶点数，E是边数</li>
+<li>空间复杂度：O(V)，需要额外的队列和入度数组</li>
+</ul>
+<h2 id="dfs实现">DFS实现</h2>
+<p>也可以使用深度优先搜索实现拓扑排序，其核心思想是在递归调用结束后将顶点加入序列。</p>
+<h3 id="算法步骤">算法步骤</h3>
+<ol>
+<li>对图中每个未访问的顶点，开始一次DFS</li>
+<li>在DFS过程中，递归地访问所有邻接顶点</li>
+<li>当一个顶点的所有邻接顶点都已被访问，将该顶点加入结果序列的头部</li>
+<li>最终结果序列即为拓扑排序</li>
+</ol>
+<h3 id="代码实现">代码实现</h3>
+<pre><code class="lang-cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; graph[MAXN];       <span class="hljs-comment">// 邻接表表示的有向图</span>
+<span class="hljs-keyword">bool</span> visited[MAXN];            <span class="hljs-comment">// 记录顶点是否被访问过</span>
+<span class="hljs-keyword">bool</span> inStack[MAXN];            <span class="hljs-comment">// 记录顶点是否在当前DFS路径上（用于检测环）</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; topologicalOrder;  <span class="hljs-comment">// 存储拓扑排序的结果</span>
+<span class="hljs-keyword">bool</span> hasCycle;                 <span class="hljs-comment">// 标记图中是否存在环</span>
+
+<span class="hljs-comment">// DFS遍历</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u)</span> </span>{
+    visited[u] = <span class="hljs-literal">true</span>;
+    inStack[u] = <span class="hljs-literal">true</span>;  <span class="hljs-comment">// 标记顶点u在当前DFS路径上</span>
+
+    <span class="hljs-comment">// 访问所有邻接顶点</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> v : graph[u]) {
+        <span class="hljs-keyword">if</span> (!visited[v]) {
+            dfs(v);
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (inStack[v]) {
+            <span class="hljs-comment">// 如果v已经在当前DFS路径上，说明存在环</span>
+            hasCycle = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">return</span>;
+        }
+    }
+
+    inStack[u] = <span class="hljs-literal">false</span>;  <span class="hljs-comment">// 顶点u已经处理完毕，移出当前路径</span>
+    topologicalOrder.push_back(u);  <span class="hljs-comment">// 将顶点加入拓扑序列</span>
+}
+
+<span class="hljs-comment">// 拓扑排序主函数</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">topologicalSort</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-comment">// 初始化</span>
+    <span class="hljs-built_in">memset</span>(visited, <span class="hljs-literal">false</span>, <span class="hljs-keyword">sizeof</span>(visited));
+    <span class="hljs-built_in">memset</span>(inStack, <span class="hljs-literal">false</span>, <span class="hljs-keyword">sizeof</span>(inStack));
+    topologicalOrder.clear();
+    hasCycle = <span class="hljs-literal">false</span>;
+
+    <span class="hljs-comment">// 对每个未访问的顶点开始DFS</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">if</span> (!visited[i]) {
+            dfs(i);
+        }
+    }
+
+    <span class="hljs-comment">// 如果存在环，无法进行拓扑排序</span>
+    <span class="hljs-keyword">if</span> (hasCycle) {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+
+    <span class="hljs-comment">// 由于DFS后加入的顺序与拓扑排序相反，需要反转</span>
+    reverse(topologicalOrder.begin(), topologicalOrder.end());
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+</code></pre>
+<h3 id="时间复杂度分析">时间复杂度分析</h3>
+<ul>
+<li>时间复杂度：O(V+E)</li>
+<li>空间复杂度：O(V)，需要额外的访问标记数组和调用栈空间</li>
+</ul>
+<h2 id="实战应用">实战应用</h2>
+<h3 id="判断图中是否存在环">判断图中是否存在环</h3>
+<p>拓扑排序可以用来判断一个有向图是否包含环：</p>
+<ul>
+<li>如果能够得到一个完整的拓扑排序（排序结果包含所有顶点），则图中不存在环</li>
+<li>如果无法得到完整的拓扑排序，则图中存在环</li>
+</ul>
+<h3 id="求解依赖问题">求解依赖问题</h3>
+<p>许多实际问题可以建模为依赖图，然后通过拓扑排序求解：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 例：课程安排问题</span>
+<span class="hljs-comment">// n个课程，课程编号为1到n</span>
+<span class="hljs-comment">// prerequisites[i] = [a, b]表示课程a依赖于课程b（必须先学习课程b）</span>
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">canFinish</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-built_in">vector</span>&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt;&amp; prerequisites)</span> </span>{
+    <span class="hljs-comment">// 构建邻接表</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; graph[n+<span class="hljs-number">1</span>];
+    <span class="hljs-keyword">int</span> inDegree[n+<span class="hljs-number">1</span>] = {<span class="hljs-number">0</span>};
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span>&amp; pre : prerequisites) {
+        <span class="hljs-keyword">int</span> course = pre.first;
+        <span class="hljs-keyword">int</span> prereq = pre.second;
+        graph[prereq].push_back(course);
+        inDegree[course]++;
+    }
+
+    <span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; q;
+    <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// 将所有入度为0的课程加入队列</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">if</span> (inDegree[i] == <span class="hljs-number">0</span>) {
+            q.push(i);
+        }
+    }
+
+    <span class="hljs-comment">// 拓扑排序</span>
+    <span class="hljs-keyword">while</span> (!q.empty()) {
+        <span class="hljs-keyword">int</span> course = q.front();
+        q.pop();
+        count++;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> next : graph[course]) {
+            inDegree[next]--;
+            <span class="hljs-keyword">if</span> (inDegree[next] == <span class="hljs-number">0</span>) {
+                q.push(next);
+            }
+        }
+    }
+
+    <span class="hljs-comment">// 如果所有课程都能被选修，则返回true</span>
+    <span class="hljs-keyword">return</span> count == n;
+}
+</code></pre>
+<h2 id="找到所有可能的拓扑排序">找到所有可能的拓扑排序</h2>
+<p>在某些情况下，我们可能需要找到所有可能的拓扑排序序列。可以使用回溯法实现：</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">allTopologicalSorts</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; result, <span class="hljs-keyword">bool</span> visited[],
+                         <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; graph[], <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; inDegree)</span> </span>{
+    <span class="hljs-keyword">bool</span> allVisited = <span class="hljs-literal">true</span>;
+
+    <span class="hljs-comment">// 检查是否所有顶点都已访问</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">if</span> (!visited[i] &amp;&amp; inDegree[i] == <span class="hljs-number">0</span>) {
+            <span class="hljs-comment">// 选择当前入度为0的顶点</span>
+            visited[i] = <span class="hljs-literal">true</span>;
+            result.push_back(i);
+
+            <span class="hljs-comment">// 减少邻居的入度</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> neighbor : graph[i]) {
+                inDegree[neighbor]--;
+            }
+
+            <span class="hljs-comment">// 递归查找下一个顶点</span>
+            allTopologicalSorts(n, result, visited, graph, inDegree);
+
+            <span class="hljs-comment">// 回溯</span>
+            visited[i] = <span class="hljs-literal">false</span>;
+            result.pop_back();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> neighbor : graph[i]) {
+                inDegree[neighbor]++;
+            }
+
+            allVisited = <span class="hljs-literal">false</span>;
+        }
+    }
+
+    <span class="hljs-comment">// 如果所有顶点都已访问，输出当前排序</span>
+    <span class="hljs-keyword">if</span> (allVisited &amp;&amp; result.size() == n) {
+        printArrangement(result);
+    }
+}
+</code></pre>
+<h2 id="拓扑排序的变种">拓扑排序的变种</h2>
+<h3 id="字典序最小的拓扑排序">字典序最小的拓扑排序</h3>
+<p>有时我们需要找到字典序最小的拓扑排序。只需在BFS实现中使用优先队列代替普通队列：</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">lexicographicalTopSort</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-comment">// 使用优先队列（小顶堆）</span>
+    priority_queue&lt;<span class="hljs-keyword">int</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;, greater&lt;<span class="hljs-keyword">int</span>&gt;&gt; pq;
+
+    <span class="hljs-comment">// 将所有入度为0的顶点加入队列</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">if</span> (inDegree[i] == <span class="hljs-number">0</span>) {
+            pq.push(i);
+        }
+    }
+
+    <span class="hljs-comment">// 处理队列中的顶点</span>
+    <span class="hljs-keyword">while</span> (!pq.empty()) {
+        <span class="hljs-keyword">int</span> u = pq.top();
+        pq.pop();
+        topologicalOrder.push_back(u);
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> v : graph[u]) {
+            inDegree[v]--;
+            <span class="hljs-keyword">if</span> (inDegree[v] == <span class="hljs-number">0</span>) {
+                pq.push(v);
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> topologicalOrder.size() == n;
+}
+</code></pre>
+<h3 id="关键路径问题">关键路径问题</h3>
+<p>在带权有向无环图中，关键路径是从源点到汇点的最长路径，常用于项目管理中的关键路径分析(CPM)。可以通过拓扑排序求解：</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">criticalPath</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; early(n+<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);  <span class="hljs-comment">// 最早开始时间</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; late(n+<span class="hljs-number">1</span>, INT_MAX);  <span class="hljs-comment">// 最晚开始时间</span>
+
+    <span class="hljs-comment">// 计算最早开始时间（正向拓扑排序）</span>
+    <span class="hljs-comment">// ... 拓扑排序代码 ...</span>
+
+    <span class="hljs-comment">// 根据拓扑排序结果计算每个活动的最早开始时间</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> u : topologicalOrder) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; [v, weight] : graph[u]) {
+            early[v] = max(early[v], early[u] + weight);
+        }
+    }
+
+    <span class="hljs-comment">// 初始化汇点的最晚开始时间</span>
+    <span class="hljs-keyword">int</span> sink = n;  <span class="hljs-comment">// 假设n是汇点</span>
+    late[sink] = early[sink];
+
+    <span class="hljs-comment">// 计算最晚开始时间（反向拓扑排序）</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = topologicalOrder.size() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-keyword">int</span> u = topologicalOrder[i];
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; [v, weight] : graph[u]) {
+            late[u] = min(late[u], late[v] - weight);
+        }
+    }
+
+    <span class="hljs-comment">// 找出关键活动（最早开始时间等于最晚开始时间的活动）</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> u = <span class="hljs-number">1</span>; u &lt;= n; u++) {
+        <span class="hljs-keyword">if</span> (early[u] == late[u]) {
+            <span class="hljs-built_in">cout</span> &lt;&lt; u &lt;&lt; <span class="hljs-string">" is on the critical path\n"</span>;
+        }
+    }
+}
+</code></pre>
+<h2 id="练习题目推荐">练习题目推荐</h2>
+<ol>
+<li>POJ 1094 Sorting It All Out（拓扑排序基础）</li>
+<li>POJ 1270 Following Orders（输出所有可能的拓扑排序）</li>
+<li>CodeForces 510C Fox And Names（字典序最小的拓扑排序）</li>
+<li>POJ 1128 Frame Stacking（拓扑排序应用）</li>
+<li>UVA 10305 Ordering Tasks（基础拓扑排序题）</li>
+</ol>
+<h2 id="总结与技巧">总结与技巧</h2>
+<ol>
+<li><strong>检测环</strong>：通过拓扑排序可以轻松检测图中是否存在环</li>
+<li><strong>多源点拓扑排序</strong>：对所有入度为0的点同时开始BFS</li>
+<li><strong>输出所有方案</strong>：使用回溯法生成所有可能的拓扑排序</li>
+<li><strong>优化技巧</strong>：<ul>
+<li>使用邻接表而非邻接矩阵表示图</li>
+<li>预先计算入度，避免重复计算</li>
+<li>使用优先队列可以获得字典序最小的拓扑排序</li>
+</ul>
+</li>
+</ol>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="最小生成树.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 最小生成树">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"拓扑排序","level":"1.2.4","depth":2,"previous":{"title":"最小生成树","level":"1.2.3","depth":2,"path":"最小生成树.md","ref":"最小生成树.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"拓扑排序.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:17.825Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

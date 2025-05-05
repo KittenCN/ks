@@ -1,0 +1,2196 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>迭代与递归 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="time_complexity.html" />
+    
+    
+    <link rel="prev" href="performance_evaluation.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href="../.." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Hello 算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1.1" data-path="../chapter_preface/about_the_book.html">
+            
+                <a href="../chapter_preface/about_the_book.html">
+            
+                    
+                    关于本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.1.2" data-path="../chapter_preface/suggestions.html">
+            
+                <a href="../chapter_preface/suggestions.html">
+            
+                    
+                    如何使用本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.1.3" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    初识算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.2.1" data-path="../chapter_introduction/algorithms_are_everywhere.html">
+            
+                <a href="../chapter_introduction/algorithms_are_everywhere.html">
+            
+                    
+                    算法无处不在
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2.2" data-path="../chapter_introduction/what_is_dsa.html">
+            
+                <a href="../chapter_introduction/what_is_dsa.html">
+            
+                    
+                    算法是什么
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2.3" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    复杂度分析
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.3.1" data-path="performance_evaluation.html">
+            
+                <a href="performance_evaluation.html">
+            
+                    
+                    算法效率评估
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.3.2" data-path="iteration_and_recursion.html">
+            
+                <a href="iteration_and_recursion.html">
+            
+                    
+                    迭代与递归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.3" data-path="time_complexity.html">
+            
+                <a href="time_complexity.html">
+            
+                    
+                    时间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.4" data-path="space_complexity.html">
+            
+                <a href="space_complexity.html">
+            
+                    
+                    空间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.5" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="../chapter_data_structure/">
+            
+                <a href="../chapter_data_structure/">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.4.1" data-path="../chapter_data_structure/classification_of_data_structure.html">
+            
+                <a href="../chapter_data_structure/classification_of_data_structure.html">
+            
+                    
+                    数据结构分类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.2" data-path="../chapter_data_structure/basic_data_types.html">
+            
+                <a href="../chapter_data_structure/basic_data_types.html">
+            
+                    
+                    基本数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.3" data-path="../chapter_data_structure/number_encoding.html">
+            
+                <a href="../chapter_data_structure/number_encoding.html">
+            
+                    
+                    数字编码 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.4" data-path="../chapter_data_structure/character_encoding.html">
+            
+                <a href="../chapter_data_structure/character_encoding.html">
+            
+                    
+                    字符编码 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.5" data-path="../chapter_data_structure/">
+            
+                <a href="../chapter_data_structure/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="../chapter_array_and_linkedlist/">
+            
+                <a href="../chapter_array_and_linkedlist/">
+            
+                    
+                    数组与链表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.5.1" data-path="../chapter_array_and_linkedlist/array.html">
+            
+                <a href="../chapter_array_and_linkedlist/array.html">
+            
+                    
+                    数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.2" data-path="../chapter_array_and_linkedlist/linked_list.html">
+            
+                <a href="../chapter_array_and_linkedlist/linked_list.html">
+            
+                    
+                    链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.3" data-path="../chapter_array_and_linkedlist/list.html">
+            
+                <a href="../chapter_array_and_linkedlist/list.html">
+            
+                    
+                    列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.4" data-path="../chapter_array_and_linkedlist/ram_and_cache.html">
+            
+                <a href="../chapter_array_and_linkedlist/ram_and_cache.html">
+            
+                    
+                    内存与缓存 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.5" data-path="../chapter_array_and_linkedlist/">
+            
+                <a href="../chapter_array_and_linkedlist/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="../chapter_stack_and_queue/">
+            
+                <a href="../chapter_stack_and_queue/">
+            
+                    
+                    栈与队列
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.6.1" data-path="../chapter_stack_and_queue/stack.html">
+            
+                <a href="../chapter_stack_and_queue/stack.html">
+            
+                    
+                    栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.2" data-path="../chapter_stack_and_queue/queue.html">
+            
+                <a href="../chapter_stack_and_queue/queue.html">
+            
+                    
+                    队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.3" data-path="../chapter_stack_and_queue/deque.html">
+            
+                <a href="../chapter_stack_and_queue/deque.html">
+            
+                    
+                    双向队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.4" data-path="../chapter_stack_and_queue/">
+            
+                <a href="../chapter_stack_and_queue/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="../chapter_hashing/">
+            
+                <a href="../chapter_hashing/">
+            
+                    
+                    哈希表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.7.1" data-path="../chapter_hashing/hash_map.html">
+            
+                <a href="../chapter_hashing/hash_map.html">
+            
+                    
+                    哈希表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.2" data-path="../chapter_hashing/hash_collision.html">
+            
+                <a href="../chapter_hashing/hash_collision.html">
+            
+                    
+                    哈希冲突
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.3" data-path="../chapter_hashing/hash_algorithm.html">
+            
+                <a href="../chapter_hashing/hash_algorithm.html">
+            
+                    
+                    哈希算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.4" data-path="../chapter_hashing/">
+            
+                <a href="../chapter_hashing/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="../chapter_tree/">
+            
+                <a href="../chapter_tree/">
+            
+                    
+                    树
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.8.1" data-path="../chapter_tree/binary_tree.html">
+            
+                <a href="../chapter_tree/binary_tree.html">
+            
+                    
+                    二叉树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.2" data-path="../chapter_tree/binary_tree_traversal.html">
+            
+                <a href="../chapter_tree/binary_tree_traversal.html">
+            
+                    
+                    二叉树遍历
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.3" data-path="../chapter_tree/array_representation_of_tree.html">
+            
+                <a href="../chapter_tree/array_representation_of_tree.html">
+            
+                    
+                    二叉树数组表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.4" data-path="../chapter_tree/binary_search_tree.html">
+            
+                <a href="../chapter_tree/binary_search_tree.html">
+            
+                    
+                    二叉搜索树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.5" data-path="../chapter_tree/avl_tree.html">
+            
+                <a href="../chapter_tree/avl_tree.html">
+            
+                    
+                    AVL 树 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.6" data-path="../chapter_tree/">
+            
+                <a href="../chapter_tree/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="../chapter_heap/">
+            
+                <a href="../chapter_heap/">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.9.1" data-path="../chapter_heap/heap.html">
+            
+                <a href="../chapter_heap/heap.html">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.2" data-path="../chapter_heap/build_heap.html">
+            
+                <a href="../chapter_heap/build_heap.html">
+            
+                    
+                    建堆操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.3" data-path="../chapter_heap/top_k.html">
+            
+                <a href="../chapter_heap/top_k.html">
+            
+                    
+                    Top-k 问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.4" data-path="../chapter_heap/">
+            
+                <a href="../chapter_heap/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="../chapter_graph/">
+            
+                <a href="../chapter_graph/">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.10.1" data-path="../chapter_graph/graph.html">
+            
+                <a href="../chapter_graph/graph.html">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.2" data-path="../chapter_graph/graph_operations.html">
+            
+                <a href="../chapter_graph/graph_operations.html">
+            
+                    
+                    图基础操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.3" data-path="../chapter_graph/graph_traversal.html">
+            
+                <a href="../chapter_graph/graph_traversal.html">
+            
+                    
+                    图的遍历
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.4" data-path="../chapter_graph/">
+            
+                <a href="../chapter_graph/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="../chapter_searching/">
+            
+                <a href="../chapter_searching/">
+            
+                    
+                    搜索
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.11.1" data-path="../chapter_searching/binary_search.html">
+            
+                <a href="../chapter_searching/binary_search.html">
+            
+                    
+                    二分查找
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.2" data-path="../chapter_searching/binary_search_insertion.html">
+            
+                <a href="../chapter_searching/binary_search_insertion.html">
+            
+                    
+                    二分查找插入点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.3" data-path="../chapter_searching/binary_search_edge.html">
+            
+                <a href="../chapter_searching/binary_search_edge.html">
+            
+                    
+                    二分查找边界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.4" data-path="../chapter_searching/replace_linear_by_hashing.html">
+            
+                <a href="../chapter_searching/replace_linear_by_hashing.html">
+            
+                    
+                    哈希优化策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.5" data-path="../chapter_searching/searching_algorithm_revisited.html">
+            
+                <a href="../chapter_searching/searching_algorithm_revisited.html">
+            
+                    
+                    重识搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.6" data-path="../chapter_searching/">
+            
+                <a href="../chapter_searching/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="../chapter_sorting/">
+            
+                <a href="../chapter_sorting/">
+            
+                    
+                    排序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.12.1" data-path="../chapter_sorting/sorting_algorithm.html">
+            
+                <a href="../chapter_sorting/sorting_algorithm.html">
+            
+                    
+                    排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.2" data-path="../chapter_sorting/selection_sort.html">
+            
+                <a href="../chapter_sorting/selection_sort.html">
+            
+                    
+                    选择排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.3" data-path="../chapter_sorting/bubble_sort.html">
+            
+                <a href="../chapter_sorting/bubble_sort.html">
+            
+                    
+                    冒泡排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.4" data-path="../chapter_sorting/insertion_sort.html">
+            
+                <a href="../chapter_sorting/insertion_sort.html">
+            
+                    
+                    插入排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.5" data-path="../chapter_sorting/quick_sort.html">
+            
+                <a href="../chapter_sorting/quick_sort.html">
+            
+                    
+                    快速排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.6" data-path="../chapter_sorting/merge_sort.html">
+            
+                <a href="../chapter_sorting/merge_sort.html">
+            
+                    
+                    归并排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.7" data-path="../chapter_sorting/heap_sort.html">
+            
+                <a href="../chapter_sorting/heap_sort.html">
+            
+                    
+                    堆排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.8" data-path="../chapter_sorting/bucket_sort.html">
+            
+                <a href="../chapter_sorting/bucket_sort.html">
+            
+                    
+                    桶排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.9" data-path="../chapter_sorting/counting_sort.html">
+            
+                <a href="../chapter_sorting/counting_sort.html">
+            
+                    
+                    计数排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.10" data-path="../chapter_sorting/radix_sort.html">
+            
+                <a href="../chapter_sorting/radix_sort.html">
+            
+                    
+                    基数排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.11" data-path="../chapter_sorting/">
+            
+                <a href="../chapter_sorting/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="../chapter_divide_and_conquer/">
+            
+                <a href="../chapter_divide_and_conquer/">
+            
+                    
+                    分治
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.13.1" data-path="../chapter_divide_and_conquer/divide_and_conquer.html">
+            
+                <a href="../chapter_divide_and_conquer/divide_and_conquer.html">
+            
+                    
+                    分治算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.2" data-path="../chapter_divide_and_conquer/binary_search_recur.html">
+            
+                <a href="../chapter_divide_and_conquer/binary_search_recur.html">
+            
+                    
+                    分治搜索策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.3" data-path="../chapter_divide_and_conquer/build_binary_tree_problem.html">
+            
+                <a href="../chapter_divide_and_conquer/build_binary_tree_problem.html">
+            
+                    
+                    构建二叉树问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.4" data-path="../chapter_divide_and_conquer/hanota_problem.html">
+            
+                <a href="../chapter_divide_and_conquer/hanota_problem.html">
+            
+                    
+                    汉诺塔问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.5" data-path="../chapter_divide_and_conquer/">
+            
+                <a href="../chapter_divide_and_conquer/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="../chapter_backtracking/">
+            
+                <a href="../chapter_backtracking/">
+            
+                    
+                    回溯
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.14.1" data-path="../chapter_backtracking/backtracking_algorithm.html">
+            
+                <a href="../chapter_backtracking/backtracking_algorithm.html">
+            
+                    
+                    回溯算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.2" data-path="../chapter_backtracking/permutations_problem.html">
+            
+                <a href="../chapter_backtracking/permutations_problem.html">
+            
+                    
+                    全排列问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.3" data-path="../chapter_backtracking/subset_sum_problem.html">
+            
+                <a href="../chapter_backtracking/subset_sum_problem.html">
+            
+                    
+                    子集和问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.4" data-path="../chapter_backtracking/n_queens_problem.html">
+            
+                <a href="../chapter_backtracking/n_queens_problem.html">
+            
+                    
+                    N 皇后问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.5" data-path="../chapter_backtracking/">
+            
+                <a href="../chapter_backtracking/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="../chapter_dynamic_programming/">
+            
+                <a href="../chapter_dynamic_programming/">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.15.1" data-path="../chapter_dynamic_programming/intro_to_dynamic_programming.html">
+            
+                <a href="../chapter_dynamic_programming/intro_to_dynamic_programming.html">
+            
+                    
+                    初探动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.2" data-path="../chapter_dynamic_programming/dp_problem_features.html">
+            
+                <a href="../chapter_dynamic_programming/dp_problem_features.html">
+            
+                    
+                    动态规划问题特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.3" data-path="../chapter_dynamic_programming/dp_solution_pipeline.html">
+            
+                <a href="../chapter_dynamic_programming/dp_solution_pipeline.html">
+            
+                    
+                    动态规划解题思路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.4" data-path="../chapter_dynamic_programming/knapsack_problem.html">
+            
+                <a href="../chapter_dynamic_programming/knapsack_problem.html">
+            
+                    
+                    0-1 背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.5" data-path="../chapter_dynamic_programming/unbounded_knapsack_problem.html">
+            
+                <a href="../chapter_dynamic_programming/unbounded_knapsack_problem.html">
+            
+                    
+                    完全背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.6" data-path="../chapter_dynamic_programming/edit_distance_problem.html">
+            
+                <a href="../chapter_dynamic_programming/edit_distance_problem.html">
+            
+                    
+                    编辑距离问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.7" data-path="../chapter_dynamic_programming/">
+            
+                <a href="../chapter_dynamic_programming/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="../chapter_greedy/">
+            
+                <a href="../chapter_greedy/">
+            
+                    
+                    贪心
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.16.1" data-path="../chapter_greedy/greedy_algorithm.html">
+            
+                <a href="../chapter_greedy/greedy_algorithm.html">
+            
+                    
+                    贪心算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.2" data-path="../chapter_greedy/fractional_knapsack_problem.html">
+            
+                <a href="../chapter_greedy/fractional_knapsack_problem.html">
+            
+                    
+                    分数背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.3" data-path="../chapter_greedy/max_capacity_problem.html">
+            
+                <a href="../chapter_greedy/max_capacity_problem.html">
+            
+                    
+                    最大容量问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.4" data-path="../chapter_greedy/max_product_cutting_problem.html">
+            
+                <a href="../chapter_greedy/max_product_cutting_problem.html">
+            
+                    
+                    最大切分乘积问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.5" data-path="../chapter_greedy/">
+            
+                <a href="../chapter_greedy/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="../chapter_appendix/">
+            
+                <a href="../chapter_appendix/">
+            
+                    
+                    附录
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.17.1" data-path="../chapter_appendix/installation.html">
+            
+                <a href="../chapter_appendix/installation.html">
+            
+                    
+                    编程环境安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17.2" data-path="../chapter_appendix/terminology.html">
+            
+                <a href="../chapter_appendix/terminology.html">
+            
+                    
+                    术语表
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >迭代与递归</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="迭代与递归">迭代与递归</h1>
+<p>在算法中，重复执行某个任务是很常见的，它与复杂度分析息息相关。因此，在介绍时间复杂度和空间复杂度之前，我们先来了解如何在程序中实现重复执行任务，即两种基本的程序控制结构：迭代、递归。</p>
+<h2 id="迭代">迭代</h2>
+<p>「迭代 iteration」是一种重复执行某个任务的控制结构。在迭代中，程序会在满足一定的条件下重复执行某段代码，直到这个条件不再满足。</p>
+<h3 id="for-循环">for 循环</h3>
+<p><code>for</code> 循环是最常见的迭代形式之一，<strong>适合在预先知道迭代次数时使用</strong>。</p>
+<p>以下函数基于 <code>for</code> 循环实现了求和 $1 + 2 + \dots + n$ ，求和结果使用变量 <code>res</code> 记录。需要注意的是，Python 中 <code>range(a, b)</code> 对应的区间是“左闭右开”的，对应的遍历范围为 $a, a + 1, \dots, b-1$ ：</p>
+<ul>
+<li><p>"Python"</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">for_loop</span><span class="hljs-params">(n: int)</span> -&gt; <span class="hljs-title">int</span>:</span>
+  <span class="hljs-string">"""for 循环"""</span>
+  res = <span class="hljs-number">0</span>
+ // 循环求和 <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, ..., n-<span class="hljs-number">1</span>, n
+  <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+      res += i
+  <span class="hljs-keyword">return</span> res
+</code></pre>
+</li>
+<li><p>"C++"</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/* for 循环 */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">forLoop</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+  <span class="hljs-comment">// 循环求和 1, 2, ..., n-1, n</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; ++i) {
+      res += i;
+  }
+  <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+</li>
+<li><p>"Java"</p>
+<pre><code class="lang-java"><span class="hljs-comment">/* for 循环 */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">forLoop</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+  <span class="hljs-comment">// 循环求和 1, 2, ..., n-1, n</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+      res += i;
+  }
+  <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+</li>
+</ul>
+<p>下图是该求和函数的流程框图。</p>
+<p><img src="iteration_and_recursion.assets/iteration.png" alt="求和函数的流程框图"></img></p>
+<p>此求和函数的操作数量与输入数据大小 $n$ 成正比，或者说成“线性关系”。实际上，<strong>时间复杂度描述的就是这个“线性关系”</strong>。相关内容将会在下一节中详细介绍。</p>
+<h3 id="while-循环">while 循环</h3>
+<p>与 <code>for</code> 循环类似，<code>while</code> 循环也是一种实现迭代的方法。在 <code>while</code> 循环中，程序每轮都会先检查条件，如果条件为真，则继续执行，否则就结束循环。</p>
+<p>下面我们用 <code>while</code> 循环来实现求和 $1 + 2 + \dots + n$ ：</p>
+<ul>
+<li><p>"Python"</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">while_loop</span><span class="hljs-params">(n: int)</span> -&gt; <span class="hljs-title">int</span>:</span>
+  <span class="hljs-string">"""while 循环"""</span>
+  res = <span class="hljs-number">0</span>
+  i = <span class="hljs-number">1</span> // 初始化条件变量
+ // 循环求和 <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, ..., n-<span class="hljs-number">1</span>, n
+  <span class="hljs-keyword">while</span> i &lt;= n:
+      res += i
+      i += <span class="hljs-number">1</span> // 更新条件变量
+  <span class="hljs-keyword">return</span> res
+</code></pre>
+</li>
+<li><p>"C++"</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/* while 循环 */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">whileLoop</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; <span class="hljs-comment">// 初始化条件变量</span>
+  <span class="hljs-comment">// 循环求和 1, 2, ..., n-1, n</span>
+  <span class="hljs-keyword">while</span> (i &lt;= n) {
+      res += i;
+      i++; <span class="hljs-comment">// 更新条件变量</span>
+  }
+  <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+</li>
+<li><p>"Java"</p>
+<pre><code class="lang-java"><span class="hljs-comment">/* while 循环 */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">whileLoop</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; <span class="hljs-comment">// 初始化条件变量</span>
+  <span class="hljs-comment">// 循环求和 1, 2, ..., n-1, n</span>
+  <span class="hljs-keyword">while</span> (i &lt;= n) {
+      res += i;
+      i++; <span class="hljs-comment">// 更新条件变量</span>
+  }
+  <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+</li>
+</ul>
+<p><strong><code>while</code> 循环比 <code>for</code> 循环的自由度更高</strong>。在 <code>while</code> 循环中，我们可以自由地设计条件变量的初始化和更新步骤。</p>
+<p>例如在以下代码中，条件变量 $i$ 每轮进行两次更新，这种情况就不太方便用 <code>for</code> 循环实现：</p>
+<ul>
+<li><p>"Python"</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">while_loop_ii</span><span class="hljs-params">(n: int)</span> -&gt; <span class="hljs-title">int</span>:</span>
+  <span class="hljs-string">"""while 循环（两次更新）"""</span>
+  res = <span class="hljs-number">0</span>
+  i = <span class="hljs-number">1</span> // 初始化条件变量
+ // 循环求和 <span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">10</span>, ...
+  <span class="hljs-keyword">while</span> i &lt;= n:
+      res += i
+     // 更新条件变量
+      i += <span class="hljs-number">1</span>
+      i *= <span class="hljs-number">2</span>
+  <span class="hljs-keyword">return</span> res
+</code></pre>
+</li>
+<li><p>"C++"</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/* while 循环（两次更新） */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">whileLoopII</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; <span class="hljs-comment">// 初始化条件变量</span>
+  <span class="hljs-comment">// 循环求和 1, 4, 10, ...</span>
+  <span class="hljs-keyword">while</span> (i &lt;= n) {
+      res += i;
+      <span class="hljs-comment">// 更新条件变量</span>
+      i++;
+      i *= <span class="hljs-number">2</span>;
+  }
+  <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+</li>
+<li><p>"Java"</p>
+<pre><code class="lang-java"><span class="hljs-comment">/* while 循环（两次更新） */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">whileLoopII</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; <span class="hljs-comment">// 初始化条件变量</span>
+  <span class="hljs-comment">// 循环求和 1, 4, 10, ...</span>
+  <span class="hljs-keyword">while</span> (i &lt;= n) {
+      res += i;
+      <span class="hljs-comment">// 更新条件变量</span>
+      i++;
+      i *= <span class="hljs-number">2</span>;
+  }
+  <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+</li>
+</ul>
+<p>总的来说，<strong><code>for</code> 循环的代码更加紧凑，<code>while</code> 循环更加灵活</strong>，两者都可以实现迭代结构。选择使用哪一个应该根据特定问题的需求来决定。</p>
+<h3 id="嵌套循环">嵌套循环</h3>
+<p>我们可以在一个循环结构内嵌套另一个循环结构，下面以 <code>for</code> 循环为例：</p>
+<ul>
+<li><p>"Python"</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">nested_for_loop</span><span class="hljs-params">(n: int)</span> -&gt; <span class="hljs-title">str</span>:</span>
+  <span class="hljs-string">"""双层 for 循环"""</span>
+  res = <span class="hljs-string">""</span>
+ // 循环 i = <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, ..., n-<span class="hljs-number">1</span>, n
+  <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+     // 循环 j = <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, ..., n-<span class="hljs-number">1</span>, n
+      <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+          res += f<span class="hljs-string">"({i}, {j}), "</span>
+  <span class="hljs-keyword">return</span> res
+</code></pre>
+</li>
+<li><p>"C++"</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/* 双层 for 循环 */</span>
+<span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">nestedForLoop</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-built_in">ostringstream</span> res;
+  <span class="hljs-comment">// 循环 i = 1, 2, ..., n-1, n</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; ++i) {
+      <span class="hljs-comment">// 循环 j = 1, 2, ..., n-1, n</span>
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; ++j) {
+          res &lt;&lt; <span class="hljs-string">"("</span> &lt;&lt; i &lt;&lt; <span class="hljs-string">", "</span> &lt;&lt; j &lt;&lt; <span class="hljs-string">"), "</span>;
+      }
+  }
+  <span class="hljs-keyword">return</span> res.str();
+}
+</code></pre>
+</li>
+<li><p>"Java"</p>
+<pre><code class="lang-java"><span class="hljs-comment">/* 双层 for 循环 */</span>
+<span class="hljs-function">String <span class="hljs-title">nestedForLoop</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  StringBuilder res = <span class="hljs-keyword">new</span> StringBuilder();
+  <span class="hljs-comment">// 循环 i = 1, 2, ..., n-1, n</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+      <span class="hljs-comment">// 循环 j = 1, 2, ..., n-1, n</span>
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++) {
+          res.append(<span class="hljs-string">"("</span> + i + <span class="hljs-string">", "</span> + j + <span class="hljs-string">"), "</span>);
+      }
+  }
+  <span class="hljs-keyword">return</span> res.toString();
+}
+</code></pre>
+</li>
+</ul>
+<p>下图是该嵌套循环的流程框图。</p>
+<p><img src="iteration_and_recursion.assets/nested_iteration.png" alt="嵌套循环的流程框图"></img></p>
+<p>在这种情况下，函数的操作数量与 $n^2$ 成正比，或者说算法运行时间和输入数据大小 $n$ 成“平方关系”。</p>
+<p>我们可以继续添加嵌套循环，每一次嵌套都是一次“升维”，将会使时间复杂度提高至“立方关系”“四次方关系”，以此类推。</p>
+<h2 id="递归">递归</h2>
+<p> 「递归 recursion」是一种算法策略，通过函数调用自身来解决问题。它主要包含两个阶段。</p>
+<ol>
+<li><strong>递</strong>：程序不断深入地调用自身，通常传入更小或更简化的参数，直到达到“终止条件”。</li>
+<li><strong>归</strong>：触发“终止条件”后，程序从最深层的递归函数开始逐层返回，汇聚每一层的结果。</li>
+</ol>
+<p>而从实现的角度看，递归代码主要包含三个要素。</p>
+<ol>
+<li><strong>终止条件</strong>：用于决定什么时候由“递”转“归”。</li>
+<li><strong>递归调用</strong>：对应“递”，函数调用自身，通常输入更小或更简化的参数。</li>
+<li><strong>返回结果</strong>：对应“归”，将当前递归层级的结果返回至上一层。</li>
+</ol>
+<p>观察以下代码，我们只需调用函数 <code>recur(n)</code>  ，就可以完成 $1 + 2 + \dots + n$ 的计算：</p>
+<ul>
+<li><p>"Python"</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">recur</span><span class="hljs-params">(n: int)</span> -&gt; <span class="hljs-title">int</span>:</span>
+  <span class="hljs-string">"""递归"""</span>
+ // 终止条件
+  <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span>:
+      <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+ // 递：递归调用
+  res = recur(n - <span class="hljs-number">1</span>)
+ // 归：返回结果
+  <span class="hljs-keyword">return</span> n + res
+</code></pre>
+</li>
+<li><p>"C++"</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/* 递归 */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recur</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-comment">// 终止条件</span>
+  <span class="hljs-keyword">if</span> (n == <span class="hljs-number">1</span>)
+      <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+  <span class="hljs-comment">// 递：递归调用</span>
+  <span class="hljs-keyword">int</span> res = recur(n - <span class="hljs-number">1</span>);
+  <span class="hljs-comment">// 归：返回结果</span>
+  <span class="hljs-keyword">return</span> n + res;
+}
+</code></pre>
+</li>
+<li><p>"Java"</p>
+<pre><code class="lang-java"><span class="hljs-comment">/* 递归 */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">recur</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-comment">// 终止条件</span>
+  <span class="hljs-keyword">if</span> (n == <span class="hljs-number">1</span>)
+      <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+  <span class="hljs-comment">// 递：递归调用</span>
+  <span class="hljs-keyword">int</span> res = recur(n - <span class="hljs-number">1</span>);
+  <span class="hljs-comment">// 归：返回结果</span>
+  <span class="hljs-keyword">return</span> n + res;
+}
+</code></pre>
+</li>
+</ul>
+<p>下图展示了该函数的递归过程。</p>
+<p><img src="iteration_and_recursion.assets/recursion_sum.png" alt="求和函数的递归过程"></img></p>
+<p>虽然从计算角度看，迭代与递归可以得到相同的结果，<strong>但它们代表了两种完全不同的思考和解决问题的范式</strong>。</p>
+<ul>
+<li><strong>迭代</strong>：“自下而上”地解决问题。从最基础的步骤开始，然后不断重复或累加这些步骤，直到任务完成。</li>
+<li><strong>递归</strong>：“自上而下”地解决问题。将原问题分解为更小的子问题，这些子问题和原问题具有相同的形式。接下来将子问题继续分解为更小的子问题，直到基本情况时停止（基本情况的解是已知的）。</li>
+</ul>
+<p>以上述求和函数为例，设问题 $f(n) = 1 + 2 + \dots + n$ 。</p>
+<ul>
+<li><strong>迭代</strong>：在循环中模拟求和过程，从 $1$ 遍历到 $n$ ，每轮执行求和操作，即可求得 $f(n)$ 。</li>
+<li><strong>递归</strong>：将问题分解为子问题 $f(n) = n + f(n-1)$ ，不断（递归地）分解下去，直至基本情况 $f(1) = 1$ 时终止。</li>
+</ul>
+<h3 id="调用栈">调用栈</h3>
+<p>递归函数每次调用自身时，系统都会为新开启的函数分配内存，以存储局部变量、调用地址和其他信息等。这将导致两方面的结果。</p>
+<ul>
+<li>函数的上下文数据都存储在称为“栈帧空间”的内存区域中，直至函数返回后才会被释放。因此，<strong>递归通常比迭代更加耗费内存空间</strong>。</li>
+<li>递归调用函数会产生额外的开销。<strong>因此递归通常比循环的时间效率更低</strong>。</li>
+</ul>
+<p>如下图所示，在触发终止条件前，同时存在 $n$ 个未返回的递归函数，<strong>递归深度为 $n$</strong> 。</p>
+<p><img src="iteration_and_recursion.assets/recursion_sum_depth.png" alt="递归调用深度"></img></p>
+<p>在实际中，编程语言允许的递归深度通常是有限的，过深的递归可能导致栈溢出错误。</p>
+<h3 id="尾递归">尾递归</h3>
+<p>有趣的是，<strong>如果函数在返回前的最后一步才进行递归调用</strong>，则该函数可以被编译器或解释器优化，使其在空间效率上与迭代相当。这种情况被称为「尾递归 tail recursion」。</p>
+<ul>
+<li><strong>普通递归</strong>：当函数返回到上一层级的函数后，需要继续执行代码，因此系统需要保存上一层调用的上下文。</li>
+<li><strong>尾递归</strong>：递归调用是函数返回前的最后一个操作，这意味着函数返回到上一层级后，无须继续执行其他操作，因此系统无须保存上一层函数的上下文。</li>
+</ul>
+<p>以计算 $1 + 2 + \dots + n$ 为例，我们可以将结果变量 <code>res</code> 设为函数参数，从而实现尾递归：</p>
+<ul>
+<li><p>"Python"</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">tail_recur</span><span class="hljs-params">(n, res)</span>:</span>
+  <span class="hljs-string">"""尾递归"""</span>
+ // 终止条件
+  <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span>:
+      <span class="hljs-keyword">return</span> res
+ // 尾递归调用
+  <span class="hljs-keyword">return</span> tail_recur(n - <span class="hljs-number">1</span>, res + n)
+</code></pre>
+</li>
+<li><p>"C++"</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/* 尾递归 */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">tailRecur</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> res)</span> </span>{
+  <span class="hljs-comment">// 终止条件</span>
+  <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>)
+      <span class="hljs-keyword">return</span> res;
+  <span class="hljs-comment">// 尾递归调用</span>
+  <span class="hljs-keyword">return</span> tailRecur(n - <span class="hljs-number">1</span>, res + n);
+}
+</code></pre>
+</li>
+<li><p>"Java"</p>
+<pre><code class="lang-java"><span class="hljs-comment">/* 尾递归 */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">tailRecur</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> res)</span> </span>{
+  <span class="hljs-comment">// 终止条件</span>
+  <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>)
+      <span class="hljs-keyword">return</span> res;
+  <span class="hljs-comment">// 尾递归调用</span>
+  <span class="hljs-keyword">return</span> tailRecur(n - <span class="hljs-number">1</span>, res + n);
+}
+</code></pre>
+</li>
+</ul>
+<p>尾递归的执行过程如下图所示。对比普通递归和尾递归，两者的求和操作的执行点是不同的。</p>
+<ul>
+<li><strong>普通递归</strong>：求和操作是在“归”的过程中执行的，每层返回后都要再执行一次求和操作。</li>
+<li><strong>尾递归</strong>：求和操作是在“递”的过程中执行的，“归”的过程只需层层返回。</li>
+</ul>
+<p><img src="iteration_and_recursion.assets/tail_recursion_sum.png" alt="尾递归过程"></img></p>
+<p>!!! tip</p>
+<pre><code>请注意，许多编译器或解释器并不支持尾递归优化。例如，Python 默认不支持尾递归优化，因此即使函数是尾递归形式，仍然可能会遇到栈溢出问题。
+</code></pre><h3 id="递归树">递归树</h3>
+<p>当处理与“分治”相关的算法问题时，递归往往比迭代的思路更加直观、代码更加易读。以“斐波那契数列”为例。</p>
+<p>!!! question</p>
+<pre><code>给定一个斐波那契数列 $0, 1, 1, 2, 3, 5, 8, 13, \dots$ ，求该数列的第 $n$ 个数字。
+</code></pre><p>设斐波那契数列的第 $n$ 个数字为 $f(n)$ ，易得两个结论。</p>
+<ul>
+<li>数列的前两个数字为 $f(1) = 0$ 和 $f(2) = 1$ 。</li>
+<li>数列中的每个数字是前两个数字的和，即 $f(n) = f(n - 1) + f(n - 2)$ 。</li>
+</ul>
+<p>按照递推关系进行递归调用，将前两个数字作为终止条件，便可写出递归代码。调用 <code>fib(n)</code> 即可得到斐波那契数列的第 $n$ 个数字：</p>
+<ul>
+<li><p>"Python"</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fib</span><span class="hljs-params">(n: int)</span> -&gt; <span class="hljs-title">int</span>:</span>
+  <span class="hljs-string">"""斐波那契数列：递归"""</span>
+ // 终止条件 f(<span class="hljs-number">1</span>) = <span class="hljs-number">0</span>, f(<span class="hljs-number">2</span>) = <span class="hljs-number">1</span>
+  <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span> <span class="hljs-keyword">or</span> n == <span class="hljs-number">2</span>:
+      <span class="hljs-keyword">return</span> n - <span class="hljs-number">1</span>
+ // 递归调用 f(n) = f(n-<span class="hljs-number">1</span>) + f(n-<span class="hljs-number">2</span>)
+  res = fib(n - <span class="hljs-number">1</span>) + fib(n - <span class="hljs-number">2</span>)
+ // 返回结果 f(n)
+  <span class="hljs-keyword">return</span> res
+</code></pre>
+</li>
+<li><p>"C++"</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/* 斐波那契数列：递归 */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fib</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-comment">// 终止条件 f(1) = 0, f(2) = 1</span>
+  <span class="hljs-keyword">if</span> (n == <span class="hljs-number">1</span> || n == <span class="hljs-number">2</span>)
+      <span class="hljs-keyword">return</span> n - <span class="hljs-number">1</span>;
+  <span class="hljs-comment">// 递归调用 f(n) = f(n-1) + f(n-2)</span>
+  <span class="hljs-keyword">int</span> res = fib(n - <span class="hljs-number">1</span>) + fib(n - <span class="hljs-number">2</span>);
+  <span class="hljs-comment">// 返回结果 f(n)</span>
+  <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+</li>
+<li><p>"Java"</p>
+<pre><code class="lang-java"><span class="hljs-comment">/* 斐波那契数列：递归 */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fib</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-comment">// 终止条件 f(1) = 0, f(2) = 1</span>
+  <span class="hljs-keyword">if</span> (n == <span class="hljs-number">1</span> || n == <span class="hljs-number">2</span>)
+      <span class="hljs-keyword">return</span> n - <span class="hljs-number">1</span>;
+  <span class="hljs-comment">// 递归调用 f(n) = f(n-1) + f(n-2)</span>
+  <span class="hljs-keyword">int</span> res = fib(n - <span class="hljs-number">1</span>) + fib(n - <span class="hljs-number">2</span>);
+  <span class="hljs-comment">// 返回结果 f(n)</span>
+  <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+</li>
+</ul>
+<p>观察以上代码，我们在函数内递归调用了两个函数，<strong>这意味着从一个调用产生了两个调用分支</strong>。如下图所示，这样不断递归调用下去，最终将产生一棵层数为 $n$ 的「递归树 recursion tree」。</p>
+<p><img src="iteration_and_recursion.assets/recursion_tree.png" alt="斐波那契数列的递归树"></img></p>
+<p>从本质上看，递归体现了“将问题分解为更小子问题”的思维范式，这种分治策略至关重要。</p>
+<ul>
+<li>从算法角度看，搜索、排序、回溯、分治、动态规划等许多重要算法策略直接或间接地应用了这种思维方式。</li>
+<li>从数据结构角度看，递归天然适合处理链表、树和图的相关问题，因为它们非常适合用分治思想进行分析。</li>
+</ul>
+<h2 id="两者对比">两者对比</h2>
+<p>总结以上内容，如下表所示，迭代和递归在实现、性能和适用性上有所不同。</p>
+<p align="center"> 表 <id> &nbsp; 迭代与递归特点对比 </id></p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>迭代</th>
+<th>递归</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实现方式</td>
+<td>循环结构</td>
+<td>函数调用自身</td>
+</tr>
+<tr>
+<td>时间效率</td>
+<td>效率通常较高，无函数调用开销</td>
+<td>每次函数调用都会产生开销</td>
+</tr>
+<tr>
+<td>内存使用</td>
+<td>通常使用固定大小的内存空间</td>
+<td>累积函数调用可能使用大量的栈帧空间</td>
+</tr>
+<tr>
+<td>适用问题</td>
+<td>适用于简单循环任务，代码直观、可读性好</td>
+<td>适用于子问题分解，如树、图、分治、回溯等，代码结构简洁、清晰</td>
+</tr>
+</tbody>
+</table>
+<p>!!! tip</p>
+<pre><code>如果感觉以下内容理解困难，可以在读完“栈”章节后再来复习。
+</code></pre><p>那么，迭代和递归具有什么内在联系呢？以上述递归函数为例，求和操作在递归的“归”阶段进行。这意味着最初被调用的函数实际上是最后完成其求和操作的，<strong>这种工作机制与栈的“先入后出”原则异曲同工</strong>。</p>
+<p>事实上，“调用栈”和“栈帧空间”这类递归术语已经暗示了递归与栈之间的密切关系。</p>
+<ol>
+<li><strong>递</strong>：当函数被调用时，系统会在“调用栈”上为该函数分配新的栈帧，用于存储函数的局部变量、参数、返回地址等数据。</li>
+<li><strong>归</strong>：当函数完成执行并返回时，对应的栈帧会被从“调用栈”上移除，恢复之前函数的执行环境。</li>
+</ol>
+<p>因此，<strong>我们可以使用一个显式的栈来模拟调用栈的行为</strong>，从而将递归转化为迭代形式：</p>
+<ul>
+<li><p>"Python"</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">for_loop_recur</span><span class="hljs-params">(n: int)</span> -&gt; <span class="hljs-title">int</span>:</span>
+  <span class="hljs-string">"""使用迭代模拟递归"""</span>
+ // 使用一个显式的栈来模拟系统调用栈
+  stack = []
+  res = <span class="hljs-number">0</span>
+ // 递：递归调用
+  <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n, <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>):
+     // 通过“入栈操作”模拟“递”
+      stack.append(i)
+ // 归：返回结果
+  <span class="hljs-keyword">while</span> stack:
+     // 通过“出栈操作”模拟“归”
+      res += stack.pop()
+ // res = <span class="hljs-number">1</span>+<span class="hljs-number">2</span>+<span class="hljs-number">3</span>+...+n
+  <span class="hljs-keyword">return</span> res
+</code></pre>
+</li>
+<li><p>"C++"</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/* 使用迭代模拟递归 */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">forLoopRecur</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-comment">// 使用一个显式的栈来模拟系统调用栈</span>
+  <span class="hljs-built_in">stack</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-built_in">stack</span>;
+  <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+  <span class="hljs-comment">// 递：递归调用</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n; i &gt; <span class="hljs-number">0</span>; i--) {
+      <span class="hljs-comment">// 通过“入栈操作”模拟“递”</span>
+      <span class="hljs-built_in">stack</span>.push(i);
+  }
+  <span class="hljs-comment">// 归：返回结果</span>
+  <span class="hljs-keyword">while</span> (!<span class="hljs-built_in">stack</span>.empty()) {
+      <span class="hljs-comment">// 通过“出栈操作”模拟“归”</span>
+      res += <span class="hljs-built_in">stack</span>.top();
+      <span class="hljs-built_in">stack</span>.pop();
+  }
+  <span class="hljs-comment">// res = 1+2+3+...+n</span>
+  <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+</li>
+<li><p>"Java"</p>
+<pre><code class="lang-java"><span class="hljs-comment">/* 使用迭代模拟递归 */</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">forLoopRecur</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-comment">// 使用一个显式的栈来模拟系统调用栈</span>
+  Stack&lt;Integer&gt; stack = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+  <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+  <span class="hljs-comment">// 递：递归调用</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n; i &gt; <span class="hljs-number">0</span>; i--) {
+      <span class="hljs-comment">// 通过“入栈操作”模拟“递”</span>
+      stack.push(i);
+  }
+  <span class="hljs-comment">// 归：返回结果</span>
+  <span class="hljs-keyword">while</span> (!stack.isEmpty()) {
+      <span class="hljs-comment">// 通过“出栈操作”模拟“归”</span>
+      res += stack.pop();
+  }
+  <span class="hljs-comment">// res = 1+2+3+...+n</span>
+  <span class="hljs-keyword">return</span> res;
+}
+</code></pre>
+</li>
+</ul>
+<p>观察以上代码，当递归转化为迭代后，代码变得更加复杂了。尽管迭代和递归在很多情况下可以互相转化，但不一定值得这样做，有以下两点原因。</p>
+<ul>
+<li>转化后的代码可能更加难以理解，可读性更差。</li>
+<li>对于某些复杂问题，模拟系统调用栈的行为可能非常困难。</li>
+</ul>
+<p>总之，<strong>选择迭代还是递归取决于特定问题的性质</strong>。在编程实践中，权衡两者的优劣并根据情境选择合适的方法至关重要。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="performance_evaluation.html" class="navigation navigation-prev " aria-label="Previous page: 算法效率评估">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="time_complexity.html" class="navigation navigation-next " aria-label="Next page: 时间复杂度">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"迭代与递归","level":"1.1.3.2","depth":3,"next":{"title":"时间复杂度","level":"1.1.3.3","depth":3,"path":"chapter_computational_complexity/time_complexity.md","ref":"chapter_computational_complexity/time_complexity.md","articles":[]},"previous":{"title":"算法效率评估","level":"1.1.3.1","depth":3,"path":"chapter_computational_complexity/performance_evaluation.md","ref":"chapter_computational_complexity/performance_evaluation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"chapter_computational_complexity/iteration_and_recursion.md","mtime":"2024-01-07T12:04:56.252Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:05.926Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

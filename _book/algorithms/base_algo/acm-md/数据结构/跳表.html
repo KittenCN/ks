@@ -1,0 +1,923 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>跳表 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="平衡树.html" />
+    
+    
+    <link rel="prev" href="红黑树.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="基础数据结构.html">
+            
+                <a href="基础数据结构.html">
+            
+                    
+                    基础数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="高级数据结构概述.html">
+            
+                <a href="高级数据结构概述.html">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="并查集.html">
+            
+                <a href="并查集.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="单调栈和单调队列.html">
+            
+                <a href="单调栈和单调队列.html">
+            
+                    
+                    单调栈/单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="线段树.html">
+            
+                <a href="线段树.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="线段树懒标记.html">
+            
+                <a href="线段树懒标记.html">
+            
+                    
+                    线段树懒标记
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="树状数组.html">
+            
+                <a href="树状数组.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="ST表.html">
+            
+                <a href="ST表.html">
+            
+                    
+                    ST表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="堆.html">
+            
+                <a href="堆.html">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="二叉树.html">
+            
+                <a href="二叉树.html">
+            
+                    
+                    二叉树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="红黑树.html">
+            
+                <a href="红黑树.html">
+            
+                    
+                    红黑树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.11" data-path="跳表.html">
+            
+                <a href="跳表.html">
+            
+                    
+                    跳表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="平衡树.html">
+            
+                <a href="平衡树.html">
+            
+                    
+                    平衡树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="分块算法.html">
+            
+                <a href="分块算法.html">
+            
+                    
+                    分块算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >跳表</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="跳表">跳表</h1>
+<h2 id="算法概述">算法概述</h2>
+<p>【跳表】(Skip List)是一种随机化的数据结构，它使用多层链表实现，支持快速的查找、插入和删除操作，平均时间复杂度为O(log n)。跳表是有序链表的一种优化版本，通过随机建立"快速通道"，使得搜索过程可以跳过许多元素，从而达到对数级别的时间复杂度。</p>
+<p>跳表的核心思想是：通过在有序链表的基础上添加多级索引，形成一种"多层链表"结构，从而在保持链表插入删除操作简单性的同时，也获得了类似二分查找的高效搜索能力。</p>
+<h2 id="基本结构">基本结构</h2>
+<p>跳表由多层有序链表组成：</p>
+<ul>
+<li>最底层（Level 0）是一个包含所有元素的有序链表</li>
+<li>上层（Level 1, 2, 3, ...）是下层链表的子集，作为索引加速查找</li>
+<li>每一层的元素个数大约是下一层的1/2（通过随机决定）</li>
+</ul>
+<h2 id="跳表的节点结构">跳表的节点结构</h2>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> SkipListNode {
+    <span class="hljs-keyword">int</span> key;               <span class="hljs-comment">// 节点值</span>
+    <span class="hljs-keyword">int</span> value;             <span class="hljs-comment">// 关联值（如果需要）</span>
+    <span class="hljs-built_in">vector</span>&lt;SkipListNode*&gt; forward;  <span class="hljs-comment">// 指向各层的下一个节点</span>
+
+    SkipListNode(<span class="hljs-keyword">int</span> k, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> level) : key(k), value(v) {
+        forward.resize(level + <span class="hljs-number">1</span>, <span class="hljs-literal">nullptr</span>);
+    }
+};
+</code></pre>
+<h2 id="跳表的基本操作">跳表的基本操作</h2>
+<h3 id="跳表构造与初始化">跳表构造与初始化</h3>
+<pre><code class="lang-cpp"><span class="hljs-keyword">class</span> SkipList {
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">int</span> maxLevel;          <span class="hljs-comment">// 最大层数</span>
+    <span class="hljs-keyword">float</span> probability;     <span class="hljs-comment">// 上升到下一层的概率</span>
+    SkipListNode* header;  <span class="hljs-comment">// 头节点</span>
+    <span class="hljs-keyword">int</span> level;             <span class="hljs-comment">// 当前最高层数</span>
+
+<span class="hljs-keyword">public</span>:
+    SkipList(<span class="hljs-keyword">int</span> maxLevel = <span class="hljs-number">16</span>, <span class="hljs-keyword">float</span> p = <span class="hljs-number">0.5</span>) {
+        <span class="hljs-keyword">this</span>-&gt;maxLevel = maxLevel;
+        probability = p;
+        level = <span class="hljs-number">0</span>;
+        <span class="hljs-comment">// 头节点不存储实际元素，仅作为入口</span>
+        header = <span class="hljs-keyword">new</span> SkipListNode(-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, maxLevel);
+    }
+
+    <span class="hljs-comment">// 其他方法...</span>
+};
+</code></pre>
+<h3 id="随机层数生成">随机层数生成</h3>
+<p>跳表的一个关键操作是决定新插入节点的层数，这通常使用随机化方法：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">int</span> SkipList::randomLevel() {
+    <span class="hljs-keyword">int</span> lvl = <span class="hljs-number">0</span>;
+    <span class="hljs-comment">// 以概率p(通常为0.5)向上生成层数，直到达到最大层数或随机数不满足条件</span>
+    <span class="hljs-keyword">while</span> (rand() &lt; probability * RAND_MAX &amp;&amp; lvl &lt; maxLevel) {
+        lvl++;
+    }
+    <span class="hljs-keyword">return</span> lvl;
+}
+</code></pre>
+<h3 id="查找操作">查找操作</h3>
+<p>跳表的查找从最高层开始，当遇到大于目标的节点时下降一层，否则在当前层向前移动：</p>
+<pre><code class="lang-cpp">SkipListNode* SkipList::search(<span class="hljs-keyword">int</span> key) {
+    SkipListNode* current = header;
+
+    <span class="hljs-comment">// 从最高层开始查找</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = level; i &gt;= <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-comment">// 在当前层向前移动，直到下一个节点大于等于目标</span>
+        <span class="hljs-keyword">while</span> (current-&gt;forward[i] &amp;&amp; current-&gt;forward[i]-&gt;key &lt; key) {
+            current = current-&gt;forward[i];
+        }
+    }
+
+    <span class="hljs-comment">// 已经到达最底层，检查下一个节点是否为目标</span>
+    current = current-&gt;forward[<span class="hljs-number">0</span>];
+
+    <span class="hljs-comment">// 如果找到目标节点，返回它</span>
+    <span class="hljs-keyword">if</span> (current &amp;&amp; current-&gt;key == key) {
+        <span class="hljs-keyword">return</span> current;
+    }
+
+    <span class="hljs-comment">// 未找到目标节点</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+}
+</code></pre>
+<h3 id="插入操作">插入操作</h3>
+<p>插入操作需要先找到合适的位置，然后随机决定新节点的层数，并更新相应的指针：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">void</span> SkipList::insert(<span class="hljs-keyword">int</span> key, <span class="hljs-keyword">int</span> value) {
+    <span class="hljs-comment">// 记录每一层的前驱节点</span>
+    <span class="hljs-built_in">vector</span>&lt;SkipListNode*&gt; update(maxLevel + <span class="hljs-number">1</span>, <span class="hljs-literal">nullptr</span>);
+    SkipListNode* current = header;
+
+    <span class="hljs-comment">// 从最高层开始查找插入位置的前驱节点</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = level; i &gt;= <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-keyword">while</span> (current-&gt;forward[i] &amp;&amp; current-&gt;forward[i]-&gt;key &lt; key) {
+            current = current-&gt;forward[i];
+        }
+        update[i] = current;
+    }
+
+    <span class="hljs-comment">// 移至最底层的下一个节点</span>
+    current = current-&gt;forward[<span class="hljs-number">0</span>];
+
+    <span class="hljs-comment">// 键已存在，更新值</span>
+    <span class="hljs-keyword">if</span> (current &amp;&amp; current-&gt;key == key) {
+        current-&gt;value = value;
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-comment">// 生成随机层数</span>
+    <span class="hljs-keyword">int</span> newLevel = randomLevel();
+
+    <span class="hljs-comment">// 如果新层数高于当前最高层，更新header的forward指针</span>
+    <span class="hljs-keyword">if</span> (newLevel &gt; level) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = level + <span class="hljs-number">1</span>; i &lt;= newLevel; i++) {
+            update[i] = header;
+        }
+        level = newLevel;
+    }
+
+    <span class="hljs-comment">// 创建新节点</span>
+    SkipListNode* newNode = <span class="hljs-keyword">new</span> SkipListNode(key, value, newLevel);
+
+    <span class="hljs-comment">// 插入新节点，更新指针</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= newLevel; i++) {
+        newNode-&gt;forward[i] = update[i]-&gt;forward[i];
+        update[i]-&gt;forward[i] = newNode;
+    }
+}
+</code></pre>
+<h3 id="删除操作">删除操作</h3>
+<p>删除操作先找到目标节点，然后更新所有指向它的指针：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">bool</span> SkipList::remove(<span class="hljs-keyword">int</span> key) {
+    <span class="hljs-comment">// 记录每一层的前驱节点</span>
+    <span class="hljs-built_in">vector</span>&lt;SkipListNode*&gt; update(maxLevel + <span class="hljs-number">1</span>, <span class="hljs-literal">nullptr</span>);
+    SkipListNode* current = header;
+
+    <span class="hljs-comment">// 从最高层开始查找删除位置的前驱节点</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = level; i &gt;= <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-keyword">while</span> (current-&gt;forward[i] &amp;&amp; current-&gt;forward[i]-&gt;key &lt; key) {
+            current = current-&gt;forward[i];
+        }
+        update[i] = current;
+    }
+
+    <span class="hljs-comment">// 移至最底层的下一个节点</span>
+    current = current-&gt;forward[<span class="hljs-number">0</span>];
+
+    <span class="hljs-comment">// 键不存在，无法删除</span>
+    <span class="hljs-keyword">if</span> (!current || current-&gt;key != key) {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+
+    <span class="hljs-comment">// 更新指针，跳过要删除的节点</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= level; i++) {
+        <span class="hljs-keyword">if</span> (update[i]-&gt;forward[i] != current) {
+            <span class="hljs-keyword">break</span>;
+        }
+        update[i]-&gt;forward[i] = current-&gt;forward[i];
+    }
+
+    <span class="hljs-comment">// 删除节点</span>
+    <span class="hljs-keyword">delete</span> current;
+
+    <span class="hljs-comment">// 更新跳表的最高层数（如果需要）</span>
+    <span class="hljs-keyword">while</span> (level &gt; <span class="hljs-number">0</span> &amp;&amp; header-&gt;forward[level] == <span class="hljs-literal">nullptr</span>) {
+        level--;
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+</code></pre>
+<h2 id="跳表的复杂度分析">跳表的复杂度分析</h2>
+<h3 id="时间复杂度">时间复杂度</h3>
+<ul>
+<li><strong>查找</strong>：平均O(log n)，最坏O(n)</li>
+<li><strong>插入</strong>：平均O(log n)，最坏O(n)</li>
+<li><strong>删除</strong>：平均O(log n)，最坏O(n)</li>
+</ul>
+<h3 id="空间复杂度">空间复杂度</h3>
+<p>跳表的空间复杂度为O(n)，但常数因子比平衡树大，因为每个节点需要存储指向不同层的指针。平均而言，一个n个元素的跳表需要约2n个指针。</p>
+<h3 id="与平衡树的比较">与平衡树的比较</h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>跳表</th>
+<th>平衡树(如AVL/红黑树)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查找时间</td>
+<td>O(log n)平均</td>
+<td>O(log n)最坏</td>
+</tr>
+<tr>
+<td>插入时间</td>
+<td>O(log n)平均</td>
+<td>O(log n)最坏</td>
+</tr>
+<tr>
+<td>删除时间</td>
+<td>O(log n)平均</td>
+<td>O(log n)最坏</td>
+</tr>
+<tr>
+<td>实现复杂度</td>
+<td>简单</td>
+<td>复杂</td>
+</tr>
+<tr>
+<td>平衡维护</td>
+<td>随机化，无需显式平衡</td>
+<td>需要旋转等复杂操作</td>
+</tr>
+<tr>
+<td>并发性能</td>
+<td>优秀（局部修改）</td>
+<td>一般（可能需要全局重平衡）</td>
+</tr>
+<tr>
+<td>内存使用</td>
+<td>较高</td>
+<td>适中</td>
+</tr>
+</tbody>
+</table>
+<h2 id="跳表在acm竞赛中的应用">跳表在ACM竞赛中的应用</h2>
+<p>在ACM竞赛中，跳表主要用于以下场景：</p>
+<ol>
+<li><strong>有序数据集合维护</strong>：当需要一个支持高效查找、插入和删除的有序集合时</li>
+<li><strong>排名查询</strong>：可以扩展跳表支持查找第k小元素或确定元素排名</li>
+<li><strong>区间操作</strong>：跳表的有序特性使其适合处理区间查询和修改</li>
+<li><strong>替代平衡树</strong>：当红黑树实现复杂度过高时，跳表是一个简单的替代选择</li>
+</ol>
+<h2 id="跳表的优化与扩展">跳表的优化与扩展</h2>
+<h3 id="1-跳表的内存优化">1. 跳表的内存优化</h3>
+<p>在ACM竞赛环境中，可以使用数组池代替动态内存分配来提高效率：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 节点池优化</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+SkipListNode nodePool[MAXN];
+<span class="hljs-keyword">int</span> nodeCount = <span class="hljs-number">0</span>;
+
+<span class="hljs-function">SkipListNode* <span class="hljs-title">createNode</span><span class="hljs-params">(<span class="hljs-keyword">int</span> key, <span class="hljs-keyword">int</span> value, <span class="hljs-keyword">int</span> level)</span> </span>{
+    nodePool[nodeCount].key = key;
+    nodePool[nodeCount].value = value;
+    nodePool[nodeCount].forward.resize(level + <span class="hljs-number">1</span>, <span class="hljs-literal">nullptr</span>);
+    <span class="hljs-keyword">return</span> &amp;nodePool[nodeCount++];
+}
+</code></pre>
+<h3 id="2-支持排名查询的跳表">2. 支持排名查询的跳表</h3>
+<p>可以在节点中添加span字段来记录跨度，用于支持排名查询：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> RankedSkipListNode {
+    <span class="hljs-keyword">int</span> key;
+    <span class="hljs-keyword">int</span> value;
+    <span class="hljs-built_in">vector</span>&lt;RankedSkipListNode*&gt; forward;
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; span;  <span class="hljs-comment">// 在每一层，到forward[i]的跨度</span>
+
+    RankedSkipListNode(<span class="hljs-keyword">int</span> k, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> level) : key(k), value(v) {
+        forward.resize(level + <span class="hljs-number">1</span>, <span class="hljs-literal">nullptr</span>);
+        span.resize(level + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+    }
+};
+
+<span class="hljs-comment">// 查找排名为rank的元素</span>
+<span class="hljs-function">RankedSkipListNode* <span class="hljs-title">findByRank</span><span class="hljs-params">(<span class="hljs-keyword">int</span> rank)</span> </span>{
+    <span class="hljs-keyword">if</span> (rank &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+    RankedSkipListNode* current = header;
+    <span class="hljs-keyword">int</span> accumulated = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = level; i &gt;= <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-keyword">while</span> (current-&gt;forward[i] &amp;&amp; accumulated + current-&gt;span[i] &lt; rank) {
+            accumulated += current-&gt;span[i];
+            current = current-&gt;forward[i];
+        }
+    }
+
+    <span class="hljs-comment">// 现在accumulated + current-&gt;span[0]应该等于rank</span>
+    <span class="hljs-keyword">if</span> (current-&gt;forward[<span class="hljs-number">0</span>]) {
+        <span class="hljs-keyword">return</span> current-&gt;forward[<span class="hljs-number">0</span>];
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;  <span class="hljs-comment">// rank超出范围</span>
+}
+</code></pre>
+<h3 id="3-支持区间查询的跳表">3. 支持区间查询的跳表</h3>
+<p>跳表的有序特性使其自然支持区间查询：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 查询区间[minKey, maxKey]内的所有元素</span>
+<span class="hljs-built_in">vector</span>&lt;SkipListNode*&gt; rangeQuery(<span class="hljs-keyword">int</span> minKey, <span class="hljs-keyword">int</span> maxKey) {
+    <span class="hljs-built_in">vector</span>&lt;SkipListNode*&gt; result;
+
+    <span class="hljs-comment">// 找到大于等于minKey的第一个节点</span>
+    SkipListNode* current = header;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = level; i &gt;= <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-keyword">while</span> (current-&gt;forward[i] &amp;&amp; current-&gt;forward[i]-&gt;key &lt; minKey) {
+            current = current-&gt;forward[i];
+        }
+    }
+
+    <span class="hljs-comment">// 移至第一个符合条件的节点</span>
+    current = current-&gt;forward[<span class="hljs-number">0</span>];
+
+    <span class="hljs-comment">// 收集区间内的所有节点</span>
+    <span class="hljs-keyword">while</span> (current &amp;&amp; current-&gt;key &lt;= maxKey) {
+        result.push_back(current);
+        current = current-&gt;forward[<span class="hljs-number">0</span>];
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h2 id="跳表的典型应用例题">跳表的典型应用例题</h2>
+<h3 id="例题：多重集合维护">例题：多重集合维护</h3>
+<p><strong>问题描述</strong>：
+实现一个数据结构支持以下操作：</p>
+<ol>
+<li>插入一个数x</li>
+<li>删除一个数x（如果有多个，只删除一个）</li>
+<li>查询数x的排名（即集合中严格小于x的元素个数+1）</li>
+<li>查询排名为k的数</li>
+<li>查询x的前驱（小于x的最大元素）</li>
+<li>查询x的后继（大于x的最小元素）</li>
+</ol>
+<p><strong>解决思路</strong>：
+这个问题可以使用跳表解决，实现如下：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">class</span> MultiskipList {
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-comment">// 基础跳表实现...</span>
+
+    <span class="hljs-comment">// 查询元素排名</span>
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getRank</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+        SkipListNode* current = header;
+        <span class="hljs-keyword">int</span> rank = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = level; i &gt;= <span class="hljs-number">0</span>; i--) {
+            <span class="hljs-keyword">while</span> (current-&gt;forward[i] &amp;&amp; current-&gt;forward[i]-&gt;key &lt; x) {
+                rank += current-&gt;span[i];
+                current = current-&gt;forward[i];
+            }
+        }
+
+        <span class="hljs-keyword">return</span> rank + <span class="hljs-number">1</span>;  <span class="hljs-comment">// +1因为排名从1开始</span>
+    }
+
+    <span class="hljs-comment">// 查询第k小的元素</span>
+    <span class="hljs-function">SkipListNode* <span class="hljs-title">getElementByRank</span><span class="hljs-params">(<span class="hljs-keyword">int</span> k)</span> </span>{
+        <span class="hljs-keyword">if</span> (k &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+
+        SkipListNode* current = header;
+        <span class="hljs-keyword">int</span> accumulated = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = level; i &gt;= <span class="hljs-number">0</span>; i--) {
+            <span class="hljs-keyword">while</span> (current-&gt;forward[i] &amp;&amp; accumulated + current-&gt;span[i] &lt; k) {
+                accumulated += current-&gt;span[i];
+                current = current-&gt;forward[i];
+            }
+        }
+
+        <span class="hljs-keyword">if</span> (current-&gt;forward[<span class="hljs-number">0</span>]) {
+            <span class="hljs-keyword">return</span> current-&gt;forward[<span class="hljs-number">0</span>];
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+    }
+
+    <span class="hljs-comment">// 查询前驱</span>
+    <span class="hljs-function">SkipListNode* <span class="hljs-title">getPredecessor</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+        SkipListNode* current = header;
+        SkipListNode* predecessor = <span class="hljs-literal">nullptr</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = level; i &gt;= <span class="hljs-number">0</span>; i--) {
+            <span class="hljs-keyword">while</span> (current-&gt;forward[i] &amp;&amp; current-&gt;forward[i]-&gt;key &lt; x) {
+                current = current-&gt;forward[i];
+            }
+
+            <span class="hljs-keyword">if</span> (current != header) {
+                predecessor = current;
+            }
+        }
+
+        <span class="hljs-keyword">return</span> predecessor;
+    }
+
+    <span class="hljs-comment">// 查询后继</span>
+    <span class="hljs-function">SkipListNode* <span class="hljs-title">getSuccessor</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+        SkipListNode* current = header;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = level; i &gt;= <span class="hljs-number">0</span>; i--) {
+            <span class="hljs-keyword">while</span> (current-&gt;forward[i] &amp;&amp; current-&gt;forward[i]-&gt;key &lt;= x) {
+                current = current-&gt;forward[i];
+            }
+        }
+
+        <span class="hljs-keyword">if</span> (current-&gt;forward[<span class="hljs-number">0</span>]) {
+            <span class="hljs-keyword">return</span> current-&gt;forward[<span class="hljs-number">0</span>];
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+    }
+};
+</code></pre>
+<h2 id="跳表的实现技巧">跳表的实现技巧</h2>
+<h3 id="1-边界处理">1. 边界处理</h3>
+<p>在跳表的所有操作中，需要仔细处理边界情况：</p>
+<ul>
+<li>空跳表</li>
+<li>目标键不存在</li>
+<li>操作第一个或最后一个元素</li>
+</ul>
+<h3 id="2-随机化策略">2. 随机化策略</h3>
+<p>跳表的性能很大程度上依赖于随机层数生成策略，常见方法有：</p>
+<ul>
+<li>固定概率（如0.5或0.25）</li>
+<li>基于节点数量动态调整概率</li>
+<li>限制最大层数（通常取log₂n或更小）</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 一种常用的层数生成策略</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">randomLevel</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> level = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (rand() &lt; RAND_MAX / <span class="hljs-number">4</span> &amp;&amp; level &lt; maxLevel) {  <span class="hljs-comment">// 概率0.25</span>
+        level++;
+    }
+    <span class="hljs-keyword">return</span> level;
+}
+</code></pre>
+<h3 id="3-避免使用stl">3. 避免使用STL</h3>
+<p>在ACM竞赛中，为了最大化性能，可以避免使用STL vector，而是使用固定大小的数组：</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> OptimizedNode {
+    <span class="hljs-keyword">int</span> key;
+    <span class="hljs-keyword">int</span> value;
+    OptimizedNode* forward[MAX_LEVEL + <span class="hljs-number">1</span>];
+    <span class="hljs-keyword">int</span> span[MAX_LEVEL + <span class="hljs-number">1</span>];
+
+    OptimizedNode(<span class="hljs-keyword">int</span> k, <span class="hljs-keyword">int</span> v) : key(k), value(v) {
+        <span class="hljs-built_in">memset</span>(forward, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(forward));
+        <span class="hljs-built_in">memset</span>(span, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(span));
+    }
+};
+</code></pre>
+<h2 id="总结">总结</h2>
+<p>跳表是一种随机化的数据结构，它提供了与平衡树相近的性能，但实现更为简单。通过多层链表结构和随机化技术，跳表在保持链表操作简单性的同时，实现了对数级别的查找时间复杂度。</p>
+<p>跳表的主要优势在于：</p>
+<ol>
+<li>实现简单，代码量小于平衡树</li>
+<li>插入和删除操作较为局部化，不需要全局重平衡</li>
+<li>空间利用效率相对较高</li>
+<li>随机化特性使其在大多数情况下表现良好</li>
+</ol>
+<p>在ACM竞赛中，当需要一个有序数据结构但不想实现复杂的平衡树时，跳表是一个非常好的选择。同时，跳表也可以扩展以支持排名查询、区间操作等高级功能，适用于各种复杂的问题场景。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="红黑树.html" class="navigation navigation-prev " aria-label="Previous page: 红黑树">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="平衡树.html" class="navigation navigation-next " aria-label="Next page: 平衡树">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"跳表","level":"1.2.11","depth":2,"next":{"title":"平衡树","level":"1.2.12","depth":2,"path":"平衡树.md","ref":"平衡树.md","articles":[]},"previous":{"title":"红黑树","level":"1.2.10","depth":2,"path":"红黑树.md","ref":"红黑树.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"跳表.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:40.626Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

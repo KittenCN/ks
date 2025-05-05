@@ -1,0 +1,583 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ch07. Python 程序流程控制 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch08.html" />
+    
+    
+    <link rel="prev" href="ch06.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Python基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    ch01. 初识 Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    ch02. Python 运算符与基本数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    ch03. 玩转 Python 字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    ch04. Python 序列结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    ch05. Python 的三种格式化输出方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    ch06. Python 常用内置函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.7" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    ch07. Python 程序流程控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="ch08.html">
+            
+                <a href="ch08.html">
+            
+                    
+                    ch08. Python 标准库和扩展库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="ch09.html">
+            
+                <a href="ch09.html">
+            
+                    
+                    ch09. 常用 Python 标准库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="ch10.html">
+            
+                <a href="ch10.html">
+            
+                    
+                    ch10. 函数Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ch11.html">
+            
+                <a href="ch11.html">
+            
+                    
+                    ch11. 面向对象程序设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="ch12.html">
+            
+                <a href="ch12.html">
+            
+                    
+                    ch12. 文件和异常
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ch13.html">
+            
+                <a href="ch13.html">
+            
+                    
+                    ch13. 迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="ch14.html">
+            
+                <a href="ch14.html">
+            
+                    
+                    ch14. Python 奇技淫巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ch07. Python 程序流程控制</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="（七）python程序流程控制">（七）Python程序流程控制</h1>
+<blockquote>
+<p>Python有三种流程控制结构</p>
+<ul>
+<li>顺序结构（略）</li>
+<li>选择结构</li>
+<li>循环结构</li>
+</ul>
+</blockquote>
+<h2 id="1-顺序结构">1. 顺序结构</h2>
+<p>按照循序从上到下依次执行语句的结构就是循序结构，是最简单的流程控制结构。</p>
+<h2 id="2-选择结构">2. 选择结构</h2>
+<blockquote>
+<p><code>condition</code> : 可判断 True / False 的条件表达式</p>
+<p><code>statement</code>: 满足该条件下所要执行的语句</p>
+</blockquote>
+<h3 id="2-1-if-语句">2. 1 <code>if</code> 语句</h3>
+<pre><code class="lang-Python"><span class="hljs-keyword">if</span> condition:
+    statement
+</code></pre>
+<h3 id="22-if-else-语句">2.2 <code>if-else</code> 语句</h3>
+<pre><code class="lang-Python"><span class="hljs-keyword">if</span> condition:
+    statement1
+<span class="hljs-keyword">else</span>:
+    statement2
+</code></pre>
+<h3 id="23-if-elif-else-语句">2.3 <code>if-elif-else</code> 语句</h3>
+<pre><code class="lang-Python"><span class="hljs-keyword">if</span> condition1:
+    statement1
+<span class="hljs-keyword">elif</span> condition2:
+    statement2
+<span class="hljs-keyword">elif</span> condition3:
+    statement3
+...
+<span class="hljs-keyword">else</span>:
+    statementN
+</code></pre>
+<h3 id="24-if-嵌套语句">2.4 <code>if</code> 嵌套语句</h3>
+<p><code>if</code>、<code>if-else</code>、<code>if-elif-else</code> 之间可以嵌套，根据开发的具体情况选择合理的嵌套方案。并严格遵守不同级别的 <code>if</code> 语句的代码缩进规范。</p>
+<h3 id="25-pass-语句">2.5 <code>pass</code> 语句</h3>
+<p><code>pass</code> 语句是空语句，不做任何事情，用来占位，是为了保持程序结构的完整性。
+在实际开发中，往往是为了搭起陈旭的整体逻辑结构，暂时不去实现那些细节，之后根据需要添加代码。</p>
+<pre><code class="lang-py"><span class="hljs-keyword">pass</span>
+</code></pre>
+<h3 id="26-assert-语句">2.6 <code>assert</code> 语句</h3>
+<p><code>assert</code> 语句又叫断言语句，用于判断一个表达式的值，当某个表达式为真，则程序继续向下执行，否则，报 <code>AssertionError</code> 错误，程序在此终止。
+<code>assert</code> 的用处在于，与其让程序在晚些时候崩溃，不如在错误条件出现时，就直接让程序崩溃，这有利于我们对程序排错，提高程序的健壮性。</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">assert</span> expression
+</code></pre>
+<h3 id="27-关于缩进">2.7 关于缩进</h3>
+<p>Python 以缩进来标记代码块的，缩进量相同的代码就成为同一个代码块。Python 规定了代码块必须缩进，且缩进量要相同，但未规定缩进量的大小。一般以一个 <code>tab</code> 或者 4 个空格键（大部分编辑器或IDE中，一个tab就是4个空格）为一个缩进量。</p>
+<p>Python编程规范</p>
+<ul>
+<li><p>同一个代码块的所有语句都要缩进</p>
+</li>
+<li><p>统一代码快的缩进量相同</p>
+</li>
+<li><p>不要随意缩进（纯顺序结构不缩进）</p>
+</li>
+</ul>
+<h3 id="28-if-语句的选择">2.8 <code>if</code> 语句的选择</h3>
+<p><code>if-elif-else</code> 语句只执行一种情况，若要执行多种符合条件的情况则可以使用独立 <code>if</code> 语句。 </p>
+<h2 id="3-循环结构">3. 循环结构</h2>
+<h3 id="31-while-循环">3.1 <code>while</code> 循环</h3>
+<pre><code class="lang-py"><span class="hljs-keyword">while</span> condition:
+    statement
+</code></pre>
+<h3 id="32-for-循环">3.2 <code>for</code> 循环</h3>
+<pre><code class="lang-Python"><span class="hljs-keyword">for</span> iterating_var <span class="hljs-keyword">in</span> String|List|Tuple|Dict|Set：
+    statement
+</code></pre>
+<p>示例</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-string">'hello'</span>:
+    print(i)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]:
+    print(i)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>):
+    print(i)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> dict:
+    print(dict[i])
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>}:
+    print(i)
+</code></pre>
+<blockquote>
+<p>iterating_var:迭代变量</p>
+</blockquote>
+<h3 id="33-嵌套循环">3.3 嵌套循环</h3>
+<p><code>for</code> 和 <code>while</code> 之间（<code>for</code>和<code>for</code>、<code>while</code>和<code>while</code>、<code>for</code>和<code>while</code>之间均可进行循环）可以嵌套循环。</p>
+<h3 id="34-break-和-continue-语句">3.4 <code>break</code> 和 <code>continue</code> 语句</h3>
+<p><code>break</code> 终止最近的这个循环；<code>continue</code> 跳过本轮循环，进行下一轮循环。</p>
+<p>break 示例：</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">if</span> <span class="hljs-keyword">True</span>:
+    <span class="hljs-keyword">break</span>
+</code></pre>
+<p>continue 示例：</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">if</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:
+    <span class="hljs-keyword">continue</span>
+</code></pre>
+<h3 id="35-for-i-in-rangej-方法">3.5 <code>for i in range(j)</code> 方法</h3>
+<p><code>range(j)</code> 函数是 Python 内置的函数，依次返回 <code>[0, j)</code> 的 <code>j</code> 个整数。</p>
+<p><code>range(M,N)</code> 依次返回 <code>[M, N)</code> 的 <code>N-M</code> 个整数。</p>
+<pre><code class="lang-Python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">10</span>):
+    print(i, end=<span class="hljs-string">' '</span>)
+<span class="hljs-comment"># output:0 1 2 3 4 5 6 7 8 9</span>
+</code></pre>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch06.html" class="navigation navigation-prev " aria-label="Previous page: ch06. Python 常用内置函数">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch08.html" class="navigation navigation-next " aria-label="Next page: ch08. Python 标准库和扩展库">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ch07. Python 程序流程控制","level":"1.1.7","depth":2,"next":{"title":"ch08. Python 标准库和扩展库","level":"1.1.8","depth":2,"path":"ch08.md","ref":"ch08.md","articles":[]},"previous":{"title":"ch06. Python 常用内置函数","level":"1.1.6","depth":2,"path":"ch06.md","ref":"ch06.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch07.md","mtime":"2025-04-20T02:13:02.373Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:34.729Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

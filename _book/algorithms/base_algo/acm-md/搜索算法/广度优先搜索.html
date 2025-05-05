@@ -1,0 +1,646 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>广度优先搜索(BFS) · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="二分查找.html" />
+    
+    
+    <link rel="prev" href="深度优先搜索.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="搜索算法概述.html">
+            
+                <a href="搜索算法概述.html">
+            
+                    
+                    搜索算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="深度优先搜索.html">
+            
+                <a href="深度优先搜索.html">
+            
+                    
+                    深度优先搜索(DFS)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.2" data-path="广度优先搜索.html">
+            
+                <a href="广度优先搜索.html">
+            
+                    
+                    广度优先搜索(BFS)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="二分查找.html">
+            
+                <a href="二分查找.html">
+            
+                    
+                    二分查找
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="回溯法.html">
+            
+                <a href="回溯法.html">
+            
+                    
+                    回溯法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >广度优先搜索(BFS)</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="广度优先搜索bfs">广度优先搜索(BFS)</h1>
+<h2 id="算法概述">算法概述</h2>
+<p>【广度优先搜索】是一种图搜索算法，用于遍历或搜索图中的节点。它从起始节点开始，逐层向外扩展，直到找到目标节点或遍历完所有节点。BFS通常用于寻找最短路径、连通性等问题。</p>
+<h2 id="算法设计思路">算法设计思路</h2>
+<p>广度优先搜索的核心思想是：使用队列来实现层次遍历，确保首先访问距离起点最近的节点，然后逐层向外扩展。其基本步骤如下：</p>
+<ol>
+<li>将起始节点加入队列，并标记为已访问</li>
+<li>当队列不为空时，重复以下步骤：<ul>
+<li>从队列中取出一个节点</li>
+<li>访问该节点的所有未被访问的邻居节点，并将它们加入队列</li>
+</ul>
+</li>
+<li>直到找到目标节点或队列为空</li>
+</ol>
+<h2 id="代码实现与解析">代码实现与解析</h2>
+<h3 id="基本bfs实现">基本BFS实现</h3>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;queue&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unordered_set&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-comment">// 广度优先搜索函数</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bfs</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; graph, <span class="hljs-keyword">int</span> start)</span> </span>{
+    <span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; q; <span class="hljs-comment">// 队列用于存储待访问的节点</span>
+    <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-keyword">int</span>&gt; visited; <span class="hljs-comment">// 集合用于记录已访问的节点</span>
+
+    q.push(start); <span class="hljs-comment">// 将起始节点加入队列</span>
+    visited.insert(start); <span class="hljs-comment">// 标记起始节点为已访问</span>
+
+    <span class="hljs-keyword">while</span> (!q.empty()) {
+        <span class="hljs-keyword">int</span> node = q.front(); <span class="hljs-comment">// 取出队首节点</span>
+        q.pop();
+
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"访问节点: "</span> &lt;&lt; node &lt;&lt; endl;
+
+        <span class="hljs-comment">// 访问所有邻居节点</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> neighbor : graph[node]) {
+            <span class="hljs-keyword">if</span> (visited.find(neighbor) == visited.end()) { <span class="hljs-comment">// 如果邻居节点未被访问</span>
+                q.push(neighbor); <span class="hljs-comment">// 加入队列</span>
+                visited.insert(neighbor); <span class="hljs-comment">// 标记为已访问</span>
+            }
+        }
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// 示例图的邻接表表示</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; graph = {
+        {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>},    <span class="hljs-comment">// 节点0的邻居</span>
+        {<span class="hljs-number">0</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>}, <span class="hljs-comment">// 节点1的邻居</span>
+        {<span class="hljs-number">0</span>, <span class="hljs-number">4</span>},    <span class="hljs-comment">// 节点2的邻居</span>
+        {<span class="hljs-number">1</span>, <span class="hljs-number">5</span>},    <span class="hljs-comment">// 节点3的邻居</span>
+        {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>}, <span class="hljs-comment">// 节点4的邻居</span>
+        {<span class="hljs-number">3</span>, <span class="hljs-number">4</span>}     <span class="hljs-comment">// 节点5的邻居</span>
+    };
+
+    bfs(graph, <span class="hljs-number">0</span>); <span class="hljs-comment">// 从节点0开始进行广度优先搜索</span>
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3 id="时间复杂度分析">时间复杂度分析</h3>
+<ul>
+<li>时间复杂度：O(V + E)，其中V是节点数，E是边数</li>
+<li>空间复杂度：O(V)，需要存储队列和访问标记</li>
+</ul>
+<h2 id="优化策略">优化策略</h2>
+<ol>
+<li><p>【双向BFS】当同时知道起点和终点时，可以从两端同时开始BFS，直到两个搜索相遇</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">bidirectionalBFS</span><span class="hljs-params">(<span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> end)</span> </span>{
+ <span class="hljs-keyword">if</span> (start == end) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+
+ <span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; q1, q2;
+ <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-keyword">int</span>&gt; visited1, visited2;
+
+ q1.push(start);
+ q2.push(end);
+ visited1.insert(start);
+ visited2.insert(end);
+
+ <span class="hljs-keyword">while</span> (!q1.empty() &amp;&amp; !q2.empty()) {
+     <span class="hljs-comment">// 总是从较小的队列扩展</span>
+     <span class="hljs-keyword">if</span> (q1.size() &gt; q2.size()) {
+         swap(q1, q2);
+         swap(visited1, visited2);
+     }
+
+     <span class="hljs-keyword">int</span> size = q1.size();
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) {
+         <span class="hljs-keyword">int</span> node = q1.front();
+         q1.pop();
+
+         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> neighbor : graph[node]) {
+             <span class="hljs-keyword">if</span> (visited1.count(neighbor)) <span class="hljs-keyword">continue</span>; <span class="hljs-comment">// 已访问</span>
+
+             <span class="hljs-keyword">if</span> (visited2.count(neighbor)) {
+                 <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>; <span class="hljs-comment">// 两个搜索相遇</span>
+             }
+
+             visited1.insert(neighbor);
+             q1.push(neighbor);
+         }
+     }
+ }
+
+ <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">// 无法到达</span>
+}
+</code></pre>
+</li>
+<li><p>【01BFS】处理边权为0或1的最短路径问题时，可以用双端队列优化</p>
+<pre><code class="lang-cpp"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; bfs01(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt;&gt;&amp; graph, <span class="hljs-keyword">int</span> start) {
+ <span class="hljs-keyword">int</span> n = graph.size();
+ <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dist(n, INT_MAX);
+ <span class="hljs-built_in">deque</span>&lt;<span class="hljs-keyword">int</span>&gt; dq; <span class="hljs-comment">// 使用双端队列</span>
+
+ dist[start] = <span class="hljs-number">0</span>;
+ dq.push_front(start);
+
+ <span class="hljs-keyword">while</span> (!dq.empty()) {
+     <span class="hljs-keyword">int</span> node = dq.front();
+     dq.pop_front();
+
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; [neighbor, weight] : graph[node]) {
+         <span class="hljs-keyword">if</span> (dist[neighbor] &gt; dist[node] + weight) {
+             dist[neighbor] = dist[node] + weight;
+
+             <span class="hljs-keyword">if</span> (weight == <span class="hljs-number">0</span>) {
+                 dq.push_front(neighbor); <span class="hljs-comment">// 权重为0的边，加入队首</span>
+             } <span class="hljs-keyword">else</span> {
+                 dq.push_back(neighbor);  <span class="hljs-comment">// 权重为1的边，加入队尾</span>
+             }
+         }
+     }
+ }
+
+ <span class="hljs-keyword">return</span> dist;
+}
+</code></pre>
+</li>
+<li><p>【状态压缩BFS】当需要记录多个状态时，可以使用位运算进行状态压缩</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 使用位运算表示状态，比如在迷宫中记录已访问的物品</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">bfsWithBitmask</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; grid, <span class="hljs-keyword">int</span> startX, <span class="hljs-keyword">int</span> startY)</span> </span>{
+ <span class="hljs-keyword">int</span> rows = grid.size();
+ <span class="hljs-keyword">int</span> cols = grid[<span class="hljs-number">0</span>].size();
+ <span class="hljs-keyword">int</span> totalItems = <span class="hljs-number">5</span>; <span class="hljs-comment">// 假设有5个物品需要收集</span>
+
+ <span class="hljs-comment">// visited[x][y][state]表示在(x,y)位置，已收集物品状态为state时是否访问过</span>
+ <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt;&gt; visited(rows, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt;(cols, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;(<span class="hljs-number">1</span> &lt;&lt; totalItems, <span class="hljs-literal">false</span>)));
+
+ <span class="hljs-built_in">queue</span>&lt;tuple&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt; q; <span class="hljs-comment">// (x, y, state)</span>
+ q.push({startX, startY, <span class="hljs-number">0</span>});
+ visited[startX][startY][<span class="hljs-number">0</span>] = <span class="hljs-literal">true</span>;
+
+ <span class="hljs-keyword">int</span> steps = <span class="hljs-number">0</span>;
+ <span class="hljs-built_in">vector</span>&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt; dirs = { {-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>}, {<span class="hljs-number">0</span>, <span class="hljs-number">1</span>} };
+
+ <span class="hljs-keyword">while</span> (!q.empty()) {
+     <span class="hljs-keyword">int</span> size = q.size();
+     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) {
+         <span class="hljs-keyword">auto</span> [x, y, state] = q.front();
+         q.pop();
+
+         <span class="hljs-comment">// 如果所有物品都收集了</span>
+         <span class="hljs-keyword">if</span> (state == (<span class="hljs-number">1</span> &lt;&lt; totalItems) - <span class="hljs-number">1</span>) {
+             <span class="hljs-keyword">return</span> steps;
+         }
+
+         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; dir : dirs) {
+             <span class="hljs-keyword">int</span> nx = x + dir.first;
+             <span class="hljs-keyword">int</span> ny = y + dir.second;
+
+             <span class="hljs-keyword">if</span> (nx &lt; <span class="hljs-number">0</span> || nx &gt;= rows || ny &lt; <span class="hljs-number">0</span> || ny &gt;= cols || grid[nx][ny] == -<span class="hljs-number">1</span>) <span class="hljs-keyword">continue</span>;
+
+             <span class="hljs-keyword">int</span> newState = state;
+             <span class="hljs-keyword">if</span> (grid[nx][ny] &gt; <span class="hljs-number">0</span>) {
+                 <span class="hljs-comment">// 收集物品，物品编号为grid[nx][ny]-1</span>
+                 newState |= (<span class="hljs-number">1</span> &lt;&lt; (grid[nx][ny] - <span class="hljs-number">1</span>));
+             }
+
+             <span class="hljs-keyword">if</span> (!visited[nx][ny][newState]) {
+                 visited[nx][ny][newState] = <span class="hljs-literal">true</span>;
+                 q.push({nx, ny, newState});
+             }
+         }
+     }
+     steps++;
+ }
+
+ <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>; <span class="hljs-comment">// 无法收集所有物品</span>
+}
+</code></pre>
+</li>
+</ol>
+<h2 id="a搜索算法（bfs的扩展）">A*搜索算法（BFS的扩展）</h2>
+<p>A*算法是BFS的一种启发式扩展，它使用估价函数来引导搜索方向，优先探索更有希望到达目标的路径。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// A*算法寻找最短路径</span>
+<span class="hljs-built_in">vector</span>&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt; aStarSearch(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; grid, pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; start, pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; goal) {
+    <span class="hljs-keyword">int</span> rows = grid.size();
+    <span class="hljs-keyword">int</span> cols = grid[<span class="hljs-number">0</span>].size();
+
+    <span class="hljs-comment">// 优先队列，按f值（g+h）排序，最小值在队首</span>
+    priority_queue&lt;tuple&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;, <span class="hljs-built_in">vector</span>&lt;tuple&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt;, greater&lt;&gt;&gt; pq;
+
+    <span class="hljs-comment">// g[r][c]表示从起点到(r,c)的已知最短距离</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; g(rows, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(cols, INT_MAX));
+
+    <span class="hljs-comment">// parent记录路径</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt;&gt; parent(rows, <span class="hljs-built_in">vector</span>&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt;(cols));
+
+    <span class="hljs-comment">// 启发函数h：曼哈顿距离</span>
+    <span class="hljs-keyword">auto</span> h = [&amp;goal](<span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> c) -&gt; <span class="hljs-keyword">int</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">abs</span>(r - goal.first) + <span class="hljs-built_in">abs</span>(c - goal.second);
+    };
+
+    g[start.first][start.second] = <span class="hljs-number">0</span>;
+    pq.push({h(start.first, start.second), start.first, start.second}); <span class="hljs-comment">// {f, r, c}</span>
+
+    <span class="hljs-built_in">vector</span>&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt; dirs = { {-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {<span class="hljs-number">1</span>, <span class="hljs-number">0</span>}, {<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>}, {<span class="hljs-number">0</span>, <span class="hljs-number">1</span>} };
+
+    <span class="hljs-keyword">while</span> (!pq.empty()) {
+        <span class="hljs-keyword">auto</span> [f, r, c] = pq.top();
+        pq.pop();
+
+        <span class="hljs-comment">// 达到目标</span>
+        <span class="hljs-keyword">if</span> (r == goal.first &amp;&amp; c == goal.second) {
+            <span class="hljs-comment">// 重建路径</span>
+            <span class="hljs-built_in">vector</span>&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt; path;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> pos = make_pair(r, c); pos != start; pos = parent[pos.first][pos.second]) {
+                path.push_back(pos);
+            }
+            path.push_back(start);
+            reverse(path.begin(), path.end());
+            <span class="hljs-keyword">return</span> path;
+        }
+
+        <span class="hljs-comment">// f值已经不是最小值，跳过</span>
+        <span class="hljs-keyword">if</span> (f &gt; g[r][c] + h(r, c)) <span class="hljs-keyword">continue</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; dir : dirs) {
+            <span class="hljs-keyword">int</span> nr = r + dir.first;
+            <span class="hljs-keyword">int</span> nc = c + dir.second;
+
+            <span class="hljs-keyword">if</span> (nr &lt; <span class="hljs-number">0</span> || nr &gt;= rows || nc &lt; <span class="hljs-number">0</span> || nc &gt;= cols || grid[nr][nc] == <span class="hljs-number">1</span>) <span class="hljs-keyword">continue</span>;
+
+            <span class="hljs-keyword">int</span> ng = g[r][c] + <span class="hljs-number">1</span>; <span class="hljs-comment">// 假设步长为1</span>
+
+            <span class="hljs-keyword">if</span> (ng &lt; g[nr][nc]) {
+                g[nr][nc] = ng;
+                parent[nr][nc] = {r, c};
+                pq.push({ng + h(nr, nc), nr, nc});
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> {}; <span class="hljs-comment">// 无法到达目标</span>
+}
+</code></pre>
+<h2 id="练习题推荐">练习题推荐</h2>
+<ol>
+<li>LeetCode 934: 最短的桥（多源BFS）</li>
+<li>LeetCode 994: 腐烂的橘子（多源BFS模拟）</li>
+<li>LeetCode 1162: 地图分析（多源BFS计算距离）</li>
+<li>LeetCode 127: 单词接龙（变形BFS）</li>
+<li>LeetCode 752: 打开转盘锁（状态BFS）</li>
+<li>LeetCode 815: 公交路线（图的BFS）</li>
+<li>LeetCode 773: 滑动谜题（状态压缩BFS）</li>
+<li>POJ 3984: 迷宫问题（基础BFS路径记录）</li>
+<li>CodeForces 580C: Kefa and Park（带条件BFS）</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>广度优先搜索是解决"最短路径"类问题的首选算法，尤其在无权图或等权图中。它的核心思想是"层次遍历"，确保首先探索距离起点近的节点，然后逐渐向外扩展。</p>
+<p>BFS的关键优势：</p>
+<ol>
+<li>保证找到的路径是最短的（在无权图中）</li>
+<li>适合处理最短路径、最少步数等问题</li>
+<li>能够有效处理大型状态空间</li>
+</ol>
+<p>BFS的主要挑战：</p>
+<ol>
+<li>空间复杂度高，需要存储整个前沿</li>
+<li>在处理大型图或高维状态空间时，队列可能会变得很大</li>
+</ol>
+<p>在竞赛编程中，熟练掌握BFS的变体（如双向BFS、A*搜索、01BFS等）能够帮助你高效解决各类搜索问题。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="深度优先搜索.html" class="navigation navigation-prev " aria-label="Previous page: 深度优先搜索(DFS)">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="二分查找.html" class="navigation navigation-next " aria-label="Next page: 二分查找">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"广度优先搜索(BFS)","level":"1.2.2","depth":2,"next":{"title":"二分查找","level":"1.2.3","depth":2,"path":"二分查找.md","ref":"二分查找.md","articles":[]},"previous":{"title":"深度优先搜索(DFS)","level":"1.2.1","depth":2,"path":"深度优先搜索.md","ref":"深度优先搜索.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"广度优先搜索.md","mtime":"2025-04-25T11:45:23.855Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:34.691Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

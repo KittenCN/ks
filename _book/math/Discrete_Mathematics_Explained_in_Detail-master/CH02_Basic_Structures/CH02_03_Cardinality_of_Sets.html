@@ -1,0 +1,775 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>CH02_03_Cardinality_of_Sets · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="CH02_02_Function_and_Sequence.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    --CH02_Basic_Structures--
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="CH02_01_Set.html">
+            
+                <a href="CH02_01_Set.html">
+            
+                    
+                    CH02_01_Set
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="CH02_02_Function_and_Sequence.html">
+            
+                <a href="CH02_02_Function_and_Sequence.html">
+            
+                    
+                    CH02_02_Function_and_Sequence
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5" data-path="CH02_03_Cardinality_of_Sets.html">
+            
+                <a href="CH02_03_Cardinality_of_Sets.html">
+            
+                    
+                    CH02_03_Cardinality_of_Sets
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >CH02_03_Cardinality_of_Sets</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <font size="6"> Chaptcer 02 Basic Structures 基本结构</font>
+
+<p>Part 03 Cardinality of Sets</p>
+<p>Covering 2.5</p>
+<hr></hr>
+<h1 id="cardinality-of-sets-集合的基数">Cardinality of Sets 集合的基数</h1>
+<p>[TOC]</p>
+<h2 id="relation-between-sets-and-mapping-集合与映射的关系">Relation between Sets and Mapping 集合与映射的关系</h2>
+<p>The cardinality of a set A is equal to the cardinality of a set B, denoted | A | = | B |, iff <strong>there exists a bijection from A to B</strong>.</p>
+<p>If <strong>there is an injection from A to B</strong>, the cardinality of A is less than or the same as the cardinality of B and we write  |A| ≤ |B|. When |A| ≤ |B| and A and B have different cardinality, we say that the cardinality of A is less than the cardinality of B and write |A| &lt; |B|.</p>
+<h2 id="countable-sets-可数集">Countable Sets 可数集</h2>
+<p>A set that is either <strong>finite</strong> <em>or</em> has the <strong>same cardinality as the set of positive integers</strong> called <strong>countable</strong>（<strong>可数的</strong>）</p>
+<p>A set that is not countable is called <strong>uncountable</strong>（<strong>不可数的</strong>）</p>
+<p>When an infinite set S is countable, we denote the cardinality of S by $\aleph_0​$ (<strong>aleph null</strong>（<strong>“阿里夫零”</strong>）)</p>
+<p>If $|A|=|Z^+|$, the set A is <strong>countably infinite</strong>（<strong>可数无限</strong>）</p>
+<blockquote>
+<p>Below we will list some examples of countably infinite sets</p>
+</blockquote>
+<h3 id="hilberts-grand-hotel-希尔伯特大酒店">Hilbert’s Grand Hotel 希尔伯特大酒店</h3>
+<p>Hilbert’s Grand Hotel （希尔伯特大酒店）是一个很有意思的问题，它有很多细分小问题，每个小问题的证明思想都能被用于其他问题的证明，可谓思想的游戏。篇幅有限不过多介绍，有兴趣可以参看《离散数学及其应用》的例题和习题。</p>
+<h3 id="show-that-a-set-is-countable-可数性证明">Show that a set is countable 可数性证明</h3>
+<blockquote>
+<p><strong>Key</strong>: <strong><em>Find a bijection!</em></strong></p>
+</blockquote>
+<h4 id="method-1-linear-mapping-简单的线性映射">Method 1. Linear Mapping 简单的线性映射</h4>
+<h5 id="eg1-the-set-e-of-even-positive-integers-偶数集">e.g.1 The set E of even positive integers 偶数集</h5>
+<p>Let f(x) = 2x. Then,  f is a bijection from $Z^+$ to $E$</p>
+<table>
+<thead>
+<tr>
+<th><strong>x</strong></th>
+<th><strong>1</strong></th>
+<th><strong>2</strong></th>
+<th><strong>3</strong></th>
+<th><strong>4</strong></th>
+<th><strong>……</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>f(x)</strong></td>
+<td><strong>2</strong></td>
+<td><strong>4</strong></td>
+<td><strong>6</strong></td>
+<td><strong>8</strong></td>
+<td><strong>……</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>The numbers of positive even integers is the same as positive integers</p>
+<p>E is a proper subset of $Z^+$, but $|E|=|Z^+|$</p>
+</blockquote>
+<h5 id="eg2-the-set-of-integers-z-整数集">e.g.2 The set of integers Z 整数集</h5>
+<p>$Z={0,1,-1,2,-2,...}$</p>
+<p>$f(n)=
+\begin{cases}
+-(n-1)/2&amp; \text{n is odd}\
+n/2&amp; \text{n is even}\
+\end{cases}$</p>
+<h4 id="method-2-cantor-table-利用cantor表构造映射">Method 2. Cantor Table 利用Cantor表构造映射</h4>
+<h5 id="eg3-the-set-of-positive-rational-numbers-q-有理数集">e.g.3 The set of positive rational numbers $Q^+$ 有理数集</h5>
+<p>$\forall x\in Q^+,x=p/q,\ p,q\in Z^+$</p>
+<p>Let $S={(p,q)|p,q\in Z^+}=Z^+\times Z^+$</p>
+<h6 id="step-1-prove-qleqs">Step 1 Prove $|Q^+|\leq|S|$</h6>
+<p>$r=\frac{p}{q}\in Q^+$</p>
+<p>$\frac{p}{q}\to(p,q)$ is injective</p>
+<p>Hence, $|Q^+|\leq|S|$</p>
+<h6 id="step-2-prove-sz">Step 2 Prove $|S|=|Z^+|$</h6>
+<p>Cantor Table</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"><strong>1</strong></th>
+<th style="text-align:center"><strong>2</strong></th>
+<th style="text-align:center"><strong>3</strong></th>
+<th style="text-align:center"><strong>…</strong></th>
+<th style="text-align:center"><strong>p</strong></th>
+<th style="text-align:center"><strong>…</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>1</strong></td>
+<td style="text-align:center">(1,1)</td>
+<td style="text-align:center">(2,1)</td>
+<td style="text-align:center">(3,1)</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">(p,1)</td>
+<td style="text-align:center">…</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2</strong></td>
+<td style="text-align:center">(1,2)</td>
+<td style="text-align:center">(2,2)</td>
+<td style="text-align:center">(3,2)</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">(p,2)</td>
+<td style="text-align:center">…</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>3</strong></td>
+<td style="text-align:center">(1,3)</td>
+<td style="text-align:center">(2,3)</td>
+<td style="text-align:center">(3,3)</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">(p,3)</td>
+<td style="text-align:center">…</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>…</strong></td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>q</strong></td>
+<td style="text-align:center">(1,q)</td>
+<td style="text-align:center">(2,q)</td>
+<td style="text-align:center">(3,q)</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">(p,q)</td>
+<td style="text-align:center">…</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>…</strong></td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+</tr>
+</tbody>
+</table>
+<p>for any pair (p,q), $n=1+2+3+...+(p+q-2)+q=\frac{(p+q-2)(p+q-1)}{2}+q$</p>
+<p>this mapping is invertable, which means we found a <strong>bijection</strong></p>
+<blockquote>
+<p>An infinite set is countable iff it is possible to list all the elements of the set in a sequence</p>
+</blockquote>
+<h6 id="step-3-prove-zleqq">Step 3 Prove $|Z^+|\leq|Q^+|$</h6>
+<p>$\because Z^+\subseteq Q^+$</p>
+<p>$\therefore|Z^+|\leq|Q^+|$</p>
+<p>All in all, $|Q^+|=|S|=|Z^+|$</p>
+<blockquote>
+<p><strong>Note</strong>:</p>
+<p>The set of <strong>all rational numbers Q</strong>, positive and negative, is also countable infinite. </p>
+</blockquote>
+<h5 id="eg4-show-that-the-set-of-the-real-numbers-with-decimal-representations-consisting-of-all-1s-is-countable">e.g.4 Show that the set of the real numbers with decimal representations consisting of all 1s is countable</h5>
+<p>We can arrange the numbers in a 2-dimensional table as follows:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"><strong>1</strong></th>
+<th style="text-align:center"><strong>2</strong></th>
+<th style="text-align:center"><strong>3</strong></th>
+<th style="text-align:center"><strong>4</strong></th>
+<th style="text-align:center"><strong>5</strong></th>
+<th style="text-align:center"><strong>…</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>1</strong></td>
+<td style="text-align:center">$.\overline1$</td>
+<td style="text-align:center">$.1$</td>
+<td style="text-align:center">$.11$</td>
+<td style="text-align:center">$.111$</td>
+<td style="text-align:center">$.1111$</td>
+<td style="text-align:center">…</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>2</strong></td>
+<td style="text-align:center">$1.\overline1$</td>
+<td style="text-align:center">$1$</td>
+<td style="text-align:center">$1.1$</td>
+<td style="text-align:center">$1.11$</td>
+<td style="text-align:center">$1.111$</td>
+<td style="text-align:center">…</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>3</strong></td>
+<td style="text-align:center">$11.\overline1$</td>
+<td style="text-align:center">$11$</td>
+<td style="text-align:center">$11.1$</td>
+<td style="text-align:center">$11.11$</td>
+<td style="text-align:center">$11.111$</td>
+<td style="text-align:center">…</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>4</strong></td>
+<td style="text-align:center">$111.\overline1$</td>
+<td style="text-align:center">$111$</td>
+<td style="text-align:center">$111.1$</td>
+<td style="text-align:center">$111.11$</td>
+<td style="text-align:center">$111.111$</td>
+<td style="text-align:center">…</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>5</strong></td>
+<td style="text-align:center">$1111.\overline1$</td>
+<td style="text-align:center">$1111$</td>
+<td style="text-align:center">$1111.1$</td>
+<td style="text-align:center">$1111.11$</td>
+<td style="text-align:center">$1111.111$</td>
+<td style="text-align:center">…</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>…</strong></td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+</tr>
+</tbody>
+</table>
+<p>Then number these numbers as before, like 1 to $.\overline1$, 2 to $.1$, 3 to $1.\overline1$, 4 to $.11$, 5 to $1$……</p>
+<p>Thus, we found a bijection!</p>
+<p>Q.E.D.</p>
+<h4 id="method-3-define-an-order-for-strings-字符串的运算符重载">Method 3. Define an order for strings 字符串的“运算符重载”</h4>
+<h5 id="eg5-show-that-the-set-of-finite-strings-s-over-a-finite-alphabet-a-is-countably-infinite">e.g.5 Show that the set of finite strings S over a finite alphabet A is countably infinite</h5>
+<p>Assume an alphabetical ordering of symbols in A. Show that the strings can be listed in a sequence. First list</p>
+<ol>
+<li>All the strings of length 0 in alphabetical order.</li>
+<li>Then all the strings of length 1 in lexicographic (as in a dictionary) order.</li>
+<li>Then all the strings of length 2 in lexicographic order. </li>
+<li>And so on.</li>
+</ol>
+<p>This implies a bijection from N to S and hence it is a countably infinite set.</p>
+<h5 id="eg6-show-that-the-set-of-all-java-programs-is-countable">e.g.6 Show that the set of all Java programs is countable</h5>
+<p>A computer program written in a programming language can be thought of as a string of symbols from a finite alphabet</p>
+<p>Hence, using the conclusion form the last example, we know this statement is true.</p>
+<h3 id="the-properties-of-the-countable-sets-可数集性质">The properties of the countable sets 可数集性质</h3>
+<ol>
+<li><p>No infinite set has a smaller cardinality than a countable set</p>
+</li>
+<li><p>The union of two countable sets is countable</p>
+<blockquote>
+<p><strong>Proof</strong>:</p>
+<p>Suppose that A and B are both countable sets. Without loss of generality, we can assume that A and B are disjoint.</p>
+<ul>
+<li>Case 1: A and B are finite. (Obviously…)</li>
+<li>Case 2: A is infinite and B is finite. (Obviously…)</li>
+<li>Case 3: A and B are both countably infinite. (We can list their elements as $a_1,a_2,a_3,...,a_n,...$ and $b_1,b_2,b_3,...,b_n,...$ respectively. By alternating terms of these two sequences, we can list the elements of A∪B in the infinite sequence $a_1,b_1,a_2,b_2,a_3,b_3,...,a_n,b_n,...$, hence A∪B is countably infinite)</li>
+</ul>
+<p>Q.E.D.</p>
+</blockquote>
+</li>
+<li><p>The union of finite number of countable sets is countable</p>
+</li>
+<li><p>The union of a countable number of countable sets is countable</p>
+</li>
+</ol>
+<h2 id="uncountable-sets-不可数集">Uncountable Sets 不可数集</h2>
+<blockquote>
+<p>We mainly talks about how to prove a set is uncountable</p>
+</blockquote>
+<h3 id="examples-of-proof-证明举例">Examples of Proof 证明举例</h3>
+<h4 id="method-1-cantor-diagonalization-argument-康托尔对角线法">Method 1. Cantor Diagonalization Argument 康托尔对角线法</h4>
+<h5 id="eg1-the-set-of-real-numbers-between-0-and-1-is-uncountable">e.g.1 The set of real numbers between 0 and 1 is uncountable</h5>
+<p>$A={x|x\in(0,1)\wedge x\in R}$</p>
+<h6 id="step-1-prove-zleqa">Step 1 Prove $|Z^+|\leq|A|$</h6>
+<p>$B={\frac{1}{n+1}|n\in Z^+}$</p>
+<p>$\because|B|=|Z^+|$</p>
+<p>and $B\in A$</p>
+<p>$\therefore|Z^+|\leq|A|$</p>
+<h6 id="step-2-prove-znea">Step 2 Prove $|Z^+|\ne|A|$</h6>
+<p>Assume A is countable, then let $A={r_1,r_2,r_3,...,r_n,...}$</p>
+<p>Represent each real number in the list using its <strong>decimal expansion</strong>（<strong>十进制表示</strong>）</p>
+<blockquote>
+<p>List:</p>
+<ul>
+<li>$r<em>1=0.d</em>{11}d<em>{12}d</em>{13}d<em>{14}d</em>{15}d_{16}...$</li>
+<li>$r<em>2=0.d</em>{21}d<em>{22}d</em>{23}d<em>{24}d</em>{25}d_{26}...$</li>
+<li><p>$r<em>3=0.d</em>{31}d<em>{32}d</em>{33}d<em>{34}d</em>{35}d_{36}...$</p>
+</li>
+<li><p>…</p>
+</li>
+</ul>
+</blockquote>
+<p><strong>Now construct a new number x</strong></p>
+<p>$x=0.x<em>{1}x</em>{2}x<em>{3}x</em>{4}x<em>{5}x</em>{6}x_{7}...$</p>
+<p>$x<em>i=
+\begin{cases}
+6&amp; d</em>{ii}\ne6\
+7&amp; d_{ii}=6\
+\end{cases}$</p>
+<blockquote>
+<p> 明白“对角线法”的意思了吗？简而言之就是将对角线上的元素$d_{ii}$换掉</p>
+</blockquote>
+<p><strong>Then x is not equal to any number in the list</strong></p>
+<p>So whatever sequence we construct, there is always at least a new number that is not included!</p>
+<p>Hence, no such list can exist and hence the interval (0,1) is uncountable</p>
+<h5 id="eg2-show-that-the-set-of-the-real-numbers-with-decimal-representations-consisting-of-all-1s-or-9s-is-uncountable">e.g.2 Show that the set of the real numbers with decimal representations consisting of all 1s or 9s is uncountable</h5>
+<p>Denote the set as A, assume A is countable, then let $A={r_1,r_2,r_3,...,r_n,...}$</p>
+<p>Represent each real number in the list using its <strong>decimal expansion</strong>（<strong>十进制表示</strong>）</p>
+<blockquote>
+<p>List:</p>
+<ul>
+<li>$r<em>1=0.d</em>{11}d<em>{12}d</em>{13}d<em>{14}d</em>{15}d_{16}...$</li>
+<li>$r<em>2=0.d</em>{21}d<em>{22}d</em>{23}d<em>{24}d</em>{25}d_{26}...$</li>
+<li><p>$r<em>3=0.d</em>{31}d<em>{32}d</em>{33}d<em>{34}d</em>{35}d_{36}...$</p>
+</li>
+<li><p>…</p>
+</li>
+</ul>
+</blockquote>
+<p><strong>Now construct a new number x</strong></p>
+<p>$x=0.x<em>{1}x</em>{2}x<em>{3}x</em>{4}x<em>{5}x</em>{6}x_{7}...$</p>
+<p>$x<em>i=
+\begin{cases}
+1&amp; d</em>{ii}=9\
+9&amp; d<em>{ii}=1\ 
+or&amp; d</em>{ii}=0\
+\end{cases}$</p>
+<p>Then x is not equal to any number in the list</p>
+<p>So whatever sequence we construct, there is always at least a new number that is not included!</p>
+<p>Hence, no such list can exist and hence A is uncountable</p>
+<blockquote>
+<p>这题与可数集的例题4很像，但是一个可数一个不可数，本质原因在于例题4中的基数为$\aleph_0$，而这里增加了一个9后，基数变为了$2^{\aleph_0}$，而这个数是不可数的，后面会给它一个记号c或者$\aleph_1$</p>
+</blockquote>
+<h4 id="method-2-find-a-bijection-to-an-uncountable-set-找出到已知不可数集的双射">Method 2. Find a bijection to an uncountable set 找出到已知不可数集的双射</h4>
+<h5 id="eg3-the-set-of-real-numbers-has-the-same-cardinality-as-the-set-01">e.g.3 The set of real numbers has the same cardinality as the set (0,1)</h5>
+<p> $f(x)=tan(x)$</p>
+<p>f(x) is a bijection from $(-\frac{\pi}{2},\frac{\pi}{2})$ to R</p>
+<p>$∵|(-\frac{\pi}{2},\frac{\pi}{2})|=|(0,1)|$</p>
+<p>$∴|R|=|(0,1)|=c$</p>
+<blockquote>
+<p>$c=2^{\aleph_0}$</p>
+</blockquote>
+<h4 id="method-3-schrőder-bernstein-theorem">Method 3. Schrőder-Bernstein Theorem</h4>
+<p><strong>Schrőder-Bernstein Theorem</strong> : If A and B are sets with $|A|\leq|B|​$ and $|B|\leq|A|$ then $|B|=|A|$. </p>
+<p>In other words, if there are one-to-one functions f from A to B and g from B to A, then there is a one to –one correspondence between A and B.</p>
+<blockquote>
+<p>有点像夹逼定理……</p>
+</blockquote>
+<h5 id="eg4-show-that-the-cardinality-of-01-is-c">e.g.4 Show that the cardinality of [0,1] is c</h5>
+<p>$A=[0,1]={x|x\in R,0\leq x\leq 1}$</p>
+<p>$B=(0,1)={x|x\in R,0&lt;x&lt;1}$</p>
+<p>$B\subseteq A\Rightarrow|B|\leq|A|$</p>
+<p>Let $g(x)=\frac{1}{2}x+\frac{1}{4},x\in[0,1]$</p>
+<p>Hence, g(x) is a bijection from [0,1] to $[\frac{1}{4}, \frac{3}{4}]$</p>
+<p>and $[\frac{1}{4}, \frac{3}{4}]\subset (0,1)$</p>
+<p>Thus $|A|\leq|B|$</p>
+<p>$∴|A|=|B|=c$</p>
+<h3 id="summary-小总结-how-to-prove-aleqb">[Summary 小总结] How to Prove $|A|\leq|B|$</h3>
+<p>通过以上几道例题可以发现，$|A|\leq|B|$的证明经常被用到，这里总结证明此式子的三大方法</p>
+<h4 id="method-1-find-an-injective-找到一个单射">Method 1. Find an injective 找到一个单射</h4>
+<blockquote>
+<p>in e.g.1 Step1</p>
+<p>Prove $|Z^+|\leq|A|$</p>
+</blockquote>
+<h4 id="method-2-prove-asubseteq-b">Method 2. Prove $A\subseteq B$</h4>
+<blockquote>
+<p>in e.g.3</p>
+<p>$A=[0,1]={x|x\in R,0\leq x\leq 1}$</p>
+<p>$B=(0,1)={x|x\in R,0&lt;x&lt;1}$</p>
+<p>$B\subseteq A\Rightarrow|B|\leq|A|$</p>
+</blockquote>
+<h4 id="method-3-prove-accsubseteq-b-在b中找到与a基数相同的子集">Method 3. Prove $|A|=|C|,C\subseteq B$ 在B中找到与A基数相同的子集</h4>
+<blockquote>
+<p>in e.g.3</p>
+<p>$|A|=[\frac{1}{4}, \frac{3}{4}]$ and $[\frac{1}{4}, \frac{3}{4}]\subset (0,1)​$</p>
+<p>Thus $|A|\leq|B|$</p>
+</blockquote>
+<h2 id="applications-理论应用">Applications 理论应用</h2>
+<h3 id="computability-可计算性">Computability 可计算性</h3>
+<p>We say that a function is <strong>computable</strong>（<strong>可计算的</strong>） if there is a computer program in some programming language that finds the values of this function. If a function is not computable we say it is <strong>uncomputable</strong> （<strong>不可计算的</strong>）</p>
+<p>To show that there are uncomputable functions, we need to establish two results. </p>
+<p>First, we need to show that the set of all computer programs in any particular programming language is countable. (Proved before)</p>
+<p>Next, we show that there are uncountably many different functions from a particular countably infinite set to itself.</p>
+<p><strong>So now, there are only a countable number of computer programs. Consequently, there are only a countable number of computable functions. However, there are an uncountable number of functions, so not all functions are computable.</strong></p>
+<h3 id="the-continuum-hypothesis-连续统假设">The Continuum Hypothesis 连续统假设</h3>
+<blockquote>
+<p>In brief, $\aleph_0=|Z^+|&lt;|P(Z^+)|=|R|=\aleph_1$</p>
+</blockquote>
+<h4 id="1-show-that-pzr">1. Show that $|P(Z^+)|=|R|$</h4>
+<ul>
+<li><p>First, for any $S\in P(Z^+)$, there is a real number r in (0,1) whose <strong>decimal</strong> expansion is</p>
+<p>$r=0.d_1d_2d_3...$</p>
+<p>$d_i=
+\begin{cases}
+6&amp; i\in S\
+7&amp; i \notin S\
+\end{cases}$</p>
+<p>Then we have constructed a one-to-one function from $P(Z^+)​$ to (0, 1)</p>
+</li>
+<li><p>Second, for any r in (0,1), it has a <strong>binary</strong> expansion $r=0.d_1d_2d_3...​$ </p>
+<p>Then there is a set ${i|d_i=1}$</p>
+<p>So we constructed a one-to-one function from (0, 1) to $P(Z^+)$</p>
+<blockquote>
+<p><strong>P.S.</strong></p>
+<p>In order that our function from (0, 1) to $P(Z^+)$ to be well-defined, we must choose which of two equivalent expressions to represent numbers thath ave terminating binary expansions to use (for example, $0.10010\overline1$ versus $0.10011\overline0​$); we can decide to always use the terminating form, the one ending in all 0’s.)</p>
+</blockquote>
+</li>
+<li><p>By the Schrőder-Bernstein theorem we have $|P(Z^+)|=|(0,1)|=|R|=c​$</p>
+</li>
+<li>Hence, $c=2^{\aleph_0}$</li>
+</ul>
+<h4 id="2-show-that-zpz">2. Show that $|Z^+|&lt;|P(Z^+)|$</h4>
+<blockquote>
+<p><strong>Cantor’s theorem</strong></p>
+<p>The cardinality of the power set of an arbitrary set has a greater cardinality than the original arbitrary set</p>
+<blockquote>
+<p><strong>Proof</strong>:</p>
+<p><strong><em>Step 1</em></strong></p>
+<blockquote>
+<p> We convert this problem into showing that <strong><em>there does not exist an onto function f from S to P(S)</em></strong></p>
+</blockquote>
+<p>Suppose that f is a function from S to P(S). We must show that f is not onto.</p>
+<p>Let $T={s\in S|s\notin f(s)}$. Although T is in the codomian of f, which is P(S), we will show that T is not in the range of f.</p>
+<p>If it were, then we would have f(t) = T for some $t\in S$</p>
+<ol>
+<li>Suppose that $t\in T$, then according to the definition of T, $t\notin f(t)$, thus, $t\notin T$, which is a contradiction</li>
+<li>Suppose that $t\notin T$, then $t\notin f(t)$, then t follows the definition of T, so $t\in T$, which is again a contradiction</li>
+</ol>
+<p>Hence, f is not onto. </p>
+<p>In other words, <strong><em>there does not exist an onto function f from S to P(S)</em></strong></p>
+<p><strong><em>Step 2</em></strong></p>
+<p>The function sending x to {x} for each $x\in S$ is a one-to-one function from S to P(S), hence $|S|\leq|P(S)|$</p>
+<p><strong><em>Step 3</em></strong></p>
+<p>Since there is no onto from S to P(S), then there is no one-to-one correspondence, which implies that $|S|\neq|P(S)|$</p>
+<p><strong><em>All in All</em></strong></p>
+<p>$|S|&lt;|P(S)|$</p>
+</blockquote>
+</blockquote>
+<p>Hence, by the Cantor’s theorem, $|Z^+|&lt;|P(Z^+)|$, which can be expressed as $\aleph_0&lt;2^{\aleph_0}=c$</p>
+<h4 id="3-the-hypothesis">3. The Hypothesis</h4>
+<p>The famous continuum hypothesis asserts that there is no cardinal number X between $\aleph_0$ and c</p>
+<p>It tells us that the smallest infinite cardinal numbers forms an infinite sequence $\aleph_0,\aleph_1,\aleph_2,\aleph_3,...$</p>
+<p>There are no other cardinal numbers between $\aleph<em>n$ and $\aleph</em>{n+1}$, also $\aleph_ {n+1}$is the cardinal number of the power set of a set S, whose own cardinal is $\aleph_n$</p>
+<p>When we talk about $\aleph_0$ and $\aleph_1$, the continuum hypothesis (CH) asserts that there is no cardinal number （基数） <em>a</em> such that $\aleph_0&lt;a&lt;\aleph_1$</p>
+<p>Hence, $c=2^{\aleph_0}=\aleph_1$</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="CH02_02_Function_and_Sequence.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: CH02_02_Function_and_Sequence">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"CH02_03_Cardinality_of_Sets","level":"1.5","depth":1,"previous":{"title":"CH02_02_Function_and_Sequence","level":"1.4","depth":1,"path":"CH02_02_Function_and_Sequence.md","ref":"CH02_02_Function_and_Sequence.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"CH02_03_Cardinality_of_Sets.md","mtime":"2025-04-22T02:55:08.996Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:18:40.709Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

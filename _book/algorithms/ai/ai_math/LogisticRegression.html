@@ -1,0 +1,572 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>逻辑回归 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="SimpleBayes.html" />
+    
+    
+    <link rel="prev" href="LinearRegression.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    常见机器学习算法的数学推导
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="LinearRegression.html">
+            
+                <a href="LinearRegression.html">
+            
+                    
+                    线性回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.2" data-path="LogisticRegression.html">
+            
+                <a href="LogisticRegression.html">
+            
+                    
+                    逻辑回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="SimpleBayes.html">
+            
+                <a href="SimpleBayes.html">
+            
+                    
+                    朴素贝叶斯
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="KNN.html">
+            
+                <a href="KNN.html">
+            
+                    
+                    K近邻
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="DecisionTrees.html">
+            
+                <a href="DecisionTrees.html">
+            
+                    
+                    决策树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="RandomForest.html">
+            
+                <a href="RandomForest.html">
+            
+                    
+                    随机森林
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="AdaBoost.html">
+            
+                <a href="AdaBoost.html">
+            
+                    
+                    AdaBoost
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="GBDT.html">
+            
+                <a href="GBDT.html">
+            
+                    
+                    梯度提升树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="XGBoost.html">
+            
+                <a href="XGBoost.html">
+            
+                    
+                    XGBoost
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >逻辑回归</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="逻辑回归">逻辑回归</h1>
+<p><strong>约定：</strong></p>
+<ul>
+<li><font color="F66A65">红色：</font>对名词进行解释的重点</li>
+<li><font color="FDA63E">黄色：</font>各部分总结中的重点</li>
+<li><font color="62D257">绿色：</font>算法基本假设与解释</li>
+</ul>
+<p><strong>摘要：</strong></p>
+<ol>
+<li>线性结果对于对数几率的拟合推出sigmoid（<a href="#二概率函数sigmoid">sigmoid</a>）</li>
+<li>两种得到损失函数的方法（<a href="#31-交叉熵（基于KL散度）">交叉熵（基于KL散度）</a>、<a href="#32-极大似然估计">极大似然估计</a>）</li>
+<li>两类模型的辨析（<a href="#41-判别模型">判别模型</a>、<a href="#42-生成模型">生成模型</a>）</li>
+</ol>
+<p><strong>名词解释：</strong><code>sigmoid</code>、<code>softmax</code>、<code>交叉熵</code>、<code>KL散度</code>、<code>判别模型\生成模型</code>、<code>L1正则化/L2正则化</code>、<code>LASSO、岭回归</code></p>
+<blockquote>
+<ol>
+<li>sigmoid：本身是一种分布，<font color="F66A65">分布函数类似正态分布</font>。本身的sigmoid函数是将实数空间的输入映射到0~1之间的输出，因此被用来作为一种<font color="F66A65">“概率函数”</font></li>
+<li>softmax: 一种用于<font color="F66A65">处理多分类问题的“概率函数”</font></li>
+<li>交叉熵：一种常用的分类问题中的<font color="F66A65">损失函数</font></li>
+<li>KL散度：数学上<font color="F66A65">衡量两个分布之间的距离</font>的一种方法，交叉熵可以由KL散度推导出来</li>
+<li>生成模型和判别模型：判别模型可以根据给定特征值直接<font color="F66A65">给出预测结果，或条件概率</font>。生成模型需要<font color="F66A65">学习联合概率分布</font>（特征和标签的联合概率分布，本质上就是数据集的分布了），所以生成模型可以学习到整个数据的分布就可以从分布中sample新数据</li>
+<li>L1正则化/L2正则化：两种通过修改损失函数的表达从结构上<font color="F66A65">防止过拟合</font>的正则化方法，其中的L1和L2表示了两种模型复杂度的方法</li>
+<li>LASSO/岭回归：<font color="F66A65">应用了L1和L2正则化的逻辑回归</font>分别叫做LASSO回归和岭回归</li>
+<li>注：正则化和ridge回归，岭回归部分相对简单，放到 <a href="algorithms/ai/ai_math/Extra4.html">番外-正则化、距离与范数</a> 详细讲述，不在这篇中详述了</li>
+</ol>
+</blockquote>
+<p><strong>原理实现：</strong>
+<a href="">基于梯度下降的逻辑回归</a></p>
+<h2 id="一、一句话概括">一、一句话概括</h2>
+<p>因为线性回归不能对输出是离散值的情况进行预测（只能做回归问题，不能做分类问题），所以将线性回归的输出理解成0 1之间的概率，从而让线性回归拥有了进行分类的能力。</p>
+<p><strong>概括总结</strong></p>
+<blockquote>
+<ol>
+<li><font color="FDA63E">逻辑回归 = 线性回归+”概率函数“</font>
+
+</li>
+</ol>
+</blockquote>
+<h2 id="二、概率函数">二、概率函数</h2>
+<h3 id="21-sigmoid推导过程">2.1 sigmoid推导过程</h3>
+<p>$$P(Y=1 \mid x)=\frac{1}{1+e^{-\left(w^{T} x+b\right)} }$$
+以上是通过sigmoid计算的条件概率，式子中的$w^{T} x+b$就是线性回归的输出值。以下是理解sigmoid函数过程</p>
+<ol>
+<li>想让“线性回归”拟合的空间压缩到0到1，最简单的方案是分段函数$$p(y=1 \mid x)=\left{\begin{array}{ll}0, &amp; z&lt;0 \\ 0.5, &amp; z=0 \\ 1, &amp; z&gt;0\end{array}, \quad z=w^{T} x+b\right.$$</li>
+<li>上式并不好做求解，所以引入“对数几率”的概念\
+ 2.1 几率: 正例与反例概率的比值称为几率 \
+ 2.2 则对数几率：$$ln ( odds )=\ln \frac{p}{1-p}$$
+ 2.3 将线性回归的结果作为对 “对数几率的拟合”$$w^{T} x+b=\ln \frac{p}{1-p}$$</li>
+</ol>
+<blockquote>
+<p>解释：对数几率的好处：是任阶的凸函数，有很多方式可以优化（引入了e）</p>
+<ol>
+<li>带入$p$为后验概率$p(Y=1|X)$有$$w^{T} x+b=\ln \frac{p(Y=1|X)}{1-p(Y=1|X)}$$</li>
+<li>得到披着sigmoid外衣的线性回归：$$P(Y=1 \mid x)=\frac{1}{1+e^{-\left(w^{T} x+b\right)} }$$<h3 id="22-sigmoid求导过程">2.2 sigmoid求导过程</h3>
+</li>
+<li>sigmoid函数表达式
+$$g(z) = \frac{1}{1+e^{-z} }=(1+e^{-z})^{-1}$$</li>
+</ol>
+</blockquote>
+<ol>
+<li><p>求导得到表达式：
+$$g'(z)=(-1)<em>(1+e^{-z})^{-2}</em>e^{-z}*(-1)​$$</p>
+</li>
+<li><p>整理得
+$g'(z) = \frac{1}{(1+e^{-z})^2}*(e^{-z})$</p>
+</li>
+<li><p>拆出一个 $\frac{1}{1+e^{-z} }$ 得
+$$g'(z)=\frac{1}{1+e^{-z} } <em> (\frac{1}{1+e^{-z} } </em> e^{-z}) -&gt; g'(z)=\frac{1}{1+e^{-z} } * \frac{e^{-z} }{1+e^{-z} }$$</p>
+</li>
+<li><p>整理得
+$$g'(z)=g(z)<em>(1-g(z))$$
+<em>*sigmoid总结</em></em></p>
+<blockquote>
+<ol>
+<li>逻辑回归是<font color="FDA63E">线性回归对于对数几率的拟合</font></li>
+<li>选择sigmoid函数的另一个大家耳熟能详的原因是，sigmoid由于引入了e，使得<font color="FDA63E">导函数的形式很优雅</font>：$f'(z) = f(z)(1-f(z))$<h2 id="22-softmax">2.2 softmax</h2>
+$$S<em>{i}=\frac{e^{V</em>{i} } }{\sum<em>{j} e^{V</em>{j} } }$$<h3 id="221-softmax理解过程">2.2.1 softmax理解过程</h3>
+</li>
+</ol>
+</blockquote>
+</li>
+<li>对于一个多分类的概率函数要求：可以一次得到多分类的概率：每个分类概率0-1，加和为1</li>
+<li>可以使用 每个数除以其总数的方法得到，但是有两个问题：不能拉开差距，不方便求导</li>
+<li>采用每个数字作为指数（拉开差距），e作为底数（方便求导）处理后，再除以其总数</li>
+<li>得到结果：np.exp(xi) / np.exp(xi).sum()<h3 id="222-关于soft的理解">2.2.2 关于soft的理解</h3>
+</li>
+<li>给定一组数，[1,3,4,5,8,20,18,30, 35]，最大的显然是35（严格最大）</li>
+<li>但是在挑选时30的那个数据也可能存在更良好的基因（保留了更科学的数据规律）</li>
+<li>所以通过概率的方式挑选最大，35的被挑到概率最大即可
+<strong>softmax总结</strong><blockquote>
+<ol>
+<li>softmax中的soft是指将<font color="FDA63E">取最大这件事情通过概率表达出来</font>（这样取出来的最大就不是严格意义上的最大，有一定概率取别的数字）</li>
+<li>softmax和sigmoid函数一样选择引入e（方便求导）<h2 id="三、损失函数：以二分类为例">三、损失函数：以二分类为例</h2>
+$$J(\mathrm{w}, \mathrm{b})=\frac{1}{\mathrm{~m} } \sum_{\mathrm{i}=1}^{\mathrm{m} }\left(-\mathrm{y^{(\mathrm{i})}log}\left(\hat{\mathrm{y} }^{(\mathrm{i})}\right)-\left(1-\mathrm{y}^{(\mathrm{i})}\right) \log \left(1-\hat{\mathrm{y} }^{(\mathrm{i})}\right)\right)$$
+以上是逻辑回归的损失函数，我们从两个角度理解一下（推导）<h3 id="31-交叉熵（基于kl散度）">3.1 交叉熵（基于KL散度）</h3>
+</li>
+</ol>
+</blockquote>
+</li>
+<li>数学上KL散度衡量了两个分布之间的距离，尤其是离散值的情况，以下是KL散度公式
+$$D<em>{K L}(p | q)=\sum</em>{i=1}^{n} p\left(x<em>{i}\right) \log \left(\frac{p\left(x</em>{i}\right)}{q\left(x_{i}\right)}\right)$$<blockquote>
+<p>注：KL散度又称相对熵，n为事件所有可能性，散度值越小，分布p和q越接近</p>
+</blockquote>
+</li>
+<li><p>分母拆开得到
+$$D<em>{K L}(p | q)=\sum</em>{i=1}^{n} p\left(x<em>{i}\right) \log \left(p\left(x</em>{i}\right)\right)-\sum<em>{i=1}^{n} p\left(x</em>{i}\right) \log \left(q\left(x_{i}\right)\right)$$</p>
+</li>
+<li><p>其中，第一部分$\sum<em>{i=1}^{n} p\left(x</em>{i}\right) \log \left(p\left(x<em>{i}\right)\right)$就是熵，第二部分$-\sum</em>{i=1}^{n} p\left(x<em>{i}\right) \log \left(q\left(x</em>{i}\right)\right)$就是交叉熵</p>
+</li>
+<li>将分布p看做数据集真实的分布，q看做是预测的分布。则第一部分不变，第二部分交叉熵越小越好，之后就演变成分类问题经典的损失函数</li>
+<li>在二分类下代入两种分类的概率后，进行放缩（除以样本数）即得到损失函数。</li>
+</ol>
+<p><strong>交叉熵总结</strong></p>
+<blockquote>
+<ol>
+<li><font color="FDA63E">KL散度可以理解成 真实分布的熵 + 交叉熵</font>，KL散度越小越接近，所以要最小化交叉熵<h3 id="32-极大似然估计">3.2 极大似然估计</h3>
+</li>
+<li>针对一个特定的数据，概率预测如下：
+$$y=1: \quad p(y \mid x)=\hat{y}$$
+$$y=0: \operatorname{p}(\mathrm{y} \mid \mathrm{x})=1-\hat{y}$$</li>
+<li>尝试合并得到
+$$p(y \mid x)=\hat{y}^{y}(1-\hat{y})^{(1-y)}$$
+解释：y=1时$\quad p(y \mid x)=\hat{y}$, y=0时，$\operatorname{p}(\mathrm{y} \mid \mathrm{x})=1-\hat{y}$</li>
+<li>此时在一个独立同分布的数据中，可以连乘每个样本的概率得到似然函数
+$$L(\theta)=\prod<em>{i=1}^{m} P\left(y^{(i)} \mid x^{(i)} ; \theta\right)=\prod</em>{i=1}^{m}\left(h<em>{\theta}\left(x^{(i)}\right)\right)^{y^{(i)} }\left(1-h</em>{\theta}\left(x^{(i)}\right)\right)^{1-y^{(i)} }$$</li>
+<li>取对数得到对数似然
+$$l(\theta)=\log L(\theta)=\sum<em>{i=1}^{m}\left(y^{(i)} \log h</em>{\theta}\left(x^{(i)}\right)+\left(1-y^{(i)}\right) \log \left(1-h_{\theta}\left(x^{(i)}\right)\right)\right)$$</li>
+<li>此时我们的目标就是最大化上面的表达式，如果我们乘以 $\frac{1}{m}$ 就需要最小化表达式了（损失函数）</li>
+</ol>
+</blockquote>
+<p><strong>极大似然推导总结</strong></p>
+<blockquote>
+<ol>
+<li>从极大似然估计的角度来看：损失函数就是<font color="FDA63E">负的似然函数的均值</font>，所以最小化损失函数，等价于最大化似然函数<h2 id="四、生成模型和判别模型">四、生成模型和判别模型</h2>
+这两个概念一直觉得自己懂了，但又不是懂的很多，辨析在这里<h3 id="41-判别模型">4.1 判别模型</h3>
+</li>
+<li>判别模型可以直接给出$f(y|x)$ 或者 更直接给出决策结果。</li>
+<li>前者比如这篇讲述的逻辑回归，后者比如K近邻。</li>
+<li>判别模型对数据的假设更少，想法也更直接，所以更容易有更高的正确率，对数据的鲁棒性更好，但是就需要相对更多的数据。</li>
+<li>ROC曲线中要求能够得到$f(y|x)$，根据预测的概率选择不同的阈值进行描点，所以很多直接给出决策结果的算法就需要找到合理的方法进行条件概率化（如果想用ROC的话）<h3 id="42-生成模型">4.2 生成模型</h3>
+</li>
+<li>生成模型是通过学习联合概率，然后基于联合概率得到条件概率$f(y|x)$</li>
+<li>联合概率指的是 特征和标签的联合概率，也就是数据的概率（特征加标签就是完整的数据）</li>
+<li>因为有了完整的数据分布，所以生成模型可以从这个分布中sample数据（生成模型名字的由来）</li>
+<li>因为需要比判别模型得到更多的东西（多得到了一个联合概率）所以生成模型对数据做出了一些额外的假设（主要是为了简化计算）</li>
+<li>正因为额外的假设，会导致生成模型的准确率会下降（存在不符合假设的情况）但是有了合理的假设，生成模型可以在数据量并不是很大的时候使用（可以通过假设脑补数据）</li>
+</ol>
+</blockquote>
+<p><strong>生成模型和判别模型总结</strong></p>
+<blockquote>
+<ol>
+<li>生成模型中的「生成」：生成模型可以学习“数据的概率”，即数据的分布，所以可以从分布中sample数据</li>
+<li>速度问题：生成模型学习的是联合概率，也就是数据的概率，所以在有新数据增加时，<font color="FDA63E">生成模型可以更快的收敛</font></li>
+<li>隐变量问题：生成模型对数据一般会做一些假设，这些假设一方面会导致模型准确率下降，另一方面也可以规<font color="FDA63E">避掉一些隐变量问题</font></li>
+<li>生成模型和判别模型在<a href="algorithms/ai/ai_math/SimpleBayes.html">朴素贝叶斯</a>一篇中的高斯判别模型中会再次提到，从高斯判别模型能够推导逻辑回归的角度来看这两类模型对于数据的假设情况<h2 id="五、总结">五、总结</h2>
+</li>
+<li>逻辑回归是<font color="FDA63E">线性回归对于对数几率的拟合</font></li>
+</ol>
+</blockquote>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="LinearRegression.html" class="navigation navigation-prev " aria-label="Previous page: 线性回归">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="SimpleBayes.html" class="navigation navigation-next " aria-label="Next page: 朴素贝叶斯">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"逻辑回归","level":"1.1.2","depth":2,"next":{"title":"朴素贝叶斯","level":"1.1.3","depth":2,"path":"SimpleBayes.md","ref":"SimpleBayes.md","articles":[]},"previous":{"title":"线性回归","level":"1.1.1","depth":2,"path":"LinearRegression.md","ref":"LinearRegression.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"LogisticRegression.md","mtime":"2025-04-25T11:46:11.362Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:43.273Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

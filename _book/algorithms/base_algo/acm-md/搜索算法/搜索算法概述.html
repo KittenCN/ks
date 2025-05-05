@@ -1,0 +1,669 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>搜索算法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="深度优先搜索.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="搜索算法概述.html">
+            
+                <a href="搜索算法概述.html">
+            
+                    
+                    搜索算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="深度优先搜索.html">
+            
+                <a href="深度优先搜索.html">
+            
+                    
+                    深度优先搜索(DFS)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="广度优先搜索.html">
+            
+                <a href="广度优先搜索.html">
+            
+                    
+                    广度优先搜索(BFS)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="二分查找.html">
+            
+                <a href="二分查找.html">
+            
+                    
+                    二分查找
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="回溯法.html">
+            
+                <a href="回溯法.html">
+            
+                    
+                    回溯法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >搜索算法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="搜索算法概述">搜索算法概述</h1>
+<h2 id="什么是搜索算法">什么是搜索算法</h2>
+<p>【搜索算法】是一类通过系统性探索问题的可能解空间来找到满足特定条件解的算法。搜索算法在算法竞赛中占有重要地位，是解决各种复杂问题的基础工具。</p>
+<h2 id="搜索算法的类型">搜索算法的类型</h2>
+<ol>
+<li><p><strong>穷举搜索</strong>：尝试所有可能的解，直到找到满足条件的解。</p>
+<ul>
+<li>优点：保证找到解（如果存在）</li>
+<li>缺点：时间复杂度高，容易超时</li>
+</ul>
+</li>
+<li><p><strong>深度优先搜索(DFS)</strong>：优先探索当前路径，直到不能继续前进，再回溯到之前的分支点尝试其他路径。</p>
+<ul>
+<li>使用递归或栈实现</li>
+<li>适用于寻找所有解、路径问题、组合问题等</li>
+</ul>
+</li>
+<li><p><strong>广度优先搜索(BFS)</strong>：按层次扩展，先探索离起点近的节点，再逐步向外扩展。</p>
+<ul>
+<li>使用队列实现</li>
+<li>适用于寻找最短路径、层次遍历等问题</li>
+</ul>
+</li>
+<li><p><strong>二分查找</strong>：在有序数据集合中查找特定元素的高效搜索算法。</p>
+<ul>
+<li>时间复杂度：O(log n)</li>
+<li>适用于已排序数组的快速查找</li>
+</ul>
+</li>
+<li><p><strong>回溯法</strong>：一种系统性地尝试解的各种可能组合，并在判断不符合条件时"回溯"的方法。</p>
+<ul>
+<li>DFS的一种特殊应用</li>
+<li>适用于组合、排列、子集等问题</li>
+</ul>
+</li>
+</ol>
+<h2 id="搜索算法的效率比较">搜索算法的效率比较</h2>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>时间复杂度</th>
+<th>空间复杂度</th>
+<th>是否保证最优解</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>穷举搜索</td>
+<td>O(2^n)或更高</td>
+<td>O(n)</td>
+<td>是</td>
+<td>输入规模小的问题</td>
+</tr>
+<tr>
+<td>DFS</td>
+<td>O(b^d)</td>
+<td>O(d)</td>
+<td>否</td>
+<td>路径查找、组合问题</td>
+</tr>
+<tr>
+<td>BFS</td>
+<td>O(b^d)</td>
+<td>O(b^d)</td>
+<td>是(无权图最短路)</td>
+<td>最短路径、层次遍历</td>
+</tr>
+<tr>
+<td>二分查找</td>
+<td>O(log n)</td>
+<td>O(1)</td>
+<td>是</td>
+<td>有序数组查找</td>
+</tr>
+<tr>
+<td>回溯法</td>
+<td>O(b^d)</td>
+<td>O(d)</td>
+<td>是</td>
+<td>组合问题、剪枝优化问题</td>
+</tr>
+</tbody>
+</table>
+<p>注：b表示分支因子(每个节点的平均子节点数)，d表示解的深度</p>
+<h2 id="搜索算法优化技巧">搜索算法优化技巧</h2>
+<ol>
+<li><p><strong>剪枝</strong>：提前判断当前搜索路径不可能得到有效解，及时停止搜索。</p>
+<ul>
+<li>可行性剪枝：判断当前状态是否合法</li>
+<li>最优性剪枝：判断当前路径是否有可能优于已知解</li>
+<li>对称性剪枝：避免搜索等价情况</li>
+</ul>
+</li>
+<li><p><strong>记忆化</strong>：存储已经计算过的状态结果，避免重复计算。</p>
+<ul>
+<li>可结合动态规划使用</li>
+<li>大幅减少重复状态的搜索</li>
+</ul>
+</li>
+<li><p><strong>启发式搜索</strong>：利用问题特性进行更有针对性的搜索。</p>
+<ul>
+<li>A*算法：结合估价函数指导搜索方向</li>
+<li>贪心策略：优先选择更有希望的路径</li>
+</ul>
+</li>
+<li><p><strong>双向搜索</strong>：同时从起点和终点开始搜索，在中间会合。</p>
+<ul>
+<li>可以显著减少搜索空间</li>
+</ul>
+</li>
+</ol>
+<h2 id="典型问题与解法">典型问题与解法</h2>
+<h3 id="1-迷宫问题（bfsdfs）">1. 迷宫问题（BFS/DFS）</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// BFS解决迷宫问题</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;queue&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-comment">// 四个方向：上、右、下、左</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> dx[<span class="hljs-number">4</span>] = {-<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>};
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> dy[<span class="hljs-number">4</span>] = {<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>};
+
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">bfs</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">char</span>&gt;&gt;&amp; maze, pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; start, pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; end)</span> </span>{
+    <span class="hljs-keyword">int</span> n = maze.size();
+    <span class="hljs-keyword">int</span> m = maze[<span class="hljs-number">0</span>].size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt; visited(n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;(m, <span class="hljs-literal">false</span>));
+    <span class="hljs-built_in">queue</span>&lt;pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt; q;
+
+    q.push(start);
+    visited[start.first][start.second] = <span class="hljs-literal">true</span>;
+
+    <span class="hljs-keyword">while</span> (!q.empty()) {
+        pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; curr = q.front();
+        q.pop();
+
+        <span class="hljs-comment">// 到达终点</span>
+        <span class="hljs-keyword">if</span> (curr.first == end.first &amp;&amp; curr.second == end.second) {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+
+        <span class="hljs-comment">// 尝试四个方向</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+            <span class="hljs-keyword">int</span> nx = curr.first + dx[i];
+            <span class="hljs-keyword">int</span> ny = curr.second + dy[i];
+
+            <span class="hljs-comment">// 检查新位置是否有效且未访问</span>
+            <span class="hljs-keyword">if</span> (nx &gt;= <span class="hljs-number">0</span> &amp;&amp; nx &lt; n &amp;&amp; ny &gt;= <span class="hljs-number">0</span> &amp;&amp; ny &lt; m &amp;&amp; 
+                maze[nx][ny] != <span class="hljs-string">'#'</span> &amp;&amp; !visited[nx][ny]) {
+                q.push({nx, ny});
+                visited[nx][ny] = <span class="hljs-literal">true</span>;
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">// 无法到达终点</span>
+}
+</code></pre>
+<h3 id="2-组合问题（回溯法）">2. 组合问题（回溯法）</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 回溯法解决组合问题</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> start, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; current, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; result)</span> </span>{
+    <span class="hljs-comment">// 将当前组合加入结果集</span>
+    result.push_back(current);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start; i &lt; nums.size(); i++) {
+        <span class="hljs-comment">// 做选择</span>
+        current.push_back(nums[i]);
+        <span class="hljs-comment">// 继续回溯，注意下一个起始位置为i+1</span>
+        backtrack(nums, i + <span class="hljs-number">1</span>, current, result);
+        <span class="hljs-comment">// 撤销选择</span>
+        current.pop_back();
+    }
+}
+
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; subsets(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums) {
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; result;
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; current;
+    backtrack(nums, <span class="hljs-number">0</span>, current, result);
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h3 id="3-二分查找">3. 二分查找</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 二分查找</span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-comment">// 在有序数组中查找目标值</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">binarySearch</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> target)</span> </span>{
+    <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> right = nums.size() - <span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">while</span> (left &lt;= right) {
+        <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>; <span class="hljs-comment">// 防止溢出</span>
+
+        <span class="hljs-keyword">if</span> (nums[mid] == target) {
+            <span class="hljs-keyword">return</span> mid; <span class="hljs-comment">// 找到目标</span>
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &lt; target) {
+            left = mid + <span class="hljs-number">1</span>; <span class="hljs-comment">// 在右半部分继续查找</span>
+        } <span class="hljs-keyword">else</span> {
+            right = mid - <span class="hljs-number">1</span>; <span class="hljs-comment">// 在左半部分继续查找</span>
+        }
+    }
+
+    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>; <span class="hljs-comment">// 未找到目标</span>
+}
+
+<span class="hljs-comment">// 查找第一个大于等于target的元素位置</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lowerBound</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> target)</span> </span>{
+    <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> right = nums.size();
+
+    <span class="hljs-keyword">while</span> (left &lt; right) {
+        <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">if</span> (nums[mid] &gt;= target) {
+            right = mid;
+        } <span class="hljs-keyword">else</span> {
+            left = mid + <span class="hljs-number">1</span>;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> left;
+}
+
+<span class="hljs-comment">// 查找第一个大于target的元素位置</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">upperBound</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> target)</span> </span>{
+    <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> right = nums.size();
+
+    <span class="hljs-keyword">while</span> (left &lt; right) {
+        <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">if</span> (nums[mid] &gt; target) {
+            right = mid;
+        } <span class="hljs-keyword">else</span> {
+            left = mid + <span class="hljs-number">1</span>;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> left;
+}
+</code></pre>
+<h2 id="常见错误和注意事项">常见错误和注意事项</h2>
+<ol>
+<li><p><strong>栈溢出</strong>：DFS递归层数过深可能导致栈溢出，应考虑：</p>
+<ul>
+<li>使用迭代方式代替递归</li>
+<li>增加剪枝优化</li>
+<li>评估问题规模，选择合适的搜索方法</li>
+</ul>
+</li>
+<li><p><strong>访问标记</strong>：忘记标记已访问状态或忘记恢复状态可能导致：</p>
+<ul>
+<li>无限循环</li>
+<li>错过正确解</li>
+</ul>
+</li>
+<li><p><strong>边界处理</strong>：在搜索过程中要注意处理各种边界情况：</p>
+<ul>
+<li>数组越界</li>
+<li>搜索终止条件</li>
+<li>特殊输入处理</li>
+</ul>
+</li>
+<li><p><strong>超时问题</strong>：搜索空间过大时，应考虑：</p>
+<ul>
+<li>增加剪枝策略</li>
+<li>改变搜索方向或算法</li>
+<li>记忆化搜索</li>
+<li>问题分解</li>
+</ul>
+</li>
+</ol>
+<h2 id="练习题推荐">练习题推荐</h2>
+<ol>
+<li><p>DFS类问题：</p>
+<ul>
+<li><a href="https://leetcode.com/problems/number-of-islands/" target="_blank">Leetcode 200 - Number of Islands</a></li>
+<li><a href="http://poj.org/problem?id=1321" target="_blank">POJ 1321 - 棋盘问题</a></li>
+</ul>
+</li>
+<li><p>BFS类问题：</p>
+<ul>
+<li><a href="https://leetcode.com/problems/01-matrix/" target="_blank">Leetcode 542 - 01 Matrix</a></li>
+<li><a href="http://poj.org/problem?id=3278" target="_blank">POJ 3278 - Catch That Cow</a></li>
+</ul>
+</li>
+<li><p>二分查找类问题：</p>
+<ul>
+<li><a href="https://leetcode.com/problems/search-insert-position/" target="_blank">Leetcode 35 - Search Insert Position</a></li>
+<li><a href="http://poj.org/problem?id=2456" target="_blank">POJ 2456 - Aggressive cows</a></li>
+</ul>
+</li>
+<li><p>回溯法类问题：</p>
+<ul>
+<li><a href="https://leetcode.com/problems/permutations/" target="_blank">Leetcode 46 - Permutations</a></li>
+<li><a href="http://poj.org/problem?id=2676" target="_blank">POJ 2676 - Sudoku</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>搜索算法是解决复杂问题的强大工具，在算法竞赛中有广泛应用。掌握不同类型的搜索算法及其适用场景，关注算法的优化和剪枝技巧，能够帮助我们更高效地解决各种算法问题。在实践中，根据问题的特性和规模选择合适的搜索策略尤为重要。</p>
+<p>在接下来的章节中，我们会深入探讨各种搜索算法的具体实现和应用场景。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="深度优先搜索.html" class="navigation navigation-next " aria-label="Next page: 深度优先搜索(DFS)">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"搜索算法","level":"1.2","depth":1,"next":{"title":"深度优先搜索(DFS)","level":"1.2.1","depth":2,"path":"深度优先搜索.md","ref":"深度优先搜索.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"articles":[{"title":"深度优先搜索(DFS)","level":"1.2.1","depth":2,"path":"深度优先搜索.md","ref":"深度优先搜索.md","articles":[]},{"title":"广度优先搜索(BFS)","level":"1.2.2","depth":2,"path":"广度优先搜索.md","ref":"广度优先搜索.md","articles":[]},{"title":"二分查找","level":"1.2.3","depth":2,"path":"二分查找.md","ref":"二分查找.md","articles":[]},{"title":"回溯法","level":"1.2.4","depth":2,"path":"回溯法.md","ref":"回溯法.md","articles":[]}],"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"搜索算法概述.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:34.691Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

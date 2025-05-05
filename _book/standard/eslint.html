@@ -1,0 +1,891 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Eslint · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="jsdoc.html" />
+    
+    
+    <link rel="prev" href="component.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    开发规范
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="standard.html">
+            
+                <a href="standard.html">
+            
+                    
+                    书写规范
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="component.html">
+            
+                <a href="component.html">
+            
+                    
+                    组件规范
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.3" data-path="eslint.html">
+            
+                <a href="eslint.html">
+            
+                    
+                    Eslint
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="jsdoc.html">
+            
+                <a href="jsdoc.html">
+            
+                    
+                    Jsdoc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="yooha.html">
+            
+                <a href="yooha.html">
+            
+                    
+                    雅虎军规
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="git.html">
+            
+                <a href="git.html">
+            
+                    
+                    git
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Eslint</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="eslint">ESlint</h1>
+<div align="center">
+
+  <img src="standard/img/eslint.png" width="300" alt="logo" align="center"></img>
+</div>
+
+<p><a href="https://eslint.org/" target="_blank">ESLint</a> 由 JavaScript 红宝书 作者 Nicholas C. Zakas 编写， 2013 年发布第一个版本。 NCZ 的初衷不是重复造一个轮子，而是在实际需求得不到 JSHint 团队响应 的情况下做出的选择：以可扩展、每条规则独立、不内置编码风格为理念编写一个 lint 工具。</p>
+<h2 id="eslint-提供以下支持：">EsLint 提供以下支持：</h2>
+<ol>
+<li>ES6</li>
+<li>AngularJS</li>
+<li>JSX</li>
+<li>Style 检查</li>
+<li>自定义错误和提示</li>
+</ol>
+<h2 id="eslint-提供以下几种校验：">EsLint 提供以下几种校验：</h2>
+<ol>
+<li>语法错误校验</li>
+<li>不重要或丢失的标点符号，如分号</li>
+<li>没法运行到的代码块（使用过 WebStorm 的童鞋应该了解）</li>
+<li>未被使用的参数提醒</li>
+<li>漏掉的结束符，如}</li>
+<li>确保样式的统一规则，如 sass 或者 less</li>
+<li>检查变量的命名</li>
+</ol>
+<h2 id="优势">优势</h2>
+<p>Eslint 对于每一个开发者而言都是非常值得使用的，这样会强制你写出高质量且整洁的代码，所以建议无论大家是前端开发者、weex 开发者、还是小程序开发者都建议大家讲 Eslint 集成进入，来提高项目的质量。 ##安装</p>
+<h2 id="原理">原理</h2>
+<p>eslint 首先收集到所有规则的配置项，将所有规则归并后进行多重遍历；首先有源码生成 AST 将语法节点传入队列中，之后遍历所有规则，采用时间发布订阅模式（类似 webpack tapable）
+未所有的规则的选择器添加事件，在触发事件时执行规则插件，如果发现有问题，则上报信息记录下来；</p>
+<h2 id="安装">安装</h2>
+<pre><code class="lang-bash">npm install -g eslint
+</code></pre>
+<h4 id="初始化">初始化</h4>
+<p>如果你的项目还没有配置文件（.eslintrc）的话，可以通过指定--init 参数来生成一个新的配置文件：</p>
+<pre><code class="lang-bash">eslint --init
+</code></pre>
+<p>运行 eslint --init 后，会在当前目录下生成一个.eslintrc 文件，你可以在这个文件中配置一些规则。</p>
+<h3 id="配置示例参数">配置示例参数</h3>
+<pre><code class="lang-json"><span class="hljs-string">'rules'</span>: {
+<span class="hljs-comment">///////////////</span>
+<span class="hljs-comment">// 可能的错误 //</span>
+<span class="hljs-comment">////////////////</span>
+
+<span class="hljs-comment">// 禁止条件表达式中出现赋值操作符</span>
+<span class="hljs-string">"no-cond-assign"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用 console</span>
+<span class="hljs-string">"no-console"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止在条件中使用常量表达式</span>
+<span class="hljs-comment">// if (false) {</span>
+<span class="hljs-comment">// doSomethingUnfinished();</span>
+<span class="hljs-comment">// } //cuowu</span>
+<span class="hljs-string">"no-constant-condition"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止在正则表达式中使用控制字符 ：new RegExp("\x1f")</span>
+<span class="hljs-string">"no-control-regex"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 数组和对象键值对最后一个逗号， never参数：不能带末尾的逗号, always参数：必须带末尾的逗号，</span>
+<span class="hljs-comment">// always-multiline：多行模式必须带逗号，单行模式不能带逗号</span>
+<span class="hljs-string">"comma-dangle"</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">"always-multiline"</span>],
+<span class="hljs-comment">// 禁用 debugger</span>
+<span class="hljs-string">"no-debugger"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止 function 定义中出现重名参数</span>
+<span class="hljs-string">"no-dupe-args"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止对象字面量中出现重复的 key</span>
+<span class="hljs-string">"no-dupe-keys"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止重复的 case 标签</span>
+<span class="hljs-string">"no-duplicate-case"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止空语句块</span>
+<span class="hljs-string">"no-empty"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止在正则表达式中使用空字符集 (/^abc[]/)</span>
+<span class="hljs-string">"no-empty-character-class"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止对 catch 子句的参数重新赋值</span>
+<span class="hljs-string">"no-ex-assign"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止不必要的布尔转换</span>
+<span class="hljs-string">"no-extra-boolean-cast"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止不必要的括号 //(a * b) + c;//报错</span>
+<span class="hljs-string">"no-extra-parens"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止不必要的分号</span>
+<span class="hljs-string">"no-extra-semi"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止对 function 声明重新赋值</span>
+<span class="hljs-string">"no-func-assign"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止在嵌套的块中出现 function 或 var 声明</span>
+<span class="hljs-string">"no-inner-declarations"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"functions"</span>],
+<span class="hljs-comment">// 禁止 RegExp 构造函数中无效的正则表达式字符串</span>
+<span class="hljs-string">"no-invalid-regexp"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止在字符串和注释之外不规则的空白</span>
+<span class="hljs-string">"no-irregular-whitespace"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止在 in 表达式中出现否定的左操作数</span>
+<span class="hljs-string">"no-negated-in-lhs"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止把全局对象 (Math 和 JSON) 作为函数调用 错误：var math = Math();</span>
+<span class="hljs-string">"no-obj-calls"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止直接使用 Object.prototypes 的内置属性</span>
+<span class="hljs-string">"no-prototype-builtins"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止正则表达式字面量中出现多个空格</span>
+<span class="hljs-string">"no-regex-spaces"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用稀疏数组</span>
+<span class="hljs-string">"no-sparse-arrays"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止出现令人困惑的多行表达式</span>
+<span class="hljs-string">"no-unexpected-multiline"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止在return、throw、continue 和 break语句之后出现不可达代码</span>
+<span class="hljs-comment">/*
+ function foo() {
+ return true;
+ console.log("done");
+ }//错误
+ */</span>
+<span class="hljs-string">"no-unreachable"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 要求使用 isNaN() 检查 NaN</span>
+<span class="hljs-string">"use-isnan"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 强制使用有效的 JSDoc 注释</span>
+<span class="hljs-string">"valid-jsdoc"</span>: <span class="hljs-number">1</span>,
+<span class="hljs-comment">// 强制 typeof 表达式与有效的字符串进行比较</span>
+<span class="hljs-comment">// typeof foo === "undefimed" 错误</span>
+<span class="hljs-string">"valid-typeof"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">//////////////</span>
+<span class="hljs-comment">// 最佳实践 //</span>
+<span class="hljs-comment">//////////////</span>
+
+<span class="hljs-comment">// 定义对象的set存取器属性时，强制定义get</span>
+<span class="hljs-string">"accessor-pairs"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 强制数组方法的回调函数中有 return 语句</span>
+<span class="hljs-string">"array-callback-return"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制把变量的使用限制在其定义的作用域范围内</span>
+<span class="hljs-string">"block-scoped-var"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 限制圈复杂度，也就是类似if else能连续接多少个</span>
+<span class="hljs-string">"complexity"</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">9</span>],
+<span class="hljs-comment">// 要求 return 语句要么总是指定返回的值，要么不指定</span>
+<span class="hljs-string">"consistent-return"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制所有控制语句使用一致的括号风格</span>
+<span class="hljs-string">"curly"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"all"</span>],
+<span class="hljs-comment">// switch 语句强制 default 分支，也可添加 // no default 注释取消此次警告</span>
+<span class="hljs-string">"default-case"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 强制object.key 中 . 的位置，参数:</span>
+<span class="hljs-comment">// property，'.'号应与属性在同一行</span>
+<span class="hljs-comment">// object, '.' 号应与对象名在同一行</span>
+<span class="hljs-string">"dot-location"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"property"</span>],
+<span class="hljs-comment">// 强制使用.号取属性</span>
+<span class="hljs-comment">// 参数： allowKeywords：true 使用保留字做属性名时，只能使用.方式取属性</span>
+<span class="hljs-comment">// false 使用保留字做属性名时, 只能使用[]方式取属性 e.g [2, {"allowKeywords": false}]</span>
+<span class="hljs-comment">// allowPattern: 当属性名匹配提供的正则表达式时，允许使用[]方式取值,否则只能用.号取值 e.g [2, {"allowPattern": "^[a-z]+(_[a-z]+)+$"}]</span>
+<span class="hljs-string">"dot-notation"</span>: [<span class="hljs-number">2</span>, {<span class="hljs-string">"allowKeywords"</span>: <span class="hljs-literal">false</span>}],
+<span class="hljs-comment">// 使用 === 替代 == allow-null允许null和undefined==</span>
+<span class="hljs-string">"eqeqeq"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"allow-null"</span>],
+<span class="hljs-comment">// 要求 for-in 循环中有一个 if 语句</span>
+<span class="hljs-string">"guard-for-in"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用 alert、confirm 和 prompt</span>
+<span class="hljs-string">"no-alert"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁用 arguments.caller 或 arguments.callee</span>
+<span class="hljs-string">"no-caller"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 不允许在 case 子句中使用词法声明</span>
+<span class="hljs-string">"no-case-declarations"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止除法操作符显式的出现在正则表达式开始的位置</span>
+<span class="hljs-string">"no-div-regex"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止 if 语句中有 return 之后有 else</span>
+<span class="hljs-string">"no-else-return"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止出现空函数.如果一个函数包含了一条注释，它将不会被认为有问题。</span>
+<span class="hljs-string">"no-empty-function"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止使用空解构模式no-empty-pattern</span>
+<span class="hljs-string">"no-empty-pattern"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止在没有类型检查操作符的情况下与 null 进行比较</span>
+<span class="hljs-string">"no-eq-null"</span>: <span class="hljs-number">1</span>,
+<span class="hljs-comment">// 禁用 eval()</span>
+<span class="hljs-string">"no-eval"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止扩展原生类型</span>
+<span class="hljs-string">"no-extend-native"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止不必要的 .bind() 调用</span>
+<span class="hljs-string">"no-extra-bind"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用不必要的标签</span>
+<span class="hljs-string">"no-extra-label:"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止 case 语句落空</span>
+<span class="hljs-string">"no-fallthrough"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止数字字面量中使用前导和末尾小数点</span>
+<span class="hljs-string">"no-floating-decimal"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止使用短符号进行类型转换(!!fOO)</span>
+<span class="hljs-string">"no-implicit-coercion"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止在全局范围内使用 var 和命名的 function 声明</span>
+<span class="hljs-string">"no-implicit-globals"</span>: <span class="hljs-number">1</span>,
+<span class="hljs-comment">// 禁止使用类似 eval() 的方法</span>
+<span class="hljs-string">"no-implied-eval"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止 this 关键字出现在类和类对象之外</span>
+<span class="hljs-string">"no-invalid-this"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁用 __iterator__ 属性</span>
+<span class="hljs-string">"no-iterator"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用标签语句</span>
+<span class="hljs-string">"no-labels"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用不必要的嵌套块</span>
+<span class="hljs-string">"no-lone-blocks"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止在循环中出现 function 声明和表达式</span>
+<span class="hljs-string">"no-loop-func"</span>: <span class="hljs-number">1</span>,
+<span class="hljs-comment">// 禁用魔术数字(3.14什么的用常量代替)</span>
+<span class="hljs-string">"no-magic-numbers"</span>:[<span class="hljs-number">1</span>, {<span class="hljs-string">"ignore"</span>: [<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">1</span>] }],
+<span class="hljs-comment">// 禁止使用多个空格</span>
+<span class="hljs-string">"no-multi-spaces"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止使用多行字符串，在 JavaScript 中，可以在新行之前使用斜线创建多行字符串</span>
+<span class="hljs-string">"no-multi-str"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止对原生对象赋值</span>
+<span class="hljs-string">"no-native-reassign"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止在非赋值或条件语句中使用 new 操作符</span>
+<span class="hljs-string">"no-new"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止对 Function 对象使用 new 操作符</span>
+<span class="hljs-string">"no-new-func"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止对 String，Number 和 Boolean 使用 new 操作符</span>
+<span class="hljs-string">"no-new-wrappers"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用八进制字面量</span>
+<span class="hljs-string">"no-octal"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止在字符串中使用八进制转义序列</span>
+<span class="hljs-string">"no-octal-escape"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 不允许对 function 的参数进行重新赋值</span>
+<span class="hljs-string">"no-param-reassign"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁用 __proto__ 属性</span>
+<span class="hljs-string">"no-proto"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止使用 var 多次声明同一变量</span>
+<span class="hljs-string">"no-redeclare"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用指定的通过 require 加载的模块</span>
+<span class="hljs-string">"no-return-assign"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止使用 javascript: url</span>
+<span class="hljs-string">"no-script-url"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止自我赋值</span>
+<span class="hljs-string">"no-self-assign"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止自身比较</span>
+<span class="hljs-string">"no-self-compare"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用逗号操作符</span>
+<span class="hljs-string">"no-sequences"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止抛出非异常字面量</span>
+<span class="hljs-string">"no-throw-literal"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用一成不变的循环条件</span>
+<span class="hljs-string">"no-unmodified-loop-condition"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止出现未使用过的表达式</span>
+<span class="hljs-string">"no-unused-expressions"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁用未使用过的标签</span>
+<span class="hljs-string">"no-unused-labels"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止不必要的 .call() 和 .apply()</span>
+<span class="hljs-string">"no-useless-call"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止不必要的字符串字面量或模板字面量的连接</span>
+<span class="hljs-string">"no-useless-concat"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用不必要的转义字符</span>
+<span class="hljs-string">"no-useless-escape"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁用 void 操作符</span>
+<span class="hljs-string">"no-void"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止在注释中使用特定的警告术语</span>
+<span class="hljs-string">"no-warning-comments"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁用 with 语句</span>
+<span class="hljs-string">"no-with"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 强制在parseInt()使用基数参数</span>
+<span class="hljs-string">"radix"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 要求所有的 var 声明出现在它们所在的作用域顶部</span>
+<span class="hljs-string">"vars-on-top"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求 IIFE 使用括号括起来</span>
+<span class="hljs-string">"wrap-iife"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"any"</span>],
+<span class="hljs-comment">// 要求或禁止 “Yoda” 条件</span>
+<span class="hljs-string">"yoda"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"never"</span>],
+<span class="hljs-comment">// 要求或禁止使用严格模式指令</span>
+<span class="hljs-string">"strict"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">//////////////</span>
+<span class="hljs-comment">// 变量声明 //</span>
+<span class="hljs-comment">//////////////</span>
+
+<span class="hljs-comment">// 要求或禁止 var 声明中的初始化(初值)</span>
+<span class="hljs-string">"init-declarations"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 不允许 catch 子句的参数与外层作用域中的变量同名</span>
+<span class="hljs-string">"no-catch-shadow"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止删除变量</span>
+<span class="hljs-string">"no-delete-var"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 不允许标签与变量同名</span>
+<span class="hljs-string">"no-label-var"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用特定的全局变量</span>
+<span class="hljs-string">"no-restricted-globals"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止 var 声明 与外层作用域的变量同名</span>
+<span class="hljs-string">"no-shadow"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止覆盖受限制的标识符</span>
+<span class="hljs-string">"no-shadow-restricted-names"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用未声明的变量，除非它们在 /*global */ 注释中被提到</span>
+<span class="hljs-string">"no-undef"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止将变量初始化为 undefined</span>
+<span class="hljs-string">"no-undef-init"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止将 undefined 作为标识符</span>
+<span class="hljs-string">"no-undefined"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止出现未使用过的变量</span>
+<span class="hljs-string">"no-unused-vars"</span>: [<span class="hljs-number">2</span>, {<span class="hljs-string">"vars"</span>: <span class="hljs-string">"all"</span>, <span class="hljs-string">"args"</span>: <span class="hljs-string">"none"</span>}],
+<span class="hljs-comment">// 不允许在变量定义之前使用它们</span>
+<span class="hljs-string">"no-use-before-define"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">//////////////////////////</span>
+<span class="hljs-comment">// Node.js and CommonJS //</span>
+<span class="hljs-comment">//////////////////////////</span>
+
+<span class="hljs-comment">// require return statements after callbacks</span>
+<span class="hljs-string">"callback-return"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求 require() 出现在顶层模块作用域中</span>
+<span class="hljs-string">"global-require"</span>: <span class="hljs-number">1</span>,
+<span class="hljs-comment">// 要求回调函数中有容错处理</span>
+<span class="hljs-string">"handle-callback-err"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"^(err|error)$"</span>],
+<span class="hljs-comment">// 禁止混合常规 var 声明和 require 调用</span>
+<span class="hljs-string">"no-mixed-requires"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止调用 require 时使用 new 操作符</span>
+<span class="hljs-string">"no-new-require"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止对 __dirname 和 __filename进行字符串连接</span>
+<span class="hljs-string">"no-path-concat"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁用 process.env</span>
+<span class="hljs-string">"no-process-env"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁用 process.exit()</span>
+<span class="hljs-string">"no-process-exit"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁用同步方法</span>
+<span class="hljs-string">"no-sync"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">//////////////</span>
+<span class="hljs-comment">// 风格指南 //</span>
+<span class="hljs-comment">//////////////</span>
+
+<span class="hljs-comment">// 指定数组的元素之间要以空格隔开(, 后面)， never参数：[ 之前和 ] 之后不能带空格，always参数：[ 之前和 ] 之后必须带空格</span>
+<span class="hljs-string">"array-bracket-spacing"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"never"</span>],
+<span class="hljs-comment">// 禁止或强制在单行代码块中使用空格(禁用)</span>
+<span class="hljs-string">"block-spacing"</span>:[<span class="hljs-number">1</span>, <span class="hljs-string">"never"</span>],
+<span class="hljs-comment">//强制使用一致的缩进 第二个参数为 "tab" 时，会使用tab，</span>
+<span class="hljs-comment">// if while function 后面的{必须与if在同一行，java风格。</span>
+<span class="hljs-string">"brace-style"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"1tbs"</span>, {<span class="hljs-string">"allowSingleLine"</span>: <span class="hljs-literal">true</span>}],
+<span class="hljs-comment">// 双峰驼命名格式</span>
+<span class="hljs-string">"camelcase"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 控制逗号前后的空格</span>
+<span class="hljs-string">"comma-spacing"</span>: [<span class="hljs-number">2</span>, {<span class="hljs-string">"before"</span>: <span class="hljs-literal">false</span>, <span class="hljs-string">"after"</span>: <span class="hljs-literal">true</span>}],
+<span class="hljs-comment">// 控制逗号在行尾出现还是在行首出现 (默认行尾)</span>
+<span class="hljs-comment">// http://eslint.org/docs/rules/comma-style</span>
+<span class="hljs-string">"comma-style"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"last"</span>],
+<span class="hljs-comment">//"SwitchCase" (默认：0) 强制 switch 语句中的 case 子句的缩进水平</span>
+<span class="hljs-comment">// 以方括号取对象属性时，[ 后面和 ] 前面是否需要空格, 可选参数 never, always</span>
+<span class="hljs-string">"computed-property-spacing"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"never"</span>],
+<span class="hljs-comment">// 用于指统一在回调函数中指向this的变量名，箭头函数中的this已经可以指向外层调用者，应该没卵用了</span>
+<span class="hljs-comment">// e.g [0,"that"] 指定只能 var that = this. that不能指向其他任何值，this也不能赋值给that以外的其他值</span>
+<span class="hljs-string">"consistent-this"</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">"that"</span>],
+<span class="hljs-comment">// 强制使用命名的 function 表达式</span>
+<span class="hljs-string">"func-names"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 文件末尾强制换行</span>
+<span class="hljs-string">"eol-last"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-string">"indent"</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, {<span class="hljs-string">"SwitchCase"</span>: <span class="hljs-number">1</span>}],
+<span class="hljs-comment">// 强制在对象字面量的属性中键和值之间使用一致的间距</span>
+<span class="hljs-string">"key-spacing"</span>: [<span class="hljs-number">2</span>, {<span class="hljs-string">"beforeColon"</span>: <span class="hljs-literal">false</span>, <span class="hljs-string">"afterColon"</span>: <span class="hljs-literal">true</span>}],
+<span class="hljs-comment">// 强制使用一致的换行风格</span>
+<span class="hljs-string">"linebreak-style"</span>: [<span class="hljs-number">1</span>, <span class="hljs-string">"unix"</span>],
+<span class="hljs-comment">// 要求在注释周围有空行 ( 要求在块级注释之前有一空行)</span>
+<span class="hljs-string">"lines-around-comment"</span>: [<span class="hljs-number">1</span>, {<span class="hljs-string">"beforeBlockComment"</span>: <span class="hljs-literal">true</span>}],
+<span class="hljs-comment">// 强制一致地使用函数声明或函数表达式，方法定义风格，参数：</span>
+<span class="hljs-comment">// declaration: 强制使用方法声明的方式，function f(){} e.g [2, "declaration"]</span>
+<span class="hljs-comment">// expression：强制使用方法表达式的方式，var f = function() {} e.g [2, "expression"]</span>
+<span class="hljs-comment">// allowArrowFunctions: declaration风格中允许箭头函数。 e.g [2, "declaration", { "allowArrowFunctions": true }]</span>
+<span class="hljs-string">"func-style"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制回调函数最大嵌套深度 5层</span>
+<span class="hljs-string">"max-nested-callbacks"</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">5</span>],
+<span class="hljs-comment">// 禁止使用指定的标识符</span>
+<span class="hljs-string">"id-blacklist"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制标识符的最新和最大长度</span>
+<span class="hljs-string">"id-length"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求标识符匹配一个指定的正则表达式</span>
+<span class="hljs-string">"id-match"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制在 JSX 属性中一致地使用双引号或单引号</span>
+<span class="hljs-string">"jsx-quotes"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制在关键字前后使用一致的空格 (前后腰需要)</span>
+<span class="hljs-string">"keyword-spacing"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 强制一行的最大长度</span>
+<span class="hljs-string">"max-len"</span>:[<span class="hljs-number">1</span>, <span class="hljs-number">200</span>],
+<span class="hljs-comment">// 强制最大行数</span>
+<span class="hljs-string">"max-lines"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制 function 定义中最多允许的参数数量</span>
+<span class="hljs-string">"max-params"</span>:[<span class="hljs-number">1</span>, <span class="hljs-number">7</span>],
+<span class="hljs-comment">// 强制 function 块最多允许的的语句数量</span>
+<span class="hljs-string">"max-statements"</span>:[<span class="hljs-number">1</span>, <span class="hljs-number">200</span>],
+<span class="hljs-comment">// 强制每一行中所允许的最大语句数量</span>
+<span class="hljs-string">"max-statements-per-line"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求构造函数首字母大写 （要求调用 new 操作符时有首字母大小的函数，允许调用首字母大写的函数时没有 new 操作符。）</span>
+<span class="hljs-string">"new-cap"</span>: [<span class="hljs-number">2</span>, {<span class="hljs-string">"newIsCap"</span>: <span class="hljs-literal">true</span>, <span class="hljs-string">"capIsNew"</span>: <span class="hljs-literal">false</span>}],
+<span class="hljs-comment">// 要求调用无参构造函数时有圆括号</span>
+<span class="hljs-string">"new-parens"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 要求或禁止 var 声明语句后有一行空行</span>
+<span class="hljs-string">"newline-after-var"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止使用 Array 构造函数</span>
+<span class="hljs-string">"no-array-constructor"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁用按位运算符</span>
+<span class="hljs-string">"no-bitwise"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求 return 语句之前有一空行</span>
+<span class="hljs-string">"newline-before-return"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求方法链中每个调用都有一个换行符</span>
+<span class="hljs-string">"newline-per-chained-call"</span>: <span class="hljs-number">1</span>,
+<span class="hljs-comment">// 禁用 continue 语句</span>
+<span class="hljs-string">"no-continue"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止在代码行后使用内联注释</span>
+<span class="hljs-string">"no-inline-comments"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止 if 作为唯一的语句出现在 else 语句中</span>
+<span class="hljs-string">"no-lonely-if"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止混合使用不同的操作符</span>
+<span class="hljs-string">"no-mixed-operators"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 不允许空格和 tab 混合缩进</span>
+<span class="hljs-string">"no-mixed-spaces-and-tabs"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 不允许多个空行</span>
+<span class="hljs-string">"no-multiple-empty-lines"</span>: [<span class="hljs-number">2</span>, {<span class="hljs-string">"max"</span>: <span class="hljs-number">2</span>}],
+<span class="hljs-comment">// 不允许否定的表达式</span>
+<span class="hljs-string">"no-negated-condition"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 不允许使用嵌套的三元表达式</span>
+<span class="hljs-string">"no-nested-ternary"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止使用 Object 的构造函数</span>
+<span class="hljs-string">"no-new-object"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止使用一元操作符 ++ 和 --</span>
+<span class="hljs-string">"no-plusplus"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止使用特定的语法</span>
+<span class="hljs-string">"no-restricted-syntax"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止 function 标识符和括号之间出现空格</span>
+<span class="hljs-string">"no-spaced-func"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 不允许使用三元操作符</span>
+<span class="hljs-string">"no-ternary"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁用行尾空格</span>
+<span class="hljs-string">"no-trailing-spaces"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止标识符中有悬空下划线_bar</span>
+<span class="hljs-string">"no-underscore-dangle"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止可以在有更简单的可替代的表达式时使用三元操作符</span>
+<span class="hljs-string">"no-unneeded-ternary"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止属性前有空白</span>
+<span class="hljs-string">"no-whitespace-before-property"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制花括号内换行符的一致性</span>
+<span class="hljs-string">"object-curly-newline"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制在花括号中使用一致的空格</span>
+<span class="hljs-string">"object-curly-spacing"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制将对象的属性放在不同的行上</span>
+<span class="hljs-string">"object-property-newline"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制函数中的变量要么一起声明要么分开声明</span>
+<span class="hljs-string">"one-var"</span>: [<span class="hljs-number">2</span>, {<span class="hljs-string">"initialized"</span>: <span class="hljs-string">"never"</span>}],
+<span class="hljs-comment">// 要求或禁止在 var 声明周围换行</span>
+<span class="hljs-string">"one-var-declaration-per-line"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求或禁止在可能的情况下要求使用简化的赋值操作符</span>
+<span class="hljs-string">"operator-assignment"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制操作符使用一致的换行符</span>
+<span class="hljs-string">"operator-linebreak"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"after"</span>, {<span class="hljs-string">"overrides"</span>: {<span class="hljs-string">"?"</span>:<span class="hljs-string">"before"</span>, <span class="hljs-string">":"</span>: <span class="hljs-string">"before"</span>}}],
+<span class="hljs-comment">// 要求或禁止块内填充</span>
+<span class="hljs-string">"padded-blocks"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求对象字面量属性名称用引号括起来</span>
+<span class="hljs-string">"quote-props"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制使用一致的反勾号、双引号或单引号</span>
+<span class="hljs-string">"quotes"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"single"</span>, <span class="hljs-string">"avoid-escape"</span>],
+<span class="hljs-comment">// 要求使用 JSDoc 注释</span>
+<span class="hljs-string">"require-jsdoc"</span>: <span class="hljs-number">1</span>,
+<span class="hljs-comment">// 要求或禁止使用分号而不是 ASI（这个才是控制行尾部分号的，）</span>
+<span class="hljs-string">"semi"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"always"</span>],
+<span class="hljs-comment">// 强制分号之前和之后使用一致的空格</span>
+<span class="hljs-string">"semi-spacing"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求同一个声明块中的变量按顺序排列</span>
+<span class="hljs-string">"sort-vars"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制在块之前使用一致的空格</span>
+<span class="hljs-string">"space-before-blocks"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"always"</span>],
+<span class="hljs-comment">// 强制在 function的左括号之前使用一致的空格</span>
+<span class="hljs-string">"space-before-function-paren"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"always"</span>],
+<span class="hljs-comment">// 强制在圆括号内使用一致的空格</span>
+<span class="hljs-string">"space-in-parens"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"never"</span>],
+<span class="hljs-comment">// 要求操作符周围有空格</span>
+<span class="hljs-string">"space-infix-ops"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 强制在一元操作符前后使用一致的空格</span>
+<span class="hljs-string">"space-unary-ops"</span>: [<span class="hljs-number">2</span>, {<span class="hljs-string">"words"</span>: <span class="hljs-literal">true</span>, <span class="hljs-string">"nonwords"</span>: <span class="hljs-literal">false</span>}],
+<span class="hljs-comment">// 强制在注释中 // 或 /* 使用一致的空格</span>
+<span class="hljs-string">"spaced-comment"</span>: [<span class="hljs-number">2</span>, <span class="hljs-string">"always"</span>, {<span class="hljs-string">"markers"</span>: [<span class="hljs-string">"global"</span>, <span class="hljs-string">"globals"</span>, <span class="hljs-string">"eslint"</span>, <span class="hljs-string">"eslint-disable"</span>, <span class="hljs-string">"*package"</span>,<span class="hljs-string">"!"</span>] }],
+<span class="hljs-comment">// 要求或禁止 Unicode BOM</span>
+<span class="hljs-string">"unicode-bom"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求正则表达式被括号括起来</span>
+<span class="hljs-string">"wrap-regex"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">//////////////</span>
+<span class="hljs-comment">// ES6.相关 //</span>
+<span class="hljs-comment">//////////////</span>
+
+<span class="hljs-comment">// 要求箭头函数体使用大括号</span>
+<span class="hljs-string">"arrow-body-style"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 要求箭头函数的参数使用圆括号</span>
+<span class="hljs-string">"arrow-parens"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-string">"arrow-spacing"</span>:[<span class="hljs-number">2</span>, {<span class="hljs-string">"before"</span>: <span class="hljs-literal">true</span>, <span class="hljs-string">"after"</span>: <span class="hljs-literal">true</span>}],
+<span class="hljs-comment">// 强制在子类构造函数中用super()调用父类构造函数，TypeScrip的编译器也会提示</span>
+<span class="hljs-string">"constructor-super"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制 generator 函数中 * 号周围使用一致的空格</span>
+<span class="hljs-string">"generator-star-spacing"</span>: [<span class="hljs-number">2</span>, {<span class="hljs-string">"before"</span>: <span class="hljs-literal">true</span>, <span class="hljs-string">"after"</span>: <span class="hljs-literal">true</span>}],
+<span class="hljs-comment">// 禁止修改类声明的变量</span>
+<span class="hljs-string">"no-class-assign"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 不允许箭头功能，在那里他们可以混淆的比较</span>
+<span class="hljs-string">"no-confusing-arrow"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止修改 const 声明的变量</span>
+<span class="hljs-string">"no-const-assign"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止类成员中出现重复的名称</span>
+<span class="hljs-string">"no-dupe-class-members"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 不允许复制模块的进口</span>
+<span class="hljs-string">"no-duplicate-imports"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止 Symbol 的构造函数</span>
+<span class="hljs-string">"no-new-symbol"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 允许指定模块加载时的进口</span>
+<span class="hljs-string">"no-restricted-imports"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 禁止在构造函数中，在调用 super() 之前使用 this 或 super</span>
+<span class="hljs-string">"no-this-before-super"</span>: <span class="hljs-number">2</span>,
+<span class="hljs-comment">// 禁止不必要的计算性能键对象的文字</span>
+<span class="hljs-string">"no-useless-computed-key"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求使用 let 或 const 而不是 var</span>
+<span class="hljs-string">"no-var"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求或禁止对象字面量中方法和属性使用简写语法</span>
+<span class="hljs-string">"object-shorthand"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求使用箭头函数作为回调</span>
+<span class="hljs-string">"prefer-arrow-callback"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求使用 const 声明那些声明后不再被修改的变量</span>
+<span class="hljs-string">"prefer-const"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求在合适的地方使用 Reflect 方法</span>
+<span class="hljs-string">"prefer-reflect"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求使用扩展运算符而非 .apply()</span>
+<span class="hljs-string">"prefer-spread"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求使用模板字面量而非字符串连接</span>
+<span class="hljs-string">"prefer-template"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// Suggest using the rest parameters instead of arguments</span>
+<span class="hljs-string">"prefer-rest-params"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求generator 函数内有 yield</span>
+<span class="hljs-string">"require-yield"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// enforce spacing between rest and spread operators and their expressions</span>
+<span class="hljs-string">"rest-spread-spacing"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 强制模块内的 import 排序</span>
+<span class="hljs-string">"sort-imports"</span>: <span class="hljs-number">0</span>,
+<span class="hljs-comment">// 要求或禁止模板字符串中的嵌入表达式周围空格的使用</span>
+<span class="hljs-string">"template-curly-spacing"</span>: <span class="hljs-number">1</span>,
+<span class="hljs-comment">// 强制在 yield* 表达式中 * 周围使用空格</span>
+<span class="hljs-string">"yield-star-spacing"</span>: <span class="hljs-number">2</span>
+}
+</code></pre>
+<h3 id="优先级顺序">优先级顺序</h3>
+<p>.eslintrc.js &gt; .eslintrc.yaml &gt; .eslintrc.yml &gt; .eslintrc &gt; .eslintrc.json</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="component.html" class="navigation navigation-prev " aria-label="Previous page: 组件规范">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="jsdoc.html" class="navigation navigation-next " aria-label="Next page: Jsdoc">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Eslint","level":"1.1.3","depth":2,"next":{"title":"Jsdoc","level":"1.1.4","depth":2,"path":"jsdoc.md","ref":"jsdoc.md","articles":[]},"previous":{"title":"组件规范","level":"1.1.2","depth":2,"path":"component.md","ref":"component.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"eslint.md","mtime":"2025-05-03T00:31:50.172Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:18:12.866Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

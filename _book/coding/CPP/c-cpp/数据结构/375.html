@@ -1,0 +1,1027 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>霍夫曼编码算法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="376.html" />
+    
+    
+    <link rel="prev" href="374.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="343.html">
+            
+                <a href="343.html">
+            
+                    
+                    数据结构和算法基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="344.html">
+            
+                <a href="344.html">
+            
+                    
+                    数据结构和算法导论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="345.html">
+            
+                <a href="345.html">
+            
+                    
+                    渐近符号
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="346.html">
+            
+                <a href="346.html">
+            
+                    
+                    算法的空间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="347.html">
+            
+                <a href="347.html">
+            
+                    
+                    算法的时间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="348.html">
+            
+                <a href="348.html">
+            
+                    
+                    基本算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="349.html">
+            
+                <a href="349.html">
+            
+                    
+                    搜索算法简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="350.html">
+            
+                <a href="350.html">
+            
+                    
+                    线性搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="351.html">
+            
+                <a href="351.html">
+            
+                    
+                    二分搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="352.html">
+            
+                <a href="352.html">
+            
+                    
+                    排序介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="353.html">
+            
+                <a href="353.html">
+            
+                    
+                    冒泡排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="354.html">
+            
+                <a href="354.html">
+            
+                    
+                    插入排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="355.html">
+            
+                <a href="355.html">
+            
+                    
+                    选择排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="356.html">
+            
+                <a href="356.html">
+            
+                    
+                    快速排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="357.html">
+            
+                <a href="357.html">
+            
+                    
+                    归并排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="358.html">
+            
+                <a href="358.html">
+            
+                    
+                    堆排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="359.html">
+            
+                <a href="359.html">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="360.html">
+            
+                <a href="360.html">
+            
+                    
+                    什么是栈数据结构？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="361.html">
+            
+                <a href="361.html">
+            
+                    
+                    什么是队列数据结构？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="362.html">
+            
+                <a href="362.html">
+            
+                    
+                    使用栈实现队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="363.html">
+            
+                <a href="363.html">
+            
+                    
+                    链表介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="364.html">
+            
+                <a href="364.html">
+            
+                    
+                    线性链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="365.html">
+            
+                <a href="365.html">
+            
+                    
+                    循环链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="366.html">
+            
+                <a href="366.html">
+            
+                    
+                    双端队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="367.html">
+            
+                <a href="367.html">
+            
+                    
+                    使用队列实现栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="368.html">
+            
+                <a href="368.html">
+            
+                    
+                    使用链表实现栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="369.html">
+            
+                <a href="369.html">
+            
+                    
+                    双向链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="370.html">
+            
+                <a href="370.html">
+            
+                    
+                    二叉树介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="371.html">
+            
+                <a href="371.html">
+            
+                    
+                    二叉查找树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="372.html">
+            
+                <a href="372.html">
+            
+                    
+                    贪心算法或技巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="373.html">
+            
+                <a href="373.html">
+            
+                    
+                    活动选择问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="374.html">
+            
+                <a href="374.html">
+            
+                    
+                    Prim 最小生成树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.33" data-path="375.html">
+            
+                <a href="375.html">
+            
+                    
+                    霍夫曼编码算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="376.html">
+            
+                <a href="376.html">
+            
+                    
+                    迪克斯特拉算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >霍夫曼编码算法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="霍夫曼编码算法">霍夫曼编码算法</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/data-structures/huffman-coding" target="_blank">https://www.studytonight.com/data-structures/huffman-coding</a></p>
+</blockquote>
+<p>计算机科学中的每一个信息都被<strong>编码为</strong>1 和 0<strong>的字符串。信息论的目标是通常用最少的比特数来传输信息，使得每个编码都是明确的。本教程讨论了固定长度和可变长度编码以及霍夫曼编码，霍夫曼编码是所有数据编码方案的基础</strong></p>
+<p>在计算机中，编码可以定义为有效地传输或存储字符序列的过程。固定长度和可变长度是两种编码方案，解释如下-</p>
+<p><strong>固定长度编码</strong> -使用相同的位数为每个字符分配一个二进制代码。因此，像“aabacdad”这样的字符串可能需要 64 位(8 字节)来存储或传输，假设每个字符使用 8 位。</p>
+<p><strong>可变长度编码</strong> -与固定长度编码相反，该方案根据字符在给定文本中的出现频率，使用可变位数对字符进行编码。因此，对于像“aabacdad”这样的给定字符串，字符“a”、“b”、“c”和“d”的频率分别是 4、1、1 和 2。由于“a”比“b”、“c”和“d”出现得更频繁，因此它使用的位数最少，其次是“d”、“b”和“c”。假设我们给每个字符随机分配二进制代码如下-</p>
+<p><strong>a 0</strong>
+<strong>b 011</strong>
+<strong>c 111</strong>
+<strong>d 11</strong></p>
+<p>因此，字符串“aabacdad”被编码为<strong>0001101111011(0 | 0 | 011 | 0 | 111 | 11 | 0 | 11)，</strong>与固定长度编码方案相比使用更少的位数。</p>
+<p>但真正的问题在于解码阶段。如果我们尝试解码字符串 0001101111011，它将非常模糊，因为它可以解码为多个字符串，其中很少是-</p>
+<p><strong>aaadacdad (0 | 0 | 0 | 11 | 0 | 111 | 11 | 0 | 11)</strong>
+<strong>aaadbcad (0 | 0 | 0 | 11 | 011 | 111 | 0 | 11)</strong>
+<strong>aabbcb (0 | 0 | 011 | 011 | 111 | 011)</strong></p>
+<p>…等等</p>
+<p>为了防止解码过程中出现这种歧义，编码阶段应该满足<strong>“前缀规则”</strong>，该规则规定任何二进制代码都不应该是另一个代码的前缀。这将产生独特的<strong>可解码代码</strong>。上述“a”、“b”、“c”和“d”的代码不遵循前缀规则，因为 a 的二进制代码即 0 是 b 的二进制代码即 011 的前缀，导致不明确的<strong>可解码代码。</strong></p>
+<p>让我们重新考虑将二进制代码分配给字符“a”、“b”、“c”和“d”。</p>
+<p><strong>a 0</strong>
+<strong>b 11</strong>
+<strong>c 101</strong>
+<strong>d 100</strong></p>
+<p>使用上述代码，字符串<strong>“aabacdad”</strong>被编码为 0011011000100(0 | 0 | 11 | 0 | 101 | 100 | 0 | 100)。现在，我们可以将其解码回字符串<strong>“aabacdad”</strong>。</p>
+<h3 id="问题陈述-">问题陈述-</h3>
+<p><strong>输入:</strong>待传输或存储的符号集及其频率/概率/权重</p>
+<p><strong>输出:</strong>期望码字长度最小的无前缀变长二进制码。等效地，从根开始具有最小加权路径长度的树状数据结构可以用于生成二进制代码</p>
+<h4 id="霍夫曼编码-">霍夫曼编码-</h4>
+<p>霍夫曼编码可用于寻找给定问题陈述的解决方案。</p>
+<ul>
+<li>这项技术由大卫·霍夫曼于 1951 年开发，是所有数据压缩和编码方案的基础</li>
+<li>这是一种用于无损数据编码的著名算法</li>
+<li>它遵循贪心方法，因为它处理生成最小长度的无前缀二进制代码</li>
+<li>它使用可变长度编码方案，根据字符在给定文本中出现的频率，为字符分配二进制代码。出现频率最高的字符被分配最小的代码，出现频率最低的字符获得最大的代码</li>
+</ul>
+<p>霍夫曼编码的主要步骤是-</p>
+<p><strong>第一步</strong> -使用输入符号集和每个符号的权重/频率构建霍夫曼树</p>
+<ul>
+<li>类似于二叉树数据结构，需要创建具有 <strong>n</strong> 叶节点和 <strong>n-1</strong> 内部节点的霍夫曼树</li>
+<li>优先级队列用于构建霍夫曼树，使得具有最低频率的节点具有最高优先级。最小堆数据结构可用于实现优先级队列的功能。</li>
+<li>最初，所有节点都是叶节点，包含字符本身以及该字符的权重/频率</li>
+<li>另一方面，内部节点包含权重和两个子节点的链接</li>
+</ul>
+<p><strong>第二步</strong> -通过遍历霍夫曼树为每个符号分配二进制代码</p>
+<ul>
+<li>通常，位“0”代表左边的子级，位“1”代表右边的子级</li>
+</ul>
+<p><strong>Algorithm for creating the Huffman Tree-</strong></p>
+<p><strong>步骤 1</strong> -为每个字符创建一个叶节点，并使用所有节点构建一个最小堆(频率值用于比较最小堆中的两个节点)</p>
+<p><strong>步骤 2-当堆有多个节点时，重复步骤 3 至 5</strong></p>
+<p> <strong>**步骤 3</strong> -从堆中提取两个频率最小的节点，比如 x 和 y</p>
+<p><strong>第 4 步</strong> -创建一个新的内部节点 z，x 作为其左子节点，y 作为其右子节点。同样<code>frequency(z)= frequency(x)+frequency(y)</code></p>
+<p><strong>步骤 5</strong> -将 z 添加到最小堆中</p>
+<p><strong>第 6 步</strong> -堆中的最后一个节点是霍夫曼树的根</p>
+<p>让我们尝试使用上述算法为以下字符及其频率创建霍夫曼树</p>
+<p>| 特性 | 频率 |
+| a | Ten |
+| e | Fifteen |
+| 我 | Twelve |
+| o | three |
+| u | four |
+| s | Thirteen |
+| t | one |</p>
+<p><strong>步骤 A</strong> -为所有角色创建叶节点，并将它们添加到最小堆中。</p>
+<ul>
+<li><p><strong>Step 1</strong>- Create a leaf node for each character and build a min heap using all the nodes (The frequency value is used to compare two nodes in min heap)</p>
+<p><img src="img/1859b1e85aa510dea3dee9be67c3bf1a.png" alt="leaf nodes"></img>图 1:每个字符的叶节点</p>
+</li>
+</ul>
+<p><strong>步骤 B</strong> -重复以下步骤，直到堆有多个节点</p>
+<ul>
+<li><strong>步骤 3</strong> -从堆中提取两个频率最小的节点，比如 x 和 y</li>
+<li><strong>第 4 步</strong> -创建一个新的内部节点 z，x 作为其左子节点，y 作为其右子节点。同样频率(z)=频率(x)+频率(y)</li>
+<li><p><strong>步骤 5</strong> -将 z 添加到最小堆中</p>
+<p><em>*</em>   提取并组合一个以 4 为频率的内部节点</p>
+</li>
+<li>将新的内部节点添加到优先级队列-</li>
+</ul>
+<p><img src="img/53fa3813c425b3bb676de237231a56f4.png" alt="Combining nodes "></img>图 2:结合节点 o 和 t</p>
+<ul>
+<li>提取并组合一个以 8 为频率的内部节点</li>
+<li>将新的内部节点添加到优先级队列-</li>
+</ul>
+<p><img src="img/2e47317c4688aa258e7e9c2f4a84da06.png" alt="Combining nodes "></img>图 3:将节点 u 与频率为 4 的内部节点组合</p>
+<ul>
+<li>提取并合并节点 I 和 s</li>
+<li>将新的内部节点添加到优先级队列-</li>
+</ul>
+<p><img src="img/36f4d564d35f3f547be9236f991f2274.png" alt="Combining nodes "></img>图 4:将节点 u 与频率为 4 的内部节点组合</p>
+<ul>
+<li>提取并合并节点 I 和 s</li>
+<li>将新的内部节点添加到优先级队列-</li>
+</ul>
+<p><img src="img/a82a43e9cd235dc27c557de92f0ef1a4.png" alt="Combining nodes "></img>图 5:合并节点 I 和 s</p>
+<ul>
+<li>提取并合并以 18 为频率的内部节点</li>
+<li>将新的内部节点添加到优先级队列-</li>
+</ul>
+<p><img src="img/66784ea052d61a98ea80aa3dbe096726.png" alt="Combining nodes "></img>图 6:将节点 e 与具有 18 作为频率的内部节点组合</p>
+<ul>
+<li>最后，提取并合并以 25 和 33 为频率的内部节点</li>
+<li>将新的内部节点添加到优先级队列-</li>
+</ul>
+<p><img src="img/6522e0f0bd4f381b1abae49cbf6d8cf9.png" alt="Combining nodes "></img>图 7:通过组合具有 25 和 33 作为频率的内部节点获得的最终霍夫曼树</p>
+<p>现在，由于队列中只有一个节点，控件将退出循环</p>
+<p><strong>步骤 C</strong> -由于频率为 58 的内部节点是队列中唯一的节点，因此它成为<strong>霍夫曼树</strong>的根。</p>
+<p><strong>第 6 步</strong> -堆中的最后一个节点是霍夫曼树的根</p>
+<h3 id="遍历霍夫曼树的步骤">遍历霍夫曼树的步骤</h3>
+<ol>
+<li>创建辅助数组</li>
+<li>从根节点开始遍历树</li>
+<li>遍历左子时向数组中添加 0，遍历右子时向数组中添加 1</li>
+<li>只要找到叶节点，就打印数组元素</li>
+</ol>
+<p>按照上面生成的霍夫曼树的步骤，我们得到了无前缀和可变长度的二进制码，其期望码字长度最小</p>
+<p><img src="img/b15d25f2baa82b4bf4bbcfb8aca30e99.png" alt="Binary code to huffman"></img>图 8:给霍夫曼树分配二进制代码</p>
+<p>| 特性 | 二进制码 |
+| 我 | 00 |
+| s | 01 |
+| e | Ten |
+| u | One thousand one hundred |
+| t | Eleven thousand and ten |
+| o | Eleven thousand and eleven |
+| a | One hundred and eleven |</p>
+<p><strong>Using the above binary codes-</strong></p>
+<p>假设字符串“staeiout”需要通过网络从计算机 A(发送方)传输到计算机 B(接收方)。使用霍夫曼编码的概念，字符串在发送方被编码为<strong>“01110101111000110110011010”(01 | 11010 | 111 | 10 | 00 | 11011 | 1100 | 11010)</strong>。</p>
+<p>一旦在接收器端接收到，它将通过遍历霍夫曼树被解码回来。为了解码每个字符，我们从根节点开始遍历树。从字符串的第一位开始。比特流中的“1”或“0”将决定在树中向左还是向右。打印字符，如果我们到达一个叶节点。</p>
+<p><strong>Thus for the above bit stream</strong></p>
+<p><img src="img/d80e63aabd1cad5a4d2c5949c93625a0.png" alt="decoding bit stream"></img>图 9:解码比特流</p>
+<p><strong>On similar lines-</strong></p>
+<ul>
+<li>111 被解码为 a</li>
+<li>10 被解码为“e”</li>
+<li>00 被解码为“I”</li>
+<li>11011 被解码为“o”</li>
+<li>1100 被解码为 u</li>
+<li>最后，11010 被解码为“t”，从而返回字符串“staeiout”</li>
+</ul>
+<p><strong>Implementation-</strong></p>
+<p>下面是霍夫曼编码的 C++ 实现。该算法可以根据需要映射到任何编程语言。</p>
+<pre><code class="lang-cpp">     <span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;queue&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-keyword">class</span> Huffman_Codes
+{
+ <span class="hljs-keyword">struct</span> New_Node
+ {
+  <span class="hljs-keyword">char</span> data;
+  <span class="hljs-keyword">size_t</span> freq;
+  New_Node* left;
+  New_Node* right;
+  New_Node(<span class="hljs-keyword">char</span> data, <span class="hljs-keyword">size_t</span> freq) : data(data),
+                                 freq(freq),
+left(<span class="hljs-literal">NULL</span>),
+right(<span class="hljs-literal">NULL</span>)
+                                 {}
+ ~New_Node()
+ {
+   <span class="hljs-keyword">delete</span> left;
+   <span class="hljs-keyword">delete</span> right;
+ }
+ };
+
+ <span class="hljs-keyword">struct</span> compare
+ {
+  <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(New_Node* l, New_Node* r)</span>
+  </span>{
+    <span class="hljs-keyword">return</span> (l-&gt;freq &gt; r-&gt;freq);
+  }
+};
+
+New_Node* top;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print_Code</span><span class="hljs-params">(New_Node* root, <span class="hljs-built_in">string</span> str)</span>
+</span>{
+<span class="hljs-keyword">if</span>(root == <span class="hljs-literal">NULL</span>)
+   <span class="hljs-keyword">return</span>;
+
+ <span class="hljs-keyword">if</span>(root-&gt;data == <span class="hljs-string">'$'</span>)
+ {
+  print_Code(root-&gt;left, str + <span class="hljs-string">"0"</span>);
+  print_Code(root-&gt;right, str + <span class="hljs-string">"1"</span>);
+ }
+
+ <span class="hljs-keyword">if</span>(root-&gt;data != <span class="hljs-string">'$'</span>)
+ {
+   <span class="hljs-built_in">cout</span> &lt;&lt; root-&gt;data &lt;&lt;<span class="hljs-string">" : "</span> &lt;&lt; str &lt;&lt; <span class="hljs-string">"\n"</span>;
+   print_Code(root-&gt;left, str + <span class="hljs-string">"0"</span>);
+   print_Code(root-&gt;right, str + <span class="hljs-string">"1"</span>);
+ }
+}
+
+<span class="hljs-keyword">public</span>:
+  Huffman_Codes() {};
+  ~Huffman_Codes()
+  {
+    <span class="hljs-keyword">delete</span> top;
+  }
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Generate_Huffman_tree</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">char</span>&gt;&amp; data, <span class="hljs-built_in">vector</span>&lt;size_t&gt;&amp; freq, size_t size)</span>
+  </span>{
+   New_Node* left;
+   New_Node* right;
+   priority_queue&lt;New_Node*, <span class="hljs-built_in">vector</span>&lt;New_Node*&gt;, compare &gt; minHeap;
+
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; size; ++i)
+   {
+      minHeap.push(<span class="hljs-keyword">new</span> New_Node(data[i], freq[i]));
+   }
+
+<span class="hljs-keyword">while</span>(minHeap.size() != <span class="hljs-number">1</span>)
+    {
+      left = minHeap.top();
+minHeap.pop();
+
+      right = minHeap.top();
+minHeap.pop();
+
+      top = <span class="hljs-keyword">new</span> New_Node(<span class="hljs-string">'$'</span>, left-&gt;freq + right-&gt;freq);
+      top-&gt;left  = left;
+      top-&gt;right = right;
+      minHeap.push(top);
+     }
+    print_Code(minHeap.top(), <span class="hljs-string">""</span>);
+ }
+};
+
+ <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+ </span>{
+  <span class="hljs-keyword">int</span> n, f;
+  <span class="hljs-keyword">char</span> ch;
+  Huffman_Codes set1;
+  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">char</span>&gt; data;
+  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">size_t</span>&gt; freq;
+  <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"Enter the number of elements \n"</span>;
+  <span class="hljs-built_in">cin</span>&gt;&gt;n;
+  <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"Enter the characters \n"</span>;
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)
+  {
+      <span class="hljs-built_in">cin</span>&gt;&gt;ch;
+data.insert(data.end(), ch);
+  }
+  <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"Enter the frequencies \n"</span>;
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)
+  {
+      <span class="hljs-built_in">cin</span>&gt;&gt;f;
+freq.insert(freq.end(), f);
+  }
+
+  <span class="hljs-keyword">size_t</span> size = data.size();
+  set1.Generate_Huffman_tree(data, freq, size);
+
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>使用与上述示例相同的输入来执行程序。这将有助于用实际输出来验证结果解集。</p>
+<p><img src="img/f9b404272e94b9eee8c09abed4bb7e50.png" alt="output"></img>图 10:输出</p>
+<h3 id="时间复杂度分析-">时间复杂度分析-</h3>
+<p>由于霍夫曼编码使用最小堆数据结构来实现优先级队列，因此复杂度为 0(nlogn)。这可以解释如下-</p>
+<ul>
+<li>构建一个最小堆需要<code>O(nlogn)</code>时间(将一个元素从根节点移动到叶节点需要<code>O(logn)</code>比较，在最坏的情况下，这是针对 n/2 个元素完成的)。</li>
+<li>构建一个最小堆需要<code>O(nlogn)</code>时间(将一个元素从根节点移动到叶节点需要<code>O(logn)</code>比较，在最坏的情况下，这是针对 n/2 个元素完成的)。</li>
+</ul>
+<p>由于构建最小堆和排序是按顺序执行的，因此整个过程的算法复杂度计算为 0(nlogn)</p>
+<p>我们也可以有一个线性时间算法，如果字符已经按照它们的频率排序的话。</p>
+<h3 id="霍夫曼编码的优点-">霍夫曼编码的优点-</h3>
+<ul>
+<li>这种编码方案节省了大量存储空间，因为生成的二进制码长度可变</li>
+<li>它生成较短的二进制代码，用于编码在输入字符串中更频繁出现的符号/字符</li>
+<li>生成的二进制代码没有前缀</li>
+</ul>
+<h3 id="霍夫曼编码的缺点-">霍夫曼编码的缺点-</h3>
+<ul>
+<li>与有损编码技术相比，像霍夫曼编码这样的无损数据编码方案实现了更低的压缩比。因此，像霍夫曼编码这样的无损技术只适用于编码文本和程序文件，而不适用于编码数字图像。</li>
+<li>霍夫曼编码是一个相对较慢的过程，因为它使用两个过程-一个用于建立统计模型，另一个用于编码。因此，使用霍夫曼编码的无损技术比其他技术要慢得多。</li>
+<li>由于所有二进制码的长度不同，解码软件很难检测编码数据是否损坏。这可能导致不正确的解码，进而导致错误的输出。</li>
+</ul>
+<h3 id="霍夫曼编码的实际应用">霍夫曼编码的实际应用</h3>
+<ul>
+<li>霍夫曼编码广泛用于类似<code>GZIP, PKZIP (winzip) and BZIP2</code>的压缩格式。</li>
+<li>像<code>JPEG, PNG and MP3</code>这样的多媒体编解码器使用霍夫曼编码(更准确地说是前缀码)</li>
+<li>霍夫曼编码仍然主导着压缩行业，因为由于专利问题，避免了较新的算术和范围编码方案。</li>
+</ul>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="374.html" class="navigation navigation-prev " aria-label="Previous page: Prim 最小生成树">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="376.html" class="navigation navigation-next " aria-label="Next page: 迪克斯特拉算法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"霍夫曼编码算法","level":"1.1.33","depth":2,"next":{"title":"迪克斯特拉算法","level":"1.1.34","depth":2,"path":"376.md","ref":"376.md","articles":[]},"previous":{"title":"Prim 最小生成树","level":"1.1.32","depth":2,"path":"374.md","ref":"374.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"375.md","mtime":"2025-04-30T01:08:58.897Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:10.684Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

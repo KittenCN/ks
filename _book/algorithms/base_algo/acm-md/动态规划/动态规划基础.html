@@ -1,0 +1,707 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>动态规划基础 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="背包问题.html" />
+    
+    
+    <link rel="prev" href="动态规划概述.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="动态规划概述.html">
+            
+                <a href="动态规划概述.html">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.1" data-path="动态规划基础.html">
+            
+                <a href="动态规划基础.html">
+            
+                    
+                    动态规划基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="背包问题.html">
+            
+                <a href="背包问题.html">
+            
+                    
+                    背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="最长公共子序列.html">
+            
+                <a href="最长公共子序列.html">
+            
+                    
+                    最长公共子序列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="最长递增子序列.html">
+            
+                <a href="最长递增子序列.html">
+            
+                    
+                    最长递增子序列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >动态规划基础</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="动态规划基础">动态规划基础</h1>
+<p>动态规划(Dynamic Programming, DP)是算法竞赛中非常重要的一种解题技巧，适用于具有【最优子结构】和【重叠子问题】特性的问题。本章将系统介绍动态规划的基础知识和解题思路。</p>
+<h2 id="动态规划的核心思想">动态规划的核心思想</h2>
+<p>【定义】动态规划是一种通过将复杂问题分解为更简单的子问题来解决问题的方法，它通过存储子问题的解来避免重复计算。</p>
+<h3 id="动态规划的两个关键特性">动态规划的两个关键特性</h3>
+<ol>
+<li><strong>最优子结构</strong>：问题的最优解包含其子问题的最优解</li>
+<li><strong>重叠子问题</strong>：子问题的解会被重复利用多次</li>
+</ol>
+<h2 id="动态规划与分治法的区别">动态规划与分治法的区别</h2>
+<ul>
+<li><strong>分治法</strong>：将问题分解为互不相交的子问题，递归解决子问题，然后合并结果</li>
+<li><strong>动态规划</strong>：将问题分解为可能重叠的子问题，自底向上地解决子问题，并保存子问题的结果</li>
+</ul>
+<h2 id="动态规划的基本步骤">动态规划的基本步骤</h2>
+<ol>
+<li><strong>确定状态表示</strong>：明确定义DP数组中每个元素的含义</li>
+<li><strong>确定状态转移方程</strong>：找出状态之间的递推关系</li>
+<li><strong>确定初始状态和边界条件</strong>：为DP数组提供初始值</li>
+<li><strong>确定计算顺序</strong>：通常是自底向上的顺序</li>
+<li><strong>计算最终结果</strong>：最终答案通常是DP数组中的某个值或者基于DP数组的某种计算</li>
+</ol>
+<h2 id="动态规划的实现方式">动态规划的实现方式</h2>
+<h3 id="记忆化搜索（自顶向下）">记忆化搜索（自顶向下）</h3>
+<p>将递归过程中已计算的子问题结果保存下来，避免重复计算。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 斐波那契数列的记忆化搜索实现</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100</span>;
+<span class="hljs-keyword">int</span> memo[MAXN]; <span class="hljs-comment">// 记忆数组，存储已计算的结果</span>
+
+<span class="hljs-comment">// 初始化为-1，表示未计算</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">memset</span>(memo, -<span class="hljs-number">1</span>, <span class="hljs-keyword">sizeof</span>(memo));
+    memo[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>; <span class="hljs-comment">// 边界情况</span>
+    memo[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>; <span class="hljs-comment">// 边界情况</span>
+}
+
+<span class="hljs-comment">// 带记忆化的递归</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fibonacci</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> n; <span class="hljs-comment">// 基本情况处理</span>
+    <span class="hljs-keyword">if</span> (memo[n] != -<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> memo[n]; <span class="hljs-comment">// 已计算，直接返回</span>
+
+    <span class="hljs-comment">// 计算并保存结果</span>
+    memo[n] = fibonacci(n-<span class="hljs-number">1</span>) + fibonacci(n-<span class="hljs-number">2</span>);
+    <span class="hljs-keyword">return</span> memo[n];
+}
+</code></pre>
+<h3 id="递推（自底向上）">递推（自底向上）</h3>
+<p>直接按照状态转移方程进行递推计算，不使用递归，避免递归开销。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 斐波那契数列的递推实现</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fibonacci</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> n; <span class="hljs-comment">// 处理基础情况</span>
+
+    <span class="hljs-keyword">int</span> dp[MAXN]; <span class="hljs-comment">// 状态数组</span>
+    dp[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+    dp[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;
+
+    <span class="hljs-comment">// 自底向上计算每个状态</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++) {
+        dp[i] = dp[i-<span class="hljs-number">1</span>] + dp[i-<span class="hljs-number">2</span>]; <span class="hljs-comment">// 状态转移方程</span>
+    }
+
+    <span class="hljs-keyword">return</span> dp[n];
+}
+</code></pre>
+<h3 id="空间优化">空间优化</h3>
+<p>对于某些DP问题，可以通过滚动数组或状态压缩等方式降低空间复杂度。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 斐波那契数列的空间优化实现</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fibonacci</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> n;
+
+    <span class="hljs-keyword">int</span> prev2 = <span class="hljs-number">0</span>; <span class="hljs-comment">// f(0)</span>
+    <span class="hljs-keyword">int</span> prev1 = <span class="hljs-number">1</span>; <span class="hljs-comment">// f(1)</span>
+    <span class="hljs-keyword">int</span> curr;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++) {
+        curr = prev1 + prev2;
+        prev2 = prev1;
+        prev1 = curr;
+    }
+
+    <span class="hljs-keyword">return</span> prev1;
+}
+</code></pre>
+<h2 id="动态规划的常见模型">动态规划的常见模型</h2>
+<h3 id="线性dp">线性DP</h3>
+<p>状态与前面有限个状态相关，转移方程通常有固定的模式。</p>
+<p><strong>例题：最长递增子序列(LIS)</strong></p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 最长递增子序列</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lengthOfLIS</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+    <span class="hljs-keyword">int</span> n = nums.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(n, <span class="hljs-number">1</span>); <span class="hljs-comment">// dp[i]表示以nums[i]结尾的最长递增子序列的长度</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j++) {
+            <span class="hljs-keyword">if</span> (nums[i] &gt; nums[j]) {
+                dp[i] = max(dp[i], dp[j] + <span class="hljs-number">1</span>);
+            }
+        }
+    }
+
+    <span class="hljs-keyword">int</span> maxLength = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        maxLength = max(maxLength, dp[i]);
+    }
+
+    <span class="hljs-keyword">return</span> maxLength;
+}
+</code></pre>
+<h3 id="区间dp">区间DP</h3>
+<p>状态定义在区间[i,j]上，状态转移通常涉及将区间分割成子区间。</p>
+<p><strong>例题：石子合并问题</strong></p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 石子合并问题</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">mergeStones</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; stones)</span> </span>{
+    <span class="hljs-keyword">int</span> n = stones.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; sum(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>); <span class="hljs-comment">// 前缀和数组</span>
+
+    <span class="hljs-comment">// 计算前缀和</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        sum[i] = sum[i - <span class="hljs-number">1</span>] + stones[i - <span class="hljs-number">1</span>];
+    }
+
+    <span class="hljs-comment">// dp[i][j]表示合并区间[i,j]的最小代价</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; dp(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(n + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
+
+    <span class="hljs-comment">// 枚举区间长度</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> len = <span class="hljs-number">2</span>; len &lt;= n; len++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i + len - <span class="hljs-number">1</span> &lt;= n; i++) {
+            <span class="hljs-keyword">int</span> j = i + len - <span class="hljs-number">1</span>;
+            dp[i][j] = INT_MAX;
+
+            <span class="hljs-comment">// 枚举分割点</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = i; k &lt; j; k++) {
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k + <span class="hljs-number">1</span>][j] + sum[j] - sum[i - <span class="hljs-number">1</span>]);
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[<span class="hljs-number">1</span>][n];
+}
+</code></pre>
+<h3 id="背包dp">背包DP</h3>
+<p>处理资源分配类问题，有多种不同类型（01背包、完全背包等）。</p>
+<p><strong>例题：01背包问题</strong></p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 01背包问题</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">knapsack</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-keyword">int</span> capacity)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; dp(n + <span class="hljs-number">1</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>));
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;= capacity; j++) {
+            <span class="hljs-comment">// 不选第i个物品</span>
+            dp[i][j] = dp[i - <span class="hljs-number">1</span>][j];
+
+            <span class="hljs-comment">// 选第i个物品（如果容量允许）</span>
+            <span class="hljs-keyword">if</span> (j &gt;= weights[i - <span class="hljs-number">1</span>]) {
+                dp[i][j] = max(dp[i][j], dp[i - <span class="hljs-number">1</span>][j - weights[i - <span class="hljs-number">1</span>]] + values[i - <span class="hljs-number">1</span>]);
+            }
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[n][capacity];
+}
+</code></pre>
+<h3 id="状态压缩dp">状态压缩DP</h3>
+<p>使用位运算表示状态集合，适用于集合较小且需要表示子集的情况。</p>
+<p><strong>例题：旅行商问题(TSP)</strong></p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 旅行商问题简化版</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">tsp</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; graph)</span> </span>{
+    <span class="hljs-keyword">int</span> n = graph.size();
+    <span class="hljs-keyword">int</span> all = (<span class="hljs-number">1</span> &lt;&lt; n) - <span class="hljs-number">1</span>; <span class="hljs-comment">// 所有城市都被访问的状态</span>
+
+    <span class="hljs-comment">// dp[state][i]表示当前在城市i，已访问的城市集合为state时的最短路径长度</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; dp(<span class="hljs-number">1</span> &lt;&lt; n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(n, INT_MAX));
+
+    <span class="hljs-comment">// 初始状态：从城市0出发</span>
+    dp[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// 枚举所有状态</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> state = <span class="hljs-number">1</span>; state &lt; (<span class="hljs-number">1</span> &lt;&lt; n); state++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+            <span class="hljs-comment">// 如果城市i不在当前state中，跳过</span>
+            <span class="hljs-keyword">if</span> (!(state &amp; (<span class="hljs-number">1</span> &lt;&lt; i))) <span class="hljs-keyword">continue</span>;
+
+            <span class="hljs-comment">// 枚举前一个城市j</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++) {
+                <span class="hljs-comment">// 如果城市j不在前一个状态中，或者j==i，跳过</span>
+                <span class="hljs-keyword">if</span> (i == j || !(state &amp; (<span class="hljs-number">1</span> &lt;&lt; j))) <span class="hljs-keyword">continue</span>;
+
+                <span class="hljs-comment">// 状态转移</span>
+                dp[state][i] = min(dp[state][i], dp[state ^ (<span class="hljs-number">1</span> &lt;&lt; i)][j] + graph[j][i]);
+            }
+        }
+    }
+
+    <span class="hljs-comment">// 所有城市都访问后，最后回到城市0</span>
+    <span class="hljs-keyword">int</span> result = INT_MAX;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">if</span> (graph[i][<span class="hljs-number">0</span>] != INT_MAX) {
+            result = min(result, dp[all][i] + graph[i][<span class="hljs-number">0</span>]);
+        }
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h3 id="树形dp">树形DP</h3>
+<p>在树结构上进行动态规划，状态通常与子树相关。</p>
+<p><strong>例题：树的最大独立集</strong></p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 树的最大独立集</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; graph;
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp[<span class="hljs-number">2</span>]; <span class="hljs-comment">// dp[0][i]表示不选节点i的最大独立集大小，dp[1][i]表示选择节点i的最大独立集大小</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node, <span class="hljs-keyword">int</span> parent)</span> </span>{
+    dp[<span class="hljs-number">0</span>][node] = <span class="hljs-number">0</span>;
+    dp[<span class="hljs-number">1</span>][node] = <span class="hljs-number">1</span>; <span class="hljs-comment">// 选择当前节点</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> child : graph[node]) {
+        <span class="hljs-keyword">if</span> (child == parent) <span class="hljs-keyword">continue</span>; <span class="hljs-comment">// 避免向上遍历</span>
+
+        dfs(child, node);
+
+        dp[<span class="hljs-number">0</span>][node] += max(dp[<span class="hljs-number">0</span>][child], dp[<span class="hljs-number">1</span>][child]); <span class="hljs-comment">// 不选当前节点，子节点可选可不选</span>
+        dp[<span class="hljs-number">1</span>][node] += dp[<span class="hljs-number">0</span>][child]; <span class="hljs-comment">// 选当前节点，子节点不能选</span>
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxIndependentSet</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    graph.resize(n + <span class="hljs-number">1</span>);
+    dp[<span class="hljs-number">0</span>].resize(n + <span class="hljs-number">1</span>);
+    dp[<span class="hljs-number">1</span>].resize(n + <span class="hljs-number">1</span>);
+
+    <span class="hljs-comment">// 构建树结构（添加边）...</span>
+
+    dfs(<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>); <span class="hljs-comment">// 从根节点开始DFS</span>
+
+    <span class="hljs-keyword">return</span> max(dp[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>], dp[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>]);
+}
+</code></pre>
+<h3 id="数位dp">数位DP</h3>
+<p>按照数位进行动态规划，处理与数字位数相关的计数问题。</p>
+<p><strong>例题：计算1到n中数字1的出现次数</strong></p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 数位DP：计算1到n中数字1的出现次数</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">countDigitOne</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">if</span> (n &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-built_in">string</span> s = to_string(n);
+    <span class="hljs-keyword">int</span> len = s.length();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; dp(len, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(len, -<span class="hljs-number">1</span>));
+
+    <span class="hljs-comment">// count(pos, cnt, limit)表示当前在位置pos，已经有cnt个1，是否有上界限制limit</span>
+    <span class="hljs-comment">// 使用记忆化搜索实现数位DP</span>
+    function&lt;<span class="hljs-keyword">int</span>(<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>, <span class="hljs-keyword">bool</span>)&gt; count = [&amp;](<span class="hljs-keyword">int</span> pos, <span class="hljs-keyword">int</span> cnt, <span class="hljs-keyword">bool</span> limit) {
+        <span class="hljs-keyword">if</span> (pos == len) <span class="hljs-keyword">return</span> cnt;
+        <span class="hljs-keyword">if</span> (!limit &amp;&amp; dp[pos][cnt] != -<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> dp[pos][cnt];
+
+        <span class="hljs-keyword">int</span> up = limit ? s[pos] - <span class="hljs-string">'0'</span> : <span class="hljs-number">9</span>;
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= up; i++) {
+            res += count(pos + <span class="hljs-number">1</span>, cnt + (i == <span class="hljs-number">1</span>), limit &amp;&amp; i == up);
+        }
+
+        <span class="hljs-keyword">if</span> (!limit) dp[pos][cnt] = res;
+        <span class="hljs-keyword">return</span> res;
+    };
+
+    <span class="hljs-keyword">return</span> count(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">true</span>);
+}
+</code></pre>
+<h2 id="动态规划的优化技巧">动态规划的优化技巧</h2>
+<h3 id="滚动数组优化">滚动数组优化</h3>
+<p>当DP状态只依赖于前一个或几个状态时，可以使用滚动数组降低空间复杂度。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 01背包的滚动数组优化</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">knapsack</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; weights, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; values, <span class="hljs-keyword">int</span> capacity)</span> </span>{
+    <span class="hljs-keyword">int</span> n = weights.size();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(capacity + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = capacity; j &gt;= weights[i]; j--) {
+            dp[j] = max(dp[j], dp[j - weights[i]] + values[i]);
+        }
+    }
+
+    <span class="hljs-keyword">return</span> dp[capacity];
+}
+</code></pre>
+<h3 id="单调队列单调栈优化">单调队列/单调栈优化</h3>
+<p>适用于某些具有单调性质的DP问题，可以降低时间复杂度。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 使用单调队列优化的滑动窗口最大值（可用于某些DP转移）</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; maxSlidingWindow(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> k) {
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; result;
+    <span class="hljs-built_in">deque</span>&lt;<span class="hljs-keyword">int</span>&gt; q; <span class="hljs-comment">// 双端队列，存储索引</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.size(); i++) {
+        <span class="hljs-comment">// 移除队首超出窗口范围的元素</span>
+        <span class="hljs-keyword">while</span> (!q.empty() &amp;&amp; q.front() &lt; i - k + <span class="hljs-number">1</span>) {
+            q.pop_front();
+        }
+
+        <span class="hljs-comment">// 移除队列中所有小于当前元素的值（它们不可能是窗口最大值）</span>
+        <span class="hljs-keyword">while</span> (!q.empty() &amp;&amp; nums[q.back()] &lt; nums[i]) {
+            q.pop_back();
+        }
+
+        q.push_back(i);
+
+        <span class="hljs-comment">// 窗口形成后才开始记录结果</span>
+        <span class="hljs-keyword">if</span> (i &gt;= k - <span class="hljs-number">1</span>) {
+            result.push_back(nums[q.front()]);
+        }
+    }
+
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+<h3 id="斜率优化">斜率优化</h3>
+<p>适用于某些具有特殊形式的DP转移方程，利用斜率来降低时间复杂度。</p>
+<h3 id="四边形不等式优化">四边形不等式优化</h3>
+<p>适用于满足四边形不等式性质的区间DP问题。</p>
+<h2 id="实战技巧">实战技巧</h2>
+<ol>
+<li><strong>分析问题结构</strong>：明确问题是否具有最优子结构和重叠子问题特性</li>
+<li><strong>从小规模实例开始</strong>：先手动解决小规模问题，找出规律</li>
+<li><strong>仔细定义状态</strong>：状态定义是DP问题的关键</li>
+<li><strong>注意边界条件</strong>：边界处理往往是DP问题的难点</li>
+<li><strong>考虑优化空间</strong>：许多DP问题可以通过滚动数组等技巧降低空间复杂度</li>
+</ol>
+<h2 id="练习题目推荐">练习题目推荐</h2>
+<ol>
+<li>POJ 1163 The Triangle (简单线性DP)</li>
+<li>POJ 1458 Common Subsequence (经典LCS问题)</li>
+<li>POJ 1651 Multiplication Puzzle (区间DP)</li>
+<li>POJ 1276 Cash Machine (完全背包问题)</li>
+<li>POJ 2229 Sumsets (线性DP with 思维)</li>
+<li>POJ 3254 Corn Fields (状态压缩DP)</li>
+</ol>
+<h2 id="常见错误与避坑指南">常见错误与避坑指南</h2>
+<ol>
+<li><strong>状态定义不清晰</strong>：导致转移方程推导困难</li>
+<li><strong>边界条件处理不当</strong>：边界是DP问题的常见错误源</li>
+<li><strong>循环顺序错误</strong>：影响状态依赖关系</li>
+<li><strong>忽略特殊情况</strong>：要注意极端输入、空集等特殊情况</li>
+<li><strong>递推方向错误</strong>：自顶向下和自底向上的选择需谨慎</li>
+<li><strong>数组越界</strong>：DP数组大小预估不足导致越界</li>
+</ol>
+<p>通过本章的学习，你应该能够理解动态规划的基本概念和解题思路。在接下来的章节中，我们将深入研究各类动态规划问题的具体应用。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="动态规划概述.html" class="navigation navigation-prev " aria-label="Previous page: 动态规划">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="背包问题.html" class="navigation navigation-next " aria-label="Next page: 背包问题">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"动态规划基础","level":"1.2.1","depth":2,"next":{"title":"背包问题","level":"1.2.2","depth":2,"path":"背包问题.md","ref":"背包问题.md","articles":[]},"previous":{"title":"动态规划","level":"1.2","depth":1,"path":"动态规划概述.md","ref":"动态规划概述.md","articles":[{"title":"动态规划基础","level":"1.2.1","depth":2,"path":"动态规划基础.md","ref":"动态规划基础.md","articles":[]},{"title":"背包问题","level":"1.2.2","depth":2,"path":"背包问题.md","ref":"背包问题.md","articles":[]},{"title":"最长公共子序列","level":"1.2.3","depth":2,"path":"最长公共子序列.md","ref":"最长公共子序列.md","articles":[]},{"title":"最长递增子序列","level":"1.2.4","depth":2,"path":"最长递增子序列.md","ref":"最长递增子序列.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"动态规划基础.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:12.158Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

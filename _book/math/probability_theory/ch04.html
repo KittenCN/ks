@@ -1,0 +1,985 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>期望值 条件概率 失忆性 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch05.html" />
+    
+    
+    <link rel="prev" href="ch03.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    概率论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    离散机率分布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    连续机率分布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    期望值 条件概率 失忆性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    联合概率 边际概率 双变数期望值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    多个随机变量之和的概率分布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    随机数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >期望值 条件概率 失忆性</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <p><a href="...menustart"></a></p>
+<ul>
+<li><a href="#884b6b277b1c5c27d38fbc97f6560af9">Week6 Week7 期望值 条件概率 失忆性</a><ul>
+<li><a href="#699f5bed3f92e270bce0a95ed5bf89d3">6-2: 期望值 I (EXPECTATION)</a><ul>
+<li><a href="#7a410c29ec1783458c2d5c679f790eee">随机变量的函数之期望值</a></li>
+<li><a href="#09a5fcc38b3f4c96f745b665bfb42cea">期望值运算性质</a></li>
+<li><a href="#487e3e26c9963764a55fe4f8b597d389">常见的随机变量函数期望值</a></li>
+<li><a href="#d43aa7d625393a9c328a86c60568b12e">变异数 (variance)</a></li>
+<li><a href="#d57572a47dea71843856503c0ef5c154">Variance 便利算法</a></li>
+<li><a href="#33805636b57d3a4f61be9c79a1d93947">常见离散分布之期望值/变异数</a></li>
+<li><a href="#367685545196820c0c173d14fe4c9421">几率推导奥义： 「凑」字诀</a></li>
+<li><a href="#ab458f4b361834dd802e4f40d31b5ebc">Quiz</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#b9d0e738b55594e8d3824de9b91b0914">Week7</a><ul>
+<li><a href="#041a19cd2e4bebb61913e1566b7cfb67">7-1 期望值II</a><ul>
+<li><a href="#45c2600156e6a1f700dfe4260c9694c4">随机变数函数 期望值</a></li>
+<li><a href="#29e116aede7ee7f00af95ca5edd4c6d0">常见连续分布的期望值/变异数</a></li>
+<li><a href="#4fdbd553cf6f3c5cfd46baa1993c8dc2">期望值推导</a></li>
+</ul>
+</li>
+<li><a href="#27fdd10ac05020268c5d6bb6954f4099">7.2 隨機變數之函數</a><ul>
+<li><a href="#317aa5bd89ce045575f8cb8491b70c62">如何求 g(X)几率分布?</a></li>
+</ul>
+</li>
+<li><a href="#33f8148fbbdcedb32e214651afcff8d9">7.3a 条件概率分布</a></li>
+<li><a href="#f16b66e705a9a610a0da37b5dae105eb">7.3a 失忆性 (Memoryless)</a></li>
+<li><a href="#e1f7ff5183a361cd3b41e3ab5e647cb5">QUIZ</a></li>
+</ul>
+</li>
+</ul>
+<p><a href="...menuend"></a></p>
+<h2 id="884b6b277b1c5c27d38fbc97f6560af9"></h2>
+
+<h1 id="week6-week7-期望值-条件概率-失忆性">Week6 Week7 期望值 条件概率 失忆性</h1>
+<h2 id="699f5bed3f92e270bce0a95ed5bf89d3"></h2>
+
+<h2 id="6-2-期望值-i-expectation">6-2: 期望值 I (EXPECTATION)</h2>
+<ul>
+<li>大数法则<ul>
+<li>想知道某事件发生的机率?</li>
+<li>作很多次实验，记录实验中出现那个事件多少次。当实验次数接近无穷 多次时，这个比例就会越来越接近实际的机率!</li>
+<li>P(A) = lim<sub>N→∞</sub> (N<sub>A</sub>/N)</li>
+</ul>
+</li>
+<li>期望值 (Expectation)<ul>
+<li>做随机实验时，我们很希望能有某种估算</li>
+<li>平均值是我们平常最常普遍的估算值</li>
+<li>作两次实验的平均值是? (X₁+X₂)/2 = ?</li>
+<li>不管我们做多少次实验，平均值都是一个随机变数，那不就 不能拿来估算?</li>
+<li>所幸!当做的实验次数趋近于无穷多时，这么多次的实验的平均值 会收敛到一个常数!我们就用它来当作这机率分布的估算值吧!</li>
+</ul>
+</li>
+<li>若考虑某机率分布，作实验很多次若随机实验之样本空间为 {1,2, ... ,n}, 作实验N次，记录各结果出现 次数，分别为N₁,N₂,...N<sub>n</sub><ul>
+<li>平均值 (Mean): ∑<sub>x=</sub>ⁿ₁ (x·Nₓ)/N</li>
+<li>根据大数法则 : ∑<sub>x=</sub>ⁿ₁ x·P<sub>X</sub>(x)</li>
+</ul>
+</li>
+<li>Mean 值又称作期望值<ul>
+<li>μ<sub>Y</sub> = E[Y]</li>
+<li>对离散随机变数 𝑿 而言，我们定义其期望值 <ul>
+<li>E[X] = μ<sub>X</sub> = ∑<sub>x=</sub><sup>∞</sup><sub>-∞</sub> x·P<sub>X</sub>(x) </li>
+</ul>
+</li>
+<li><strong>期望值不等于随机会发生的值</strong>!<ul>
+<li>eg. P<sub>X</sub>(1) = P<sub>X</sub>(-1) = 1/2 =&gt; μ<sub>X</sub> = 0 !!! </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="7a410c29ec1783458c2d5c679f790eee"></h2>
+
+<h3 id="随机变量的函数之期望值">随机变量的函数之期望值</h3>
+<ul>
+<li>对于任一离散随机变量 X 而言，其 任意函数 g(X) 亦是一随机变量，亦有期望值</li>
+<li>g(X) 期望值定义为<ul>
+<li>E[ g(X) ] = ∑<sub>x=</sub><sup>∞</sup><sub>-∞</sub> g(x)·P<sub>X</sub>(x) </li>
+<li>根随即变量的期望值公式相比，只是 x 变成了 g(x)</li>
+</ul>
+</li>
+</ul>
+<h2 id="09a5fcc38b3f4c96f745b665bfb42cea"></h2>
+
+<h3 id="期望值运算性质">期望值运算性质</h3>
+<ul>
+<li>E[ 3X² ] = ∑<sub>x=</sub><sup>∞</sup><sub>-∞</sub> 3x²·P<sub>X</sub>(x) <ul>
+<li>= 3·∑<sub>x=</sub><sup>∞</sup><sub>-∞</sub> x²·P<sub>X</sub>(x)  = 3·E[X²]</li>
+<li>常数项可以提出来</li>
+</ul>
+</li>
+<li>E[α·g(X)] = α·E[g(X)] </li>
+<li>E[α·g(X) + β·h(X) ] = α·E[g(X)] + β·E[h(X)]</li>
+<li>E[α] = α</li>
+</ul>
+<h2 id="487e3e26c9963764a55fe4f8b597d389"></h2>
+
+<h3 id="常见的随机变量函数期望值">常见的随机变量函数期望值</h3>
+<ul>
+<li>X 的 n<sup>th</sup> moment:<ul>
+<li>E[Xⁿ] = ∑<sub>x=</sub><sup>∞</sup><sub>-∞</sub> xⁿ·P<sub>X</sub>(x)  </li>
+<li>Ex: E[X²] 是 X的 2<sup>nd</sup> moment</li>
+</ul>
+</li>
+<li>X 的变异数 (variance):<ul>
+<li>E[ (X-μ<sub>X</sub>)² ] </li>
+<li>减去 期望值的 平方</li>
+</ul>
+</li>
+<li>全期望值公示<ul>
+<li>E[Y] = E[E(Y|X)]</li>
+</ul>
+</li>
+</ul>
+<h2 id="d43aa7d625393a9c328a86c60568b12e"></h2>
+
+<h3 id="变异数-variance">变异数 (variance)</h3>
+<ul>
+<li>Variance通常符号表示为 σ<sub>X</sub>² = E[ (X-μ<sub>X</sub>)² ] </li>
+<li>变异数隐含关于随机变数 X 多「乱」的信息</li>
+<li>变异数的开根号便是标准差 (standard deviation)<ul>
+<li>σ<sub>X</sub> = √Variance</li>
+</ul>
+</li>
+<li>性质:<ul>
+<li>if a constant is added to all values of the variable, the variance is unchanged:<ul>
+<li>Var[X + a] = Var[X]</li>
+</ul>
+</li>
+<li>If all values are scaled by a constant, the variance is scaled by the square of that constant:<ul>
+<li>Var[aX] = a²Var[X]</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>双变量 期望值，Variance，见第8章</li>
+</ul>
+<h2 id="d57572a47dea71843856503c0ef5c154"></h2>
+
+<h3 id="variance-便利算法">Variance 便利算法</h3>
+<ul>
+<li><p>σ<sub>X</sub>² = E[ (X-μ<sub>X</sub>)² ]</p>
+<ul>
+<li>= E[ X²-2μ<sub>X</sub>·X+μ<sub>X</sub>² ]</li>
+<li>= E[X²] + E[-2μ<sub>X</sub>·X] + E[ μ<sub>X</sub>² ]</li>
+<li>= E[X²] - 2μ<sub>X</sub>·E[X] + μ<sub>X</sub>²</li>
+<li>= E[X²] - μ<sub>X</sub>² </li>
+</ul>
+</li>
+<li><p>=&gt; E[X²] = σ<sub>X</sub>² + μ<sub>X</sub>²  </p>
+</li>
+</ul>
+<h2 id="33805636b57d3a4f61be9c79a1d93947"></h2>
+
+<h3 id="常见离散分布之期望值变异数">常见离散分布之期望值/变异数</h3>
+<ul>
+<li>X~Bernouli(p) :<ul>
+<li>μ<sub>X</sub> = 1·p + 0·(1-p) = p</li>
+<li>σ<sub>X</sub>² = E[X²] - μ<sub>X</sub>² = ∑<sub>x=</sub>¹₀ x²·p<sub>X</sub>(x) - μ<sub>X</sub>²<ul>
+<li>= 1²·p + 0²·(1-p) - p² = p(1-p)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>X~BIN(n,p) :<ul>
+<li>μ<sub>X</sub> = np</li>
+<li>σ<sub>X</sub>² = np(1-p)</li>
+</ul>
+</li>
+<li>X~GEO(p) :<ul>
+<li>μ<sub>X</sub> = ∑<sub>x=</sub><sup>∞</sup><sub>0</sub> x· (1-p)<sup>x-1</sup>·p = 1/p </li>
+<li>σ<sub>X</sub>² = E[X²] - μ<sub>X</sub>² = (1-p)/p²</li>
+</ul>
+</li>
+<li>X~PASKAL(k,p) :<ul>
+<li>μ<sub>X</sub> = k/p</li>
+<li>σ<sub>X</sub>² = k(1-p)/p²  </li>
+</ul>
+</li>
+<li>X~POI(α) :<ul>
+<li>μ<sub>X</sub> = α</li>
+<li>σ<sub>X</sub>² = α </li>
+</ul>
+</li>
+<li>X~UNIF(a,b) :<ul>
+<li>μ<sub>X</sub> = (a+b)/2</li>
+<li>σ<sub>X</sub>² = 1/12·(b-a)(b-a+2)</li>
+</ul>
+</li>
+</ul>
+<h2 id="367685545196820c0c173d14fe4c9421"></h2>
+
+<h3 id="几率推导奥义：-「凑」字诀">几率推导奥义： 「凑」字诀</h3>
+<ul>
+<li>以 X~POI(a) 为例</li>
+<li>X~POI(a) 概率公式是什么？<ul>
+<li>P<sub>X</sub>(x) = (aˣ/x!)·e⁻ª , x=0,1,2,... </li>
+</ul>
+</li>
+<li>我们手上能利用的公式有哪些？<ul>
+<li>∑<sub>x=</sub><sup>∞</sup><sub>0</sub> (aˣ/x!)·e⁻ª = 1</li>
+</ul>
+</li>
+<li>开始推导:  </li>
+</ul>
+<hr></hr>
+<p>E[X] = ∑<sub>x=</sub><sup>∞</sup><sub>0</sub> x·(aˣ/x!)·e⁻ª </p>
+<p>x 和 x！约分，变成 (x-1)! , 这样 ∑ 运算就不能包括 x=0了， 因为 阶乘对负数没有定义</p>
+<p> E[X] = ∑<sub>x=</sub><sup>∞</sup><sub>1</sub> (aˣ/(x-1)!)·e⁻ª </p>
+<p>使 a 的指数形式 和 阶乘 保持一致</p>
+<p> E[X] = a·∑<sub>x=</sub><sup>∞</sup><sub>1</sub> (aˣ⁻¹/(x-1)!)·e⁻ª </p>
+<p>令 x' = x-1 </p>
+<p> E[X] = a· ∑<sub>x'=</sub><sup>∞</sup><sub>0</sub>  (aˣ<sup>'</sup>/x'!)·e⁻ª = a·1 = a </p>
+<hr></hr>
+<p>σ<sub>X</sub>² = E[X²] - μ<sub>X</sub>² = E[X²] - a² </p>
+<p>和 E[X] 类似， 可以推导处 E[X²] =  a² + a , 所以</p>
+<p>σ<sub>X</sub>² =  a </p>
+<hr></hr>
+<h2 id="ab458f4b361834dd802e4f40d31b5ebc"></h2>
+
+<h3 id="quiz">Quiz</h3>
+<details>
+<summary>
+quiz...
+</summary>
+
+1. 一个随机变数X, E[X]=μ, Var[X]=σ², σ&gt;0 请问下列何者叙述正确(正確選項只有一個)
+    - Y=-X, E[Y]=-μ, Var[Y]=σ²
+        - 正确: E[-X]=-E[X] , Var[-X]=(-1)²Var[X]
+    - Y=(X-μ)/σ² 会是一个均值为1，且标注差也为1的 Gaussian 随机函数
+        - ❌
+    - Y=-μ·X , 则 E[Y]=μ², Var[Y] = -μ²σ
+        - ❌
+    - Y=2X+4 , 则 E[Y]=2μ+4, Var[Y] = 2σ²
+        - ❌ Var[Y] = 4σ²
+2. 小米到學校後才得知今天 要小考，但是上課睡覺、下課玩的小米什麼 都沒有準備，考卷發下來後，發現考題是5題選擇題，每題都有 A、B、C、D四個選項，每題只有一個正確答案，每題20分。已知小米決定每題都猜C，隨機變數S代表小米這次考試總共答對的題數，可以發現S是個Binomial Random Variable，請問小米答對題數的期望值是多少 E[S] = ?
+    - E[S]= np = 5*0.25 = 1.25
+3. 承續上題小米的考試，已知小米全部都猜 C，而且又已經知道這次考試第一題答案真的是C，而隨機變數S代表小米這次考試總得分，S的變異數是Var[S]=σ², 请问σ是多少?
+    - 注: 已经不是 Binomial 分布了
+4. 阿壘投籃平均進球率是 60% ，某日他好友阿拓在旁提議 ，如果阿壘可以連續進 10球，就停止射球並且阿拓會請阿壘一瓶運動飲料。隨機變數B是指阿壘這場賭注裡總共的進籃球數 (ex: B=6 就是指阿壘只投進六球，第七球沒投進)，則請問 E[B]=?
+    - note: 不是简单的计算几何分布的期望值，因为第10球和前面的9球不一样，而且投中第10球后，就结束了
+    - p<sub>投不进</sub>=0.4, E[B] = ∑<sub>i=0</sub>⁹ i*pmf(i+1) +  10* (0.6**10)
+        ```python
+        &gt;&gt;&gt; sum( [ i* stats.geom.pmf( i+1, 0.4 )  for i in range(10) ] ) + 10* (0.6**10)
+        1.4909300736
+        # 暴力验证
+        &gt;&gt;&gt; p = 0.4
+        &gt;&gt;&gt; r = 0
+        &gt;&gt;&gt; for nBallScore in xrange(11):
+        ...     x = nBallScore +1 
+        ...     r += (1-p)**(x-1)*( p if nBallScore &lt;10 else 1 ) * nBallScore
+        ... 
+        &gt;&gt;&gt; r
+        1.4909300736
+        ```
+
+5. 某國的籃球 聯盟季後賽，由東隊對上 西隊 ，要在 5場比賽內決定 誰是這國家今 年最強的籃球 隊伍，當某一隊伍 取得 3場勝利的時候 ，這季後 賽馬上就結束確 定由三勝的球隊取得最後的冠軍寶座 。假設按照 幾年來的對戰統計 ，一場東隊 碰上西隊 的比賽，東隊獲勝的機率 是 60 %，而西隊獲勝的機率 則是 40 %。隨機變 數 N代表這次季後賽在總冠軍確定時，總共比賽的場數。請問N的期望值是?
+    - 同样，这也简单的计算 PASKAL 期望值，因为到第5场就结束了
+    - N 可能等于3,4,5
+    - 4.07
+        ```python
+        &gt;&gt;&gt; p = 0.6
+        &gt;&gt;&gt; 
+        &gt;&gt;&gt; 3*p**3 + 3*(1-p)**3
+        0.84
+
+        &gt;&gt;&gt; 4*p**3*(1-p)*3 + 4*(1-p)**3*p *3
+        1.4976
+
+        &gt;&gt;&gt; 5*p**2*(1-p)**2 * 6 
+        1.7280000000000002
+
+        &gt;&gt;&gt; 1.7280000000000002 + 1.4976 + 0.84
+        4.0656
+        ```
+6. 小惠拿到了全校身高，性别的资料。發現全校的身高資料是個Gaussian Distribution H~Guassian( 178.32, 5.83 )。并且发现 测量用的尺有兩個地方設計不良：
+    - 1. 用皮尺去量公正尺上一毫米(mm)的刻度，發現皮尺量出來是1.1毫米
+    - 2. 皮尺並不是從0 公分 做為開端，竟然是以 1 公分 做為開端，也就是量身高的時候醫師替各位同學都多加 1 公分了
+    - 發現這件慘案後，不僅全校剛剛量測結束的身高資料都錯誤，小惠的研究也陷入困境。但是小惠突然想起 丙紳老師教授過隨機變數的性質，發現如果皮尺只有這兩種誤差的話，那麼這些資料是可以還原成正確的身高資料的! 也就是假設隨機變數 X是隨機找一位小惠國中同學的真正身高(單位 cm)，則可以藉由小惠剛剛發現的兩種誤差推導出 H 與 X 的關係，則X 也就是全校同學的真正身高資料就可以還原了。
+    - 請問下列敘述何者正確? (正確的選項只有一個)
+        -  小惠全校真實身高的標準差為5.3 cm
+        - ❌ 若 μ<sub>X</sub> = E[X], 则 μ<sub>X</sub> = 1.1μ<sub>H</sub> + 1
+        - ❌ Var[X] = 38.44
+        - ❌ 若存在函数 g(x) 使得 H=g(X), 则可以推得 随机变数H,X 的标准差 σ<sub>H</sub>, σ<sub>X</sub> ,  会存在 σ<sub>H</sub> = g( σ<sub>X</sub>) 的关系
+    - H = 1 + 1.1X =&gt; X = (H-1)/1.1 = H/1.1 - 1/1.1
+        - E[X] = E[H]/1.1 - 1/1.1 = 178.32 /1.1 - 1/1.1 = 161.2
+        - Var[X] = Var[H]/(1.1**2) = (5.83**2)/(1.1**2) = 28.09
+            - σ<sub>X</sub> = 5.3
+            - 5.83 ≠ 1 + 5.3*1.1 = 1 + 5.3*1.1
+
+</details>
+
+<h2 id="b9d0e738b55594e8d3824de9b91b0914"></h2>
+
+<h1 id="week7">Week7</h1>
+<h2 id="041a19cd2e4bebb61913e1566b7cfb67"></h2>
+
+<h2 id="7-1-期望值ii">7-1 期望值II</h2>
+<ul>
+<li>对连续的随机变数X而言，想求期望值，我们用类似 离散随机变数的方式出发</li>
+<li>将X的值 以Δ为单位 无条件舍去来近似结果 离散随机变数 Y <ul>
+<li>当 Δ → 0时， X≈Y , 当Δ趋近0的时候，Y接近Y</li>
+<li>X∈[0,1Δ) -&gt; Y=0Δ</li>
+<li>X∈[1Δ,2Δ) -&gt; Y=1Δ</li>
+<li>X∈[nΔ,(n+1Δ) -&gt; Y=nΔ</li>
+</ul>
+</li>
+<li>根据第五周<ul>
+<li>p<sub>Y</sub>(nΔ) = P(nΔ ≤ X &lt; nΔ+Δ) ≈ f<sub>X</sub>(nΔ)·Δ</li>
+</ul>
+</li>
+<li>E[X] = lim<sub>Δ→0</sub>E[Y] = lim<sub>Δ→0</sub> ∑<sub>n=-∞</sub><sup>∞</sup> nΔ·P<sub>Y</sub>(nΔ)<ul>
+<li>= ∫<sub>-∞</sub><sup>∞</sup> xf<sub>X</sub>(x)dx</li>
+<li>即， x乘上pdf,然后积分<ul>
+<li>一般来说, 求一个 函数 f(x) 在 x∈ [a,b] 之间的均值, 一般是 求出原函数F, 均值就是 (F(b)-F(a))/(b-a)</li>
+<li>pdf 本身就蕴含一点均值的计算，求期望值只需要计算 F(b)-F(a) ?</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="45c2600156e6a1f700dfe4260c9694c4"></h2>
+
+<h3 id="随机变数函数-期望值">随机变数函数 期望值</h3>
+<ul>
+<li>对于任一连续随机变数X，其任意函数g(X)亦是一随机变数<ul>
+<li>E[g(X)] = ∫<sub>-∞</sub><sup>∞</sup> g(x)f<sub>X</sub>(x)dx</li>
+</ul>
+</li>
+</ul>
+<h2 id="29e116aede7ee7f00af95ca5edd4c6d0"></h2>
+
+<h3 id="常见连续分布的期望值变异数">常见连续分布的期望值/变异数</h3>
+<ul>
+<li>X ~ Exponential(λ)<ul>
+<li>μ = 1/λ</li>
+<li>σ² = 1/λ²</li>
+</ul>
+</li>
+<li>X ~ Erlang(n,λ)<ul>
+<li>μ = n/λ</li>
+<li>σ² = n/λ²</li>
+</ul>
+</li>
+<li>X ~ Gaussian(μ,σ)<ul>
+<li>μ = μ</li>
+<li>σ² = σ²</li>
+</ul>
+</li>
+<li>X ~ UNIF(a,b)<ul>
+<li>μ = (a+b)/2</li>
+<li>σ² = 1/12 · (b-a)²</li>
+</ul>
+</li>
+</ul>
+<h2 id="4fdbd553cf6f3c5cfd46baa1993c8dc2"></h2>
+
+<h3 id="期望值推导">期望值推导</h3>
+<ul>
+<li>一些有用的微积分性质<ul>
+<li>e<sup><code>*</code></sup>𝑑<code>*</code> = 𝑑e<sup><code>*</code></sup></li>
+<li>∫U𝑑V = UV - ∫VdU</li>
+<li>∫c𝑑x = ∫𝑑cx  , c 是常数</li>
+<li>∫pdf = 1</li>
+</ul>
+</li>
+</ul>
+<h2 id="27fdd10ac05020268c5d6bb6954f4099"></h2>
+
+<h2 id="72-隨機變數之函數">7.2 隨機變數之函數</h2>
+<ul>
+<li>随机变数X的任意函数g(X)也是一个随机变数</li>
+<li>通常被称为 Derived Random Variable<ul>
+<li>从 random variable X 衍生出来的一个新的random variable</li>
+</ul>
+</li>
+</ul>
+<h2 id="317aa5bd89ce045575f8cb8491b70c62"></h2>
+
+<h3 id="如何求-gx几率分布">如何求 g(X)几率分布?</h3>
+<ul>
+<li>若X为离散<ul>
+<li>直接推 g(X) 的 PMF</li>
+</ul>
+</li>
+<li><p>若X为连续</p>
+<ul>
+<li>先推 g(X)的CDF， 再微分得到PDF</li>
+</ul>
+</li>
+<li><p>Ex:某宅宅超爱战LOL。每次一战就连续战 𝑿 场不可收拾，已知 𝑿~GEO(0.2)。某宅宅内心仍有 一点清明，其良心亦会因战过度而内疚，依战的次数 多寡，内疚程度 𝒀分别为1, 2, 3 不同等级:</p>
+<pre><code>             ⎧ 1, if 1≤X≤3
+  Y = g(X) = ⎨ 2, if 4≤X≤6
+             ⎩ 3, if X≥7
+</code></pre><ul>
+<li>问Y=g(X)的几率分布?</li>
+<li>解: X~GEO(0.2) =&gt; p<sub>X</sub>(x) = (1-0.2)<sup>x-1</sup>·0.2<ul>
+<li>p<sub>Y</sub>(1) = p<sub>X</sub>(1)+p<sub>X</sub>(2)+p<sub>X</sub>(3) <ul>
+<li>= 0.2 + 0.8·0.2 + 0.8²·0.2</li>
+</ul>
+</li>
+<li>p<sub>Y</sub>(2) = p<sub>X</sub>(4)+p<sub>X</sub>(5)+p<sub>X</sub>(6) <ul>
+<li>= (0.8)³·0.2 + (0.8)⁴·0.2 + (0.8)⁵·0.2</li>
+</ul>
+</li>
+<li>p<sub>Y</sub>(3) = P(Y=3) = 1-p<sub>Y</sub>(2)-p<sub>Y</sub>(3)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>离散g(X)<ul>
+<li>Y = g(X) 的 PMF为 </li>
+<li><img src="../../ap/calculus/imgs/TU_prob2_gx_PMF.png" alt=""></img></li>
+</ul>
+</li>
+<li>连续g(X) <ul>
+<li>先计算g(X)的CDF: <ul>
+<li>F<sub>g(X)</sub>(y) = P[g(X)≤y]</li>
+</ul>
+</li>
+<li>若 g(X)可微分, 再对y微分得到PDF:<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_gx_PDF.png" alt=""></img></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>连续g(x) = aX + b</p>
+<ul>
+<li>Ex1: 若Y=3X+2, 请问Y的PDF 跟f<sub>X</sub>(x)之关系为何?</li>
+<li>F<sub>Y</sub>(y) = P(Y≤y)<ul>
+<li>= P(3X+2≤y)</li>
+<li>= P(X≤(y-2)/3 )</li>
+<li>= F<sub>X</sub>( (y-2)/3 )</li>
+</ul>
+</li>
+<li>f<sub>Y</sub>(y) = f<sub>X</sub>( (y-2)/3 )·(1/3)</li>
+<li><p>generic solution:</p>
+<ul>
+<li>f<sub>Y</sub>(y) = (1/|a|)·f<sub>X</sub>( (y-b)/a )</li>
+</ul>
+</li>
+<li><p>Ex2: X~Exponential(λ) , Y = 2X</p>
+</li>
+<li>f<sub>X</sub>(x) = λe<sup>-λx</sup>u(x), Y=2x (a=2,b=0)<ul>
+<li>这里 u(x)是工程上常见的一个函数，表示只有x&gt;0时有值，即x&gt;0时u(x)=1, 其他情况u(x)=0</li>
+</ul>
+</li>
+<li>f<sub>Y</sub>(y) = (1/|a|)·f<sub>X</sub>( (y-b)/a )<ul>
+<li>= 1/2·λe<sup>-λ·y/2</sup>·u(y/2)   (a,b代入)</li>
+<li>= λ/2·e<sup>-λ/2·y</sup>·u(y) </li>
+<li>=&gt; Y~Exponential(λ/2)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>连续g(x) = aX² + b<ul>
+<li>Ex: Y = 2X²+1, X~UNIF(-1,7), 求 Y的PDF</li>
+<li>不要好高骛远，先算CDF</li>
+<li>F<sub>Y</sub>(y) = P(Y=2X²+1≤y)<ul>
+<li>= P(X²≤(y-1)/2)</li>
+<li>= P( -√((y-1)/2) ≤ X ≤ √((y-1)/2) )</li>
+<li>= ∫<sub>-z</sub><sup>z</sup>f<sub>X</sub>(x)dx  , 令 z = √((y-1)/2)</li>
+</ul>
+</li>
+<li>需要注意积分的范围, 这里注意 Y &gt; 3的情况<ul>
+<li>y≤3: F<sub>Y</sub>(y) = ∫<sub>-z</sub><sup>z</sup>1/8dx = </li>
+<li>y&gt;3: F<sub>Y</sub>(y) = ∫<sub>-1</sub><sup>z</sup>1/8dx =</li>
+<li>微分得到 f<sub>Y</sub>(y)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="33f8148fbbdcedb32e214651afcff8d9"></h2>
+
+<h2 id="73a-条件概率分布">7.3a 条件概率分布</h2>
+<ul>
+<li>Ex:为了更了解宅宅的心，店员妹亦开始战 LOL。 已知店员妹战LOL场数 𝑿~UNIF (1, 5)。若已知 店员妹战了两场仍战意甚浓、继续战。请问在此情况下，店员妹 今日战LOL场数 𝑿 之机率分布为何?<ul>
+<li>条件 B: 已战两场 仍想战</li>
+<li>p<sub>X|B</sub>(x) = P(X=x|B) = P(X=x,B)/P(B)<ul>
+<li>= (1/5) / (3/5)  = 1/3,  x∈B:x=3,4,5</li>
+<li>= 0,   x∉B:x=otherwise</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>若𝑿是一离散随机变数，其PMF为 𝒑𝑿(𝒙)。若已知某事件 𝑩 已发生，则在此情况下 之条件机率分布为:<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_cond_dis_PMF.png" alt=""></img></li>
+</ul>
+</li>
+<li>Ex:店员妹等公交车上班。通常等公交车的时间 𝑿， 从零到十分钟间可能性均等。若店员妹已等了 五分钟车还没来。请问在此情况下，等车时间 𝑿 之机率分布为何?<ul>
+<li>B: X&gt;5 =&gt; P(B)=0.5</li>
+<li>f<sub>X|B</sub> = x∈B: f<sub>X</sub>(x) / P(B)<ul>
+<li>= x∉B: 0</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>若𝑿是一连续随机变量，其PDF为 𝒇𝑿(𝒙)。若已知某事件 𝑩 已发生，则在此情况下 之条件机率分布为:<ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_cond_dis_PDF.png" alt=""></img></li>
+</ul>
+</li>
+<li>条件期望值 Conditional Expectation <ul>
+<li><img src="../../ap/calculus/imgs/TU_prob2_cond_E.png" alt=""></img></li>
+<li><img src="../../ap/calculus/imgs/TU_prob2_cond_var.png" alt=""></img></li>
+</ul>
+</li>
+</ul>
+<h2 id="f16b66e705a9a610a0da37b5dae105eb"></h2>
+
+<h2 id="73a-失忆性-memoryless">7.3a 失忆性 (Memoryless)</h2>
+<ul>
+<li><p>宅宅与店员妹相约出门。宅宅出门前在战LOL，场数 𝑿~GEO (𝟎.2) 。店员妹等了两场后，宅宅还在玩。 店员妹甚怒，怒催宅宅。宅宅曰「快好了、快好了」。问宅宅剩余场 数 𝑿’ 之机率分布为何?</p>
+</li>
+<li><p>店员妹与宅宅相约出门。店员妹出门前化妆时间为 𝑿(小时)， 𝑿~Exponential(𝟏)。经过一小时后， 仍未完成。宅宅甚怒，怒催店员妹。店员妹曰「快好了、快好了」。 问店员妹剩余化妆时间𝑿′机率分布为何? </p>
+</li>
+<li><p>Geometric 跟 Exponential 机率分布 皆有失忆性的性质</p>
+<ul>
+<li>不管事情已经进行多久，对于事情之后的进行 一点影响都没有!</li>
+</ul>
+</li>
+</ul>
+<h2 id="e1f7ff5183a361cd3b41e3ab5e647cb5"></h2>
+
+<h2 id="quiz">QUIZ</h2>
+<details>
+<summary>
+quiz...
+</summary>
+
+1. X~Exponential( 0.5 ) , 请问下列哪个错误？
+    1. Y=2x+1, Var[Y] = 9   (错)
+    2. E[X] = 2 
+    3. Var[X] = 4 
+    4. Y=2x+1, E[Y] = 5 
+
+    - A: 
+        - 可以很容易知道 E = 1/0.5 = 2, Var = 1/0.5² = 4
+        - E[Y] = E[2X+1] = 2E[X] + E[1] = 4+1 = 5
+        - Var[Y] = E[(Y-5)²] = E[Y²] - 25 = E[4X²+4X+1] - 25 = 4E[X²]+4E[X]+1-25
+            - = 4·( Var[X] + E[X]² ) + 8+1-25 = 16
+        - using scipy
+            ```python
+            &gt;&gt;&gt; scipy.stats.expon.expect( scale=1/0.5 )
+            1.9999999999999998
+            &gt;&gt;&gt; scipy.stats.expon.var( scale=1/0.5 )
+            4.0
+            &gt;&gt;&gt; scipy.stats.expon.expect( func=lambda x:2*x+1,  scale=1/0.5 )
+            5.0
+            &gt;&gt;&gt; scipy.stats.expon.expect( func=lambda x:x**2,  scale=1/0.5 )
+            8.0    # E[X²]
+            &gt;&gt;&gt; Y = scipy.stats.expon.rvs(scale=1/0.5 , size=1000000) *2 + 1
+            &gt;&gt;&gt; Y.var()
+            15.989224062316483
+            ```
+2. 假設等一班特定的公車所花費的的時間 T 是Uniform Distribution，小速在公車站打滾多年的經驗，已經知道168路公車的平均要花5分鐘等一班公車，請問168號公車是幾分鐘會有一班車經過?
+    - A:
+        - T~UNIF
+        - E[T] = 5 = ( 0 + b) / 2
+        - b = 10分钟
+3. 星仔跟阿達兩人準備要出席今晚在學校的晚會，為了在晚會上引起眾人目光，星仔決定大手筆打扮自己，但是阿達其實只是為了去吃美食而已。下午3點兩人相約在阿達家集合，因為阿達有車可以載星仔一起去會場，但是星仔帶著所有行頭打算三點才開始在阿達家開始打扮。假設連續隨機變數TT 是星仔打扮所需要的時間(單位 hr)，且T∼Exponential(λ=1/3)。但是晚會六點就開始了，加上從阿達家過去的路程要半小時以上，如果阿達下午五點20以前沒即時出門前往會場，阿達或許就會吃不到今日開場限量的好吃麵包，於是阿達決定就等到下午五點20分，如果星仔依然還沒打扮好，就直接拋下星仔自行前往會場。也就是離散型隨機變數RR代表阿達有沒有成功到達會場:
+    - R = 1 if 阿達載星仔到會場 ; R = 0 if 阿達沒有載星仔到會場. 請問，Var[R]=?
+    - A: using scipy
+        ```python
+        &gt;&gt;&gt; P_R1 = scipy.stats.expon.cdf( 2+1/3.0 ,   scale=3)
+        &gt;&gt;&gt; P_R1
+        0.5405741759640734
+        &gt;&gt;&gt; Var = P_R1 * (1-P_R1)  #  Bernoulli
+        0.2483537362448364
+        ```
+4. 同上題情境，如果5點的時候阿達確認星仔還沒打扮完，在此情況下，隨機變數R2==(R∣T&gt;2) 代表最後阿達是否會載星仔到會場，請問E[R2] ?
+    - A: using scipy , 由指数分布的失忆性
+        ```python
+        &gt;&gt;&gt; P_R1 = scipy.stats.expon.cdf( 1/3.0 ,   scale=3)
+        &gt;&gt;&gt; P_R1
+        0.10516068318563022
+        &gt;&gt;&gt; E = P  # Bernoulli
+        ```
+5. X的CDF 定义如下
+    - F<sub>X</sub>(x) = 
+        - 0 , 0&gt;x
+        - 1-e<sup>-x/2</sup>  ,  x≥0
+    - f<sub>X</sub>(x) = e<sup>-x/2</sup> / 2  =&gt; X~Exp(2)
+        - E[X] = 2 , Var[X] = 4
+6. 條件機率的一大應用就是在醫學疾病檢驗的判斷，假設有一疾病只要病患確診，這病患三個月內的死亡率將會是90%，但是人群中只有2%的人確定患有此疾病(Disease)。而如今開發出一套檢驗方式可以針對此疾病作檢驗，根據檢驗結果是陽性(Positive)或是陰性(Negative)以判斷是否染上此疾病，陽性就是出現罹患此疾病會有的現象，陰性則反之。但是這套檢驗方法卻不是百分之百完全準確的，因為有些環境或是其他疾病會讓已經確定自己是健康的人(Health)也檢驗也出陽性，假設這種狀況的機率是0.3%；而實際上已經確定患有此疾病(Disease)但是卻因為一些環境或是體質差異也有可能檢驗出陰性，假設這樣的機率是0.2%。某天小豐擔心自己患上此疾病，於是前往醫院進行這種檢驗，結果檢驗結果為陽性，請幫忙小豐分析，小豐沒有染上此疾病(Health)的機率為何?
+    ```
+    P(health) = 0.98 , P(disease) = 0.02
+    P(positive | health) = 0.003
+    P(negative | disease) = 0.002
+    求 P( health | positive )
+    P( health | positive )  = P(health, positive) / P(positive)
+
+    P(health, positive) = P(positive | health)*P(health) = 0.003 * 0.98
+    怎么求 P(positive)？
+    P(positive) = P(positive, health ) + P( positive, disease )
+                = 0.003 * 0.98 +  P( positive |  disease ) * P( disease )
+                = 0.003 * 0.98 + ( 1 - P( negative |  disease ) )  * P( disease )
+                = 0.003 * 0.98 + ( 1 - 0.002 ) * 0.02
+                = 0.0229
+    P( health | positive )  = 0.003 * 0.98 / 0.0229 = 0.128
+    ```
+
+</details>
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch03.html" class="navigation navigation-prev " aria-label="Previous page: 连续机率分布">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch05.html" class="navigation navigation-next " aria-label="Next page: 联合概率 边际概率 双变数期望值">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"期望值 条件概率 失忆性","level":"1.5","depth":1,"next":{"title":"联合概率 边际概率 双变数期望值","level":"1.6","depth":1,"path":"ch05.md","ref":"ch05.md","articles":[]},"previous":{"title":"连续机率分布","level":"1.4","depth":1,"path":"ch03.md","ref":"ch03.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch04.md","mtime":"2024-01-02T13:15:34.666Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:18:34.382Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,768 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java Arrays.fill()方法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0867.html" />
+    
+    
+    <link rel="prev" href="0865.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 工具库
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0849.html">
+            
+                <a href="0849.html">
+            
+                    
+                    Java Arrays类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0850.html">
+            
+                <a href="0850.html">
+            
+                    
+                    Java Arrays类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0851.html">
+            
+                <a href="0851.html">
+            
+                    
+                    数组方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0852.html">
+            
+                <a href="0852.html">
+            
+                    
+                    Java Arrays.copyOf()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0853.html">
+            
+                <a href="0853.html">
+            
+                    
+                    Java Arrays.deepToString()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0854.html">
+            
+                <a href="0854.html">
+            
+                    
+                    Java Arrays.deepHashCode()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0855.html">
+            
+                <a href="0855.html">
+            
+                    
+                    Java Arrays.deepEquals()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0856.html">
+            
+                <a href="0856.html">
+            
+                    
+                    Java Arrays.copyOfRange()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0857.html">
+            
+                <a href="0857.html">
+            
+                    
+                    Java Arrays.compare()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0858.html">
+            
+                <a href="0858.html">
+            
+                    
+                    Java Arrays.binarySearch()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0859.html">
+            
+                <a href="0859.html">
+            
+                    
+                    Java Arrays.asList()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0860.html">
+            
+                <a href="0860.html">
+            
+                    
+                    Java Arrays.setAll()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0861.html">
+            
+                <a href="0861.html">
+            
+                    
+                    Java Arrays.parallelPrefix()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0862.html">
+            
+                <a href="0862.html">
+            
+                    
+                    Java Arrays.parallelPrefix()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0863.html">
+            
+                <a href="0863.html">
+            
+                    
+                    Java Arrays.mismatch()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0864.html">
+            
+                <a href="0864.html">
+            
+                    
+                    Java Arrays.hashCode()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="0865.html">
+            
+                <a href="0865.html">
+            
+                    
+                    Java Arrays.parallelSort()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.18" data-path="0866.html">
+            
+                <a href="0866.html">
+            
+                    
+                    Java Arrays.fill()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="0867.html">
+            
+                <a href="0867.html">
+            
+                    
+                    Java Arrays.equals()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="0868.html">
+            
+                <a href="0868.html">
+            
+                    
+                    Java Arrays.sort()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="0869.html">
+            
+                <a href="0869.html">
+            
+                    
+                    Java Arrays.stream()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="0870.html">
+            
+                <a href="0870.html">
+            
+                    
+                    Java Arrays.toString()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="0871.html">
+            
+                <a href="0871.html">
+            
+                    
+                    Java Arrays.spliterator()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="0872.html">
+            
+                <a href="0872.html">
+            
+                    
+                    Java Arrays.compareUnsigned()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java Arrays.fill()方法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-arraysfill方法">Java <code>Arrays.fill()</code>方法</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-util/java-arrays-fill-method" target="_blank">https://www.studytonight.com/java-util/java-arrays-fill-method</a></p>
+</blockquote>
+<p>在本教程中，我们将学习 <a href="https://www.studytonight.com/java/" target="_blank">Java</a> 中<code>Arrays</code>类的<code>fill()</code>方法。使用这种方法，我们可以将特定值赋给所有数组元素或指定范围内的元素。当需要从一个数组中初始化一个特定的值到元素组时，我们使用这个方法。</p>
+<h3 id="句法">句法</h3>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">fill</span><span class="hljs-params">(datatype[] array,datatype val)</span>
+</span></code></pre>
+<p>此方法接收一个数组和值，然后将该值赋给所有数组索引。</p>
+<h3 id="fill-方法重载方法列表"><code>fill</code> <code>()</code>方法重载方法列表</h3>
+<p>此表包含<code>fill</code> <code>()</code>方法的所有重载变体。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>静态空隙填充(布尔[]数组，布尔 val)</strong></td>
+<td>此方法将指定的布尔值赋给指定布尔数组的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(布尔[]数组，int fromIndex，int toIndex，布尔 val)</strong></td>
+<td>此方法将指定的布尔值分配给指定布尔数组的指定范围的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(字节[]数组，字节 val)</strong></td>
+<td>此方法将指定的字节值分配给指定字节数组的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(字节[]数组，int fromIndex，int toIndex，byte val)</strong></td>
+<td>此方法将指定的字节值分配给指定字节数组的指定范围的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(char[]数组，char val)</strong></td>
+<td>此方法将指定的字符值分配给指定字符数组的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态视线填充(char[]数组，int fromIndex，int toIndex，char val)</strong></td>
+<td>此方法将指定的字符值分配给指定字符数组的指定范围的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(双[]数组，双 val)</strong></td>
+<td>此方法将指定的双精度值赋给指定的双精度数组的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(double[]数组，int fromIndex，int toIndex，double val)</strong></td>
+<td>此方法将指定的双精度值赋给指定双精度数组的指定范围的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(float[]数组，float val)</strong></td>
+<td>此方法将指定的浮点值分配给指定浮点数组的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(float[]数组，int fromIndex，int toIndex，float val)</strong></td>
+<td>此方法将指定的浮点值分配给指定浮点数组的指定范围的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(int[]数组，int val)</strong></td>
+<td>此方法将指定的 int 值赋给指定的 int 数组的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(int[]数组，int fromIndex，int toIndex，int val)</strong></td>
+<td>此方法将指定的 int 值赋给指定 int 数组的指定范围的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(long[]数组，int fromIndex，int toIndex，long val)</strong></td>
+<td>此方法将指定的长值赋给指定的长数组的指定范围的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(长[]数组，长 val)</strong></td>
+<td>此方法将指定的长值赋给指定的长数组的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(短[]数组，int fromIndex，int toIndex，短 val)</strong></td>
+<td>此方法将指定的短值分配给指定短数组的指定范围的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(短[]数组，短 val)</strong></td>
+<td>此方法将指定的短值分配给指定短数组的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(对象[]数组，int fromIndex，int toIndex，Object val)</strong></td>
+<td>此方法将指定的对象引用分配给指定对象数组的指定范围的每个元素。</td>
+</tr>
+<tr>
+<td><strong>静态空隙填充(对象[]数组，对象值)</strong></td>
+<td>此方法将指定的对象引用分配给指定对象数组的每个元素。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="示例将元素填充到数组中">示例:将元素填充到数组中</h2>
+<p>在下面给出的程序中，我们可以看到一个现有的数组<code>arr</code> ，它包含不同的元素和不同的值，但是在应用 <code>fill()</code>方法后，所有的数组元素都被值<code>5</code>填充。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span> 
+    </span>{ 
+        <span class="hljs-keyword">int</span> arr[] = {<span class="hljs-number">12</span>, <span class="hljs-number">21</span>, <span class="hljs-number">31</span>, <span class="hljs-number">81</span>, <span class="hljs-number">53</span>, <span class="hljs-number">24</span>, <span class="hljs-number">42</span>, <span class="hljs-number">41</span>, <span class="hljs-number">62</span>};           
+        Arrays.fill(arr, <span class="hljs-number">5</span>); 
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> num:arr)
+        {
+            System.out.print(num+<span class="hljs-string">" "</span>);
+        } 
+    } 
+}
+</code></pre>
+<p>5 5 5 5 5 5 5 5 5 5</p>
+<h2 id="示例将元素填充到特定索引的数组中">示例:将元素填充到特定索引的数组中</h2>
+<p>上述方法用于初始化所有数组元素。如果我们想要初始化一个特定的元素范围呢？在这种情况下，我们有另一个重载方法，类似于<code>Arrays</code>类的其他重载方法。在下面给出的代码中，我们可以看到第 2 到第 7 个索引的数组元素被替换为 8。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span> 
+    </span>{ 
+        <span class="hljs-keyword">int</span> arr[] = {<span class="hljs-number">12</span>, <span class="hljs-number">21</span>, <span class="hljs-number">31</span>, <span class="hljs-number">81</span>, <span class="hljs-number">53</span>, <span class="hljs-number">24</span>, <span class="hljs-number">42</span>, <span class="hljs-number">41</span>, <span class="hljs-number">62</span>};           
+        Arrays.fill(arr, <span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>); 
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> num:arr)
+        {
+            System.out.print(num+<span class="hljs-string">" "</span>);
+        } 
+    } 
+}
+</code></pre>
+<p>12 21 8 8 8 8 41 62</p>
+<h2 id="其重载方法示例">其重载方法示例</h2>
+<p>在下面的例子中，我们在各种数据类型上实现了<code>fill()</code>方法，如<code>float</code>、<code>long</code>和<code>char</code>。我们可以通过比较代码中的参数和控制台中的输出来理解实现。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span></span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span> 
+    </span>{  
+        <span class="hljs-comment">//example for float</span>
+        <span class="hljs-keyword">float</span> array1[] = {<span class="hljs-number">12</span>, <span class="hljs-number">21</span>, <span class="hljs-number">31</span>, <span class="hljs-number">1</span>, <span class="hljs-number">53</span>, <span class="hljs-number">24</span>, <span class="hljs-number">42</span>, <span class="hljs-number">41</span>, <span class="hljs-number">62</span>}; 
+        System.out.println(<span class="hljs-string">"\nExample of fill() with flaot:\n"</span>+Arrays.toString(array1));
+        Arrays.fill(array1, <span class="hljs-number">2</span>, <span class="hljs-number">7</span>, <span class="hljs-number">44</span>); 
+        System.out.println(Arrays.toString(array1));
+
+        <span class="hljs-comment">//example for long</span>
+        <span class="hljs-keyword">long</span> array2[] = {<span class="hljs-number">8</span>, <span class="hljs-number">7</span>, <span class="hljs-number">5</span>, <span class="hljs-number">1</span>, <span class="hljs-number">9</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">7</span>, <span class="hljs-number">3</span>}; 
+        System.out.println(<span class="hljs-string">"\nExample of fill() with long:\n"</span>+Arrays.toString(array2));
+        Arrays.fill(array2, <span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">9</span>); 
+        System.out.println(Arrays.toString(array2));
+
+        <span class="hljs-comment">//example for char</span>
+        <span class="hljs-keyword">char</span> array3[] = {<span class="hljs-string">'s'</span>, <span class="hljs-string">'t'</span>, <span class="hljs-string">'u'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'y'</span>, <span class="hljs-string">'t'</span>, <span class="hljs-string">'o'</span>, <span class="hljs-string">'n'</span>, <span class="hljs-string">'i'</span>, <span class="hljs-string">'g'</span>, <span class="hljs-string">'h'</span>, <span class="hljs-string">'t'</span>}; 
+        System.out.println(<span class="hljs-string">"\nExample of fill() with long:\n"</span>+Arrays.toString(array3));
+        Arrays.fill(array3, <span class="hljs-number">0</span>, <span class="hljs-number">8</span>, <span class="hljs-string">'s'</span>); 
+        System.out.println(Arrays.toString(array3));
+    }
+}
+</code></pre>
+<p>用 flaot 填充()的示例:
+【12.0，21.0，31.0，1.0，53.0，24.0，42.0，41.0，62.0】
+【12.0，21.0，44.0，44.0，44.0，44.0，41.0，62.0】</p>
+<p>用 long 填充()的示例:
+【8，</p>
+<h3 id="结论">结论</h3>
+<p>在本教程中，我们学习了 fill()方法如何使用<code>public static void fill(datatype[] array,datatype val)</code>初始化完整的数组。如果我们想在那个时候初始化一个特定的范围，我们有另一个重载方法<code>public static void fill(datatype[] array,datatype fromIndex, datatype toIndex, datatype val)</code>。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0865.html" class="navigation navigation-prev " aria-label="Previous page: Java Arrays.parallelSort()方法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0867.html" class="navigation navigation-next " aria-label="Next page: Java Arrays.equals()方法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java Arrays.fill()方法","level":"1.1.18","depth":2,"next":{"title":"Java Arrays.equals()方法","level":"1.1.19","depth":2,"path":"0867.md","ref":"0867.md","articles":[]},"previous":{"title":"Java Arrays.parallelSort()方法","level":"1.1.17","depth":2,"path":"0865.md","ref":"0865.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0866.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:21:02.278Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

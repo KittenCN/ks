@@ -1,0 +1,868 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>STL 中的列表容器 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="198.html" />
+    
+    
+    <link rel="prev" href="196.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    STL
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="190.html">
+            
+                <a href="190.html">
+            
+                    
+                    容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="191.html">
+            
+                <a href="191.html">
+            
+                    
+                    STL 简介:标准模板库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="192.html">
+            
+                <a href="192.html">
+            
+                    
+                    什么是 STL 中的容器？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="193.html">
+            
+                <a href="193.html">
+            
+                    
+                    STL 中的偶对模板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="194.html">
+            
+                <a href="194.html">
+            
+                    
+                    STL 中的元组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="195.html">
+            
+                <a href="195.html">
+            
+                    
+                    STL 中的数组容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="196.html">
+            
+                <a href="196.html">
+            
+                    
+                    STL 中的向量容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.8" data-path="197.html">
+            
+                <a href="197.html">
+            
+                    
+                    STL 中的列表容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="198.html">
+            
+                <a href="198.html">
+            
+                    
+                    STL 中的映射容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="199.html">
+            
+                <a href="199.html">
+            
+                    
+                    C++ STL 中的栈容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="200.html">
+            
+                <a href="200.html">
+            
+                    
+                    STL 中的队列容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="201.html">
+            
+                <a href="201.html">
+            
+                    
+                    C++ STL 中的优先级队列容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="202.html">
+            
+                <a href="202.html">
+            
+                    
+                    C++ STL 中的 DEQUE 容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="203.html">
+            
+                <a href="203.html">
+            
+                    
+                    迭代器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="204.html">
+            
+                <a href="204.html">
+            
+                    
+                    C++ STL 中迭代器概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="205.html">
+            
+                <a href="205.html">
+            
+                    
+                    STL 中迭代器的运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="206.html">
+            
+                <a href="206.html">
+            
+                    
+                    STL 中的算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="207.html">
+            
+                <a href="207.html">
+            
+                    
+                    C++ STL 算法概述
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="208.html">
+            
+                <a href="208.html">
+            
+                    
+                    STL 中的排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="209.html">
+            
+                <a href="209.html">
+            
+                    
+                    STL 中的二分搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="210.html">
+            
+                <a href="210.html">
+            
+                    
+                    STL 中的上界和下界搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="211.html">
+            
+                <a href="211.html">
+            
+                    
+                    C++ STL 中的非修改算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="212.html">
+            
+                <a href="212.html">
+            
+                    
+                    C++ STL 中的修改算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="213.html">
+            
+                <a href="213.html">
+            
+                    
+                    C++ STL 中的数值算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="214.html">
+            
+                <a href="214.html">
+            
+                    
+                    STL 中的最小和最大操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="215.html">
+            
+                <a href="215.html">
+            
+                    
+                    最小最大值和置换运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >STL 中的列表容器</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="stl-中的列表容器">STL 中的列表容器</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/cpp/stl/stl-container-list" target="_blank">https://www.studytonight.com/cpp/stl/stl-container-list</a></p>
+</blockquote>
+<p>数组和向量是连续的容器，即它们将数据存储在连续的内存中，因此向量/数组中间的插入操作非常昂贵(就操作数量和处理时间而言)，因为我们必须移动所有元素，链表克服了这个问题。链表可以通过使用列表容器来实现。</p>
+<p>使用列表模板创建新链接列表的语法为:</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;list&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">std</span>::**<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; l;
+}
+<span class="hljs-comment">/* Creates a new empty linked list l */</span>
+</code></pre>
+<p>类似于向量和数组，列表也可以用参数初始化，</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;list&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">std</span>::**<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; l{<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>};
+}
+<span class="hljs-comment">/* Creates a new linked list l */</span>
+</code></pre>
+<p><img src="img/39b33c4b30f7dbe66382af038df83c21.png" alt="List creation example"></img></p>
+<p>以下是我们初始化列表的更多方法:</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;list&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; myList{<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>};
+    <span class="hljs-comment">/* creates list with 1,2,3 in it */</span>
+
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; myNewList = <span class="hljs-number">1</span>;
+    <span class="hljs-comment">/*  create list myNewList of integer 
+        and copies value of 1 into it*/</span>
+}
+</code></pre>
+<hr></hr>
+<h2 id="列表容器的成员函数">列表容器的成员函数</h2>
+<h3 id="insert功能"><code>insert</code>功能</h3>
+<p>顾名思义，这个方法在列表中的特定位置插入一个元素。insert()有三种变体，如下所示:</p>
+<ul>
+<li><code>insert(iterator, element)</code>:在列表中<strong>迭代器</strong>指向的位置之前插入<strong>元素</strong>。</li>
+<li><code>insert(iterator, count, element)</code>:在列表中<strong>迭代器</strong>指向的位置前插入<strong>元素</strong>，计数次。</li>
+<li><code>insert(iterator, start_iterator, end_iterator)</code>:在<strong>迭代器</strong>指向的位置之前，将 <strong>start_iterator</strong> 指向的元素插入 <strong>end_iterator</strong> 指向的元素</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;list&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; l = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>};
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt;::iterator it = l.begin();           
+
+    l.**insert** (it+<span class="hljs-number">1</span>, <span class="hljs-number">100</span>);    <span class="hljs-comment">// insert 100 before 2 position</span>
+    <span class="hljs-comment">/* now the list is 1 100 2 3 4 5 */</span>
+
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; new_l = {<span class="hljs-number">10</span>,<span class="hljs-number">20</span>,<span class="hljs-number">30</span>,<span class="hljs-number">40</span>};   <span class="hljs-comment">// new list</span>
+
+    new_l.**insert** (new_l.**begin()**, l.**begin()**, l.**end()**);
+    <span class="hljs-comment">/* 
+        insert elements from beginning of list l to end of list l 
+        before 1 position in list new_l */</span>
+
+    <span class="hljs-comment">/* now the list new_l is 1 100 2 3 4 5 10 20 30 40 */</span>
+
+    l.**insert**(l.**begin()**, <span class="hljs-number">5</span>, <span class="hljs-number">10</span>);  <span class="hljs-comment">// insert 10 before beginning 5 times</span>
+    <span class="hljs-comment">/* now l is 10 10 10 10 10 1 100 2 3 4 5 */</span>
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3 id="pushback和pushfront功能"><code>push_back</code>和<code>push_front</code>功能</h3>
+<p><code>push_back(element)</code>方法用于将元素从后面推入列表。</p>
+<p><img src="img/dd40a200ae9b202b39b3406de9bd4d8a.png" alt="Push elements from back in Lists"></img></p>
+<p><code>push_front(element)</code>方法用于将元素从前面推入列表。</p>
+<p><img src="img/ddf9071eb7f1fad70727885a553ef9e9.png" alt="Push elements from front in Lists"></img></p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;list&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; l{<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>};
+
+    l.**push_back**(<span class="hljs-number">6</span>);
+    l.**push_back**(<span class="hljs-number">7</span>);
+    *<span class="hljs-comment">/* now the list becomes 1,2,3,4,5,6,7 */</span>*
+
+    l.**push_front**(<span class="hljs-number">8</span>);
+    l.**push_front**(<span class="hljs-number">9</span>);
+    *<span class="hljs-comment">/* now the list becomes 9,8,1,2,3,4,5,6,7 */</span>*
+
+}
+</code></pre>
+<h3 id="popback和popfront功能"><code>pop_back</code>和<code>pop_front</code>功能</h3>
+<p><code>pop_front()</code>从列表开始处移除第一个元素。而<code>pop_back()</code>从列表末尾移除第一个元素。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;list&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; l{<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>};
+
+    l.**pop_back()**();
+    *<span class="hljs-comment">/* now the list becomes 1,2,3,4 */</span>*
+
+    l.**pop_front()**();
+    *<span class="hljs-comment">/* now the list becomes 2,3,4 */</span>*
+}
+</code></pre>
+<h3 id="empty功能"><code>empty</code>功能</h3>
+<p>如果列表为空，此方法返回 true，否则返回 false。</p>
+<h3 id="size功能"><code>size</code>功能</h3>
+<p>此方法可用于查找列表中存在的元质数量。</p>
+<h3 id="front-and-back功能"><code>front and back</code>功能</h3>
+<p><code>front()</code>用于从开始获取列表的第一个元素，而<code>back()</code>用于从后面获取列表的第一个元素。</p>
+<h3 id="swap功能"><code>swap</code>功能</h3>
+<p>交换两个列表，如果在交换任何元素时有异常抛出，<code>swap()</code>抛出异常。要交换的两个列表必须是相同的类型，即不能用字符串列表交换整数列表。</p>
+<h3 id="reverse功能"><code>reverse</code>功能</h3>
+<p>此方法可用于完全反转列表。</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;list&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; l{<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>};
+
+    l.**reverse**();
+    *<span class="hljs-comment">/* now the list becomes 5,4,3,2,1 */</span>*
+}
+</code></pre>
+<h3 id="sort功能"><code>sort</code>功能</h3>
+<p><code>sort()</code>方法对给定列表进行排序。它不会创建新的排序列表，但会更改现有列表中元素的位置以对其进行排序。这种方法有两种变体:</p>
+<ul>
+<li><code>sort()</code>:对列表中的元素进行升序排序，对于此功能，列表中的元素应该是数字。</li>
+<li><code>sort(compare_function)</code>:这种排序()是在我们不得不改变排序方式的时候使用的。它对非数字元素非常有帮助。我们可以定义如何在 compare _ funtion 中对列表元素进行排序。例如，字符串列表可以按字符串的长度排序，也可以按降序排序。</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;list&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">compare_function</span><span class="hljs-params">( <span class="hljs-built_in">string</span>&amp; s1 , <span class="hljs-built_in">string</span>&amp; s2 )</span>
+</span>{
+    <span class="hljs-keyword">return</span> ( s1.length() &gt; s2.length() );
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; list1 = {<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>};
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-built_in">string</span>&gt; list2 = {<span class="hljs-string">"h"</span>, <span class="hljs-string">"hhh"</span>, <span class="hljs-string">"hh"</span>};
+
+    list1.**sort**();
+    *<span class="hljs-comment">/* list1 is now 1 2 3 4 5 6 */</span>*
+
+    list2.**sort**(compare_function);
+    *<span class="hljs-comment">/* list2 is now h hh hhh */</span>* 
+}
+</code></pre>
+<h3 id="splice功能"><code>splice</code>功能</h3>
+<p><code>splice()</code>方法将元素从一个列表转移到另一个列表。拼接有三种版本:</p>
+<ul>
+<li><code>splice(iterator, list_name)</code>:在<strong>迭代器</strong>指向的位置传送完整的列表<strong>列表名</strong>。</li>
+<li><code>splice(iterator, list_name, iterator_pos)</code>:将<strong>迭代器 _pos</strong> 指向的元素从<strong>列表 _ 名称</strong>转移到<strong>迭代器</strong>指向的位置。</li>
+<li><code>splice(iterator, list_name, itr_start, itr_end)</code>:从<strong>列表名称</strong>中<strong>迭代器</strong>指向的位置开始， <strong>itr_start</strong> 和 <strong>itr_end</strong> 指定的传送范围。</li>
+</ul>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;list&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; list1 = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>};
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; list2 = {<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>};
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt;::iterator it;
+
+    it = list1.**begin**();
+    ++it;   *<span class="hljs-comment">//pointing to second position*           </span>
+
+    list1.**splice**(it, list2);
+    *<span class="hljs-comment">/* transfer all elements of list2 at position 2 in list1 */</span>
+    <span class="hljs-comment">/* now list1 is 1 5 6 7 8 2 3 4 and list2 is empty */</span>*
+
+    list2.**splice**(list2.**begin**(), list1, it);
+    *<span class="hljs-comment">/* transfer element pointed by it in list1 to the beginning of list2 */</span>
+    <span class="hljs-comment">/* list2 is now 5 and list1 is 1 6 7 8 2 3 4*/</span>*
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3 id="merge功能"><code>merge</code>功能</h3>
+<p>合并两个排序列表。必须首先对这两个列表进行排序。<code>merge()</code>合并两个列表，使得每个元素都被放置在结果列表中的适当位置。合并的语法是<code>list1.merge(list2)</code>。</p>
+<p>作为参数传递的列表不会被删除，调用 merge()的列表将成为合并列表</p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;list&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">()</span>
+</span>{
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; list1 = {<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">7</span>,<span class="hljs-number">9</span>};
+    **<span class="hljs-built_in">list</span>**&lt;<span class="hljs-keyword">int</span>&gt; list2 = {<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>,<span class="hljs-number">10</span>};
+
+    *<span class="hljs-comment">/* both the lists are sorted. In case they are not , 
+    first they should be sorted by sort function() */</span>*
+
+    list1.**merge**(list2);
+
+    *<span class="hljs-comment">/* list list1 is now 1,2,3,4,5,6,7,8,9,10  */</span>*
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; list1.**size**() &lt;&lt; endl;    *<span class="hljs-comment">// prints 10* </span>
+}
+</code></pre>
+<hr></hr>
+<h2 id="词典式比较列表">词典式比较列表</h2>
+<p>由于列表是元素的集合，因此它们没有自己的标准值。因此，为了比较列表或向量，我们按照字典顺序比较它们的元素。</p>
+<p>例如，让 list1 = { 1，2，3}和 list2 = { 1，3，2 }，现在，如果我们想检查 list1 是否大于 list2，我们只需按照列表中出现的顺序检查每个列表的元素。因为列表 1 中的 1 等于列表 2 中的 1，我们继续，现在列表 1 中的 2 比列表 2 中的 3 小，因此列表 2 在词典上大于列表 1。</p>
+<p>运算符<code>==</code>、<code>&gt;</code>、<code>&lt;</code> 、<code>&lt;=</code>、<code>&gt;=</code>可用于按字典顺序比较列表。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="196.html" class="navigation navigation-prev " aria-label="Previous page: STL 中的向量容器">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="198.html" class="navigation navigation-next " aria-label="Next page: STL 中的映射容器">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"STL 中的列表容器","level":"1.1.8","depth":2,"next":{"title":"STL 中的映射容器","level":"1.1.9","depth":2,"path":"198.md","ref":"198.md","articles":[]},"previous":{"title":"STL 中的向量容器","level":"1.1.7","depth":2,"path":"196.md","ref":"196.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"197.md","mtime":"2025-04-30T01:08:58.608Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:24:05.064Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

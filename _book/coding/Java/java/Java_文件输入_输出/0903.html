@@ -1,0 +1,2297 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java CharArrayReader类 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0904.html" />
+    
+    
+    <link rel="prev" href="0902.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 文件输入/输出
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0874.html">
+            
+                <a href="0874.html">
+            
+                    
+                    Java 文件输入输出
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0875.html">
+            
+                <a href="0875.html">
+            
+                    
+                    Java 字节流类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0876.html">
+            
+                <a href="0876.html">
+            
+                    
+                    Java 中的字符流类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0877.html">
+            
+                <a href="0877.html">
+            
+                    
+                    Java 字节流类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0878.html">
+            
+                <a href="0878.html">
+            
+                    
+                    Java BufferedInputStream
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0879.html">
+            
+                <a href="0879.html">
+            
+                    
+                    Java FileOutputStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0880.html">
+            
+                <a href="0880.html">
+            
+                    
+                    Java FileInputStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0881.html">
+            
+                <a href="0881.html">
+            
+                    
+                    Java BufferedOutputStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0882.html">
+            
+                <a href="0882.html">
+            
+                    
+                    Java SequenceInputStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0883.html">
+            
+                <a href="0883.html">
+            
+                    
+                    Java ByteArrayOutputStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0884.html">
+            
+                <a href="0884.html">
+            
+                    
+                    Java ByteArrayInputStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0885.html">
+            
+                <a href="0885.html">
+            
+                    
+                    Java DataOutputStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0886.html">
+            
+                <a href="0886.html">
+            
+                    
+                    Java DataInputStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0887.html">
+            
+                <a href="0887.html">
+            
+                    
+                    Java FilterOutputStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0888.html">
+            
+                <a href="0888.html">
+            
+                    
+                    Java FilterInputStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0889.html">
+            
+                <a href="0889.html">
+            
+                    
+                    Java ObjectStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="0890.html">
+            
+                <a href="0890.html">
+            
+                    
+                    Java ObjectStreamField类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="0891.html">
+            
+                <a href="0891.html">
+            
+                    
+                    Java Console类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="0892.html">
+            
+                <a href="0892.html">
+            
+                    
+                    Java FilePermission类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="0893.html">
+            
+                <a href="0893.html">
+            
+                    
+                    Java Writer类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="0894.html">
+            
+                <a href="0894.html">
+            
+                    
+                    Java 字符流类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="0895.html">
+            
+                <a href="0895.html">
+            
+                    
+                    Java FilterReader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="0896.html">
+            
+                <a href="0896.html">
+            
+                    
+                    Java FilterWriter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="0897.html">
+            
+                <a href="0897.html">
+            
+                    
+                    Java PushbackReader类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="0898.html">
+            
+                <a href="0898.html">
+            
+                    
+                    Java Reader类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="0899.html">
+            
+                <a href="0899.html">
+            
+                    
+                    Java FileWriter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="0900.html">
+            
+                <a href="0900.html">
+            
+                    
+                    Java FileReader类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="0901.html">
+            
+                <a href="0901.html">
+            
+                    
+                    Java BufferedWriter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="0902.html">
+            
+                <a href="0902.html">
+            
+                    
+                    Java BufferedReader类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.30" data-path="0903.html">
+            
+                <a href="0903.html">
+            
+                    
+                    Java CharArrayReader类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="0904.html">
+            
+                <a href="0904.html">
+            
+                    
+                    Java CharArrayWriter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="0905.html">
+            
+                <a href="0905.html">
+            
+                    
+                    Java PrintStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="0906.html">
+            
+                <a href="0906.html">
+            
+                    
+                    Java PrintWriter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="0907.html">
+            
+                <a href="0907.html">
+            
+                    
+                    Java OutputStreamWriter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="0908.html">
+            
+                <a href="0908.html">
+            
+                    
+                    Java InputStreamReader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="0909.html">
+            
+                <a href="0909.html">
+            
+                    
+                    Java PushbackInputStream类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="0910.html">
+            
+                <a href="0910.html">
+            
+                    
+                    Java StringWriter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="0911.html">
+            
+                <a href="0911.html">
+            
+                    
+                    Java StringReader类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="0912.html">
+            
+                <a href="0912.html">
+            
+                    
+                    Java PipedWriter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="0913.html">
+            
+                <a href="0913.html">
+            
+                    
+                    Java PipedReader类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="0914.html">
+            
+                <a href="0914.html">
+            
+                    
+                    Java CharArrayWriter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="0915.html">
+            
+                <a href="0915.html">
+            
+                    
+                    Java CharArrayWriter.writeTo()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="0916.html">
+            
+                <a href="0916.html">
+            
+                    
+                    Java CharArrayWriter.write()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="0917.html">
+            
+                <a href="0917.html">
+            
+                    
+                    Java CharArrayWriter.size()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="0918.html">
+            
+                <a href="0918.html">
+            
+                    
+                    Java CharArrayWriter.toCharArray()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.46" data-path="0919.html">
+            
+                <a href="0919.html">
+            
+                    
+                    Java CharArrayWriter.toString()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.47" data-path="0920.html">
+            
+                <a href="0920.html">
+            
+                    
+                    Java CharArrayWriter.append()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.48" data-path="0921.html">
+            
+                <a href="0921.html">
+            
+                    
+                    Java CharArrayWriter.flush()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.49" data-path="0922.html">
+            
+                <a href="0922.html">
+            
+                    
+                    Java CharArrayWriter.reset()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.50" data-path="0923.html">
+            
+                <a href="0923.html">
+            
+                    
+                    Java OutputStreamWriter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.51" data-path="0924.html">
+            
+                <a href="0924.html">
+            
+                    
+                    Java OutputStreamWriter.write()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.52" data-path="0925.html">
+            
+                <a href="0925.html">
+            
+                    
+                    Java OutputStreamWriter.getEncoding()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.53" data-path="0926.html">
+            
+                <a href="0926.html">
+            
+                    
+                    Java OutputStreamWriter.close()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.54" data-path="0927.html">
+            
+                <a href="0927.html">
+            
+                    
+                    Java OutputStreamWriter.flush()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.55" data-path="0928.html">
+            
+                <a href="0928.html">
+            
+                    
+                    Java ByteArrayInputStream
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.56" data-path="0929.html">
+            
+                <a href="0929.html">
+            
+                    
+                    Java ByteArrayInputStream.available()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.57" data-path="0930.html">
+            
+                <a href="0930.html">
+            
+                    
+                    Java ByteArrayInputStream.read()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.58" data-path="0931.html">
+            
+                <a href="0931.html">
+            
+                    
+                    Java ByteArrayInputStream.markSupported()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.59" data-path="0932.html">
+            
+                <a href="0932.html">
+            
+                    
+                    Java ByteArrayInputStream.skip(long)方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.60" data-path="0933.html">
+            
+                <a href="0933.html">
+            
+                    
+                    Java ByteArrayInputStream.mark(int)方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.61" data-path="0934.html">
+            
+                <a href="0934.html">
+            
+                    
+                    Java FileInputStream方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.62" data-path="0935.html">
+            
+                <a href="0935.html">
+            
+                    
+                    Java FileInputStream.available()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.63" data-path="0936.html">
+            
+                <a href="0936.html">
+            
+                    
+                    Java FileInputStream.close()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.64" data-path="0937.html">
+            
+                <a href="0937.html">
+            
+                    
+                    Java FileInputStream.skip()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.65" data-path="0938.html">
+            
+                <a href="0938.html">
+            
+                    
+                    Java FileChannel.getChannel()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.66" data-path="0939.html">
+            
+                <a href="0939.html">
+            
+                    
+                    Java FileDescriptor.getFD()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.67" data-path="0940.html">
+            
+                <a href="0940.html">
+            
+                    
+                    Java FileInputStream.read()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.68" data-path="0941.html">
+            
+                <a href="0941.html">
+            
+                    
+                    Java BufferedWriter方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.69" data-path="0942.html">
+            
+                <a href="0942.html">
+            
+                    
+                    Java BufferedWriter.write()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.70" data-path="0943.html">
+            
+                <a href="0943.html">
+            
+                    
+                    Java BufferedWriter.newLine()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.71" data-path="0944.html">
+            
+                <a href="0944.html">
+            
+                    
+                    Java FileWriter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.72" data-path="0945.html">
+            
+                <a href="0945.html">
+            
+                    
+                    Java FileWriterclose.close()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.73" data-path="0946.html">
+            
+                <a href="0946.html">
+            
+                    
+                    Java FileWriter.flush()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.74" data-path="0947.html">
+            
+                <a href="0947.html">
+            
+                    
+                    Java InputStreamReader方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.75" data-path="0948.html">
+            
+                <a href="0948.html">
+            
+                    
+                    Java InputStreamReader.read()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.76" data-path="0949.html">
+            
+                <a href="0949.html">
+            
+                    
+                    Java InputStreamReader.ready()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.77" data-path="0950.html">
+            
+                <a href="0950.html">
+            
+                    
+                    Java InputStreamReader.getEncoding()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.78" data-path="0951.html">
+            
+                <a href="0951.html">
+            
+                    
+                    Java InputStreamReader.close()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.79" data-path="0952.html">
+            
+                <a href="0952.html">
+            
+                    
+                    Java CharArrayReader方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.80" data-path="0953.html">
+            
+                <a href="0953.html">
+            
+                    
+                    Java CharArrayReader.skip()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.81" data-path="0954.html">
+            
+                <a href="0954.html">
+            
+                    
+                    Java CharArrayReader.close()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.82" data-path="0955.html">
+            
+                <a href="0955.html">
+            
+                    
+                    Java CharArrayReader.ready()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.83" data-path="0956.html">
+            
+                <a href="0956.html">
+            
+                    
+                    Java CharArrayReader.read()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.84" data-path="0957.html">
+            
+                <a href="0957.html">
+            
+                    
+                    Java CharArrayReader.标记()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.85" data-path="0958.html">
+            
+                <a href="0958.html">
+            
+                    
+                    Java CharArrayReader.reset()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.86" data-path="0959.html">
+            
+                <a href="0959.html">
+            
+                    
+                    Java CharArrayReader.markSupported()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.87" data-path="0960.html">
+            
+                <a href="0960.html">
+            
+                    
+                    Java FilterReader方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.88" data-path="0961.html">
+            
+                <a href="0961.html">
+            
+                    
+                    Java FilterReader.read()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.89" data-path="0962.html">
+            
+                <a href="0962.html">
+            
+                    
+                    Java FilterReader.mark()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.90" data-path="0963.html">
+            
+                <a href="0963.html">
+            
+                    
+                    Java FilterReader.ready()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.91" data-path="0964.html">
+            
+                <a href="0964.html">
+            
+                    
+                    Java FilterReader.close()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.92" data-path="0965.html">
+            
+                <a href="0965.html">
+            
+                    
+                    Java FilterReader.markSupported()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.93" data-path="0966.html">
+            
+                <a href="0966.html">
+            
+                    
+                    Java FilterReader.reset()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.94" data-path="0967.html">
+            
+                <a href="0967.html">
+            
+                    
+                    Java FilterReader.skip()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.95" data-path="0968.html">
+            
+                <a href="0968.html">
+            
+                    
+                    Java BufferedReader
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.96" data-path="0969.html">
+            
+                <a href="0969.html">
+            
+                    
+                    Java BufferedReader.close()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.97" data-path="0970.html">
+            
+                <a href="0970.html">
+            
+                    
+                    Java BufferedReader.skip()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.98" data-path="0971.html">
+            
+                <a href="0971.html">
+            
+                    
+                    Java BufferedReade.read()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.99" data-path="0972.html">
+            
+                <a href="0972.html">
+            
+                    
+                    Java BufferedReader.readLine()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.100" data-path="0973.html">
+            
+                <a href="0973.html">
+            
+                    
+                    Java BufferedReader.markSupported()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.101" data-path="0974.html">
+            
+                <a href="0974.html">
+            
+                    
+                    Java BufferedReader.ready()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.102" data-path="0975.html">
+            
+                <a href="0975.html">
+            
+                    
+                    Java BufferedReader.reset()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.103" data-path="0976.html">
+            
+                <a href="0976.html">
+            
+                    
+                    Java BufferedReader.mark()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.104" data-path="0977.html">
+            
+                <a href="0977.html">
+            
+                    
+                    Java FilterInputStream方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.105" data-path="0978.html">
+            
+                <a href="0978.html">
+            
+                    
+                    Java FilterInputStream.read()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.106" data-path="0979.html">
+            
+                <a href="0979.html">
+            
+                    
+                    Java FilterInputStream .available()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.107" data-path="0980.html">
+            
+                <a href="0980.html">
+            
+                    
+                    Java FilterInputStream.skip()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.108" data-path="0981.html">
+            
+                <a href="0981.html">
+            
+                    
+                    Java FilterInputStream.markSupported()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.109" data-path="0982.html">
+            
+                <a href="0982.html">
+            
+                    
+                    Java FilterInputStream.mark()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.110" data-path="0983.html">
+            
+                <a href="0983.html">
+            
+                    
+                    Java FilterInputStream.reset()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.111" data-path="0984.html">
+            
+                <a href="0984.html">
+            
+                    
+                    Java FileReader方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.112" data-path="0985.html">
+            
+                <a href="0985.html">
+            
+                    
+                    Java FileReader.read()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.113" data-path="0986.html">
+            
+                <a href="0986.html">
+            
+                    
+                    Java FileReader.close()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.114" data-path="0987.html">
+            
+                <a href="0987.html">
+            
+                    
+                    Java FileWriter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.115" data-path="0988.html">
+            
+                <a href="0988.html">
+            
+                    
+                    Java FileWriter.write()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.116" data-path="0989.html">
+            
+                <a href="0989.html">
+            
+                    
+                    Java PipedWriter
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.117" data-path="0990.html">
+            
+                <a href="0990.html">
+            
+                    
+                    Java PipedWriter.write()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.118" data-path="0991.html">
+            
+                <a href="0991.html">
+            
+                    
+                    Java PipedWriter.close()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.119" data-path="0992.html">
+            
+                <a href="0992.html">
+            
+                    
+                    Java PipedWriter.flush()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.120" data-path="0993.html">
+            
+                <a href="0993.html">
+            
+                    
+                    Java PipedReader方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.121" data-path="0994.html">
+            
+                <a href="0994.html">
+            
+                    
+                    Java PipedReader.connect()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.122" data-path="0995.html">
+            
+                <a href="0995.html">
+            
+                    
+                    Java PipedReader.read()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.123" data-path="0996.html">
+            
+                <a href="0996.html">
+            
+                    
+                    Java PipedReader.ready()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.124" data-path="0997.html">
+            
+                <a href="0997.html">
+            
+                    
+                    Java PipedReader.close()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.125" data-path="0998.html">
+            
+                <a href="0998.html">
+            
+                    
+                    Java BufferedInputStream方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.126" data-path="0999.html">
+            
+                <a href="0999.html">
+            
+                    
+                    Java BufferedInputStream.available()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.127" data-path="1000.html">
+            
+                <a href="1000.html">
+            
+                    
+                    Java StringWriter方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.128" data-path="1001.html">
+            
+                <a href="1001.html">
+            
+                    
+                    Java StringWriter.write()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.129" data-path="1002.html">
+            
+                <a href="1002.html">
+            
+                    
+                    Java StringWriter.toString()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.130" data-path="1003.html">
+            
+                <a href="1003.html">
+            
+                    
+                    Java StringWriter.getBuffer()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.131" data-path="1004.html">
+            
+                <a href="1004.html">
+            
+                    
+                    Java StringWriter.flush()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.132" data-path="1005.html">
+            
+                <a href="1005.html">
+            
+                    
+                    Java StringWriter.close()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.133" data-path="1006.html">
+            
+                <a href="1006.html">
+            
+                    
+                    Java StringWriter.append()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.134" data-path="1007.html">
+            
+                <a href="1007.html">
+            
+                    
+                    Java DataInputStream方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.135" data-path="1008.html">
+            
+                <a href="1008.html">
+            
+                    
+                    Java DataInputStream.readDouble()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.136" data-path="1009.html">
+            
+                <a href="1009.html">
+            
+                    
+                    Java DataInputStream.readBoolean()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.137" data-path="1010.html">
+            
+                <a href="1010.html">
+            
+                    
+                    Java DataInputStream.skipBytes()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.138" data-path="1011.html">
+            
+                <a href="1011.html">
+            
+                    
+                    Java DataInputStream.read()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.139" data-path="1012.html">
+            
+                <a href="1012.html">
+            
+                    
+                    Java DataInputStream.readInt()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.140" data-path="1013.html">
+            
+                <a href="1013.html">
+            
+                    
+                    Java DataInputStream.readByte()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.141" data-path="1014.html">
+            
+                <a href="1014.html">
+            
+                    
+                    Java DataInputStream.readChar()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.142" data-path="1015.html">
+            
+                <a href="1015.html">
+            
+                    
+                    Java DataInputStream.readUTF()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.143" data-path="1016.html">
+            
+                <a href="1016.html">
+            
+                    
+                    Java FilterWriter方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.144" data-path="1017.html">
+            
+                <a href="1017.html">
+            
+                    
+                    Java FilterWriter.flush()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.145" data-path="1018.html">
+            
+                <a href="1018.html">
+            
+                    
+                    Java FilterWriter.write()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java CharArrayReader类</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-chararrayreader类">Java <code>CharArrayReader</code>类</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-file-io/java-chararrayreader-class" target="_blank">https://www.studytonight.com/java-file-io/java-chararrayreader-class</a></p>
+</blockquote>
+<p>在本教程中，我们将学习 <a href="https://www.studytonight.com/java/" target="_blank">Java</a> 中的<code>CharArrayReader</code> 类。这个类使用字符数组创建一个字符缓冲区。该类提供了<code>mark()</code>、 <code>read()</code>、<code>close(), reset()</code>、 <code>markSupported()</code>、<code>skip()</code>和<code>ready()</code>等多种方法</p>
+<h3 id="句法">句法</h3>
+<p>这是 Java 中<code>CharArrayReader</code> 类的语法声明。我们可以看到这个类继承了<code>Reader</code> 类。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CharArrayReader</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Reader</span>
+</span></code></pre>
+<h3 id="java-chararrayreader-类方法">Java CharArrayReader 类方法</h3>
+<p><code>CharAraayReader</code> 类的所有方法如下表所示</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int read()</code></td>
+<td>此方法用于读取单个字符</td>
+</tr>
+<tr>
+<td><code>int read(char[] b, int off, int len)</code></td>
+<td>此方法用于将字符读入数组部分。</td>
+</tr>
+<tr>
+<td><code>boolean ready()</code></td>
+<td>此方法用于判断流是否准备好读取。</td>
+</tr>
+<tr>
+<td><code>boolean markSupported()</code></td>
+<td>此方法用于判断流是否支持 mark()操作。</td>
+</tr>
+<tr>
+<td><code>long skip(long n)</code></td>
+<td>此方法用于跳过输入流中的字符。</td>
+</tr>
+<tr>
+<td><code>void mark(int readAheadLimit)</code></td>
+<td>此方法用于标记流中的当前位置。</td>
+</tr>
+<tr>
+<td><code>void reset()</code></td>
+<td>此方法用于将流重置为最近的标记。</td>
+</tr>
+<tr>
+<td><code>void close()</code></td>
+<td>此方法用于关闭流。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="chararrayreader-类示例">CharArrayReader 类示例</h3>
+<p>在下面的例子中，我们使用<code>CharArrayReader</code> 类实现<code>read()</code> 方法。我们从小溪中一个一个地读一个字，直到它到达小溪的尽头，小溪的尽头将是<code>-1</code>。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">package</span> studytonight;
+<span class="hljs-keyword">import</span> java.io.CharArrayReader;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span> 
+</span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span> <span class="hljs-keyword">throws</span> Exception
+    </span>{
+        <span class="hljs-keyword">char</span>[] arr = { <span class="hljs-string">'s'</span>, <span class="hljs-string">'t'</span>, <span class="hljs-string">'u'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'y'</span>, <span class="hljs-string">'t'</span>, <span class="hljs-string">'o'</span>, <span class="hljs-string">'n'</span>, <span class="hljs-string">'i'</span>, <span class="hljs-string">'g'</span>, <span class="hljs-string">'h'</span>, <span class="hljs-string">'t'</span> };  
+        CharArrayReader reader = <span class="hljs-keyword">new</span> CharArrayReader(arr);  
+        <span class="hljs-keyword">int</span> ch = <span class="hljs-number">0</span>;  
+        <span class="hljs-keyword">while</span> ((ch = reader.read()) != -<span class="hljs-number">1</span>) {  
+            System.out.print((<span class="hljs-keyword">char</span>)ch);  
+        }  
+    }
+}
+</code></pre>
+<p>今晚学习</p>
+<h3 id="chararrayreader-类示例">CharArrayReader 类示例</h3>
+<p>在下面的例子中，我们将实现<code>mark(), reset()</code>和<code>markSupported()</code>方法，这里 read 方法将读取一个字符并将其打印在屏幕上。然后使用 mark()方法标记特定位置的点，并使用<code>markSupported()</code>方法检查我们的位置是否被标记，使用 reset 方法流将重新定位我们标记位置的位置，并再次从该点提供值。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">package</span> studytonight;
+<span class="hljs-keyword">import</span> java.io.CharArrayReader;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span> 
+</span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span> <span class="hljs-keyword">throws</span> Exception
+    </span>{
+        <span class="hljs-keyword">char</span>[] arr = { <span class="hljs-string">'s'</span>, <span class="hljs-string">'t'</span>, <span class="hljs-string">'u'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'y'</span>, <span class="hljs-string">'t'</span>, <span class="hljs-string">'o'</span>, <span class="hljs-string">'n'</span>, <span class="hljs-string">'i'</span>, <span class="hljs-string">'g'</span>, <span class="hljs-string">'h'</span>, <span class="hljs-string">'t'</span> };  
+        CharArrayReader reader = <span class="hljs-keyword">new</span> CharArrayReader(arr);  
+
+        System.out.println(<span class="hljs-string">"Element : "</span>+(<span class="hljs-keyword">char</span>)reader.read()); 
+        System.out.println(<span class="hljs-string">"Element : "</span>+(<span class="hljs-keyword">char</span>)reader.read()); 
+        System.out.println(<span class="hljs-string">"Element : "</span>+(<span class="hljs-keyword">char</span>)reader.read()); 
+        reader.mark(<span class="hljs-number">0</span>);          
+        System.out.println(<span class="hljs-string">"Element : "</span>+(<span class="hljs-keyword">char</span>)reader.read()); 
+        System.out.println(<span class="hljs-string">"Element : "</span>+(<span class="hljs-keyword">char</span>)reader.read());       
+
+        <span class="hljs-keyword">if</span> (reader.markSupported()) 
+        { 
+            System.out.println(<span class="hljs-string">"\nmark() is supported\n"</span>); 
+            reader.reset(); 
+            System.out.println(<span class="hljs-string">"Element : "</span>+(<span class="hljs-keyword">char</span>)reader.read()); 
+            System.out.println(<span class="hljs-string">"Element : "</span>+(<span class="hljs-keyword">char</span>)reader.read()); 
+        } 
+        <span class="hljs-keyword">else</span>
+        {
+            System.out.println(<span class="hljs-string">"mark() method not supported."</span>); 
+        }    
+    }
+}
+</code></pre>
+<p>元素:s
+元素:t
+元素:u
+元素:d
+元素:y</p>
+<p>标记()被支持</p>
+<p>元素:d
+元素:y</p>
+<h3 id="结论">结论</h3>
+<p>在本教程中，我们学习了 Java 中的<code>CharArrayReader</code> 类。CharArrayReader 类使用字符数组创建字符缓冲区。</p>
+<p>使用<code>mark()</code>方法，我们可以设置位置，只要需要，我们就可以从该位置开始阅读。稍后，我们只能从这一点开始读取数据。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0902.html" class="navigation navigation-prev " aria-label="Previous page: Java BufferedReader类">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0904.html" class="navigation navigation-next " aria-label="Next page: Java CharArrayWriter类">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java CharArrayReader类","level":"1.1.30","depth":2,"next":{"title":"Java CharArrayWriter类","level":"1.1.31","depth":2,"path":"0904.md","ref":"0904.md","articles":[]},"previous":{"title":"Java BufferedReader类","level":"1.1.29","depth":2,"path":"0902.md","ref":"0902.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0903.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:21:10.795Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

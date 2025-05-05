@@ -1,0 +1,461 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>最大公约数与最小公倍数 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="快速幂.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="数学算法概述.html">
+            
+                <a href="数学算法概述.html">
+            
+                    
+                    数学算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="素数筛法.md">
+            
+                <span>
+            
+                    
+                    素数筛法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="快速幂.html">
+            
+                <a href="快速幂.html">
+            
+                    
+                    快速幂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.3" data-path="最大公约数与最小公倍数.html">
+            
+                <a href="最大公约数与最小公倍数.html">
+            
+                    
+                    最大公约数与最小公倍数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >最大公约数与最小公倍数</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="最大公约数与最小公倍数">最大公约数与最小公倍数</h1>
+<p>在ACM竞赛中，最大公约数(Greatest Common Divisor, GCD)和最小公倍数(Least Common Multiple, LCM)是非常基础且常用的数学概念。这些算法在整数理论、分数计算、密码学等多种问题中扮演着重要角色。</p>
+<h2 id="基础概念">基础概念</h2>
+<h3 id="【最大公约数】">【最大公约数】</h3>
+<p>最大公约数(GCD)是指能够同时整除两个或多个整数的最大正整数。例如，12和18的最大公约数是6，因为6是能同时整除12和18的最大整数。</p>
+<h3 id="【最小公倍数】">【最小公倍数】</h3>
+<p>最小公倍数(LCM)是指能够被两个或多个整数同时整除的最小正整数。例如，12和18的最小公倍数是36，因为36是能同时被12和18整除的最小正整数。</p>
+<h2 id="欧几里得算法辗转相除法">欧几里得算法(辗转相除法)</h2>
+<h3 id="算法原理">算法原理</h3>
+<p>欧几里得算法基于一个重要性质：<strong>如果a和b是两个正整数，且a &gt; b，那么gcd(a, b) = gcd(b, a % b)</strong>。</p>
+<p>这一性质使我们可以递归地将问题规模缩小，直到其中一个数为0时，另一个数就是最大公约数。</p>
+<h3 id="代码实现">代码实现</h3>
+<h4 id="递归版本">递归版本</h4>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 递归实现欧几里得算法</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{
+    <span class="hljs-keyword">if</span> (b == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> a;  <span class="hljs-comment">// 基础情况：当b为0时，a即为最大公约数</span>
+    <span class="hljs-keyword">return</span> gcd(b, a % b);  <span class="hljs-comment">// 递归调用：将b和a%b作为新的输入</span>
+}
+</code></pre>
+<h4 id="迭代版本">迭代版本</h4>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 迭代实现欧几里得算法</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{
+    <span class="hljs-keyword">while</span> (b != <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">int</span> temp = b;
+        b = a % b;  <span class="hljs-comment">// 计算余数</span>
+        a = temp;   <span class="hljs-comment">// 更新a为原来的b</span>
+    }
+    <span class="hljs-keyword">return</span> a;  <span class="hljs-comment">// 当b为0时，a即为最大公约数</span>
+}
+</code></pre>
+<h3 id="时间复杂度分析">时间复杂度分析</h3>
+<p>欧几里得算法的时间复杂度为O(log(min(a, b)))。这是因为每次迭代后，较小数至少减半，所以最多需要O(log N)步就可以计算出结果。</p>
+<h2 id="最小公倍数计算">最小公倍数计算</h2>
+<p>最小公倍数可以通过最大公约数来计算：<strong>lcm(a, b) = (a * b) / gcd(a, b)</strong>。</p>
+<p>但在实际编程中，为了避免整型溢出，我们通常这样写：</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lcm</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{
+    <span class="hljs-keyword">return</span> a / gcd(a, b) * b;  <span class="hljs-comment">// 先除后乘，避免溢出</span>
+}
+</code></pre>
+<h2 id="扩展欧几里得算法">扩展欧几里得算法</h2>
+<p>如果我们需要解决形如ax + by = gcd(a, b)的方程，可以使用扩展欧几里得算法。</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 扩展欧几里得算法，计算ax + by = gcd(a, b)的一组解</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">exgcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b, <span class="hljs-keyword">int</span> &amp;x, <span class="hljs-keyword">int</span> &amp;y)</span> </span>{
+    <span class="hljs-keyword">if</span> (b == <span class="hljs-number">0</span>) {
+        x = <span class="hljs-number">1</span>;
+        y = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">return</span> a;
+    }
+    <span class="hljs-keyword">int</span> d = exgcd(b, a % b, y, x);
+    y -= (a / b) * x;
+    <span class="hljs-keyword">return</span> d;
+}
+</code></pre>
+<p>这里，函数返回gcd(a, b)的值，并通过引用更新x和y，使它们满足等式ax + by = gcd(a, b)。</p>
+<h2 id="应用场景">应用场景</h2>
+<ol>
+<li><strong>分数运算</strong>：通分、约分等操作</li>
+<li><strong>求解模线性方程</strong>：如解模意义下的逆元</li>
+<li><strong>裴蜀定理应用</strong>：判定同余方程的可解性</li>
+<li><strong>互质判定</strong>：判断两数是否互质(gcd = 1)</li>
+</ol>
+<h2 id="例题分析">例题分析</h2>
+<h3 id="例题1：分数加减法">例题1：分数加减法</h3>
+<p>在处理分数运算时，常需要先通分（求LCM），再进行加减，最后约分（求GCD）。</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">struct</span> Fraction {
+    <span class="hljs-keyword">int</span> num, den;  <span class="hljs-comment">// 分子(numerator)和分母(denominator)</span>
+
+    <span class="hljs-comment">// 约分，使分数保持最简形式</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">simplify</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">int</span> g = gcd(<span class="hljs-built_in">abs</span>(num), den);
+        num /= g;
+        den /= g;
+    }
+
+    <span class="hljs-comment">// 分数加法</span>
+    <span class="hljs-function">Fraction <span class="hljs-title">add</span><span class="hljs-params">(Fraction other)</span> </span>{
+        <span class="hljs-keyword">int</span> lcm_val = lcm(den, other.den);
+        <span class="hljs-keyword">int</span> new_num = num * (lcm_val / den) + other.num * (lcm_val / other.den);
+        Fraction result = {new_num, lcm_val};
+        result.simplify();
+        <span class="hljs-keyword">return</span> result;
+    }
+};
+</code></pre>
+<h3 id="例题2：互质数对计数">例题2：互质数对计数</h3>
+<p>给定n，求[1, n]区间内互质数对(i, j)的个数（1 ≤ i &lt; j ≤ n）。</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">countCoPrimePairs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i + <span class="hljs-number">1</span>; j &lt;= n; j++) {
+            <span class="hljs-keyword">if</span> (gcd(i, j) == <span class="hljs-number">1</span>) {
+                count++;
+            }
+        }
+    }
+    <span class="hljs-keyword">return</span> count;
+}
+</code></pre>
+<p>优化方法：通过欧拉函数和容斥原理可以在O(n log n)时间内解决。</p>
+<h2 id="常见易错点">常见易错点</h2>
+<ol>
+<li><strong>整数溢出</strong>：计算LCM时先乘后除可能导致整数溢出，应当先除后乘</li>
+<li><strong>负数处理</strong>：GCD算法需确保传入的是非负数，或在算法中进行适当处理</li>
+<li><strong>零的特例</strong>：注意处理涉及零的情况，如gcd(0, n) = n</li>
+</ol>
+<h2 id="竞赛优化技巧">竞赛优化技巧</h2>
+<ol>
+<li>使用C++17的内置函数：<code>std::gcd(a, b)</code>和<code>std::lcm(a, b)</code>（在<code>&lt;numeric&gt;</code>头文件中）</li>
+<li>对于多个数的GCD，可以利用结合律依次计算</li>
+<li>在需要频繁计算GCD的场景，可以通过预处理优化</li>
+</ol>
+<h2 id="习题推荐">习题推荐</h2>
+<ol>
+<li><a href="http://www.usaco.org/index.php" target="_blank">USACO - Cow GCD</a>：计算一系列数字的GCD</li>
+<li><a href="https://codeforces.com/problemset/problem/1370/B" target="_blank">CodeForces - GCD Compression</a>：涉及GCD性质的构造问题</li>
+<li><a href="https://leetcode.com/problems/greatest-common-divisor-of-strings/" target="_blank">LeetCode 1071. Greatest Common Divisor of Strings</a>：字符串的GCD应用</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>最大公约数和最小公倍数是竞赛编程中不可或缺的基本工具。掌握欧几里得算法及其扩展形式，可以帮助你解决各类整数理论问题。记住，这些算法不仅高效，而且实现简单，是必须熟练掌握的基础算法。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="快速幂.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 快速幂">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"最大公约数与最小公倍数","level":"1.2.3","depth":2,"previous":{"title":"快速幂","level":"1.2.2","depth":2,"path":"快速幂.md","ref":"快速幂.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"最大公约数与最小公倍数.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:37.547Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,570 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>KMP算法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="字典树.html" />
+    
+    
+    <link rel="prev" href="字符串匹配.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="字符串算法概述.html">
+            
+                <a href="字符串算法概述.html">
+            
+                    
+                    字符串算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="字符串匹配.html">
+            
+                <a href="字符串匹配.html">
+            
+                    
+                    字符串匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.2" data-path="KMP算法.html">
+            
+                <a href="KMP算法.html">
+            
+                    
+                    KMP算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="字典树.html">
+            
+                <a href="字典树.html">
+            
+                    
+                    字典树(Trie)
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >KMP算法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="kmp算法">KMP算法</h1>
+<p>【KMP算法】(Knuth-Morris-Pratt算法)是一种高效的字符串匹配算法，由Donald Knuth、James H. Morris和Vaughan Pratt在1977年共同发表。KMP算法通过利用已匹配部分的信息，避免了不必要的字符比较，将字符串匹配的时间复杂度从O(m*n)降低到O(m+n)。</p>
+<h2 id="基本原理">基本原理</h2>
+<p>KMP算法的核心思想是：<strong>当匹配失败时，不需要回溯主串指针，而是通过预处理的【部分匹配表】(next数组)让模式串指针回退到合适的位置继续匹配</strong>。</p>
+<p>KMP算法的关键在于理解和构建next数组，它记录了模式串中前缀和后缀的最长公共元素长度。</p>
+<h2 id="next数组的含义">next数组的含义</h2>
+<p>next[i]表示：对于模式串P的子串P[0...i]，其【最长相等前后缀】的长度。</p>
+<ul>
+<li>前缀：除了最后一个字符外，子串的所有头部子串</li>
+<li>后缀：除了第一个字符外，子串的所有尾部子串</li>
+</ul>
+<p>例如，对于模式串"ABABC"：</p>
+<ul>
+<li>next[0] = 0，因为单个字符没有相等的前后缀</li>
+<li>next[1] = 0，"AB"的前缀是"A"，后缀是"B"，不相等</li>
+<li>next[2] = 1，"ABA"的前缀有"A","AB"，后缀有"A","BA"，最长公共前后缀是"A"，长度为1</li>
+<li>next[3] = 2，"ABAB"的前缀有"A","AB","ABA"，后缀有"B","AB","BAB"，最长公共前后缀是"AB"，长度为2</li>
+<li>next[4] = 0，"ABABC"没有相等的前后缀</li>
+</ul>
+<h2 id="next数组的构建">next数组的构建</h2>
+<p>构建next数组的过程也可以使用KMP的思想，代码如下：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 构建next数组</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">getNext</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; pattern, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; next)</span> </span>{
+    <span class="hljs-keyword">int</span> n = pattern.length();
+    next.resize(n);
+
+    next[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 初始值</span>
+    <span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>;    <span class="hljs-comment">// j表示前缀末尾</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {  <span class="hljs-comment">// i表示后缀末尾</span>
+        <span class="hljs-comment">// 如果当前字符不匹配，回退j</span>
+        <span class="hljs-keyword">while</span> (j &gt; <span class="hljs-number">0</span> &amp;&amp; pattern[i] != pattern[j]) {
+            j = next[j - <span class="hljs-number">1</span>];
+        }
+
+        <span class="hljs-comment">// 如果当前字符匹配，j向前移动</span>
+        <span class="hljs-keyword">if</span> (pattern[i] == pattern[j]) {
+            j++;
+        }
+
+        next[i] = j;  <span class="hljs-comment">// 记录当前位置的最长相等前后缀长度</span>
+    }
+}
+</code></pre>
+<h2 id="kmp匹配算法">KMP匹配算法</h2>
+<p>有了next数组后，KMP匹配的过程如下：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// KMP字符串匹配</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">kmpSearch</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; text, <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; pattern)</span> </span>{
+    <span class="hljs-keyword">int</span> m = text.length();
+    <span class="hljs-keyword">int</span> n = pattern.length();
+
+    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;  <span class="hljs-comment">// 空模式串总是匹配成功</span>
+
+    <span class="hljs-comment">// 构建next数组</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; next;
+    getNext(pattern, next);
+
+    <span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>;  <span class="hljs-comment">// j表示已匹配的模式串字符数</span>
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) {
+        <span class="hljs-comment">// 如果当前字符不匹配，回退j</span>
+        <span class="hljs-keyword">while</span> (j &gt; <span class="hljs-number">0</span> &amp;&amp; text[i] != pattern[j]) {
+            j = next[j - <span class="hljs-number">1</span>];
+        }
+
+        <span class="hljs-comment">// 如果当前字符匹配，j向前移动</span>
+        <span class="hljs-keyword">if</span> (text[i] == pattern[j]) {
+            j++;
+        }
+
+        <span class="hljs-comment">// 如果完全匹配</span>
+        <span class="hljs-keyword">if</span> (j == n) {
+            <span class="hljs-keyword">return</span> i - n + <span class="hljs-number">1</span>;  <span class="hljs-comment">// 返回匹配的起始位置</span>
+        }
+    }
+
+    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;  <span class="hljs-comment">// 未找到匹配</span>
+}
+</code></pre>
+<h2 id="完整kmp算法实现">完整KMP算法实现</h2>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-comment">// 构建next数组</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; getNext(<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; pattern) {
+    <span class="hljs-keyword">int</span> n = pattern.length();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; next(n);
+
+    next[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">while</span> (j &gt; <span class="hljs-number">0</span> &amp;&amp; pattern[i] != pattern[j]) {
+            j = next[j - <span class="hljs-number">1</span>];
+        }
+
+        <span class="hljs-keyword">if</span> (pattern[i] == pattern[j]) {
+            j++;
+        }
+
+        next[i] = j;
+    }
+
+    <span class="hljs-keyword">return</span> next;
+}
+
+<span class="hljs-comment">// KMP字符串匹配，找到所有匹配位置</span>
+<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; kmpSearchAll(<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; text, <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; pattern) {
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; positions;
+    <span class="hljs-keyword">int</span> m = text.length();
+    <span class="hljs-keyword">int</span> n = pattern.length();
+
+    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> positions;
+
+    <span class="hljs-comment">// 构建next数组</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; next = getNext(pattern);
+
+    <span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) {
+        <span class="hljs-keyword">while</span> (j &gt; <span class="hljs-number">0</span> &amp;&amp; text[i] != pattern[j]) {
+            j = next[j - <span class="hljs-number">1</span>];
+        }
+
+        <span class="hljs-keyword">if</span> (text[i] == pattern[j]) {
+            j++;
+        }
+
+        <span class="hljs-keyword">if</span> (j == n) {
+            positions.push_back(i - n + <span class="hljs-number">1</span>);  <span class="hljs-comment">// 记录匹配位置</span>
+            j = next[j - <span class="hljs-number">1</span>];  <span class="hljs-comment">// 继续寻找下一个匹配</span>
+        }
+    }
+
+    <span class="hljs-keyword">return</span> positions;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">string</span> text = <span class="hljs-string">"ABABCABABCABCABC"</span>;
+    <span class="hljs-built_in">string</span> pattern = <span class="hljs-string">"ABABC"</span>;
+
+    <span class="hljs-comment">// 打印next数组</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; next = getNext(pattern);
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Next数组: "</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> val : next) {
+        <span class="hljs-built_in">cout</span> &lt;&lt; val &lt;&lt; <span class="hljs-string">" "</span>;
+    }
+    <span class="hljs-built_in">cout</span> &lt;&lt; endl;
+
+    <span class="hljs-comment">// 查找所有匹配位置</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; positions = kmpSearchAll(text, pattern);
+
+    <span class="hljs-keyword">if</span> (positions.empty()) {
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"未找到匹配"</span> &lt;&lt; endl;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"匹配位置: "</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> pos : positions) {
+            <span class="hljs-built_in">cout</span> &lt;&lt; pos &lt;&lt; <span class="hljs-string">" "</span>;
+        }
+        <span class="hljs-built_in">cout</span> &lt;&lt; endl;
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h2 id="时间复杂度分析">时间复杂度分析</h2>
+<ul>
+<li>构建next数组：O(m)，其中m是模式串的长度</li>
+<li>KMP匹配：O(n)，其中n是文本串的长度</li>
+<li>总时间复杂度：O(m + n)</li>
+</ul>
+<p>这比朴素的字符串匹配算法O(m*n)要高效得多，尤其是当文本串和模式串很长时。</p>
+<h2 id="应用场景">应用场景</h2>
+<ol>
+<li><strong>字符串匹配</strong>：在文本中查找特定模式串</li>
+<li><strong>多模式匹配</strong>：结合其他算法处理多模式匹配问题</li>
+<li><strong>循环串问题</strong>：判断字符串是否由某个子串重复组成</li>
+<li><strong>最小循环节</strong>：求解字符串的最小循环节长度</li>
+<li><strong>字符串压缩</strong>：基于周期性的字符串压缩算法</li>
+</ol>
+<h2 id="典型例题">典型例题</h2>
+<h3 id="例题1：字符串查找">例题1：字符串查找</h3>
+<p><strong>问题</strong>：给定一个文本串和一个模式串，找出模式串在文本串中的所有出现位置。</p>
+<p><strong>解法</strong>：直接应用KMP算法的kmpSearchAll函数。</p>
+<h3 id="例题2：最小循环节">例题2：最小循环节</h3>
+<p><strong>问题</strong>：给定一个字符串，判断它是否可以由某个子串重复多次得到，如果可以，找出这个子串。</p>
+<p><strong>思路</strong>：如果字符串S有长度为k的循环节，那么next[n-1]的值会告诉我们最长的相等前后缀。如果n%(n-next[n-1])==0，那么n-next[n-1]就是最小循环节长度。</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">findMinimumRepeatPattern</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; s)</span> </span>{
+    <span class="hljs-keyword">int</span> n = s.length();
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; next = getNext(s);
+
+    <span class="hljs-keyword">int</span> repeatLength = n - next[n - <span class="hljs-number">1</span>];
+
+    <span class="hljs-comment">// 检查是否能被整除</span>
+    <span class="hljs-keyword">if</span> (next[n - <span class="hljs-number">1</span>] &gt; <span class="hljs-number">0</span> &amp;&amp; n % repeatLength == <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span> s.substr(<span class="hljs-number">0</span>, repeatLength);
+    }
+
+    <span class="hljs-keyword">return</span> s;  <span class="hljs-comment">// 无法分解为重复子串</span>
+}
+</code></pre>
+<h2 id="注意事项">注意事项</h2>
+<ol>
+<li>【next数组初始化】：next[0]应该初始化为0</li>
+<li>【边界条件】：处理空串的情况</li>
+<li>【变形应用】：了解KMP算法在周期串和前缀函数中的应用</li>
+<li>【优化next数组】：有时可以使用优化的next数组，使得匹配失败时直接跳转到不同的字符</li>
+</ol>
+<h2 id="常见错误">常见错误</h2>
+<ol>
+<li>next数组计算错误</li>
+<li>匹配过程中索引处理不当</li>
+<li>在处理多个匹配时忘记重置j的值</li>
+</ol>
+<h2 id="练习题目推荐">练习题目推荐</h2>
+<ol>
+<li>POJ 3461 - Oulipo (文本中模式串出现次数)</li>
+<li>SPOJ - NHAY (Needle in the Haystack)</li>
+<li>LeetCode 28 - Find the Index of the First Occurrence in a String</li>
+</ol>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="字符串匹配.html" class="navigation navigation-prev " aria-label="Previous page: 字符串匹配">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="字典树.html" class="navigation navigation-next " aria-label="Next page: 字典树(Trie)">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"KMP算法","level":"1.2.2","depth":2,"next":{"title":"字典树(Trie)","level":"1.2.3","depth":2,"path":"字典树.md","ref":"字典树.md","articles":[]},"previous":{"title":"字符串匹配","level":"1.2.1","depth":2,"path":"字符串匹配.md","ref":"字符串匹配.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"KMP算法.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:23.368Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

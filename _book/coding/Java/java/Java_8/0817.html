@@ -1,0 +1,664 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 8 函数式接口 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0818.html" />
+    
+    
+    <link rel="prev" href="0816.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0807.html">
+            
+                <a href="0807.html">
+            
+                    
+                    Java 8 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0808.html">
+            
+                <a href="0808.html">
+            
+                    
+                    Java 8 Lambda 表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0809.html">
+            
+                <a href="0809.html">
+            
+                    
+                    Java 反射 API——Parameter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0810.html">
+            
+                <a href="0810.html">
+            
+                    
+                    Java 8 Base64类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0811.html">
+            
+                <a href="0811.html">
+            
+                    
+                    Java 8 Collectors类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0812.html">
+            
+                <a href="0812.html">
+            
+                    
+                    Java 8 并行数组排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0813.html">
+            
+                <a href="0813.html">
+            
+                    
+                    Java 8 方法引用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0814.html">
+            
+                <a href="0814.html">
+            
+                    
+                    Java 8 forEach()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0815.html">
+            
+                <a href="0815.html">
+            
+                    
+                    Java 8 StringJoiner类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0816.html">
+            
+                <a href="0816.html">
+            
+                    
+                    Java 接口默认和静态方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.11" data-path="0817.html">
+            
+                <a href="0817.html">
+            
+                    
+                    Java 8 函数式接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0818.html">
+            
+                <a href="0818.html">
+            
+                    
+                    Java Optional类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0819.html">
+            
+                <a href="0819.html">
+            
+                    
+                    Java 8 流 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0820.html">
+            
+                <a href="0820.html">
+            
+                    
+                    Java 8 改进的类型推断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0821.html">
+            
+                <a href="0821.html">
+            
+                    
+                    Java 8 日期和时间 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0822.html">
+            
+                <a href="0822.html">
+            
+                    
+                    Java 谓词
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 8 函数式接口</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-8-函数式接口">Java 8 函数式接口</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-8/java-8-functional-interface" target="_blank">https://www.studytonight.com/java-8/java-8-functional-interface</a></p>
+</blockquote>
+<p>函数式接口是 Java 8 中引入的一个概念。一个只有一个抽象方法并标有 <strong>@FunctionalInterface</strong> 注解的接口叫做 FunctionalInterface。</p>
+<p>函数接口用于支持函数式编程方法、lambda 表达式以及方法引用。</p>
+<p>由于单一抽象方法(SAM)，函数式接口也被称为 <strong>SAM 接口</strong>。</p>
+<p>让我们看看如何创建一个函数式接口，尽管 Java 提供了各种内置的函数式接口，我们已经在主题末尾的表格中进行了总结。</p>
+<h2 id="示例功能界面"><strong>示例:功能界面</strong></h2>
+<p>我们正在创建一个用注释标记的函数式接口，它只包含一个抽象方法。</p>
+<pre><code class="lang-java"><span class="hljs-annotation">@FunctionalInterface</span>
+<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Printable</span></span>{
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span>;
+}
+</code></pre>
+<h2 id="示例错误的功能界面"><strong>示例:错误的功能界面</strong></h2>
+<p>如果我们对具有多个抽象方法的接口使用函数接口注释，那么编译器将会产生错误。</p>
+<pre><code class="lang-java"><span class="hljs-annotation">@FunctionalInterface</span>
+<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Printable</span></span>{
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span>;
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print3D</span><span class="hljs-params">()</span></span>;
+}
+</code></pre>
+<p>错误:
+无效的“@FunctionalInterface”注释；可打印不是功能界面</p>
+<h2 id="非抽象方法函数式接口"><strong>非抽象方法函数式接口</strong></h2>
+<p>一个函数接口可以有默认的和静态的方法，就像普通接口一样，但是只有一个抽象方法。下面是一个有效的功能界面。</p>
+<pre><code class="lang-java"><span class="hljs-annotation">@FunctionalInterface</span>
+<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Printable</span></span>{
+
+    <span class="hljs-comment">// Abstract method</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-comment">// non-abstract (static) method</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print3D</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"3D Printing"</span>);
+    }
+}
+</code></pre>
+<h2 id="如何实现一个函数式接口？"><strong>如何实现一个函数式接口？</strong></h2>
+<p>函数式接口可以通过使用 lambda 表达式或方法引用来实现。要了解 Lambda 表达式，您可以访问我们的<a href="”lambda-expression”">Lambda 表达式</a>主题。</p>
+<p>让我们看一些实现函数式接口的例子。</p>
+<h2 id="示例功能界面"><strong>示例:功能界面</strong></h2>
+<p>在这个例子中，我们使用 lambda 表达式实现了一个函数接口。使用 lambda 表达式在 Demo 类中实现了一个抽象方法 print()。</p>
+<pre><code class="lang-java"><span class="hljs-annotation">@FunctionalInterface</span>
+<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Printable</span></span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print3D</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"3D Printing"</span>);
+    }
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        <span class="hljs-comment">// Implementing functional interface using lambda</span>
+        Printable p = ()-&gt;System.out.println(<span class="hljs-string">"Printing..."</span>);
+        p.print();
+    }
+}
+</code></pre>
+<p>印刷...</p>
+<h2 id="示例使用方法引用的功能界面"><strong>示例:使用方法引用的功能界面</strong></h2>
+<p>在这个例子中，我们使用方法引用实现了一个函数接口。方法引用是一个概念，在这个概念中，我们可以将方法引用到接口的抽象方法。见下面的例子。</p>
+<pre><code class="lang-java"><span class="hljs-annotation">@FunctionalInterface</span>
+<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Printable</span></span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print3D</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"3D Printing"</span>);
+    }
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Demo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        Demo demo = <span class="hljs-keyword">new</span> Demo();
+        <span class="hljs-comment">// Referring to a non-functional method</span>
+        Printable p = demo::printColor;
+        <span class="hljs-comment">// calling abstract method</span>
+        p.print();
+    }
+
+    <span class="hljs-comment">// Implementation of print() abstract method</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printColor</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"Color Printing..."</span>);
+    }
+}
+</code></pre>
+<p>彩色印刷...</p>
+<h2 id="有效扩展界面"><strong>有效:扩展界面</strong></h2>
+<p>函数式接口只能扩展没有任何抽象方法的非函数式接口。</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Drawable</span></span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">draw</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"Draw Image"</span>);
+    }
+}
+
+<span class="hljs-annotation">@FunctionalInterface</span>
+<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Printable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Drawable</span></span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print3D</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"3D Printing"</span>);
+    }
+}
+</code></pre>
+<h2 id="无效扩展界面"><strong>无效:扩展界面</strong></h2>
+<p>函数接口不能扩展任何具有一个或多个抽象方法的接口。编译器将在编译时报告错误。</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Drawable</span></span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">draw</span><span class="hljs-params">()</span></span>;
+}
+
+<span class="hljs-annotation">@FunctionalInterface</span>
+<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Printable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Drawable</span></span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print3D</span><span class="hljs-params">()</span> </span>{
+        System.out.println(<span class="hljs-string">"3D Printing"</span>);
+    }
+}
+</code></pre>
+<p><strong>错误:</strong>无效的“@FunctionalInterface”注释；可打印不是功能界面</p>
+<h2 id="java-内置功能界面"><strong>Java 内置功能界面</strong></h2>
+<p>Java 提供了各种内置的函数接口来支持函数编程，尽管我们可以像本主题开始时那样创建自己的函数接口。</p>
+<p>下表包含位于<strong>**Java . util . function</strong>包中的函数式接口列表。**</p>
+<p> <strong>| </strong>界面<strong> | </strong>描述** |
+| 双消费者〔t0〕 | 它表示接受两个输入参数并且不返回结果的操作。 |
+| 消费者 | 它表示接受单个参数并且不返回结果的操作。 |
+| 功能 | 它表示接受一个参数并返回一个结果的函数。 |
+| 谓词 | 它表示一个参数的谓词(布尔值函数)。 |
+| 双功能 | 它表示接受两个参数并返回一个结果的函数。 |
+| 二进制操作器 | 它表示对相同数据类型的两个操作数的操作。它返回与操作数类型相同的结果。 |
+| 双重定向 | 它表示两个参数的谓词(布尔值函数)。 |
+| BooleanSupplier | 它代表布尔值结果的提供者。 |
+| 双二进制运算符 | 它表示对两个<code>Double</code>类型操作数的操作，并返回一个<code>Double</code>类型值。 |
+| 双重消费者 | 它表示接受单个<code>Double</code>类型参数并且不返回结果的操作。 |
+| 双功能〔t0〕 | 它表示接受<code>Double</code>类型参数并产生结果的函数。 |
+| 双重预测 | 它表示一个<code>Double</code>类型参数的谓词(布尔值函数)。 |
+| 双重供应商 | 它代表了双重结果的供应商。 |
+| DoubleToIntFunction | 它表示接受<code>Double</code>类型参数并产生 int 类型结果的函数。 |
+| IntToDoubleFunction | 它表示接受整数参数并返回双精度值的函数。 |
+| IntToLongFunction | 它表示接受整数参数并返回 long 类型的函数。 |
+| 插管操作器 | 它表示对单个整数操作数的运算，产生整数结果。 |
+| LongBinaryOperator | 它表示对两个<code>Long</code>类型操作数的操作，并返回一个<code>Long</code>类型结果。 |
+| 长期消费者 | 它表示接受单个<code>Long</code>类型参数并且不返回结果的操作。 |
+| 长功能 | 它表示接受<code>Long</code>类型参数并返回结果的函数。 |
+| longpredictate | 它表示一个<code>Long</code>类型参数的谓词(布尔值函数)。 |
+| 长期供应商 | 它代表长型结果的供应商。 |
+| LongToDoubleFunction | 它表示接受<code>Long</code>类型参数并返回<code>Double</code>类型结果的函数。 |
+| LongToIntFunction | 它表示接受<code>Long</code>类型参数并返回整数结果的函数。 |
+| longunaryooperator | 它表示对单个<code>Long</code>类型操作数的操作，返回<code>Long</code>类型结果。 |
+| object double consumer〔t0〕 | 它表示接受对象和双参数的操作，并且不返回任何结果。 |
+| 对象用户〔t0〕 | 它表示接受对象和整数参数的操作。它不返回结果。 |
+| ObjLongConsumer | 它表示接受一个对象和一个长参数的操作，它不返回任何结果。 |
+| 供应商 | 它代表结果的提供者。 |
+| 至双功能 | 它表示一个接受两个参数并产生<code>Double</code>类型结果的函数。 |
+| 全功能〔t0〕 | 它表示一个返回双精度类型结果的函数。 |
+| 屋顶分叉〔t0〕 | 它表示接受两个参数并返回一个整数的函数。 |
+| 屋顶功能〔t0〕 | 它表示一个返回整数的函数。 |
+| ToLongBiFunction | 它表示接受两个参数并返回<code>Long</code>类型结果的函数。 |
+| 托伦函数〔t0〕 | 它表示返回<code>Long</code>类型结果的函数。 |
+| 无操作者 | 它表示对单个操作数的操作，该操作数返回与其操作数类型相同的结果。 |</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0816.html" class="navigation navigation-prev " aria-label="Previous page: Java 接口默认和静态方法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0818.html" class="navigation navigation-next " aria-label="Next page: Java Optional类">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 8 函数式接口","level":"1.1.11","depth":2,"next":{"title":"Java Optional类","level":"1.1.12","depth":2,"path":"0818.md","ref":"0818.md","articles":[]},"previous":{"title":"Java 接口默认和静态方法","level":"1.1.10","depth":2,"path":"0816.md","ref":"0816.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0817.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:51.159Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

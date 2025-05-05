@@ -1,0 +1,491 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 11 HTTP 客户端 API · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0847.html" />
+    
+    
+    <link rel="prev" href="0845.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 11
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0841.html">
+            
+                <a href="0841.html">
+            
+                    
+                    Java 11 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0842.html">
+            
+                <a href="0842.html">
+            
+                    
+                    Java 11 字符串新方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0843.html">
+            
+                <a href="0843.html">
+            
+                    
+                    Java 11 文件新方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0844.html">
+            
+                <a href="0844.html">
+            
+                    
+                    在 Java 11 的 Lambda 表达式中使用var
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0845.html">
+            
+                <a href="0845.html">
+            
+                    
+                    Java 11 中基于嵌套的访问控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.6" data-path="0846.html">
+            
+                <a href="0846.html">
+            
+                    
+                    Java 11 HTTP 客户端 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0847.html">
+            
+                <a href="0847.html">
+            
+                    
+                    Java 文件的不编译执行
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 11 HTTP 客户端 API</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-11-http-客户端-api">Java 11 HTTP 客户端 API</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-11/java-11-http-client-api" target="_blank">https://www.studytonight.com/java-11/java-11-http-client-api</a></p>
+</blockquote>
+<p>Java 11 增加了一个新的<strong>模块</strong> <code>java.net.http</code>和一个<strong>包</strong> <code>java.net.http</code>来定义 HTTP Client 和 WebSocket APIs。</p>
+<p>这个包包含几个类和接口，为 HTTP 提供高级客户端接口，为 WebSocket 提供低级客户端接口。</p>
+<p>我们可以使用这些类和接口来发送同步或异步请求。</p>
+<h2 id="接口列表">接口列表</h2>
+<p>以下是 java.net.http 包的接口，可用于处理客户端请求和响应。</p>
+<p>| </p>
+<p>连接</p>
+<p> | </p>
+<p>描述</p>
+<p> |
+| </p>
+<p><strong>HttpClient。builder〔t1〕</strong></p>
+<p> | HTTP 客户端的构建者。 |
+| </p>
+<p>HttpRequest。BodyPublisher</p>
+<p> | BodyPublisher 将高级 Java 对象转换成适合作为请求体发送的字节缓冲区流。 |
+| </p>
+<p>HttpRequest.Builder</p>
+<p> | HTTP 请求的构建者。 |
+| </p>
+<p>http 响应〔t0〕</p>
+<p> | 一个 HTTP 响应。 |
+| </p>
+<p>http response(http 响应)。body handler〔t0〕</p>
+<p> | 响应体的处理程序。 |
+| </p>
+<p>http response(http 响应)。body subscriber〔t0〕</p>
+<p> | BodySubscriber 使用响应体字节，并将它们转换为更高级别的 Java 类型。 |
+| </p>
+<p>HttpResponse.PushPromiseHandler</p>
+<p> | 推送承诺的处理程序。 |
+| </p>
+<p>http 响应。响应信息</p>
+<p> | 在最初收到响应时和处理正文之前，提供给 BodyHandler 的初始响应信息。 |
+| </p>
+<p>WebSocket</p>
+<p> | 一个网络套接字客户端。 |
+| </p>
+<p>WebSocket.Builder</p>
+<p> | 网络套接字客户端的构建者。 |
+| </p>
+<p>WebSocket . listener-网路通讯协定</p>
+<p> | WebSocket 的接收接口。 |</p>
+<h2 id="类别列表">类别列表</h2>
+<p>以下是 java.net.http 包下的类，用于创建 HttpClient 和连接到主机。</p>
+<p>| </p>
+<p>班级</p>
+<p> | </p>
+<p>描述</p>
+<p> |
+| </p>
+<p>http client(http 客户端)</p>
+<p> | 一个超文本传输协议客户端。 |
+| </p>
+<p>HttpHeaders</p>
+<p> | 一组 HTTP 头的只读视图。 |
+| </p>
+<p>对象</p>
+<p> | 一个 HTTP 请求。 |
+| </p>
+<p>HttpRequest。BodyPublishers</p>
+<p> | BodyPublisher 的实现，实现各种有用的发布器，例如从字符串或文件发布请求正文。 |
+| </p>
+<p>http response(http 响应)。BodyHandlers(身体处理程序)</p>
+<p> | BodyHandler 的实现，实现各种有用的处理程序，例如将响应体作为字符串处理，或将响应体流式传输到文件。 |
+| </p>
+<p>http 响应。body 订户</p>
+<p> | 实现各种有用订阅者的 BodySubscriber 实现，例如将响应正文字节转换为字符串，或将字节流式传输到文件。 |</p>
+<h2 id="举例时间">举例时间:</h2>
+<p>在这个例子中，我们使用 HttpClient 向“study now . com”发送一个 get 请求。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.io.IOException;
+<span class="hljs-keyword">import</span> java.net.URI;
+<span class="hljs-keyword">import</span> java.net.http.HttpClient;
+<span class="hljs-keyword">import</span> java.net.http.HttpClient.Redirect;
+<span class="hljs-keyword">import</span> java.net.http.HttpClient.Version;
+<span class="hljs-keyword">import</span> java.net.http.HttpRequest;
+<span class="hljs-keyword">import</span> java.net.http.HttpResponse;
+<span class="hljs-keyword">import</span> java.net.http.HttpResponse.BodyHandlers;
+<span class="hljs-keyword">import</span> java.time.Duration;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException, InterruptedException </span>{
+        HttpRequest request = HttpRequest.newBuilder()
+                .GET()
+                .uri(URI.create(<span class="hljs-string">"https://www.studytonight.com"</span>))
+                .build();
+        HttpClient httpClient = HttpClient.newBuilder()
+                .version(Version.HTTP_2)
+                .followRedirects(Redirect.NORMAL)
+                .connectTimeout(Duration.ofSeconds(<span class="hljs-number">20</span>))
+                .build();
+        HttpResponse&lt;String&gt; response = httpClient.send(request, BodyHandlers.ofString());
+        System.out.println(response.statusCode());
+
+    }
+}
+</code></pre>
+<p>200</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0845.html" class="navigation navigation-prev " aria-label="Previous page: Java 11 中基于嵌套的访问控制">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0847.html" class="navigation navigation-next " aria-label="Next page: Java 文件的不编译执行">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 11 HTTP 客户端 API","level":"1.1.6","depth":2,"next":{"title":"Java 文件的不编译执行","level":"1.1.7","depth":2,"path":"0847.md","ref":"0847.md","articles":[]},"previous":{"title":"Java 11 中基于嵌套的访问控制","level":"1.1.5","depth":2,"path":"0845.md","ref":"0845.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0846.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:43.423Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

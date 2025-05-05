@@ -1,0 +1,1597 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>NumPy 矩阵乘法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="185.html" />
+    
+    
+    <link rel="prev" href="183.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    NumPy
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="170.html">
+            
+                <a href="170.html">
+            
+                    
+                    NumPy 基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="171.html">
+            
+                <a href="171.html">
+            
+                    
+                    什么是 Numpy 库？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="172.html">
+            
+                <a href="172.html">
+            
+                    
+                    安装 NumPy 库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="173.html">
+            
+                <a href="173.html">
+            
+                    
+                    NumPy 数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="174.html">
+            
+                <a href="174.html">
+            
+                    
+                    NumPy 数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="175.html">
+            
+                <a href="175.html">
+            
+                    
+                    NumPy 数组创建——empty、zeroes和ones
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="176.html">
+            
+                <a href="176.html">
+            
+                    
+                    使用现有数据创建 Numpy 数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="177.html">
+            
+                <a href="177.html">
+            
+                    
+                    从数值范围创建 Numpy 数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="178.html">
+            
+                <a href="178.html">
+            
+                    
+                    NumPy 索引和切片
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="179.html">
+            
+                <a href="179.html">
+            
+                    
+                    NumPy 高级索引
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="180.html">
+            
+                <a href="180.html">
+            
+                    
+                    NumPy 广播
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="181.html">
+            
+                <a href="181.html">
+            
+                    
+                    NumPy 排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="182.html">
+            
+                <a href="182.html">
+            
+                    
+                    NumPy 副本和视图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="183.html">
+            
+                <a href="183.html">
+            
+                    
+                    NumPy 访问数组元素的（迭代）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.15" data-path="184.html">
+            
+                <a href="184.html">
+            
+                    
+                    NumPy 矩阵乘法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="185.html">
+            
+                <a href="185.html">
+            
+                    
+                    NumPy 基本函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="186.html">
+            
+                <a href="186.html">
+            
+                    
+                    NumPy arange()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="187.html">
+            
+                <a href="187.html">
+            
+                    
+                    NumPy reshape()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="188.html">
+            
+                <a href="188.html">
+            
+                    
+                    NumPy append()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="189.html">
+            
+                <a href="189.html">
+            
+                    
+                    NumPy concatenate()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="190.html">
+            
+                <a href="190.html">
+            
+                    
+                    NumPy array()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="191.html">
+            
+                <a href="191.html">
+            
+                    
+                    NumPy transpose()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="192.html">
+            
+                <a href="192.html">
+            
+                    
+                    NumPy partition()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="193.html">
+            
+                <a href="193.html">
+            
+                    
+                    NumPy 数学函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="194.html">
+            
+                <a href="194.html">
+            
+                    
+                    NumPy ceil()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="195.html">
+            
+                <a href="195.html">
+            
+                    
+                    NumPy floor()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="196.html">
+            
+                <a href="196.html">
+            
+                    
+                    NumPy trunc()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="197.html">
+            
+                <a href="197.html">
+            
+                    
+                    NumPy fix()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="198.html">
+            
+                <a href="198.html">
+            
+                    
+                    NumPy 字符串函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="199.html">
+            
+                <a href="199.html">
+            
+                    
+                    NumPy islower()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="200.html">
+            
+                <a href="200.html">
+            
+                    
+                    NumPy find()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="201.html">
+            
+                <a href="201.html">
+            
+                    
+                    NumPy count()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="202.html">
+            
+                <a href="202.html">
+            
+                    
+                    NumPy istitle()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="203.html">
+            
+                <a href="203.html">
+            
+                    
+                    NumPy decode()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="204.html">
+            
+                <a href="204.html">
+            
+                    
+                    NumPy encode()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="205.html">
+            
+                <a href="205.html">
+            
+                    
+                    NumPy replace()功能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="206.html">
+            
+                <a href="206.html">
+            
+                    
+                    NumPy splitlines()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="207.html">
+            
+                <a href="207.html">
+            
+                    
+                    NumPy add()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="208.html">
+            
+                <a href="208.html">
+            
+                    
+                    NumPy multiply()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="209.html">
+            
+                <a href="209.html">
+            
+                    
+                    NumPy center()功能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="210.html">
+            
+                <a href="210.html">
+            
+                    
+                    NumPy join()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="211.html">
+            
+                <a href="211.html">
+            
+                    
+                    NumPy split()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="212.html">
+            
+                <a href="212.html">
+            
+                    
+                    NumPy title()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="213.html">
+            
+                <a href="213.html">
+            
+                    
+                    NumPy lower()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="214.html">
+            
+                <a href="214.html">
+            
+                    
+                    NumPy isupper()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.46" data-path="215.html">
+            
+                <a href="215.html">
+            
+                    
+                    NumPy isnumeric()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.47" data-path="216.html">
+            
+                <a href="216.html">
+            
+                    
+                    NumPy isalpha()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.48" data-path="217.html">
+            
+                <a href="217.html">
+            
+                    
+                    NumPy index()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.49" data-path="218.html">
+            
+                <a href="218.html">
+            
+                    
+                    NumPy startswith()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.50" data-path="219.html">
+            
+                <a href="219.html">
+            
+                    
+                    NumPy isspace()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.51" data-path="220.html">
+            
+                <a href="220.html">
+            
+                    
+                    NumPy isdigit()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.52" data-path="221.html">
+            
+                <a href="221.html">
+            
+                    
+                    NumPy isdecimal()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.53" data-path="222.html">
+            
+                <a href="222.html">
+            
+                    
+                    NumPy upper()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.54" data-path="223.html">
+            
+                <a href="223.html">
+            
+                    
+                    NumPy capitalize()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.55" data-path="224.html">
+            
+                <a href="224.html">
+            
+                    
+                    NumPy swapcase()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.56" data-path="225.html">
+            
+                <a href="225.html">
+            
+                    
+                    NumPy strip()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.57" data-path="226.html">
+            
+                <a href="226.html">
+            
+                    
+                    NumPy partition()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.58" data-path="227.html">
+            
+                <a href="227.html">
+            
+                    
+                    Numpy 统计函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.59" data-path="228.html">
+            
+                <a href="228.html">
+            
+                    
+                    NumPy amin()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.60" data-path="229.html">
+            
+                <a href="229.html">
+            
+                    
+                    NumPy amax()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.61" data-path="230.html">
+            
+                <a href="230.html">
+            
+                    
+                    NumPy ptp()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.62" data-path="231.html">
+            
+                <a href="231.html">
+            
+                    
+                    NumPy median()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.63" data-path="232.html">
+            
+                <a href="232.html">
+            
+                    
+                    NumPy mean()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.64" data-path="233.html">
+            
+                <a href="233.html">
+            
+                    
+                    NumPy std()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.65" data-path="234.html">
+            
+                <a href="234.html">
+            
+                    
+                    矩阵库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.66" data-path="235.html">
+            
+                <a href="235.html">
+            
+                    
+                    NumPy eye()功能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.67" data-path="236.html">
+            
+                <a href="236.html">
+            
+                    
+                    NumPy identity()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.68" data-path="237.html">
+            
+                <a href="237.html">
+            
+                    
+                    NumPy rand()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.69" data-path="238.html">
+            
+                <a href="238.html">
+            
+                    
+                    NumPy empty()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.70" data-path="239.html">
+            
+                <a href="239.html">
+            
+                    
+                    NumPy ones()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.71" data-path="240.html">
+            
+                <a href="240.html">
+            
+                    
+                    NumPy zeros()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.72" data-path="241.html">
+            
+                <a href="241.html">
+            
+                    
+                    二元运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.73" data-path="242.html">
+            
+                <a href="242.html">
+            
+                    
+                    NumPy left_shift()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.74" data-path="243.html">
+            
+                <a href="243.html">
+            
+                    
+                    NumPy right_shift()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.75" data-path="244.html">
+            
+                <a href="244.html">
+            
+                    
+                    NumPy bitwise_xor()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.76" data-path="245.html">
+            
+                <a href="245.html">
+            
+                    
+                    NumPy invert()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.77" data-path="246.html">
+            
+                <a href="246.html">
+            
+                    
+                    NumPy bitwise_or()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.78" data-path="247.html">
+            
+                <a href="247.html">
+            
+                    
+                    NumPy bitwise_and()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.79" data-path="248.html">
+            
+                <a href="248.html">
+            
+                    
+                    线性代数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.80" data-path="249.html">
+            
+                <a href="249.html">
+            
+                    
+                    NumPy dot()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.81" data-path="250.html">
+            
+                <a href="250.html">
+            
+                    
+                    杂项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.82" data-path="251.html">
+            
+                <a href="251.html">
+            
+                    
+                    NumPy asarray()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.83" data-path="252.html">
+            
+                <a href="252.html">
+            
+                    
+                    NumPy frombuffer()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.84" data-path="253.html">
+            
+                <a href="253.html">
+            
+                    
+                    NumPy logspace()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.85" data-path="254.html">
+            
+                <a href="254.html">
+            
+                    
+                    NumPy linspace()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.86" data-path="255.html">
+            
+                <a href="255.html">
+            
+                    
+                    NumPy fromiter()函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >NumPy 矩阵乘法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="numpy-矩阵乘法">NumPy 矩阵乘法</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/numpy/numpy-matrix-multiplication" target="_blank">https://www.studytonight.com/numpy/numpy-matrix-multiplication</a></p>
+</blockquote>
+<p>在本教程中，我们将介绍 NumPy 库中两个矩阵的<strong>乘法的概念。另外，由于 NumPy 库主要用于操作和数组处理，所以这是一个非常重要的概念。</strong></p>
+<p>在 NumPy 中，矩阵 的<strong>乘法基本上是一种运算，我们将</strong>两个矩阵作为输入<strong>和</strong>将第一个矩阵的行乘以第二个矩阵<strong>的列，产生一个单个矩阵作为输出。但是有一点很重要，我们要保证，那就是第一个矩阵</strong>的<strong>行数应该是</strong>等于第二个矩阵<strong>的列数。</strong></p>
+<p>Numpy 中矩阵相乘的过程俗称<strong>矢量化</strong>。矢量化过程的主要目标是减少循环使用<a href="https://www.studytonight.com/python/looping-in-python" target="_blank"></a><strong>来执行此类操作。当程序中跳过<code>for</code>循环的使用时，将减少代码的整体执行时间。</strong></p>
+<p> **让我们向您展示矩阵乘法的图像，然后我们将继续讨论矩阵乘法的不同方法:</p>
+<p><img src="img/b6e2f2535048931061e9adddffbd61d5.png" alt="Numpy Matrix multiplication"></img></p>
+<h2 id="矩阵乘法的不同方法">矩阵乘法的不同方法</h2>
+<p>NumPy 中主要有三种不同的矩阵乘法方法，如下所示:</p>
+<ul>
+<li><p><strong>使用</strong> <code>multiply()</code> <strong>函数</strong>
+该函数将返回两个给定数组的元素乘法。</p>
+</li>
+<li><p><strong>使用</strong> <code>matmul()</code> <strong>函数</strong>
+该函数将返回两个输入数组的矩阵乘积。</p>
+</li>
+<li><p><strong>使用</strong> <code>dot()</code> <strong>函数</strong>
+该函数将返回两个给定数组的标量或点积。</p>
+</li>
+</ul>
+<p>现在我们将一个接一个地详细理解上面给出的每一种方法。</p>
+<h2 id="1使用multiply功能">1.使用<code>multiply()</code>功能</h2>
+<p>当我们要做两个数组的乘法运算时，使用<code>numpy.multiply()</code>函数。该方法将返回<code>arr1</code>和<code>arr2</code>的乘积，乘法按元素进行。</p>
+<p>如果，矩阵 A 为:</p>
+<p><img src="img/5efb953e41240468114f2979fb941cbd.png" alt="matrix multiplication example numpy"></img></p>
+<p>并且，矩阵 B 是:</p>
+<p><img src="img/2ec1e27b5ae4530e330611e10d18e08e.png" alt="matrix multiplication example numpy"></img></p>
+<p>然后， <strong>A*B</strong> 将这样计算:</p>
+<p><img src="img/ac85bf5fe272231e1de56524f46f55b2.png" alt="matrix multiplication example numpy"></img></p>
+<h3 id="numpymultiply的语法"><code>numpy.multiply()</code>的语法:</h3>
+<p>使用该函数所需的语法如下:</p>
+<pre><code class="lang-py">numpy.multiply(arr1, arr2, /, out, *, where, casting, order, dtype=<span class="hljs-keyword">None</span>, subok=<span class="hljs-keyword">True</span>[, signature, extobj], ufunc ‘multiply’)
+</code></pre>
+<p>让我们讨论上面给出的参数:</p>
+<ul>
+<li><p><strong>arr1</strong>
+该参数用于指示第一个输入数组。</p>
+</li>
+<li><p><strong>arr2</strong>
+该参数用于指示第二个 nput 数组。</p>
+</li>
+<li><p><strong>数据类型</strong>
+该参数用于指示返回数组的类型。</p>
+</li>
+<li><p><strong>出</strong>
+该参数主要指定结果存储的位置。</p>
+<ul>
+<li><p>如果提供了这个参数，那么它必须有一个可以存储乘法结果的形状。</p>
+</li>
+<li><p>如果未提供此参数或<strong>无</strong>，在这种情况下，将返回新分配的数组。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>其中</strong>
+在该参数中，<strong>真</strong>值表示计算该位置的<code>ufunc</code>，如果是<strong>假</strong>值，则将该值单独留在输出中。</p>
+</li>
+<li><p><strong>**kwargs</strong>
+该参数允许向函数传递键值对。</p>
+</li>
+</ul>
+<h3 id="基本示例">基本示例:</h3>
+<p>下面我们有一个代码片段，涵盖了用于 NumPy 中矩阵乘法的<code>multiply()</code>函数:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np  
+
+a = np.array([[<span class="hljs-number">11</span>,<span class="hljs-number">2</span>,<span class="hljs-number">23</span>],[<span class="hljs-number">14</span>,<span class="hljs-number">75</span>,<span class="hljs-number">6</span>],[<span class="hljs-number">17</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>]], ndmin=<span class="hljs-number">3</span>) 
+print(<span class="hljs-string">"A is:\n"</span>,a)
+
+b = np.array([[<span class="hljs-number">9</span>,<span class="hljs-number">8</span>,<span class="hljs-number">7</span>],[<span class="hljs-number">6</span>,<span class="hljs-number">5</span>,<span class="hljs-number">4</span>],[<span class="hljs-number">3</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>]], ndmin=<span class="hljs-number">3</span>)    
+print(<span class="hljs-string">"B is:\n"</span>,b)
+
+out = np.multiply(a,b)  
+print(<span class="hljs-string">"The resultant matrix is :"</span>)
+print(out)
+</code></pre>
+<p>上述代码的输出将是:</p>
+<p><img src="img/d439d8c239ae9568c98ca3cd28afe4dd.png" alt="numpy multiply() function code example"></img></p>
+<h2 id="2使用matmul功能">2.使用<code>matmul()</code>功能</h2>
+<p>NumPy 库中的<code>matmul()</code>函数用于返回两个给定数组的矩阵乘积。</p>
+<p>如果，矩阵 A 为:</p>
+<p><img src="img/5efb953e41240468114f2979fb941cbd.png" alt="numpy matmul() function code example"></img></p>
+<p>并且，矩阵 B 是:</p>
+<p><img src="img/2ec1e27b5ae4530e330611e10d18e08e.png" alt="numpy matmul() function code example"></img></p>
+<p>然后， <strong>A*B</strong> 使用<code>matmul()</code>函数会这样计算:</p>
+<p><img src="img/347c9d09f518b93a5edfae8617fa2dee.png" alt="numpy matmul() function example"></img></p>
+<h3 id="matmul的语法"><code>matmul()</code>的语法:</h3>
+<p>使用该函数所需的语法如下:</p>
+<pre><code class="lang-py">np.matmul(array a, array b)
+</code></pre>
+<p>值得注意的是，当它返回<strong>二维数组</strong>的标准乘积时，如果任一给定数组的维数为 <strong>&gt; 2</strong> ，则它被视为位于最后两个索引中的矩阵的<strong>堆栈，并被相应地广播。另一方面，如果任一参数是 </strong>1-D 数组<strong>，则通过在其维度上附加 </strong>1<strong> 将其提升为矩阵，该矩阵在乘法后被移除。</strong></p>
+<h3 id="例-1">例 1:</h3>
+<p>在下面的例子中，我们使用了<code>matmul()</code>函数进行矩阵乘法:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+A = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>], [<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>]])
+B = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>], [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>], [<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>]])
+
+print(<span class="hljs-string">"Matrix A is:\n"</span>,A)
+print(<span class="hljs-string">"Matrix A is:\n"</span>,B)
+
+C = np.matmul(A,B)
+print(<span class="hljs-string">"The Matrix multiplication of matrix A and B is:\n"</span>,C)
+</code></pre>
+<p>上述代码的输出将是:</p>
+<h3 id=""><img src="img/c09ee92248a684bffb8fdd8ce7a73b45.png" alt="numpy matmul() function code example"></img></h3>
+<h3 id="例-2">例 2:</h3>
+<p>让我们举另一个例子，其中被相乘的两个阵列(矩阵)具有不同的维度:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> numpy.matlib 
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np 
+
+a = [[<span class="hljs-number">1</span>,<span class="hljs-number">4</span>],[<span class="hljs-number">2</span>,<span class="hljs-number">1</span>]] 
+print(<span class="hljs-string">"A is"</span>,a)
+b = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>]
+print(<span class="hljs-string">"B is"</span>,b)
+print(<span class="hljs-string">"AxB is"</span>)
+print(np.matmul(a,b))
+print(<span class="hljs-string">"BxA is "</span>)
+<span class="hljs-keyword">print</span> (np.matmul(b,a))
+</code></pre>
+<p>A 为[[1，4]，[2，1]]
+B 为[1，2]
+AxB 为
+【9 4】
+BxA 为
+【5 6】</p>
+<h2 id="3使用dot功能">3.使用<code>dot()</code>功能</h2>
+<p>在 NumPy 库中使用<code>dot()</code>函数的任意两个给定矩阵的点积基本上就是它们的矩阵积。唯一的主要区别是在<strong>点积</strong>中，我们也可以有标量值。因此两个矩阵的点积也被称为<strong>标量积</strong>。</p>
+<h3 id="numpydot的语法"><code>numpy.dot()</code>的语法:</h3>
+<p>使用该函数所需的语法如下:</p>
+<pre><code class="lang-py">numpy.dot(a, b, out=<span class="hljs-keyword">None</span>)
+</code></pre>
+<p>如果，矩阵 <strong>A</strong> 为:</p>
+<p><img src="img/ee93861734a3ac7c19a341d0431d5c81.png" alt="numpy dot() function example"></img></p>
+<p>而矩阵 <strong>B</strong> 是，</p>
+<p><img src="img/0d0c912b7c5362eb3d367d40f7b53c1d.png" alt="numpy dot() function example"></img></p>
+<p>A 和 B 的<strong>点积计算如下:</strong></p>
+<pre><code class="lang-py">A.B = a11*b11 + a12*b12 + a13*b13
+</code></pre>
+<p>现在让我们举几个代码示例来看看这是如何实现的。</p>
+<h3 id="例-1">例 1:</h3>
+<p>通过下面给出的例子，我们将说明两个一维矩阵的点积:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+A = np.array([<span class="hljs-number">7</span>,<span class="hljs-number">9</span>,<span class="hljs-number">8</span>])
+B = np.array([<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>])
+print(<span class="hljs-string">"Matrix A is:\n"</span>, A)
+print(<span class="hljs-string">"Matrix A is:\n"</span>, B)
+
+C = np.dot(A,B)
+print(<span class="hljs-string">"Dot product of matrix A and B is:\n"</span>, C)
+</code></pre>
+<p>矩阵 A 为:
+【7 9 8】
+矩阵 A 为:
+【2 5 6】
+矩阵 A 与 B 的点积为:
+107</p>
+<h3 id="例-2">例 2:</h3>
+<p>在下面给出的例子中，我们将说明两个二维矩阵的点积:</p>
+<pre><code class="lang-py"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+A = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">4</span>],[<span class="hljs-number">3</span>,<span class="hljs-number">1</span>]])
+B = np.array([[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>],[<span class="hljs-number">6</span>,<span class="hljs-number">5</span>]])
+print(<span class="hljs-string">"Matrix A is:\n"</span>, A)
+print(<span class="hljs-string">"Matrix A is:\n"</span>, B)
+
+C = np.dot(A, B)
+print(<span class="hljs-string">"Matrix multiplication of matrix A and B is:\n"</span>, C)
+</code></pre>
+<p><img src="img/ef11a2d3c4c6dae82dc263e17e1d25db.png" alt="numpy dot() function code example"></img></p>
+<h3 id="例-3">例 3:</h3>
+<p>在下面给出的例子中，我们将说明一个<strong>标量值和一个二维矩阵</strong>的点积:</p>
+<pre><code class="lang-py">A = np.array([[<span class="hljs-number">2</span>,<span class="hljs-number">4</span>],[<span class="hljs-number">3</span>,<span class="hljs-number">5</span>]])
+print(<span class="hljs-string">"Matrix A is:\n"</span>, A)
+C = np.dot(<span class="hljs-number">3</span>, A)
+print(<span class="hljs-string">"Matrix multiplication of matrix A with scalar :\n"</span>, C)
+</code></pre>
+<p><img src="img/581ec64d8132639956197f565fa5f81a.png" alt="numpy dot() function code example"></img></p>
+<h2 id="摘要">摘要</h2>
+<p>在本教程中，我们介绍了矩阵乘法的不同方法。我们介绍了<code>multiply()</code>函数、<code>matmul()</code>函数和<code>dot()</code>函数的语法，以及这些函数的多个代码示例。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="183.html" class="navigation navigation-prev " aria-label="Previous page: NumPy 访问数组元素的（迭代）">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="185.html" class="navigation navigation-next " aria-label="Next page: NumPy 基本函数">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"NumPy 矩阵乘法","level":"1.1.15","depth":2,"next":{"title":"NumPy 基本函数","level":"1.1.16","depth":2,"path":"185.md","ref":"185.md","articles":[]},"previous":{"title":"NumPy 访问数组元素的（迭代）","level":"1.1.14","depth":2,"path":"183.md","ref":"183.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"184.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:41.367Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

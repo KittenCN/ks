@@ -1,0 +1,614 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 反射 API——Parameter类 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0810.html" />
+    
+    
+    <link rel="prev" href="0808.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0807.html">
+            
+                <a href="0807.html">
+            
+                    
+                    Java 8 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0808.html">
+            
+                <a href="0808.html">
+            
+                    
+                    Java 8 Lambda 表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.3" data-path="0809.html">
+            
+                <a href="0809.html">
+            
+                    
+                    Java 反射 API——Parameter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0810.html">
+            
+                <a href="0810.html">
+            
+                    
+                    Java 8 Base64类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0811.html">
+            
+                <a href="0811.html">
+            
+                    
+                    Java 8 Collectors类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0812.html">
+            
+                <a href="0812.html">
+            
+                    
+                    Java 8 并行数组排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0813.html">
+            
+                <a href="0813.html">
+            
+                    
+                    Java 8 方法引用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0814.html">
+            
+                <a href="0814.html">
+            
+                    
+                    Java 8 forEach()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0815.html">
+            
+                <a href="0815.html">
+            
+                    
+                    Java 8 StringJoiner类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0816.html">
+            
+                <a href="0816.html">
+            
+                    
+                    Java 接口默认和静态方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0817.html">
+            
+                <a href="0817.html">
+            
+                    
+                    Java 8 函数式接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0818.html">
+            
+                <a href="0818.html">
+            
+                    
+                    Java Optional类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0819.html">
+            
+                <a href="0819.html">
+            
+                    
+                    Java 8 流 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0820.html">
+            
+                <a href="0820.html">
+            
+                    
+                    Java 8 改进的类型推断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0821.html">
+            
+                <a href="0821.html">
+            
+                    
+                    Java 8 日期和时间 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0822.html">
+            
+                <a href="0822.html">
+            
+                    
+                    Java 谓词
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 反射 API——Parameter类</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-反射-api——parameter类">Java 反射 API——<code>Parameter</code>类</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-8/java-reflection-api-parameter-class" target="_blank">https://www.studytonight.com/java-8/java-reflection-api-parameter-class</a></p>
+</blockquote>
+<p>在 Java 8 版本中，Java 增加了一个名为<code>Parameter</code>的新类来获取关于方法参数的信息。<code>Parameter</code>类帮助<strong>获取关于方法</strong>参数<strong>的信息</strong>，包括名称和修饰符等。它还提供了获取参数属性的替代方法。</p>
+<p>我们可以这样理解它:假设我们在运行时有一个类，我们想知道它的方法、参数和<code>Parameter</code>类型等。在这种情况下，我们使用反射 API，它由各种类组成，如类、方法、构造器、参数等。关于反射 API 的更多信息，可以参考我们的帖子 <a href="https://www.studytonight.com/java/reflection-api.php" target="_blank">Java 反射 API</a> 。</p>
+<p>用于<strong>反射 API</strong> 中，用于运行时处理参数。它存储在 <strong>java.lang.reflect</strong> 包中。下面是类的声明。</p>
+<h2 id="申报">申报</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Parameter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Object</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AnnotatedElement</span>
+</span></code></pre>
+<h2 id="parameter类方法"><code>Parameter</code>类方法</h2>
+<p>下表包含<code>Parameter</code>类的方法，这些方法有助于在运行时访问参数。</p>
+<p>| </p>
+<p>方法</p>
+<p> | </p>
+<p>描述</p>
+<p> |
+| 布尔等于(对象对象) | 它根据可执行文件和索引进行比较。 |
+| 注释类型 getAnnotatedType() | 它返回一个 AnnotatedType 对象，该对象表示使用类型来指定由该参数表示的形式参数的类型。 |
+| <t extends="" annotation="">T getAnnotation(类<t>注释类)</t>&lt;/t&gt; | 如果存在指定类型的注释，则返回该元素的注释，否则返回 null。 |
+| 注释[] getAnnotations() | 它返回出现在这个元素上的注释。 |
+|  <t extends="" annotation="">T[]GetannostatusBytype(类&lt; T &gt;注释类)</t> | 它返回与此元素关联的注释。 |
+|  <t extends="" annotation="">【古特 getdeclaredannotation】(类&lt; T &gt;注释类)</t> | 如果指定类型的注释直接存在，则返回该元素的注释，否则返回 null。 |
+| annotation[]getDeclaredAnnotations() | 它返回直接出现在这个元素上的注释。 |
+|  <t extends="" annotation="">【t[]get clariionsbytype】(类&lt; T &gt;注释类)</t> | 如果指定类型的注释直接存在或间接存在，它将返回该元素的注释。 |
+| Executable getDevingExecutable（） | 它返回声明该参数的可执行文件。 |
+| int get codes() | 它获取由该参数对象表示的参数的修饰符标志。 |
+| String getName（） | 它返回参数的名称。 |
+| getparameterizedtype() | 它返回一个类型对象，该对象标识由该参数对象表示的参数的参数化类型。 |
+| 类&gt; getType() | 它返回一个 Class 对象，该对象标识由该 parameter 对象表示的参数的声明类型。 |
+| int hashCode（） | 它根据可执行文件的哈希代码和索引返回哈希代码。 |
+| 布尔 isImplicit() | 如果此参数在源代码中隐式声明，则返回 true 否则返回 false。 |
+| 布尔值 isNamePresent（） | 如果参数根据类文件具有名称，则返回 true 否则返回 false。 |
+| boolean isSynthetic() | 如果此参数在源代码中既没有隐式也没有显式声明，则返回 true 否则返回 false。 |
+| 布尔 isVarArgs() | 如果此参数表示变量参数列表，则返回 true 否则返回 false。 |</t></p>
+<h2 id="举例时间">举例时间:</h2>
+<p>让我们举一个例子来访问一个名为“计算”的类的参数，这个类包含两个带参数的方法。我们通过<code>Parameter</code>类的方法来获取参数。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.lang.reflect.Method;
+<span class="hljs-keyword">import</span> java.lang.reflect.Parameter;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Calculate</span> </span>{  
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>{  
+        <span class="hljs-keyword">return</span> (a+b);  
+    }  
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sub</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>{  
+        <span class="hljs-keyword">return</span> (a-b);  
+    }  
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+      Class&lt;? extends Calculate&gt; cal = <span class="hljs-keyword">new</span> Calculate().getClass();
+      <span class="hljs-comment">// Get methods</span>
+      Method[] method = cal.getDeclaredMethods();
+      System.out.println(<span class="hljs-string">"Method Name: "</span>+ method[<span class="hljs-number">0</span>].getName());
+      <span class="hljs-comment">// get parameters</span>
+      System.out.println(<span class="hljs-string">"Parameters: "</span>);
+      Parameter[] parameters = method[<span class="hljs-number">0</span>].getParameters();
+      System.out.println(parameters[<span class="hljs-number">0</span>].getType()+<span class="hljs-string">" "</span>+parameters[<span class="hljs-number">0</span>].getName());
+      System.out.println(parameters[<span class="hljs-number">1</span>].getType()+<span class="hljs-string">" "</span>+parameters[<span class="hljs-number">1</span>].getName());
+
+    }
+}
+</code></pre>
+<p>方法名称:添加
+参数:
+int a
+int b</p>
+<h2 id="示例获取方法的所有参数">示例:获取方法的所有参数</h2>
+<p>在这个例子中，我们得到了类的两个方法的所有参数。因为 getParameters()方法返回一个数组，所以我们需要使用 for 循环来访问所有的参数。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.lang.reflect.Method;
+<span class="hljs-keyword">import</span> java.lang.reflect.Parameter;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Calculate</span> </span>{  
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>{  
+        <span class="hljs-keyword">return</span> (a+b);  
+    }  
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sub</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>{  
+        <span class="hljs-keyword">return</span> (a-b);  
+    }  
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+      Class&lt;? extends Calculate&gt; cal = <span class="hljs-keyword">new</span> Calculate().getClass();
+      <span class="hljs-comment">// Get methods</span>
+      Method[] methods = cal.getDeclaredMethods();
+      <span class="hljs-keyword">for</span>(Method method : methods) {
+          System.out.println(<span class="hljs-string">"Method Name: "</span>+ method.getName());
+          Parameter[] parameters = method.getParameters();
+          System.out.println(<span class="hljs-string">"Parameters: "</span>);
+          <span class="hljs-keyword">for</span>(Parameter parameter : parameters)
+              System.out.println(parameter);
+      }     
+    }
+}
+</code></pre>
+<p>方法名称:添加
+参数:
+int a
+int b
+方法名称:子
+参数:
+int a
+int b</p>
+<p><strong>注意:</strong>要获取参数的实际名称，使用<strong>-参数</strong>标志编译类。默认<strong>。类</strong>文件不存储参数，返回 argsN 作为参数名，其中 N 是方法中的参数个数。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0808.html" class="navigation navigation-prev " aria-label="Previous page: Java 8 Lambda 表达式">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0810.html" class="navigation navigation-next " aria-label="Next page: Java 8 Base64类">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 反射 API——Parameter类","level":"1.1.3","depth":2,"next":{"title":"Java 8 Base64类","level":"1.1.4","depth":2,"path":"0810.md","ref":"0810.md","articles":[]},"previous":{"title":"Java 8 Lambda 表达式","level":"1.1.2","depth":2,"path":"0808.md","ref":"0808.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0809.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:51.159Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

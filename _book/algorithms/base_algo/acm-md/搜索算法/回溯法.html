@@ -1,0 +1,717 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>回溯法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="二分查找.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="搜索算法概述.html">
+            
+                <a href="搜索算法概述.html">
+            
+                    
+                    搜索算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="深度优先搜索.html">
+            
+                <a href="深度优先搜索.html">
+            
+                    
+                    深度优先搜索(DFS)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="广度优先搜索.html">
+            
+                <a href="广度优先搜索.html">
+            
+                    
+                    广度优先搜索(BFS)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="二分查找.html">
+            
+                <a href="二分查找.html">
+            
+                    
+                    二分查找
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.4" data-path="回溯法.html">
+            
+                <a href="回溯法.html">
+            
+                    
+                    回溯法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >回溯法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="回溯法">回溯法</h1>
+<h2 id="算法概述">算法概述</h2>
+<p>【回溯法】是一种通过穷举所有可能性来找到问题解的算法。它采用试错的思想，尝试分步解决问题，当发现当前尝试不能得到有效解时，会撤销上一步或几步的计算，再尝试其他的可能性。这种"尝试-回退"的策略，使得回溯法特别适合解决组合、排列、选择类问题。</p>
+<h2 id="算法设计思路">算法设计思路</h2>
+<p>回溯法的核心思想是：</p>
+<ol>
+<li>定义问题的解空间</li>
+<li>采用深度优先策略，系统地搜索整个解空间</li>
+<li>搜索过程中，根据约束条件进行剪枝，避免无效的搜索路径</li>
+<li>当找到合法解或遍历完整个解空间时结束搜索</li>
+</ol>
+<p>回溯法常常可以表示为一个递归函数，每一次递归调用都表示一次选择。</p>
+<h2 id="代码实现与解析">代码实现与解析</h2>
+<p>回溯法的一般框架：</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(参数列表)</span> </span>{
+    <span class="hljs-keyword">if</span> (终止条件) {
+        记录解;
+        <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-keyword">for</span> (选择 : 选择列表) {
+        做选择;
+        backtrack(参数列表); <span class="hljs-comment">// 递归进入下一层决策树</span>
+        撤销选择; <span class="hljs-comment">// 回溯到上一步</span>
+    }
+}
+</code></pre>
+<h3 id="经典问题：n皇后问题">经典问题：N皇后问题</h3>
+<p>N皇后问题要求在N×N的棋盘上放置N个皇后，使得它们不能互相攻击（即不能同行、同列、同对角线）。</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">class</span> Solution {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt; solveNQueens(<span class="hljs-keyword">int</span> n) {
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt; result;
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; board(n, <span class="hljs-built_in">string</span>(n, <span class="hljs-string">'.'</span>));
+
+        backtrack(board, <span class="hljs-number">0</span>, result);
+        <span class="hljs-keyword">return</span> result;
+    }
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&amp; board, <span class="hljs-keyword">int</span> row, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt;&amp; result)</span> </span>{
+        <span class="hljs-comment">// 终止条件：所有行都放置了皇后</span>
+        <span class="hljs-keyword">if</span> (row == board.size()) {
+            result.push_back(board);
+            <span class="hljs-keyword">return</span>;
+        }
+
+        <span class="hljs-keyword">int</span> n = board.size();
+        <span class="hljs-comment">// 尝试在当前行的每一列放置皇后</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> col = <span class="hljs-number">0</span>; col &lt; n; col++) {
+            <span class="hljs-keyword">if</span> (!isValid(board, row, col)) <span class="hljs-keyword">continue</span>;
+
+            <span class="hljs-comment">// 做选择</span>
+            board[row][col] = <span class="hljs-string">'Q'</span>;
+
+            <span class="hljs-comment">// 递归到下一行</span>
+            backtrack(board, row + <span class="hljs-number">1</span>, result);
+
+            <span class="hljs-comment">// 撤销选择（回溯）</span>
+            board[row][col] = <span class="hljs-string">'.'</span>;
+        }
+    }
+
+    <span class="hljs-comment">// 检查在(row, col)位置放置皇后是否合法</span>
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isValid</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&amp; board, <span class="hljs-keyword">int</span> row, <span class="hljs-keyword">int</span> col)</span> </span>{
+        <span class="hljs-keyword">int</span> n = board.size();
+
+        <span class="hljs-comment">// 检查列</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; row; i++) {
+            <span class="hljs-keyword">if</span> (board[i][col] == <span class="hljs-string">'Q'</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+
+        <span class="hljs-comment">// 检查左上方对角线</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = row - <span class="hljs-number">1</span>, j = col - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span> &amp;&amp; j &gt;= <span class="hljs-number">0</span>; i--, j--) {
+            <span class="hljs-keyword">if</span> (board[i][j] == <span class="hljs-string">'Q'</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+
+        <span class="hljs-comment">// 检查右上方对角线</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = row - <span class="hljs-number">1</span>, j = col + <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span> &amp;&amp; j &lt; n; i--, j++) {
+            <span class="hljs-keyword">if</span> (board[i][j] == <span class="hljs-string">'Q'</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+};
+</code></pre>
+<h2 id="回溯法与深度优先搜索的关系">回溯法与深度优先搜索的关系</h2>
+<p>回溯法可以看作是一种特殊的深度优先搜索(DFS)，但有以下区别：</p>
+<ol>
+<li>回溯法强调的是试探与回退的过程，主要用于求解问题的所有解</li>
+<li>DFS是一种搜索策略，强调的是搜索的顺序</li>
+<li>回溯法中通常涉及到状态的选择、探索和撤销，而DFS主要关注访问顺序</li>
+</ol>
+<h2 id="复杂度分析">复杂度分析</h2>
+<ul>
+<li>时间复杂度：O(k * n^k)，其中n是选择数，k是解的长度<ul>
+<li>实际时间复杂度取决于剪枝效率，上述是最坏情况</li>
+</ul>
+</li>
+<li>空间复杂度：O(k)，主要是递归调用栈的深度</li>
+</ul>
+<h2 id="典型应用场景">典型应用场景</h2>
+<p>回溯法适用于以下问题类型：</p>
+<ol>
+<li>【组合问题】：从n个数中找出k个数的所有组合</li>
+<li>【排列问题】：n个数的所有排列</li>
+<li>【切割问题】：将字符串切割成满足特定条件的片段</li>
+<li>【子集问题】：求一个集合的所有子集</li>
+<li>【棋盘问题】：如N皇后、数独等</li>
+<li>【图的着色问题】</li>
+<li>【迷宫问题】：寻找所有可行路径</li>
+</ol>
+<h2 id="典型例题分析">典型例题分析</h2>
+<h3 id="例题1-全排列问题（leetcode-46）">例题1: 全排列问题（LeetCode 46）</h3>
+<p>问题描述：给定一个不含重复数字的数组，返回其所有可能的全排列。</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">class</span> Solution {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; permute(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums) {
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; result;
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; current;
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt; used(nums.size(), <span class="hljs-literal">false</span>);
+
+        backtrack(nums, used, current, result);
+        <span class="hljs-keyword">return</span> result;
+    }
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&amp; used, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; current, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; result)</span> </span>{
+        <span class="hljs-comment">// 终止条件：排列长度等于数组长度</span>
+        <span class="hljs-keyword">if</span> (current.size() == nums.size()) {
+            result.push_back(current);
+            <span class="hljs-keyword">return</span>;
+        }
+
+        <span class="hljs-comment">// 尝试每个数字</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.size(); i++) {
+            <span class="hljs-comment">// 跳过已经使用的数字</span>
+            <span class="hljs-keyword">if</span> (used[i]) <span class="hljs-keyword">continue</span>;
+
+            <span class="hljs-comment">// 做选择</span>
+            used[i] = <span class="hljs-literal">true</span>;
+            current.push_back(nums[i]);
+
+            <span class="hljs-comment">// 递归</span>
+            backtrack(nums, used, current, result);
+
+            <span class="hljs-comment">// 撤销选择（回溯）</span>
+            used[i] = <span class="hljs-literal">false</span>;
+            current.pop_back();
+        }
+    }
+};
+</code></pre>
+<p>分析：</p>
+<ul>
+<li>时间复杂度：O(n * n!)，其中n是数组长度</li>
+<li>空间复杂度：O(n)，递归深度和存储当前排列的空间</li>
+<li>核心思想：通过标记数组记录已使用元素，递归生成所有可能的排列</li>
+</ul>
+<h3 id="例题2-子集（leetcode-78）">例题2: 子集（LeetCode 78）</h3>
+<p>问题描述：给定一组不含重复元素的整数数组，返回该数组所有可能的子集（幂集）。</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">class</span> Solution {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; subsets(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums) {
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; result;
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; current;
+
+        backtrack(nums, <span class="hljs-number">0</span>, current, result);
+        <span class="hljs-keyword">return</span> result;
+    }
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums, <span class="hljs-keyword">int</span> start, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; current, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; result)</span> </span>{
+        <span class="hljs-comment">// 每个递归状态都是一个有效的子集，直接加入结果</span>
+        result.push_back(current);
+
+        <span class="hljs-comment">// 从start开始，避免重复</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start; i &lt; nums.size(); i++) {
+            <span class="hljs-comment">// 做选择</span>
+            current.push_back(nums[i]);
+
+            <span class="hljs-comment">// 递归，注意从i+1开始，避免重复使用元素</span>
+            backtrack(nums, i + <span class="hljs-number">1</span>, current, result);
+
+            <span class="hljs-comment">// 撤销选择（回溯）</span>
+            current.pop_back();
+        }
+    }
+};
+</code></pre>
+<p>分析：</p>
+<ul>
+<li>时间复杂度：O(n * 2^n)，共有2^n个子集，每个子集需要O(n)时间生成</li>
+<li>空间复杂度：O(n)，递归深度和存储当前子集的空间</li>
+<li>核心思想：通过递归构建包含或不包含每个元素的所有组合</li>
+</ul>
+<h3 id="例题3-组合总和（leetcode-39）">例题3: 组合总和（LeetCode 39）</h3>
+<p>问题描述：给定一个无重复元素的数组candidates和一个目标数target，找出candidates中所有可以使数字和为target的组合。candidates中的数字可以无限制重复被选取。</p>
+<pre><code class="lang-cpp"><span class="hljs-keyword">class</span> Solution {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; combinationSum(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; candidates, <span class="hljs-keyword">int</span> target) {
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; result;
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; current;
+
+        backtrack(candidates, target, <span class="hljs-number">0</span>, current, result);
+        <span class="hljs-keyword">return</span> result;
+    }
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; candidates, <span class="hljs-keyword">int</span> remain, <span class="hljs-keyword">int</span> start, 
+                 <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; current, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; result)</span> </span>{
+        <span class="hljs-comment">// 终止条件</span>
+        <span class="hljs-keyword">if</span> (remain &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>; <span class="hljs-comment">// 超过目标和，无效</span>
+        <span class="hljs-keyword">if</span> (remain == <span class="hljs-number">0</span>) {
+            result.push_back(current); <span class="hljs-comment">// 找到一个有效组合</span>
+            <span class="hljs-keyword">return</span>;
+        }
+
+        <span class="hljs-comment">// 尝试从start开始的每个候选数</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = start; i &lt; candidates.size(); i++) {
+            <span class="hljs-comment">// 做选择</span>
+            current.push_back(candidates[i]);
+
+            <span class="hljs-comment">// 递归，注意仍从i开始，因为可以重复使用元素</span>
+            backtrack(candidates, remain - candidates[i], i, current, result);
+
+            <span class="hljs-comment">// 撤销选择（回溯）</span>
+            current.pop_back();
+        }
+    }
+};
+</code></pre>
+<p>分析：</p>
+<ul>
+<li>时间复杂度：O(n^(T/M))，其中T是目标和，M是最小的候选数</li>
+<li>空间复杂度：O(T/M)，递归深度最多为T/M</li>
+<li>核心思想：通过回溯构建所有和为目标值的组合，允许重复使用元素</li>
+</ul>
+<h2 id="易错点与调试技巧">易错点与调试技巧</h2>
+<ol>
+<li><p>【边界条件处理】确保递归的终止条件正确</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 错误写法: 可能导致无限递归</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">if</span> (someCondition) {
+        <span class="hljs-comment">// 找到解</span>
+    }
+    <span class="hljs-comment">// 缺少最终的终止条件</span>
+    <span class="hljs-keyword">for</span> (选择 : 选择列表) {
+        backtrack();
+    }
+}
+
+<span class="hljs-comment">// 正确写法: 有明确的终止条件</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">if</span> (终止条件) {
+        <span class="hljs-keyword">return</span>; <span class="hljs-comment">// 明确终止递归</span>
+    }
+    <span class="hljs-keyword">for</span> (选择 : 选择列表) {
+        做选择;
+        backtrack();
+        撤销选择; <span class="hljs-comment">// 确保每次递归后都撤销选择</span>
+    }
+}
+</code></pre>
+</li>
+<li><p>【回溯操作】确保每次选择后都正确回溯</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 错误写法: 没有回溯</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">for</span> (选择 : 选择列表) {
+        做选择;
+        backtrack();
+        <span class="hljs-comment">// 缺少撤销选择步骤，会导致状态混乱</span>
+    }
+}
+
+<span class="hljs-comment">// 正确写法: 选择与撤销选择对应，确保状态一致性</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">for</span> (选择 : 选择列表) {
+        做选择;
+        backtrack();
+        撤销选择; <span class="hljs-comment">// 确保回溯到选择前的状态</span>
+    }
+}
+</code></pre>
+</li>
+<li><p>【状态管理】注意引用传递和值传递的区别</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 使用引用传递current，确保回溯时正确撤销选择</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; current)</span> </span>{
+    <span class="hljs-comment">// ...</span>
+    current.push_back(val);
+    backtrack(current);
+    current.pop_back(); <span class="hljs-comment">// 回溯</span>
+}
+</code></pre>
+</li>
+<li><p>【剪枝优化】提前排除无效路径</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(<span class="hljs-keyword">int</span> remain)</span> </span>{
+    <span class="hljs-keyword">if</span> (remain &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>; <span class="hljs-comment">// 剪枝：和已经超过目标</span>
+    <span class="hljs-keyword">if</span> (remain == <span class="hljs-number">0</span>) {
+        <span class="hljs-comment">// 找到解</span>
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-comment">// 继续搜索</span>
+}
+</code></pre>
+</li>
+</ol>
+<h2 id="优化策略">优化策略</h2>
+<ol>
+<li><p>【排序预处理】通过预先排序提高剪枝效率</p>
+<pre><code class="lang-cpp"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; combinationSum(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; candidates, <span class="hljs-keyword">int</span> target) {
+    sort(candidates.begin(), candidates.end()); <span class="hljs-comment">// 预先排序</span>
+    <span class="hljs-comment">// ...继续回溯</span>
+}
+</code></pre>
+</li>
+<li><p>【位运算优化】对于某些问题，可以用位运算表示状态</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 使用位运算表示访问状态</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(<span class="hljs-keyword">int</span> state)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">if</span> ((state &amp; (<span class="hljs-number">1</span> &lt;&lt; i)) == <span class="hljs-number">0</span>) { <span class="hljs-comment">// 检查第i位是否已访问</span>
+            backtrack(state | (<span class="hljs-number">1</span> &lt;&lt; i)); <span class="hljs-comment">// 设置第i位为已访问</span>
+        }
+    }
+}
+</code></pre>
+</li>
+<li><p>【记忆化搜索】缓存已经计算过的结果</p>
+<pre><code class="lang-cpp"><span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-keyword">bool</span>&gt; memo;
+
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">backtrackWithMemo</span><span class="hljs-params">(<span class="hljs-built_in">string</span>&amp; s, <span class="hljs-keyword">int</span> start, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&amp; wordDict)</span> </span>{
+    <span class="hljs-keyword">if</span> (start == s.size()) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+
+    <span class="hljs-built_in">string</span> key = to_string(start);
+    <span class="hljs-keyword">if</span> (memo.count(key)) <span class="hljs-keyword">return</span> memo[key];
+
+    <span class="hljs-keyword">bool</span> result = <span class="hljs-literal">false</span>;
+    <span class="hljs-comment">// ...执行回溯</span>
+
+    memo[key] = result; <span class="hljs-comment">// 记忆结果</span>
+    <span class="hljs-keyword">return</span> result;
+}
+</code></pre>
+</li>
+</ol>
+<h2 id="练习题推荐">练习题推荐</h2>
+<ol>
+<li>LeetCode 46: 全排列（排列问题）</li>
+<li>LeetCode 78: 子集（子集问题）</li>
+<li>LeetCode 39: 组合总和（组合问题）</li>
+<li>LeetCode 131: 分割回文串（切割问题）</li>
+<li>LeetCode 51: N皇后（棋盘问题）</li>
+<li>LeetCode 37: 解数独（棋盘问题）</li>
+<li>LeetCode 79: 单词搜索（矩阵搜索）</li>
+<li>LeetCode 17: 电话号码的字母组合（排列组合）</li>
+<li>LeetCode 90: 子集 II（含重复元素的子集问题）</li>
+<li>LeetCode 40: 组合总和 II（含重复元素的组合问题）</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>回溯法是一种穷举式的搜索策略，通过系统地尝试所有可能的解，最终找到满足条件的答案。它的核心在于"做选择-递归-撤销选择"的过程，这种模式使得我们可以系统地探索解空间。</p>
+<p>在ACM比赛中，回溯法特别适合用于解决组合、排列、选择、棋盘等问题。掌握回溯法的核心思想和实现模板，再结合合理的剪枝优化，将使你能够高效地解决众多经典的搜索问题。</p>
+<p>记住，回溯法的效率往往取决于剪枝的有效性，因此针对具体问题设计合适的剪枝策略是提高算法效率的关键。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="二分查找.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 二分查找">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"回溯法","level":"1.2.4","depth":2,"previous":{"title":"二分查找","level":"1.2.3","depth":2,"path":"二分查找.md","ref":"二分查找.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"回溯法.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:34.691Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

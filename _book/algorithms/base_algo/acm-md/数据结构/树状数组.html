@@ -1,0 +1,702 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>树状数组 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ST表.html" />
+    
+    
+    <link rel="prev" href="线段树懒标记.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="基础数据结构.html">
+            
+                <a href="基础数据结构.html">
+            
+                    
+                    基础数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="高级数据结构概述.html">
+            
+                <a href="高级数据结构概述.html">
+            
+                    
+                    高级数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="并查集.html">
+            
+                <a href="并查集.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="单调栈和单调队列.html">
+            
+                <a href="单调栈和单调队列.html">
+            
+                    
+                    单调栈/单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="线段树.html">
+            
+                <a href="线段树.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="线段树懒标记.html">
+            
+                <a href="线段树懒标记.html">
+            
+                    
+                    线段树懒标记
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.6" data-path="树状数组.html">
+            
+                <a href="树状数组.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="ST表.html">
+            
+                <a href="ST表.html">
+            
+                    
+                    ST表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="堆.html">
+            
+                <a href="堆.html">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="二叉树.html">
+            
+                <a href="二叉树.html">
+            
+                    
+                    二叉树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="红黑树.html">
+            
+                <a href="红黑树.html">
+            
+                    
+                    红黑树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.11" data-path="跳表.html">
+            
+                <a href="跳表.html">
+            
+                    
+                    跳表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.12" data-path="平衡树.html">
+            
+                <a href="平衡树.html">
+            
+                    
+                    平衡树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.13" data-path="分块算法.html">
+            
+                <a href="分块算法.html">
+            
+                    
+                    分块算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >树状数组</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="树状数组">树状数组</h1>
+<p>【树状数组】(Binary Indexed Tree，简称BIT，又称Fenwick Tree)是一种用于高效处理数组前缀和的数据结构。它支持单点修改和区间查询操作，这两种操作的时间复杂度都是 O(log n)。</p>
+<h2 id="基本原理">基本原理</h2>
+<p>树状数组的核心思想是利用数的二进制表示，将前缀和分解为多个部分。树状数组中的每个节点存储原始数组中一段区间的和。</p>
+<h3 id="关键操作">关键操作</h3>
+<p>树状数组基于以下两个关键操作：</p>
+<ul>
+<li><strong>lowbit(x)</strong>：返回x二进制表示中最低位的1所对应的值</li>
+<li>例如：lowbit(12) = lowbit(1100₂) = 4 = 100₂</li>
+</ul>
+<h2 id="数据结构表示">数据结构表示</h2>
+<p>树状数组本质上是一个数组，通常用数组 <code>tree[]</code> 表示：</p>
+<ul>
+<li><code>tree[i]</code> 存储的是序列中一段元素的和</li>
+<li>具体来说，<code>tree[i]</code> 存储的是从 <code>i - lowbit(i) + 1</code> 到 <code>i</code> 这一段区间内的元素和</li>
+</ul>
+<h2 id="核心操作实现">核心操作实现</h2>
+<h3 id="1-lowbit函数">1. lowbit函数</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 计算x的二进制表示中最低位1所对应的值</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+    <span class="hljs-keyword">return</span> x &amp; (-x);
+}
+</code></pre>
+<h3 id="2-更新操作单点修改">2. 更新操作(单点修改)</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 在位置idx上增加值val</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> idx, <span class="hljs-keyword">int</span> val)</span> </span>{
+    <span class="hljs-keyword">while</span> (idx &lt;= n) {     <span class="hljs-comment">// n是数组长度</span>
+        tree[idx] += val;
+        idx += lowbit(idx); <span class="hljs-comment">// 更新受影响的所有节点</span>
+    }
+}
+</code></pre>
+<h3 id="3-查询操作求前缀和">3. 查询操作(求前缀和)</h3>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 计算前缀和：从1到idx的元素和</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> idx)</span> </span>{
+    <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (idx &gt; <span class="hljs-number">0</span>) {
+        sum += tree[idx];
+        idx -= lowbit(idx); <span class="hljs-comment">// 向前查找</span>
+    }
+    <span class="hljs-keyword">return</span> sum;
+}
+</code></pre>
+<h3 id="4-区间查询">4. 区间查询</h3>
+<p>要查询区间[l, r]的和，可以利用前缀和的性质：</p>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">queryRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+    <span class="hljs-keyword">return</span> query(r) - query(l - <span class="hljs-number">1</span>);
+}
+</code></pre>
+<h2 id="完整代码示例">完整代码示例</h2>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+<span class="hljs-keyword">int</span> tree[MAXN];
+<span class="hljs-keyword">int</span> n;  <span class="hljs-comment">// 数组长度</span>
+
+<span class="hljs-comment">// 计算lowbit</span>
+<span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+    <span class="hljs-keyword">return</span> x &amp; (-x);
+}
+
+<span class="hljs-comment">// 单点更新</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> idx, <span class="hljs-keyword">int</span> val)</span> </span>{
+    <span class="hljs-keyword">while</span> (idx &lt;= n) {
+        tree[idx] += val;
+        idx += lowbit(idx);
+    }
+}
+
+<span class="hljs-comment">// 查询前缀和</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> idx)</span> </span>{
+    <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (idx &gt; <span class="hljs-number">0</span>) {
+        sum += tree[idx];
+        idx -= lowbit(idx);
+    }
+    <span class="hljs-keyword">return</span> sum;
+}
+
+<span class="hljs-comment">// 初始化树状数组</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">buildBIT</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+    n = nums.size();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        update(i + <span class="hljs-number">1</span>, nums[i]);  <span class="hljs-comment">// 注意：树状数组从1开始索引</span>
+    }
+}
+
+<span class="hljs-comment">// 区间查询</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">queryRange</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span> </span>{
+    <span class="hljs-keyword">return</span> query(r) - query(l - <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; nums = {<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>, <span class="hljs-number">11</span>};
+    buildBIT(nums);
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"前缀和(1到3): "</span> &lt;&lt; query(<span class="hljs-number">3</span>) &lt;&lt; endl;       <span class="hljs-comment">// 输出：1+3+5=9</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"区间和(3到5): "</span> &lt;&lt; queryRange(<span class="hljs-number">3</span>, <span class="hljs-number">5</span>) &lt;&lt; endl; <span class="hljs-comment">// 输出：5+7+9=21</span>
+
+    <span class="hljs-comment">// 将位置2的值增加4</span>
+    update(<span class="hljs-number">2</span>, <span class="hljs-number">4</span>);
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"更新后的前缀和(1到3): "</span> &lt;&lt; query(<span class="hljs-number">3</span>) &lt;&lt; endl; <span class="hljs-comment">// 输出：1+(3+4)+5=13</span>
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h2 id="时间复杂度分析">时间复杂度分析</h2>
+<ul>
+<li>单点更新：O(log n)</li>
+<li>区间查询：O(log n)</li>
+</ul>
+<h2 id="树状数组的应用场景">树状数组的应用场景</h2>
+<ol>
+<li><strong>区间求和</strong>：快速计算数组的区间和</li>
+<li><strong>动态维护前缀和</strong>：在频繁更新的情况下维护前缀和</li>
+<li><strong>求逆序对数量</strong>：通过树状数组优化归并排序</li>
+<li><strong>二维/多维前缀和</strong>：处理二维或更高维度的前缀和问题</li>
+</ol>
+<h2 id="树状数组与线段树的比较">树状数组与线段树的比较</h2>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>树状数组</th>
+<th>线段树</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实现复杂度</td>
+<td>简单</td>
+<td>复杂</td>
+</tr>
+<tr>
+<td>内存占用</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>单点修改</td>
+<td>O(log n)</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td>区间修改</td>
+<td>需要额外技巧</td>
+<td>原生支持</td>
+</tr>
+<tr>
+<td>区间查询</td>
+<td>O(log n)</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>简单的区间求和问题</td>
+<td>复杂的区间操作问题</td>
+</tr>
+</tbody>
+</table>
+<h2 id="典型应用题目">典型应用题目</h2>
+<h3 id="例题1：逆序对计数">例题1：逆序对计数</h3>
+<p><strong>问题描述</strong>：给定一个数组，求数组中的逆序对数量(即前面的数比后面的数大的对数)。</p>
+<p><strong>解题思路</strong>：</p>
+<ol>
+<li>从右向左扫描数组</li>
+<li>对于每个元素，统计已经扫描过的元素中小于当前元素的数量</li>
+<li>利用树状数组维护已扫描元素的计数</li>
+</ol>
+<pre><code class="lang-cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">countInversions</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>{
+    <span class="hljs-comment">// 离散化处理</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; sorted = nums;
+    sort(sorted.begin(), sorted.end());
+    sorted.erase(unique(sorted.begin(), sorted.end()), sorted.end());
+
+    <span class="hljs-built_in">memset</span>(tree, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(tree));
+    n = sorted.size();
+
+    <span class="hljs-keyword">int</span> inversions = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = nums.size() - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-keyword">int</span> idx = lower_bound(sorted.begin(), sorted.end(), nums[i]) - sorted.begin() + <span class="hljs-number">1</span>;
+        inversions += query(idx - <span class="hljs-number">1</span>);  <span class="hljs-comment">// 统计比当前元素小的元素数量</span>
+        update(idx, <span class="hljs-number">1</span>);                <span class="hljs-comment">// 将当前元素加入树状数组</span>
+    }
+
+    <span class="hljs-keyword">return</span> inversions;
+}
+</code></pre>
+<h3 id="例题2：区间更新与查询">例题2：区间更新与查询</h3>
+<p>树状数组也可以支持区间更新操作，通过差分数组技巧实现。以下代码演示如何实现区间更新：</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">// 差分数组的树状数组</span>
+<span class="hljs-keyword">int</span> diff[MAXN];  <span class="hljs-comment">// 差分数组的树状数组</span>
+
+<span class="hljs-comment">// 区间更新：给区间[l,r]的每个元素加上val</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rangeUpdate</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> val)</span> </span>{
+    update(diff, l, val);       <span class="hljs-comment">// 在位置l加上val</span>
+    update(diff, r + <span class="hljs-number">1</span>, -val);  <span class="hljs-comment">// 在位置r+1减去val</span>
+}
+
+<span class="hljs-comment">// 获取位置idx的元素值(前缀和)</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getValue</span><span class="hljs-params">(<span class="hljs-keyword">int</span> idx)</span> </span>{
+    <span class="hljs-keyword">return</span> query(diff, idx);
+}
+</code></pre>
+<h2 id="注意事项">注意事项</h2>
+<ol>
+<li>【索引从1开始】：树状数组通常从索引1开始，处理原始数组时需要偏移</li>
+<li>【处理大数组】：树状数组可以处理很大的数组，但需要预先分配足够的空间</li>
+<li>【离散化】：当数据范围很大但数据量较小时，可以使用离散化技术</li>
+</ol>
+<h2 id="常见错误">常见错误</h2>
+<ol>
+<li>树状数组的索引从0开始而不是1</li>
+<li>更新函数和查询函数的实现错误</li>
+<li>树状数组大小不够</li>
+</ol>
+<h2 id="练习题目推荐">练习题目推荐</h2>
+<ol>
+<li>SPOJ - INVCNT (逆序对计数)</li>
+<li>POJ 3321 - Apple Tree (树上计数问题)</li>
+<li>CodeForces 459D - Pashmak and Parmida's Problem</li>
+</ol>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="线段树懒标记.html" class="navigation navigation-prev " aria-label="Previous page: 线段树懒标记">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ST表.html" class="navigation navigation-next " aria-label="Next page: ST表">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"树状数组","level":"1.2.6","depth":2,"next":{"title":"ST表","level":"1.2.7","depth":2,"path":"ST表.md","ref":"ST表.md","articles":[]},"previous":{"title":"线段树懒标记","level":"1.2.5","depth":2,"path":"线段树懒标记.md","ref":"线段树懒标记.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"树状数组.md","mtime":"2025-04-08T05:26:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:40.626Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,837 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>十四、回归的推断 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="15.html" />
+    
+    
+    <link rel="prev" href="13.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    计算与推断思维
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="READ_ME.html">
+            
+                <a href="READ_ME.html">
+            
+                    
+                    计算与推断思维
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="1.html">
+            
+                <a href="1.html">
+            
+                    
+                    一、数据科学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="2.html">
+            
+                <a href="2.html">
+            
+                    
+                    二、因果和实验
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="3.html">
+            
+                <a href="3.html">
+            
+                    
+                    三、Python 编程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="4.html">
+            
+                <a href="4.html">
+            
+                    
+                    四、数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="5.html">
+            
+                <a href="5.html">
+            
+                    
+                    五、表格
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="6.html">
+            
+                <a href="6.html">
+            
+                    
+                    六、可视化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="7.html">
+            
+                <a href="7.html">
+            
+                    
+                    七、函数和表格
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="8.html">
+            
+                <a href="8.html">
+            
+                    
+                    八、随机性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="9.html">
+            
+                <a href="9.html">
+            
+                    
+                    九、经验分布
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="10.html">
+            
+                <a href="10.html">
+            
+                    
+                    十、假设检验
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="11.html">
+            
+                <a href="11.html">
+            
+                    
+                    十一、估计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="12.html">
+            
+                <a href="12.html">
+            
+                    
+                    十二、为什么均值重要
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="13.html">
+            
+                <a href="13.html">
+            
+                    
+                    十三、预测
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.15" data-path="14.html">
+            
+                <a href="14.html">
+            
+                    
+                    十四、回归的推断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="15.html">
+            
+                <a href="15.html">
+            
+                    
+                    十五、分类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="16.html">
+            
+                <a href="16.html">
+            
+                    
+                    十六、比较两个样本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="17.html">
+            
+                <a href="17.html">
+            
+                    
+                    十七、更新预测
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >十四、回归的推断</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="十四、回归的推断">十四、回归的推断</h1>
+<blockquote>
+<p>原文：<a href="https://github.com/data-8/textbook/tree/gh-pages/chapters/14" target="_blank">Inference for Regression</a></p>
+<p>译者：<a href="https://github.com/wizardforcel" target="_blank">飞龙</a></p>
+<p>协议：<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></p>
+<p>自豪地采用<a href="https://translate.google.cn/" target="_blank">谷歌翻译</a></p>
+</blockquote>
+<p>到目前为止，我们对变量之间关系的分析纯粹是描述性的。我们知道如何找到穿过散点图的最佳直线来绘制。在所有直线中它的估计的均方误差最小，从这个角度来看，这条线是最好的。</p>
+<p>但是，如果我们的数据是更大总体的样本呢？如果我们在样本中发现了两个变量之间的线性关系，那么对于总体也是如此嘛？它会是完全一样的线性关系吗？我们可以预测一个不在我们样本中的新的个体的响应变量吗？</p>
+<p>如果我们认为，散点图反映了被绘制的两个变量之间的基本关系，但是并没有完全规定这种关系，那么就会出现这样的推理和预测问题。例如，出生体重与孕期的散点图，显示了我们样本中两个变量之间的精确关系；但是我们可能想知道，对于抽样总体中的所有新生儿或实际中的一般新生儿，这样的关系是否是真实的，或者说几乎是正确的。</p>
+<p>一如既往，推断思维起始于仔细检查数据的假设。一组假设被称为模型。大致线性的散点图中的一组随机性的假设称为回归模型。</p>
+<h2 id="回归模型">回归模型</h2>
+<p>简而言之，这样的模型认为，两个变量之间的底层关系是完全线性的；这条直线是我们想要识别的信号。但是，我们无法清楚地看到这条线。我们看到的是分散在这条线上的点。在每一点上，信号都被随机噪声污染。因此，我们的推断目标是将信号从噪声中分离出来。</p>
+<p>更详细地说，回归模型规定了，散点图中的点是随机生成的，如下所示。</p>
+<ul>
+<li><code>x</code>和<code>y</code>之间的关系是完全线性的。我们看不到这个“真实直线”，但它是存在的。</li>
+<li>散点图通过将线上的点垂直移动，或上或下来创建，如下所示：</li>
+<li>对于每个<code>x</code>，找到真实直线上的相应点（即信号），然后生成噪声或误差。</li>
+<li>误差从误差总体中带放回随机抽取，总体是均值为 0 的正态分布。</li>
+<li>创建一个点，横坐标为<code>x</code>，纵坐标为“<code>x</code>处的真实高度加上误差”。</li>
+<li>最后，从散点图中删除真正的线，只显示创建的点。</li>
+</ul>
+<p>基于这个散点图，我们应该如何估计真实直线？ 我们可以使其穿过散点图的最佳直线是回归线。 所以回归线是真实直线的自然估计。</p>
+<p>下面的模拟显示了回归直线与真实直线的距离。 第一个面板显示如何从真实直线生成散点图。 第二个显示我们看到的散点图。 第三个显示穿过散点图的回归线。 第四个显示回归线和真实直线。</p>
+<p>为了运行模拟，请使用三个参数调用<code>draw_and_compare</code>函数：真实直线的斜率，真实直线的截距以及样本量。</p>
+<p>运行模拟几次，用不同的斜率和截距，以及不同的样本量。 因为所有的点都是根据模型生成的，所以如果样本量适中，你会看到回归线是真实直线的一个良好估计。</p>
+<pre><code class="lang-py"><span class="hljs-comment"># The true line,</span>
+<span class="hljs-comment"># the points created,</span>
+<span class="hljs-comment"># and our estimate of the true line.</span>
+<span class="hljs-comment"># Arguments: true slope, true intercept, number of points</span>
+
+draw_and_compare(<span class="hljs-number">4</span>, -<span class="hljs-number">5</span>, <span class="hljs-number">10</span>)
+</code></pre>
+<p><img src="img/14-1.png" alt=""></img></p>
+<p>实际上，我们当然不会看到真实直线。 模拟结果表明，如果回归模型看起来合理，并且如果我们拥有大型样本，那么回归线就是真实直线的一个良好近似。</p>
+<h2 id="真实斜率的推断">真实斜率的推断</h2>
+<p>我们的模拟表明，如果回归模型成立，并且样本量很大，则回归线很可能接近真实直线。 这使我们能够估计真实直线的斜率。</p>
+<p>我们将使用我们熟悉的母亲和她们的新生儿的样本，来开发估计真实直线的斜率的方法。 首先，我们来看看我们是否相信，回归模型是一系列适当假设，用于描述出生体重和孕期之间的关系。</p>
+<pre><code class="lang-py">correlation(baby, <span class="hljs-string">'Gestational Days'</span>, <span class="hljs-string">'Birth Weight'</span>)
+<span class="hljs-number">0.40754279338885108</span>
+</code></pre>
+<p>总的来说，散点图看起来相当均匀地分布在这条线上，尽管一些点分布在主云形的周围。 相关系数为 0.4，回归线斜率为正。</p>
+<p>这是否反映真实直线斜率为正的事实？ 为了回答这个问题，让我们看看我们能否估计真实斜率。 我们当然有了一个估计：我们的回归线斜率。 这大约是 0.47 盎司每天。</p>
+<pre><code class="lang-py">slope(baby, <span class="hljs-string">'Gestational Days'</span>, <span class="hljs-string">'Birth Weight'</span>)
+<span class="hljs-number">0.46655687694921522</span>
+</code></pre>
+<p>但是如果散点图出现的方式不同，回归线会有所不同，可能会有不同的斜率。 我们如何计算，斜率可能有多么不同？</p>
+<p>我们需要点的另一个样本，以便我们可以绘制回归线穿过新的散点图，并找出其斜率。 但另一个样本从哪里得到呢？</p>
+<p>你猜对了 - 我们将自举我们的原始样本。 这会给我们自举的散点图，通过它我们可以绘制回归线。</p>
+<h3 id="自举散点图">自举散点图</h3>
+<p>我们可以通过对原始样本带放回地随机抽样，来模拟新样本，它的次数与原始样本量相同。 这些新样本中的每一个都会给我们一个散点图。 我们将这个称为自举散点图，简而言之，我们将调用整个过程来自举散点图。</p>
+<p>这里是来自样本的原始散点图，以及自举重采样过程的四个复制品。 请注意，重采样散点图通常比原始图稀疏一点。 这是因为一些原始的点没有在样本中被选中。</p>
+<p><img src="img/14-3.png" alt=""></img></p>
+<h3 id="估计真实斜率">估计真实斜率</h3>
+<p>我们可以多次自举散点图，并绘制穿过每个自举图的回归线。 每条线都有一个斜率。 我们可以简单收集所有的斜率并绘制经验直方图。 回想一下，在默认情况下，<code>sample</code>方法带放回地随机抽取，次数与表中的行数相同。 也就是说，<code>sample</code>默认生成一个自举样本。</p>
+<pre><code class="lang-py">slopes = make_array()
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> np.arange(<span class="hljs-number">5000</span>):
+    bootstrap_sample = baby.sample()
+    bootstrap_slope = slope(bootstrap_sample, <span class="hljs-string">'Gestational Days'</span>, <span class="hljs-string">'Birth Weight'</span>)
+    slopes = np.append(slopes, bootstrap_slope)
+Table().with_column(<span class="hljs-string">'Bootstrap Slopes'</span>, slopes).hist(bins=<span class="hljs-number">20</span>)
+</code></pre>
+<p><img src="img/14-4.png" alt=""></img></p>
+<p>然后，我们可以使用<code>percentile</code>方法，为真实直线的斜率构建约 95% 置信区间。 置信区间从 5000 个自举斜率的第 2.5 百分位数，延伸到第 97.5 百分位数。</p>
+<pre><code class="lang-py">left = percentile(<span class="hljs-number">2.5</span>, slopes)
+right = percentile(<span class="hljs-number">97.5</span>, slopes)
+left, right
+(<span class="hljs-number">0.38209399211893086</span>, <span class="hljs-number">0.56014757838023777</span>)
+</code></pre>
+<h3 id="用于自举斜率的函数">用于自举斜率的函数</h3>
+<p>让我们收集我们估计斜率的方法的所有步骤，并定义函数<code>bootstrap_slope</code>来执行它们。 它的参数是表的名称，预测变量和响应变量的标签，以及自举复制品的所需数量。 在每个复制品中，该函数自举原始散点图并计算所得回归线的斜率。 然后绘制所有生成的斜率的直方图，并打印由斜率的“中间 95%”组成的区间。</p>
+<pre><code class="lang-py"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bootstrap_slope</span><span class="hljs-params">(table, x, y, repetitions)</span>:</span>
+
+    <span class="hljs-comment"># For each repetition:</span>
+    <span class="hljs-comment"># Bootstrap the scatter, get the slope of the regression line,</span>
+    <span class="hljs-comment"># augment the list of generated slopes</span>
+    slopes = make_array()
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> np.arange(repetitions):
+        bootstrap_sample = table.sample()
+        bootstrap_slope = slope(bootstrap_sample, x, y)
+        slopes = np.append(slopes, bootstrap_slope)
+
+    <span class="hljs-comment"># Find the endpoints of the 95% confidence interval for the true slope</span>
+    left = percentile(<span class="hljs-number">2.5</span>, slopes)
+    right = percentile(<span class="hljs-number">97.5</span>, slopes)
+
+    <span class="hljs-comment"># Slope of the regression line from the original sample</span>
+    observed_slope = slope(table, x, y)
+
+    <span class="hljs-comment"># Display results</span>
+    Table().with_column(<span class="hljs-string">'Bootstrap Slopes'</span>, slopes).hist(bins=<span class="hljs-number">20</span>)
+    plots.plot(make_array(left, right), make_array(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>), color=<span class="hljs-string">'yellow'</span>, lw=<span class="hljs-number">8</span>);
+    print(<span class="hljs-string">'Slope of regression line:'</span>, observed_slope)
+    print(<span class="hljs-string">'Approximate 95%-confidence interval for the true slope:'</span>)
+    print(left, right)
+</code></pre>
+<p>当响应变量为出生体重，预测变量为孕期时，我们调用<code>bootstrap_slope</code>来找到真实斜率的置信区间，我们得到了一个区间，非常接近我们之前获得的东西：大约 0.38 到 0.56 盎司每天。</p>
+<pre><code class="lang-py">bootstrap_slope(baby, <span class="hljs-string">'Gestational Days'</span>, <span class="hljs-string">'Birth Weight'</span>, <span class="hljs-number">5000</span>)
+Slope of regression line: <span class="hljs-number">0.466556876949</span>
+Approximate <span class="hljs-number">95</span>%-confidence interval <span class="hljs-keyword">for</span> the true slope:
+<span class="hljs-number">0.378663152966</span> <span class="hljs-number">0.555005146304</span>
+</code></pre>
+<p><img src="img/14-5.png" alt=""></img></p>
+<p>现在我们有一个函数，可以自动完成估计在回归模型中展示斜率的过程，我们也可以在其他变量上使用它。</p>
+<p>例如，我们来看看出生体重与母亲身高的关系。 更高的女性往往有更重的婴儿吗？</p>
+<p>回归模型似乎是合理的，基于散点图，但相关性不高。 这只有大约 0.2。</p>
+<pre><code class="lang-py">scatter_fit(baby, <span class="hljs-string">'Maternal Height'</span>, <span class="hljs-string">'Birth Weight'</span>)
+</code></pre>
+<p><img src="img/14-6.png" alt=""></img></p>
+<pre><code class="lang-py">correlation(baby, <span class="hljs-string">'Maternal Height'</span>, <span class="hljs-string">'Birth Weight'</span>)
+<span class="hljs-number">0.20370417718968034</span>
+</code></pre>
+<p>像之前一样，我们使用<code>bootstrap_slope</code>来估计回归模型中真实直线的斜率。</p>
+<pre><code class="lang-py">bootstrap_slope(baby, <span class="hljs-string">'Maternal Height'</span>, <span class="hljs-string">'Birth Weight'</span>, <span class="hljs-number">5000</span>)
+Slope of regression line: <span class="hljs-number">1.47801935193</span>
+Approximate <span class="hljs-number">95</span>%-confidence interval <span class="hljs-keyword">for</span> the true slope:
+<span class="hljs-number">1.0403083964</span> <span class="hljs-number">1.91576886223</span>
+</code></pre>
+<p><img src="img/14-7.png" alt=""></img></p>
+<p>真实斜率的 95% 置信区间，从约 1 延伸到约 1.9 盎司每英寸。</p>
+<h3 id="真实斜率可能为-0-嘛？">真实斜率可能为 0 嘛？</h3>
+<p>假设我们相信我们的数据遵循回归模型，并且我们拟合回归线来估计真实直线。 如果回归线不完全是平的，几乎总是如此，我们将观察到散点图中的一些线性关联。</p>
+<p>但是，如果这种观察是假的呢？ 换句话说，如果真实直线是平的 - 也就是说，这两个变量之间没有线性关系 - 我们观察到的联系，只是由于从样本中产生点的随机性。</p>
+<p>这是一个模拟，说明了为什么会出现这个问题。 我们将再次调用<code>draw_and_compare</code>函数，这次要求真实斜率为 0。我们的目标是，观察我们的回归线是否显示不为 0 的斜率。</p>
+<p>请记住函数<code>draw_and_compare</code>的参数是真实直线的斜率和截距，以及要生成的点的数量。</p>
+<pre><code class="lang-py">draw_and_compare(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>, <span class="hljs-number">25</span>)
+</code></pre>
+<p><img src="img/14-8.png" alt=""></img></p>
+<p>运行模拟几次，每次保持真实直线的斜率为 0 。你会注意到，虽然真实直线的斜率为 0，但回归线的斜率通常不为 0。回归线有时会向上倾斜，有时会向下倾斜，每次都给我们错误的印象，即这两个变量是相关的。</p>
+<p>为了确定我们所看到的斜率是否真实，我们想测试以下假设：</p>
+<p>原假设。真实直线的斜率是 0。</p>
+<p>备选假设。真实直线的斜率不是 0。</p>
+<p>我们很有条件来实现它。由于我们可以为真实斜率构建一个 95% 的置信区间，我们所要做的就是看区间是否包含 0。</p>
+<p>如果没有，那么我们可以拒绝原假设（P 值为 5% 的截断值）。</p>
+<p>如果真实斜率的置信区间确实包含 0，那么我们没有足够的证据来拒绝原假设。也许我们看到的斜率是假的。</p>
+<p>我们在一个例子中使用这个方法。假设我们试图根据母亲的年龄来估计新生儿的出生体重。根据样本，根据母亲年龄估计出生体重的回归线的斜率为正，约为 0.08 盎司每年。</p>
+<pre><code class="lang-py">slope(baby, <span class="hljs-string">'Maternal Age'</span>, <span class="hljs-string">'Birth Weight'</span>)
+<span class="hljs-number">0.085007669415825132</span>
+</code></pre>
+<p>虽然斜率为正，但是很小。 回归线非常接近平的，这就产生了一个问题，真实直线是否是平的。</p>
+<pre><code class="lang-py">scatter_fit(baby, <span class="hljs-string">'Maternal Age'</span>, <span class="hljs-string">'Birth Weight'</span>)
+</code></pre>
+<p><img src="img/14-9.png" alt=""></img></p>
+<p>我们可以使用<code>bootstrap_slope</code>来估计真实直线的斜率。 计算表明，真实斜率的约 95% 的自举置信区间左端为负，右端为正 - 换句话说，区间包含 0。</p>
+<pre><code class="lang-py">bootstrap_slope(baby, <span class="hljs-string">'Maternal Age'</span>, <span class="hljs-string">'Birth Weight'</span>, <span class="hljs-number">5000</span>)
+Slope of regression line: <span class="hljs-number">0.0850076694158</span>
+Approximate <span class="hljs-number">95</span>%-confidence interval <span class="hljs-keyword">for</span> the true slope:
+-<span class="hljs-number">0.104335243815</span> <span class="hljs-number">0.272791852339</span>
+</code></pre>
+<p><img src="img/14-10.png" alt=""></img></p>
+<p>因为区间包含 0，所以我们不能拒绝原假设，母亲年龄与新生儿出生体重之间的真实线性关系的斜率为 0。基于此分析，使用母亲年龄作为预测变量，基于回归模型预测出生体重是不明智的。</p>
+<h2 id="预测区间">预测区间</h2>
+<p>回归的主要用途之一是对新个体进行预测，这个个体不是我们原始样本的一部分，但是与样本个体相似。在模型的语言中，我们想要估计新值<code>x</code>的<code>y</code>。</p>
+<p>我们的估计是真实直线在<code>x</code>处的高度。当然，我们不知道真实直线。我们使用我们的样本点的回归线来代替。</p>
+<p>给定值<code>x</code>的拟合值，是基于<code>x</code>值的<code>y</code>的回归估计。换句话说，给定值<code>x</code>的拟合值就是回归线在<code>x</code>处的高度。</p>
+<p>假设我们试图根据孕期天数来预测新生儿的出生体重。我们在前面的章节中看到，这些数据非常适合回归模型，真实直线的斜率的 95% 置信区间不包含 0。因此，我们的预测似乎是合理的。</p>
+<p>下图显示了预测位于回归线上的位置。红线是<code>x = 300</code>。</p>
+<p><img src="img/14-11.png" alt=""></img></p>
+<p>红线与回归线的相交点的高度是孕期天数 300 的拟合值。</p>
+<p>函数<code>fitted_value</code>计算这个高度。像函数的相关性，斜率和截距一样，它的参数是表的名称和<code>x</code>和<code>y</code>的列标签。但是它也需要第四个参数，即<code>x</code>的值，在这个值上进行估算。</p>
+<pre><code class="lang-py"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fitted_value</span><span class="hljs-params">(table, x, y, given_x)</span>:</span>
+    a = slope(table, x, y)
+    b = intercept(table, x, y)
+    <span class="hljs-keyword">return</span> a * given_x  + b
+</code></pre>
+<p>孕期天数 300 的拟合值约为 129.2 盎司。 换句话说，对于孕期为 300 天的孕妇，我们估计的新生儿体重约为 129.2 盎司。</p>
+<pre><code class="lang-py">fit_300 = fitted_value(baby, <span class="hljs-string">'Gestational Days'</span>, <span class="hljs-string">'Birth Weight'</span>, <span class="hljs-number">300</span>)
+fit_300
+<span class="hljs-number">129.2129241703143</span>
+</code></pre>
+<h3 id="预测的可变性">预测的可变性</h3>
+<p>我们已经开发了一种方法，使用我们样本中的数据，根据孕期天数预测新生儿的体重。 但作为数据科学家，我们知道样本可能有所不同。 如果样本不同，回归线也会不一样，我们的预测也是。 为了看看我们的预测有多好，我们必须了解预测的可变性。</p>
+<p>为此，我们必须生成新的样本。 我们可以像上一节那样，通过自举散点图来实现。 然后，我们为每个散点图的复制品拟合回归线，并根据每一行进行预测。 下图显示了 10 条这样的线，以及孕期天数 300 对应的出生体重预测。</p>
+<p><img src="img/14-12.png" alt=""></img></p>
+<pre><code class="lang-py">lines
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>slope</th>
+<th>intercept</th>
+<th>prediction at x=300</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.503931</td>
+<td>-21.6998</td>
+<td>129.479</td>
+</tr>
+<tr>
+<td>0.53227</td>
+<td>-29.5647</td>
+<td>130.116</td>
+</tr>
+<tr>
+<td>0.518771</td>
+<td>-25.363</td>
+<td>130.268</td>
+</tr>
+<tr>
+<td>0.430556</td>
+<td>-1.06812</td>
+<td>128.099</td>
+</tr>
+<tr>
+<td>0.470229</td>
+<td>-11.7611</td>
+<td>129.308</td>
+</tr>
+<tr>
+<td>0.48713</td>
+<td>-16.5314</td>
+<td>129.608</td>
+</tr>
+<tr>
+<td>0.51241</td>
+<td>-23.2954</td>
+<td>130.428</td>
+</tr>
+<tr>
+<td>0.52473</td>
+<td>-27.2053</td>
+<td>130.214</td>
+</tr>
+<tr>
+<td>0.409943</td>
+<td>5.22652</td>
+<td>128.21</td>
+</tr>
+<tr>
+<td>0.468065</td>
+<td>-11.6967</td>
+<td>128.723</td>
+</tr>
+</tbody>
+</table>
+<p>每一行的预测都不相同。 下表显示了 10 条线的斜率、截距以及预测。</p>
+<h3 id="自举预测区间">自举预测区间</h3>
+<p>如果我们增加重采样过程的重复次数，我们可以生成预测的经验直方图。这将允许我们创建预测区间，使用为斜率创建自举置信区间时的相同的百分比方法。</p>
+<p>让我们定义一个名为<code>bootstrap_prediction</code>的函数来实现。该函数有五个参数：</p>
+<ul>
+<li>表的名称</li>
+<li>预测变量和响应变量的列标签</li>
+<li>用于预测的<code>x</code>的值</li>
+<li>所需的自举重复次数</li>
+</ul>
+<p>在每次重复中，函数将自举原始散点图，并基于<code>x</code>的指定值查找<code>y</code>的预测值。具体来说，它调用我们在本节前面定义的函数<code>fitted_value</code>，来寻找指定<code>x</code>处的拟合值。</p>
+<p>最后，绘制所有预测值的经验直方图，并打印由预测值的“中间 95%”组成的区间。它还打印基于穿过原始散点图的回归线的预测值。</p>
+<pre><code class="lang-py"><span class="hljs-comment"># Bootstrap prediction of variable y at new_x</span>
+<span class="hljs-comment"># Data contained in table; prediction by regression of y based on x</span>
+<span class="hljs-comment"># repetitions = number of bootstrap replications of the original scatter plot</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bootstrap_prediction</span><span class="hljs-params">(table, x, y, new_x, repetitions)</span>:</span>
+
+    <span class="hljs-comment"># For each repetition:</span>
+    <span class="hljs-comment"># Bootstrap the scatter; </span>
+    <span class="hljs-comment"># get the regression prediction at new_x; </span>
+    <span class="hljs-comment"># augment the predictions list</span>
+    predictions = make_array()
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> np.arange(repetitions):
+        bootstrap_sample = table.sample()
+        bootstrap_prediction = fitted_value(bootstrap_sample, x, y, new_x)
+        predictions = np.append(predictions, bootstrap_prediction)
+
+    <span class="hljs-comment"># Find the ends of the approximate 95% prediction interval</span>
+    left = percentile(<span class="hljs-number">2.5</span>, predictions)
+    right = percentile(<span class="hljs-number">97.5</span>, predictions)
+
+    <span class="hljs-comment"># Prediction based on original sample</span>
+    original = fitted_value(table, x, y, new_x)
+
+    <span class="hljs-comment"># Display results</span>
+    Table().with_column(<span class="hljs-string">'Prediction'</span>, predictions).hist(bins=<span class="hljs-number">20</span>)
+    plots.xlabel(<span class="hljs-string">'predictions at x='</span>+str(new_x))
+    plots.plot(make_array(left, right), make_array(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>), color=<span class="hljs-string">'yellow'</span>, lw=<span class="hljs-number">8</span>);
+    print(<span class="hljs-string">'Height of regression line at x='</span>+str(new_x)+<span class="hljs-string">':'</span>, original)
+    print(<span class="hljs-string">'Approximate 95%-confidence interval:'</span>)
+    print(left, right)
+bootstrap_prediction(baby, <span class="hljs-string">'Gestational Days'</span>, <span class="hljs-string">'Birth Weight'</span>, <span class="hljs-number">300</span>, <span class="hljs-number">5000</span>)
+Height of regression line at x=<span class="hljs-number">300</span>: <span class="hljs-number">129.21292417</span>
+Approximate <span class="hljs-number">95</span>%-confidence interval:
+<span class="hljs-number">127.300774171</span> <span class="hljs-number">131.361729528</span>
+</code></pre>
+<p><img src="img/14-13.png" alt=""></img></p>
+<p>上图显示了基于 5000 次重复的自举过程，孕期天数 300 的预测出生体重的自举经验直方图。经验分布大致是正泰的。</p>
+<p>我们已经通过预测的“中间 95%”，即预测的第 2.5 百分位数到第 97.5 百分位数的区间，构建了分数的约 95% 的预测区间。 区间范围从大约 127 到大约 131。基于原始样本的预测是大约 129，接近区间的中心。</p>
+<h3 id="改变预测变量的值的效果">改变预测变量的值的效果</h3>
+<p>下图显示了孕期天数 285 的 5,000 次自举预测的直方图。 基于原始样本的预测是约 122 盎司，区间范围从约 121 盎司到约 123 盎司。</p>
+<pre><code class="lang-py">bootstrap_prediction(baby, <span class="hljs-string">'Gestational Days'</span>, <span class="hljs-string">'Birth Weight'</span>, <span class="hljs-number">285</span>, <span class="hljs-number">5000</span>)
+Height of regression line at x=<span class="hljs-number">285</span>: <span class="hljs-number">122.214571016</span>
+Approximate <span class="hljs-number">95</span>%-confidence interval:
+<span class="hljs-number">121.177089926</span> <span class="hljs-number">123.291373304</span>
+</code></pre>
+<p><img src="img/14-14.png" alt=""></img></p>
+<p>请注意，这个区间比孕妇天数 300 的预测区间更窄。 让我们来调查其原因。</p>
+<p>孕妇天数均值约为 279 天：</p>
+<pre><code class="lang-py">np.mean(baby.column(<span class="hljs-string">'Gestational Days'</span>))
+<span class="hljs-number">279.10136286201021</span>
+</code></pre>
+<p>所以 285 比 300 更接近分布的中心。 通常，基于自举样本的回归线，在预测变量的分布中心附近彼此更接近。 因此，所有的预测值也更接近。 这解释了预测区间的宽度更窄。</p>
+<p>你可以在下面的图中看到这一点，它显示了 10 个自举复制品中每一个的<code>x = 285</code>和<code>x = 300</code>的预测值。 通常情况下，直线在<code>x = 300</code>处比<code>x = 285</code>处相距更远，因此<code>x = 300</code>的预测更加可变。</p>
+<p><img src="img/14-15.png" alt=""></img></p>
+<h3 id="注意事项">注意事项</h3>
+<p>我们在本章中进行的所有预测和测试，都假设回归模型是成立的。 具体来说，这些方法假设，散点图中的点由直线上的点产生，然后通过添加随机正态噪声将它们推离直线。</p>
+<p>如果散点图看起来不像那样，那么模型可能不适用于数据。 如果模型不成立，那么假设模型为真的计算是无效的。</p>
+<p>因此，在开始基于模型进行预测，或者对模型参数进行假设检验之前，我们首先要确定回归模型是否适用于我们的数据。 一个简单的方法就是，按照我们在本节所做的操作，即绘制两个变量的散点图，看看它看起来是否大致线性，并均匀分布在一条线上。 我们还应该使用残差图，执行我们在前一节中开发的诊断。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="13.html" class="navigation navigation-prev " aria-label="Previous page: 十三、预测">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="15.html" class="navigation navigation-next " aria-label="Next page: 十五、分类">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"十四、回归的推断","level":"1.1.15","depth":2,"next":{"title":"十五、分类","level":"1.1.16","depth":2,"path":"15.md","ref":"15.md","articles":[]},"previous":{"title":"十三、预测","level":"1.1.14","depth":2,"path":"13.md","ref":"13.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"14.md","mtime":"2018-03-04T12:09:02.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:18:25.491Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

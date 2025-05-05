@@ -1,0 +1,937 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Python 套接字——SOCK_STREAM和SOCK_DGRAM · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="131.html" />
+    
+    
+    <link rel="prev" href="129.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Python 网络
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="124.html">
+            
+                <a href="124.html">
+            
+                    
+                    简介和基础知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="125.html">
+            
+                <a href="125.html">
+            
+                    
+                    网络编程导论
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="126.html">
+            
+                <a href="126.html">
+            
+                    
+                    常见网络术语
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="127.html">
+            
+                <a href="127.html">
+            
+                    
+                    安装 Python 第三方库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="128.html">
+            
+                <a href="128.html">
+            
+                    
+                    解释和交互式 Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="129.html">
+            
+                <a href="129.html">
+            
+                    
+                    套接字基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.7" data-path="130.html">
+            
+                <a href="130.html">
+            
+                    
+                    Python 套接字——SOCK_STREAM和SOCK_DGRAM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="131.html">
+            
+                <a href="131.html">
+            
+                    
+                    使用 TCP 套接字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="132.html">
+            
+                <a href="132.html">
+            
+                    
+                    使用 UDP 套接字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="133.html">
+            
+                <a href="133.html">
+            
+                    
+                    通过 TCP 套接字处理接收的客户端数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="134.html">
+            
+                <a href="134.html">
+            
+                    
+                    阻塞和非阻塞套接字输入/输出
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="135.html">
+            
+                <a href="135.html">
+            
+                    
+                    通过 TSL/SSL 保护套接字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="136.html">
+            
+                <a href="136.html">
+            
+                    
+                    从网络分析开始
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="137.html">
+            
+                <a href="137.html">
+            
+                    
+                    使用套接字构建自定义端口扫描器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="138.html">
+            
+                <a href="138.html">
+            
+                    
+                    在 Python 中使用 Nmap 端口扫描器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="139.html">
+            
+                <a href="139.html">
+            
+                    
+                    使用命令行输入的 Nmap 端口扫描脚本
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="140.html">
+            
+                <a href="140.html">
+            
+                    
+                    什么是横幅抓取？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="141.html">
+            
+                <a href="141.html">
+            
+                    
+                    Wireshark 网络流量分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="142.html">
+            
+                <a href="142.html">
+            
+                    
+                    Wireshark 数据包分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="143.html">
+            
+                <a href="143.html">
+            
+                    
+                    使用dpkt库分析网络流量
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="144.html">
+            
+                <a href="144.html">
+            
+                    
+                    scapy 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="145.html">
+            
+                <a href="145.html">
+            
+                    
+                    实际应用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="146.html">
+            
+                <a href="146.html">
+            
+                    
+                    是时候干活了
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="147.html">
+            
+                <a href="147.html">
+            
+                    
+                    从 PDF 文件中提取元数据
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="148.html">
+            
+                <a href="148.html">
+            
+                    
+                    使用pyGeoIP模块
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="149.html">
+            
+                <a href="149.html">
+            
+                    
+                    什么是网页抓取？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="150.html">
+            
+                <a href="150.html">
+            
+                    
+                    实现网页抓取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="151.html">
+            
+                <a href="151.html">
+            
+                    
+                    什么是 API？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="152.html">
+            
+                <a href="152.html">
+            
+                    
+                    使用脸书 GraphAPI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="153.html">
+            
+                <a href="153.html">
+            
+                    
+                    挖掘自己的脸书账户
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="154.html">
+            
+                <a href="154.html">
+            
+                    
+                    Python 的mechanize库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="155.html">
+            
+                <a href="155.html">
+            
+                    
+                    使用mechanize库更改浏览器的用户代理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="156.html">
+            
+                <a href="156.html">
+            
+                    
+                    Web 爬取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="157.html">
+            
+                <a href="157.html">
+            
+                    
+                    入门指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="158.html">
+            
+                <a href="158.html">
+            
+                    
+                    网页抓取简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="159.html">
+            
+                <a href="159.html">
+            
+                    
+                    requests模块简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="160.html">
+            
+                <a href="160.html">
+            
+                    
+                    beautifulsoup模块简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="161.html">
+            
+                <a href="161.html">
+            
+                    
+                    进阶
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="162.html">
+            
+                <a href="162.html">
+            
+                    
+                    探索 BeautifulSoap 方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="163.html">
+            
+                <a href="163.html">
+            
+                    
+                    使用 BeautifulSoap 查找 HTML 标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="164.html">
+            
+                <a href="164.html">
+            
+                    
+                    从消费者报告网站抓取产品名称
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="165.html">
+            
+                <a href="165.html">
+            
+                    
+                    高级
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="166.html">
+            
+                <a href="166.html">
+            
+                    
+                    网页抓取：将数据写入文件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="167.html">
+            
+                <a href="167.html">
+            
+                    
+                    网页抓取：抓取多个网址
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="168.html">
+            
+                <a href="168.html">
+            
+                    
+                    从 StudyTonight 教程网页中抓取主题名称
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Python 套接字——SOCK_STREAM和SOCK_DGRAM</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="python-套接字——sockstream和sockdgram">Python 套接字——<code>SOCK_STREAM</code>和<code>SOCK_DGRAM</code></h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/network-programming-in-python/socket-methods" target="_blank">https://www.studytonight.com/network-programming-in-python/socket-methods</a></p>
+</blockquote>
+<p>插座有两种类型:<code>SOCK_STREAM</code>和<code>SOCK_DGRAM</code>。下面我们对两种类型的插座进行比较。</p>
+<p>| SOCK_STREAM | SOCK_DGRAM |
+| 对于 TCP 协议 | 对于 UDP 协议 |
+| 可靠的交付 | 不可靠的交货 |
+| 保证数据包的正确排序 | 没有订单保证 |
+| 面向连接 | 没有连接的概念 |
+| 双向的 | 不是双向的 |</p>
+<hr></hr>
+<h2 id="python-中的套接字模块">Python 中的套接字模块</h2>
+<p>要创建套接字，我们必须使用 Python 套接字模块中可用的<code>socket.socket()</code>函数，其一般语法如下:</p>
+<pre><code class="lang-py">S = socket.socket(socket_family, socket_type, protocol=<span class="hljs-number">0</span>)
+</code></pre>
+<ul>
+<li><strong>socket_family</strong> :这不是<code>AF_UNIX</code>就是<code>AF_INET</code>。在本教程中，我们只讨论 INET 套接字，因为它们至少占正在使用的套接字的 99%。</li>
+<li><strong>插座类型:</strong>这不是<code>SOCK_STREAM</code>就是<code>SOCK_DGRAM</code>。</li>
+<li><strong>协议:</strong>这通常被忽略，默认为<code>0</code>。</li>
+</ul>
+<p>现在，如果你还记得的话，我们在<a href="basics-of-sockets">上一节教程</a>中也讨论过客户机-服务器套接字程序。现在，让我们深入了解该程序，并尝试理解所使用的术语和方法。</p>
+<hr></hr>
+<h2 id="客户端套接字方法">客户端套接字方法</h2>
+<p>以下是一些客户端套接字方法:</p>
+<h3 id="连接-">连接( )</h3>
+<p>连接到某个地址的远程套接字。一个地址格式(主机、端口)对用于<code>AF_INET</code>地址族。</p>
+<hr></hr>
+<h2 id="服务器套接字方法">服务器套接字方法</h2>
+<p>以下是一些服务器套接字方法:</p>
+<h3 id="绑定-">绑定( )</h3>
+<p>此方法将套接字绑定到一个地址。地址的格式取决于上面提到的套接字家族(<code>AF_INET</code>)。</p>
+<h3 id="听积压">听(积压)</h3>
+<p>此方法侦听与套接字的连接。积压是在拒绝连接之前必须侦听的排队连接的最大数量。</p>
+<h3 id="接受-">接受( )</h3>
+<p>此方法用于接受连接。套接字必须绑定到一个地址并侦听连接。返回值是一个<code>pair(conn, address)</code>，其中 <strong>conn</strong> 是一个新的套接字对象，可用于在该连接上发送和接收数据，地址是绑定到连接另一端套接字的地址。</p>
+<blockquote>
+<p><em>有关方法的详细视图，请参考文件:<a href="https://docs.python.org/2/library/socket.html" target="_blank">https://docs.python.org/2/library/socket.html</a>T3</em></p>
+</blockquote>
+<hr></hr>
+<h2 id="少数通用套接字方法">少数通用套接字方法</h2>
+<p>对于下面定义的套接字对象，</p>
+<pre><code class="lang-py">s = socket.socket(socket_family, socket_type, protocol=<span class="hljs-number">0</span>)
+</code></pre>
+<p>| 套接字方法 | UDP 套接字方法 |
+| <code>s.recv()</code> →接收 TCP 消息 | <code>s.recvfrom()</code> →接收 UDP 消息 |
+| <code>s.send()</code> →传输 TCP 消息 | <code>s.sendto()</code> →传输 UDP 消息 |</p>
+<hr></hr>
+<h2 id="一些基本的套接字方法">一些基本的套接字方法</h2>
+<ul>
+<li><code>close()</code>此方法用于关闭插座连接。</li>
+<li><code>gethostname()</code>这个方法返回一个包含 python 解释器当前正在执行的机器的<strong>主机名</strong>的字符串。例如:localhost。</li>
+<li><code>gethostbyname()</code>如果想知道当前机器的 IP 地址，可以使用<code>gethostbyname(gethostname())</code>。</li>
+</ul>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="129.html" class="navigation navigation-prev " aria-label="Previous page: 套接字基础">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="131.html" class="navigation navigation-next " aria-label="Next page: 使用 TCP 套接字">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Python 套接字——SOCK_STREAM和SOCK_DGRAM","level":"1.1.7","depth":2,"next":{"title":"使用 TCP 套接字","level":"1.1.8","depth":2,"path":"131.md","ref":"131.md","articles":[]},"previous":{"title":"套接字基础","level":"1.1.6","depth":2,"path":"129.md","ref":"129.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"130.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:16.781Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

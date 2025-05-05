@@ -1,0 +1,528 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>朴素贝叶斯 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="KNN.html" />
+    
+    
+    <link rel="prev" href="LogisticRegression.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    常见机器学习算法的数学推导
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="LinearRegression.html">
+            
+                <a href="LinearRegression.html">
+            
+                    
+                    线性回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="LogisticRegression.html">
+            
+                <a href="LogisticRegression.html">
+            
+                    
+                    逻辑回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.3" data-path="SimpleBayes.html">
+            
+                <a href="SimpleBayes.html">
+            
+                    
+                    朴素贝叶斯
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="KNN.html">
+            
+                <a href="KNN.html">
+            
+                    
+                    K近邻
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="DecisionTrees.html">
+            
+                <a href="DecisionTrees.html">
+            
+                    
+                    决策树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="RandomForest.html">
+            
+                <a href="RandomForest.html">
+            
+                    
+                    随机森林
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="AdaBoost.html">
+            
+                <a href="AdaBoost.html">
+            
+                    
+                    AdaBoost
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="GBDT.html">
+            
+                <a href="GBDT.html">
+            
+                    
+                    梯度提升树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="XGBoost.html">
+            
+                <a href="XGBoost.html">
+            
+                    
+                    XGBoost
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >朴素贝叶斯</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="朴素贝叶斯">朴素贝叶斯</h1>
+<p><strong>约定：</strong></p>
+<ul>
+<li><font color="F66A65">红色：</font>对名词进行解释的重点</li>
+<li><font color="FDA63E">黄色：</font>各部分总结中的重点</li>
+<li><font color="62D257">绿色：</font>算法基本假设与解释</li>
+</ul>
+<p><strong>摘要：</strong></p>
+<ol>
+<li>朴素贝叶斯算法的起点：贝叶斯公式（<a href="#二贝叶斯公式：朴素贝叶斯算法的起点">贝叶斯公式：朴素贝叶斯算法的起点</a>）</li>
+<li>两种求解似然函数的方法和其假设（<a href="#31-高斯判别分析（GDA）">高斯判别分析（GDA）</a>、<a href="#32-朴素贝叶斯">朴素贝叶斯</a>）</li>
+<li>解决遇到没有见过的特征项的平滑（<a href="#四拉普拉斯平滑">拉普拉斯平滑</a>）</li>
+</ol>
+<p><strong>名词解释：</strong><code>贝叶斯公式</code>、<code>先验概率\后验概率</code>、<code>似然概率函数</code>、<code>条件独立</code>、<code>拉普拉斯平滑</code></p>
+<blockquote>
+<ol>
+<li>贝叶斯公式：朴素贝叶斯<font color="F66A65">算法的起点</font>，该公式从条件概率公式和全概率公式得到，<font color="F66A65">说明了后验概率正比于似然乘先验</font></li>
+<li>先验概率\后验概率：源自古老的统计学，先验概率一般是指没有任何经验知识的概率即$P(Y)$，后验概率是指有了一些知识后<font color="F66A65">对于先验的修正</font>，即$P(Y|X=xx)$</li>
+<li>似然概率函数：通过给定x，<font color="F66A65">基于参数估计概率的过程</font>，输入是参数，输出是概率</li>
+<li>条件独立：这里指训练集的特征条件独立，这<font color="F66A65">是一个假设</font>，也是朴素贝叶斯中<font color="F66A65">朴素</font>二字的由来</li>
+<li>拉普拉斯平滑：在计算似然函数时会遇到“没有见过的特征的概率是0”的情况，引入<font color="F66A65">拉普拉斯平滑也可以给这种情况一个概率</font></li>
+</ol>
+</blockquote>
+<p><strong>原理实现：</strong>
+<a href="">朴素贝叶斯的手写实现</a></p>
+<h2 id="一、一句话概括">一、一句话概括</h2>
+<p>朴素贝叶斯算法起点是贝叶斯公式的分子：先验 * 似然，且由于先验一样，则比较不同分类的似然函数。然后引入特征的条件独立的假设，使得似然函数的计算可以拆解成概率的连乘。再引入拉普拉斯平滑解决概率连乘的过程中出现0的情况</p>
+<p><strong>概括总结</strong></p>
+<blockquote>
+<ol>
+<li>朴素贝叶斯 = <font color="FDA63E">贝叶斯公式分子中的似然函数（贝叶斯） + 特征条件独立假设（朴素）</font></li>
+</ol>
+</blockquote>
+<h2 id="二、贝叶斯公式：朴素贝叶斯算法的起点">二、贝叶斯公式：朴素贝叶斯算法的起点</h2>
+<p>$$P(Y=C_k \mid X)=\frac{P(X \mid Y=C_k) * P(Y=C_k)}{P(X)}$$</p>
+<blockquote>
+<ol>
+<li>$P(Y=C_k \mid X)$表示已知某未知样本的特征后，其属于分类k的的概率（就是得知某一样本的特征，预测其为分类k的概率）\
+显然：找到使得等式右边概率最大的那个分类就是我们要预测的那个分类</li>
+<li>$P(X)$表示，sample出这个未知样本的概率</li>
+<li>解释：以上提到的「未知样本」就是我们要用模型预测的那个样本</li>
+</ol>
+</blockquote>
+<p>以上就是贝叶斯公式带入分类的概率后得到的公式（朴素贝叶斯算法的起点），推导如下</p>
+<ol>
+<li>条件概率公式：$$P(B \mid A)=\frac{P(A \mid B) P(B)}{P(A)}$$</li>
+<li>带入$P(A)=P(X)$，$P(B)=P(Y=C_k)$得到贝叶斯公式（分子表示了似然乘以先验）
+$$P(Y=C_k \mid X)=\frac{P(X \mid Y=C_k) * P(Y=C_k)}{P(X)}$$</li>
+<li>等式右边表示</li>
+</ol>
+<p><strong>贝叶斯公式总结</strong></p>
+<blockquote>
+<ol>
+<li><font color="FDA63E">贝叶斯公式就是条件概率公式的变形</font>，带入分类问题中的概率就变成了朴素贝叶斯算法的起点</li>
+<li>等式左边是后验概率，等式右边的分子是「先验」乘以「似然」、所以贝叶斯公式的核心：<font color="FDA63E">后验正比于先验乘以似然</font></li>
+<li>要找到概率最大的「后验」，就要找到 先验*似然最大的 那个分类。因为<font color="FDA63E">先验概率求解较为简单，所以目标变成找到计算似然函数$P(X \mid Y=C_k)$的方法</font><h2 id="三、似然函数的计算">三、似然函数的计算</h2>
+</li>
+<li>基于之前的讨论，我们已经明确目的，找到计算$P(X \mid Y=C_k)$的方法，从而可以比较哪个分类会得到最大的结果，就将数据预测成哪个分类</li>
+<li>为了计算上式，需要引入一些假设，对数据的不同假设（为了更方便的计算似然函数）区分出了两种方法，包括我们今天提到的朴素贝叶斯</li>
+</ol>
+</blockquote>
+<h2 id="31-高斯判别分析（gda）">3.1 高斯判别分析（GDA）</h2>
+<blockquote>
+<p>应用场景：X的特征都是连续变量可以使用：是一种求 $P(X \mid Y=C_k)$ 的方法</p>
+<h3 id="311-算法假设与推导">3.1.1 算法假设与推导</h3>
+<ol>
+<li>引入假设：<font color="62D257">假设$p(X|Y=C_k)$符合多元高斯分布，分类符合伯努利分布</font>得到如下公式，其中$|\Sigma|$  是协方差矩阵的行列式，对应正态分布的$\sigma$
+$$p(x|y=0) = \frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2} }*exp(-\frac{1}{2}(x-\mu_0)^T\Sigma^{-1}(x-\mu_0))$$</li>
+<li>相应的：
+$$p(x|y=1) = \frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2} }*exp(-\frac{1}{2}(x-\mu_1)^T\Sigma^{-1}(x-\mu_1))$$</li>
+<li>有了以上两个式子利用极大似然估计就可以得到结果，本文不做展开</li>
+</ol>
+</blockquote>
+<h3 id="312-高斯判别分析引申">3.1.2 高斯判别分析引申</h3>
+<ol>
+<li>基于同一个出发点不同的假设分出了高斯判别模型和朴素贝叶斯（事实上朴素贝叶斯在遇到连续特征时往往也要引入特征的分布假设，和高斯判别模型很类似，但并没有那么「彻底」，「朴素贝叶斯引申」中进行展开）</li>
+<li>高斯判别模型和逻辑回归还有着一层关系：从逻辑回归的概率解释中可以看出它的假设是$P(Y|X, \theta)$服从伯努利分布</li>
+<li>由高斯判别模型进行推导可以得到：逻辑回归的结果：$p\left(y=1 \mid x ; \phi, \mu<em>{0}, \mu</em>{1}, \Sigma\right)=\frac{1}{1+e^{-\theta^{T} x} }$</li>
+<li>从逻辑回归出发却无法得到高斯判别分析的结果，也说明了判别模型（逻辑回归）进行了更少的数据假设，鲁棒性更强。生成模型（高斯判别模型）对数据做了更多的假设，很有可能遇到假设不合理的情况，但可以处理数据量少的情况（相当于通过假设脑补数据）<h2 id="32-朴素贝叶斯">3.2 朴素贝叶斯</h2>
+<h3 id="321-算法假设与推导">3.2.1 算法假设与推导</h3>
+</li>
+<li>引入假设：<font color="62D257">$p(X|Y=C_k)$条件独立，也就是说在某一个分类中，特征A的取值和特征B的取值是独立的</font></li>
+<li>基于假设有：以下等式（即条件联合概率=条件概率的乘积）$$p(X|Y=C<em>k) = p(x_1,x_2,x_3...|Y=C_k) = p(x_1|Y=C_k)<em>p(x_2|Y=C_k)</em>...=\prod</em>{i=1}^np(x_i|Y=C_k)$$</li>
+<li>将似然函数的表达拆分成概率的连乘之后，就可以去数据集中数数了（连乘中的每一项可以通过数数的古典概型进行计算）</li>
+</ol>
+<p><strong>朴素贝叶斯总结</strong></p>
+<blockquote>
+<ol>
+<li>朴素贝叶斯通过<font color="FDA63E">引入特征条件独立的假设完成了似然函数的计算</font></li>
+<li>小插曲：特征条件独立的假设<font color="FDA63E">很像NLP的n元语法模型（</font>朴素贝叶斯中是unigram，即一个单词出现的概率和其前后单词出现的概率无关）<h3 id="322-朴素贝叶斯引申">3.2.2 朴素贝叶斯引申</h3>
+基于以上讨论，仍存在一个问题：如果特征不是连续值怎么计算某一个特定项出现的概率; b. 如果很幸运是离散值，那么出现了数据集中没有见过的特定项，概率岂不是0（无法比较）</li>
+</ol>
+</blockquote>
+<ol>
+<li>第一个问题的答案是将数据离散化（这个比较好想）或者引入其他假设，如正态分布假设，然后根据分布的概率密度函数进行求解（需要根据业务经验进行合理假设，这也是为什么之前说朴素贝叶斯对于连续值需要进行合理假设，但没有高斯判别分析假设的那么「彻底」）</li>
+<li>第二个问题的答案就是我们接下来要讨论的拉普拉斯平滑<h2 id="四、拉普拉斯平滑">四、拉普拉斯平滑</h2>
+用于解决离散特征的概率可能为0的问题</li>
+<li>引入平画项，修正贝叶斯公式得到以下公式，其中$S_j$是该特征值的项数（为了归一化）
+$$P(Y=C_k \mid X)=\frac{P(X \mid Y=C_k) <em> P(Y=C_k)+\lambda}{P(X)+S_j </em> \lambda}$$</li>
+<li>当$\lambda=1$时称为拉普拉斯平滑</li>
+</ol>
+<p><strong>拉普拉斯平滑总结</strong></p>
+<blockquote>
+<ol>
+<li>当某一特征出现了之前没有见过的特征项时，让<font color="FDA63E">分子和分母都加点东西</font>，就避免了概率为0的情况</li>
+<li>如数据集中只有红色和黄色，要预测的样本是绿色，则分子+1，分母+ 2*1（2是原本该特征的取值个数）</li>
+</ol>
+</blockquote>
+<h2 id="五、总结">五、总结</h2>
+<blockquote>
+<ol>
+<li>朴素贝叶斯是：<font color="FDA63E">贝叶斯公式</font>（起点）+<font color="FDA63E">特征条件独立假设</font>（朴素，方便计算似然函数表达式）+<font color="FDA63E">拉普拉斯平滑</font>（解决遇到没有见过的特征值的情况）</li>
+<li>朴素贝叶斯和高斯判别模型是两种对数据的假设从而求解似然函数的方法</li>
+</ol>
+</blockquote>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="LogisticRegression.html" class="navigation navigation-prev " aria-label="Previous page: 逻辑回归">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="KNN.html" class="navigation navigation-next " aria-label="Next page: K近邻">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"朴素贝叶斯","level":"1.1.3","depth":2,"next":{"title":"K近邻","level":"1.1.4","depth":2,"path":"KNN.md","ref":"KNN.md","articles":[]},"previous":{"title":"逻辑回归","level":"1.1.2","depth":2,"path":"LogisticRegression.md","ref":"LogisticRegression.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"SimpleBayes.md","mtime":"2025-04-25T11:45:23.981Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:43.273Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

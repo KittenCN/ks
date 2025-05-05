@@ -1,0 +1,839 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java Arrays.equals()方法 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0868.html" />
+    
+    
+    <link rel="prev" href="0866.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 工具库
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0849.html">
+            
+                <a href="0849.html">
+            
+                    
+                    Java Arrays类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0850.html">
+            
+                <a href="0850.html">
+            
+                    
+                    Java Arrays类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0851.html">
+            
+                <a href="0851.html">
+            
+                    
+                    数组方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0852.html">
+            
+                <a href="0852.html">
+            
+                    
+                    Java Arrays.copyOf()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0853.html">
+            
+                <a href="0853.html">
+            
+                    
+                    Java Arrays.deepToString()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0854.html">
+            
+                <a href="0854.html">
+            
+                    
+                    Java Arrays.deepHashCode()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0855.html">
+            
+                <a href="0855.html">
+            
+                    
+                    Java Arrays.deepEquals()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0856.html">
+            
+                <a href="0856.html">
+            
+                    
+                    Java Arrays.copyOfRange()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0857.html">
+            
+                <a href="0857.html">
+            
+                    
+                    Java Arrays.compare()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0858.html">
+            
+                <a href="0858.html">
+            
+                    
+                    Java Arrays.binarySearch()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0859.html">
+            
+                <a href="0859.html">
+            
+                    
+                    Java Arrays.asList()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0860.html">
+            
+                <a href="0860.html">
+            
+                    
+                    Java Arrays.setAll()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0861.html">
+            
+                <a href="0861.html">
+            
+                    
+                    Java Arrays.parallelPrefix()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0862.html">
+            
+                <a href="0862.html">
+            
+                    
+                    Java Arrays.parallelPrefix()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0863.html">
+            
+                <a href="0863.html">
+            
+                    
+                    Java Arrays.mismatch()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0864.html">
+            
+                <a href="0864.html">
+            
+                    
+                    Java Arrays.hashCode()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="0865.html">
+            
+                <a href="0865.html">
+            
+                    
+                    Java Arrays.parallelSort()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="0866.html">
+            
+                <a href="0866.html">
+            
+                    
+                    Java Arrays.fill()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.19" data-path="0867.html">
+            
+                <a href="0867.html">
+            
+                    
+                    Java Arrays.equals()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="0868.html">
+            
+                <a href="0868.html">
+            
+                    
+                    Java Arrays.sort()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="0869.html">
+            
+                <a href="0869.html">
+            
+                    
+                    Java Arrays.stream()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="0870.html">
+            
+                <a href="0870.html">
+            
+                    
+                    Java Arrays.toString()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="0871.html">
+            
+                <a href="0871.html">
+            
+                    
+                    Java Arrays.spliterator()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="0872.html">
+            
+                <a href="0872.html">
+            
+                    
+                    Java Arrays.compareUnsigned()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java Arrays.equals()方法</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-arraysequals方法">Java <code>Arrays.equals()</code>方法</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-util/java-arrays-equals-method" target="_blank">https://www.studytonight.com/java-util/java-arrays-equals-method</a></p>
+</blockquote>
+<p>在本教程中，我们将学习 <a href="https://www.studytonight.com/java/" target="_blank">Java</a> 中<code>Arrays</code>类的<code>equals()</code>方法。此方法用于检查给定的两个数组是否相等。如果两个数组都是<code>null</code> 或者两个数组具有相同的长度并且每个对应的元素都相同，则两个数组相等。该方法将接受两个数组，并且在比较这两个数组之后，它将基于等式返回布尔值<code>true</code> 或<code>false</code> 。</p>
+<h2 id="语法">语法:</h2>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Object[] array1,Object[] aarray2)</span>
+</span></code></pre>
+<h3 id="equals方法重载方法列表"><code>equals()</code>方法重载方法列表</h3>
+<p>此表包含<code>equals()</code>方法的所有重载变体。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>静态布尔等于(布尔[] a，布尔[] a2)</td>
+<td>如果两个指定的布尔值数组相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(布尔[] a，int aFromIndex，int aToIndex，布尔[] b，int bFromIndex，int bToIndex)</td>
+<td>如果指定范围内的两个指定布尔值数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(字节[] a，字节[] a2)</td>
+<td>如果两个指定的字节数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(字节[] a，int aFromIndex，int aToIndex，字节[] b，int bFromIndex，int bToIndex)</td>
+<td>如果指定范围内的两个指定字节数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(char[] a，char[] a2)</td>
+<td>如果两个指定的字符数组相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等式(char[] a、int afromindex、int aToIndex、char[] b、int bfromindex、int bToIndex)</td>
+<td>如果指定范围内的两个指定字符数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(double[] a，double[] a2)</td>
+<td>如果两个指定的双精度数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(double[] a，int aFromIndex，int aToIndex，double[] b，int bFromIndex，int bToIndex)</td>
+<td>如果指定范围内的两个指定的双精度数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(float[] a，float[] a2)</td>
+<td>如果两个指定的浮点数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(float[] a，int aFromIndex，int aToIndex，float[] b，int bFromIndex，int bToIndex)</td>
+<td>如果指定范围内的两个指定浮点数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(int[] a，int[] a2)</td>
+<td>如果两个指定的整数数组相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等式(int[] a、int afromindex、int[] b、int bfromindex、int bToIndex)</td>
+<td>如果指定范围内的两个指定整数数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(long[] a，int aFromIndex，int aToIndex，long[] b，int bFromIndex，int bToIndex)</td>
+<td>如果指定范围内的两个指定的长数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔值等于(long[] a，long[] a2)</td>
+<td>如果两个指定的长数组相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(short[] a，int aFromIndex，int aToIndex，short[] b，int bFromIndex，int bToIndex)</td>
+<td>如果指定范围内的两个指定短路数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(短[] a，短[] a2)</td>
+<td>如果两个指定的短路数组相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(对象[] a，int aFromIndex，int aToIndex，对象[] b，int bFromIndex，int bToIndex)</td>
+<td>如果指定范围内的两个指定对象数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态布尔等于(对象[] a，对象[] a2)</td>
+<td>如果两个指定的对象数组彼此相等，则此方法返回 true。</td>
+</tr>
+<tr>
+<td>静态<t>布尔等于(T[] a，int aFromIndex，int aToIndex，T[] b，int bFromIndex，int bToIndex，<code>Comparator</code> super T&gt; cmp)</t></td>
+<td>如果指定范围内的两个指定对象数组彼此相等，则此方法返回 true。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="equals方法的示例">equals()方法的示例</h2>
+<p>在下面的例子中，我们有两个数组<code>array1</code> 和<code>array2</code>。两个对应的数组元素相等，因此将返回<code>true</code>。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays; 
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span> 
+</span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> 
+    </span>{ 
+        <span class="hljs-keyword">int</span>[] array1 = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span> [] {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>}; 
+        <span class="hljs-keyword">int</span>[] array2 = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span> [] {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>}; 
+        <span class="hljs-keyword">if</span>(Arrays.equals(array1, array2))
+        {
+            System.out.println(<span class="hljs-string">"Both Arrays Are Equal"</span>);
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            System.out.println(<span class="hljs-string">"Both Arrays Are Not Equal"</span>);
+        }
+    } 
+}
+</code></pre>
+<p>两个数组相等</p>
+<p>还有另一种<code>equals()</code>重载方法，用于对数组进行切片。我们需要传递开始和结束索引来比较任何数组。</p>
+<h2 id="数组切片的-equals方法示例">数组切片的 equals()方法示例</h2>
+<p>下面的例子与上面的例子相同，但是我们可以通过传递两个数组的<strong>开始索引</strong> 和<strong>结束索引</strong> 来分割数组。本例中，我们比较了<strong>排列 1</strong> 和<strong>排列 2</strong> ，从索引 <strong>2 到 8</strong> ，从 <strong>4 到 10。</strong></p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays; 
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span> 
+</span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> 
+    </span>{ 
+        <span class="hljs-keyword">int</span>[] array1 = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span> [] {<span class="hljs-number">1</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>, <span class="hljs-number">11</span>, <span class="hljs-number">21</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>,<span class="hljs-number">9</span>, <span class="hljs-number">4</span>, <span class="hljs-number">12</span>, <span class="hljs-number">47</span>, <span class="hljs-number">85</span>, <span class="hljs-number">2</span>, <span class="hljs-number">62</span>, <span class="hljs-number">14</span>, <span class="hljs-number">72</span>, <span class="hljs-number">11</span>, <span class="hljs-number">4</span>}; 
+        <span class="hljs-keyword">int</span>[] array2 = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span> [] {<span class="hljs-number">1</span>, <span class="hljs-number">12</span>, <span class="hljs-number">41</span>, <span class="hljs-number">71</span>, <span class="hljs-number">22</span>, <span class="hljs-number">36</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">12</span>, <span class="hljs-number">2</span>, <span class="hljs-number">12</span>, <span class="hljs-number">15</span>, <span class="hljs-number">16</span>, <span class="hljs-number">22</span>, <span class="hljs-number">18</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>}; 
+        <span class="hljs-keyword">if</span>(Arrays.equals(array1,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>,array2,<span class="hljs-number">4</span>,<span class="hljs-number">10</span>))
+        {
+            System.out.println(<span class="hljs-string">"Both Arrays Are Equal"</span>);
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            System.out.println(<span class="hljs-string">"Both Arrays Are Not Equal"</span>);
+        }
+    } 
+}
+</code></pre>
+<p>两个数组不相等</p>
+<h2 id="对象数组的-equals方法示例">对象数组的 equals()方法示例</h2>
+<p>下面的例子说明了如何将<code>equals()</code>方法也应用于对象数组。由于这个对象不是原始数据类型，我们需要为我们的对象覆盖一个<code>equals()</code>方法，在我们的例子中，我们<code>Student</code> 是一个对象。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span>
+</span>{
+    String stud_name;
+    <span class="hljs-keyword">int</span> roll_no;
+    Student(String stud_name, <span class="hljs-keyword">int</span> roll_no){
+        <span class="hljs-keyword">this</span>.stud_name = stud_name;
+        <span class="hljs-keyword">this</span>.roll_no = roll_no;
+    }
+    <span class="hljs-comment">//overrifing equals method</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Object obj)</span> 
+    </span>{
+        Student s = (Student)obj; 
+        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">this</span>.stud_name == s.stud_name &amp;&amp; <span class="hljs-keyword">this</span>.roll_no==s.roll_no); 
+    } 
+}
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span> </span>{ 
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span> 
+    </span>{ 
+        Student array1[][] = { 
+                { <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"AAA"</span>,<span class="hljs-number">123</span>), <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"BBB"</span>,<span class="hljs-number">789</span>) }, 
+                { <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"CCC"</span>,<span class="hljs-number">183</span>), <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"DDD"</span>,<span class="hljs-number">445</span>) }, 
+                { <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"EEE"</span>,<span class="hljs-number">693</span>), <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"FFF"</span>,<span class="hljs-number">348</span>) } }; 
+
+        Student array2[][] = { 
+                { <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"AAA"</span>,<span class="hljs-number">123</span>), <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"BBB"</span>,<span class="hljs-number">789</span>) }, 
+                { <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"CCC"</span>,<span class="hljs-number">183</span>), <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"DDD"</span>,<span class="hljs-number">445</span>) }, 
+                { <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"EEE"</span>,<span class="hljs-number">693</span>), <span class="hljs-keyword">new</span> Student(<span class="hljs-string">"FFF"</span>,<span class="hljs-number">348</span>) } };         
+
+        <span class="hljs-keyword">if</span>(Arrays.deepEquals(array1, array2))
+        {
+            System.out.println(<span class="hljs-string">"Both arrays are equal"</span>);
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            System.out.println(<span class="hljs-string">"Both arrays are not equal"</span>);
+        }
+    } 
+}
+</code></pre>
+<p>两个数组不相等</p>
+<h2 id="equals方法示例所有重载方法">equals()方法示例所有重载方法</h2>
+<p>在下面的示例中，我们实现了 equals()方法的所有重载方法。如果两个数组相等，此方法将返回 true，否则将返回 false 值。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.Arrays;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StudyTonight</span> 
+</span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> 
+    </span>{
+        <span class="hljs-keyword">byte</span> byteArray1[] = {<span class="hljs-number">5</span>, <span class="hljs-number">10</span>, <span class="hljs-number">15</span>, <span class="hljs-number">20</span>, <span class="hljs-number">25</span>, <span class="hljs-number">30</span>, <span class="hljs-number">35</span>, <span class="hljs-number">40</span>, <span class="hljs-number">45</span>, <span class="hljs-number">50</span>, <span class="hljs-number">55</span>, <span class="hljs-number">60</span>}; 
+        <span class="hljs-keyword">byte</span> byteArray2[] = {<span class="hljs-number">35</span>, <span class="hljs-number">40</span>, <span class="hljs-number">45</span>, <span class="hljs-number">50</span>, <span class="hljs-number">55</span>, <span class="hljs-number">60</span>,<span class="hljs-number">5</span>, <span class="hljs-number">10</span>, <span class="hljs-number">15</span>, <span class="hljs-number">20</span>, <span class="hljs-number">25</span>, <span class="hljs-number">30</span>}; 
+        System.out.println(<span class="hljs-string">"Arrays.equals(byteArray1,byteArray2): "</span>+Arrays.equals(byteArray1,byteArray2));
+        System.out.println(<span class="hljs-string">"Arrays.equals(byteArray1, 0, 5, byteArray2, 0, 5): "</span>+Arrays.equals(byteArray1, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>, byteArray2, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>));        
+
+        <span class="hljs-keyword">char</span> charArray1[] = {<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'e'</span>, <span class="hljs-string">'f'</span>, <span class="hljs-string">'g'</span>, <span class="hljs-string">'h'</span>, <span class="hljs-string">'i'</span>, <span class="hljs-string">'j'</span>, <span class="hljs-string">'k'</span>}; 
+        <span class="hljs-keyword">char</span> charArray2[] = {<span class="hljs-string">'d'</span>, <span class="hljs-string">'e'</span>, <span class="hljs-string">'f'</span>, <span class="hljs-string">'g'</span>, <span class="hljs-string">'h'</span>, <span class="hljs-string">'i'</span>,<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'e'</span>}; 
+        System.out.println(<span class="hljs-string">"Arrays.equals(charArray1,charArray2): "</span>+Arrays.equals(charArray1,charArray2));
+        System.out.println(<span class="hljs-string">"Arrays.equals(charArray1, 0, 5, charArray2, 0, 5): "</span>+Arrays.equals(charArray1, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>, charArray2, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>));    
+
+        <span class="hljs-keyword">int</span> intArray1[] = {<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>, <span class="hljs-number">60</span>, <span class="hljs-number">70</span>, <span class="hljs-number">80</span>, <span class="hljs-number">90</span>, <span class="hljs-number">100</span>, <span class="hljs-number">110</span>, <span class="hljs-number">120</span>, <span class="hljs-number">130</span>, <span class="hljs-number">140</span>, <span class="hljs-number">150</span>};
+        <span class="hljs-keyword">int</span> intArray2[] = {<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>, <span class="hljs-number">60</span>, <span class="hljs-number">70</span>, <span class="hljs-number">80</span>, <span class="hljs-number">90</span>, <span class="hljs-number">100</span>, <span class="hljs-number">110</span>, <span class="hljs-number">120</span>, <span class="hljs-number">130</span>, <span class="hljs-number">140</span>, <span class="hljs-number">150</span>};
+        System.out.println(<span class="hljs-string">"Arrays.equals(intArray1, intArray2): "</span>+Arrays.equals(intArray1, intArray2));
+        System.out.println(<span class="hljs-string">"Arrays.equals(intArray1, 0, 5, intArray2, 0, 5): "</span>+Arrays.equals(intArray1, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>, intArray2, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>));    
+
+        <span class="hljs-keyword">double</span> doubleArray1[] = {<span class="hljs-number">5.1</span>, <span class="hljs-number">6.2</span>, <span class="hljs-number">7.2</span>, <span class="hljs-number">8.1</span>, <span class="hljs-number">9.4</span>, <span class="hljs-number">10.2</span>, <span class="hljs-number">11.6</span>, <span class="hljs-number">12.96</span>, <span class="hljs-number">13.2</span>, <span class="hljs-number">14.25</span>, <span class="hljs-number">15.6</span>, <span class="hljs-number">16.4</span>, <span class="hljs-number">17.2</span>}; 
+        <span class="hljs-keyword">double</span> doubleArray2[] = {<span class="hljs-number">6.2</span>, <span class="hljs-number">7.2</span>, <span class="hljs-number">8.1</span>, <span class="hljs-number">9.4</span>, <span class="hljs-number">10.2</span>, <span class="hljs-number">11.6</span>, <span class="hljs-number">12.96</span>, <span class="hljs-number">13.2</span>,<span class="hljs-number">5.1</span>, <span class="hljs-number">6.2</span>, <span class="hljs-number">7.2</span>, <span class="hljs-number">8.1</span>, <span class="hljs-number">9.4</span>}; 
+        System.out.println(<span class="hljs-string">"Arrays.equals(doubleArray1, doubleArray2): "</span>+Arrays.equals(doubleArray1, doubleArray2));
+        System.out.println(<span class="hljs-string">"Arrays.equals(doubleArray1, 0, 5, doubleArray2, 0, 5): "</span>+Arrays.equals(doubleArray1, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>, doubleArray2, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>));    
+
+        <span class="hljs-keyword">float</span> floatArray1[] = {<span class="hljs-number">1f</span>, <span class="hljs-number">2f</span>, <span class="hljs-number">3f</span>, <span class="hljs-number">4f</span>, <span class="hljs-number">5f</span>, <span class="hljs-number">6f</span>, <span class="hljs-number">7f</span>, <span class="hljs-number">8f</span>, <span class="hljs-number">9f</span>, <span class="hljs-number">10f</span>}; 
+        <span class="hljs-keyword">float</span> floatArray2[] = {<span class="hljs-number">1f</span>, <span class="hljs-number">2f</span>, <span class="hljs-number">3f</span>, <span class="hljs-number">4f</span>, <span class="hljs-number">5f</span>, <span class="hljs-number">6f</span>, <span class="hljs-number">7f</span>, <span class="hljs-number">8f</span>, <span class="hljs-number">9f</span>, <span class="hljs-number">10f</span>}; 
+        System.out.println(<span class="hljs-string">"Arrays.equals(floatArray1, floatArray2): "</span>+Arrays.equals(floatArray1, floatArray2));
+        System.out.println(<span class="hljs-string">"Arrays.equals(floatArray1, 0, 5, floatArray2, 0, 5): "</span>+Arrays.equals(floatArray1, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>, floatArray2, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>));    
+
+        <span class="hljs-keyword">short</span> shortArray1[] = {<span class="hljs-number">12</span>, <span class="hljs-number">14</span>, <span class="hljs-number">16</span>, <span class="hljs-number">18</span>, <span class="hljs-number">20</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>}; 
+        <span class="hljs-keyword">short</span> shortArray2[] = {<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>, <span class="hljs-number">10</span>, <span class="hljs-number">3</span>, <span class="hljs-number">12</span>, <span class="hljs-number">5</span>, <span class="hljs-number">32</span>, <span class="hljs-number">16</span>}; 
+        System.out.println(<span class="hljs-string">"Arrays.equals(shortArray1, shortArray2): "</span>+Arrays.equals(shortArray1, shortArray2));
+        System.out.println(<span class="hljs-string">"Arrays.equals(shortArray1, 0, 5, shortArray2, 0, 5): "</span>+Arrays.equals(shortArray1, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>, shortArray2, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>));    
+    }
+}
+</code></pre>
+<p>Arrays.equals(byteArray1，byteArray2):false
+arrays . equals(bytearray 1，0，5，bytearray 2，0，5):false
+arrays . equals(chararray 1，charArray2):false
+arrays . equals(chararray 1，0，5，chararray 2，0，5):false
+arrays . equals(intarray 1，intArray2):true
+arrays . equals(intarray 1，0，5，intarray 2，0，5): true 【T6</p>
+<h3 id="结论">结论</h3>
+<p>在本教程中，我们从 Arrays 类中学习了 equal()方法。这种方法有两种变体，一种是不切片<code>public static boolean equals(Object[] array1,Object[] aarray2)</code>，另一种是切片<code>public static boolean equals(Object[] array1,int FromIndex,int ToIndex,Object[] array2,int FromIndex,int ToIndex)</code>。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0866.html" class="navigation navigation-prev " aria-label="Previous page: Java Arrays.fill()方法">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0868.html" class="navigation navigation-next " aria-label="Next page: Java Arrays.sort()方法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java Arrays.equals()方法","level":"1.1.19","depth":2,"next":{"title":"Java Arrays.sort()方法","level":"1.1.20","depth":2,"path":"0868.md","ref":"0868.md","articles":[]},"previous":{"title":"Java Arrays.fill()方法","level":"1.1.18","depth":2,"path":"0866.md","ref":"0866.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0867.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:21:02.278Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

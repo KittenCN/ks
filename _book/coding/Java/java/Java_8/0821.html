@@ -1,0 +1,622 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 8 日期和时间 API · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0822.html" />
+    
+    
+    <link rel="prev" href="0820.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0807.html">
+            
+                <a href="0807.html">
+            
+                    
+                    Java 8 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0808.html">
+            
+                <a href="0808.html">
+            
+                    
+                    Java 8 Lambda 表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0809.html">
+            
+                <a href="0809.html">
+            
+                    
+                    Java 反射 API——Parameter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0810.html">
+            
+                <a href="0810.html">
+            
+                    
+                    Java 8 Base64类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0811.html">
+            
+                <a href="0811.html">
+            
+                    
+                    Java 8 Collectors类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0812.html">
+            
+                <a href="0812.html">
+            
+                    
+                    Java 8 并行数组排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0813.html">
+            
+                <a href="0813.html">
+            
+                    
+                    Java 8 方法引用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0814.html">
+            
+                <a href="0814.html">
+            
+                    
+                    Java 8 forEach()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0815.html">
+            
+                <a href="0815.html">
+            
+                    
+                    Java 8 StringJoiner类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0816.html">
+            
+                <a href="0816.html">
+            
+                    
+                    Java 接口默认和静态方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0817.html">
+            
+                <a href="0817.html">
+            
+                    
+                    Java 8 函数式接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0818.html">
+            
+                <a href="0818.html">
+            
+                    
+                    Java Optional类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0819.html">
+            
+                <a href="0819.html">
+            
+                    
+                    Java 8 流 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0820.html">
+            
+                <a href="0820.html">
+            
+                    
+                    Java 8 改进的类型推断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.15" data-path="0821.html">
+            
+                <a href="0821.html">
+            
+                    
+                    Java 8 日期和时间 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0822.html">
+            
+                <a href="0822.html">
+            
+                    
+                    Java 谓词
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 8 日期和时间 API</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-8-日期和时间-api">Java 8 日期和时间 API</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-8/java-8-date-and-time-api" target="_blank">https://www.studytonight.com/java-8/java-8-date-and-time-api</a></p>
+</blockquote>
+<p>Java 在 Java 8 版本中添加了一个新的日期和时间 API，它由几个类、接口和枚举组成，用于处理日期和时间。</p>
+<p>在 Java 8 之前，有一个<code>java.util.Date</code>类来创建和处理日期和时间，它有一些限制，比如<strong>不是线程安全的、</strong> <strong>设计不佳</strong>、<strong>难以处理时区。</strong></p>
+<p>新的日期和时间 API 基于国际标准化组织日历系统，所有的类都是不可变的和线程安全的。</p>
+<p>java.time 包的类代表主要的日期时间概念，包括瞬间、持续时间、日期、时间、时区和周期。</p>
+<h2 id="java-日期时间-api-类">Java 日期时间 API 类</h2>
+<p>新的 <strong>java.time</strong> 包包括下面列出的各种类和枚举。</p>
+<p>| </p>
+<p>班级</p>
+<p> | </p>
+<p>描述</p>
+<p> |
+| 时钟 | 使用时区提供当前即时、日期和时间的时钟。 |
+| 持续时间 | 基于时间的时间量，如“34.5 秒”。 |
+| 瞬间 | 时间线上的瞬间点。 |
+| 局部日期 | 在 ISO-8601 日历系统中没有时区的日期，如 2007-12-03。 |
+| LocalDateTime | 在 ISO-8601 日历系统中没有时区的日期时间，例如 2007-12-03T10:15:30。 |
+| LocalTime(本地时间) | 在 ISO-8601 日历系统中没有时区的时间，如 10:15:30。 |
+| 蒙特达伊 | ISO-8601 日历系统中的月日，如- 12-03。 |
+| 偏移日期时间 | 在 ISO-8601 日历系统中，从世界协调时/格林威治时间偏移的日期时间，如 2007-12-03T10:15:30+01:00。 |
+| 偏移时间 | 在 ISO-8601 日历系统中，从世界协调时/格林威治时间偏移的时间，如 10:15:30+01:00。 |
+| 时期 | ISO-8601 日历系统中基于日期的时间量，例如“2 年 3 个月 4 天”。 |
+| 年 | ISO-8601 日历系统中的一年，如 2007 年。 |
+| 年月 | ISO-8601 日历系统中的一年一月，如 2007-12。 |
+| ZonedDateTime | 在 ISO-8601 日历系统中带有时区的日期时间，例如 2007-12-03T10:15:30+01:00 欧洲/巴黎。 |
+| ZoneId | 时区标识，如欧洲/巴黎。 |
+| ZoneOffset(区域偏移) | 与格林威治时间/世界协调时的时区偏移量，如+02:00。 |</p>
+<h2 id="java-8-日期时间-api-枚举">Java 8 日期时间 API 枚举</h2>
+<p>以下是存在于 <strong>java.time</strong> 包中的枚举。</p>
+<p>| 列举型别 | 描述 |
+| 星期几 | 一周中的某一天，如“星期二”。 |
+| 月 | 一年中的一个月，如“六月”。 |</p>
+<h2 id="示例本地日期类">示例:本地日期类</h2>
+<p>该类在 <strong>java.time</strong> 包中提供。它表示在 ISO-8601 日历系统中没有时区的日期，例如 2007-12-03。</p>
+<p><code>LocalDate</code> 类是一个不可变的日期时间对象，用于创建地区日期。见下面的例子。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        LocalDate date = LocalDate.parse(<span class="hljs-string">"2012-12-10"</span>);
+        System.out.println(date);    
+    }
+}
+</code></pre>
+<p>2012-12-10</p>
+<h2 id="示例本地日期时间类">示例:本地日期时间类</h2>
+<p>这个类用于创建一个有时间但没有时区的日期。它表示在 ISO-8601 日历系统中没有时区的日期时间，例如 2010-10-03T10:10:50。</p>
+<p><code>LocalDateTime</code>类是一个不可变的日期时间对象，代表一个日期时间。我们可以用它来表示有时间的日期。例如，值“2007 年 10 月 2 日 13:45.30.123456789”可以存储在<code>LocalDateTime</code>中。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.time.LocalDateTime;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        LocalDateTime date = LocalDateTime.of(<span class="hljs-number">2012</span>, <span class="hljs-number">12</span>, <span class="hljs-number">10</span>, <span class="hljs-number">2</span>, <span class="hljs-number">30</span>);
+        System.out.println(date);    
+    }
+}
+</code></pre>
+<p>2012-12-10T02:30</p>
+<h2 id="示例本地时间类">示例:本地时间类</h2>
+<p>此类用于创建本地时间对象。它表示在 ISO-8601 日历系统中没有时区的时间，例如 11:10:30。</p>
+<p><code>LocalTime</code>类是表示时间的不可变日期时间对象，例如“13:45.30.123456789”的值可以存储在<code>LocalTime</code>中。见下面的例子。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.time.LocalTime;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        LocalTime time = LocalTime.of(<span class="hljs-number">12</span>, <span class="hljs-number">12</span>,<span class="hljs-number">30</span>);
+        System.out.println(time);    
+    }
+}
+</code></pre>
+<p>12:12:30</p>
+<h2 id="示例区域数据时间类">示例:区域数据时间类</h2>
+<p>此类用于创建带有时区的日期时间对象。它表示在 ISO-8601 日历系统中带有时区的日期时间，例如 2017-10-03T10:10:30+05:30 亚洲/加尔各答。</p>
+<p><code>ZonedDateTime</code>类是带有时区的日期时间的不可变表示。此类存储所有日期和时间字段。例如，“亚洲/加尔各答时区 2017 年 10 月 2 日 15:40.35.123456786 +05:30”的值可以存储在<code>ZonedDateTime</code>中。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.time.ZoneId;
+<span class="hljs-keyword">import</span> java.time.ZonedDateTime;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        ZonedDateTime time = ZonedDateTime.of(<span class="hljs-number">2015</span>, <span class="hljs-number">10</span>, <span class="hljs-number">15</span>, <span class="hljs-number">2</span>, <span class="hljs-number">10</span>, <span class="hljs-number">30</span>, <span class="hljs-number">0</span>, ZoneId.systemDefault());
+        System.out.println(time);    
+    }
+}
+</code></pre>
+<p>2015-10-15T02:10:30+05:30【亚洲/加尔各答】</p>
+<h2 id="示例偏移日期时间类">示例:偏移日期时间类</h2>
+<p>此类用于在 ISO-8601 日历系统中创建从世界协调时/格林威治时间偏移的日期时间，例如 2017-10-03T15:10:30+01:00。</p>
+<p><code>OffsetDateTime</code>类是带有偏移量的日期时间的不可变表示。此类存储所有日期和时间字段，以及与世界协调时/格林威治时间的偏移量。例如，值“2017 年 10 月 2 日 15:42.35.123456789 +02:00”可以存储在<code>OffsetDateTime</code>中。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.time.OffsetDateTime;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        OffsetDateTime date = OffsetDateTime.parse(<span class="hljs-string">"2017-02-03T12:30:30+01:00"</span>);
+        System.out.println(date);
+    }
+}
+</code></pre>
+<p>2017-02-03T12:30:30+01:00</p>
+<h2 id="示例偏移时间类">示例:偏移时间类</h2>
+<p>此类用于存储在 ISO-8601 日历系统中从世界协调时/格林威治时间偏移的时间，例如 15:10:35+01:00。</p>
+<p><code>OffsetTime</code>类是一个表示时间的不可变日期时间对象。此类存储所有时间字段以及区域偏移量。例如，值“15:40.35.123456789+02:00”可以存储在<code>OffsetTime</code>中。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.time.OffsetTime;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>{
+
+        OffsetTime time = OffsetTime.parse(<span class="hljs-string">"12:30:30+01:00"</span>);
+        System.out.println(time);
+    }
+}
+</code></pre>
+<p>12:30:30+01:00</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0820.html" class="navigation navigation-prev " aria-label="Previous page: Java 8 改进的类型推断">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0822.html" class="navigation navigation-next " aria-label="Next page: Java 谓词">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 8 日期和时间 API","level":"1.1.15","depth":2,"next":{"title":"Java 谓词","level":"1.1.16","depth":2,"path":"0822.md","ref":"0822.md","articles":[]},"previous":{"title":"Java 8 改进的类型推断","level":"1.1.14","depth":2,"path":"0820.md","ref":"0820.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0821.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:51.159Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

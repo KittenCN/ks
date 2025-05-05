@@ -1,0 +1,705 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>在 JSP 中创建自定义标签 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="0529.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    JSP
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0507.html">
+            
+                <a href="0507.html">
+            
+                    
+                    JSP 的基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0508.html">
+            
+                <a href="0508.html">
+            
+                    
+                    JSP 简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0509.html">
+            
+                <a href="0509.html">
+            
+                    
+                    JSP 的生命周期
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0510.html">
+            
+                <a href="0510.html">
+            
+                    
+                    创建一个 JSP 页面
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0511.html">
+            
+                <a href="0511.html">
+            
+                    
+                    JSP 脚本元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0512.html">
+            
+                <a href="0512.html">
+            
+                    
+                    JSP 脚本标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0513.html">
+            
+                <a href="0513.html">
+            
+                    
+                    JSP 声明标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0514.html">
+            
+                <a href="0514.html">
+            
+                    
+                    JSP 指令标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="0515.html">
+            
+                <a href="0515.html">
+            
+                    
+                    JSP 表达式标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0516.html">
+            
+                <a href="0516.html">
+            
+                    
+                    JSP 核心
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0517.html">
+            
+                <a href="0517.html">
+            
+                    
+                    JSP 中的隐式对象
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0518.html">
+            
+                <a href="0518.html">
+            
+                    
+                    JSP 包含指令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0519.html">
+            
+                <a href="0519.html">
+            
+                    
+                    JSP Taglib 指令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0520.html">
+            
+                <a href="0520.html">
+            
+                    
+                    JSP 异常处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0521.html">
+            
+                <a href="0521.html">
+            
+                    
+                    JSP 标准标签（动作元素）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0522.html">
+            
+                <a href="0522.html">
+            
+                    
+                    JSP JavaBean 组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="0523.html">
+            
+                <a href="0523.html">
+            
+                    
+                    JSP jsp:useBean标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="0524.html">
+            
+                <a href="0524.html">
+            
+                    
+                    JSP jsp:getProperty标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="0525.html">
+            
+                <a href="0525.html">
+            
+                    
+                    jsp:setProperty标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="0526.html">
+            
+                <a href="0526.html">
+            
+                    
+                    JSP 高级
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="0527.html">
+            
+                <a href="0527.html">
+            
+                    
+                    JSP 表达式语言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="0528.html">
+            
+                <a href="0528.html">
+            
+                    
+                    JSTL 标准标签库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="0529.html">
+            
+                <a href="0529.html">
+            
+                    
+                    JSP 自定义标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.24" data-path="0530.html">
+            
+                <a href="0530.html">
+            
+                    
+                    在 JSP 中创建自定义标签
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >在 JSP 中创建自定义标签</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="在-jsp-中创建自定义标签">在 JSP 中创建自定义标签</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/jsp/creating-a-custom-tag.php" target="_blank">https://www.studytonight.com/jsp/creating-a-custom-tag.php</a></p>
+</blockquote>
+<p>要创建自定义标签，需要以下组件:</p>
+<ol>
+<li>应该扩展<code>SimpleTagSupport</code>的<strong>标签处理程序</strong>类。</li>
+<li><strong>标签库描述符(TLD)</strong> 文件</li>
+<li>在 JSP 文件中使用<a href="custom-tag.php">自定义标签</a></li>
+</ol>
+<hr></hr>
+<h2 id="标签处理程序类">标签处理程序类</h2>
+<p>您可以通过两种不同的方式创建标记处理程序类:</p>
+<ol>
+<li>通过实现三个接口之一:<code>SimpleTag</code>、<code>Tag</code>或<code>BodyTag</code>，它们定义了在标签的生命周期中调用的方法。</li>
+<li>通过扩展实现<code>SimpleTag</code>、<code>Tag</code>或<code>BodyTag</code>接口的抽象基类。<strong>简单标签支持</strong>、<strong>标签支持</strong>和<strong>身体标签支持</strong>类实现简单标签、标签和标签接口。扩展这些类使标记处理程序类不必实现接口中的所有方法，并且还提供了其他方便的功能。</li>
+</ol>
+<hr></hr>
+<h3 id="标签库描述符">标签库描述符</h3>
+<p>标签库描述符是一个 XML 文档，它包含关于整个库以及库中包含的每个标签的信息。网络容器和 JSP 页面开发工具都使用顶级域名来验证标签。</p>
+<p>标签库描述符文件必须具有扩展名<code>.tld</code>，并且必须打包在 WAR 文件的 <strong>/WEB-INF/</strong> 目录或子目录中，或者打包在 JAR 中的标签库的 <strong>/META-INF/</strong> 目录或子目录中。</p>
+<hr></hr>
+<h3 id="自定义标签示例">自定义标签示例</h3>
+<p>在我们的例子中，我们将创建一个扩展<strong>标签支持</strong>类的标签处理程序类。当我们扩展这个类时，我们必须覆盖方法<code>doStartTag()</code>。这个类还有另外两个方法，即<code>doEndTag()</code>和<code>release()</code>，我们可以根据自己的需求决定是否覆盖。</p>
+<p><strong>CountMatches.java</strong></p>
+<pre><code class="lang-java"><span class="hljs-keyword">package</span> com.studytonight.taghandler;
+
+<span class="hljs-keyword">import</span> java.io.IOException;
+<span class="hljs-keyword">import</span> javax.servlet.jsp.*;
+<span class="hljs-keyword">import</span> org.apache.commons.lang.StringUtils;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> **<span class="hljs-title">CountMatches</span>** <span class="hljs-keyword">extends</span> **<span class="hljs-title">TagSupport</span>** </span>{
+  <span class="hljs-keyword">private</span> String **inputstring**;
+  <span class="hljs-keyword">private</span> String **lookupstring**;
+
+  <span class="hljs-keyword">public</span> String **getInputstring**() {
+    <span class="hljs-keyword">return</span> inputstring;
+  }
+
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> **setInputstring**(String *inputstring*) {
+    <span class="hljs-keyword">this</span>.inputstring = inputstring;
+  }
+
+  <span class="hljs-keyword">public</span> String **getLookupstring**() {
+    <span class="hljs-keyword">return</span> lookupstring;
+  }
+
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> **setLookupstring**(String *lookupstring*) {
+    <span class="hljs-keyword">this</span>.lookupstring = lookupstring;
+  }
+
+  <span class="hljs-annotation">@Override</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> **doStartTag**() <span class="hljs-keyword">throws</span> JspException {
+    <span class="hljs-keyword">try</span> {
+      JspWriter out = pageContext.getOut();
+      out.println(StringUtils.countMatches(inputstring, lookupstring));
+    } 
+    <span class="hljs-keyword">catch</span> (IOException e) {
+      e.printStackTrace();
+    }
+    <span class="hljs-keyword">return</span> SKIP_BODY;
+  }
+}
+</code></pre>
+<p>在上面的代码中，我们有一个<code>doStartTag()</code>方法的实现，如果我们要扩展<strong>标记支持</strong>类，这是必须的。我们已经声明了两个变量<code>inputstring</code>和<code>lookupstring</code>。这些变量表示自定义标签的<strong>属性</strong>。我们必须为这些变量提供 getter 和 setter，以便将值设置到这些变量中，这些变量将在使用这个自定义标记时提供。我们还可以指定这些属性是否是必需的。</p>
+<p><strong>计数匹配作家. tld</strong></p>
+<pre><code class="lang-java">&lt;?xml version="*1.0*" encoding="*UTF-8*"?&gt;
+&lt;taglib&gt; 
+  &lt;tlibversion&gt;1.0&lt;/tlibversion&gt;
+  &lt;jspversion&gt;1.1&lt;/jspversion&gt;
+  &lt;shortname&gt;**cntmtchs**&lt;/shortname&gt;
+  &lt;info&gt;Sample taglib for Substr operation&lt;/info&gt;
+  &lt;uri&gt;*http://studytonight.com/jsp/taglib/countmatches*&lt;/uri&gt;
+
+  &lt;tag&gt;
+    &lt;name&gt;**countmatches**&lt;/name&gt;
+    &lt;tagclass&gt;**com.studytonight.taghandler.CountMatches**&lt;/tagclass&gt;
+    &lt;info&gt;String Utility&lt;/info&gt;
+    &lt;attribute&gt;
+       &lt;name&gt;**inputstring**&lt;/name&gt;
+       &lt;required&gt;**true**&lt;/required&gt;
+    &lt;/attribute&gt;
+    &lt;attribute&gt;
+       &lt;name&gt;**lookupstring**&lt;/name&gt;
+       &lt;required&gt;**true**&lt;/required&gt;
+    &lt;/attribute&gt;
+  &lt;/tag&gt;
+
+&lt;/taglib&gt;
+</code></pre>
+<p>taglib 元素指定了模式、所需的 JSP 版本以及这个标签库中的标签。TLD 中的每个<strong>标签</strong>元素代表库中存在的一个单独的自定义标签。这些标记中的每一个都应该有一个与之关联的标记处理程序类。</p>
+<p><strong>uri</strong> 元素表示唯一标识标签库的统一资源标识符。</p>
+<p><strong>标签</strong>元素中的两个<strong>属性</strong>元素表示标签有两个属性，提供给<strong>必需</strong>元素的<strong>真</strong>值表示标签正常工作需要这两个属性。</p>
+<p><strong>test.jsp</strong></p>
+<pre><code class="lang-java"> &lt;%@taglib prefix="**mytag**" uri="*/WEB-INF/CountMatchesDescriptor.tld*"%&gt;  
+&lt;html&gt;
+  &lt;**mytag:countmatches** inputstring="*Studytonight*" lookupstring="*t*"&gt;
+  &lt;/**mytag:countmatches**&gt;
+&lt;/html&gt;
+</code></pre>
+<p>如果这个标签工作正常，它应该在浏览器中打印一个值<code>3</code>，因为“今晚学习”这个词中出现了 3 次“不”。</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0529.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: JSP 自定义标签">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"在 JSP 中创建自定义标签","level":"1.1.24","depth":2,"previous":{"title":"JSP 自定义标签","level":"1.1.23","depth":2,"path":"0529.md","ref":"0529.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0530.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:23:13.554Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

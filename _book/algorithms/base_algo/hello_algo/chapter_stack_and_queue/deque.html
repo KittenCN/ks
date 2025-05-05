@@ -1,0 +1,2757 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>双向队列 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="./" />
+    
+    
+    <link rel="prev" href="queue.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href="../.." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Hello 算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    前言
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1.1" data-path="../chapter_preface/about_the_book.html">
+            
+                <a href="../chapter_preface/about_the_book.html">
+            
+                    
+                    关于本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.1.2" data-path="../chapter_preface/suggestions.html">
+            
+                <a href="../chapter_preface/suggestions.html">
+            
+                    
+                    如何使用本书
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.1.3" data-path="../chapter_preface/">
+            
+                <a href="../chapter_preface/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    初识算法
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.2.1" data-path="../chapter_introduction/algorithms_are_everywhere.html">
+            
+                <a href="../chapter_introduction/algorithms_are_everywhere.html">
+            
+                    
+                    算法无处不在
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2.2" data-path="../chapter_introduction/what_is_dsa.html">
+            
+                <a href="../chapter_introduction/what_is_dsa.html">
+            
+                    
+                    算法是什么
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2.3" data-path="../chapter_introduction/">
+            
+                <a href="../chapter_introduction/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="../chapter_computational_complexity/">
+            
+                <a href="../chapter_computational_complexity/">
+            
+                    
+                    复杂度分析
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.3.1" data-path="../chapter_computational_complexity/performance_evaluation.html">
+            
+                <a href="../chapter_computational_complexity/performance_evaluation.html">
+            
+                    
+                    算法效率评估
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.2" data-path="../chapter_computational_complexity/iteration_and_recursion.html">
+            
+                <a href="../chapter_computational_complexity/iteration_and_recursion.html">
+            
+                    
+                    迭代与递归
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.3" data-path="../chapter_computational_complexity/time_complexity.html">
+            
+                <a href="../chapter_computational_complexity/time_complexity.html">
+            
+                    
+                    时间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.4" data-path="../chapter_computational_complexity/space_complexity.html">
+            
+                <a href="../chapter_computational_complexity/space_complexity.html">
+            
+                    
+                    空间复杂度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3.5" data-path="../chapter_computational_complexity/">
+            
+                <a href="../chapter_computational_complexity/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="../chapter_data_structure/">
+            
+                <a href="../chapter_data_structure/">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.4.1" data-path="../chapter_data_structure/classification_of_data_structure.html">
+            
+                <a href="../chapter_data_structure/classification_of_data_structure.html">
+            
+                    
+                    数据结构分类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.2" data-path="../chapter_data_structure/basic_data_types.html">
+            
+                <a href="../chapter_data_structure/basic_data_types.html">
+            
+                    
+                    基本数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.3" data-path="../chapter_data_structure/number_encoding.html">
+            
+                <a href="../chapter_data_structure/number_encoding.html">
+            
+                    
+                    数字编码 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.4" data-path="../chapter_data_structure/character_encoding.html">
+            
+                <a href="../chapter_data_structure/character_encoding.html">
+            
+                    
+                    字符编码 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4.5" data-path="../chapter_data_structure/">
+            
+                <a href="../chapter_data_structure/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="../chapter_array_and_linkedlist/">
+            
+                <a href="../chapter_array_and_linkedlist/">
+            
+                    
+                    数组与链表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.5.1" data-path="../chapter_array_and_linkedlist/array.html">
+            
+                <a href="../chapter_array_and_linkedlist/array.html">
+            
+                    
+                    数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.2" data-path="../chapter_array_and_linkedlist/linked_list.html">
+            
+                <a href="../chapter_array_and_linkedlist/linked_list.html">
+            
+                    
+                    链表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.3" data-path="../chapter_array_and_linkedlist/list.html">
+            
+                <a href="../chapter_array_and_linkedlist/list.html">
+            
+                    
+                    列表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.4" data-path="../chapter_array_and_linkedlist/ram_and_cache.html">
+            
+                <a href="../chapter_array_and_linkedlist/ram_and_cache.html">
+            
+                    
+                    内存与缓存 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5.5" data-path="../chapter_array_and_linkedlist/">
+            
+                <a href="../chapter_array_and_linkedlist/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    栈与队列
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.6.1" data-path="stack.html">
+            
+                <a href="stack.html">
+            
+                    
+                    栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.2" data-path="queue.html">
+            
+                <a href="queue.html">
+            
+                    
+                    队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.6.3" data-path="deque.html">
+            
+                <a href="deque.html">
+            
+                    
+                    双向队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="../chapter_hashing/">
+            
+                <a href="../chapter_hashing/">
+            
+                    
+                    哈希表
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.7.1" data-path="../chapter_hashing/hash_map.html">
+            
+                <a href="../chapter_hashing/hash_map.html">
+            
+                    
+                    哈希表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.2" data-path="../chapter_hashing/hash_collision.html">
+            
+                <a href="../chapter_hashing/hash_collision.html">
+            
+                    
+                    哈希冲突
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.3" data-path="../chapter_hashing/hash_algorithm.html">
+            
+                <a href="../chapter_hashing/hash_algorithm.html">
+            
+                    
+                    哈希算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7.4" data-path="../chapter_hashing/">
+            
+                <a href="../chapter_hashing/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="../chapter_tree/">
+            
+                <a href="../chapter_tree/">
+            
+                    
+                    树
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.8.1" data-path="../chapter_tree/binary_tree.html">
+            
+                <a href="../chapter_tree/binary_tree.html">
+            
+                    
+                    二叉树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.2" data-path="../chapter_tree/binary_tree_traversal.html">
+            
+                <a href="../chapter_tree/binary_tree_traversal.html">
+            
+                    
+                    二叉树遍历
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.3" data-path="../chapter_tree/array_representation_of_tree.html">
+            
+                <a href="../chapter_tree/array_representation_of_tree.html">
+            
+                    
+                    二叉树数组表示
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.4" data-path="../chapter_tree/binary_search_tree.html">
+            
+                <a href="../chapter_tree/binary_search_tree.html">
+            
+                    
+                    二叉搜索树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.5" data-path="../chapter_tree/avl_tree.html">
+            
+                <a href="../chapter_tree/avl_tree.html">
+            
+                    
+                    AVL 树 *
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8.6" data-path="../chapter_tree/">
+            
+                <a href="../chapter_tree/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="../chapter_heap/">
+            
+                <a href="../chapter_heap/">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.9.1" data-path="../chapter_heap/heap.html">
+            
+                <a href="../chapter_heap/heap.html">
+            
+                    
+                    堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.2" data-path="../chapter_heap/build_heap.html">
+            
+                <a href="../chapter_heap/build_heap.html">
+            
+                    
+                    建堆操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.3" data-path="../chapter_heap/top_k.html">
+            
+                <a href="../chapter_heap/top_k.html">
+            
+                    
+                    Top-k 问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9.4" data-path="../chapter_heap/">
+            
+                <a href="../chapter_heap/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="../chapter_graph/">
+            
+                <a href="../chapter_graph/">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.10.1" data-path="../chapter_graph/graph.html">
+            
+                <a href="../chapter_graph/graph.html">
+            
+                    
+                    图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.2" data-path="../chapter_graph/graph_operations.html">
+            
+                <a href="../chapter_graph/graph_operations.html">
+            
+                    
+                    图基础操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.3" data-path="../chapter_graph/graph_traversal.html">
+            
+                <a href="../chapter_graph/graph_traversal.html">
+            
+                    
+                    图的遍历
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10.4" data-path="../chapter_graph/">
+            
+                <a href="../chapter_graph/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="../chapter_searching/">
+            
+                <a href="../chapter_searching/">
+            
+                    
+                    搜索
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.11.1" data-path="../chapter_searching/binary_search.html">
+            
+                <a href="../chapter_searching/binary_search.html">
+            
+                    
+                    二分查找
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.2" data-path="../chapter_searching/binary_search_insertion.html">
+            
+                <a href="../chapter_searching/binary_search_insertion.html">
+            
+                    
+                    二分查找插入点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.3" data-path="../chapter_searching/binary_search_edge.html">
+            
+                <a href="../chapter_searching/binary_search_edge.html">
+            
+                    
+                    二分查找边界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.4" data-path="../chapter_searching/replace_linear_by_hashing.html">
+            
+                <a href="../chapter_searching/replace_linear_by_hashing.html">
+            
+                    
+                    哈希优化策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.5" data-path="../chapter_searching/searching_algorithm_revisited.html">
+            
+                <a href="../chapter_searching/searching_algorithm_revisited.html">
+            
+                    
+                    重识搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11.6" data-path="../chapter_searching/">
+            
+                <a href="../chapter_searching/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="../chapter_sorting/">
+            
+                <a href="../chapter_sorting/">
+            
+                    
+                    排序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.12.1" data-path="../chapter_sorting/sorting_algorithm.html">
+            
+                <a href="../chapter_sorting/sorting_algorithm.html">
+            
+                    
+                    排序算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.2" data-path="../chapter_sorting/selection_sort.html">
+            
+                <a href="../chapter_sorting/selection_sort.html">
+            
+                    
+                    选择排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.3" data-path="../chapter_sorting/bubble_sort.html">
+            
+                <a href="../chapter_sorting/bubble_sort.html">
+            
+                    
+                    冒泡排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.4" data-path="../chapter_sorting/insertion_sort.html">
+            
+                <a href="../chapter_sorting/insertion_sort.html">
+            
+                    
+                    插入排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.5" data-path="../chapter_sorting/quick_sort.html">
+            
+                <a href="../chapter_sorting/quick_sort.html">
+            
+                    
+                    快速排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.6" data-path="../chapter_sorting/merge_sort.html">
+            
+                <a href="../chapter_sorting/merge_sort.html">
+            
+                    
+                    归并排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.7" data-path="../chapter_sorting/heap_sort.html">
+            
+                <a href="../chapter_sorting/heap_sort.html">
+            
+                    
+                    堆排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.8" data-path="../chapter_sorting/bucket_sort.html">
+            
+                <a href="../chapter_sorting/bucket_sort.html">
+            
+                    
+                    桶排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.9" data-path="../chapter_sorting/counting_sort.html">
+            
+                <a href="../chapter_sorting/counting_sort.html">
+            
+                    
+                    计数排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.10" data-path="../chapter_sorting/radix_sort.html">
+            
+                <a href="../chapter_sorting/radix_sort.html">
+            
+                    
+                    基数排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12.11" data-path="../chapter_sorting/">
+            
+                <a href="../chapter_sorting/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="../chapter_divide_and_conquer/">
+            
+                <a href="../chapter_divide_and_conquer/">
+            
+                    
+                    分治
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.13.1" data-path="../chapter_divide_and_conquer/divide_and_conquer.html">
+            
+                <a href="../chapter_divide_and_conquer/divide_and_conquer.html">
+            
+                    
+                    分治算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.2" data-path="../chapter_divide_and_conquer/binary_search_recur.html">
+            
+                <a href="../chapter_divide_and_conquer/binary_search_recur.html">
+            
+                    
+                    分治搜索策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.3" data-path="../chapter_divide_and_conquer/build_binary_tree_problem.html">
+            
+                <a href="../chapter_divide_and_conquer/build_binary_tree_problem.html">
+            
+                    
+                    构建二叉树问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.4" data-path="../chapter_divide_and_conquer/hanota_problem.html">
+            
+                <a href="../chapter_divide_and_conquer/hanota_problem.html">
+            
+                    
+                    汉诺塔问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13.5" data-path="../chapter_divide_and_conquer/">
+            
+                <a href="../chapter_divide_and_conquer/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="../chapter_backtracking/">
+            
+                <a href="../chapter_backtracking/">
+            
+                    
+                    回溯
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.14.1" data-path="../chapter_backtracking/backtracking_algorithm.html">
+            
+                <a href="../chapter_backtracking/backtracking_algorithm.html">
+            
+                    
+                    回溯算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.2" data-path="../chapter_backtracking/permutations_problem.html">
+            
+                <a href="../chapter_backtracking/permutations_problem.html">
+            
+                    
+                    全排列问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.3" data-path="../chapter_backtracking/subset_sum_problem.html">
+            
+                <a href="../chapter_backtracking/subset_sum_problem.html">
+            
+                    
+                    子集和问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.4" data-path="../chapter_backtracking/n_queens_problem.html">
+            
+                <a href="../chapter_backtracking/n_queens_problem.html">
+            
+                    
+                    N 皇后问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14.5" data-path="../chapter_backtracking/">
+            
+                <a href="../chapter_backtracking/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="../chapter_dynamic_programming/">
+            
+                <a href="../chapter_dynamic_programming/">
+            
+                    
+                    动态规划
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.15.1" data-path="../chapter_dynamic_programming/intro_to_dynamic_programming.html">
+            
+                <a href="../chapter_dynamic_programming/intro_to_dynamic_programming.html">
+            
+                    
+                    初探动态规划
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.2" data-path="../chapter_dynamic_programming/dp_problem_features.html">
+            
+                <a href="../chapter_dynamic_programming/dp_problem_features.html">
+            
+                    
+                    动态规划问题特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.3" data-path="../chapter_dynamic_programming/dp_solution_pipeline.html">
+            
+                <a href="../chapter_dynamic_programming/dp_solution_pipeline.html">
+            
+                    
+                    动态规划解题思路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.4" data-path="../chapter_dynamic_programming/knapsack_problem.html">
+            
+                <a href="../chapter_dynamic_programming/knapsack_problem.html">
+            
+                    
+                    0-1 背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.5" data-path="../chapter_dynamic_programming/unbounded_knapsack_problem.html">
+            
+                <a href="../chapter_dynamic_programming/unbounded_knapsack_problem.html">
+            
+                    
+                    完全背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.6" data-path="../chapter_dynamic_programming/edit_distance_problem.html">
+            
+                <a href="../chapter_dynamic_programming/edit_distance_problem.html">
+            
+                    
+                    编辑距离问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15.7" data-path="../chapter_dynamic_programming/">
+            
+                <a href="../chapter_dynamic_programming/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="../chapter_greedy/">
+            
+                <a href="../chapter_greedy/">
+            
+                    
+                    贪心
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.16.1" data-path="../chapter_greedy/greedy_algorithm.html">
+            
+                <a href="../chapter_greedy/greedy_algorithm.html">
+            
+                    
+                    贪心算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.2" data-path="../chapter_greedy/fractional_knapsack_problem.html">
+            
+                <a href="../chapter_greedy/fractional_knapsack_problem.html">
+            
+                    
+                    分数背包问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.3" data-path="../chapter_greedy/max_capacity_problem.html">
+            
+                <a href="../chapter_greedy/max_capacity_problem.html">
+            
+                    
+                    最大容量问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.4" data-path="../chapter_greedy/max_product_cutting_problem.html">
+            
+                <a href="../chapter_greedy/max_product_cutting_problem.html">
+            
+                    
+                    最大切分乘积问题
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16.5" data-path="../chapter_greedy/">
+            
+                <a href="../chapter_greedy/">
+            
+                    
+                    小结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="../chapter_appendix/">
+            
+                <a href="../chapter_appendix/">
+            
+                    
+                    附录
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.17.1" data-path="../chapter_appendix/installation.html">
+            
+                <a href="../chapter_appendix/installation.html">
+            
+                    
+                    编程环境安装
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17.2" data-path="../chapter_appendix/terminology.html">
+            
+                <a href="../chapter_appendix/terminology.html">
+            
+                    
+                    术语表
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >双向队列</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="双向队列">双向队列</h1>
+<p>在队列中，我们仅能删除头部元素或在尾部添加元素。如下图所示，「双向队列 double-ended queue」提供了更高的灵活性，允许在头部和尾部执行元素的添加或删除操作。</p>
+<p><img src="deque.assets/deque_operations.png" alt="双向队列的操作"></img></p>
+<h2 id="双向队列常用操作">双向队列常用操作</h2>
+<p>双向队列的常用操作如下表所示，具体的方法名称需要根据所使用的编程语言来确定。</p>
+<p align="center"> 表 <id> &nbsp; 双向队列操作效率 </id></p>
+
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>描述</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pushFirst()</code></td>
+<td>将元素添加至队首</td>
+<td>$O(1)$</td>
+</tr>
+<tr>
+<td><code>pushLast()</code></td>
+<td>将元素添加至队尾</td>
+<td>$O(1)$</td>
+</tr>
+<tr>
+<td><code>popFirst()</code></td>
+<td>删除队首元素</td>
+<td>$O(1)$</td>
+</tr>
+<tr>
+<td><code>popLast()</code></td>
+<td>删除队尾元素</td>
+<td>$O(1)$</td>
+</tr>
+<tr>
+<td><code>peekFirst()</code></td>
+<td>访问队首元素</td>
+<td>$O(1)$</td>
+</tr>
+<tr>
+<td><code>peekLast()</code></td>
+<td>访问队尾元素</td>
+<td>$O(1)$</td>
+</tr>
+</tbody>
+</table>
+<p>同样地，我们可以直接使用编程语言中已实现的双向队列类：</p>
+<ul>
+<li><p>"Python"</p>
+<p>  ```python title="deque.py"
+  from collections import deque</p>
+<p> // 初始化双向队列
+  deque: deque[int] = deque()</p>
+<p> // 元素入队
+  deque.append(2)     // 添加至队尾
+  deque.append(5)
+  deque.append(4)
+  deque.appendleft(3) // 添加至队首
+  deque.appendleft(1)</p>
+<p> // 访问元素
+  front: int = deque[0] // 队首元素
+  rear: int = deque[-1] // 队尾元素</p>
+<p> // 元素出队
+  pop_front: int = deque.popleft() // 队首元素出队
+  pop_rear: int = deque.pop()      // 队尾元素出队</p>
+<p> // 获取双向队列的长度
+  size: int = len(deque)</p>
+<p> // 判断双向队列是否为空
+  is_empty: bool = len(deque) == 0
+  ```</p>
+</li>
+<li><p>"C++"</p>
+<p>  ```cpp title="deque.cpp"
+  /<em> 初始化双向队列 </em>/
+  deque<int> deque;</int></p>
+<p>  /<em> 元素入队 </em>/
+  deque.push_back(2);   // 添加至队尾
+  deque.push_back(5);
+  deque.push_back(4);
+  deque.push_front(3);  // 添加至队首
+  deque.push_front(1);</p>
+<p>  /<em> 访问元素 </em>/
+  int front = deque.front(); // 队首元素
+  int back = deque.back();   // 队尾元素</p>
+<p>  /<em> 元素出队 </em>/
+  deque.pop_front();  // 队首元素出队
+  deque.pop_back();   // 队尾元素出队</p>
+<p>  /<em> 获取双向队列的长度 </em>/
+  int size = deque.size();</p>
+<p>  /<em> 判断双向队列是否为空 </em>/
+  bool empty = deque.empty();
+  ```</p>
+</li>
+<li><p>"Java"</p>
+<p>  ```java title="deque.java"
+  /<em> 初始化双向队列 </em>/
+  Deque<integer> deque = new LinkedList&lt;&gt;();</integer></p>
+<p>  /<em> 元素入队 </em>/
+  deque.offerLast(2);   // 添加至队尾
+  deque.offerLast(5);
+  deque.offerLast(4);
+  deque.offerFirst(3);  // 添加至队首
+  deque.offerFirst(1);</p>
+<p>  /<em> 访问元素 </em>/
+  int peekFirst = deque.peekFirst();  // 队首元素
+  int peekLast = deque.peekLast();    // 队尾元素</p>
+<p>  /<em> 元素出队 </em>/
+  int popFirst = deque.pollFirst();  // 队首元素出队
+  int popLast = deque.pollLast();    // 队尾元素出队</p>
+<p>  /<em> 获取双向队列的长度 </em>/
+  int size = deque.size();</p>
+<p>  /<em> 判断双向队列是否为空 </em>/
+  boolean isEmpty = deque.isEmpty();
+  ```</p>
+</li>
+<li><p>"C#"</p>
+<p>  ```csharp title="deque.cs"
+  /<em> 初始化双向队列 </em>/
+  // 在 C# 中，将链表 LinkedList 看作双向队列来使用
+  LinkedList<int> deque = new();</int></p>
+<p>  /<em> 元素入队 </em>/
+  deque.AddLast(2);   // 添加至队尾
+  deque.AddLast(5);
+  deque.AddLast(4);
+  deque.AddFirst(3);  // 添加至队首
+  deque.AddFirst(1);</p>
+<p>  /<em> 访问元素 </em>/
+  int peekFirst = deque.First.Value;  // 队首元素
+  int peekLast = deque.Last.Value;    // 队尾元素</p>
+<p>  /<em> 元素出队 </em>/
+  deque.RemoveFirst();  // 队首元素出队
+  deque.RemoveLast();   // 队尾元素出队</p>
+<p>  /<em> 获取双向队列的长度 </em>/
+  int size = deque.Count;</p>
+<p>  /<em> 判断双向队列是否为空 </em>/
+  bool isEmpty = deque.Count == 0;
+  ```</p>
+</li>
+<li><p>"Go"</p>
+<p>  ```go title="deque_test.go"
+  /<em> 初始化双向队列 </em>/
+  // 在 Go 中，将 list 作为双向队列使用
+  deque := list.New()</p>
+<p>  /<em> 元素入队 </em>/
+  deque.PushBack(2)      // 添加至队尾
+  deque.PushBack(5)
+  deque.PushBack(4)
+  deque.PushFront(3)     // 添加至队首
+  deque.PushFront(1)</p>
+<p>  /<em> 访问元素 </em>/
+  front := deque.Front() // 队首元素
+  rear := deque.Back()   // 队尾元素</p>
+<p>  /<em> 元素出队 </em>/
+  deque.Remove(front)    // 队首元素出队
+  deque.Remove(rear)     // 队尾元素出队</p>
+<p>  /<em> 获取双向队列的长度 </em>/
+  size := deque.Len()</p>
+<p>  /<em> 判断双向队列是否为空 </em>/
+  isEmpty := deque.Len() == 0
+  ```</p>
+</li>
+<li><p>"Swift"</p>
+<p>  ```swift title="deque.swift"
+  /<em> 初始化双向队列 </em>/
+  // Swift 没有内置的双向队列类，可以把 Array 当作双向队列来使用
+  var deque: [Int] = []</p>
+<p>  /<em> 元素入队 </em>/
+  deque.append(2) // 添加至队尾
+  deque.append(5)
+  deque.append(4)
+  deque.insert(3, at: 0) // 添加至队首
+  deque.insert(1, at: 0)</p>
+<p>  /<em> 访问元素 </em>/
+  let peekFirst = deque.first! // 队首元素
+  let peekLast = deque.last! // 队尾元素</p>
+<p>  /<em> 元素出队 </em>/
+  // 使用 Array 模拟时 popFirst 的复杂度为 O(n)
+  let popFirst = deque.removeFirst() // 队首元素出队
+  let popLast = deque.removeLast() // 队尾元素出队</p>
+<p>  /<em> 获取双向队列的长度 </em>/
+  let size = deque.count</p>
+<p>  /<em> 判断双向队列是否为空 </em>/
+  let isEmpty = deque.isEmpty
+  ```</p>
+</li>
+<li><p>"JS"</p>
+<p>  ```javascript title="deque.js"
+  /<em> 初始化双向队列 </em>/
+  // JavaScript 没有内置的双端队列，只能把 Array 当作双端队列来使用
+  const deque = [];</p>
+<p>  /<em> 元素入队 </em>/
+  deque.push(2);
+  deque.push(5);
+  deque.push(4);
+  // 请注意，由于是数组，unshift() 方法的时间复杂度为 O(n)
+  deque.unshift(3);
+  deque.unshift(1);
+  console.log("双向队列 deque = ", deque);</p>
+<p>  /<em> 访问元素 </em>/
+  const peekFirst = deque[0];
+  console.log("队首元素 peekFirst = " + peekFirst);
+  const peekLast = deque[deque.length - 1];
+  console.log("队尾元素 peekLast = " + peekLast);</p>
+<p>  /<em> 元素出队 </em>/
+  // 请注意，由于是数组，shift() 方法的时间复杂度为 O(n)
+  const popFront = deque.shift();
+  console.log("队首出队元素 popFront = " + popFront + "，队首出队后 deque = " + deque);
+  const popBack = deque.pop();
+  console.log("队尾出队元素 popBack = " + popBack + "，队尾出队后 deque = " + deque);</p>
+<p>  /<em> 获取双向队列的长度 </em>/
+  const size = deque.length;
+  console.log("双向队列长度 size = " + size);</p>
+<p>  /<em> 判断双向队列是否为空 </em>/
+  const isEmpty = size - 0;
+  console.log("双向队列是否为空 = " + isEmpty);
+  ```</p>
+</li>
+<li><p>"TS"</p>
+<p>  ```typescript title="deque.ts"
+  /<em> 初始化双向队列 </em>/
+  // TypeScript 没有内置的双端队列，只能把 Array 当作双端队列来使用
+  const deque: number[] = [];</p>
+<p>  /<em> 元素入队 </em>/
+  deque.push(2);
+  deque.push(5);
+  deque.push(4);
+  // 请注意，由于是数组，unshift() 方法的时间复杂度为 O(n)
+  deque.unshift(3);
+  deque.unshift(1);
+  console.log("双向队列 deque = ", deque);</p>
+<p>  /<em> 访问元素 </em>/
+  const peekFirst: number = deque[0];
+  console.log("队首元素 peekFirst = " + peekFirst);
+  const peekLast: number = deque[deque.length - 1];
+  console.log("队尾元素 peekLast = " + peekLast);</p>
+<p>  /<em> 元素出队 </em>/
+  // 请注意，由于是数组，shift() 方法的时间复杂度为 O(n)
+  const popFront: number = deque.shift() as number;
+  console.log("队首出队元素 popFront = " + popFront + "，队首出队后 deque = " + deque);
+  const popBack: number = deque.pop() as number;
+  console.log("队尾出队元素 popBack = " + popBack + "，队尾出队后 deque = " + deque);</p>
+<p>  /<em> 获取双向队列的长度 </em>/
+  const size: number = deque.length;
+  console.log("双向队列长度 size = " + size);</p>
+<p>  /<em> 判断双向队列是否为空 </em>/
+  const isEmpty: boolean = size - 0;
+  console.log("双向队列是否为空 = " + isEmpty);
+  ```</p>
+</li>
+<li><p>"Dart"</p>
+<p>  ```dart title="deque.dart"
+  /<em> 初始化双向队列 </em>/
+  // 在 Dart 中，Queue 被定义为双向队列
+  Queue<int> deque = Queue<int>();</int></int></p>
+<p>  /<em> 元素入队 </em>/
+  deque.addLast(2);  // 添加至队尾
+  deque.addLast(5);
+  deque.addLast(4);
+  deque.addFirst(3); // 添加至队首
+  deque.addFirst(1);</p>
+<p>  /<em> 访问元素 </em>/
+  int peekFirst = deque.first; // 队首元素
+  int peekLast = deque.last;   // 队尾元素</p>
+<p>  /<em> 元素出队 </em>/
+  int popFirst = deque.removeFirst(); // 队首元素出队
+  int popLast = deque.removeLast();   // 队尾元素出队</p>
+<p>  /<em> 获取双向队列的长度 </em>/
+  int size = deque.length;</p>
+<p>  /<em> 判断双向队列是否为空 </em>/
+  bool isEmpty = deque.isEmpty;W
+  ```</p>
+</li>
+<li><p>"Rust"</p>
+<p>  ```rust title="deque.rs"
+  /<em> 初始化双向队列 </em>/
+  let mut deque: VecDeque<u32> = VecDeque::new();</u32></p>
+<p>  /<em> 元素入队 </em>/
+  deque.push_back(2);  // 添加至队尾
+  deque.push_back(5);
+  deque.push_back(4);
+  deque.push_front(3); // 添加至队首
+  deque.push_front(1);</p>
+<p>  /<em> 访问元素 </em>/
+  if let Some(front) = deque.front() { // 队首元素
+  }
+  if let Some(rear) = deque.back() {   // 队尾元素
+  }</p>
+<p>  /<em> 元素出队 </em>/
+  if let Some(pop_front) = deque.pop_front() { // 队首元素出队
+  }
+  if let Some(pop_rear) = deque.pop_back() {   // 队尾元素出队
+  }</p>
+<p>  /<em> 获取双向队列的长度 </em>/
+  let size = deque.len();</p>
+<p>  /<em> 判断双向队列是否为空 </em>/
+  let is_empty = deque.is_empty();
+  ```</p>
+</li>
+<li><p>"C"</p>
+<p>  <code>c title="deque.c"
+  // C 未提供内置双向队列</code></p>
+</li>
+<li><p>"Zig"</p>
+<p>  ```zig title="deque.zig"</p>
+<p>  ```</p>
+</li>
+</ul>
+<h2 id="双向队列实现-">双向队列实现 *</h2>
+<p>双向队列的实现与队列类似，可以选择链表或数组作为底层数据结构。</p>
+<h3 id="基于双向链表的实现">基于双向链表的实现</h3>
+<p>回顾上一节内容，我们使用普通单向链表来实现队列，因为它可以方便地删除头节点（对应出队操作）和在尾节点后添加新节点（对应入队操作）。</p>
+<p>对于双向队列而言，头部和尾部都可以执行入队和出队操作。换句话说，双向队列需要实现另一个对称方向的操作。为此，我们采用“双向链表”作为双向队列的底层数据结构。</p>
+<p>如下图所示，我们将双向链表的头节点和尾节点视为双向队列的队首和队尾，同时实现在两端添加和删除节点的功能。</p>
+<ul>
+<li><p>"LinkedListDeque"
+  <img src="deque.assets/linkedlist_deque.png" alt="基于链表实现双向队列的入队出队操作"></img></p>
+</li>
+<li><p>"pushLast()"
+  <img src="deque.assets/linkedlist_deque_push_last.png" alt="linkedlist_deque_push_last"></img></p>
+</li>
+<li><p>"pushFirst()"
+  <img src="deque.assets/linkedlist_deque_push_first.png" alt="linkedlist_deque_push_first"></img></p>
+</li>
+<li><p>"popLast()"
+  <img src="deque.assets/linkedlist_deque_pop_last.png" alt="linkedlist_deque_pop_last"></img></p>
+</li>
+<li><p>"popFirst()"
+  <img src="deque.assets/linkedlist_deque_pop_first.png" alt="linkedlist_deque_pop_first"></img></p>
+</li>
+</ul>
+<p>实现代码如下所示：</p>
+<ul>
+<li><p>"Python"
+```python
+class ListNode:
+  """双向链表节点"""</p>
+<p>  def <strong>init</strong>(self, val: int):</p>
+<pre><code>  """构造方法"""
+  self.val: int = val
+  self.next: ListNode | None = None // 后继节点引用
+  self.prev: ListNode | None = None // 前驱节点引用
+</code></pre></li>
+</ul>
+<p>class LinkedListDeque:
+    """基于双向链表实现的双向队列"""</p>
+<pre><code>def __init__(self):
+    """构造方法"""
+    self._front: ListNode | None = None // 头节点 front
+    self._rear: ListNode | None = None // 尾节点 rear
+    self._size: int = 0 // 双向队列的长度
+
+def size(self) -&gt; int:
+    """获取双向队列的长度"""
+    return self._size
+
+def is_empty(self) -&gt; bool:
+    """判断双向队列是否为空"""
+    return self.size() == 0
+
+def push(self, num: int, is_front: bool):
+    """入队操作"""
+    node = ListNode(num)
+   // 若链表为空，则令 front 和 rear 都指向 node
+    if self.is_empty():
+        self._front = self._rear = node
+   // 队首入队操作
+    elif is_front:
+       // 将 node 添加至链表头部
+        self._front.prev = node
+        node.next = self._front
+        self._front = node // 更新头节点
+   // 队尾入队操作
+    else:
+       // 将 node 添加至链表尾部
+        self._rear.next = node
+        node.prev = self._rear
+        self._rear = node // 更新尾节点
+    self._size += 1 // 更新队列长度
+
+def push_first(self, num: int):
+    """队首入队"""
+    self.push(num, True)
+
+def push_last(self, num: int):
+    """队尾入队"""
+    self.push(num, False)
+
+def pop(self, is_front: bool) -&gt; int:
+    """出队操作"""
+    if self.is_empty():
+        raise IndexError("双向队列为空")
+   // 队首出队操作
+    if is_front:
+        val: int = self._front.val // 暂存头节点值
+       // 删除头节点
+        fnext: ListNode | None = self._front.next
+        if fnext != None:
+            fnext.prev = None
+            self._front.next = None
+        self._front = fnext // 更新头节点
+   // 队尾出队操作
+    else:
+        val: int = self._rear.val // 暂存尾节点值
+       // 删除尾节点
+        rprev: ListNode | None = self._rear.prev
+        if rprev != None:
+            rprev.next = None
+            self._rear.prev = None
+        self._rear = rprev // 更新尾节点
+    self._size -= 1 // 更新队列长度
+    return val
+
+def pop_first(self) -&gt; int:
+    """队首出队"""
+    return self.pop(True)
+
+def pop_last(self) -&gt; int:
+    """队尾出队"""
+    return self.pop(False)
+
+def peek_first(self) -&gt; int:
+    """访问队首元素"""
+    if self.is_empty():
+        raise IndexError("双向队列为空")
+    return self._front.val
+
+def peek_last(self) -&gt; int:
+    """访问队尾元素"""
+    if self.is_empty():
+        raise IndexError("双向队列为空")
+    return self._rear.val
+
+def to_array(self) -&gt; list[int]:
+    """返回数组用于打印"""
+    node = self._front
+    res = [0] * self.size()
+    for i in range(self.size()):
+        res[i] = node.val
+        node = node.next
+    return res
+</code></pre><pre><code>
+- "C++"
+```cpp
+/* 双向链表节点 */
+struct DoublyListNode {
+    int val;              // 节点值
+    DoublyListNode *next; // 后继节点指针
+    DoublyListNode *prev; // 前驱节点指针
+    DoublyListNode(int val) : val(val), prev(nullptr), next(nullptr) {
+    }
+};
+
+/* 基于双向链表实现的双向队列 */
+class LinkedListDeque {
+  private:
+    DoublyListNode *front, *rear; // 头节点 front ，尾节点 rear
+    int queSize = 0;              // 双向队列的长度
+
+  public:
+    /* 构造方法 */
+    LinkedListDeque() : front(nullptr), rear(nullptr) {
+    }
+
+    /* 析构方法 */
+    ~LinkedListDeque() {
+        // 遍历链表删除节点，释放内存
+        DoublyListNode *pre, *cur = front;
+        while (cur != nullptr) {
+            pre = cur;
+            cur = cur-&gt;next;
+            delete pre;
+        }
+    }
+
+    /* 获取双向队列的长度 */
+    int size() {
+        return queSize;
+    }
+
+    /* 判断双向队列是否为空 */
+    bool isEmpty() {
+        return size() == 0;
+    }
+
+    /* 入队操作 */
+    void push(int num, bool isFront) {
+        DoublyListNode *node = new DoublyListNode(num);
+        // 若链表为空，则令 front 和 rear 都指向 node
+        if (isEmpty())
+            front = rear = node;
+        // 队首入队操作
+        else if (isFront) {
+            // 将 node 添加至链表头部
+            front-&gt;prev = node;
+            node-&gt;next = front;
+            front = node; // 更新头节点
+        // 队尾入队操作
+        } else {
+            // 将 node 添加至链表尾部
+            rear-&gt;next = node;
+            node-&gt;prev = rear;
+            rear = node; // 更新尾节点
+        }
+        queSize++; // 更新队列长度
+    }
+
+    /* 队首入队 */
+    void pushFirst(int num) {
+        push(num, true);
+    }
+
+    /* 队尾入队 */
+    void pushLast(int num) {
+        push(num, false);
+    }
+
+    /* 出队操作 */
+    int pop(bool isFront) {
+        if (isEmpty())
+            throw out_of_range("队列为空");
+        int val;
+        // 队首出队操作
+        if (isFront) {
+            val = front-&gt;val; // 暂存头节点值
+            // 删除头节点
+            DoublyListNode *fNext = front-&gt;next;
+            if (fNext != nullptr) {
+                fNext-&gt;prev = nullptr;
+                front-&gt;next = nullptr;
+                delete front;
+            }
+            front = fNext; // 更新头节点
+        // 队尾出队操作
+        } else {
+            val = rear-&gt;val; // 暂存尾节点值
+            // 删除尾节点
+            DoublyListNode *rPrev = rear-&gt;prev;
+            if (rPrev != nullptr) {
+                rPrev-&gt;next = nullptr;
+                rear-&gt;prev = nullptr;
+                delete rear;
+            }
+            rear = rPrev; // 更新尾节点
+        }
+        queSize--; // 更新队列长度
+        return val;
+    }
+
+    /* 队首出队 */
+    int popFirst() {
+        return pop(true);
+    }
+
+    /* 队尾出队 */
+    int popLast() {
+        return pop(false);
+    }
+
+    /* 访问队首元素 */
+    int peekFirst() {
+        if (isEmpty())
+            throw out_of_range("双向队列为空");
+        return front-&gt;val;
+    }
+
+    /* 访问队尾元素 */
+    int peekLast() {
+        if (isEmpty())
+            throw out_of_range("双向队列为空");
+        return rear-&gt;val;
+    }
+
+    /* 返回数组用于打印 */
+    vector&lt;int&gt; toVector() {
+        DoublyListNode *node = front;
+        vector&lt;int&gt; res(size());
+        for (int i = 0; i &lt; res.size(); i++) {
+            res[i] = node-&gt;val;
+            node = node-&gt;next;
+        }
+        return res;
+    }
+};
+</code></pre><ul>
+<li><p>"Java"
+```java
+/<em> 双向链表节点 </em>/
+class ListNode {
+  int val; // 节点值
+  ListNode next; // 后继节点引用
+  ListNode prev; // 前驱节点引用</p>
+<p>  ListNode(int val) {</p>
+<pre><code>  this.val = val;
+  prev = next = null;
+</code></pre><p>  }
+}</p>
+</li>
+</ul>
+<p>/<em> 基于双向链表实现的双向队列 </em>/
+class LinkedListDeque {
+    private ListNode front, rear; // 头节点 front ，尾节点 rear
+    private int queSize = 0; // 双向队列的长度</p>
+<pre><code>public LinkedListDeque() {
+    front = rear = null;
+}
+
+/* 获取双向队列的长度 */
+public int size() {
+    return queSize;
+}
+
+/* 判断双向队列是否为空 */
+public boolean isEmpty() {
+    return size() == 0;
+}
+
+/* 入队操作 */
+private void push(int num, boolean isFront) {
+    ListNode node = new ListNode(num);
+    // 若链表为空，则令 front 和 rear 都指向 node
+    if (isEmpty())
+        front = rear = node;
+    // 队首入队操作
+    else if (isFront) {
+        // 将 node 添加至链表头部
+        front.prev = node;
+        node.next = front;
+        front = node; // 更新头节点
+    // 队尾入队操作
+    } else {
+        // 将 node 添加至链表尾部
+        rear.next = node;
+        node.prev = rear;
+        rear = node; // 更新尾节点
+    }
+    queSize++; // 更新队列长度
+}
+
+/* 队首入队 */
+public void pushFirst(int num) {
+    push(num, true);
+}
+
+/* 队尾入队 */
+public void pushLast(int num) {
+    push(num, false);
+}
+
+/* 出队操作 */
+private int pop(boolean isFront) {
+    if (isEmpty())
+        throw new IndexOutOfBoundsException();
+    int val;
+    // 队首出队操作
+    if (isFront) {
+        val = front.val; // 暂存头节点值
+        // 删除头节点
+        ListNode fNext = front.next;
+        if (fNext != null) {
+            fNext.prev = null;
+            front.next = null;
+        }
+        front = fNext; // 更新头节点
+    // 队尾出队操作
+    } else {
+        val = rear.val; // 暂存尾节点值
+        // 删除尾节点
+        ListNode rPrev = rear.prev;
+        if (rPrev != null) {
+            rPrev.next = null;
+            rear.prev = null;
+        }
+        rear = rPrev; // 更新尾节点
+    }
+    queSize--; // 更新队列长度
+    return val;
+}
+
+/* 队首出队 */
+public int popFirst() {
+    return pop(true);
+}
+
+/* 队尾出队 */
+public int popLast() {
+    return pop(false);
+}
+
+/* 访问队首元素 */
+public int peekFirst() {
+    if (isEmpty())
+        throw new IndexOutOfBoundsException();
+    return front.val;
+}
+
+/* 访问队尾元素 */
+public int peekLast() {
+    if (isEmpty())
+        throw new IndexOutOfBoundsException();
+    return rear.val;
+}
+
+/* 返回数组用于打印 */
+public int[] toArray() {
+    ListNode node = front;
+    int[] res = new int[size()];
+    for (int i = 0; i &lt; res.length; i++) {
+        res[i] = node.val;
+        node = node.next;
+    }
+    return res;
+}
+</code></pre><p>}</p>
+<pre><code>
+### 基于数组的实现
+
+如下图所示，与基于数组实现队列类似，我们也可以使用环形数组来实现双向队列。
+
+- "ArrayDeque"
+    ![基于数组实现双向队列的入队出队操作](deque.assets/array_deque.png)
+
+- "pushLast()"
+    ![array_deque_push_last](deque.assets/array_deque_push_last.png)
+
+- "pushFirst()"
+    ![array_deque_push_first](deque.assets/array_deque_push_first.png)
+
+- "popLast()"
+    ![array_deque_pop_last](deque.assets/array_deque_pop_last.png)
+
+- "popFirst()"
+    ![array_deque_pop_first](deque.assets/array_deque_pop_first.png)
+
+在队列的实现基础上，仅需增加“队首入队”和“队尾出队”的方法：
+
+- "Python"
+```python
+class ArrayDeque:
+    """基于环形数组实现的双向队列"""
+
+    def __init__(self, capacity: int):
+        """构造方法"""
+        self._nums: list[int] = [0] * capacity
+        self._front: int = 0
+        self._size: int = 0
+
+    def capacity(self) -&gt; int:
+        """获取双向队列的容量"""
+        return len(self._nums)
+
+    def size(self) -&gt; int:
+        """获取双向队列的长度"""
+        return self._size
+
+    def is_empty(self) -&gt; bool:
+        """判断双向队列是否为空"""
+        return self._size == 0
+
+    def index(self, i: int) -&gt; int:
+        """计算环形数组索引"""
+       // 通过取余操作实现数组首尾相连
+       // 当 i 越过数组尾部后，回到头部
+       // 当 i 越过数组头部后，回到尾部
+        return (i + self.capacity()) % self.capacity()
+
+    def push_first(self, num: int):
+        """队首入队"""
+        if self._size == self.capacity():
+            print("双向队列已满")
+            return
+       // 队首指针向左移动一位
+       // 通过取余操作实现 front 越过数组头部后回到尾部
+        self._front = self.index(self._front - 1)
+       // 将 num 添加至队首
+        self._nums[self._front] = num
+        self._size += 1
+
+    def push_last(self, num: int):
+        """队尾入队"""
+        if self._size == self.capacity():
+            print("双向队列已满")
+            return
+       // 计算队尾指针，指向队尾索引 + 1
+        rear = self.index(self._front + self._size)
+       // 将 num 添加至队尾
+        self._nums[rear] = num
+        self._size += 1
+
+    def pop_first(self) -&gt; int:
+        """队首出队"""
+        num = self.peek_first()
+       // 队首指针向后移动一位
+        self._front = self.index(self._front + 1)
+        self._size -= 1
+        return num
+
+    def pop_last(self) -&gt; int:
+        """队尾出队"""
+        num = self.peek_last()
+        self._size -= 1
+        return num
+
+    def peek_first(self) -&gt; int:
+        """访问队首元素"""
+        if self.is_empty():
+            raise IndexError("双向队列为空")
+        return self._nums[self._front]
+
+    def peek_last(self) -&gt; int:
+        """访问队尾元素"""
+        if self.is_empty():
+            raise IndexError("双向队列为空")
+       // 计算尾元素索引
+        last = self.index(self._front + self._size - 1)
+        return self._nums[last]
+
+    def to_array(self) -&gt; list[int]:
+        """返回数组用于打印"""
+       // 仅转换有效长度范围内的列表元素
+        res = []
+        for i in range(self._size):
+            res.append(self._nums[self.index(self._front + i)])
+        return res
+</code></pre><ul>
+<li><p>"C++"</p>
+<pre><code class="lang-cpp"><span class="hljs-comment">/* 基于环形数组实现的双向队列 */</span>
+<span class="hljs-keyword">class</span> ArrayDeque {
+<span class="hljs-keyword">private</span>:
+  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; nums; <span class="hljs-comment">// 用于存储双向队列元素的数组</span>
+  <span class="hljs-keyword">int</span> front;        <span class="hljs-comment">// 队首指针，指向队首元素</span>
+  <span class="hljs-keyword">int</span> queSize;      <span class="hljs-comment">// 双向队列长度</span>
+
+<span class="hljs-keyword">public</span>:
+  <span class="hljs-comment">/* 构造方法 */</span>
+  ArrayDeque(<span class="hljs-keyword">int</span> capacity) {
+      nums.resize(capacity);
+      front = queSize = <span class="hljs-number">0</span>;
+  }
+
+  <span class="hljs-comment">/* 获取双向队列的容量 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">capacity</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">return</span> nums.size();
+  }
+
+  <span class="hljs-comment">/* 获取双向队列的长度 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">size</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">return</span> queSize;
+  }
+
+  <span class="hljs-comment">/* 判断双向队列是否为空 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">return</span> queSize == <span class="hljs-number">0</span>;
+  }
+
+  <span class="hljs-comment">/* 计算环形数组索引 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">index</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>{
+      <span class="hljs-comment">// 通过取余操作实现数组首尾相连</span>
+      <span class="hljs-comment">// 当 i 越过数组尾部后，回到头部</span>
+      <span class="hljs-comment">// 当 i 越过数组头部后，回到尾部</span>
+      <span class="hljs-keyword">return</span> (i + capacity()) % capacity();
+  }
+
+  <span class="hljs-comment">/* 队首入队 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pushFirst</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num)</span> </span>{
+      <span class="hljs-keyword">if</span> (queSize == capacity()) {
+          <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"双向队列已满"</span> &lt;&lt; endl;
+          <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-comment">// 队首指针向左移动一位</span>
+      <span class="hljs-comment">// 通过取余操作实现 front 越过数组头部后回到尾部</span>
+      front = index(front - <span class="hljs-number">1</span>);
+      <span class="hljs-comment">// 将 num 添加至队首</span>
+      nums[front] = num;
+      queSize++;
+  }
+
+  <span class="hljs-comment">/* 队尾入队 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pushLast</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num)</span> </span>{
+      <span class="hljs-keyword">if</span> (queSize == capacity()) {
+          <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"双向队列已满"</span> &lt;&lt; endl;
+          <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-comment">// 计算队尾指针，指向队尾索引 + 1</span>
+      <span class="hljs-keyword">int</span> rear = index(front + queSize);
+      <span class="hljs-comment">// 将 num 添加至队尾</span>
+      nums[rear] = num;
+      queSize++;
+  }
+
+  <span class="hljs-comment">/* 队首出队 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">popFirst</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">int</span> num = peekFirst();
+      <span class="hljs-comment">// 队首指针向后移动一位</span>
+      front = index(front + <span class="hljs-number">1</span>);
+      queSize--;
+      <span class="hljs-keyword">return</span> num;
+  }
+
+  <span class="hljs-comment">/* 队尾出队 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">popLast</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">int</span> num = peekLast();
+      queSize--;
+      <span class="hljs-keyword">return</span> num;
+  }
+
+  <span class="hljs-comment">/* 访问队首元素 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">peekFirst</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">if</span> (isEmpty())
+          <span class="hljs-keyword">throw</span> out_of_range(<span class="hljs-string">"双向队列为空"</span>);
+      <span class="hljs-keyword">return</span> nums[front];
+  }
+
+  <span class="hljs-comment">/* 访问队尾元素 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">peekLast</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">if</span> (isEmpty())
+          <span class="hljs-keyword">throw</span> out_of_range(<span class="hljs-string">"双向队列为空"</span>);
+      <span class="hljs-comment">// 计算尾元素索引</span>
+      <span class="hljs-keyword">int</span> last = index(front + queSize - <span class="hljs-number">1</span>);
+      <span class="hljs-keyword">return</span> nums[last];
+  }
+
+  <span class="hljs-comment">/* 返回数组用于打印 */</span>
+  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; toVector() {
+      <span class="hljs-comment">// 仅转换有效长度范围内的列表元素</span>
+      <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; res(queSize);
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = front; i &lt; queSize; i++, j++) {
+          res[i] = nums[index(j)];
+      }
+      <span class="hljs-keyword">return</span> res;
+  }
+};
+</code></pre>
+</li>
+<li><p>"Java"</p>
+<pre><code class="lang-java"><span class="hljs-comment">/* 基于环形数组实现的双向队列 */</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ArrayDeque</span> </span>{
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span>[] nums; <span class="hljs-comment">// 用于存储双向队列元素的数组</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> front; <span class="hljs-comment">// 队首指针，指向队首元素</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> queSize; <span class="hljs-comment">// 双向队列长度</span>
+
+  <span class="hljs-comment">/* 构造方法 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ArrayDeque</span><span class="hljs-params">(<span class="hljs-keyword">int</span> capacity)</span> </span>{
+      <span class="hljs-keyword">this</span>.nums = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[capacity];
+      front = queSize = <span class="hljs-number">0</span>;
+  }
+
+  <span class="hljs-comment">/* 获取双向队列的容量 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">capacity</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">return</span> nums.length;
+  }
+
+  <span class="hljs-comment">/* 获取双向队列的长度 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">size</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">return</span> queSize;
+  }
+
+  <span class="hljs-comment">/* 判断双向队列是否为空 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isEmpty</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">return</span> queSize == <span class="hljs-number">0</span>;
+  }
+
+  <span class="hljs-comment">/* 计算环形数组索引 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">index</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>{
+      <span class="hljs-comment">// 通过取余操作实现数组首尾相连</span>
+      <span class="hljs-comment">// 当 i 越过数组尾部后，回到头部</span>
+      <span class="hljs-comment">// 当 i 越过数组头部后，回到尾部</span>
+      <span class="hljs-keyword">return</span> (i + capacity()) % capacity();
+  }
+
+  <span class="hljs-comment">/* 队首入队 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pushFirst</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num)</span> </span>{
+      <span class="hljs-keyword">if</span> (queSize == capacity()) {
+          System.out.println(<span class="hljs-string">"双向队列已满"</span>);
+          <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-comment">// 队首指针向左移动一位</span>
+      <span class="hljs-comment">// 通过取余操作实现 front 越过数组头部后回到尾部</span>
+      front = index(front - <span class="hljs-number">1</span>);
+      <span class="hljs-comment">// 将 num 添加至队首</span>
+      nums[front] = num;
+      queSize++;
+  }
+
+  <span class="hljs-comment">/* 队尾入队 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pushLast</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num)</span> </span>{
+      <span class="hljs-keyword">if</span> (queSize == capacity()) {
+          System.out.println(<span class="hljs-string">"双向队列已满"</span>);
+          <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-comment">// 计算队尾指针，指向队尾索引 + 1</span>
+      <span class="hljs-keyword">int</span> rear = index(front + queSize);
+      <span class="hljs-comment">// 将 num 添加至队尾</span>
+      nums[rear] = num;
+      queSize++;
+  }
+
+  <span class="hljs-comment">/* 队首出队 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">popFirst</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">int</span> num = peekFirst();
+      <span class="hljs-comment">// 队首指针向后移动一位</span>
+      front = index(front + <span class="hljs-number">1</span>);
+      queSize--;
+      <span class="hljs-keyword">return</span> num;
+  }
+
+  <span class="hljs-comment">/* 队尾出队 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">popLast</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">int</span> num = peekLast();
+      queSize--;
+      <span class="hljs-keyword">return</span> num;
+  }
+
+  <span class="hljs-comment">/* 访问队首元素 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">peekFirst</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">if</span> (isEmpty())
+          <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IndexOutOfBoundsException();
+      <span class="hljs-keyword">return</span> nums[front];
+  }
+
+  <span class="hljs-comment">/* 访问队尾元素 */</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">peekLast</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-keyword">if</span> (isEmpty())
+          <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IndexOutOfBoundsException();
+      <span class="hljs-comment">// 计算尾元素索引</span>
+      <span class="hljs-keyword">int</span> last = index(front + queSize - <span class="hljs-number">1</span>);
+      <span class="hljs-keyword">return</span> nums[last];
+  }
+
+  <span class="hljs-comment">/* 返回数组用于打印 */</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] toArray() {
+      <span class="hljs-comment">// 仅转换有效长度范围内的列表元素</span>
+      <span class="hljs-keyword">int</span>[] res = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[queSize];
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = front; i &lt; queSize; i++, j++) {
+          res[i] = nums[index(j)];
+      }
+      <span class="hljs-keyword">return</span> res;
+  }
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="双向队列应用">双向队列应用</h2>
+<p>双向队列兼具栈与队列的逻辑，<strong>因此它可以实现这两者的所有应用场景，同时提供更高的自由度</strong>。</p>
+<p>我们知道，软件的“撤销”功能通常使用栈来实现：系统将每次更改操作 <code>push</code> 到栈中，然后通过 <code>pop</code> 实现撤销。然而，考虑到系统资源的限制，软件通常会限制撤销的步数（例如仅允许保存 $50$ 步）。当栈的长度超过 $50$ 时，软件需要在栈底（队首）执行删除操作。<strong>但栈无法实现该功能，此时就需要使用双向队列来替代栈</strong>。请注意，“撤销”的核心逻辑仍然遵循栈的先入后出原则，只是双向队列能够更加灵活地实现一些额外逻辑。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="queue.html" class="navigation navigation-prev " aria-label="Previous page: 队列">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="./" class="navigation navigation-next " aria-label="Next page: 小结">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"双向队列","level":"1.1.6.3","depth":3,"next":{"title":"小结","level":"1.1.6.4","depth":3,"path":"chapter_stack_and_queue/README.md","ref":"chapter_stack_and_queue/README.md","articles":[]},"previous":{"title":"队列","level":"1.1.6.2","depth":3,"path":"chapter_stack_and_queue/queue.md","ref":"chapter_stack_and_queue/queue.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"chapter_stack_and_queue/deque.md","mtime":"2024-01-07T12:13:12.846Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:25:05.926Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

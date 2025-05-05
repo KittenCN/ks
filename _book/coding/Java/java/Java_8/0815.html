@@ -1,0 +1,612 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Java 8 StringJoiner类 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="0816.html" />
+    
+    
+    <link rel="prev" href="0814.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Java 8
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="0807.html">
+            
+                <a href="0807.html">
+            
+                    
+                    Java 8 特性
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="0808.html">
+            
+                <a href="0808.html">
+            
+                    
+                    Java 8 Lambda 表达式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="0809.html">
+            
+                <a href="0809.html">
+            
+                    
+                    Java 反射 API——Parameter类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="0810.html">
+            
+                <a href="0810.html">
+            
+                    
+                    Java 8 Base64类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="0811.html">
+            
+                <a href="0811.html">
+            
+                    
+                    Java 8 Collectors类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="0812.html">
+            
+                <a href="0812.html">
+            
+                    
+                    Java 8 并行数组排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="0813.html">
+            
+                <a href="0813.html">
+            
+                    
+                    Java 8 方法引用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="0814.html">
+            
+                <a href="0814.html">
+            
+                    
+                    Java 8 forEach()
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.9" data-path="0815.html">
+            
+                <a href="0815.html">
+            
+                    
+                    Java 8 StringJoiner类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="0816.html">
+            
+                <a href="0816.html">
+            
+                    
+                    Java 接口默认和静态方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="0817.html">
+            
+                <a href="0817.html">
+            
+                    
+                    Java 8 函数式接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="0818.html">
+            
+                <a href="0818.html">
+            
+                    
+                    Java Optional类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="0819.html">
+            
+                <a href="0819.html">
+            
+                    
+                    Java 8 流 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="0820.html">
+            
+                <a href="0820.html">
+            
+                    
+                    Java 8 改进的类型推断
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="0821.html">
+            
+                <a href="0821.html">
+            
+                    
+                    Java 8 日期和时间 API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="0822.html">
+            
+                <a href="0822.html">
+            
+                    
+                    Java 谓词
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Java 8 StringJoiner类</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="java-8-stringjoiner类">Java 8 <code>StringJoiner</code>类</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/java-8/java-8-stringjoiner-class" target="_blank">https://www.studytonight.com/java-8/java-8-stringjoiner-class</a></p>
+</blockquote>
+<p>Java StringJoiner 类包含在 Java 8 版本中，它允许我们构造一个由分隔符分隔的字符序列。</p>
+<p>它位于 <strong>java.util</strong> 包中，用于提供通过用户定义的分隔符创建字符串的实用程序。分隔符可以是逗号(，)，冒号(:)等。我们还可以将后缀和前缀传递给字符串连接对象。</p>
+<p>假设，我们有一个多词字符串，并希望用分隔符(逗号、分号)分隔每个词，那么 StringJoiner 就适合这个目的。下面给出了该类的声明。</p>
+<h2 id="申报">申报</h2>
+<pre><code class="lang-java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StringJoiner</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Object</span>
+</span></code></pre>
+<h2 id="stringjoiner-类构造器">StringJoiner 类构造器</h2>
+<p>StringJoiner 类包含以下两个构造器:</p>
+<p>| </p>
+<p>构造器</p>
+<p> | </p>
+<p>描述</p>
+<p> |
+| 公共字符串分隔符 | 它构造了一个 StringJoiner，其中没有字符，没有前缀或后缀，以及提供的分隔符的副本。如果分隔符为空，它将引发 NullPointerException。 |
+| 公共字符串连接符(字符序列分隔符、字符序列前缀、字符序列后缀) | 它使用提供的前缀、分隔符和后缀的副本来构造一个字符串连接符，其中没有字符。如果前缀、分隔符或后缀为空，它将引发 NullPointerException。 |</p>
+<h2 id="stringjoiner类方法"><code>StringJoiner</code>类方法</h2>
+<p>下表包含 StringJoiner 类的方法。</p>
+<p>| </p>
+<p>方法</p>
+<p> | </p>
+<p>描述</p>
+<p> |
+| 公共字符串连接器添加(字符序列新元素) | 它添加给定字符序列值的副本作为字符串连接值的下一个元素。如果 newElement 为空，则添加“空”。 |
+| 公共字符串连接合并(其他字符串连接) | 如果给定的 StringJoiner 不为空，它会添加没有前缀和后缀的内容作为下一个元素。如果给定的 StringJoiner 为空，则调用无效。 |
+| 公共 int 长度() | 它返回该字符串连接器的字符串表示形式的长度。 |
+| public string join setemptyvalue(charsequence emptyvalue) | 它设置在确定这个 StringJoiner 的字符串表示形式时使用的字符序列，并且还没有添加任何元素，也就是说，当它为空时。 |
+| 公共字符串 toString() | 它返回由前缀、后缀或空值字符组成的当前值。 |</p>
+<h2 id="举例时间">举例时间:</h2>
+<p>让我们举一个使用 StringJoiner 类创建字符串的例子。这里我们使用逗号分隔符来分隔字符串。见下面的例子。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.StringJoiner;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        StringJoiner sj = <span class="hljs-keyword">new</span> StringJoiner(<span class="hljs-string">","</span>);
+        sj.add(<span class="hljs-string">"India"</span>);
+        sj.add(<span class="hljs-string">"China"</span>);
+        sj.add(<span class="hljs-string">"US"</span>);
+        sj.add(<span class="hljs-string">"UK"</span>);
+        System.out.println(sj);
+
+    }
+
+}
+</code></pre>
+<p>印度、中国、美国、英国</p>
+<h2 id="另一个例子的时间">另一个例子的时间:</h2>
+<p>StringJoiner 允许后缀和前缀可选地包含字符串对象。在本例中，我们通过将括号设置为后缀和前缀，将冒号设置为分隔符来创建字符串。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.StringJoiner;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        StringJoiner sj = <span class="hljs-keyword">new</span> StringJoiner(<span class="hljs-string">":"</span>,<span class="hljs-string">"("</span>,<span class="hljs-string">")"</span>);
+        sj.add(<span class="hljs-string">"India"</span>);
+        sj.add(<span class="hljs-string">"China"</span>);
+        sj.add(<span class="hljs-string">"US"</span>);
+        sj.add(<span class="hljs-string">"UK"</span>);
+        System.out.println(sj);
+    }
+
+}
+</code></pre>
+<p>(印度:中国:美国:英国)</p>
+<h2 id="示例获取字符串长度">示例:获取字符串长度</h2>
+<p>StringJoiner 类提供了一个 length()方法来获取字符串的长度。在这个例子中，我们得到了字符串的长度。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.StringJoiner;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        StringJoiner sj = <span class="hljs-keyword">new</span> StringJoiner(<span class="hljs-string">":"</span>,<span class="hljs-string">"("</span>,<span class="hljs-string">")"</span>);
+        sj.add(<span class="hljs-string">"India"</span>);
+        sj.add(<span class="hljs-string">"China"</span>);
+        sj.add(<span class="hljs-string">"US"</span>);
+        sj.add(<span class="hljs-string">"UK"</span>);
+        System.out.println(sj);
+        System.out.println(<span class="hljs-string">"String length : "</span>+sj.length());
+
+    }
+
+}
+</code></pre>
+<p>(印度:中国:美国:英国)
+弦长:19</p>
+<h2 id="示例合并两个字符串">示例:合并两个字符串</h2>
+<p>StringJoiner merge()方法用于将两个 StringJoiner 对象合并为一个。在这个例子中，我们合并两个字符串，得到一个字符串对象。</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.util.StringJoiner;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">STDemo</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        StringJoiner sj = <span class="hljs-keyword">new</span> StringJoiner(<span class="hljs-string">":"</span>,<span class="hljs-string">"("</span>,<span class="hljs-string">")"</span>);
+        sj.add(<span class="hljs-string">"India"</span>);
+        sj.add(<span class="hljs-string">"China"</span>);
+        sj.add(<span class="hljs-string">"US"</span>);
+        sj.add(<span class="hljs-string">"UK"</span>);
+        System.out.println(sj);
+        StringJoiner sj2 = <span class="hljs-keyword">new</span> StringJoiner(<span class="hljs-string">":"</span>,<span class="hljs-string">"("</span>,<span class="hljs-string">")"</span>);
+        sj.add(<span class="hljs-string">"Germany"</span>);
+        sj.add(<span class="hljs-string">"Russia"</span>);
+        sj = sj.merge(sj2);
+        System.out.println(sj);
+
+    }
+
+}
+</code></pre>
+<p>(印度:中国:美国:英国)
+(印度:中国:美国:英国:德国:俄罗斯)</p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="0814.html" class="navigation navigation-prev " aria-label="Previous page: Java 8 forEach()">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="0816.html" class="navigation navigation-next " aria-label="Next page: Java 接口默认和静态方法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Java 8 StringJoiner类","level":"1.1.9","depth":2,"next":{"title":"Java 接口默认和静态方法","level":"1.1.10","depth":2,"path":"0816.md","ref":"0816.md","articles":[]},"previous":{"title":"Java 8 forEach()","level":"1.1.8","depth":2,"path":"0814.md","ref":"0814.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"0815.md","mtime":"2022-07-07T12:17:03.000Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:20:51.159Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

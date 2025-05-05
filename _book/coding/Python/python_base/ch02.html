@@ -1,0 +1,904 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>ch02. Python 运算符与基本数据类型 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ch03.html" />
+    
+    
+    <link rel="prev" href="ch01.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Python基础
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="ch01.html">
+            
+                <a href="ch01.html">
+            
+                    
+                    ch01. 初识 Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.2" data-path="ch02.html">
+            
+                <a href="ch02.html">
+            
+                    
+                    ch02. Python 运算符与基本数据类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="ch03.html">
+            
+                <a href="ch03.html">
+            
+                    
+                    ch03. 玩转 Python 字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="ch04.html">
+            
+                <a href="ch04.html">
+            
+                    
+                    ch04. Python 序列结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="ch05.html">
+            
+                <a href="ch05.html">
+            
+                    
+                    ch05. Python 的三种格式化输出方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="ch06.html">
+            
+                <a href="ch06.html">
+            
+                    
+                    ch06. Python 常用内置函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="ch07.html">
+            
+                <a href="ch07.html">
+            
+                    
+                    ch07. Python 程序流程控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="ch08.html">
+            
+                <a href="ch08.html">
+            
+                    
+                    ch08. Python 标准库和扩展库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="ch09.html">
+            
+                <a href="ch09.html">
+            
+                    
+                    ch09. 常用 Python 标准库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="ch10.html">
+            
+                <a href="ch10.html">
+            
+                    
+                    ch10. 函数Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="ch11.html">
+            
+                <a href="ch11.html">
+            
+                    
+                    ch11. 面向对象程序设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="ch12.html">
+            
+                <a href="ch12.html">
+            
+                    
+                    ch12. 文件和异常
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="ch13.html">
+            
+                <a href="ch13.html">
+            
+                    
+                    ch13. 迭代器和生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="ch14.html">
+            
+                <a href="ch14.html">
+            
+                    
+                    ch14. Python 奇技淫巧
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >ch02. Python 运算符与基本数据类型</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="二-python运算符、变量、基本数据类型">(二) Python运算符、变量、基本数据类型</h1>
+<blockquote>
+<p>✅ 在学习python基本数据类型之前，先来了解一下python运算符。</p>
+</blockquote>
+<h2 id="一、python运算符">一、python运算符</h2>
+<h3 id="1-算数运算符">1. 算数运算符</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th>含义</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">+</td>
+<td>加。<font color="red">整数的加（减）法都是精确的，浮点数的加减法可能出现精度损失。</font></td>
+<td>1 + 2 == 3</td>
+</tr>
+<tr>
+<td style="text-align:center">-</td>
+<td>减。整数的减（加）法都是精确的，浮点数的加减法可能出现精度损失。</td>
+<td>0.1+0.2 == 0.30000000000000004</td>
+</tr>
+<tr>
+<td style="text-align:center">*</td>
+<td>乘。</td>
+<td>3 * 4 == 0</td>
+</tr>
+<tr>
+<td style="text-align:center">/</td>
+<td>除。不同于C/CPP/Java等编程语言，python的 <code>/</code> 是精确计算的。</td>
+<td>9 / 2 == 4.5</td>
+</tr>
+<tr>
+<td style="text-align:center">//</td>
+<td>取整除。<font color="red">取整除的结果是向下取整，比除法结果小。</font></td>
+<td>-9 // 2 == -5</td>
+</tr>
+<tr>
+<td style="text-align:center">%</td>
+<td>取余。<code>a % b</code> <font color="red">取模运算的定义：a % b = a - n * b，n 为不大于 a / b 的最大整数。（与C/Java等不一样）</font></td>
+<td>-10 % 3 == 2</td>
+</tr>
+<tr>
+<td style="text-align:center">**</td>
+<td>幂运算。<code>x ** y</code> 表示 x 的 y 次方 x^y^</td>
+<td>2 ** 10 表示 2 的 10 次方。（1024）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-赋值运算符">2. 赋值运算符</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">=</td>
+<td>赋值运算</td>
+<td><code>a = 2</code></td>
+</tr>
+<tr>
+<td style="text-align:center">+=</td>
+<td>加法赋值运算</td>
+<td><code>a += b</code> 等价于 <code>a = a + b</code>。</td>
+</tr>
+<tr>
+<td style="text-align:center">-=</td>
+<td>减法赋值运算</td>
+<td><code>a -= b</code>等价于 <code>a = a - b</code>。</td>
+</tr>
+<tr>
+<td style="text-align:center">*=</td>
+<td>乘法赋值运算</td>
+<td><code>a *= b</code> 等价于 <code>a = a * b</code>。</td>
+</tr>
+<tr>
+<td style="text-align:center">/=</td>
+<td>除法赋值运算</td>
+<td><code>a /= b</code> 等价于 <code>a = a / b</code>。</td>
+</tr>
+<tr>
+<td style="text-align:center">//=</td>
+<td>取整除赋值运算</td>
+<td><code>a //= b</code> 等价于 <code>a = a // b</code> 。</td>
+</tr>
+<tr>
+<td style="text-align:center">%=</td>
+<td>取余赋值运算</td>
+<td><code>a %= b</code> 等价于 <code>a = a % b</code>。</td>
+</tr>
+<tr>
+<td style="text-align:center">**=</td>
+<td>幂赋值运算</td>
+<td><code>a **= b</code> 等价于 <code>a = a ** b</code>。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-比较运算符">3. 比较运算符</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th>含义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">==</td>
+<td>相等</td>
+<td>若a与b相等，则 <code>a == b</code> 返回 <code>True</code></td>
+</tr>
+<tr>
+<td style="text-align:center">!=</td>
+<td>不等</td>
+<td>若a与b不等，则 <code>a != b</code> 返回 <code>False</code></td>
+</tr>
+<tr>
+<td style="text-align:center">&gt;</td>
+<td>大于</td>
+<td>若a&gt;b，则 <code>a &gt; b</code> 返回 <code>True</code></td>
+</tr>
+<tr>
+<td style="text-align:center">&gt;=</td>
+<td>大于等于</td>
+<td>若a&gt;=b，则 <code>a &gt;= b</code> 返回 <code>True</code></td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;</td>
+<td>小于</td>
+<td>若a&lt;=b，则 <code>a &lt;= b</code> 返回 <code>True</code></td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;=</td>
+<td>小于等于</td>
+<td>若a&lt;=b，则 <code>a &lt;= b</code> 返回 <code>True</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-逻辑运算符">4. 逻辑运算符</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th>描述</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">and</td>
+<td>逻辑且</td>
+<td><code>x and y</code>：若x的逻辑值(❓)为False，则返回x，<font color="red">否则返回y的计算值。</font></td>
+</tr>
+<tr>
+<td style="text-align:center">or</td>
+<td>逻辑或</td>
+<td><code>x or y</code>：若x的逻辑值为True，则返回x，<font color="red">否则返回y的计算值。</font></td>
+</tr>
+<tr>
+<td style="text-align:center">not</td>
+<td>逻辑非</td>
+<td><code>x not y</code>：</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>❗ 注意：<font color="red">逻辑运算的结果都是 x 或者 y的值。</font></p>
+<p>❓ 这里的逻辑值是指经过计算后（如果要计算的话）得出的值，是否等价于 <code>False</code> 或者 <code>True</code>。
+<code>0</code>、<code>''</code>、 <code>False</code> 等价于 <code>False</code>；非零数值，非空字符，<code>True</code> 等价于 <code>True</code>。
+例如：
+<code>(2 - 2)</code> 的逻辑值等价于 <code>False</code>，<code>' '</code> 的逻辑值为 <code>True</code>。</p>
+</blockquote>
+<h3 id="5-成员运算符">5. 成员运算符</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th>描述</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">in</td>
+<td>如果在指定的序列中找到一个变量的值，则返回<code>True</code>，否则返回<code>False</code></td>
+<td><code>0 in [1,2,3]</code> 返回 <code>False</code></td>
+</tr>
+<tr>
+<td style="text-align:center">not in</td>
+<td>如果在指定序列中找不到变量的值，则返回<code>True</code>，否则返回<code>False</code>。</td>
+<td><code>'a' not in ['b','c',''d]</code> 返回 <code>True</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>✅ 这里的指定序列可以是列表、元组、集合。</p>
+</blockquote>
+<h3 id="6-三目运算符">6. 三目运算符</h3>
+<p>6.1 语法：<code>exp1 if condition else exp2</code></p>
+<p>6.2 含义：<code>exp1</code> 和 <code>exp2</code> 是两个表达式（或直接量），<code>condition</code> 是条件判断式。若 <code>condition</code> 成立则执行 <code>exp1</code> 并将计算值作为三木运算的返回值，否则是 <code>exp2</code>。</p>
+<p>6.3 举例</p>
+<pre><code class="lang-Python"><span class="hljs-comment"># 输出最大值</span>
+x = <span class="hljs-number">23</span>
+y = <span class="hljs-number">28</span>
+print(x <span class="hljs-keyword">if</span> x &gt; y <span class="hljs-keyword">else</span> y)
+</code></pre>
+<p>6.4 嵌套</p>
+<pre><code class="lang-Python"><span class="hljs-comment"># 输出 a,b,c 三数之中最大值</span>
+print((a <span class="hljs-keyword">if</span> (a &gt; b) <span class="hljs-keyword">else</span> b) <span class="hljs-keyword">if</span> (( a <span class="hljs-keyword">if</span> (a &gt; b) <span class="hljs-keyword">else</span> b) &gt; c) <span class="hljs-keyword">else</span> c)
+<span class="hljs-comment"># 更有可读性的</span>
+t = a <span class="hljs-keyword">if</span> a &gt; b <span class="hljs-keyword">else</span> b
+print(t <span class="hljs-keyword">if</span> t &gt; c <span class="hljs-keyword">else</span> c)
+</code></pre>
+<h3 id="7-身份运算符">7. 身份运算符</h3>
+<blockquote>
+<p>✅ 身份运算符用于比较两个对象的存储单元.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th>描述</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">is</td>
+<td>is 是判断两个标识符是不是引用自一个对象</td>
+<td><code>x is y</code>, 类似 <code>id(x) == id(y)</code>, 如果引用的是同一个对象则返回 <code>True</code>，否则返回 <code>False</code></td>
+</tr>
+<tr>
+<td style="text-align:center">not is</td>
+<td><code>is not</code> 是判断两个标识符是不是引用自不同对象。</td>
+<td><code>x is not y</code>， 类似 <code>id(a) != id(b)</code>。如果引用的不是同一个对象则返回结果 <code>True</code>，否则返回 <code>False</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>❓ id() 函数用于获取对象内存地址。</p>
+<p>❗  python里面没有类似C/CPP/Java的自增（减）运算符，<code>i++</code>和<code>i--</code>都是错误语法。</p>
+</blockquote>
+<h3 id="8-位运算符">8. 位运算符</h3>
+<blockquote>
+<p>以下例子中，<code>a == 0011 1100</code>, <code>b == 0000 1101</code></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>描述</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&amp;</code></td>
+<td>按位与运算符：参与运算的两个值,如果两个相应位都为1,则该位的结果为1,否则为0</td>
+<td><code>a &amp; b</code>  输出结果 12 ，二进制解释： <code>0000 1100</code></td>
+</tr>
+<tr>
+<td>`</td>
+<td>`</td>
+<td>按位或运算符：只要对应的二个二进位有一个为1时，结果位就为1</td>
+<td>`a</td>
+<td>b<code>输出结果 61 ，二进制解释：</code>0011 1101`</td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>按位异或运算符：当两对应的二进位相异时，结果为1</td>
+<td><code>a ^ b</code> 输出结果 49 ，二进制解释： <code>0011 0001</code></td>
+</tr>
+<tr>
+<td><code>~</code></td>
+<td>按位取反运算符：对数据的每个二进制位取反,即把1变为0,把0变为1 。<strong>~x</strong> 类似于 <strong>-x-1</strong></td>
+<td><code>~a</code>  输出结果 -61 ，二进制解释：<code>1100 0011</code>，在一个有符号二进制数的补码形式。</td>
+</tr>
+<tr>
+<td><code>&lt;&lt;</code></td>
+<td>左移动运算符：运算数的各二进位全部左移若干位，由 <strong>&lt;&lt;</strong> 右边的数字指定了移动的位数，高位丢弃，低位补0。</td>
+<td><code>a &lt;&lt; 2</code>输出结果 240 ，二进制解释： <code>1111 0000</code></td>
+</tr>
+<tr>
+<td><code>&gt;&gt;</code></td>
+<td>右移动运算符：把"&gt;&gt;"左边的运算数的各二进位全部右移若干位，<strong>&gt;&gt;</strong> 右边的数字指定了移动的位数</td>
+<td><code>a &gt;&gt; 2</code> 输出结果 15 ，二进制解释： <code>0000 1111</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="9-赋值运算符-">9. 赋值运算符 <code>:=</code></h3>
+<p>赋值运算符又称为海象运算符。</p>
+<blockquote>
+<p>暂未更新</p>
+</blockquote>
+<h3 id="10-运算符优先级">10. 运算符优先级</h3>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>**</code></td>
+<td>指数</td>
+</tr>
+<tr>
+<td><code>~ + -</code></td>
+<td>按位翻转, 一元加号和减号 (最后两个的方法名为 +@ 和 -@)</td>
+</tr>
+<tr>
+<td><code>*</code> <code>/</code> <code>%</code> <code>//</code></td>
+<td>乘，除，取模和取整除</td>
+</tr>
+<tr>
+<td><code>+</code> <code>-</code></td>
+<td>加法减法</td>
+</tr>
+<tr>
+<td><code>&gt;&gt;</code> <code>&lt;&lt;</code></td>
+<td>右移，左移运算符</td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td>位 与</td>
+</tr>
+<tr>
+<td>`</td>
+<td><code>`^</code></td>
+<td>位或、异或</td>
+</tr>
+<tr>
+<td><code>&lt;=</code> <code>&lt;</code> <code>&gt;</code> <code>&gt;=</code></td>
+<td>比较运算符</td>
+</tr>
+<tr>
+<td><code>==</code> <code>!=</code></td>
+<td>等于运算符</td>
+</tr>
+<tr>
+<td><code>=</code> <code>%=</code> <code>/=</code> <code>//=</code> <code>-=</code> <code>+=</code> <code>*=</code> <code>**=</code></td>
+<td>赋值运算符</td>
+</tr>
+<tr>
+<td><code>is</code> <code>is not</code></td>
+<td>身份运算符</td>
+</tr>
+<tr>
+<td><code>in</code> <code>not in</code></td>
+<td>成员运算符</td>
+</tr>
+<tr>
+<td><code>not</code> <code>and</code> <code>or</code></td>
+<td>逻辑运算符</td>
+</tr>
+</tbody>
+</table>
+<h2 id="二、变量">二、变量</h2>
+<p>Python 中的变量不需要声明，直接给变量赋值，就创建了一个变量。</p>
+<pre><code class="lang-Python">num = <span class="hljs-number">10</span>
+</code></pre>
+<p>Python 变量取名规则：</p>
+<ol>
+<li>变量由数字、字母（在Python3中，不局限于英文字母，还可以是中文字符等能用 UTF-8 表示的多种语言的字符）、下划线（<code>_</code>）组成，且必须以字母、下划线 <code>_</code> 开头；</li>
+<li>不能是关键字，但可以包括关键字；</li>
+<li>不能包含空格；</li>
+<li>一般而言，变量名全都小写，单词之间用下划线分割。</li>
+</ol>
+<h2 id="三、基本数据类型">三、基本数据类型</h2>
+<blockquote>
+<p>✅ type(x) 函数返回x的数据类型，可使用 type() 判断数据类型；
+✅ Python 有 6 种基本数据类型：</p>
+<ul>
+<li>不可变的数据类型
+数值(Numbers)，字符串(String)，元组(Tuple)，不可变集合(Frozenset)</li>
+<li>可变数据类型
+列表(List)，字典(Dictionary)，可变集合(Set)</li>
+</ul>
+</blockquote>
+<h3 id="1number（数字）">1.Number（数字）</h3>
+<p><strong>1.1 int 整型</strong></p>
+<p>python可以处理任意大小的整数（即理论取值范围<code>[-∞，+∞]</code>），整数的加减乘除计算都是精确的。有时候数较大的时候，为了提高可读性可以以 <code>_</code> 来分隔：<code>10_000_000_000</code>。
+除了十进制，int型还有二进制（<code>0b111</code>）、八进制（<code>0o123</code>）、十六进制（<code>0x123</code>）等，需要用前缀标识，分别是 <code>0b</code>、<code>0o</code>、<code>0x</code>。同样可以用下划线 <code>_</code> 表示。</p>
+<p><strong>1.2 float 浮点型</strong></p>
+<p>浮点数即小数，<strong>浮点数的计算可能会有四舍五入的误差</strong>。浮点数可以用 <strong>科学计数法</strong> 表示，且浮点数的小数点的位置可以变化，因此称为浮点数。例如，<code>1234.567</code> 可以表示为 <code>1.234567e3</code> 或者 <code>12.34567e2</code>。
+正因为浮点数可能存在这样的尾数偏差，所以在比较浮点数的时候，需要使用 <code>round()</code> 函数进行辅助。</p>
+<blockquote>
+<p><code>round(x, d)</code>
+x: 需要四舍五入的数字
+d: 四舍五入摄入的小数位数，默认是 0</p>
+</blockquote>
+<pre><code class="lang-Python">print(round(<span class="hljs-number">0.1</span> + <span class="hljs-number">0.2</span>, <span class="hljs-number">10</span>) == <span class="hljs-number">0.3</span>)
+<span class="hljs-comment"># True</span>
+</code></pre>
+<p><strong>1.3 complex 复数</strong></p>
+<p><code>complex</code> 型是python内置的数字类型，使用 <code>a + bj</code> 或 <code>a + bJ</code> 的形式表示。<code>a</code> 是复数的实部，<code>b</code> 是复数的虚部。<code>complex</code> 型的计算遵循数学的复数计算法则。
+<code>z.real</code> 返回复数的实部，<code>z.imag</code> 返回复数的虚部。</p>
+<p><strong>1.4 bool 布尔值</strong></p>
+<p>布尔值只有两种值：<code>True</code> 和 <code>False</code>。</p>
+<p>逻辑值为 <code>False</code></p>
+<pre><code class="lang-Python"><span class="hljs-comment"># 0, '', [], {}, (), None</span>
+</code></pre>
+<p>字符串是单引号 <code>''</code> 或双引号 <code>""</code> 包裹起来的。但有多个需要换行的地方的时候，用 <code>\n</code> 写在一行可读性不好，可以使用 <code>'''...'''</code> 来表述多行输出。</p>
+<pre><code class="lang-py">print(<span class="hljs-string">'''green
+yellow
+blue'''</span>)
+</code></pre>
+<h3 id="3list（列表）">3.List（列表）</h3>
+<p>3.1 List（列表）用方括号 <code>[]</code> 括起来，python中使用最频繁的数据类型。列表中的元素类型可以是多种数据类型，还可以包括列表，即嵌套列表。和字符串类似，列表也可以被索引和截取。和字符串不同的是，列表属于可改变的数据类型。</p>
+<p>3.2 列表的索引和截取与字符串的类似，参考上文。</p>
+<h3 id="4tuple（元组）">4.Tuple（元组）</h3>
+<p>Tuple（元组）用圆括号 <code>()</code> 括起来，与列表类似，也可以进行所以和截取，不同的是元组不可改变。</p>
+<p>元组与字符串类似，也可以被索引和截取，参考上文。</p>
+<h3 id="5dictionary（字典）">5.Dictionary（字典）</h3>
+<p>5.1 Dictionary（字典）用花括号 <code>{}</code> 括起来，是一个无序的键值对 <code>key:value</code> 是python常用的一个可变内置数据类型。其中，<code>key</code> 必须是不可变数据类型，且在一个字典中，每个 <code>key</code> 都是唯一的。</p>
+<h3 id="6set（集合）">6.Set（集合）</h3>
+<p>集合（set）使用 <code>{}</code> 括起来，是一个无序的不重复元素序列，构成集合的事物或对象称作元素或是成员。基本功能是进行成员关系测试和删除重复元素。使用 <code>print()</code> 输出，则会乱序输出，过滤重复元素。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="ch01.html" class="navigation navigation-prev " aria-label="Previous page: ch01. 初识 Python">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ch03.html" class="navigation navigation-next " aria-label="Next page: ch03. 玩转 Python 字符串">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"ch02. Python 运算符与基本数据类型","level":"1.1.2","depth":2,"next":{"title":"ch03. 玩转 Python 字符串","level":"1.1.3","depth":2,"path":"ch03.md","ref":"ch03.md","articles":[]},"previous":{"title":"ch01. 初识 Python","level":"1.1.1","depth":2,"path":"ch01.md","ref":"ch01.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch02.md","mtime":"2025-04-20T02:13:02.373Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:19:34.729Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

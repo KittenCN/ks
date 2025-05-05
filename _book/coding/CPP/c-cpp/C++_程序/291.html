@@ -1,0 +1,1994 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>C++ 程序：在旋转排序向量中寻找最小元素 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="292.html" />
+    
+    
+    <link rel="prev" href="290.html" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    C++ 程序
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="217.html">
+            
+                <a href="217.html">
+            
+                    
+                    基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="218.html">
+            
+                <a href="218.html">
+            
+                    
+                    C++ 程序：你好世界
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="219.html">
+            
+                <a href="219.html">
+            
+                    
+                    C++ 程序：二元加法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="220.html">
+            
+                <a href="220.html">
+            
+                    
+                    C++ 程序：检查数字是正数还是负数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.5" data-path="221.html">
+            
+                <a href="221.html">
+            
+                    
+                    C++ 程序：查找字符的 ASCII 值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.6" data-path="222.html">
+            
+                <a href="222.html">
+            
+                    
+                    图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.7" data-path="223.html">
+            
+                <a href="223.html">
+            
+                    
+                    C++ 程序：使用星号(*)打印半金字塔图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.8" data-path="224.html">
+            
+                <a href="224.html">
+            
+                    
+                    C++ 程序：使用数字打印半金字塔图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.9" data-path="225.html">
+            
+                <a href="225.html">
+            
+                    
+                    C++ 程序：使用字符打印半金字塔图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.10" data-path="226.html">
+            
+                <a href="226.html">
+            
+                    
+                    C++ 程序：使用星号(*)的反向半金字塔图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.11" data-path="227.html">
+            
+                <a href="227.html">
+            
+                    
+                    C++ 程序：使用数字的反向半金字塔图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.12" data-path="228.html">
+            
+                <a href="228.html">
+            
+                    
+                    C++ 程序：使用字符的反向半金字塔图案
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.13" data-path="229.html">
+            
+                <a href="229.html">
+            
+                    
+                    C++ 程序：弗洛伊德三角形程序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.14" data-path="230.html">
+            
+                <a href="230.html">
+            
+                    
+                    C++ 程序：改进的弗洛伊德三角形
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.15" data-path="231.html">
+            
+                <a href="231.html">
+            
+                    
+                    数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.16" data-path="232.html">
+            
+                <a href="232.html">
+            
+                    
+                    C++ 程序：计算用户输入的n个数之和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.17" data-path="233.html">
+            
+                <a href="233.html">
+            
+                    
+                    C++ 程序：检查给定的数字是偶数还是奇数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.18" data-path="234.html">
+            
+                <a href="234.html">
+            
+                    
+                    C++ 程序：给定数字的阶乘
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.19" data-path="235.html">
+            
+                <a href="235.html">
+            
+                    
+                    C++ 程序：使用第三个变量交换两个数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.20" data-path="236.html">
+            
+                <a href="236.html">
+            
+                    
+                    C++ 程序：不使用第三个变量交换两个数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.21" data-path="237.html">
+            
+                <a href="237.html">
+            
+                    
+                    C++ 程序：给定数字的平方根和立方根
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.22" data-path="238.html">
+            
+                <a href="238.html">
+            
+                    
+                    C++ 程序：查找 GCD 和 LCM
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.23" data-path="239.html">
+            
+                <a href="239.html">
+            
+                    
+                    C++ 程序：检查数字是不是阿姆斯特朗
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.24" data-path="240.html">
+            
+                <a href="240.html">
+            
+                    
+                    C++ 程序：计算给定数字的位数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.25" data-path="241.html">
+            
+                <a href="241.html">
+            
+                    
+                    C++ 程序：确定完全平方
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.26" data-path="242.html">
+            
+                <a href="242.html">
+            
+                    
+                    C++ 程序：确定数字是质数还是合数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.27" data-path="243.html">
+            
+                <a href="243.html">
+            
+                    
+                    C++ 程序：查找输入数字的反转
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.28" data-path="244.html">
+            
+                <a href="244.html">
+            
+                    
+                    C++ 程序：检查给定数字的回文
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.29" data-path="245.html">
+            
+                <a href="245.html">
+            
+                    
+                    数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.30" data-path="246.html">
+            
+                <a href="246.html">
+            
+                    
+                    C++ 程序：数组介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.31" data-path="247.html">
+            
+                <a href="247.html">
+            
+                    
+                    C++ 程序：初始化数组的各种方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.32" data-path="248.html">
+            
+                <a href="248.html">
+            
+                    
+                    C++ 程序：如何删除数组元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.33" data-path="249.html">
+            
+                <a href="249.html">
+            
+                    
+                    C++ 程序：求数组元素的和与均值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.34" data-path="250.html">
+            
+                <a href="250.html">
+            
+                    
+                    C++ 程序：访问矩阵元素（2D 数组）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.35" data-path="251.html">
+            
+                <a href="251.html">
+            
+                    
+                    C++ 程序：相加两个矩阵（2D 数组）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.36" data-path="252.html">
+            
+                <a href="252.html">
+            
+                    
+                    C++ 程序：相乘两个矩阵（2D 数组）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.37" data-path="253.html">
+            
+                <a href="253.html">
+            
+                    
+                    C++ 程序：寻找数组中最小和最大元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.38" data-path="254.html">
+            
+                <a href="254.html">
+            
+                    
+                    C++ 程序：计算子数组最大和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.39" data-path="255.html">
+            
+                <a href="255.html">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.40" data-path="256.html">
+            
+                <a href="256.html">
+            
+                    
+                    C++ 程序：将字符串转换为字符数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.41" data-path="257.html">
+            
+                <a href="257.html">
+            
+                    
+                    C++ 程序：不使用系统定义方法求字符串长度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.42" data-path="258.html">
+            
+                <a href="258.html">
+            
+                    
+                    C++ 程序：执行字符串连接
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.43" data-path="259.html">
+            
+                <a href="259.html">
+            
+                    
+                    C++ 程序：不使用系统定义方法反转字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.44" data-path="260.html">
+            
+                <a href="260.html">
+            
+                    
+                    C++ 程序：检查字符串回文
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.45" data-path="261.html">
+            
+                <a href="261.html">
+            
+                    
+                    排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.46" data-path="262.html">
+            
+                <a href="262.html">
+            
+                    
+                    C++ 程序：冒泡排序（标准）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.47" data-path="263.html">
+            
+                <a href="263.html">
+            
+                    
+                    C++ 程序：冒泡排序（优化）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.48" data-path="264.html">
+            
+                <a href="264.html">
+            
+                    
+                    C++ 程序：选择排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.49" data-path="265.html">
+            
+                <a href="265.html">
+            
+                    
+                    C++ 程序：插入排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.50" data-path="266.html">
+            
+                <a href="266.html">
+            
+                    
+                    C++ 程序：快速排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.51" data-path="267.html">
+            
+                <a href="267.html">
+            
+                    
+                    C++ 程序：归并排序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.52" data-path="268.html">
+            
+                <a href="268.html">
+            
+                    
+                    搜索
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.53" data-path="269.html">
+            
+                <a href="269.html">
+            
+                    
+                    C++ 程序：二分搜索算法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.54" data-path="270.html">
+            
+                <a href="270.html">
+            
+                    
+                    C++ 程序：DFS 遍历
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.55" data-path="271.html">
+            
+                <a href="271.html">
+            
+                    
+                    C++ 程序：BFS 遍历
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.56" data-path="272.html">
+            
+                <a href="272.html">
+            
+                    
+                    C++ 程序：使用修改的二分搜索查找给定数字的第一次出现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.57" data-path="273.html">
+            
+                <a href="273.html">
+            
+                    
+                    C++ 程序：使用修改的二分搜索查找给定数字的最后一次出现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.58" data-path="274.html">
+            
+                <a href="274.html">
+            
+                    
+                    面向对象的程序设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.59" data-path="275.html">
+            
+                <a href="275.html">
+            
+                    
+                    C++ 程序：面向对象类示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.60" data-path="276.html">
+            
+                <a href="276.html">
+            
+                    
+                    C++ 程序：使用类执行基本操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.61" data-path="277.html">
+            
+                <a href="277.html">
+            
+                    
+                    C++ 程序：多态示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.62" data-path="278.html">
+            
+                <a href="278.html">
+            
+                    
+                    C++ 程序：方法重载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.63" data-path="279.html">
+            
+                <a href="279.html">
+            
+                    
+                    C++ 程序：构造器和析构器示例
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.64" data-path="280.html">
+            
+                <a href="280.html">
+            
+                    
+                    C++ 程序：构造器重载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.65" data-path="281.html">
+            
+                <a href="281.html">
+            
+                    
+                    C++ 程序：单层继承
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.66" data-path="282.html">
+            
+                <a href="282.html">
+            
+                    
+                    C++ 程序：多级继承
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.67" data-path="283.html">
+            
+                <a href="283.html">
+            
+                    
+                    C++ 程序：层次继承
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.68" data-path="284.html">
+            
+                <a href="284.html">
+            
+                    
+                    C++ 程序：友元函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.69" data-path="285.html">
+            
+                <a href="285.html">
+            
+                    
+                    C++ 程序：加号(-)运算符重载
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.70" data-path="286.html">
+            
+                <a href="286.html">
+            
+                    
+                    文件处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.71" data-path="287.html">
+            
+                <a href="287.html">
+            
+                    
+                    C++ 程序：从文件中读取
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.72" data-path="288.html">
+            
+                <a href="288.html">
+            
+                    
+                    标准模板库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.73" data-path="289.html">
+            
+                <a href="289.html">
+            
+                    
+                    C++ 程序：使用 STL 初始化向量（第一部分）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.74" data-path="290.html">
+            
+                <a href="290.html">
+            
+                    
+                    C++ 程序：使用 STL 初始化向量（第二部分）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.1.75" data-path="291.html">
+            
+                <a href="291.html">
+            
+                    
+                    C++ 程序：在旋转排序向量中寻找最小元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.76" data-path="292.html">
+            
+                <a href="292.html">
+            
+                    
+                    C++ 程序：在 STL 向量中使用lower_bound()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.77" data-path="293.html">
+            
+                <a href="293.html">
+            
+                    
+                    C++ 程序：在 STL 向量中使用upper_bound()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.78" data-path="294.html">
+            
+                <a href="294.html">
+            
+                    
+                    C++ 程序：使用 STL 列表（第一部分）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.79" data-path="295.html">
+            
+                <a href="295.html">
+            
+                    
+                    C++ 程序：使用 STL 列表（第 2 部分）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.80" data-path="296.html">
+            
+                <a href="296.html">
+            
+                    
+                    C++ 程序：STL 偶对模板
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.81" data-path="297.html">
+            
+                <a href="297.html">
+            
+                    
+                    C++ 程序：STL 偶对模板的自定义排序方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.82" data-path="298.html">
+            
+                <a href="298.html">
+            
+                    
+                    C++ 程序：使用偶对模板查找排序向量中最常出现的前K个元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.83" data-path="299.html">
+            
+                <a href="299.html">
+            
+                    
+                    C++ 程序：STL 栈
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.84" data-path="300.html">
+            
+                <a href="300.html">
+            
+                    
+                    C++ 程序：查找栈中最大的元素
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.85" data-path="301.html">
+            
+                <a href="301.html">
+            
+                    
+                    C++ 程序：使用栈检查平衡括号字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.86" data-path="302.html">
+            
+                <a href="302.html">
+            
+                    
+                    C++ 程序：STL 优先级队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.87" data-path="303.html">
+            
+                <a href="303.html">
+            
+                    
+                    C++ 程序：使用优先级队列实现最小堆
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.88" data-path="304.html">
+            
+                <a href="304.html">
+            
+                    
+                    C++ 程序：STL 集合（第一部分）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.89" data-path="305.html">
+            
+                <a href="305.html">
+            
+                    
+                    C++ 程序：STL 集合（第二部分）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.90" data-path="306.html">
+            
+                <a href="306.html">
+            
+                    
+                    C++ 程序：STL 集合find()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.91" data-path="307.html">
+            
+                <a href="307.html">
+            
+                    
+                    C++ 程序：STL 集合erase()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.92" data-path="308.html">
+            
+                <a href="308.html">
+            
+                    
+                    C++ 程序：使用 STL 多重集合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.93" data-path="309.html">
+            
+                <a href="309.html">
+            
+                    
+                    C++ 程序：使用 STL 映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.94" data-path="310.html">
+            
+                <a href="310.html">
+            
+                    
+                    C++ 程序：在 STL 映射中使用find()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.95" data-path="311.html">
+            
+                <a href="311.html">
+            
+                    
+                    C++ 程序：在 STL 映射中使用erase()方法（第一部分）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.96" data-path="312.html">
+            
+                <a href="312.html">
+            
+                    
+                    C++ 程序：在 STL 映射中使用erase()方法（第二部分）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.97" data-path="313.html">
+            
+                <a href="313.html">
+            
+                    
+                    C++ 程序：通过编写自定义排序方法来排序字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.98" data-path="314.html">
+            
+                <a href="314.html">
+            
+                    
+                    C++ 程序：在 STL 映射中使用lower_bound()和upper_bound()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.99" data-path="315.html">
+            
+                <a href="315.html">
+            
+                    
+                    C++ 程序：STL 多重映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.100" data-path="316.html">
+            
+                <a href="316.html">
+            
+                    
+                    C++ 程序：在 STL 多重映射中使用find()方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.101" data-path="317.html">
+            
+                <a href="317.html">
+            
+                    
+                    C++ 程序：在 STL 多重映射中使用erase()方法（第一部分）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.102" data-path="318.html">
+            
+                <a href="318.html">
+            
+                    
+                    C++ 程序：在 STL 多重映射中使用erase()方法（第二部分）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.103" data-path="319.html">
+            
+                <a href="319.html">
+            
+                    
+                    C++ 程序：STL 无序集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.104" data-path="320.html">
+            
+                <a href="320.html">
+            
+                    
+                    C++ 程序：排序 STL 中的无序集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.105" data-path="321.html">
+            
+                <a href="321.html">
+            
+                    
+                    C++ 程序：使用 STL 无序多重集合
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.106" data-path="322.html">
+            
+                <a href="322.html">
+            
+                    
+                    C++ 程序：使用 STL 无序映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.107" data-path="323.html">
+            
+                <a href="323.html">
+            
+                    
+                    C++ 程序：使用 STL 无序多重映射
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.108" data-path="324.html">
+            
+                <a href="324.html">
+            
+                    
+                    杂项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.109" data-path="325.html">
+            
+                <a href="325.html">
+            
+                    
+                    C++ 程序：查找n个用户输入数字的平均值
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.110" data-path="326.html">
+            
+                <a href="326.html">
+            
+                    
+                    C++ 程序：无break语句的switch-case
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.111" data-path="327.html">
+            
+                <a href="327.html">
+            
+                    
+                    C++ 程序：带break语句的switch-case
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.112" data-path="328.html">
+            
+                <a href="328.html">
+            
+                    
+                    C++ 程序：按值传递
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.113" data-path="329.html">
+            
+                <a href="329.html">
+            
+                    
+                    C++ 程序：按引用调用
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.114" data-path="330.html">
+            
+                <a href="330.html">
+            
+                    
+                    C++ 程序：在 3 个数字中找出最大和最小
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.115" data-path="331.html">
+            
+                <a href="331.html">
+            
+                    
+                    C++ 程序：循环中的break语句
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.116" data-path="332.html">
+            
+                <a href="332.html">
+            
+                    
+                    C++ 程序：检查数组是否包含重复项
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.117" data-path="333.html">
+            
+                <a href="333.html">
+            
+                    
+                    C++ 程序：求一个数的除数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.118" data-path="334.html">
+            
+                <a href="334.html">
+            
+                    
+                    C++ 程序：执行继承
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.119" data-path="335.html">
+            
+                <a href="335.html">
+            
+                    
+                    C++ 程序：执行矩阵转置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.120" data-path="336.html">
+            
+                <a href="336.html">
+            
+                    
+                    C++ 程序：对给定二维数组执行各种矩阵运算
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.121" data-path="337.html">
+            
+                <a href="337.html">
+            
+                    
+                    C++ 程序：打印帕斯卡三角形
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.122" data-path="338.html">
+            
+                <a href="338.html">
+            
+                    
+                    C++ 程序：使用*打印全金字塔
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.123" data-path="339.html">
+            
+                <a href="339.html">
+            
+                    
+                    C++ 程序：简单计算器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.124" data-path="340.html">
+            
+                <a href="340.html">
+            
+                    
+                    C++ 程序：打印斐波那契数列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.125" data-path="341.html">
+            
+                <a href="341.html">
+            
+                    
+                    C++ 程序：求三个数中最大值
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >C++ 程序：在旋转排序向量中寻找最小元素</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="c-程序：在旋转排序向量中寻找最小元素">C++ 程序：在旋转排序向量中寻找最小元素</h1>
+<blockquote>
+<p>原文：<a href="https://www.studytonight.com/cpp-programs/cpp-find-minimum-element-in-a-rotated-sorted-vector-program" target="_blank">https://www.studytonight.com/cpp-programs/cpp-find-minimum-element-in-a-rotated-sorted-vector-program</a></p>
+</blockquote>
+<p>大家好！</p>
+<p>在本教程中，我们将演示 C++ 编程语言中<strong>在旋转排序向量</strong>中寻找最小元素的逻辑。</p>
+<h2 id="什么是旋转排序向量？">什么是旋转排序向量？</h2>
+<p>旋转排序向量是一个排序向量，它在你事先不知道的某个轴元素上旋转。</p>
+<p>示例: <strong>[4，5，6，7，0，1，2]</strong> 是排序向量[0，1，2，4，5，6，7]的旋转排序向量之一。</p>
+<p>为了更好地理解它的实现，请参考下面给出的评论很好的 CPP 代码。</p>
+<p><strong>代号:</strong></p>
+<pre><code class="lang-cpp"><span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span>
+<span class="hljs-preprocessor">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">findMin</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;m)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">int</span> n = m.size();
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    {
+        <span class="hljs-keyword">if</span> (i == <span class="hljs-number">0</span>)
+        {
+            <span class="hljs-keyword">if</span> (m[i] &lt; m[n - <span class="hljs-number">1</span>] &amp;&amp; m[i] &lt; m[<span class="hljs-number">1</span>])
+                <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            <span class="hljs-keyword">if</span> (m[i] &lt; m[i - <span class="hljs-number">1</span>] &amp;&amp; m[i] &lt; m[(i + <span class="hljs-number">1</span>) % n])
+                <span class="hljs-keyword">break</span>;
+        }
+    }
+
+    <span class="hljs-keyword">return</span> m[i % n];
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"\n\nWelcome to Studytonight :-)\n\n\n"</span>;
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">" ===== Program to find the Minimum element in a rotated Sorted Vector, in CPP  ===== \n\n\n"</span>;
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">" ===== Logic: The minimum element will have larger number on both right and left of it.   ===== \n\n\n"</span>;
+
+    <span class="hljs-comment">//initializing vector with the following elements</span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; v = {<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>};
+
+    <span class="hljs-keyword">int</span> n = v.size();
+
+    <span class="hljs-keyword">int</span> mini = <span class="hljs-number">0</span>;
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"The elements of the given vector is : "</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    {
+        <span class="hljs-built_in">cout</span> &lt;&lt; v[i] &lt;&lt; <span class="hljs-string">"  "</span>;
+    }
+
+    mini = findMin(v);
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"\n\nThe Minimum element in the given vector is: "</span> &lt;&lt; mini;
+
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"\n\n\n"</span>;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p><strong>输出:</strong></p>
+<p><img src="img/281d5394ba294468e84eb4a6828c75f1.png" alt="C++ rotated sorted vector"></img></p>
+<p>我们希望这篇文章能帮助你更好地理解在旋转排序向量中寻找最小元素的概念及其在 CPP 中的实现。如有任何疑问，请通过下面的评论部分与我们联系。</p>
+<p><strong>继续学习:</strong></p>
+<hr></hr>
+<hr></hr>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="290.html" class="navigation navigation-prev " aria-label="Previous page: C++ 程序：使用 STL 初始化向量（第二部分）">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="292.html" class="navigation navigation-next " aria-label="Next page: C++ 程序：在 STL 向量中使用lower_bound()方法">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"C++ 程序：在旋转排序向量中寻找最小元素","level":"1.1.75","depth":2,"next":{"title":"C++ 程序：在 STL 向量中使用lower_bound()方法","level":"1.1.76","depth":2,"path":"292.md","ref":"292.md","articles":[]},"previous":{"title":"C++ 程序：使用 STL 初始化向量（第二部分）","level":"1.1.74","depth":2,"path":"290.md","ref":"290.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"291.md","mtime":"2025-04-30T01:08:58.749Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-05T04:23:45.530Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+
