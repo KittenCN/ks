@@ -1,0 +1,43 @@
+name: Build & Deploy Honkit via Python
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 签出代码
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # 2. 安装 Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      # 3. 安装项目依赖
+      - name: Install Honkit
+        run: npm install --no-save honkit
+
+      # 4. 安装 Python（已预装，但显式设置以保证）
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # 5. 执行并行构建脚本
+      - name: Run build_all.py
+        run: |
+          chmod +x build_all.py
+          python3 build_all.py
+
+      # 6. 部署到 gh-pages 分支
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_book
