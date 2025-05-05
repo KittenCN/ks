@@ -5,7 +5,7 @@
 
 >本项目有3个不同的镜像站点，分别是：
 >>[静态主站](https://wiki.coderfan.com)  
->>[GitHub镜像站](https://kittencn.github.io/ks/)  
+>>[GitHub镜像站](https://kittencn.github.io/ks/_book/)  
 >>请按需要，请自行选择。  
 >如有任何问题，请联系[CoderFAN](https://www.coderfan.com)的站长。  
 
