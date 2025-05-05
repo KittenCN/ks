@@ -17,12 +17,12 @@
 ## 内容简介
 本项目主要包括以下内容 (本项目部分内容借用了[xflihaibo](https://xflihaibo.github.io/docs/)的基础数据，感谢！)：  
 1. [开发规范](https://wiki.coderfan.com/standard/) ：包括各种开发过程中应遵守的通用规则  
-2. [前端汇总](https://wiki.coderfan.com/web/README/) ：包括前端开发过程中常用的各种技术和工具  
-3. [后端汇总](https://wiki.coderfan.com/coding/README/) ：包括后端开发过程中常用的各种技术和工具  
-4. [算法汇总](https://wiki.coderfan.com/algorithms/README/) ：包括基础算法学习资料,这些都是程序员必备的技能。感谢大佬[krahets](https://github.com/krahets/hello-algo)。  
-5. [AP课程](https://wiki.coderfan.com/ap/README/) ：包括AP课程学习资料及部分历史真题  
-6. [数学知识](https://wiki.coderfan.com/math/README/) ：程序员都应该了解的数学知识  
-7. [工具集合](https://wiki.coderfan.com/tool/README/) ：包括各种开发过程中常用的工具  
-8. [进阶知识](https://wiki.coderfan.com/advance/README/) ：包括各种进阶知识  
-9. [资料下载](https://wiki.coderfan.com/docs/README/)   ：包括各种学习资料的下载  
+2. [前端汇总](https://wiki.coderfan.com/web/) ：包括前端开发过程中常用的各种技术和工具  
+3. [后端汇总](https://wiki.coderfan.com/coding/) ：包括后端开发过程中常用的各种技术和工具  
+4. [算法汇总](https://wiki.coderfan.com/algorithms/) ：包括基础算法学习资料,这些都是程序员必备的技能。感谢大佬[krahets](https://github.com/krahets/hello-algo)。  
+5. [AP课程](https://wiki.coderfan.com/ap/) ：包括AP课程学习资料及部分历史真题  
+6. [数学知识](https://wiki.coderfan.com/math/) ：程序员都应该了解的数学知识  
+7. [工具集合](https://wiki.coderfan.com/tool/) ：包括各种开发过程中常用的工具  
+8. [进阶知识](https://wiki.coderfan.com/advance/) ：包括各种进阶知识  
+9. [资料下载](https://wiki.coderfan.com/docs/)   ：包括各种学习资料的下载  
 [![img](img/coderfan_logo.png)](https://www.coderfan.com) 
