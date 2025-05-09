@@ -1,0 +1,1110 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>解析方法与几何模型 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="./" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="第1章-解析方法与几何模型.html">
+            
+                <a href="第1章-解析方法与几何模型.html">
+            
+                    
+                    解析方法与几何模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >解析方法与几何模型</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <center><h1 id="第1章--解析方法与几何模型">第1章  解析方法与几何模型</h1></center>
+
+<blockquote>
+<p>内容：@若冰（马世拓）</p>
+<p>审稿：@陈思州</p>
+<p>排版&amp;校对：@何瑞杰</p>
+</blockquote>
+<p>读者朋友们，在这一章当中我们将会主要学习几何模型的相关知识。你们应该都还记得一些基本的几何原理知识，用具体的几何形状来抽丝剥茧为大家介绍数学建模这再合适不过了。而在这一章中，我们不仅会学习到如何分析问题、构造数学模型，更重要的是学会如何使用代码求解一些简单的模型。本章我们希望各位能够：</p>
+<ul>
+<li><strong>了解一些常见的几何模型构造的思想方法</strong></li>
+<li><strong>对常见立体几何模型与平面几何模型能够有自己的思考</strong></li>
+<li><strong>可以使用Python求解一些简单方程或方程组的解</strong></li>
+</ul>
+<blockquote>
+<p>注意：本章内容不会太难，大家注意在简单案例中蕴含的数学思想即可。</p>
+</blockquote>
+<h2 id="11--向量表示法与几何建模基本案例">1.1  向量表示法与几何建模基本案例</h2>
+<h3 id="111--几何建模的思想">1.1.1  几何建模的思想</h3>
+<p>人类对于数学世界的探索起源于两样东西：一是计数，二是丈量。计数用以表示多少，要计算多了多少少了多少，于是有了数字的概念和四则运算，也就有了后来的代数学；丈量是测量土地的长宽面积、测量角度、分析几何关系等，也就有了后来的几何学。高中毕业以后，我们对于数学模型的理解其实还很浅薄，但几何模型对我们来讲是最直观的东西。有一张图，我们就可以直观地感受：哪两个平面平行，哪两条线垂直……通过一系列的几何定理还可以推算线段的长度等等。所以，我们就以几何模型作为了解数学建模的切入点。</p>
+<p>但是大家可万万不要小看几何模型，虽然一些基本的数学公式我们在初中高中就学过了，这类问题还是大有讲究的。几何模型中充斥了不同的数学关系，根据关系的分类可以把它们分为位置关系和数量关系两种。位置关系就包括平行、垂直、异面、相交等，数量关系则是需要具体求解边长、角度、面积等。那么既然涉及到求解，就必然会涉及到等量关系也就是方程与函数。以往的这些方程与函数是可以手动计算的，但在一个复杂的几何框架中，量与量之间的关系，还会有那么容易计算吗？</p>
+<p>分析几何问题，在现在这个阶段我们所掌握的方法大体上可以分为三种：</p>
+<ul>
+<li><strong>传统几何的演绎-证明体系</strong>：这种体系下的方法都是基于已经被证明了的公理与定理体系（例如勾股定理、正弦定理、圆幂定理等），在解决问题的过程中更强调分析而非计算，往往是通过构造辅助线、辅助平面等利用严密的逻辑推理步步为营推导出最后的结果。这种方法往往分析起来会更加困难，但减少了计算量。</li>
+<li><strong>基于向量的计算化几何</strong>：向量被引入几何当中最初的目的是为了表示有向线段，但后来大家发现基于向量的一些运算特性可以把一些数量问题统一化。几何图形中的边长、角度、面积可以转化为向量的模长、内积等求解，平行、垂直等可以转化为向量共线、内积为0等求解，就可以把所有几何问题都变成可计算的问题。这样的方法更加重视计算，并且除了传统的几何向量外，还可以构造直角坐标系从而获得坐标向量，运算更加方便。</li>
+<li><strong>基于极坐标与方程的解析几何</strong>：这种方法其实可以回溯到当初学圆锥曲线的时期，把几何图形的相交、相切、相离抽象成方程解的问题。后来又学习过极坐标和参数方程，就会发现利用极坐标和参数方程去表示曲线实在是太方便了。这样的方法就可以把几何问题转化成一个代数问题来求解，大大提高了求解的效率。</li>
+</ul>
+<p>同学们在中学阶段还记得都用过哪些几何方法去进行建模吗？我想，那真的太多了，但我们总能够总结出一些常见的公理与定理，例如： </p>
+<ul>
+<li><strong>三角形中的角度关系</strong>：这是几何学中的基本概念之一，涉及到三角形内角和定理（三角形的三个内角之和等于$180\circ$）、直角三角形的角度关系（一个角为$90^{\circ}$，另外两个角之和为$90^{\circ}$）等。</li>
+<li><strong>勾股定理</strong>：这是直角三角形中最著名的定理之一，表明直角三角形的两条直角边的平方和等于斜边的平方。即如果直角三角形的直角边长分别为$a$和$b$，斜边长为$c$，则有 $a^{2} + b^{2} = c^{2}$。</li>
+<li><strong>正弦定理</strong>：这是解决三角形问题时非常有用的定理，它表明在任意三角形中，各边的长度与其对应角的正弦值之比相等。即如果三角形的边长分别为$a$、$b$、$c$，对应的角分别为$A$、$B$、$C$，则有 $\displaystyle \frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R$，其中$R$是三角形外接圆的半径。</li>
+<li><strong>余弦定理</strong>：在任意三角形中，任意一边的平方等于其他两边的平方和减去两倍的其他两边长度乘以它们夹角的余弦值。即如果三角形的边长分别为$a$、$b$、$c$，对应的角分别为$A$、$B$、$C$，则有 $c^{2} = a^{2} + b^{2} - 2ab\cos C$。余弦定理在解决非直角三角形的问题中非常有用，尤其是在涉及边长和角度关系的问题中。</li>
+<li><strong>圆幂定理</strong>：对于任意一点到圆的两条切线，它们的长度是相等的。对于任意一条经过该点的割线，割线的两段长度的乘积是一个常数，这个常数等于该点到圆心的距离的平方减去圆的半径的平方。圆幂定理在解决与圆有关的几何问题中非常有用。</li>
+<li><strong>切割线定理</strong>（也称为割线-切线定理）：如果一条直线从外部点P切割圆，形成一条切线段$PT$和一条割线段$PAB$（A和B是割线与圆的交点），那么$PT^{2} = PA \cdot PB$。这个定理在解决圆和直线关系的几何问题中很有帮助。</li>
+<li><strong>四点共圆</strong>：四点共圆是一个判断四个点是否能在同一个圆上的几何概念。如果四个点$A$、$B$、$C$、$D$满足某种特定的关系，那么它们可以位于同一个圆上。这个概念在解决几何问题时非常重要，尤其是在证明四个点共圆的时候。常用的判断四点共圆的方法包括使用圆的方程、利用角的性质（如对顶角、圆周角等）等。</li>
+<li><strong>圆锥曲线的几何性质</strong>：圆锥曲线（包括椭圆、双曲线和抛物线）拥有许多独特的几何性质。例如，椭圆的每一点到两个焦点的距离之和是一个常数；双曲线的每一点到两个焦点的距离之差的绝对值是一个常数；抛物线上的每一点到焦点的距离等于该点到准线的距离。</li>
+<li><strong>圆锥曲线的光学性质</strong>：圆锥曲线的光学性质是指光线在圆锥曲线上的反射和折射特性。例如，椭圆上的任意一点反射到两个焦点的光线路径长度相等；抛物线上的任意一点反射到焦点的光线都平行于对称轴；双曲线上的任意一点反射到一个焦点的光线将经过另一个焦点。</li>
+<li>圆锥曲线的离心率：圆锥曲线的离心率（eccentricity）是一个非负实数，它描述了圆锥曲线的形状。对于椭圆，离心率$e$满足$0\leqslant e&lt;1$；对于双曲线，$e&gt;1$；对于抛物线，$e=1$。离心率越小，椭圆越接近圆形；离心率越大，双曲线的两支越开。</li>
+</ul>
+<p>当然，常见的其实远不止这么一点，这里罗列的是笔者觉得比较重要的几何定理，特地做一个总结。实际运用的时候有很多东西都是可以用的。</p>
+<h3 id="112--向量表示与坐标变换">1.1.2  向量表示与坐标变换</h3>
+<p>我相信各位同学在高中肯定是知道向量这个概念的，但是你们最多认识到三维，并且还依赖于画图，中学阶段我们也仅仅是接触到了三维向量。现在如果我告诉你，一个向量可以有不止三个轴，可以有$5$维，有$10$维，有$10000$维，你现在还能依靠图理解向量吗？事实上向量的维数可以是很多维，从代数的意义上你可以认为向量是一个集合，从几何的意义上你又可以认为向量是一个n维欧几里得空间中的一个点：</p>
+<p>$$
+x = [x<em>{1}, x</em>{2}, \dots, x_{n}]^{\top}. \tag{1.1.1}</p>
+<p>$$
+和二维、三维空间中的向量一样，高维空间中的向量同样可以进行加减运算、数量乘运算和数乘运算。但毕竟这是一门应用数学课程，我们不打算把太多精力放在任何一本线代课本里面都能找到的公式上，使用 Python 的NumPy 库举例子恐怕会更加直观。从程序设计的角度来看，如果读者接触过C语言应该会了解数组的概念，而在 C++ 语言中 STL 里面已经包含了 <code>vector</code> 类型。在 Python 中我们可以使用 NumPy 库来创建和操作向量，例如：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+x = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">8</span>])
+<span class="hljs-comment"># array([1, 2, 3, 5, 8])</span>
+</code></pre>
+<p>这样我们便创建了一个向量。随后便可以进行各种操作。</p>
+<blockquote>
+<p>注意：分隔符也可以用分号或空格，但得到向量的形状是不同的。</p>
+</blockquote>
+<p>引入向量的目的并不仅仅是为了在几何图形中更好地表示方向和距离，而是为了利用代数的方法来解决几何问题。向量提供了一种将几何概念转化为代数表达式的方式，从而使得几何问题的解决变得更加简单和直接。</p>
+<p>例如，在解决物理问题时，力、速度和加速度等物理量都可以用向量表示。通过向量的加减和数乘运算，我们可以直接计算出合力、相对速度等结果，而不需要借助复杂的几何图形。在计算机图形学中，向量被广泛用于表示和处理图形和动画。通过向量运算，我们可以实现图形的旋转、缩放、平移等变换，以及计算光线的反射和折射等效果。</p>
+<p>解析几何法的本质就是利用函数与方程来表示不同的几何曲线。在中学阶段我们都学习过圆锥曲线的方程形式，但在实际问题中我们面临的曲线会更加复杂。尤其是在三维空间中的曲线与曲面，可能会用到多元函数去进行表示，也可能用极坐标或参数方程更加方便，但不管怎么说，解析几何方法的本质就是把各种几何问题都转化为代数问题求解。解方程比起复杂的分析，更依靠计算，而这恰恰是程序所擅长的。</p>
+<p>在数学中，坐标变换通常涉及到一系列的矩阵运算，这些矩阵描述了一个坐标系相对于另一个坐标系的位置和方向。旋转变换就是其中的一个典型例子。当我们说一个坐标系相对于另一个坐标系进行了旋转，我们通常是指它绕着一个轴或者点旋转了一定的角度。二维空间的旋转可以简化为点绕原点旋转，而三维空间则涉及到更复杂的轴向旋转。</p>
+<p><img src="attachments/1-1.png" alt="700"></img></p>
+<center>图1 二维坐标系中的旋转</center>
+
+<p>在二维空间中，如果我们要将坐标系绕原点旋转一个角度，就可以通过旋转矩阵来实现。旋转矩阵是一个非常简单而又强大的工具，它可以将原始坐标系中的点通过线性变换映射到新坐标系中。对于逆时针旋转，二维旋转矩阵的形式是</p>
+<p>$$
+\left[ \begin{matrix}
+\cos \theta &amp; -\sin \theta\ \sin \theta &amp; \cos \theta
+\end{matrix} \right] . \tag{1.1.2}</p>
+<p>$$</p>
+<p>这里，$\theta$是旋转角度，当应用这个旋转矩阵于一个点$(x, y)$，它会给出新的坐标$(x', y')$，这表示了原始点在新坐标系中的位置。</p>
+<p>使用NumPy进行这样的变换非常简单。首先，我们创建一个表示点坐标的NumPy数组，然后创建表示旋转矩阵的二维数组。通过对这两个数组进行点积运算（也就是矩阵乘法），我们就可以得到新的坐标，在Python中可以这样实现：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+<span class="hljs-comment"># 设定旋转角度，这里我们以30度为例</span>
+theta = np.radians(<span class="hljs-number">30</span>)  <span class="hljs-comment"># 将30度转换为弧度</span>
+
+<span class="hljs-comment"># 创建旋转矩阵</span>
+rotation_matrix = np.array([
+    [np.cos(theta), -np.sin(theta)],
+    [np.sin(theta), np.cos(theta)]
+])
+
+<span class="hljs-comment"># 假设我们有一个点 (a, b)</span>
+point = np.array([a, b])
+
+<span class="hljs-comment"># 通过旋转矩阵变换这个点的坐标</span>
+rotated_point = rotation_matrix.dot(point)
+
+print(<span class="hljs-string">"原坐标为:"</span>, point)
+print(<span class="hljs-string">"旋转后的坐标为:"</span>, rotated_point)
+<span class="hljs-comment"># 原坐标为: [5 3]</span>
+<span class="hljs-comment"># 旋转后的坐标为: [2.83012702 5.09807621]</span>
+</code></pre>
+<p>此示例代码中，旋转角度是预设的，你可以根据实际情况调整。通过这种方式，我们能够将几何问题通过坐标变换转化为代数问题，使用编程方法来进行高效的计算。这不仅仅适用于理论数学问题，同样也适用于工程、物理学、计算机图形学以及机器人技术等多个领域中。</p>
+<p><img src="attachments/1-2.png" alt=""></img></p>
+<center>图2 三维坐标系中绕三个坐标轴的旋转</center>
+
+<p>在三维空间中，物体的旋转可以围绕三个主轴进行：$\mathrm{x}$轴， $\mathrm{y}$轴和$\mathrm{z}$轴。这些轴旋转代表了不同方向的运动，并且可以通过旋转矩阵来数学描述。例如，一个点$P(x, y, z)$绕$\mathrm{z}$轴旋转角度$\alpha$可以表示为</p>
+<p>$$
+R_{\mathrm{z}}(\alpha) = \left[ \begin{matrix}
+\cos\alpha &amp; -\sin\alpha &amp; 0\sin\alpha &amp; \cos\alpha &amp; 0\0 &amp; 0 &amp;1
+\end{matrix} \right], \tag{1.1.3}</p>
+<p>$$</p>
+<p>这个旋转保持$\mathrm{z}$坐标不变，同时在$XY$平面上变换$\mathrm{x}$和$\mathrm{y}$坐标。相似地，点$P$绕$\mathrm{y}$轴旋转角度$\beta$的旋转矩阵为</p>
+<p>$$
+R_{\mathrm{y}}(\beta) = \left[ \begin{matrix}
+\cos\beta &amp; 0 &amp; \sin\beta\
+0 &amp; 1 &amp; 0\
+-\sin\beta &amp; 0 &amp; \cos\beta
+\end{matrix} \right], \tag{1.1.4}</p>
+<p>$$</p>
+<p>这个旋转保持$\mathrm{y}$坐标不变，同时在$XZ$平面上变换$\mathrm{x}$和$\mathrm{z}$坐标。而点$P$绕$\mathrm{x}$轴旋转角度$\gamma$的旋转矩阵为</p>
+<p>$$
+R_{\mathrm{x}}(\gamma) = \left[ \begin{matrix}
+1 &amp; 0 &amp; 0\
+0 &amp; \cos\gamma &amp; -\sin\gamma\
+0 &amp; \sin\gamma &amp; \cos\gamma
+\end{matrix} \right], \tag{1.1.5}</p>
+<p>$$</p>
+<p>这个旋转保持$\mathrm{x}$坐标不变，同时在$YZ$平面上变换$\mathrm{y}$和$\mathrm{z}$坐标。若点$P$需同时围绕三个轴旋转，则最终旋转矩阵$R$为这三个矩阵的乘积，即$R = R<em>{\mathrm{z}}(\alpha)R</em>{\mathrm{y}}(\beta)R_{\mathrm{x}}(\gamma)$。需要注意的是，由于矩阵乘法的非交换性，旋转的顺序会影响最终结果。</p>
+<p>在实际应用中，如机器人学、航空航天和计算机图形学，旋转顺序对于模拟和预测物体如何移动至关重要。例如，飞机的姿态控制就极依赖于绕不同轴的旋转顺序，以精确地模拟和控制飞机的行动。在三维建模和动画制作中，这些旋转变换同样是创建动态、逼真场景的基础。</p>
+<p>在Python中，利用NumPy库，我们可以使用如下代码片段来实现三维旋转变换：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+<span class="hljs-comment"># 定义旋转角度（以弧度为单位）</span>
+alpha = np.radians(<span class="hljs-number">30</span>)  <span class="hljs-comment"># 绕 Z 轴旋转</span>
+beta = np.radians(<span class="hljs-number">45</span>)   <span class="hljs-comment"># 绕 Y 轴旋转</span>
+gamma = np.radians(<span class="hljs-number">60</span>)  <span class="hljs-comment"># 绕 X 轴旋转</span>
+
+<span class="hljs-comment"># 定义旋转矩阵</span>
+R_z = np.array([[np.cos(alpha), -np.sin(alpha), <span class="hljs-number">0</span>],
+                [np.sin(alpha), np.cos(alpha), <span class="hljs-number">0</span>],
+                [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]])
+
+R_y = np.array([[np.cos(beta), <span class="hljs-number">0</span>, np.sin(beta)],
+                [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>],
+                [-np.sin(beta), <span class="hljs-number">0</span>, np.cos(beta)]])
+
+R_x = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
+                [<span class="hljs-number">0</span>, np.cos(gamma), -np.sin(gamma)],
+                [<span class="hljs-number">0</span>, np.sin(gamma), np.cos(gamma)]])
+
+<span class="hljs-comment"># 总旋转矩阵</span>
+R = R_z @ R_y @ R_x
+
+<span class="hljs-comment"># 定义点P的坐标</span>
+P = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])
+
+<span class="hljs-comment"># 计算旋转后的坐标</span>
+P_rotated = R @ P
+
+print(<span class="hljs-string">"旋转后P点的坐标为:"</span>, P_rotated)
+<span class="hljs-comment"># 旋转后P点的坐标为: [3.39062937 0.11228132 1.57829826]</span>
+</code></pre>
+<p>在该代码中，点$P$经过由$\alpha$，$\beta$，和$\gamma$定义的旋转后，其新坐标由$P_{\text{rotated}}$给出。该代码首先创建了绕$\mathrm{z}$，$\mathrm{y}$，和$\mathrm{x}$轴的三个旋转矩阵，然后将它们相乘得到一个总的旋转矩阵$R$，并应用这个矩阵来转换点$P$的坐标。</p>
+<p>正是通过这些准确的数学变换和编程实现，我们能够在计算机模拟和实际应用中处理复杂的三维空间问题。无论是设计复杂的机械系统、创建逼真的三维动画，还是开发高级的虚拟现实环境，三维旋转都是不可或缺的基础。</p>
+<p><img src="attachments/1-3.png" alt=""></img></p>
+<center>图3 欧拉角图示</center>
+
+<p>欧拉角是三维空间中用于表示一个物体相对于一个固定坐标系（通常是参考坐标系或世界坐标系）的方向的一组角。这种表示方法定义了三次旋转，将物体从其初始方向旋转到期望方向。欧拉角通常表示为三个角度：$\alpha$，$\beta$，和$\gamma$分别对应于绕$\mathrm{z}$轴，$\mathrm{x}$轴（或$\mathrm{y}$轴），以及再次$\mathrm{y}$轴（或$\mathrm{x}$轴）的旋转。</p>
+<p>欧拉角旋转顺序的不同，定义了不同的旋转方式，最常见的是：</p>
+<ul>
+<li><strong>Z-Y-X（Roll-Pitch-Yaw）</strong>：首先绕$\mathrm{z}$轴旋转$\alpha$（Yaw），然后绕<em>新位置的</em>$\mathrm{y}$轴旋转$\beta$（Pitch），最后绕<em>新位置的</em>$\mathrm{x}$轴旋转$\gamma$（Roll）。</li>
+<li><strong>Z-X-Y（Yaw-Pitch-Roll）</strong>：首先绕$\mathrm{z}$轴旋转$\alpha$（Yaw），然后绕<em>新位置的</em>$\mathrm{x}$轴旋转$\beta$（Pitch），最后再次绕$\mathrm{y}$轴旋转$\gamma$（Roll）。</li>
+</ul>
+<p>每次旋转都是围绕变换后的轴，而不是初始的固定轴。这些旋转通常通过旋转矩阵进行计算，并且可以合成为一个单一的矩阵，它描述了总的旋转。在实际应用中，如飞行动力学和计算机图形学，欧拉角非常重要。</p>
+<p>这里是Python中计算欧拉角旋转的代码示例，假设采用$Z$-$Y$-$X$顺序：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+<span class="hljs-comment"># 定义欧拉角（以弧度为单位）</span>
+alpha = np.radians(<span class="hljs-number">30</span>)  <span class="hljs-comment"># 绕 z 轴的 Yaw 角度</span>
+beta = np.radians(<span class="hljs-number">45</span>)   <span class="hljs-comment"># 绕 y 轴的 Pitch 角度</span>
+gamma = np.radians(<span class="hljs-number">60</span>)  <span class="hljs-comment"># 绕 x 轴的 Roll 角度</span>
+
+<span class="hljs-comment"># 构建对应的旋转矩阵</span>
+R_z = np.array([[np.cos(alpha), -np.sin(alpha), <span class="hljs-number">0</span>],
+                [np.sin(alpha), np.cos(alpha), <span class="hljs-number">0</span>],
+                [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]])
+R_y = np.array([[np.cos(beta), <span class="hljs-number">0</span>, np.sin(beta)],
+                [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>],
+                [-np.sin(beta), <span class="hljs-number">0</span>, np.cos(beta)]])
+R_x = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
+                [<span class="hljs-number">0</span>, np.cos(gamma), -np.sin(gamma)],
+                [<span class="hljs-number">0</span>, np.sin(gamma), np.cos(gamma)]])
+
+<span class="hljs-comment"># 总旋转矩阵，注意乘法的顺序</span>
+R = np.dot(R_x, np.dot(R_y, R_z))
+
+print(<span class="hljs-string">"组合旋转矩阵为:"</span>)
+print(R)
+<span class="hljs-comment"># 组合旋转矩阵为:</span>
+<span class="hljs-comment"># [[ 0.61237244 -0.35355339  0.70710678]</span>
+<span class="hljs-comment">#  [ 0.78033009  0.12682648 -0.61237244]</span>
+<span class="hljs-comment">#  [ 0.12682648  0.9267767   0.35355339]]</span>
+</code></pre>
+<p>当你运行这段代码，它会打印出综合所有三次旋转的旋转矩阵R。</p>
+<h2 id="12-numpy-与线性代数">1.2 Numpy 与线性代数</h2>
+<p>在本节中，我们将探讨Python中最强大的科学计算库之一：NumPy。在深入学习之前，我们需要弄清楚线性代数在实际应用中的重要性。线性代数不仅是理解数据结构、解决数学问题的基础，也是计算机图形学、机器学习等高级领域不可或缺的工具。NumPy库在这里扮演了至关重要的角色，因为它为我们提供了一个高效、便捷的平台来处理数值计算和线性代数运算。接下来的内容，将通过实际的例子展示如何使用NumPy来执行一些基础但强大的线性代数操作。</p>
+<h3 id="121--numpy向量与矩阵的操作">1.2.1  Numpy向量与矩阵的操作</h3>
+<p>在科学计算的世界里，NumPy的数组对象是我们解决问题的得力助手。它能让我们轻松地执行向量化运算，这意味着可以一次性处理数据集而不需要使用循环。这种处理方式不仅代码更加简洁，而且运行速度也远快于传统的Python循环。在Numpy中，向量和矩阵都可以用二维数组表示，让我们来看看基本操作。</p>
+<p><strong>创建向量和矩阵</strong></p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-comment"># 创建向量</span>
+vector = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])
+<span class="hljs-comment"># 创建矩阵</span>
+matrix = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>],
+                   [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>],
+                   [<span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>]])
+</code></pre>
+<p><strong>向量和矩阵的基本属性</strong></p>
+<pre><code class="lang-python"><span class="hljs-comment"># 向量的维度</span>
+print(vector.shape) <span class="hljs-comment"># (3, )</span>
+<span class="hljs-comment"># 矩阵的维度</span>
+print(matrix.shape) <span class="hljs-comment"># (3, 3)</span>
+<span class="hljs-comment"># 矩阵的行数和列数</span>
+print(matrix.shape[<span class="hljs-number">0</span>])  <span class="hljs-comment"># 行数, 3</span>
+print(matrix.shape[<span class="hljs-number">1</span>])  <span class="hljs-comment"># 列数, 3</span>
+</code></pre>
+<p><strong>索引和切片</strong></p>
+<pre><code class="lang-python"><span class="hljs-comment"># 索引</span>
+print(vector[<span class="hljs-number">0</span>])  <span class="hljs-comment"># 输出第一个元素, 1</span>
+print(matrix[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>])  <span class="hljs-comment"># 输出第二行第二列的元素, 5</span>
+
+<span class="hljs-comment"># 切片</span>
+print(vector[<span class="hljs-number">0</span>:<span class="hljs-number">2</span>])  <span class="hljs-comment"># 输出前两个元素, [1, 2]</span>
+print(matrix[<span class="hljs-number">0</span>:<span class="hljs-number">2</span>, <span class="hljs-number">0</span>:<span class="hljs-number">2</span>])  <span class="hljs-comment"># 输出左上角的2x2子矩阵, [[1, 2], [4, 5]]</span>
+</code></pre>
+<p><strong>向量和矩阵的运算</strong></p>
+<pre><code class="lang-python"><span class="hljs-comment"># 向量加法</span>
+vector1 = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])
+vector2 = np.array([<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>])
+print(np.add(vector1, vector2))
+<span class="hljs-comment"># [5, 7, 9]</span>
+
+<span class="hljs-comment"># 矩阵乘法</span>
+matrix1 = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]])
+matrix2 = np.array([[<span class="hljs-number">5</span>, <span class="hljs-number">6</span>], [<span class="hljs-number">7</span>, <span class="hljs-number">8</span>]])
+print(np.dot(matrix1, matrix2))  <span class="hljs-comment"># 或使用 matrix1 @ matrix2</span>
+<span class="hljs-comment"># [[19, 22],</span>
+<span class="hljs-comment">#  [43, 50]]</span>
+</code></pre>
+<h3 id="122--利用numpy进行线性代数基本运算">1.2.2  利用Numpy进行线性代数基本运算</h3>
+<p>在NumPy中，我们可以利用数组的<strong>广播机制</strong>来进行各种线性代数运算。例如，你可以轻松地将一个标量与一个向量或矩阵相乘，而不需要编写任何循环。NumPy也提供了计算矩阵的转置、行列式、逆矩阵等常见操作的函数。</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+<span class="hljs-comment"># 数量乘法示例</span>
+scalar = <span class="hljs-number">5</span>
+scaled_vector = scalar * vector
+print(<span class="hljs-string">"Scaled vector:"</span>, scaled_vector)
+<span class="hljs-comment"># Scaled vector: [ 5 10 15]</span>
+
+<span class="hljs-comment"># 矩阵的转置示例</span>
+transposed_matrix = matrix.T
+print(<span class="hljs-string">"Transposed matrix:\n"</span>, transposed_matrix)
+<span class="hljs-comment"># Transposed matrix:</span>
+<span class="hljs-comment"># [[1, 4, 7]</span>
+<span class="hljs-comment">#  [2, 5, 8]</span>
+<span class="hljs-comment">#  [3, 6, 9]]</span>
+
+<span class="hljs-comment"># 计算行列式示例</span>
+matrix_determinant = np.linalg.det(matrix)
+print(<span class="hljs-string">"Matrix determinant:"</span>, matrix_determinant)
+<span class="hljs-comment"># Matrix determinant: 0.0</span>
+
+<span class="hljs-comment"># 求解线性方程组示例</span>
+A = np.array([[<span class="hljs-number">3</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]])
+b = np.array([<span class="hljs-number">9</span>, <span class="hljs-number">8</span>])
+solution = np.linalg.solve(A, b)
+print(<span class="hljs-string">"Solution of the linear system:"</span>, solution)
+<span class="hljs-comment"># Solution of the linear system: [2. 3.]</span>
+</code></pre>
+<h3 id="123--numpylinalg-的使用">1.2.3  <code>numpy.linalg</code> 的使用</h3>
+<p>最后，我们不能不提NumPy中的 <code>linalg</code> 子模块，它包含了一系列关于线性代数的函数。无论是求解方程组，还是计算特征值、特征向量，乃至执行奇异值分解，<code>linalg</code> 模块都能够提供帮助。通过这些工具，我们可以探索矩阵的深层属性，并应用于各种数学和工程问题。下面是一些 <code>numpy.linalg</code> 模块的使用示例：</p>
+<p><strong>计算逆矩阵</strong></p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-comment"># If the matrix is singular, use the pseudo-inverse</span>
+pseudo_inverse_matrix = np.linalg.pinv(matrix)
+print(<span class="hljs-string">"Pseudo-inverse of the matrix:"</span>)
+print(pseudo_inverse_matrix)
+<span class="hljs-comment"># Pseudo-inverse of the matrix:</span>
+<span class="hljs-comment"># [[-6.38888889e-01 -1.66666667e-01  3.05555556e-01]</span>
+<span class="hljs-comment">#  [-5.55555556e-02  4.20756436e-17  5.55555556e-02]</span>
+<span class="hljs-comment">#  [ 5.27777778e-01  1.66666667e-01 -1.94444444e-01]]</span>
+</code></pre>
+<p><strong>特征值和特征向量</strong></p>
+<pre><code class="lang-python">eigenvalues, eigenvectors = np.linalg.eig(matrix)
+print(eigenvalues)
+<span class="hljs-comment"># [ 1.61168440e+01 -1.11684397e+00 -1.30367773e-15]</span>
+
+print(eigenvectors)
+<span class="hljs-comment"># [[-0.23197069 -0.78583024  0.40824829]</span>
+<span class="hljs-comment">#  [-0.52532209 -0.08675134 -0.81649658]</span>
+<span class="hljs-comment">#  [-0.8186735   0.61232756  0.40824829]]</span>
+</code></pre>
+<p><strong>奇异值分解</strong></p>
+<pre><code class="lang-python">U, S, V = np.linalg.svd(matrix)
+print(U)
+<span class="hljs-comment"># [[-0.21483724  0.88723069  0.40824829]</span>
+<span class="hljs-comment">#  [-0.52058739  0.24964395 -0.81649658]</span>
+<span class="hljs-comment">#  [-0.82633754 -0.38794278  0.40824829]]</span>
+
+print(S)
+<span class="hljs-comment"># [1.68481034e+01 1.06836951e+00 4.41842475e-16]</span>
+
+print(V)
+<span class="hljs-comment"># [[-0.47967118 -0.57236779 -0.66506441]</span>
+<span class="hljs-comment">#  [-0.77669099 -0.07568647  0.62531805]</span>
+<span class="hljs-comment">#  [-0.40824829  0.81649658 -0.40824829]]</span>
+</code></pre>
+<blockquote>
+<p>在np的计算中存在浮点数误差，特征向量形成矩阵转置乘以特征向量形成矩阵并不完全等于单位矩阵，故按步骤计算和直接调用函数存在一定误差。感谢学习者提问，这里回答一下。</p>
+</blockquote>
+<p><strong>范数计算</strong></p>
+<pre><code class="lang-python">norm = np.linalg.norm(vector)
+print(norm)
+<span class="hljs-comment"># 3.7416573867739413</span>
+</code></pre>
+<h2 id="13--平面几何模型的构建">1.3  平面几何模型的构建</h2>
+<h3 id="131-问题背景介绍">1.3.1 问题背景介绍</h3>
+<p>我们以2023 年高教社杯全国大学生数学建模竞赛B题为例：</p>
+<p>单波束测深是利用声波在水中的传播特性来测量水体深度的技术。声波在均匀介质中作匀速直线传播，在不同界面上产生反射，利用这一原理，从测量船换能器垂直向海底发射声波信号，并记录从声波发射到信号接收的传播时间，通过声波在海水中的传播速度和传播时间计算出海水的深度，其工作原理如图 4 所示。由于单波束测深过程中采取单点连续的测量方法，因此，其测深数据分布的特点是，沿航迹的数据十分密集，而在测线间没有数据。 </p>
+<p><img src="attachments/Pasted%20image%2020240417112927.png" alt="500"></img></p>
+<center>图4 单波束（左）和多波束（右）探测的工作原理</center>
+
+<p>多波束测深系统是在单波束测深的基础上发展起来的，该系统在与航迹垂直的平面内一次能发射出数十个乃至上百个波束，再由接收换能器接收由海底返回的声波，其工作原理如图 4所示。多波束测深系统克服了单波束测深的缺点，在海底平坦的海域内，能够测量出以测量船测线为轴线且具有一定宽度的全覆盖水深条带（图 5）。 </p>
+<p><img src="attachments/Pasted%20image%2020240417113056.png" alt="500"></img></p>
+<center>图5 条带的重叠区域及其与覆盖宽度、测线间距的关系</center>
+
+<p>多波束测深条带的覆盖宽度$W$随换能器开角$\theta$和水深$D$的变化而变化。若测线相互平行且海底地形平坦, 则相邻条带之间的重叠率定义为$\displaystyle\eta = 1 - \frac{d}{W}$, 其中$d$为相邻两条测线的间距，$W$为条带的覆盖宽度 (图 5)。若$\eta &lt; 0$，则表示漏测。为保证测量的便利性和数据的完整性, 相邻条带之间应有$10\% \sim 20\%$的重叠率。</p>
+<p>但真实海底地形起伏变化大, 若采用海区平均水深设计测线间隔, 虽然条带之间的平均重叠率可以满足要求, 但在水深较浅处会出现漏测的情况 (图 6), 影响测量质量; 若采用海区最浅处水深设计测线间隔, 虽然最浅处的重叠率可以满足要求, 但在水深较深处会出现重叠过多的情况 (图 6), 数据冗余量大, 影响测量效率。</p>
+<p>与测线方向垂直的平面和海底坡面的交线构成一条与水平面夹角为$\alpha$的斜线（图 6），称$\alpha$为坡度。请建立多波束测深的覆盖宽度及相邻条带之间重叠率的数学模型。</p>
+<p><img src="attachments/Pasted%20image%2020240417113542.png" alt="500"></img></p>
+<center>图6 问题一示意图</center>
+
+<p>若多波束换能器的开角为 $120^{\circ}$，坡度为 $1.5^{\circ}$，海域中心点处的海水深度为 $70 ~\mathrm{m}$，利用上述模型计算表 1 中所列位置的指标值，将结果以表 1 的格式放在正文中，同时保存到 <code>result1.xlsx</code>文件中。</p>
+<center>表1 问题一的计算结果</center>
+
+<p><img src="attachments/Pasted%20image%2020240417113713.png" alt="700"></img></p>
+<h3 id="132-问题一的分析">1.3.2 问题一的分析</h3>
+<p>对于问题一，这是一个几何模型问题。已知开角$120^{\circ}$，坡度为 $1.5^{\circ}$，$D=70$，求覆盖宽度，这个问题本质上就是一个已知三角形角度和角平分线长度求对边的几何问题。可以反复利用三角形中的<strong>正弦定理</strong>求解左右两条波束落点的距离也就是带宽，随后通过几何关系求解重复部分。</p>
+<h3 id="133-问题一的模型建立">1.3.3 问题一的模型建立</h3>
+<p>将问题一中的几何模型进行抽象构造如图2所示。图2中船的行进方向垂直纸面向外，船的位置为$D$点。$DF$为重力方向竖直向下，而$AB$是水平面。$D$点发射出两条波束$DA$和$DE$交海底平面于$A$、$E$两点。由于$DF$竖直向下，结合问题背景可知$DF$为$\angle ADE$的角平分线。过$A$作$AC$，这是海底平面，$\angle CAB=1.5^{\circ}$。整体如图7所示：</p>
+<p><img src="attachments/Pasted%20image%2020240417113913.png" alt="500"></img></p>
+<center>图7 单一探测船的示意图</center>
+
+<p>在图7中显然，由于$DF$竖直向下而$AB$为水平面，故$\angle DAB+\angle ADF=90^{\circ}$，$\angle CAB=1.5^{\circ}$，$\angle ADF$为开角的一半也就是$60^{\circ}$，故有：</p>
+<p>$$
+\angle DAF = 90^{\circ} - \angle CAB - \angle ADF. \tag{1.3.1}</p>
+<p>$$
+这可以推算出$\angle DAF$为$28.5^\circ$，由三角形的内角和可知$\angle DEA$为$31.5^{\circ}$。已知$DF$长度为$70\text{ m}$，且知道对角角度，可以在$\Delta DAF$和$\Delta DFE$中分别使用正弦定理：</p>
+<p>$$
+\frac{DF}{\sin 28.5^{\circ}} = \frac{AF}{\sin 60^{\circ}}, \quad \frac{DF}{\sin 31.5^{\circ}} = \frac{EF}{\sin 60^{\circ}}. \tag{1.3.2}</p>
+<p>$$
+所以待求带宽的长度也就是$AF+EF$。经过代换，可以解得在已知海底深度$D$的条件下，覆盖宽度的计算方法为：</p>
+<p>$$
+W = D \left( \frac{\sin 60^{\circ}}{\sin 28.5^{\circ}} + \frac{\sin 60^{\circ}}{\sin 31.5^{\circ}} \right). \tag{1.3.3}</p>
+<p>$$
+为了求解相邻测线的覆盖率，考虑两条相邻测线的情况，如图8所示：</p>
+<p><img src="attachments/Pasted%20image%2020240417114003.png" alt="500"></img></p>
+<center>图8 多艘探测船的示意图</center>
+
+<p>从图8中可以看到，$G$点在$D$点左侧$d$米处。且由于船在水面上行走，$GD // AB$。那么同样地，由于$GJ$同样竖直向下，所以$GH//DF$, $GI//DF$，$\Delta GHI$和$\Delta DFE$是相似的。对于$G$点和$D$点而言，波束重叠部分的重叠覆盖宽度$\lambda=EH$。若过$J$作$AB$平行线，并延长$DK$相交于$P$，则二者形成的$\Delta JKP$中$\angle KJP=1.5^{\circ}$且$JP=d$。那么$EH$的长度显然有下面的关系：</p>
+<p>$$
+EH = JH + EK - JK. \tag{1.3.4}</p>
+<p>$$
+根据前面通过正弦定理得到的推论，有：</p>
+<p>$$
+\begin{align}
+JH &amp;= \frac{GJ}{\sin 31.5^{\circ}} \cdot \sin 60^{\circ},\tag{1.3.5}\
+EK &amp;= \frac{DK}{\sin 28.5^{\circ}} \cdot \sin 60^{\circ}, \tag{1.3.6}\
+JK &amp;= \frac{d}{\cos 1.5^{\circ}}, \tag{1.3.7}\
+GJ &amp;= DK + d\tan 1.5^{\circ}. \tag{1.3.8}
+\end{align}</p>
+<p>$$</p>
+<p>通过对上述表达式的求解，可以得到重叠部分的宽度为：</p>
+<p>$$
+\begin{aligned}
+\lambda &amp;= (DK + d\tan 1.5^{\circ})\cdot \frac{\sin 60^{\circ}}{\sin 31.5^{\circ}} + DK \cdot \frac{\sin 60^{\circ}}{\sin 28.5^{\circ}} - \frac{d}{\cos 1.5^{\circ}}\
+&amp;= DK \cdot \left( \frac{\sin 60^{\circ}}{\sin 31.5^{\circ}} + \frac{\sin 60^{\circ}}{\sin 28.5^{\circ}} \right) + d \cdot \left( \frac{\sin 60^{\circ} \tan 1.5^{\circ}}{\sin 31.5^{\circ}} - \frac{1}{\cos 1.5^{\circ}} \right) 
+\end{aligned}\tag{1.3.9}</p>
+<p>$$</p>
+<p>利用公式可以解得若测线距离中心位置左侧$d\text{ m}$或右侧$d\text{ m}$对应的覆盖宽度。而对应测线的海底深度为$GJ$，同样给出了对应海底深度的测算方法。而若知道对应海底深度，由于$\Delta GHI$与$\Delta DFE$相似，可以利用相似求对应位置的覆盖宽度：</p>
+<p>$$
+\frac{W'}{D + d \tan\alpha} = \frac{W}{D}. \tag{1.3.10}</p>
+<p>$$</p>
+<p>经过一系列变换，可以达成对问题一的求解。</p>
+<h3 id="133-问题一的模型求解与讨论">1.3.3 问题一的模型求解与讨论</h3>
+<p>通过建模与编程求解，可以得到计算结果如表2所示：</p>
+<center>表2 问题一的解答</center>
+
+<table>
+<thead>
+<tr>
+<th>$d/\text{m}$</th>
+<th>$-800$</th>
+<th>$-600$</th>
+<th>$-400$</th>
+<th>$-200$</th>
+<th>$0$</th>
+<th>$200$</th>
+<th>$400$</th>
+<th>$600$</th>
+<th>$800$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$D/\mathrm{m}$</td>
+<td>$90.94$</td>
+<td>$85.711$</td>
+<td>$80.474$</td>
+<td>$75.237$</td>
+<td>$70$</td>
+<td>$64.76$</td>
+<td>$59.526$</td>
+<td>$54.289$</td>
+<td>$49.051$</td>
+</tr>
+<tr>
+<td>$W/\mathrm{m}$</td>
+<td>$315.81$</td>
+<td>$297.62$</td>
+<td>$279.441$</td>
+<td>$261.25$</td>
+<td>$243$</td>
+<td>$224.8$</td>
+<td>$206.698$</td>
+<td>$188.513$</td>
+<td>$170.328$</td>
+</tr>
+<tr>
+<td>$\eta/\%$<br></br></td>
+<td>$—$</td>
+<td>$0.3569$</td>
+<td>$0.3151$</td>
+<td>$0.267$</td>
+<td>$0.21$</td>
+<td>$0.148$</td>
+<td>$0.0740$</td>
+<td>$0.0153$</td>
+<td>$0.12365$</td>
+</tr>
+</tbody>
+</table>
+<p>在表2中，距离是自变量，表示观测点到某个参考点的距离，它在整个数据集中从-800m到800m变化。随着距离的增加，海水深度逐渐减小。这可能与沿着某一方向移动远离海岸线导致海水深度减小有关。随着距离的增加，覆盖宽度逐渐减小。这可能是由于覆盖物在距离远离某一基准点时逐渐减小，也与相似形有关。覆盖率与距离和海水深度相关，并且在大约向右偏移600m左右时出现最小值。经探究，二者呈现典型的凸函数关系，当D=563m附近时覆盖率取得最小。</p>
+<p><strong>问题一的Python实现</strong></p>
+<p>该脚本计算从海底反射的超声波束的覆盖宽度，考虑各种线路测量的海底坡度和深度。</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> scipy.optimize <span class="hljs-keyword">import</span> fsolve
+
+<span class="hljs-comment"># 常量定义</span>
+theta = <span class="hljs-number">2</span> * np.pi / <span class="hljs-number">3</span>  <span class="hljs-comment"># 全开角</span>
+alpha = <span class="hljs-number">1.5</span> / <span class="hljs-number">180</span> * np.pi  <span class="hljs-comment"># 海底坡度</span>
+htheta = theta / <span class="hljs-number">2</span>  <span class="hljs-comment"># 半开角</span>
+h = <span class="hljs-number">70</span>  <span class="hljs-comment"># 中心点的海水深度</span>
+d = <span class="hljs-number">200</span>  <span class="hljs-comment"># 测线距离</span>
+k = np.tan(np.pi / <span class="hljs-number">2</span> - htheta)  <span class="hljs-comment"># 超声波直线的斜率</span>
+k0 = np.tan(alpha)  <span class="hljs-comment"># 海底斜率</span>
+
+<span class="hljs-comment"># 初始化</span>
+Aleft = []  <span class="hljs-comment"># 左端点坐标</span>
+Aright = []  <span class="hljs-comment"># 右端点坐标</span>
+Acenter = []  <span class="hljs-comment"># 中心点坐标</span>
+W = []  <span class="hljs-comment"># 覆盖宽度</span>
+
+<span class="hljs-comment"># 求解交点</span>
+<span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> range(-<span class="hljs-number">4</span>, <span class="hljs-number">5</span>):
+    leftsolve = <span class="hljs-keyword">lambda</span> t: k * (t - n * d) - k0 * t + h
+    rightsolve = <span class="hljs-keyword">lambda</span> t: -k * (t - n * d) - k0 * t + h
+    tleft = fsolve(leftsolve, <span class="hljs-number">0</span>)
+    tright = fsolve(rightsolve, <span class="hljs-number">0</span>)
+    Aleft.append([tleft[<span class="hljs-number">0</span>], k0 * tleft[<span class="hljs-number">0</span>] - h])
+    Aright.append([tright[<span class="hljs-number">0</span>], k0 * tright[<span class="hljs-number">0</span>] - h])
+    Acenter.append([<span class="hljs-number">200</span> * n, k0 * <span class="hljs-number">200</span> * n - h])
+Aleft = np.array(Aleft)
+Aright = np.array(Aright)
+Acenter = np.array(Acenter)
+D = Acenter[:, <span class="hljs-number">1</span>]  <span class="hljs-comment"># 海水深度</span>
+W = np.sqrt((Aleft[:, <span class="hljs-number">0</span>] - Aright[:, <span class="hljs-number">0</span>]) ** <span class="hljs-number">2</span> + (Aleft[:, <span class="hljs-number">1</span>] - Aright[:, <span class="hljs-number">1</span>]) ** <span class="hljs-number">2</span>)  <span class="hljs-comment"># 覆盖宽度</span>
+
+<span class="hljs-comment"># 计算重合部分</span>
+cover = np.zeros(<span class="hljs-number">8</span>)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">8</span>):
+    cover[i] = np.sqrt((Aright[i, <span class="hljs-number">0</span>] - Aleft[i + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>]) ** <span class="hljs-number">2</span> + (Aright[i, <span class="hljs-number">1</span>] - Aleft[i + <span class="hljs-number">1</span>, <span class="hljs-number">1</span>]) ** <span class="hljs-number">2</span>)
+    <span class="hljs-comment"># 判断是否有重叠，如果没有，则重叠率为负值</span>
+    <span class="hljs-keyword">if</span> Aright[i, <span class="hljs-number">0</span>] - Aleft[i + <span class="hljs-number">1</span>, <span class="hljs-number">0</span>] &lt; <span class="hljs-number">0</span>: 
+        cover[i] = -cover[i]
+eta = cover / W[<span class="hljs-number">1</span>:]
+
+<span class="hljs-comment"># 打印结果</span>
+print(<span class="hljs-string">"海水深度 D:"</span>, D)
+<span class="hljs-comment"># 海水深度 D: [-90.94873726 -85.71155294 -80.47436863 -75.23718431 -70.</span>
+<span class="hljs-comment"># -64.76281569 -59.52563137 -54.28844706 -49.05126274]</span>
+
+print(<span class="hljs-string">"覆盖宽度 W:"</span>, W)
+<span class="hljs-comment"># 覆盖宽度 W: [315.81332829 297.62756059 279.44179288 261.25602517 243.07025746</span>
+<span class="hljs-comment"># 224.88448975 206.69872205 188.51295434 170.32718663]</span>
+
+print(<span class="hljs-string">"重合部分比例 eta:"</span>, eta)
+<span class="hljs-comment"># 重合部分比例 eta: [0.35695443 0.31510572 0.26743092 0.21262236 0.14894938 0.07407224</span>
+<span class="hljs-comment"># 0.01525164 0.12364966]</span>
+</code></pre>
+<h2 id="14--立体几何模型的构建">1.4  立体几何模型的构建</h2>
+<p>背景同上，问题如下：问题 2 考虑一个矩形待测海域（图 9），测线方向与海底坡面的法向在水平面上投影的夹角为 𝛽，请建立多波束测深覆盖宽度的数学模型。</p>
+<p><img src="attachments/Pasted%20image%2020240417121230.png" alt="500"></img></p>
+<center>图9 问题二的示意图</center>
+
+<p>若多波束换能器的开角为$120^{\circ}$，坡度为$1.5^{\circ}$，海域中心点处的海水深度为 $120 \text{ m}$，利用上述模型计算表 2 中所列位置多波束测深的覆盖宽度，将结果以表 2 的格式放在正文中，同时保存到 <code>result2.xlsx</code> 文件中。</p>
+<center>表2 问题二的计算结果</center>
+
+<p><img src="attachments/Pasted%20image%2020240417121340.png" alt="700"></img></p>
+<h3 id="141问题二的分析">1.4.1问题二的分析</h3>
+<p>问题二是问题一的延续。第二个问题将场景从二维向三维扩展，在三维空间内利用正弦定理求解投影长度。可以通过做辅助平面的方式构造四棱锥，利用三面角定理求解。通过坡度和倾斜角可以解得测线与平面夹角关系，再通过波束的最大开角$120^{\circ}$可以得到直线与平面夹角，从而变换模型得到四棱锥的几何构型。通过解方程的方法求最优解。</p>
+<h3 id="142问题二模型的建立">1.4.2问题二模型的建立</h3>
+<p>对于第二问，问题变成了一个立体几何问题，如图10所示。</p>
+<p><img src="attachments/Pasted%20image%2020240417121419.png" alt="500"></img></p>
+<center>图10 问题二的三维示意图</center>
+
+<p>图10中$KJ$为测线。倾斜角$\beta$为测线与坡面法向投影的夹角，平面$ABC$是垂直于直线$KJ$的（线面垂直），$CD$为垂面与海底形成的交线，也就是所需要求解的长度。平面$BEC$是平行于水平面，也平行于直线$JK$的。同时$CE$垂直于平面$ABE$，且$CE//FH$。那么很显然，直线$KJ$与直线$BC$构成异面垂直，角度为$\beta$。并且，$AE$垂直于$CE$，$AB$垂直于$BE$，$AB$垂直于$BC$，构成一个典型的四面体几何模型。</p>
+<p>在图所示的情况中，$\beta$是一个钝角。如果过$B$作$KJ$在平面$BEC$中的投影$BK’$，$\angle EBK’$的角度为$\beta$，补角为$180-\beta$。那么很显然，由于$BK’$垂直于$BC$，$BE$垂直于$CE$，那么$\angle BCE$与$\angle CBE$互余，$\angle CBE$和$180-\beta$互余，也就是说$\angle BCE$的角度也就是$180-\beta$。
+注意到$\displaystyle \cos\angle ACB = \frac{CB}{AC}$, $\displaystyle \cos\angle BCE=\frac{CE}{BC}$, $\displaystyle cos\angle ACE=\frac{CE}{AC}$，这实际上就构成了三面角公式：</p>
+<p>$$
+\cos \angle  ACB \cdot \cos\angle BCE = \cos \angle  ACE. \tag{1.4.1}</p>
+<p>$$</p>
+<p>因为$\angle ACB=30^{\circ}$，$\angle BCE=45^{\circ}$，所以$\angle ACE$是可以求解的，$\angle EAC$也是可以求解的（二者互余）。</p>
+<p>然后另外再使用一次三面角公式，$\displaystyle \cos\angle EAC=\frac{EA}{AC}$, $\displaystyle \cos\angle EAB=\frac{AB}{EA}$, $\displaystyle \cos\angle BAC=\frac{AB}{AC}$，所以可以得到：</p>
+<p>$$
+\cos \angle  EAC \cdot \cos\angle EAB = \cos \angle  BAC. \tag{1.4.2}</p>
+<p>$$</p>
+<p>故$\angle EAB$也是可以求出来的。而$\angle DEB$为坡面角$1.5^{\circ}$，同样也就能求出$\angle ABD$。若在$\Delta ABD$中使用正弦定理，因为已知$AD$和对角，则$AE$的长满足方程：</p>
+<p>$$
+\frac{AE}{\sin\angle ADE} = \frac{d}{\sin\angle AED}. \tag{1.4.3}</p>
+<p>$$</p>
+<p>同时，由于前面求解过$\angle EAC$，即可求$AC$的长。因为$EC$垂直于平面$ABE$，所以$\Delta EAC$构成一个直角三角形。$AC$长度满足：</p>
+<p>$$
+EA = EC \cos \angle CAE. \tag{1.4.4}</p>
+<p>$$</p>
+<p>另外，在$\Delta CAD$中知道了$AC$、$AD$的长和夹角（$60^{\circ}$），就可以使用余弦定理求解$CD$的值：</p>
+<p>$$
+CD^{2} = AC^{2} + AD^{2} - 2 \cdot AC \cdot AD \cdot \cos60 ^{\circ}.\tag{1.4.5}</p>
+<p>$$</p>
+<p>同理，对于另一条波束射线，分析方法同上。只需要将$\angle BCE$的角度从$180-\beta$变为$\beta$即可求解。所以带宽$DC+DC’$可以求解。</p>
+<h3 id="142问题二模型的求解与讨论">1.4.2问题二模型的求解与讨论</h3>
+<p>通过建模与编程求解，可以得到计算结果如表3所示：</p>
+<center>表3 问题二的解答</center>
+
+<p><img src="attachments/Pasted%20image%2020240417122656.png" alt="700"></img></p>
+<p>从表3中可以看出如下规律：</p>
+<ol>
+<li><strong>测量船距海域中心点处的距离与覆盖宽度之间的关系</strong>： 从数据可以看出，随着测量船距海域中心点处的距离增加，覆盖宽度似乎也在增加。这可能表示在不同距离下，测量覆盖区域的宽度不同，这是一个直观的趋势。</li>
+<li><strong>测量船距海域中心点处的距离与测线方向夹角之间的关系</strong>： 表格中的数据似乎显示了不同距离下的测线方向夹角的变化。这可能表示在不同距离下，测量船需要采取不同的测线方向。这也是一个趋势。</li>
+<li><strong>部分数据存在对称性</strong>： 通过观察，可以看到表格的一部分数据在特定角度（如90度）下具有对称性，即某些角度下的数据在正负方向上相等。这可能反映了某种对称性或规律。</li>
+</ol>
+<p><strong>问题二的Python实现</strong></p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> scipy.optimize <span class="hljs-keyword">import</span> fsolve
+
+<span class="hljs-comment"># 常量定义</span>
+theta = <span class="hljs-number">2</span> * np.pi / <span class="hljs-number">3</span>  <span class="hljs-comment"># 全开角</span>
+alpha = -<span class="hljs-number">1.5</span> / <span class="hljs-number">180</span> * np.pi  <span class="hljs-comment"># 坡度</span>
+htheta = theta / <span class="hljs-number">2</span>  <span class="hljs-comment"># 半开角</span>
+h = <span class="hljs-number">120</span>  <span class="hljs-comment"># 正中心的海水深度</span>
+unit = <span class="hljs-number">1852</span>  <span class="hljs-comment"># 一海里等于1852米</span>
+k0 = np.tan(alpha)  <span class="hljs-comment"># 海底坡面直线的斜率</span>
+
+<span class="hljs-comment"># 初始化覆盖宽度矩阵</span>
+W = np.zeros((<span class="hljs-number">8</span>, <span class="hljs-number">8</span>))
+
+<span class="hljs-comment"># 计算不同角度和位置的声呐波束的覆盖宽度</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, <span class="hljs-number">9</span>):
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, <span class="hljs-number">9</span>):
+        beta = (i - <span class="hljs-number">1</span>) * np.pi / <span class="hljs-number">4</span>
+        d = (j - <span class="hljs-number">1</span>) * <span class="hljs-number">0.3</span> * unit  <span class="hljs-comment"># 换算为米</span>
+        v = np.array([np.cos(beta), np.sin(beta), <span class="hljs-number">0</span>])  <span class="hljs-comment"># 直线的法向量</span>
+        origin = v * d  <span class="hljs-comment"># 发射位置</span>
+
+        <span class="hljs-comment"># 波束的方向向量</span>
+        v1 = np.array([-np.sin(beta) * np.sin(htheta), np.cos(beta) * np.sin(htheta), -np.cos(htheta)])
+        v2 = np.array([np.sin(beta) * np.sin(htheta), -np.cos(beta) * np.sin(htheta), -np.cos(htheta)])
+
+        <span class="hljs-comment"># 用于找到波束与海底交点的函数</span>
+        leftsolve = <span class="hljs-keyword">lambda</span> t: (v1[<span class="hljs-number">0</span>] * t + origin[<span class="hljs-number">0</span>]) * k0 - h - (v1[<span class="hljs-number">2</span>] * t + origin[<span class="hljs-number">2</span>])
+        rightsolve = <span class="hljs-keyword">lambda</span> t: (v2[<span class="hljs-number">0</span>] * t + origin[<span class="hljs-number">0</span>]) * k0 - h - (v2[<span class="hljs-number">2</span>] * t + origin[<span class="hljs-number">2</span>])
+
+        <span class="hljs-comment"># 解方程找到交点</span>
+        tleft = fsolve(leftsolve, <span class="hljs-number">0</span>)
+        tright = fsolve(rightsolve, <span class="hljs-number">0</span>)
+
+        <span class="hljs-comment"># 计算左右交点的坐标</span>
+        pleft = v1 * tleft + origin
+        pright = v2 * tright + origin
+
+        <span class="hljs-comment"># 计算并存储覆盖宽度</span>
+        W[i-<span class="hljs-number">1</span>, j-<span class="hljs-number">1</span>] = np.linalg.norm(pleft - pright)
+
+<span class="hljs-comment"># 打印覆盖宽度矩阵</span>
+print(<span class="hljs-string">"覆盖宽度矩阵 W:\n"</span>, W)
+<span class="hljs-comment"># 覆盖宽度矩阵 W: </span>
+<span class="hljs-comment"># [[415.69219382 466.09105496 516.4899161  566.88877725 617.28763839</span>
+<span class="hljs-comment">#  667.68649953 718.08536067 768.48422182]</span>
+<span class="hljs-comment"># [416.19152335 451.87170745 487.55189155 523.23207565 558.91225975</span>
+<span class="hljs-comment">#  594.59244385 630.27262795 665.95281205]</span>
+<span class="hljs-comment"># [416.69186994 416.69186994 416.69186994 416.69186994 416.69186994</span>
+<span class="hljs-comment">#  416.69186994 416.69186994 416.69186994]</span>
+<span class="hljs-comment"># [416.19152335 380.51133925 344.83115515 309.15097105 273.47078694</span>
+<span class="hljs-comment">#  237.79060284 202.11041874 166.43023464]</span>
+<span class="hljs-comment"># [415.69219382 365.29333267 314.89447153 264.49561039 214.09674925</span>
+<span class="hljs-comment">#  163.6978881  113.29902696  62.90016582]</span>
+<span class="hljs-comment"># [416.19152335 380.51133925 344.83115515 309.15097105 273.47078694</span>
+<span class="hljs-comment">#  237.79060284 202.11041874 166.43023464]</span>
+<span class="hljs-comment"># [416.69186994 416.69186994 416.69186994 416.69186994 416.69186994</span>
+<span class="hljs-comment">#  416.69186994 416.69186994 416.69186994]</span>
+<span class="hljs-comment"># [416.19152335 451.87170745 487.55189155 523.23207565 558.91225975</span>
+<span class="hljs-comment">#  594.59244385 630.27262795 665.95281205]]</span>
+</code></pre>
+<h3 id="143-问题二的第二种解法">1.4.3 问题二的第二种解法</h3>
+<p>在问题中，以海面中央为原点，南北方向为$\mathrm{x}$轴，东西方向为$\mathrm{y}$轴，竖直向上为$\mathrm{z}$轴正方向构建三维直角坐标系如图11所示：</p>
+<p><img src="attachments/Pasted%20image%2020240417123011.png" alt="500"></img></p>
+<center>图11 问题二解法2的三维示意图</center>
+
+<p>对于测线，若已知倾斜角，则测线的方向向量为：</p>
+<p>$$
+\boldsymbol{v} = [\cos\beta, \sin\beta, 0]^{\top}. \tag{1.4.6}</p>
+<p>$$</p>
+<p>而沿着测线行进的船只发射出的两道波束，因最大开角已知为$120^{\circ}$，可以求得左右两道波束的方向向量分别为：</p>
+<p>$$
+\begin{aligned}
+\boldsymbol{v}<em>{1} &amp;= \left[ -\cos \frac{\theta}{2} \sin\beta, \cos \frac{\theta}{2}\cos\beta, -\sin \frac{\alpha}{2} \right]^{\top}, \
+\boldsymbol{v}</em>{2} &amp;= \left[ \cos \frac{\theta}{2} \sin\beta, -\cos \frac{\theta}{2}\cos\beta, -\sin \frac{\alpha}{2} \right]^{\top}.
+\end{aligned}\tag{1.4.7}</p>
+<p>$$</p>
+<p>海底坡面在三维坐标系中的解析方程可以写作：</p>
+<p>$$
+z = -x\tan \alpha - h, \quad x \in [-1852, 1852],~y \in [-3704, 3704]. \tag{1.4.8}</p>
+<p>$$</p>
+<p>三维空间中的直线方程，是以方向向量为核心构造的。若以参数方程的形式写出测线的解析式，在测线通过点$P(x<em>{0},y</em>{0},0)$的情况下，有下面一组等式成立：</p>
+<p>$$
+\left{<br></br>\begin{align}
+x &amp;= t\cos\beta + x<em>{0},\
+y &amp;= t\sin\beta + y</em>{0},\
+z &amp;= z_{0}.
+\end{align}
+\right.\tag{1.4.9}</p>
+<p>$$</p>
+<p>同样的，在通过$P$点的条件下，从$P$点发射出两条测线的参数方程分别为
+左测线：</p>
+<p>$$
+\left{<br></br>\begin{align}
+x &amp;= -t\cos \frac{\theta}{2}\sin\beta + x<em>{0},\
+y &amp;= t\cos \frac{\theta}{2}\cos\beta + y</em>{0},\
+z &amp;= -t\sin \frac{\theta}{2} + z_{0};
+\end{align}
+\right.\tag{1.4.10}</p>
+<p>$$</p>
+<p>右测线：</p>
+<p>$$
+\left{<br></br>\begin{align}
+x &amp;= t\cos \frac{\theta}{2}\sin\beta + x<em>{0},\
+y &amp;= -t\cos \frac{\theta}{2}\cos\beta + y</em>{0},\
+z &amp;= -t\sin \frac{\theta}{2} + z_{0};
+\end{align}
+\right.\tag{1.4.10}</p>
+<p>$$</p>
+<p>将左测线和右测线与平面方程联立，即可求得船只在测线上$P$点处发射波束的落点坐标。而对于每一条测线，它与通过原点的测线都平行，且相邻两条测线的距离为$d$。根据距离条件，可以计算出相邻测线必定通过的一个点。例如，对于通过原点的测线而言，其右侧测线上必定存在一个点$P$，使得$OP=d$的同时$OP$垂直于测线。可以解得这个$P$点坐标为：</p>
+<p>$$
+P = [-d\sin\beta, d\cos\beta, 0]^{\top}. \tag{1.4.12}</p>
+<p>$$</p>
+<p>联立上述条件，可以求解出对于每一条刻线$l<em>{i}$，当船只P在测线上移动时形成的落点坐标集合${w</em>{i,1}}$和${w_{i,2}}$，进而可以求解所有落点形成的长度$L$。</p>
+<h2 id="15--使用python解方程与方程组">1.5  使用Python解方程与方程组</h2>
+<p>在科学计算和工程应用中，经常会遇到需要求解方程或方程组的问题。Python提供了强大的数学库，如Numpy和Sympy，可以帮助我们轻松地解决这些问题。</p>
+<h3 id="151--利用numpy求线性方程（组）的数值解">1.5.1  利用Numpy求线性方程（组）的数值解</h3>
+<p>Numpy是Python中一个用于数值计算的库，它提供了很多用于矩阵运算的功能。我们可以使用Numpy中的linalg.solve函数来解线性方程组。例如，我们有以下方程组：</p>
+<p>$$
+\begin{align}
+10x - y - 2z &amp;= 72,\
+-x + 10y - 2z &amp;= 83,\
+-x - y + 5z &amp;= 42.
+\end{align}\tag{1.5.1}</p>
+<p>$$</p>
+<p>我们可以使用以下代码来求解这个方程组：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+a = np.array([[<span class="hljs-number">10</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">2</span>], [-<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, -<span class="hljs-number">2</span>], [-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">5</span>]])
+b = np.array([[<span class="hljs-number">72</span>], [<span class="hljs-number">83</span>], [<span class="hljs-number">42</span>]])
+c = np.linalg.solve(a, b)
+print(c)
+<span class="hljs-comment">#[[11.]</span>
+<span class="hljs-comment"># [12.]</span>
+<span class="hljs-comment"># [13.]]</span>
+
+此外，我们还可以使用矩阵的逆来求解方程组，即：
+x = np.linalg.inv(a).dot(b)
+print(x)
+<span class="hljs-comment"># [[11.]</span>
+<span class="hljs-comment"># [12.]</span>
+<span class="hljs-comment"># [13.]]</span>
+</code></pre>
+<h3 id="152--利用sympy求方程（组）的解析解">1.5.2  利用Sympy求方程（组）的解析解</h3>
+<p>Sympy是Python中一个用于符号计算的库，它可以提供方程的解析解，而不仅仅是数值解。什么是解析解和数值解呢？简单来说，解析解是指用数学符号（如$x$、$y$、$\pi$等）表示的解，而数值解是指用具体的数字表示的解。</p>
+<p>在Sympy中，我们首先需要创建符号变量，然后使用 <code>solve</code> 函数来求解方程或方程组。例如：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> sympy <span class="hljs-keyword">import</span> symbols, solve, nonlinsolve
+
+x, y = symbols(<span class="hljs-string">'x y'</span>)
+print(solve(x * <span class="hljs-number">2</span> - <span class="hljs-number">2</span>, x))  <span class="hljs-comment"># 解方程2x - 2 = 0</span>
+<span class="hljs-comment"># [1]</span>
+
+print(solve([x + y - <span class="hljs-number">35</span>, x * <span class="hljs-number">2</span> + y * <span class="hljs-number">4</span> - <span class="hljs-number">94</span>], x, y))  <span class="hljs-comment"># 解方程组x + y = 35, 2x + 4y = 94</span>
+<span class="hljs-comment"># {x:23, y:12}</span>
+
+print(solve(x**<span class="hljs-number">2</span> + x - <span class="hljs-number">20</span>, x))  <span class="hljs-comment"># 解方程x^2 + x - 20 = 0</span>
+<span class="hljs-comment"># [-5, 4]</span>
+
+a, b, c, d = symbols(<span class="hljs-string">'a b c d'</span>, real=<span class="hljs-keyword">True</span>)
+print(nonlinsolve([a**<span class="hljs-number">2</span> + a + b, a - b], [a, b]))  <span class="hljs-comment"># 解非线性方程组a^2 + a + b = 0, a - b = 0</span>
+<span class="hljs-comment"># {(-2, -2), (0, 0)}</span>
+</code></pre>
+<p>以下是一个具体案例：</p>
+<p><img src="attachments/Pasted%20image%2020240417124525.png" alt="500"></img></p>
+<center>图12 平面型Stewart平台示意图</center>
+
+<p>图12给出的是平面型Stewart平台示意图，它模拟一个操作装置，其中包括一个三角形($ABC$)平台，平台位于一个由3个支柱($P<em>{1}$, $P</em>{2}$和$P<em>{3}$)控制的固定平面中。图中的三角形($ABC$)表示平面型Stewart平台，它的尺寸由3个长度$L</em>{1}$，$L<em>{2}$，$L</em>{3}$确定。平台的位置由$3$个支柱的可变长度的$3$个参数$P<em>{1}$，$P</em>{2}$，$P<em>{3}$所控制。需要解决的问题是，在给定一组参数$P</em>{1}$，$P<em>{2}$，$P</em>{3}$的值后，计算出$A$点的坐标$(x, y)$和角度$\theta$的值($\theta$是$L_{3}$与$x$轴的夹角)。请你完成：</p>
+<ol>
+<li>数学建模：参数$L<em>{1}, L</em>{2}, L<em>{3}, x</em>{1}, x<em>{2}, y</em>{2}$是固定常数，在给定一组参数$P<em>{1}, P</em>{2}, P_{3}$的值后，判断能否得到Stewart平台的一个位置，即能否得到$A$点坐标$(x, y)$和角度$\theta$的值。如果能，则称它为Stewart平台的一个<strong>位姿</strong>。但位姿并不一定是唯一的，如何让你的模型能够计算出一组固定参数下的全部位姿。</li>
+<li>模型检验：假设有如下参数: $x<em>{1}=5$, $(x</em>{2}, y<em>{2})=(0,6)$，$L</em>{1}=L<em>{3}=3$, $L</em>{2}=3$, $p<em>{1}=p</em>{2}=5$, $p_{3}=3$，请根据你的模型，计算出Stewart平台的全部位姿，即计算出每个Stewart平台中的$A$点坐标$(x, y)$和角度$\theta$的值。</li>
+</ol>
+<p><strong>定义问题的几何关系</strong></p>
+<p>$A$点的坐标：由于$A$点位于支柱$P<em>{1}$的顶端，我们可以使用距离公式确定$A$点的坐标。这是一个圆的方程，表示所有与原点距离为$P</em>{1}$的点集合。方程如下：</p>
+<p>$$
+x^{2} + y^{2} = P_{1}^{2}. \tag{1.5.2}</p>
+<p>$$
+角度$\beta$的计算：角度是$\Delta ABC$的内角，根据余弦定理，我们有：</p>
+<p>$$
+\cos \beta = \frac{L<em>{2}^{2} + L</em>{3}^{2} - L<em>{1}^{2}}{2L</em>{2}L_{3}}. \tag{1.5.3}</p>
+<p>$$</p>
+<p>$B$点的坐标：$B$点相对于$A$点的位置可以用角度$\theta$表示，根据$A$点的坐标和角度$\theta$，我们可以写出$B$点的坐标</p>
+<p>$$
+B(x<em>{B}, y</em>{B}) = \Big(x + L^{3}\cos \theta, y + L^{3} \sin \theta\Big). \tag{1.5.4}</p>
+<p>$$</p>
+<p>$C$点的坐标：同样地，$C$点相对于$A$点的位置可以用角度$\beta + \theta$来确定，于是$C$点的坐标为：</p>
+<p>$$
+C(x<em>{C}, y</em>{C}) = \Big(x + L^{2}\cos(\beta + \theta), y + L^{2}\sin(\beta + \theta)\Big)</p>
+<p>$$</p>
+<p><strong>建立方程组</strong></p>
+<p>$B$点与$P_{2}$的距离关系：由于$B$点还位于支柱的顶端，所以我们有第二个方程：</p>
+<p>$$
+(x<em>{B} - x</em>{1})^{2} + y<em>{B}^{2} = P</em>{2}^{2}.\tag{1.5.6}</p>
+<p>$$</p>
+<p>$C$点与$P_{3}$的距离关系：同理，$C$点位于支柱的顶端，所以我们有第三个方程：</p>
+<p>$$
+(x<em>{C} - x</em>{2})^{2} + (y<em>{C} - y</em>{2})^{2} = P_{3}^{2}. \tag{1.5.7}$$</p>
+<p><strong>解方程组以确定$A$点坐标和角度$\theta$</strong></p>
+<ul>
+<li>方程求解：我们现在有三个方程和两个未知数 $x$ 和 $y$。为了求解 $x$ 和 $y$，我们可以用任何一个方程消去  后解一个二元一次方程组。</li>
+<li>多解的情况：这组方程可能有多个解，对应于不同的物理位置和Stewart平台的不同位姿。</li>
+<li>数值求解：在实践中，通常需要通过数值方法来解这类方程组，例如使用牛顿法或者数值优化算法。</li>
+<li>模型检验：给定的参数  $x<em>{1}=5$, $(x</em>{2}, y<em>{2})=(0,6)$，$L</em>{1}=L<em>{3}=3$, $L</em>{2}=3$, $p<em>{1}=p</em>{2}=5$, $p_{3}=3$ 可以代入上述方程组中进行求解。这将验证模型的正确性，并给出所有可能的Stewart平台位姿。</li>
+</ul>
+<p>通过上述步骤，我们不仅可以找到$A$点的坐标和角度$\theta$ ，而且还可以确定Stewart平台的多个可能位姿，这些位姿对应于不同的解集。这是一个典型的运动学问题，其解决方案涉及几何、三角函数以及数值计算。</p>
+<h3 id="153--利用scipy求方程（组）的数值解">1.5.3  利用Scipy求方程（组）的数值解</h3>
+<p>在进行数值求解时，<code>fsolve</code> 是 Scipy 库中用于解决非线性方程组的一个非常有用的函数。它通常用于查找方程组的根，其中方程组可以是非线性的，并且不保证有解析解。接下来我们将会对1.5.2小节例题进行求解。</p>
+<p>首先，尝试使用 Sympy 库解方程组时，我们发现问题无法解决。这是因为所面临的方程组可能没有简洁的解析解，或者是解析解超出了Sympy库的计算范围。以下是尝试解方程的代码和得到的结果：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> sympy <span class="hljs-keyword">import</span> symbols, cos, sin, pi, nonlinsolve
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+x, y, theta = symbols(<span class="hljs-string">'x y theta'</span>, real=<span class="hljs-keyword">True</span>)
+L1, L2, L3 = <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>
+p1, p2, p3 = <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">3</span>
+x1, x2, y2 = <span class="hljs-number">5</span>, <span class="hljs-number">0</span>, <span class="hljs-number">6</span>
+<span class="hljs-comment"># 计算内角β</span>
+b = np.arccos((L2**<span class="hljs-number">2</span> + L3**<span class="hljs-number">2</span> - L1**<span class="hljs-number">2</span>) / (<span class="hljs-number">2</span> * L2 * L3))
+print(b)
+<span class="hljs-comment"># 尝试解方程组</span>
+solution = nonlinsolve([
+    (x + L3 * cos(theta) - x1)**<span class="hljs-number">2</span> + (y + L3 * sin(theta))**<span class="hljs-number">2</span> - p1**<span class="hljs-number">2</span>,
+    x**<span class="hljs-number">2</span> + y**<span class="hljs-number">2</span> - p2**<span class="hljs-number">2</span>,
+    (x + L2 * cos(pi/<span class="hljs-number">3</span> + theta))**<span class="hljs-number">2</span> + (y + L2 * sin(pi/<span class="hljs-number">3</span> + theta) - y2)**<span class="hljs-number">2</span> - p3**<span class="hljs-number">2</span>
+], [x, y, theta])
+print(solution)
+<span class="hljs-comment"># 1.0471975511965979</span>
+</code></pre>
+<p>得到的输出表明，我们没有找到方程组的解析解。在这种情况下，我们转向数值解法，特别是Scipy库中的<code>fsolve</code>函数，来找到方程组的数值解。以下是使用<code>fsolve</code>的案例：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> scipy.optimize <span class="hljs-keyword">import</span> fsolve
+<span class="hljs-keyword">from</span> math <span class="hljs-keyword">import</span> sin, cos, pi
+<span class="hljs-comment"># 定义方程组</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">equations</span><span class="hljs-params">(vars)</span>:</span>
+    x, y, theta = vars
+    L1, L2, L3 = <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>
+    p1, p2, p3 = <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">3</span>
+    x1, x2, y2 = <span class="hljs-number">5</span>, <span class="hljs-number">0</span>, <span class="hljs-number">6</span>
+    <span class="hljs-comment"># 根据问题描述定义的方程</span>
+    eq1 = (x + L3*cos(theta) - x1)**<span class="hljs-number">2</span> + (y + L3*sin(theta))**<span class="hljs-number">2</span> - p2**<span class="hljs-number">2</span>
+    eq2 = x**<span class="hljs-number">2</span> + y**<span class="hljs-number">2</span> - p1**<span class="hljs-number">2</span>
+    eq3 = (x + L2*cos(pi/<span class="hljs-number">3</span> + theta))**<span class="hljs-number">2</span> + (y + L2*sin(pi/<span class="hljs-number">3</span> + theta) - y2)**<span class="hljs-number">2</span> - p3**<span class="hljs-number">2</span>
+    <span class="hljs-keyword">return</span> [eq1, eq2, eq3]
+<span class="hljs-comment"># 初始猜测值</span>
+initial_guess = [-<span class="hljs-number">1.37</span>, <span class="hljs-number">4.80</span>, <span class="hljs-number">0.12</span>]
+<span class="hljs-comment"># 使用fsolve求解方程组</span>
+result = fsolve(equations, initial_guess)
+print(result)
+<span class="hljs-comment"># [1.15769945 4.86412705 0.02143414]</span>
+</code></pre>
+<p>执行以上代码，我们得到了方程组的一组数值解。</p>
+<p>上面的代码中，<code>equations</code> 函数定义了一个方程组，它接受一个变量列表（在这里是 <code>x</code>, <code>y</code>, 和 <code>theta</code>），然后返回一个方程组列表。然后，我们使用 <code>fsolve</code> 来求解这个方程组，并且提供了一个初始猜测值列表 <code>initial_guess</code>。<code>fsolve</code> 会尝试找到这些方程的根，这意味着它会寻找满足方程组为零的 <code>x</code>, <code>y</code>, 和 <code>theta</code> 的值。</p>
+<p>在 Scipy 库中，除了 <code>fsolve</code>，还有其他几个函数可以用于解决类似的问题，比如：</p>
+<ul>
+<li><code>brentq</code> 或 <code>bisection</code>：这些函数是用于求解单变量方程的根的，适用于在指定区间内具有一个根的情况。</li>
+<li><code>root</code>：这个函数提供了一个更加通用的接口来求解多变量方程组的根，它允许选择不同的算法，比如 <code>hybr</code>, <code>lm</code>, <code>broyden1</code>, 等等。</li>
+<li><code>newton</code>：用于求解单变量方程的根，当你有方程的导数信息时特别有用。</li>
+</ul>
+<p>对于复杂的方程组，尤其是当没有解析解时，使用数值方法通常是解决问题的可行方式。<strong>在使用数值方法时，很重要的一点是要有一个合理的初始猜测，因为这些方法很大程度上依赖于起始点，并且可能收敛到局部解，或者在某些情况下可能根本不收敛。</strong></p>
+<h2 id="本章小结">本章小结</h2>
+<p>本章是数学建模的一个导引章节。在这一章节中，我们一起探索了几何模型在数学建模中的基础应用和实际操作。从向量表示法的初步了解到复杂立体几何模型的构建，再到运用Python编程语言中的 Numpy、Sympy、Scipy 等库求解方程和方程组，我们一步步深入了解了几何模型的精髓。</p>
+<p>我们首先回顾了几何建模的基本思想，并探讨了向量表示和坐标变换的重要性。这不仅巩固了我们的几何基础知识，也为后续的学习打下了坚实的基础。接着，通过Numpy的强大功能，我们学习了线性代数中向量与矩阵的操作，以及如何运用Numpy.linalg库来进行基本的线性代数运算。</p>
+<p>随后，我们针对平面几何模型和立体几何模型分别进行了深入的分析和建模。在每个问题中，我们不仅建立了数学模型，还通过模型的求解与讨论，实践了数学建模的全过程，这无疑增强了我们解决实际问题的能力。</p>
+<p>在使用Python解方程与方程组的部分，我们学习了如何利用不同的Python库来解决具体的数学问题。这些内容不仅仅是理论上的，更多的是实践操作，让我们在解决实际问题时更加得心应手。</p>
+<p>作为本章的结束，希望大家不仅理解了几何模型的构建方法，而且能够领会背后的数学原理，并将这些知识应用到现实生活中去。在接下来的章节中，我们将进一步学习更多高级的数学建模技巧和方法。请大家继续保持好奇心和探索精神，相信在数学建模的道路上会有更多的发现和成就。</p>
+<p>祝愿各位读者在学习的旅途中收获知识，享受创造的乐趣，不断提升自己的问题解决能力。在这个以数据和模型驱动的时代，让我们共同成长为理解世界的数学建模者。</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Introduction">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"解析方法与几何模型","level":"1.2","depth":1,"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"第1章-解析方法与几何模型.md","mtime":"2025-05-08T23:51:55.078Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-09T01:11:11.523Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+

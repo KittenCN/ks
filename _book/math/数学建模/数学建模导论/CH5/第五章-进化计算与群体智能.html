@@ -1,0 +1,1120 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>进化计算与群体智能 · CoderFAN 资料库</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 6.0.3">
+        <meta name="author" content="Todd Lyu">
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="./" />
+    
+    <!-- MathJax 配置：唯一且完整 -->
+<script>
+    window.MathJax = {
+      tex: {
+        inlineMath:  [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        strict: "ignore",
+        macros: { "\\E":"\\mathbb{E}", "\\Var":"\\operatorname{Var}" }
+      },
+    };
+    </script>
+    
+    <!-- 核心脚本（defer不阻塞渲染） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- 放在 tex-chtml.js 之后 -->
+    <script>
+    (function () {
+      function typeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise().catch(console.error);
+        }
+      }
+    
+      /* 第一次正文插入 */
+      document.addEventListener('DOMContentLoaded', typeset);
+    
+      /*   关键：等待 gitbook.js 初始化成功   */
+      function hookGitBook() {
+        if (window.gitbook && gitbook.events) {
+          gitbook.events.bind('page.change', typeset);   // 切章排版
+        } else {
+          /* gitbook.js 还没加载完 → 100 ms 后再试 */
+          setTimeout(hookGitBook, 100);
+        }
+      }
+      hookGitBook();   // 启动递归等待
+    })();
+    </script>
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                <a href=".." class="btn"><b></b>&#128512;返回上层&#128512;</b></a>
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="第五章-进化计算与群体智能.html">
+            
+                <a href="第五章-进化计算与群体智能.html">
+            
+                    
+                    进化计算与群体智能
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >进化计算与群体智能</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <center><h1 id="第5章-进化计算与群体智能">第5章 进化计算与群体智能</h1></center>
+
+<blockquote>
+<p>内容：@若冰（马世拓）</p>
+<p>审稿：@刘旭</p>
+<p>排版&amp;校对：@何瑞杰</p>
+</blockquote>
+<p>这一章我们主要介绍进化计算和群体智能算法中四个最常用的算法。传统的优化算法例如我们在第二章看到的分支定界、蒙特卡洛等方法比较适合于简单的、约束和变量不是那么多的优化。但当优化的变量非常之多，约束非常之多，目标函数形式非常之复杂时我们往往 是求不出最优解的。这时候我们通常使用智能优化算法去求近似解。这些算法由于很多从自然中生物行为规律受到启发故又名“仿生计算”。本章主要涉及到的知识点有：</p>
+<ul>
+<li>遗传算法</li>
+<li>蚁群算法</li>
+<li>粒子群算法</li>
+<li>模拟退火算法</li>
+</ul>
+<h2 id="51-遗传算法理论与实现">5.1 遗传算法理论与实现</h2>
+<p>人类总是能够从自然界获取很多灵感。通过蝙蝠的回声定位，我们发明了雷达；通过鱼的游动，我们发明了潜艇；通过鲨鱼的皮肤，我们发明了潜水服……而遗传算法同样是基于生物原理得到灵感。这个灵感，来自于孟德尔遗传定律和达尔文自然选择学说。</p>
+<h3 id="511-遗传算法">5.1.1 遗传算法</h3>
+<p>这一章的标题是进化计算与群体智能算法，如果你在其他的资料上看到了“智能优化算法”或者“元启发优化算法”，其实它们说的是一类东西。只是我为什么称之为进化计算与群体智能呢？因为它包含的算法种类真的非常之多，多到令人无法想象。当你看到它们的名字，你会感叹原来自然界为我们提供了如此之多的灵感，诸如蚁群算法，人工鱼群算法，萤火虫群算法，蜂群算法，狼群算法，哈里斯鹰算法……</p>
+<p>我将一些常见的智能优化算法按照如图 9.1 所示的方式进行归类汇总。值得注意的是，本章讲解的四个算法是最常用的算法，其它的一些算法虽然灵感上很创新，看起来很炫但实质效果却并没有得到太大的改善。或许运算速度有可能快一些，但从整体来看并没有比本章的这四个算法好多少。</p>
+<p><img src="attachments/Pasted%20image%2020240513112233.png" alt=""></img></p>
+<center>图9.1 一些智能算法的分类</center>
+
+<p>遗传算法是 J.H.Holland 在 1975 年提出，模拟达尔文的遗传选择和自然淘汰的进化过程。这一算法被誉为智能优化算法“根源中的根源”。它被广泛应用于大规模的优化问题，例如非线性规划，离散优化，TSP 问题，VRP 问题，车间调度问题等。</p>
+<p>孟德尔在他的遗传学说当中揭示了遗传过程中染色体的一些变化过程：复制，交叉，突变等。而微观的遗传物质的变化影响到了种群在自然界的发展，因为生物的发展与进化主要的过程就是三个：遗传，变异和选择。只有适应环境的竞争力强的生物才能存活下来，不适应者就会消亡。而遗传算法就是借鉴了这一点，通过遗传和变异生成一批候选解，然后在逐代进化的过程中一步步逼近最优解。这里补充几个概念定义：</p>
+<ul>
+<li>染色体：遗传物质的主要载体，是多个遗传因子的集合。</li>
+<li>基因：遗传操作的最小单元，以一定排列方式构成染色体。</li>
+<li>个体：染色体带有特征的实体。</li>
+<li>种群：多个个体组成群体，进化之初的原始群体被称为初始种群。</li>
+<li>适应度：用于评价个体适应环境程度的函数值。</li>
+<li>编码：二进制或十进制去表示研究问题的过程。</li>
+<li>解码：将二进制或十进制还原为原始问题的过程。</li>
+<li>选择：以一定概率从种群中选择若干个体的过程，选择的基准方法有很多，常见的有适应度比例法、期望值法、轮盘赌法等。</li>
+<li>交叉：将两个染色体换组的操作，又称重组。</li>
+<li>变异：遗传因子按一定概率变化的操作。</li>
+</ul>
+<p>遗传算法借鉴了生物学的概念，首先需要对问题进行编码，通常是将函数编码为二进制代码以后，随机产生初始种群作为初始解。随后是遗传算法的核心操作之一——选择，通常选择首先要计算出个体的适应度，根据适应度不同来采取不同选择方法进行选择，常用方法有适应度比例法、期望值法、排位次法、轮盘赌法等。</p>
+<p>在自然界中，基因的突变与染色体的交叉组合是常见现象，这里也需要在选择以后按照一定的概率发生突变和组合。不断重复上述操作直到收敛，得到的解即最优。遗传算法基本思想如图 9.2 所示：</p>
+<p><img src="attachments/Pasted%20image%2020240513112312.png" alt=""></img></p>
+<center>图9.2  遗传算法的基本思想</center>
+
+<blockquote>
+<p>注意：其实遗传算法说起来这么复杂，实际上思想本质上还是一个搜索。从一堆可行解里面搜索最优解，没有方向漫无目的的检索叫暴力搜索，有方向的才叫启发式搜索。遗传算法的方向就是进化。</p>
+</blockquote>
+<h3 id="512-遗传算法的实现">5.1.2 遗传算法的实现</h3>
+<p>我们以一个二元函数的寻优为例介绍如何实现遗传算法。</p>
+<p><strong>例 9.1</strong> 求下面这个函数的极值：</p>
+<p>$$F(x, y) = 100(y - x^2)^2 + (1 - x)^2 \tag{5.1.1}$$</p>
+<p>首先，我们定义函数并给出绘图方法：</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">F</span><span class="hljs-params">(x, y)</span>:</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">100.0</span> * (y - x ** <span class="hljs-number">2.0</span>) ** <span class="hljs-number">2.0</span> + (<span class="hljs-number">1</span> - x) ** <span class="hljs-number">2.0</span> <span class="hljs-comment"># 以香蕉函数为例</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">plot_3d</span><span class="hljs-params">(ax)</span>:</span>
+    X = np.linspace(*X_BOUND, <span class="hljs-number">100</span>)
+    Y = np.linspace(*Y_BOUND, <span class="hljs-number">100</span>)
+    X, Y = np.meshgrid(X, Y)
+    Z = F(X, Y)
+    ax.plot_surface(X, Y, Z, rstride=<span class="hljs-number">1</span>, cstride=<span class="hljs-number">1</span>, cmap=cm.coolwarm)
+    ax.set_xlabel(<span class="hljs-string">'x'</span>)
+    ax.set_ylabel(<span class="hljs-string">'y'</span>)
+    ax.set_zlabel(<span class="hljs-string">'z'</span>)
+    plt.pause(<span class="hljs-number">3</span>)
+    plt.show()
+</code></pre>
+<p>函数图像如图所示：</p>
+<p><img src="attachments/Pasted%20image%2020240513112352.png" alt=""></img></p>
+<center>图9.3 函数图像</center>
+
+<p>执行遗传算法的第一步是进行编码并初始化种群，随后评估种群适应度。而评估适应度的过程中需要对编码后的算子进行解码，因此，给出解码方法和适应度评估函数：</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_fitness</span><span class="hljs-params">(pop)</span>:</span>
+    x, y = translateDNA(pop)
+    pred = F(x, y)
+    <span class="hljs-keyword">return</span> pred
+<span class="hljs-comment"># return pred - np.min(pred)+1e-3 # 求最大值时的适应度</span>
+<span class="hljs-comment"># return np.max(pred) - pred + 1e-3 # 求最小值时的适应度，通过这一步 fitness 的范围为[0, np.max(pred)-np.min(pred)]</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">translateDNA</span><span class="hljs-params">(pop)</span>:</span>
+    <span class="hljs-comment"># pop 表示种群矩阵，一行表示一个二进制编码表示的 DNA，矩阵的行数为种群数目</span>
+    x_pop = pop[:, <span class="hljs-number">0</span>:DNA_SIZE] <span class="hljs-comment"># 前 DNA_SIZE 位表示 X</span>
+    y_pop = pop[:, DNA_SIZE:] <span class="hljs-comment"># 后 DNA_SIZE 位表示 Y</span>
+    x = x_pop.dot(<span class="hljs-number">2</span> ** np.arange(DNA_SIZE)[::-<span class="hljs-number">1</span>]) / float(<span class="hljs-number">2</span> ** DNA_SIZE - <span class="hljs-number">1</span>) * (X_BOUND[<span class="hljs-number">1</span>] - X_BOUND[<span class="hljs-number">0</span>]) + X_BOUND[<span class="hljs-number">0</span>]
+    y = y_pop.dot(<span class="hljs-number">2</span> ** np.arange(DNA_SIZE)[::-<span class="hljs-number">1</span>]) / float(<span class="hljs-number">2</span> ** DNA_SIZE - <span class="hljs-number">1</span>) * (Y_BOUND[<span class="hljs-number">1</span>] - Y_BOUND[<span class="hljs-number">0</span>]) + Y_BOUND[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">return</span> x, y
+</code></pre>
+<p>在迭代过程中，需要不断进行交叉变异等操作。这里给出变异操作的代码：</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mutation</span><span class="hljs-params">(child, MUTATION_RATE=<span class="hljs-number">0.003</span>)</span>:</span>
+    <span class="hljs-keyword">if</span> np.random.rand() &lt; MUTATION_RATE: <span class="hljs-comment"># 以 MUTATION_RATE 的概率进行变异</span>
+        mutate_point = np.random.randint(<span class="hljs-number">0</span>, DNA_SIZE) <span class="hljs-comment"># 随机产生一个实数，代表要变异基因的位置</span>
+        child[mutate_point] = child[mutate_point] ^ <span class="hljs-number">1</span> <span class="hljs-comment"># 将变异点的二进制为反转</span>
+</code></pre>
+<p>交叉操作的代码如下</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">crossover_and_mutation</span><span class="hljs-params">(pop, CROSSOVER_RATE=<span class="hljs-number">0.8</span>)</span>:</span>
+    new_pop = []
+    <span class="hljs-keyword">for</span> father <span class="hljs-keyword">in</span> pop: <span class="hljs-comment"># 遍历种群中的每一个个体，将该个体作为父亲</span>
+        child = father <span class="hljs-comment"># 孩子先得到父亲的全部基因（这里我把一串二进制串的那些 0，1 称为基因）</span>
+        <span class="hljs-keyword">if</span> np.random.rand() &lt; CROSSOVER_RATE: <span class="hljs-comment"># 产生子代时不是必然发生交叉，而是以一定的概率发生交叉</span>
+            mother = pop[np.random.randint(POP_SIZE)] <span class="hljs-comment"># 再种群中选择另一个个体，并将该个体作为母亲</span>
+            cross_points = np.random.randint(low=<span class="hljs-number">0</span>, high=DNA_SIZE * <span class="hljs-number">2</span>) <span class="hljs-comment"># 随机产生交叉的点</span>
+            child[cross_points:] = mother[cross_points:] <span class="hljs-comment"># 孩子得到位于交叉点后的母亲的基因</span>
+            mutation(child) <span class="hljs-comment"># 每个后代有一定的机率发生变异</span>
+        new_pop.append(child)
+    <span class="hljs-keyword">return</span> new_pop
+</code></pre>
+<p>最终，会对种群进行自然选择，留下适应度高的部分。自然选择的代码形如：</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">select</span><span class="hljs-params">(pop, fitness)</span>:</span>
+    <span class="hljs-comment"># nature selection wrt pop's fitness</span>
+    idx = np.random.choice(np.arange(POP_SIZE), size=POP_SIZE, replace=<span class="hljs-keyword">True</span>,
+                           p=(fitness) / (fitness.sum()))
+    <span class="hljs-keyword">return</span> pop[idx]
+</code></pre>
+<p>完整代码如下：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> matplotlib <span class="hljs-keyword">import</span> cm
+<span class="hljs-keyword">from</span> mpl_toolkits.mplot3d <span class="hljs-keyword">import</span> Axes3D
+
+DNA_SIZE = <span class="hljs-number">24</span>
+POP_SIZE = <span class="hljs-number">80</span>
+CROSSOVER_RATE = <span class="hljs-number">0.6</span>
+MUTATION_RATE = <span class="hljs-number">0.01</span>
+N_GENERATIONS = <span class="hljs-number">100</span>
+X_BOUND = [-<span class="hljs-number">2.048</span>, <span class="hljs-number">2.048</span>]
+Y_BOUND = [-<span class="hljs-number">2.048</span>, <span class="hljs-number">2.048</span>]
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">F</span><span class="hljs-params">(x, y)</span>:</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">100.0</span> * (y - x ** <span class="hljs-number">2.0</span>) ** <span class="hljs-number">2.0</span> + (<span class="hljs-number">1</span> - x) ** <span class="hljs-number">2.0</span>  <span class="hljs-comment"># 以香蕉函数为例</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">plot_3d</span><span class="hljs-params">(ax)</span>:</span>
+    X = np.linspace(*X_BOUND, <span class="hljs-number">100</span>)
+    Y = np.linspace(*Y_BOUND, <span class="hljs-number">100</span>)
+    X, Y = np.meshgrid(X, Y)
+    Z = F(X, Y)
+    ax.plot_surface(X, Y, Z, rstride=<span class="hljs-number">1</span>, cstride=<span class="hljs-number">1</span>, cmap=cm.coolwarm)
+    ax.set_xlabel(<span class="hljs-string">'x'</span>)
+    ax.set_ylabel(<span class="hljs-string">'y'</span>)
+    ax.set_zlabel(<span class="hljs-string">'z'</span>)
+    plt.pause(<span class="hljs-number">3</span>)
+    plt.show()
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_fitness</span><span class="hljs-params">(pop)</span>:</span>
+    x, y = translateDNA(pop)
+    pred = F(x, y)
+    <span class="hljs-keyword">return</span> pred
+    <span class="hljs-comment"># return pred - np.min(pred)+1e-3  # 求最大值时的适应度</span>
+    <span class="hljs-comment"># return np.max(pred) - pred + 1e-3  # 求最小值时的适应度，通过这一步fitness的范围为[0, np.max(pred)-np.min(pred)]</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">translateDNA</span><span class="hljs-params">(pop)</span>:</span>  <span class="hljs-comment"># pop表示种群矩阵，一行表示一个二进制编码表示的DNA，矩阵的行数为种群数目</span>
+    x_pop = pop[:, <span class="hljs-number">0</span>:DNA_SIZE]  <span class="hljs-comment"># 前DNA_SIZE位表示X</span>
+    y_pop = pop[:, DNA_SIZE:]  <span class="hljs-comment"># 后DNA_SIZE位表示Y</span>
+    x = x_pop.dot(<span class="hljs-number">2</span> ** np.arange(DNA_SIZE)[::-<span class="hljs-number">1</span>]) / float(<span class="hljs-number">2</span> ** DNA_SIZE - <span class="hljs-number">1</span>) * (X_BOUND[<span class="hljs-number">1</span>] - X_BOUND[<span class="hljs-number">0</span>]) + X_BOUND[<span class="hljs-number">0</span>]
+    y = y_pop.dot(<span class="hljs-number">2</span> ** np.arange(DNA_SIZE)[::-<span class="hljs-number">1</span>]) / float(<span class="hljs-number">2</span> ** DNA_SIZE - <span class="hljs-number">1</span>) * (Y_BOUND[<span class="hljs-number">1</span>] - Y_BOUND[<span class="hljs-number">0</span>]) + Y_BOUND[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">return</span> x, y
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">crossover_and_mutation</span><span class="hljs-params">(pop, CROSSOVER_RATE=<span class="hljs-number">0.8</span>)</span>:</span>
+    new_pop = []
+    <span class="hljs-keyword">for</span> father <span class="hljs-keyword">in</span> pop:  <span class="hljs-comment"># 遍历种群中的每一个个体，将该个体作为父亲</span>
+        child = father  <span class="hljs-comment"># 孩子先得到父亲的全部基因（这里我把一串二进制串的那些0，1称为基因）</span>
+        <span class="hljs-keyword">if</span> np.random.rand() &lt; CROSSOVER_RATE:  <span class="hljs-comment"># 产生子代时不是必然发生交叉，而是以一定的概率发生交叉</span>
+            mother = pop[np.random.randint(POP_SIZE)]  <span class="hljs-comment"># 再种群中选择另一个个体，并将该个体作为母亲</span>
+            cross_points = np.random.randint(low=<span class="hljs-number">0</span>, high=DNA_SIZE * <span class="hljs-number">2</span>)  <span class="hljs-comment"># 随机产生交叉的点</span>
+            child[cross_points:] = mother[cross_points:]  <span class="hljs-comment"># 孩子得到位于交叉点后的母亲的基因</span>
+        mutation(child)  <span class="hljs-comment"># 每个后代有一定的机率发生变异</span>
+        new_pop.append(child)
+    <span class="hljs-keyword">return</span> new_pop
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mutation</span><span class="hljs-params">(child, MUTATION_RATE=<span class="hljs-number">0.003</span>)</span>:</span>
+    <span class="hljs-keyword">if</span> np.random.rand() &lt; MUTATION_RATE:  <span class="hljs-comment"># 以MUTATION_RATE的概率进行变异</span>
+        mutate_point = np.random.randint(<span class="hljs-number">0</span>, DNA_SIZE)  <span class="hljs-comment"># 随机产生一个实数，代表要变异基因的位置</span>
+        child[mutate_point] = child[mutate_point] ^ <span class="hljs-number">1</span>  <span class="hljs-comment"># 将变异点的二进制为反转</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">select</span><span class="hljs-params">(pop, fitness)</span>:</span>  <span class="hljs-comment"># nature selection wrt pop's fitness</span>
+    idx = np.random.choice(np.arange(POP_SIZE), size=POP_SIZE, replace=<span class="hljs-keyword">True</span>,
+                           p=(fitness) / (fitness.sum()))
+    <span class="hljs-keyword">return</span> pop[idx]
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print_info</span><span class="hljs-params">(pop)</span>:</span>
+    fitness = get_fitness(pop)
+    max_fitness_index = np.argmax(fitness)
+    print(<span class="hljs-string">"max_fitness:"</span>, fitness[max_fitness_index])
+    x, y = translateDNA(pop)
+    print(<span class="hljs-string">"最优的基因型："</span>, pop[max_fitness_index])
+    print(<span class="hljs-string">"(x, y):"</span>, (x[max_fitness_index], y[max_fitness_index]))
+    print(F(x[max_fitness_index], y[max_fitness_index]))
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
+    fig = plt.figure()
+    ax = Axes3D(fig)
+    plot_3d(ax)
+    pop = np.random.randint(<span class="hljs-number">2</span>, size=(POP_SIZE, DNA_SIZE * <span class="hljs-number">2</span>))  <span class="hljs-comment"># matrix (POP_SIZE, DNA_SIZE)</span>
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(N_GENERATIONS):  <span class="hljs-comment"># 迭代N代</span>
+        x, y = translateDNA(pop)
+        <span class="hljs-keyword">if</span> <span class="hljs-string">'sca'</span> <span class="hljs-keyword">in</span> locals():
+            sca.remove()
+        sca = ax.scatter(x, y, F(x, y), c=<span class="hljs-string">'black'</span>, marker=<span class="hljs-string">'o'</span>)
+        plt.show()
+        plt.pause(<span class="hljs-number">0.1</span>)
+        pop = np.array(crossover_and_mutation(pop, CROSSOVER_RATE))
+        fitness = get_fitness(pop)
+        pop = select(pop, fitness)  <span class="hljs-comment"># 选择生成新的种群</span>
+    print_info(pop)
+    plot_3d(ax)
+</code></pre>
+<p>最终解得极值点出现在 $(x, y) = (2.04287866180412, -1.9751059526864263)$，极值为 $3781.442624151466$。</p>
+<p>事实上，在第三章中我们其实也见到过，Python 的 scikit-opt 库也可以实现遗传算法。这里我们以两个案例介绍 sko 中遗传算法的使用。</p>
+<p><strong>例 9.2</strong> 求下面这个函数的极值：</p>
+<p>$$ F(x, y) = x^2 + y^2 + \sin(x) + (1 - 0.001)x^2 \tag{5.1.2}$$</p>
+<p>代码如下：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> sko.GA <span class="hljs-keyword">import</span> GA
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">schaffer</span><span class="hljs-params">(p)</span>:</span>
+    <span class="hljs-string">'''This function has plenty of local minimum, with strong shocks
+    global minimum at (0,0) with value 0'''</span>
+    x1, x2 = p
+    x = np.square(x1) + np.square(x2)
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0.5</span> + (np.square(np.sin(x)) - <span class="hljs-number">0.5</span>) / np.square(<span class="hljs-number">1</span> + <span class="hljs-number">0.001</span> * x)
+
+ga = GA(func=schaffer, n_dim=<span class="hljs-number">2</span>, size_pop=<span class="hljs-number">50</span>, max_iter=<span class="hljs-number">800</span>, prob_mut=<span class="hljs-number">0.001</span>, lb=[-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>], ub=[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], precision=<span class="hljs-number">1e-7</span>)
+best_x, best_y = ga.run()
+print(<span class="hljs-string">'best_x:'</span>, best_x, <span class="hljs-string">'\n'</span>, <span class="hljs-string">'best_y:'</span>, best_y)
+</code></pre>
+<p>最终搜索到的最优解为 $[0,0]$。在迭代过程中的损失函数曲线也可以进行绘制：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+Y_history = pd.DataFrame(ga.all_history_Y)
+fig, ax = plt.subplots(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>)
+ax[<span class="hljs-number">0</span>].plot(Y_history.index, Y_history.values, <span class="hljs-string">'.'</span>, color=<span class="hljs-string">'red'</span>)
+Y_history.min(axis=<span class="hljs-number">1</span>).cummin().plot(kind=<span class="hljs-string">'line'</span>)
+plt.show()
+</code></pre>
+<p>所得到的适应度函数随迭代轮次的变化曲线如图所示：</p>
+<p><img src="attachments/Pasted%20image%2020240513112609.png" alt=""></img></p>
+<center>图9.4 遗传算法的迭代曲线</center>
+
+<p><strong>例 9.3</strong> 利用遗传算法解 TSP 问题</p>
+<p>我们可以先创建数据点的横纵坐标，并定义目标函数为回路的距离之和：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> spatial
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+
+num_points = <span class="hljs-number">50</span>
+points_coordinate = np.random.rand(num_points, <span class="hljs-number">2</span>) <span class="hljs-comment"># generate coordinate of points</span>
+distance_matrix = spatial.distance.cdist(points_coordinate, points_coordinate, metric=<span class="hljs-string">'euclidean'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cal_total_distance</span><span class="hljs-params">(routine)</span>:</span>
+    <span class="hljs-string">'''The objective function. input routine, return total distance.
+    cal_total_distance(np.arange(num_points))'''</span>
+    num_points, = routine.shape
+    <span class="hljs-keyword">return</span> sum([distance_matrix[routine[i % num_points], routine[(i + <span class="hljs-number">1</span>) % num_points]] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(num_points)])
+</code></pre>
+<p>在 sko 中，有专门用于解决 TSP 问题的接口 <code>GA_TSP</code> 来通过遗传算法解决 TSP 问题。例如，我们看到下面的代码：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> sko.GA <span class="hljs-keyword">import</span> GA_TSP
+ga_tsp = GA_TSP(func=cal_total_distance, n_dim=num_points, size_pop=<span class="hljs-number">50</span>, max_iter=<span class="hljs-number">500</span>, prob_mut=<span class="hljs-number">1</span>)
+best_points, best_distance = ga_tsp.run()
+fig, ax = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+best_points_ = np.concatenate([best_points, [best_points[<span class="hljs-number">0</span>]]])
+best_points_coordinate = points_coordinate[best_points_, :]
+ax[<span class="hljs-number">0</span>].plot(best_points_coordinate[:, <span class="hljs-number">0</span>], best_points_coordinate[:, <span class="hljs-number">1</span>], <span class="hljs-string">'o-r'</span>)
+ax[<span class="hljs-number">1</span>].plot(ga_tsp.generation_best_Y)
+plt.show()
+</code></pre>
+<p>最终得到的 TSP 回路路径与适应度函数变化曲线如图所示：</p>
+<p><img src="attachments/Pasted%20image%2020240513112642.png" alt=""></img></p>
+<center>图9.5 使用遗传算法解TSP问题</center>
+
+<p><strong>例 9.4</strong> 使用遗传算法进行数据拟合</p>
+<p>我们随机生成一组数据点：</p>
+<pre><code class="lang-python">x_true = np.linspace(-<span class="hljs-number">1.2</span>, <span class="hljs-number">1.2</span>, <span class="hljs-number">30</span>)
+y_true = x_true ** <span class="hljs-number">3</span> - x_true + <span class="hljs-number">0.4</span> * np.random.rand(<span class="hljs-number">30</span>)
+plt.plot(x_true, y_true, <span class="hljs-string">'o'</span>)
+</code></pre>
+<p>我们使用 sko 库中的遗传算法(GA) 进行拟合：</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">f_fun</span><span class="hljs-params">(x, a, b, c, d)</span>:</span>
+    <span class="hljs-keyword">return</span> a * x ** <span class="hljs-number">3</span> + b * x ** <span class="hljs-number">2</span> + c * x + d
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">obj_fun</span><span class="hljs-params">(p)</span>:</span>
+    a, b, c, d = p
+    residuals = np.square(f_fun(x_true, a, b, c, d) - y_true).sum()
+    <span class="hljs-keyword">return</span> residuals
+
+nga = GA(func=obj_fun, n_dim=<span class="hljs-number">4</span>, size_pop=<span class="hljs-number">100</span>, max_iter=<span class="hljs-number">500</span>, lb=[-<span class="hljs-number">2</span>] * <span class="hljs-number">4</span>, ub=[<span class="hljs-number">2</span>] * <span class="hljs-number">4</span>)
+
+best_params, residuals = ga.run()
+print(<span class="hljs-string">'best_x:'</span>, best_params, <span class="hljs-string">'\n'</span>, <span class="hljs-string">'best_y:'</span>, residuals)
+y_predict = f_fun(x_true, *best_params)
+fig, ax = plt.subplots()
+ax.plot(x_true, y_true, <span class="hljs-string">'o'</span>)
+ax.plot(x_true, y_predict, <span class="hljs-string">'-'</span>)
+plt.show()
+<span class="hljs-comment"># best_x: [ 0.93360083 -0.0612649 -0.98437051 0.27416942] best_y: [0.2066883]</span>
+</code></pre>
+<p><img src="attachments/Pasted%20image%2020240513112732.png" alt=""></img></p>
+<center>图9.6 遗传算法解数据拟合问题</center>
+
+<h2 id="52-粒子群算法理论与实现">5.2 粒子群算法理论与实现</h2>
+<h3 id="531-粒子群算法">5.3.1 粒子群算法</h3>
+<p>不知各位是否会注意到，鸟群例如大雁在飞行的时候它们的飞行方向除了受到环境的影响，还会受到其他大雁的影响，从而使群体中每一只大雁的飞行轨迹都整齐划一。而当一只鸟飞离鸟群去寻找栖息地的时候，它不仅要考虑自身运动方向和周围环境，还会从其他优秀的个体的飞行轨迹去模仿学习经验（当然它自己也可能被其它鸟模仿）。这一过程揭示了鸟群运动过程中的两类重要的知识：自我智慧和群体智慧。</p>
+<p>现在假设一群鸟在一块有食物的区域内，它们都瞎了都不知道食物在哪里，但知道当前位置与食物的距离。最简单的方法就是搜寻目前离食物最近的鸟的区域。那我现在把这个区域看做是函数的搜索空间，每个鸟被抽象为一个粒子（物理意义上的质点），每个粒子有一个适应度和速度描述飞行方向和距离。粒子通过分析当前最优粒子在解空间中的运动过程去搜索最优解。设微粒群体规模为 $N$，其中每个微粒在 $D$ 维空间中的坐标位置可表示为 $X<em>{i}=(x</em>{i,1},x<em>{i,2},…,x</em>{i,D})$，微粒 i 的速度定义为每次迭代中微粒移动的距离，表示为 $V<em>i=(v</em>{i,1},v<em>{i,2},…,v</em>{i,D})$，$P<em>i$ 表示微粒 $i$ 所经历的最好位置，$P_g$ 为群体中所有微粒所经过的最好位置，则微粒 $i$ 在第 $d$ 维子空间中的飞行速度 $v</em>{i,d}$ 根据下式进行调整：</p>
+<p>$$ v<em>{i,d}^{t+1} = w \cdot v</em>{i,d}^{t} + c<em>1 \cdot \text{Rand}() \cdot (p</em>{i,d}^t - x<em>{i,d}^{t}) + c_2 \cdot \text{Rand}() \cdot (p</em>{g,d}^t - x_{i,d}^{t}) \tag{5.2.1}$$</p>
+<p>在这个过程中，每次运动的时间间隔被视作单位 $1$，那么速度实际上也可以用于描述下一个时间间隔的移动方向和移动距离。</p>
+<p>$$ x<em>{i,d}^{t+1} = x</em>{i,d}^{t} + v_{i,d}^{t+1} \tag{5.2.2}$$</p>
+<p>第一项为微粒先前速度乘一个权值进行加速，表示微粒对当前自身速度状态的信任，依据自身的速度进行惯性运动，因此称这个权值为惯性权值。第二项为微粒当前位置与自身最优位置之间的距离，为认知部分，表示微粒本身的思考，即微粒的运动来源于自己经验的部分。第三项为微粒当前位置与群体最优位置之间的距离，为社会部分，表示微粒间的信息共享与相互合作，即微粒的运动中来源于群体中其他微粒经验的部分。</p>
+<p>粒子群算法基本流程：</p>
+<ol>
+<li>初始化：随机初始化每一微粒的位置和速度。</li>
+<li>评估：依据适应度函数计算每个微粒的适应度值，以作为判断每一微粒之好坏。</li>
+<li>寻找个体最优解：找出每一微粒到目前为止的搜寻过程中最佳解，这个最佳解称为 Pbest。</li>
+<li>寻找群体最优解：找出所有微粒到目前为止所搜寻到的整体最佳解，此最佳解称之为 Gbest。</li>
+<li>更新每一微粒的速度与位置。</li>
+<li>回到步骤 2 继续执行，直到获得一个令人满意的结果或符合终止条件为止。</li>
+</ol>
+<p>粒子群算法的工作流程如图 9.7 所示：</p>
+<p><img src="attachments/Pasted%20image%2020240513113053.png" alt=""></img></p>
+<center>图9.7 粒子群算法的计算过程</center>
+
+<h3 id="522-粒子群算法的实现">5.2.2 粒子群算法的实现</h3>
+<p><strong>例 9.5</strong> 求下面这个函数的极值：</p>
+<p>$$F(x, y) = 3\cos(x y) + x + y^2 \tag{9.2.3}</p>
+<p>$$
+我们可以先通过它的图像来观察它的性质：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+X = np.arange(-<span class="hljs-number">4</span> ,<span class="hljs-number">4</span> ,<span class="hljs-number">0.01</span>)
+Y = np.arange(-<span class="hljs-number">4</span> ,<span class="hljs-number">4</span> ,<span class="hljs-number">0.01</span>)
+x, y = np.meshgrid(X ,Y)
+Z = <span class="hljs-number">3</span>*np.cos(x * y) + x + y**<span class="hljs-number">2</span>
+<span class="hljs-comment"># 作图</span>
+fig = plt.figure(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">15</span>))
+ax3 = plt.axes(projection = <span class="hljs-string">"3d"</span>)
+ax3.plot_surface(x,y,Z ,cmap = <span class="hljs-string">"rainbow"</span>)
+plt.show()
+</code></pre>
+<p>得到图像如图9.8 所示：</p>
+<p><img src="attachments/Pasted%20image%2020240513113213.png" alt=""></img></p>
+<center>图9.8 测试函数的图像</center>
+
+<p>从图中可以看到函数有多个极值点，我们使用粒子群算法找到函数的全局最优点。对上述过程进行复现的完整代码如下：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-comment"># 初始化种群，群体规模，每个粒子的速度和规模</span>
+N = <span class="hljs-number">100</span> <span class="hljs-comment"># 种群数目</span>
+D = <span class="hljs-number">2</span> <span class="hljs-comment"># 维度</span>
+T = <span class="hljs-number">200</span> <span class="hljs-comment"># 最大迭代次数</span>
+c1 = c2 = <span class="hljs-number">1.5</span> <span class="hljs-comment"># 个体学习因子与群体学习因子</span>
+w_max = <span class="hljs-number">0.8</span> <span class="hljs-comment"># 权重系数最大值</span>
+w_min = <span class="hljs-number">0.4</span> <span class="hljs-comment"># 权重系数最小值</span>
+x_max = <span class="hljs-number">4</span> <span class="hljs-comment"># 每个维度最大取值范围，如果每个维度不一样，那么可以写一个数组，下面代码依次需要改变</span>
+x_min = -<span class="hljs-number">4</span> <span class="hljs-comment"># 同上</span>
+v_max = <span class="hljs-number">1</span> <span class="hljs-comment"># 每个维度粒子的最大速度</span>
+v_min = -<span class="hljs-number">1</span> <span class="hljs-comment"># 每个维度粒子的最小速度</span>
+
+<span class="hljs-comment"># 定义适应度函数</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">3</span> * np.cos(x[<span class="hljs-number">0</span>] * x[<span class="hljs-number">1</span>]) + x[<span class="hljs-number">0</span>] + x[<span class="hljs-number">1</span>] ** <span class="hljs-number">2</span>
+
+<span class="hljs-comment"># 初始化种群个体</span>
+x = np.random.rand(N, D) * (x_max - x_min) + x_min <span class="hljs-comment"># 初始化每个粒子的位置</span>
+v = np.random.rand(N, D) * (v_max - v_min) + v_min <span class="hljs-comment"># 初始化每个粒子的速度</span>
+<span class="hljs-comment"># 初始化个体最优位置和最优值</span>
+p = x <span class="hljs-comment"># 用来存储每一个粒子的历史最优位置</span>
+p_best = np.ones((N, <span class="hljs-number">1</span>)) <span class="hljs-comment"># 每行存储的是最优值</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(N): <span class="hljs-comment"># 初始化每个粒子的最优值，此时就是把位置带进去，把适应度值计算出来</span>
+    p_best[i] = func(x[i, :])
+<span class="hljs-comment"># 初始化全局最优位置和全局最优值</span>
+g_best = <span class="hljs-number">100</span> <span class="hljs-comment">#设置真的全局最优值</span>
+gb = np.ones(T) <span class="hljs-comment"># 用于记录每一次迭代的全局最优值</span>
+x_best = np.ones(D) <span class="hljs-comment"># 用于存储最优粒子的取值</span>
+
+<span class="hljs-comment"># 按照公式依次迭代直到满足精度或者迭代次数</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(T):
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(N):
+        <span class="hljs-comment"># 个更新个体最优值和全局最优值</span>
+        <span class="hljs-keyword">if</span> p_best[j] &gt; func(x[j,:]):
+            p_best[j] = func(x[j,:])
+            p[j,:] = x[j,:].copy()
+        <span class="hljs-comment"># p_best[j] = func(x[j,:]) if func(x[j,:]) &lt; p_best[j] else p_best[j]</span>
+        <span class="hljs-comment"># 更新全局最优值</span>
+        <span class="hljs-keyword">if</span> g_best &gt; p_best[j]:
+            g_best = p_best[j]
+            x_best = x[j,:].copy() <span class="hljs-comment"># 一定要加 copy，否则后面 x[j,:]更新也会将 x_best 更新</span>
+        <span class="hljs-comment"># 计算动态惯性权重</span>
+        w = w_max - (w_max - w_min) * i / T
+        <span class="hljs-comment"># 更新位置和速度</span>
+        v[j, :] = w * v[j, :] + c1 * np.random.rand(<span class="hljs-number">1</span>) * (p[j, :] - x[j, :]) + c2 * np.random.rand(<span class="hljs-number">1</span>) * (x_best - x[j, :])
+        x[j, :] = x[j, :] + v[j, :]
+        <span class="hljs-comment"># 边界条件处理</span>
+        <span class="hljs-keyword">for</span> ii <span class="hljs-keyword">in</span> range(D):
+            <span class="hljs-keyword">if</span> (v[j, ii] &gt; v_max) <span class="hljs-keyword">or</span> (v[j, ii] &lt; v_min):
+                v[j, ii] = v_min + np.random.rand(<span class="hljs-number">1</span>) * (v_max - v_min)
+            <span class="hljs-keyword">if</span> (x[j, ii] &gt; x_max) <span class="hljs-keyword">or</span> (x[j, ii] &lt; x_min):
+                x[j, ii] = x_min + np.random.rand(<span class="hljs-number">1</span>) * (x_max - x_min)
+        <span class="hljs-comment"># 记录历代全局最优值</span>
+        gb[i] = g_best
+    print(<span class="hljs-string">"最优值为"</span>, gb[T - <span class="hljs-number">1</span>],<span class="hljs-string">"最优位置为"</span>,x_best)
+    plt.plot(range(T),gb)
+    plt.xlabel(<span class="hljs-string">"迭代次数"</span>)
+    plt.ylabel(<span class="hljs-string">"适应度值"</span>)
+    plt.title(<span class="hljs-string">"适应度进化曲线"</span>)
+    plt.show()
+</code></pre>
+<p>可以得到适应度的进化曲线如图9.9 所示：</p>
+<p><img src="attachments/Pasted%20image%2020240513115452.png" alt=""></img></p>
+<center>图9.9 适应度随迭代次数的变化</center>
+
+<p>最终得到的搜索结果为最优值为 $-6.4063965702604575$ 最优位置为 $[-3.99999512 -0.74624737]$</p>
+<p>同样的，在 sko 中有 <code>PSO</code> 方法提供了粒子群算法的接口。例如，下面两个例子都可以使用 <code>PSO</code> 接口进行求解。</p>
+<p><strong>例 9.6</strong> 求下面这个函数的极值：</p>
+<p>$$ F(x) = x<em>1^2 + (x_2 - 0.05)^2 + x_3^2, \quad x</em>{3} \geqslant 0.05 \tag{5.2.4}$$</p>
+<p>使用 <code>sko.PSO</code> 提供的 <code>PSO</code> 方法解决这个问题的代码如下：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> sko.PSO <span class="hljs-keyword">import</span> PSO
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">demo_func</span><span class="hljs-params">(x)</span>:</span>
+    x1, x2, x3 = x
+    <span class="hljs-keyword">return</span> x1 ** <span class="hljs-number">2</span> + (x2 - <span class="hljs-number">0.05</span>) ** <span class="hljs-number">2</span> + x3 ** <span class="hljs-number">2</span>
+pso = PSO(func=demo_func, dim=<span class="hljs-number">3</span>, pop=<span class="hljs-number">40</span>, max_iter=<span class="hljs-number">150</span>, lb=[<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">0.5</span>], ub=[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>], w=<span class="hljs-number">0.8</span>, c1=<span class="hljs-number">0.5</span>, c2=<span class="hljs-number">0.5</span>)
+pso.run()
+print(<span class="hljs-string">'best_x is '</span>, pso.gbest_x, <span class="hljs-string">'best_y is'</span>, pso.gbest_y)
+plt.plot(pso.gbest_y_hist)
+plt.show()
+<span class="hljs-comment"># best_x is [0. 0.05 0.5 ] best_y is [0.25]</span>
+</code></pre>
+<p><img src="attachments/Pasted%20image%2020240513113415.png" alt=""></img></p>
+<center>图9.10 适应度的变化</center>
+
+<p><strong>例 9.7</strong> 利用粒子群算法解 TSP 问题</p>
+<p>与遗传算法类似，粒子群算法也提供了针对 TSP 问题的接口。完整代码如下：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> sko.PSO <span class="hljs-keyword">import</span> PSO_TSP
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> spatial
+distance_matrix = spatial.distance.cdist(points_coordinate, points_coordinate, metric=<span class="hljs-string">'euclidean'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cal_total_distance</span><span class="hljs-params">(routine)</span>:</span>
+    <span class="hljs-string">'''The objective function. input routine, return total distance.
+    cal_total_distance(np.arange(num_points))'''</span>
+    num_points, = routine.shape
+    <span class="hljs-keyword">return</span> sum([distance_matrix[routine[i % num_points], routine[(i + <span class="hljs-number">1</span>) % num_points]] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(num_points)])
+
+pso_tsp = PSO_TSP(func=cal_total_distance, n_dim=num_points, size_pop=<span class="hljs-number">200</span>, max_iter=<span class="hljs-number">800</span>, w=<span class="hljs-number">0.8</span>, c1=<span class="hljs-number">0.1</span>, c2=<span class="hljs-number">0.1</span>)
+best_points, best_distance = pso_tsp.run()
+print(<span class="hljs-string">'best_distance'</span>, best_distance)
+fig, ax = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+best_points_ = np.concatenate([best_points, [best_points[<span class="hljs-number">0</span>]]])
+best_points_coordinate = points_coordinate[best_points_, :]
+ax[<span class="hljs-number">0</span>].plot(best_points_coordinate[:, <span class="hljs-number">0</span>], best_points_coordinate[:, <span class="hljs-number">1</span>], <span class="hljs-string">'o-r'</span>)
+ax[<span class="hljs-number">1</span>].plot(pso_tsp.gbest_y_hist)
+plt.show()
+</code></pre>
+<p>最优距离为 $4.5485$，得到的结果如图所示：</p>
+<p><img src="attachments/Pasted%20image%2020240513113457.png" alt=""></img></p>
+<center>图9.11 使用粒子群算法解TSP问题</center>
+
+<h2 id="53-蚁群算法理论与实现">5.3 蚁群算法理论与实现</h2>
+<h3 id="521-蚁群算法">5.2.1 蚁群算法</h3>
+<p>蚁群算法（Ant colony algorithm）是 20 世纪 90 年代初意大利学者 M.Dorigo，V.Maniezzo，A.Colorni 等从生物进化的机制中受到启发，通过模拟自然界蚂蚁搜索路径的行为提出来的一种新型的模拟进化算法。蚂蚁在运动过程中，能够在它所经过的路径上留下一种称之为外激素(pheromone)的物质进行信息传递，而且蚂蚁在运动过程中能够感知这种物质，并以此指导自己的运动方向，因此由大量蚂蚁组成的蚁群集体行为便表现出一种信息正反馈现象：某一路径上走过的蚂蚁越多，则后来者选择该路径的概率就越大。最优路径上的激素浓度越来越大，而其它的路径上激素浓度却会随着时间的流逝而消减。最终整个蚁群会找出最优路径。</p>
+<p>蚁群算法的规则如下：</p>
+<ul>
+<li>初始化：为每条边上的初始信息素和蚂蚁进行赋值。</li>
+<li>如果满足算法外循环的停止规则则停止计算并输出最优解；否则蚂蚁们统统从起点出发，将走过的路径添加到集合中。</li>
+<li>对每一只蚂蚁，按照信息素浓度分配各个路径的概率，并选择路径同时留下信息素。
+分配规则如下：$$ p<em>{i,j} = \frac{\tau</em>{i,j}^{\alpha} \cdot \eta<em>{i,j}^{\beta}}{\sum</em>{k=0}^{n-1} \tau<em>{ik}^{\alpha} \cdot \eta</em>{ik}^{\beta}} \tag{5.2.5}$$
+其中，$\tau<em>{i,j}$ 是从节点 $i$ 到节点 $j$ 的信息素浓度，$\eta</em>{i,j}$ 是启发式因子，通常是距离的倒数，$\alpha$ 和 $\beta$ 是参数。</li>
+<li>按照一定规则对最短路径上的信息素增强，其他路径上的信息素进行挥发。定义最短路径为 $W$，挥发的规则形如：$$ \tau<em>{i,j} \leftarrow (1 - \rho) \tau</em>{i,j} + \Delta \tau<em>{i,j} \tag{5.2.6}$$
+其中，$\rho$ 是挥发率，$\Delta \tau</em>{i,j}$ 是路径 $i$ 到 $j$ 上新增的信息素量。</li>
+</ul>
+<blockquote>
+<p>注意：蚁群算法的过程中边上信息素的一些状态和蚂蚁的行进信息可以用一个表格（数组）存储起来，这个表叫禁忌表。</p>
+</blockquote>
+<p>蚁群算法的流程如图9.12 所示：</p>
+<p><img src="attachments/Pasted%20image%2020240513113701.png" alt=""></img></p>
+<center>图9.12 蚁群算法的流程图</center>
+
+<h3 id="522-蚁群算法的实现">5.2.2 蚁群算法的实现</h3>
+<p>我们可以用面向对象的方式提供一种蚁群算法的实现：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ACO</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, parameters)</span>:</span>
+        <span class="hljs-comment"># 初始化</span>
+        self.NGEN = parameters[<span class="hljs-number">0</span>] <span class="hljs-comment"># 迭代的代数</span>
+        self.pop_size = parameters[<span class="hljs-number">1</span>] <span class="hljs-comment"># 种群大小</span>
+        self.var_num = len(parameters[<span class="hljs-number">2</span>]) <span class="hljs-comment"># 变量个数</span>
+        self.bound = [] <span class="hljs-comment"># 变量的约束范围</span>
+        self.bound.append(parameters[<span class="hljs-number">2</span>])
+        self.bound.append(parameters[<span class="hljs-number">3</span>])
+        self.pop_x = np.zeros((self.pop_size, self.var_num)) <span class="hljs-comment"># 所有蚂蚁的位置</span>
+        self.g_best = np.zeros((<span class="hljs-number">1</span>, self.var_num)) <span class="hljs-comment"># 全局蚂蚁最优的位置</span>
+
+        <span class="hljs-comment"># 初始化第 0 代初始全局最优解</span>
+        temp = -<span class="hljs-number">1</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(self.pop_size):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(self.var_num):
+                self.pop_x[i][j] = np.random.uniform(self.bound[<span class="hljs-number">0</span>][j], self.bound[<span class="hljs-number">1</span>][j])
+            fit = self.fitness(self.pop_x[i])
+            <span class="hljs-keyword">if</span> fit &gt; temp:
+                self.g_best = self.pop_x[i]
+                temp = fit
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fitness</span><span class="hljs-params">(self, ind_var)</span>:</span>
+        <span class="hljs-string">""</span>“个体适应值计算<span class="hljs-string">""</span>“
+        x1 = ind_var[<span class="hljs-number">0</span>]
+        x2 = ind_var[<span class="hljs-number">1</span>]
+        x3 = ind_var[<span class="hljs-number">2</span>]
+        y = <span class="hljs-number">4</span>*x1 ** <span class="hljs-number">2</span> + <span class="hljs-number">2</span>*x2 + x3 ** <span class="hljs-number">3</span>
+        <span class="hljs-keyword">return</span> y
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">update_operator</span><span class="hljs-params">(self, gen, t, t_max)</span>:</span>
+        <span class="hljs-string">""</span>“更新算子：根据概率更新下一时刻的位置<span class="hljs-string">""</span>“
+        rou = <span class="hljs-number">0.8</span> <span class="hljs-comment"># 信息素挥发系数</span>
+        Q = <span class="hljs-number">1</span> <span class="hljs-comment"># 信息释放总量</span>
+        lamda = <span class="hljs-number">1</span> / gen
+        pi = np.zeros(self.pop_size)
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(self.pop_size):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(self.var_num):
+                pi[i] = (t_max - t[i]) / t_max
+            <span class="hljs-comment"># 更新位置</span>
+            <span class="hljs-keyword">if</span> pi[i] &lt; np.random.uniform(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>):
+                self.pop_x[i][j] = self.pop_x[i][j] + np.random.uniform(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>) * lamda
+            <span class="hljs-keyword">else</span>:
+                self.pop_x[i][j] = self.pop_x[i][j] + np.random.uniform(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>) * (
+                self.bound[<span class="hljs-number">1</span>][j] - self.bound[<span class="hljs-number">0</span>][j]) / <span class="hljs-number">2</span>
+            <span class="hljs-comment"># 越界保护</span>
+            <span class="hljs-keyword">if</span> self.pop_x[i][j] &lt; self.bound[<span class="hljs-number">0</span>][j]:
+                self.pop_x[i][j] = self.bound[<span class="hljs-number">0</span>][j]
+            <span class="hljs-keyword">if</span> self.pop_x[i][j] &gt; self.bound[<span class="hljs-number">1</span>][j]:
+                self.pop_x[i][j] = self.bound[<span class="hljs-number">1</span>][j]
+            <span class="hljs-comment"># 更新 t 值</span>
+            t[i] = (<span class="hljs-number">1</span> - rou) * t[i] + Q * self.fitness(self.pop_x[i])
+        <span class="hljs-comment"># 更新全局最优值</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(self.pop_size):
+            <span class="hljs-keyword">if</span> self.fitness(self.pop_x[i]) &gt; self.fitness(self.g_best):
+                self.g_best = self.pop_x[i].copy()
+        t_max = np.max(t)
+        <span class="hljs-keyword">return</span> t_max, t
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span><span class="hljs-params">(self)</span>:</span>
+        popobj = []
+        best = np.zeros((<span class="hljs-number">1</span>, self.var_num))[<span class="hljs-number">0</span>]
+        <span class="hljs-keyword">for</span> gen <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, self.NGEN + <span class="hljs-number">1</span>):
+            <span class="hljs-keyword">if</span> gen == <span class="hljs-number">1</span>:
+                tmax, t = self.update_operator(gen, np.array(list(map(self.fitness, self.pop_x))),
+                                                 np.max(np.array(list(map(self.fitness, self.pop_x)))))
+            <span class="hljs-keyword">else</span>:
+                tmax, t = self.update_operator(gen, t, tmax)
+            print(<span class="hljs-string">'############ Generation {} ############'</span>.format(str(gen)))
+            print(self.g_best)
+            print(self.fitness(self.g_best))
+            <span class="hljs-keyword">if</span> self.fitness(self.g_best) &gt; self.fitness(best):
+                best = self.g_best.copy()
+                popobj.append(self.fitness(best))
+                print(<span class="hljs-string">'最好的位置：{}'</span>.format(best))
+                print(<span class="hljs-string">'最大的函数值：{}'</span>.format(self.fitness(best)))
+            print(<span class="hljs-string">"---- End of (successful) Searching ----"</span>)
+        plt.figure()
+        plt.title(<span class="hljs-string">"Figure1"</span>)
+        plt.xlabel(<span class="hljs-string">"iterators"</span>, size=<span class="hljs-number">14</span>)
+        plt.ylabel(<span class="hljs-string">"fitness"</span>, size=<span class="hljs-number">14</span>)
+        t = [t <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, self.NGEN + <span class="hljs-number">1</span>)]
+        plt.plot(t, popobj, color=<span class="hljs-string">'b'</span>, linewidth=<span class="hljs-number">2</span>)
+        plt.show()
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:
+    NGEN = <span class="hljs-number">100</span>
+    popsize = <span class="hljs-number">50</span>
+    low = [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>]
+    up = [<span class="hljs-number">30</span>, <span class="hljs-number">30</span>, <span class="hljs-number">30</span>]
+    parameters = [NGEN, popsize, low, up]
+    aco = ACO(parameters)
+    aco.main()
+</code></pre>
+<p>如果使用 sko 工具，<code>sko.ACA</code> 也提供了蚁群算法的接口。蚁群算法在解决 TSP 问题中有着重要作用，例如，使用下面的代码利用蚁群算法解决 TSP 问题：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> scipy <span class="hljs-keyword">import</span> spatial
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+num_points = <span class="hljs-number">50</span>
+points_coordinate = np.random.rand(num_points, <span class="hljs-number">2</span>) <span class="hljs-comment"># generate coordinate of points</span>
+distance_matrix = spatial.distance.cdist(points_coordinate, points_coordinate, metric=<span class="hljs-string">'euclidean'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cal_total_distance</span><span class="hljs-params">(routine)</span>:</span>
+    <span class="hljs-string">'''The objective function. input routine, return total distance.
+    cal_total_distance(np.arange(num_points))'''</span>
+    num_points, = routine.shape
+    <span class="hljs-keyword">return</span> sum([distance_matrix[routine[i % num_points], routine[(i + <span class="hljs-number">1</span>) % num_points]] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(num_points)])
+
+<span class="hljs-keyword">from</span> sko.ACA <span class="hljs-keyword">import</span> ACA_TSP
+aca = ACA_TSP(func=cal_total_distance, n_dim=num_points,
+              size_pop=<span class="hljs-number">50</span>, max_iter=<span class="hljs-number">200</span>,
+              distance_matrix=distance_matrix)
+best_points, best_distance = aca.run()
+print(best_points)
+print(best_distance)
+fig, ax = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+best_points_ = np.concatenate([best_points, [best_points[<span class="hljs-number">0</span>]]])
+best_points_coordinate = points_coordinate[best_points_, :]
+ax[<span class="hljs-number">0</span>].plot(best_points_coordinate[:, <span class="hljs-number">0</span>], best_points_coordinate[:, <span class="hljs-number">1</span>], <span class="hljs-string">'o-r'</span>)
+ax[<span class="hljs-number">1</span>].plot(aca.generation_best_Y)
+plt.show()
+</code></pre>
+<p><img src="attachments/Pasted%20image%2020240513113745.png" alt=""></img></p>
+<center>图9.13 使用蚁群算法解TSP问题</center>
+
+<h2 id="54-模拟退火算法理论与实现">5.4 模拟退火算法理论与实现</h2>
+<p>模拟退火算法由 Kirkpatrick 等提出，能有效的解决局部最优解问题。它不同于前面基于生物的进化和群体智能，它是基于物理学定律提出的方法。</p>
+<h3 id="541-模拟退火算法">5.4.1 模拟退火算法</h3>
+<p>模拟退火算法(Simulated Annealing, SA)的思想借鉴于固体的退火原理，当固体的温度很高的时候，内能比较大，固体的内部粒子处于快速无序运动，当温度慢慢降低的过程中，固体的内能减小，粒子的慢慢趋于有序，最终，当固体处于常温时，内能达到最小，此时，粒子最为稳定。模拟退火算法便是基于这样的原理设计而成。</p>
+<p>模拟退火算法来源于晶体冷却的过程，如果固体不处于最低能量状态，给固体加热再冷却，随着温度缓慢下降，固体中的原子按照一定形状排列，形成高密度、低能量的有规则晶体，对应于算法中的全局最优解。而如果温度下降过快，可能导致原子缺少足够的时间排列成晶体的结构，结果产生了具有较高能量的非晶体，这就是局部最优解。因此就可以根据退火的过程，给其在增加一点能量，然后再冷却，如果增加能量，跳出了局部最优解，本次退火就是成功的。</p>
+<p>模拟退火算法包含两个部分即 <strong>Metropolis 准则</strong>和<strong>退火过程</strong>。Metropolis 准则以概率来接受新状态，而不是使用完全确定的规则，称为 Metropolis 准则，计算量较低。从某一个解到新解本质上是衡量其能量变化，若能量向递减的方向跃迁则接受这一次迭代，若能量反而增大，并不是一定拒绝而是以一定的采样概率接受。这一概率值满足 Metropolis 定义：</p>
+<p>$$ P = \exp\left(-\frac{E<em>{new} - E</em>{old}}{T}\right) \tag{5.4.1}$$</p>
+<p>直接使用 Metropolis 算法可能会导致寻优速度太慢，以至于无法实际使用，为了确保在有限的时间收敛，必须设定控制算法收敛的参数，在上面的公式中，可以调节的参数就是 $T$，$T$ 如果过大，就会导致退火太快，达到局部最优值就会结束迭代，如果取值较小，则计算时间会增加，实际应用中采用退火温度表，在退火初期采用较大的 $T$ 值，随着退火的进行，逐步降低。</p>
+<p>模拟退火的过程如图 9.14 所示：
+<img src="attachments/Pasted%20image%2020240513113856.png" alt=""></img></p>
+<center>图9.14  模拟退火算法流程图</center>
+
+<blockquote>
+<p>注意：速度上模拟退火和粒子群都很快，但模拟退火略快一些，比遗传更快，蚁群的速度是最慢的。但粒子群求解大规模函数极值的时候容易碰到边界陷入的情况。模拟退火则相对比较稳定一些。</p>
+</blockquote>
+<h3 id="542-模拟退火算法的实现">5.4.2 模拟退火算法的实现</h3>
+<p><strong>例 9.8</strong> 求下面这个函数的极值：</p>
+<p>$$ y = x^3 - 60x^2 - 4x + 6 \tag{5.4.2}$$</p>
+<p>使用 python 对模拟退火算法进行编程的代码如下：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> math
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">aimFunction</span><span class="hljs-params">(x)</span>:</span>
+    y = x ** <span class="hljs-number">3</span> - <span class="hljs-number">60</span> * x ** <span class="hljs-number">2</span> - <span class="hljs-number">4</span> * x + <span class="hljs-number">6</span>
+    <span class="hljs-keyword">return</span> y
+
+x = [i / <span class="hljs-number">10</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1000</span>)]
+y = [<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1000</span>)]
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1000</span>):
+    y[i] = aimFunction(x[i])
+
+plt.plot(x, y)
+plt.show()
+
+T = <span class="hljs-number">1000</span> <span class="hljs-comment"># initiate temperature</span>
+Tmin = <span class="hljs-number">10</span> <span class="hljs-comment"># minimum value of temperature</span>
+x = np.random.uniform(low=<span class="hljs-number">0</span>, high=<span class="hljs-number">100</span>) <span class="hljs-comment"># initiate x</span>
+k = <span class="hljs-number">50</span> <span class="hljs-comment"># times of internal circulation</span>
+
+y = <span class="hljs-number">0</span> <span class="hljs-comment"># initiate result</span>
+t = <span class="hljs-number">0</span> <span class="hljs-comment"># time</span>
+<span class="hljs-keyword">while</span> T &gt;= Tmin:
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(k):
+        <span class="hljs-comment"># calculate y</span>
+        y = aimFunction(x)
+        <span class="hljs-comment"># generate a new x in the neighboorhood of x by transform function</span>
+        xNew = x + np.random.uniform(low=-<span class="hljs-number">0.055</span>, high=<span class="hljs-number">0.055</span>) * T
+        <span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> &lt;= xNew <span class="hljs-keyword">and</span> xNew &lt;= <span class="hljs-number">100</span>):
+            yNew = aimFunction(xNew)
+            <span class="hljs-keyword">if</span> yNew - y &lt; <span class="hljs-number">0</span>:
+                x = xNew
+            <span class="hljs-keyword">else</span>:
+                <span class="hljs-comment"># metropolis principle</span>
+                p = math.exp(-(yNew - y) / T)
+                r = np.random.uniform(low=<span class="hljs-number">0</span>, high=<span class="hljs-number">1</span>)
+                <span class="hljs-keyword">if</span> r &lt; p:
+                    x = xNew
+        t += <span class="hljs-number">1</span>
+        T = <span class="hljs-number">1000</span> / (<span class="hljs-number">1</span> + t) <span class="hljs-comment">#降温函数，也可使用 T=0.9T</span>
+    print(x, aimFunction(x))
+    <span class="hljs-comment"># 39.78060332087924 -32150.24487975278</span>
+</code></pre>
+<p><strong>例 9.9</strong> 使用模拟退火算法解决 TSP 问题</p>
+<p>使用 sko 中提供的模拟退火算法接口解一个 TSP 问题的代码如下：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> sko.SA <span class="hljs-keyword">import</span> SA_TSP
+nsa_tsp = SA_TSP(func=cal_total_distance, x0=range(num_points), T_max=<span class="hljs-number">800</span>, T_min=<span class="hljs-number">1</span>, L=<span class="hljs-number">1000</span>)
+best_points, best_distance = sa_tsp.run()
+print(best_points, best_distance, cal_total_distance(best_points))
+fig, ax = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+best_points_ = np.concatenate([best_points, [best_points[<span class="hljs-number">0</span>]]])
+best_points_coordinate = points_coordinate[best_points_, :]
+ax[<span class="hljs-number">0</span>].plot(sa_tsp.best_y_history)
+ax[<span class="hljs-number">0</span>].set_xlabel(<span class="hljs-string">"Iteration"</span>)
+ax[<span class="hljs-number">0</span>].set_ylabel(<span class="hljs-string">"Distance"</span>)
+ax[<span class="hljs-number">1</span>].plot(best_points_coordinate[:, <span class="hljs-number">0</span>], best_points_coordinate[:, <span class="hljs-number">1</span>], marker=<span class="hljs-string">'o'</span>, markerfacecolor=<span class="hljs-string">'b'</span>, color=<span class="hljs-string">'c'</span>, linestyle=<span class="hljs-string">'-'</span>)
+ax[<span class="hljs-number">1</span>].set_xlabel(<span class="hljs-string">"Longitude"</span>)
+ax[<span class="hljs-number">1</span>].set_ylabel(<span class="hljs-string">"Latitude"</span>)
+plt.show()
+</code></pre>
+<p>得到结果如图所示：
+<img src="attachments/Pasted%20image%2020240513114048.png" alt=""></img></p>
+<center>图9.15 使用模拟退火算法解TSP问题</center>
+
+<h2 id="55-使用-scikit-opt-实现智能优化算法">5.5 使用 scikit-opt 实现智能优化算法</h2>
+<h3 id="551-智能优化算法分类">5.5.1 智能优化算法分类</h3>
+<p>智能优化算法受到人类智能、生物群体社会性或自然现象规律的启发，主要包括以下几种类型：</p>
+<ul>
+<li><p><strong>进化类算法</strong>：</p>
+<ul>
+<li><em>遗传算法</em>：模仿自然界生物进化机制。</li>
+<li><em>差分进化算法</em>：通过群体个体间的合作与竞争来优化搜索。</li>
+<li><em>免疫算法</em>：模拟生物免疫系统学习和认知功能。</li>
+</ul>
+</li>
+<li><p><strong>群体智能算法</strong>：</p>
+<ul>
+<li><em>蚁群算法</em>：模拟蚂蚁集体寻径行为。</li>
+<li><em>粒子群算法</em>：模拟鸟群和鱼群群体行为。</li>
+</ul>
+</li>
+</ul>
+<p>除了以上常见的算法外，还有许多其他群体智能优化算法，例如：萤火虫算法、布谷鸟算法、蝙蝠算法、狼群算法、烟花算法、合同网协议算法等等。</p>
+<ul>
+<li><em>模拟退火算法</em>：源于固体物质退火过程。</li>
+<li><em>禁忌搜索算法</em>：模拟人类智力记忆过程。</li>
+<li><em>神经网络算法</em>：模拟动物神经网络行为特征。</li>
+</ul>
+<h3 id="552-scikit-opt-使用方法简介">5.5.2 Scikit-opt 使用方法简介</h3>
+<p>Scikit-opt 封装了 7 种启发式算法，分别是差分进化算法、遗传算法、粒子群算法、模拟退火算法、蚁群算法、鱼群算法和免疫优化算法。</p>
+<p>在探索智能优化算法之前，首先我们需要先安装 scikit-opt 库。</p>
+<pre><code class="lang-bash">pip install scikit-opt
+</code></pre>
+<p>接下来我们来学习如何利用 Scikit-opt 库实现上述的七种算法，下面是一些简单的案例：</p>
+<h4 id="1-差分进化算法">1. 差分进化算法</h4>
+<p><strong>例 9.10</strong> 解下面的优化问题：</p>
+<p>$$
+\begin{align}
+\text{minimize}~&amp;f(x<em>{1}, x</em>{2}, x<em>{3}) = x</em>{1}^{2} + x<em>{2}^{2} + x</em>{3}^{2}\
+\text{s.t.}~&amp;x<em>{1}x</em>{2} \geqslant 1\
+&amp;x<em>{1}x</em>{2} \leqslant 5\
+&amp;x<em>{2} + x</em>{3} = 1\
+&amp;0 \leqslant x<em>{1}, x</em>{2}, x_{3} \leqslant 5
+\end{align} \tag{5.5.1}</p>
+<p>$$</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> sko.DE <span class="hljs-keyword">import</span> DE
+de = DE(func=obj_func, n_dim=<span class="hljs-number">3</span>, size_pop=<span class="hljs-number">50</span>, max_iter=<span class="hljs-number">800</span>, lb=[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>], ub=[<span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>],
+         constraint_eq=constraint_eq, constraint_ueq=constraint_ueq)
+best_x, best_y = de.run()
+print(<span class="hljs-string">'best_x:'</span>, best_x, <span class="hljs-string">'\n'</span>, <span class="hljs-string">'best_y:'</span>, best_y)
+</code></pre>
+<h4 id="2-遗传算法">2. 遗传算法</h4>
+<p><strong>例 9.11</strong> 解下面的优化问题：</p>
+<p>$$
+\text{minimize}~f(x<em>{1}, x</em>{2}, x<em>{3}) = x</em>{1}^{2} + (x<em>{2} - 0.05)^{2} + x</em>{3}^{2} \tag{5.5.2}</p>
+<p>$$</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> sko.GA <span class="hljs-keyword">import</span> GA
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">schaffer</span><span class="hljs-params">(p)</span>:</span>
+    <span class="hljs-string">'''
+    这个函数有很多局部最小值，具有强烈的震荡
+    全局最小值在 (0,0) 处，值为 0
+    '''</span>
+    x1, x2 = p
+    x = np.square(x1) + np.square(x2)
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0.5</span> + (np.square(np.sin(x)) - <span class="hljs-number">0.5</span>) / np.square(<span class="hljs-number">1</span> + <span class="hljs-number">0.001</span> * x) 
+
+ga = GA(func=schaffer, n_dim=<span class="hljs-number">2</span>, size_pop=<span class="hljs-number">50</span>, max_iter=<span class="hljs-number">800</span>, prob_mut=<span class="hljs-number">0.001</span>, lb=[-<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>], ub=[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], precision=<span class="hljs-number">1e-7</span>)
+best_x, best_y = ga.run()
+print(<span class="hljs-string">'best_x:'</span>, best_x, <span class="hljs-string">'\n'</span>, <span class="hljs-string">'best_y:'</span>, best_y)
+
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+
+Y_history = pd.DataFrame(ga.all_history_Y)
+fig, ax = plt.subplots(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>)
+ax[<span class="hljs-number">0</span>].plot(Y_history.index, Y_history.values, <span class="hljs-string">'.'</span>, color=<span class="hljs-string">'red'</span>)
+Y_history.min(axis=<span class="hljs-number">1</span>).cummin().plot(kind=<span class="hljs-string">'line'</span>)
+plt.show()
+</code></pre>
+<p><img src="attachments/Pasted%20image%2020240513114536.png" alt=""></img></p>
+<center>图9.16 优化结果</center>
+
+<h4 id="3-粒子群算法">3. 粒子群算法</h4>
+<p><strong>例 9.12</strong> 解下面的优化问题：</p>
+<p>$$
+\text{minimize}~f(x<em>{1}, x</em>{2}) = 0.5 + \frac{\sin^{2}\Big(x<em>{1}^{2} + x</em>{2}^{2}\Big) - 0.5}{\Big(1 + 0.001(x<em>{1}^{2} + x</em>{2}^{2})\Big)^{2}} \tag{5.5.3}</p>
+<p>$$</p>
+<pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">demo_func</span><span class="hljs-params">(x)</span>:</span>
+    x1, x2, x3 = x
+    <span class="hljs-keyword">return</span> x1 ** <span class="hljs-number">2</span> + (x2 - <span class="hljs-number">0.05</span>) ** <span class="hljs-number">2</span> + x3 ** <span class="hljs-number">2</span>
+
+<span class="hljs-keyword">from</span> sko.PSO <span class="hljs-keyword">import</span> PSO
+pso = PSO(func=demo_func, n_dim=<span class="hljs-number">3</span>, pop=<span class="hljs-number">40</span>, max_iter=<span class="hljs-number">150</span>, lb=[<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">0.5</span>], ub=[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>], w=<span class="hljs-number">0.8</span>, c1=<span class="hljs-number">0.5</span>, c2=<span class="hljs-number">0.5</span>)
+pso.run()
+print(<span class="hljs-string">'best_x is '</span>, pso.gbest_x, <span class="hljs-string">'best_y is'</span>, pso.gbest_y)
+
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+
+plt.plot(pso.gbest_y_hist)
+plt.show()
+</code></pre>
+<p><img src="attachments/Pasted%20image%2020240513114746.png" alt=""></img></p>
+<center>图9.17 优化结果</center>
+
+<h4 id="4-模拟退火算法">4. 模拟退火算法</h4>
+<p><strong>例 9.13</strong> 解下面的优化问题：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> sko.SA <span class="hljs-keyword">import</span> SA
+sa = SA(func=demo_func, x0=[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>], T_max=<span class="hljs-number">1</span>, T_min=<span class="hljs-number">1e-9</span>, L=<span class="hljs-number">300</span>, max_stay_counter=<span class="hljs-number">150</span>)
+best_x, best_y = sa.run()
+print(<span class="hljs-string">'best_x:'</span>, best_x, <span class="hljs-string">'best_y'</span>, best_y)
+</code></pre>
+<blockquote>
+<p>scikit-opt 还提供了三种模拟退火流派: Fast, Boltzmann 和 Cauchy.</p>
+</blockquote>
+<h4 id="5蚁群算法">5.蚁群算法</h4>
+<p><strong>例 9.14</strong> 解决TSP问题：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> sko.ACA <span class="hljs-keyword">import</span> ACA_TSP
+aca = ACA_TSP(func=cal_total_distance, n_dim=num_points,
+              size_pop=<span class="hljs-number">50</span>, max_iter=<span class="hljs-number">200</span>,
+              distance_matrix=distance_matrix)
+best_x, best_y = aca.run()
+</code></pre>
+<p><img src="attachments/Pasted%20image%2020240513114945.png" alt=""></img></p>
+<center>图9.18 优化结果</center>
+
+<h4 id="6-免疫优化算法">6. 免疫优化算法</h4>
+<p><strong>例 9.15</strong> 解决TSP问题：</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> sko.IA <span class="hljs-keyword">import</span> IA_TSP
+ia_tsp = IA_TSP(func=cal_total_distance, n_dim=num_points, size_pop=<span class="hljs-number">500</span>, max_iter=<span class="hljs-number">800</span>,
+                prob_mut=<span class="hljs-number">0.2</span>,
+                T=<span class="hljs-number">0.7</span>, alpha=<span class="hljs-number">0.95</span>)
+best_points, best_distance = ia_tsp.run()
+print(<span class="hljs-string">'best routine:'</span>, best_points, <span class="hljs-string">'best_distance:'</span>, best_distance)
+</code></pre>
+<p><img src="attachments/Pasted%20image%2020240513115029.png" alt=""></img></p>
+<center>图9.19 优化结果</center>
+
+<h4 id="7-人工鱼群算法">7. 人工鱼群算法</h4>
+<p><strong>例 9.16</strong> 解下面的优化问题：</p>
+<p>$$
+\text{minimize}~f(x<em>{1}, x</em>{2}) = \frac{1}{x<em>{1}^{2}} + x</em>{1}^{2} + \frac{1}{x<em>{2}^{2}} + x</em>{2}^{2} \tag{5.5.4}</p>
+<p>$$</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> sko.AFSA <span class="hljs-keyword">import</span> AFSA
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span><span class="hljs-params">(x)</span>:</span>
+    x1, x2 = x
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> / x1 ** <span class="hljs-number">2</span> + x1 ** <span class="hljs-number">2</span> + <span class="hljs-number">1</span> / x2 ** <span class="hljs-number">2</span> + x2 ** <span class="hljs-number">2</span>
+
+afsa = AFSA(func, n_dim=<span class="hljs-number">2</span>, size_pop=<span class="hljs-number">50</span>, max_iter=<span class="hljs-number">300</span>,
+            max_try_num=<span class="hljs-number">100</span>, step=<span class="hljs-number">0.5</span>, visual=<span class="hljs-number">0.3</span>,
+            q=<span class="hljs-number">0.98</span>, delta=<span class="hljs-number">0.5</span>)
+best_x, best_y = afsa.run()
+print(best_x, best_y)
+</code></pre>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Introduction">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"进化计算与群体智能","level":"1.2","depth":1,"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"第五章-进化计算与群体智能.md","mtime":"2025-05-08T23:51:55.482Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-09T01:11:09.059Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+
+    </body>
+</html>
+
