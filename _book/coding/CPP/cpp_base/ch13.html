@@ -6,7 +6,7 @@
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <title>ch13. CPP 深入理解 · CoderFAN 资料库</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="description" content="">
+        <meta name="description" content="CoderFAN 资料库 算法资料 C++基础">
         <meta name="generator" content="GitBook 6.0.3">
         <meta name="author" content="Todd Lyu">
         
@@ -378,7 +378,7 @@
                             
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="前言">前言</h1>
+                                <h2 id="前言">前言</h2>
 <h2 id="说到cpp11，应该想到什么？">说到CPP11，应该想到什么？</h2>
 <ul>
 <li>什么是 lambda，及怎么样使用它是最好的？</li>
@@ -416,7 +416,7 @@
 </li>
 <li>thread_local</li>
 </ul>
-<h1 id="保证稳定性和兼容性">保证稳定性和兼容性</h1>
+<h2 id="保证稳定性和兼容性">保证稳定性和兼容性</h2>
 <h2 id="将c99标准纳入cpp11">将C99标准纳入CPP11</h2>
 <h3 id="确定编译环境的预定义宏">确定编译环境的预定义宏</h3>
 <ul>
@@ -498,7 +498,7 @@ void fun() noexcept(noexcept(T())) {}
      <span class="hljs-keyword">struct</span> C {<span class="hljs-keyword">int</span> a;} c;
 }
 </code></pre>
-<h1 id="通用为本，专用为末">通用为本，专用为末</h1>
+<h2 id="通用为本，专用为末">通用为本，专用为末</h2>
 <h2 id="继承构造函数">继承构造函数</h2>
 <p>继承关系中，子类可以自动或得父类的成员和接口，但构造函数无法自动地被子类继承。因为通常子类也有自己的成员，我们要定义子类自己的构造函数，在子类构造函数中去调用父类构造函数以及初始化自己的成员。</p>
 <p>但是，如果子类中没有任何成员，或者其成员都用CPP11的新特性“快速初始化成员变量”进行了初始化乃至于没有必要再用构造函数初始化了，那这时候我们很可能希望直接将父类的构造函数继承到子类，毕竟这时候只需要初始化父类成员。CPP11允许我们使用using &lt;父类名&gt;::&lt;父类名&gt;来将所有父类构造函数引入子类，被using引入的父类构造函数是隐式声明的（也就是说，只有用到的函数才会被生成，以节省生成的代码）。</p>
@@ -650,7 +650,7 @@ StringObjectMap&lt;MyCls&gt; myMap;
 <p>只不过，CPP98对于模板参数中使用表达式的情况支持的不友好，CPP11明确了任何在编译期合法的表达式都能够作为模板参数，比如下面的这个例子就在CPP98中无法通过编译，而在CPP11中可以：</p>
 <pre><code class="lang-CPP"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">int</span> I&gt; <span class="hljs-keyword">struct</span> A{};<span class="hljs-function"><span class="hljs-keyword">char</span> <span class="hljs-title">xxx</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;<span class="hljs-function"><span class="hljs-keyword">char</span> <span class="hljs-title">xxx</span><span class="hljs-params">(<span class="hljs-keyword">float</span>)</span></span>;<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> T&gt; A&lt;<span class="hljs-keyword">sizeof</span>(xxx((T)<span class="hljs-number">0</span>))&gt; f(T){}
 </code></pre>
-<h1 id="新手易学，老兵易用">新手易学，老兵易用</h1>
+<h2 id="新手易学，老兵易用">新手易学，老兵易用</h2>
 <h2 id="右尖括号的改进">右尖括号的改进</h2>
 <p>CPP98曾经规定应该把 &gt;&gt; 优先判定为右移操作符，但这个规定在CPP11被取消了，CPP11规定编译器可以自行智能地判断&gt;&gt;是否是右移操作符。</p>
 <h2 id="auto类型推导">auto类型推导</h2>
@@ -666,12 +666,12 @@ StringObjectMap&lt;MyCls&gt; myMap;
 <p>auto func(char* a,int b) -&gt; int;</p>
 <h2 id="基于范围的for循环">基于范围的for循环</h2>
 <p>自定义集合类型要想支持这样的for循环，需要实现begin, end, ++, ==四个函数。</p>
-<h1 id="提高类型安全">提高类型安全</h1>
+<h2 id="提高类型安全">提高类型安全</h2>
 <h2 id="强类型枚举">强类型枚举</h2>
 <p>CPP98: enum X {...};</p>
 <p>CPP11: enum class X {...};</p>
 <h2 id="堆内存管理：智能指针与垃圾回收">堆内存管理：智能指针与垃圾回收</h2>
-<h1 id="提高性能及操作硬件的能力">提高性能及操作硬件的能力</h1>
+<h2 id="提高性能及操作硬件的能力">提高性能及操作硬件的能力</h2>
 <h2 id="常量表达式">常量表达式</h2>
 <p>CPP11规定使用constexpr修饰符来修饰常量表达式。常量表达式可以是函数或者值。常量表达式函数中不可以出现非常量表达式。常量表达式可以在编译期使用，但如果常量表达式并没有一定要在编译期被计算出来，标准规定编译器在这种情况下可以将常量表达式编译成普通的表达式，表达式会在运行时被计算。</p>
 <h2 id="变长模板">变长模板</h2>
@@ -754,7 +754,7 @@ T&lt;Parent1, Parent2&gt;  t;    <span class="hljs-comment">// t的类型是：c
 </li>
 </ul>
 <p>CPP11新增了quick_exit标准方法，该方法语意上和exit一样，都是程序自发终止，但和exit不同的是，它不会进行本进程的清理工作，在多线程环境下也不会先等待线程结束，而是直接让操作系统终止进程并回收资源。</p>
-<h1 id="为改变思想方式而改变">为改变思想方式而改变</h1>
+<h2 id="为改变思想方式而改变">为改变思想方式而改变</h2>
 <h2 id="指针空值-nullptr">指针空值-nullptr</h2>
 <p>CPP11定义了nullptr_t和nullptr，前者是类型，后者是该类型的值。</p>
 <p>nullptr可以隐式转换为任何指针，但无法被隐式转换为bool类型，无法使用if (nullptr)这样的表达式；此外它所属的nullptr_t是一个基础类型，nullptr无法被推导为T*这样的模板参数。</p>
@@ -803,7 +803,7 @@ T&lt;Parent1, Parent2&gt;  t;    <span class="hljs-comment">// t的类型是：c
 <li><p>函数体：</p>
 </li>
 </ul>
-<h1 id="融入实际应用">融入实际应用</h1>
+<h2 id="融入实际应用">融入实际应用</h2>
 <h2 id="对齐支持">对齐支持</h2>
 <p>C和CPP都是具备直接操作底层硬件能力的语言，因此某些开发者会对数据结构的对齐方式特别关注。</p>
 <p>CPP11规定了alignof和alignas关键字，前者可以查询某个类型的对齐方式（一般来说都是32位-4字节或者64位-8字节对齐），而后者可以规定某个自定义类的对齐方式。比如如果我们想要使用内联汇编的向量指令（可以同时处理4组处理器位数的数据）来优化处理速度，就可能想要将数据对齐到4*处理器位数的位置处。</p>
@@ -868,7 +868,7 @@ T&lt;Parent1, Parent2&gt;  t;    <span class="hljs-comment">// t的类型是：c
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"ch13. CPP 深入理解","level":"1.1.14","depth":2,"previous":{"title":"ch12. CPP 核心编程","level":"1.1.13","depth":2,"path":"ch12.md","ref":"ch12.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*"},"file":{"path":"ch13.md","mtime":"2025-04-25T12:33:46.452Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-09T01:07:39.476Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"description":"CoderFAN 资料库 算法资料 C++基础","title":"ch13. CPP 深入理解","level":"1.1.14","depth":2,"previous":{"title":"ch12. CPP 核心编程","level":"1.1.13","depth":2,"path":"ch12.md","ref":"ch12.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-search","-livereload","-lunr","-fontsettings","highlight","expandable-chapters-small","back-to-top-button","github","code","theme-default"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{"lang":{"eval_rst":"rst","toc":"text"}},"github":{"url":"https://github.com/KittenCN"},"expandable-chapters-small":{},"back-to-top-button":{},"code":{"copyButtons":true},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Todd Lyu","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"CoderFAN 资料库","gitbook":"*","description":"CoderFAN 资料库 算法资料 C++基础"},"file":{"path":"ch13.md","mtime":"2025-05-12T03:21:13.595Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-05-12T03:24:25.121Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

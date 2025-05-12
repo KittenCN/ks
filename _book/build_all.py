@@ -20,6 +20,16 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 
+class _H1Demoter:
+    def __init__(self):
+        self.seen = False
+    def __call__(self, m):
+        if not self.seen:
+            self.seen = True
+            return m.group(0)
+        # demote to h2
+        return f"<h2{m.group(1)}>{m.group(2)}</h2>"
+
 # --------------------- CONFIGURATION ---------------------
 MAX_PARALLEL = 2
 BUILD_ROOT = Path("_book")           # 最终输出目录
@@ -29,6 +39,29 @@ EXCLUDED_DIRS = {d.lower() for d in (
     'build', 'dist', '_book', '_layouts', 'lib', 'img', 'imgs'
 )}
 # ---------------------------------------------------------
+def demote_extra_h1():
+    """
+    确保每个 HTML 文件只有一个 <h1>，后续所有 <h1> 都降级为 <h2>
+    """
+    print("\n🔧 正在降级多余的 H1 标签 …")
+    htmls = list(BUILD_ROOT.rglob("*.html"))
+    pattern = re.compile(r"<h1(.*?)>(.*?)</h1>", re.IGNORECASE | re.DOTALL)
+    changed = 0
+
+    with tqdm(total=len(htmls), desc="Demoting H1", unit="文件") as pbar:
+        for p in htmls:
+            try:
+                text = p.read_text(encoding="utf-8")
+                demoter = _H1Demoter()
+                new = pattern.sub(demoter, text)
+                if new != text:
+                    p.write_text(new, encoding="utf-8")
+                    changed += 1
+            except Exception:
+                pass
+            pbar.update(1)
+
+    print(f"✅ H1 降级完成，共修改 {changed} 个文件。")
 
 def find_valid_volumes(base_dir):
     volumes = []
@@ -166,6 +199,7 @@ def main():
 
     merge_all_outputs(volumes, base)
     fix_md_links_in_html()
+    demote_extra_h1()
 
     print("\n=== Build Summary ===")
     print(f"Total volumes: {len(volumes)}")
