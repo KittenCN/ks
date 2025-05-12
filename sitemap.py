@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 import argparse
 
 parser = argparse.ArgumentParser(description='Generate a sitemap.xml file.')
-parser.add_argument('--choice', type=int, default = 0)
+parser.add_argument('--choice', type=int, default = 1)
 args = parser.parse_args()
 
 def indent(elem, level=0):
