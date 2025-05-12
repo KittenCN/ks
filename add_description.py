@@ -4,7 +4,7 @@
 """
 Multi-threaded script to insert YAML front-matter descriptions into Markdown files
 - 递归遍历当前目录及所有子目录中的 .md 文件
-- 跳过文件名前缀为 '_' 的文件
+- 跳过文件名前缀为 '_' 的文件，以及名为 'SUMMARY.md' 的文件
 - 如果本目录下没有 book.json，则向上查找父目录，依次类推
 - 使用多线程并行，并显示进度条
 """
@@ -35,9 +35,7 @@ def process_md(md_path: Path):
     if not desc:
         return f"NO_DESC: {md_path}"
     content = md_path.read_text(encoding=ENCODING)
-    # 构造 YAML front-matter
     front = f"---\ndescription: {desc.strip()}\n---\n\n"
-    # 如已有 front-matter，则去掉旧的
     if content.startswith('---'):
         parts = content.split('---', 2)
         if len(parts) == 3:
@@ -46,13 +44,17 @@ def process_md(md_path: Path):
     return f"OK: {md_path}"
 
 def main(base_dir: Path):
-    # 1. 递归遍历所有 .md
+    # 1. 递归查找所有 .md
     md_files = list(base_dir.rglob('*.md'))
-    # 2. 只保留不以 '_' 开头的文件
-    md_files = [p for p in md_files if not p.name.startswith('_')]
+    # 2. 排除：以 '_' 开头 或 名为 'SUMMARY.md'
+    md_files = [
+        p for p in md_files
+        if not p.name.startswith('_')
+        and p.name.lower() != 'summary.md'
+    ]
     total = len(md_files)
     if total == 0:
-        print("⚠️ 没有找到任何 Markdown 文件。")
+        print("⚠️ 没有找到任何符合条件的 Markdown 文件。")
         return
 
     print(f"🔍 发现 {total} 个 Markdown 文件，使用 {MAX_WORKERS} 个线程处理...\n")
@@ -65,13 +67,12 @@ def main(base_dir: Path):
     ok      = [r for r in results if r.startswith("OK")]
     no_desc = [r for r in results if r.startswith("NO_DESC")]
 
-    print(f"\n✅ 完成：更新成功 {len(ok)} 个文件；未找到 description 文件 {len(no_desc)} 个。")
+    print(f"\n✅ 完成：更新成功 {len(ok)} 个文件；缺少 description 的 {len(no_desc)} 个。")
     if no_desc:
         print("缺少 description 的文件：")
         for r in no_desc:
             print(" ", r)
 
 if __name__ == '__main__':
-    # 从命令行参数取目录；默认是当前目录
     base = Path(sys.argv[1]) if len(sys.argv) > 1 else Path.cwd()
     main(base)
