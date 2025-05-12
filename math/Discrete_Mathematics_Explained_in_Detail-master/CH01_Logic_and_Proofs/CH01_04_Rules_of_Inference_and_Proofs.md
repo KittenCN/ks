@@ -1,3 +1,7 @@
+---
+description: Discrete Mathematics Explained in Detail-master logic proofs
+---
+
 <font size=6> Chapter 01 Logic and Proofs 逻辑与证明</font>
 
 Part 04

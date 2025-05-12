@@ -1,3 +1,7 @@
+---
+description: Discrete Mathematics Explained in Detail-master algorithms
+---
+
 <font size=6> Chaptcer 03 Algorithms 算法</font>
 
 covering 3.1~3.3

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 实战Kaggle比赛：狗的品种识别（ImageNet Dogs）
 
 本节我们将在Kaggle上实战狗品种识别问题。

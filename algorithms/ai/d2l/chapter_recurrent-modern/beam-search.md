@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 束搜索
 :label:`sec_beam-search`
 

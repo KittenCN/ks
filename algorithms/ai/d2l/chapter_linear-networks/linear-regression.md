@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 线性回归
 :label:`sec_linear_regression`
 

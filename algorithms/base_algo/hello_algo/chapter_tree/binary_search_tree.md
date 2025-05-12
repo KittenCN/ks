@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 Hello 算法
+---
+
 # 二叉搜索树
 
 如下图所示，「二叉搜索树 binary search tree」满足以下条件。

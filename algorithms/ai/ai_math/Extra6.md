@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 常见机器学习算法的数学推导
+---
+
 # AdaBoost计算示例
 > 付尧 PKU 机器学习AdaBoost示例
 ## 一、数据集

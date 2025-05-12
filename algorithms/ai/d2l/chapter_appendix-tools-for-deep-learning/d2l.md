@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # `d2l` API 文档
 :label:`sec_d2l`
 

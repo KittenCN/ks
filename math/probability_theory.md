@@ -1,3 +1,7 @@
+---
+description: 数学 基础知识
+---
+
 * **probability_theory**
     * [概率论](/math/probability_theory/ch01.md)
     * [离散机率分布](/math/probability_theory/ch02.md)

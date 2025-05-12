@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 单发多框检测（SSD）
 :label:`sec_ssd`
 

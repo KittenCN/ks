@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 目标检测和边界框
 :label:`sec_bbox`
 

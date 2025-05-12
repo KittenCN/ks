@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 Hello 算法
+---
+
 # 快速排序
 
 「快速排序 quick sort」是一种基于分治策略的排序算法，运行高效，应用广泛。

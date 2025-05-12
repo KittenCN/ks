@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 ACM算法指南 算法函数 STL函数 STL容器 String
+---
+
 # C++ String 类完全指南
 
 C++ 标准库中的 `string` 类是字符串操作的核心工具。本指南全面介绍其功能和用法，帮助你高效处理字符串。

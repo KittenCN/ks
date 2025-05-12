@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Minibatch Stochastic Gradient Descent
 :label:`sec_minibatch_sgd`
 

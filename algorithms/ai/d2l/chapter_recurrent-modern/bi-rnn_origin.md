@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Bidirectional Recurrent Neural Networks
 :label:`sec_bi_rnn`
 

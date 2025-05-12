@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 复杂性思维
+---
+
 # 附录 B、阅读列表
 
 > 原文：[Appendix B  Reading list](http://greenteapress.com/complexity2/html/thinkcomplexity2015.html)

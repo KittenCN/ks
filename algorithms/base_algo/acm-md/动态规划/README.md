@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动态规划
+---
+
 # algorithms
   
 - [基础数据结构](/algorithms/base_algo/acm-md/数据结构/基础数据结构.md)

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 从全连接层到卷积
 :label:`sec_why-conv`
 

@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 练习 2：创造力
 
 > 原文：[Exercise 2: On Creativity](https://learncodethehardway.org/more-python-book/ex2.html)

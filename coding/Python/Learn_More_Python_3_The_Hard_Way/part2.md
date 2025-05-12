@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 第二部分：简单的黑魔法
 
 > 原文：[Part II: Quick Hacks](https://learncodethehardway.org/more-python-book/part1.html)

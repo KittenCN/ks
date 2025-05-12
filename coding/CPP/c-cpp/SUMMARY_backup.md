@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 StudyTonight C/C++ 中文教程
+---
+
 -   [StudyTonight C/C++ 中文教程](README.md)
     -   [C](001.md)
         -   [基础知识](002.md)

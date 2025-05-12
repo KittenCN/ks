@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Implementation of Recurrent Neural Networks from Scratch
 :label:`sec_rnn_scratch`
 

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 延后初始化
 :label:`sec_deferred_init`
 

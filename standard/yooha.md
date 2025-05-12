@@ -1,3 +1,7 @@
+---
+description: 基础知识 开发规范 设计模式
+---
+
 # 雅虎军规
 
 <div align="center">

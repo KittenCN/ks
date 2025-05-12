@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 练习 8：`cut`
 
 > 原文：[Exercise 8: cut](https://learncodethehardway.org/more-python-book/ex8.html)

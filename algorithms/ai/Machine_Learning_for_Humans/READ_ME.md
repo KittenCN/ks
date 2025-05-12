@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 写给人类的机器学习
+---
+
 # 写给人类的机器学习
 
 原书：[Machine_Learning_for_Humans](https://medium.com/machine-learning-for-humans/)

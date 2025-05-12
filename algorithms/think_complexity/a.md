@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 复杂性思维
+---
+
 # 附录 A、算法分析
 
 > 原文：[Appendix A  Analysis of algorithms](http://greenteapress.com/complexity2/html/thinkcomplexity2014.html)

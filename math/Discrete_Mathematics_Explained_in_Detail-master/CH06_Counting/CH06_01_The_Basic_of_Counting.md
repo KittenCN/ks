@@ -1,3 +1,7 @@
+---
+description: Discrete Mathematics Explained in Detail-master counting
+---
+
 <font size=6> Chaptcer 06 Counting 计数</font>
 
 Part 01 The Basic of Counting 计数基础

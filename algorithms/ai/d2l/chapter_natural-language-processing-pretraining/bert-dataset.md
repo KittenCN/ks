@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 用于预训练BERT的数据集
 :label:`sec_bert-dataset`
 

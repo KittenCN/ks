@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料
+---
+
 * **人工智能**
     *   [动手学深度学习](/algorithms/ai/d2l/README.md)
     *   [常见机器学习算法的数学推导](/algorithms/ai/ai_math/README.md)

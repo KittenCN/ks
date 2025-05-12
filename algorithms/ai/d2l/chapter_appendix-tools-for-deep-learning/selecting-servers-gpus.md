@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 选择服务器和GPU
 :label:`sec_buy_gpu`
 

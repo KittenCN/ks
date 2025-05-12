@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Machine Translation and the Dataset
 :label:`sec_machine_translation`
 

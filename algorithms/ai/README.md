@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 人工智能算法资料
+---
+
 # algorithms
   
 -   [动手学深度学习](d2l/README.md)

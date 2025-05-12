@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 CSA 杂项
+---
+
 # AP Computer Science A 学习笔记  
 ## Java 语法  
 (1) 布尔值叫 `boolean`，只能是 `true` 或 `false`，没有非 `0` 即 `true` 的概念。`boolean` 不能强转 `int`，实在要转可以用三目运算符。`if (...)` 里面只能是布尔值。  

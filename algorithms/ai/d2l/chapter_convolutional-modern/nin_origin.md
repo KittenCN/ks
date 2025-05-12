@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Network in Network (NiN)
 :label:`sec_nin`
 

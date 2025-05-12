@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 情感分析：使用循环神经网络
 :label:`sec_sentiment_rnn`
 

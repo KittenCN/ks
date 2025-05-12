@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 卷积神经网络（LeNet）
 :label:`sec_lenet`
 

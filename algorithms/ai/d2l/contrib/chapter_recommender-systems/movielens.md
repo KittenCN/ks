@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # MovieLens数据集
 
 用于推荐系统研究的数据集有很多，而其中[MovieLens](https://movielens.org/)数据集可能是最受欢迎的一个。1997年，为了收集评分数据用于研究目的，明尼苏达大学的GroupLens研究实验室创建了本数据集。MovieLens数据集在包括个性化推荐和社会心理学在内的多个研究领域起到了关键作用。

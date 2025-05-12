@@ -1,3 +1,7 @@
+---
+description: 数学建模导论 微分方程 动力系统
+---
+
 # CoderFAN
 
 <br />

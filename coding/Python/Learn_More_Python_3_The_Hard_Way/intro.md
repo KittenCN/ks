@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 引言
 
 > 原文：[Introduction](https://learncodethehardway.org/more-python-book/intro.html)

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 小批量随机梯度下降
 :label:`sec_minibatch_sgd`
 

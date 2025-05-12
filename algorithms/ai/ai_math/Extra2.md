@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 常见机器学习算法的数学推导
+---
+
 # 番外-似然函数：一个摸小球的例子
 > 似然函数的话题在 [线性回归](/algorithms/ai/ai_math/LinearRegression.md) 一篇中解释过，然后由于实在是太重要了，在其他的markdown中频频出现，这里就再以一个简单的摸小球的例子进一步解释
 

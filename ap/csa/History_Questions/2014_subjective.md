@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 CSA 历史真题
+---
+
 # 11\. AP计算机2014年考试：主观题  
 I. This question involves reasoning about strings made up of uppercase letters. You will implement two related methods that appear in the same class (not shown). The first method takes a single parameter and returns a scrambled version of that string. The second method takes a list of strings and modifies the list by scrambling each entry in the list. Any entry that cannot be scrambled is removed from the list.  
   

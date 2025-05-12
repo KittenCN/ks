@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 含并行连结的网络（GoogLeNet）
 :label:`sec_googlenet`
 

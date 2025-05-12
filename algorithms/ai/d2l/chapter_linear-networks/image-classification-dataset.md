@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 图像分类数据集
 :label:`sec_fashion_mnist`
 

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Natural Language Processing: Pretraining
 :label:`chap_nlp_pretrain`
 

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 自然语言推断：使用注意力
 :label:`sec_natural-language-inference-attention`
 

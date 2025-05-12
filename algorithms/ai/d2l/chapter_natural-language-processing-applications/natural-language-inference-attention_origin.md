@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Natural Language Inference: Using Attention
 :label:`sec_natural-language-inference-attention`
 

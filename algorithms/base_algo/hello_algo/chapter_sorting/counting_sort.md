@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 Hello 算法
+---
+
 # 计数排序
 
 「计数排序 counting sort」通过统计元素数量来实现排序，通常应用于整数数组。

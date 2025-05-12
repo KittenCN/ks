@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Natural Language Processing: Applications
 :label:`chap_nlp_app`
 

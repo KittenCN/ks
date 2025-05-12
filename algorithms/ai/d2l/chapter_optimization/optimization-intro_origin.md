@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Optimization and Deep Learning
 
 In this section, we will discuss the relationship between optimization and deep learning as well as the challenges of using optimization in deep learning.

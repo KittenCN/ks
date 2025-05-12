@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 多GPU的简洁实现
 :label:`sec_multi_gpu_concise`
 

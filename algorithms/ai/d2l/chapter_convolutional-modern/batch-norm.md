@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 批量规范化
 :label:`sec_batch_norm`
 

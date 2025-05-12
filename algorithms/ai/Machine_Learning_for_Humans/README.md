@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 写给人类的机器学习
+---
+
 # algorithms
   
 -   [写给人类的机器学习](README.md)

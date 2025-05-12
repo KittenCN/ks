@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 人工智能算法资料
+---
+
 *   **动手学深度学习**
     * [前言](/algorithms/ai/d2l/chapter_preface/index.md)
     * [安装](/algorithms/ai/d2l/chapter_installation/index.md)

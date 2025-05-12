@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 用于预训练词嵌入的数据集
 :label:`sec_word2vec_data`
 

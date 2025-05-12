@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 Hello 算法
+---
+
 # 二分查找边界
 
 ## 查找左边界

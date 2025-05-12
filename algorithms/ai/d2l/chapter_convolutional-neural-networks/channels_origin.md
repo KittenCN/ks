@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Multiple Input and Multiple Output Channels
 :label:`sec_channels`
 

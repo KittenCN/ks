@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 #  序列到序列学习（seq2seq）
 :label:`sec_seq2seq`
 

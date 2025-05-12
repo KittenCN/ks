@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Learning Rate Scheduling
 :label:`sec_scheduler`
 

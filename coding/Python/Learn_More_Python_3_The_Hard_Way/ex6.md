@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 练习 6：`find`
 
 > 原文：[Exercise 6: find](https://learncodethehardway.org/more-python-book/ex6.html)

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # From Fully-Connected Layers to Convolutions
 :label:`sec_why-conv`
 

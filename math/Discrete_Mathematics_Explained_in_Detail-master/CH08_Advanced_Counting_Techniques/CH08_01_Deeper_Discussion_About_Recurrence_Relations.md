@@ -1,3 +1,7 @@
+---
+description: Discrete Mathematics Explained in Detail-master advanced counting techniques
+---
+
 <font size=6>Chaptcer 08 Advanced Counting Techniques 高级计数技术</font>
 
 Part 01 Deeper Discussion About Recurrence Relations 递归关系的深入探讨

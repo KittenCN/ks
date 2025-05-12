@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 Hello 算法
+---
+
 # 动态规划
 
 <div class="center-table" markdown>

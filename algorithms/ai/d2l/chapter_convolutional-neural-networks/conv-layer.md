@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 图像卷积
 :label:`sec_conv_layer`
 

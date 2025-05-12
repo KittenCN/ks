@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 字符串算法
+---
+
 # KMP算法
 
 【KMP算法】(Knuth-Morris-Pratt算法)是一种高效的字符串匹配算法，由Donald Knuth、James H. Morris和Vaughan Pratt在1977年共同发表。KMP算法通过利用已匹配部分的信息，避免了不必要的字符比较，将字符串匹配的时间复杂度从O(m*n)降低到O(m+n)。

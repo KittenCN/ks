@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 注意力提示
 :label:`sec_attention-cues`
 

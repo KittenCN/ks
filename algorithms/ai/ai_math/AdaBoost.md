@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 常见机器学习算法的数学推导
+---
+
 
 # AdaBoost
 **约定：**

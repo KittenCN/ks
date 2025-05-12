@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # The Dataset for Pretraining Word Embeddings
 :label:`sec_word2vec_data`
 

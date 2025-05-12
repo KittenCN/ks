@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 练习 1：流程
 
 > 原文：[Exercise 1: On Process](https://learncodethehardway.org/more-python-book/ex1.html)

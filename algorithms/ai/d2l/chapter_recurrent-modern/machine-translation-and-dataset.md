@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 机器翻译与数据集
 :label:`sec_machine_translation`
 

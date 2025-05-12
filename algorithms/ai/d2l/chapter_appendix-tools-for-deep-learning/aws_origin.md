@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Using AWS EC2 Instances
 :label:`sec_aws`
 

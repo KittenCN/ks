@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 #  预备知识
 :label:`chap_preliminaries`
 

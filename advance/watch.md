@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 各种基础工具使用速查 jest, xss, electron, node, ab, nginx, linux, ssh, docker, vim
+---
+
 ## 监控
 
 **初始化页面->重定向时间, 清除前一个页面 -> 缓存->DNS 解析->TCP 三次握手 四次挥手->向服务器发送请求->服务器响应返回请求->处理文件->加载

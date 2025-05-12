@@ -1,3 +1,7 @@
+---
+description: 概率论
+---
+
 # coding
 
 -   [概率论](ch01.md)

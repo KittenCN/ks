@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 各种基础工具使用速查 jest, xss, electron, node, ab, nginx, linux, ssh, docker, vim
+---
+
 # ssh
 
 准备工作：首先你需要一台服务器，我临时在阿里云买了一台服务器

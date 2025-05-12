@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料
+---
+
 * **复杂性思维**
     * [一、复杂性科学](/algorithms/think_complexity/1.md)
     * [二、图](/algorithms/think_complexity/2.md)

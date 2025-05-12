@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 Hello 算法
+---
+
 # 参考文献
 
 [1] Thomas H. Cormen, et al. Introduction to Algorithms (3rd Edition).

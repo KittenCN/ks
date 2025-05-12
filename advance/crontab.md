@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 各种基础工具使用速查 jest, xss, electron, node, ab, nginx, linux, ssh, docker, vim
+---
+
 # crontab
 
 Linux 定时任务 Crontab crond 是 linux 下用来周期性的执行某种任务或等待处理某些事件的一个守护进程，与 windows 下的计划任务类似，当安装完成操作系统后，默认会安装此服务 工具，并且会自动启动 crond 进程，crond 进程每分钟会定期检查是否有要执行的任务，如果有要执行的任务，则自动执行该任务。

@@ -1,3 +1,7 @@
+---
+description: 数学建模
+---
+
 # CoderFAN
 
 -   [数学建模导论](数学建模导论/README.md)

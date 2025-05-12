@@ -1,3 +1,7 @@
+---
+description: Discrete Mathematics Explained in Detail-master
+---
+
 # 001
 
 We will sometimes use the notation $\bigvee_{j = 1}^{n} p_j$ for $p_1 \vee p_2 \vee ... \vee p_n$ and $\bigwedge_{j = 1}^n p_j$ for $p_1 \wedge p_2 \wedge ... \wedge p_n$. Using this notation, the extended version of De Morgan's laws can be written concisely as $\lnot (\bigvee_{j = 1}^n p_j) \equiv \bigwedge_{j = 1}^n p_j $ and $\lnot (\bigwedge_{j = 1}^n p_j) \equiv \bigvee_{j = 1}^n \lnot p_j$.(Methods for proving these identities will be given in Section 5.1.)

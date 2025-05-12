@@ -1,3 +1,7 @@
+---
+description: 这里是CoderFAN的资料库, 主要用于编程学习资料的收集和分享。
+---
+
 ## 项目简介  
 这里是[CoderFAN](https://www.coderfan.com)的资料库, 主要用于编程学习资料的收集和分享。  
 如需要进一步学习编程知识，可以访问 *[OJ学习平台](https://www.coderfan.com)* 。  

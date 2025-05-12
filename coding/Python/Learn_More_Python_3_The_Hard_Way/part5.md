@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 第五部分：文本解析
 
 > 原文：[Part V: Parsing Text](https://learncodethehardway.org/more-python-book/part4.html)

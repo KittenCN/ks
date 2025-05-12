@@ -1,3 +1,7 @@
+---
+description: 数学建模导论 解析方法 几何模型
+---
+
 # CoderFAN
 
 <br />

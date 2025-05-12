@@ -1,3 +1,7 @@
+---
+description: 数学 基础知识
+---
+
 * **Discrete_Mathematics_Explained_in_Detail-master**
     * [CH01_Logic_and_Proofs](/math/Discrete_Mathematics_Explained_in_Detail-master/CH01_Logic_and_Proofs.md)
     * [CH02_Basic_Structures](/math/Discrete_Mathematics_Explained_in_Detail-master/CH02_Basic_Structures.md)

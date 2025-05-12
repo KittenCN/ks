@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 字符串算法
+---
+
 # algorithms
   
 - [基础数据结构](/algorithms/base_algo/acm-md/数据结构/基础数据结构.md)

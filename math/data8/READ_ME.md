@@ -1,3 +1,7 @@
+---
+description: 计算与推断思维
+---
+
 # 计算与推断思维 中文版
 
 原书：[data-8/textbook](https://github.com/data-8/textbook/)

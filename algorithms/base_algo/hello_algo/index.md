@@ -1,10 +1,5 @@
 ---
-comments: true
-glightbox: false
-hide:
-  - footer
-  - toc
-  - edit
+description: CoderFAN 资料库 算法资料 Hello 算法
 ---
 
 <div class="header-img-div" style="max-width: 500px;">

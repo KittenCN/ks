@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 ACM算法指南 算法函数 STL函数 STL容器 String
+---
+
 # algorithms
   
 - [基础数据结构](数据结构/基础数据结构.md)

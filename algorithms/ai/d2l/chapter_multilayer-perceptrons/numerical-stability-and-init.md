@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 数值稳定性和模型初始化
 :label:`sec_numerical_stability`
 

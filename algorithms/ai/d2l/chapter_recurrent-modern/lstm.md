@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 长短期记忆网络（LSTM）
 :label:`sec_lstm`
 

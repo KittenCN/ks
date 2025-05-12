@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 calculus
+---
+
 [](...menustart)
 
 - [微积分总览](#cb7b69587d37b4d0d6623ec0b7e15e8f)

@@ -1,3 +1,7 @@
+---
+description: Discrete Mathematics Explained in Detail-master basic structures
+---
+
 <font size=6> Chaptcer 02 Basic Structures 基本结构</font>
 
 Part 03 Cardinality of Sets

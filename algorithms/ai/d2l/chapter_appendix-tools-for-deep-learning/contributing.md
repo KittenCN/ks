@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 为本书做贡献
 :label:`sec_how_to_contribute`
 

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 ACM算法指南 算法函数 STL函数 STL容器 String
+---
+
 # ACM竞赛常用算法详解（初学者友好版）
 
 ## 目录

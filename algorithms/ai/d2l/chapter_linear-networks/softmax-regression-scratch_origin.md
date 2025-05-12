@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Implementation of Softmax Regression from Scratch
 :label:`sec_softmax_scratch`
 

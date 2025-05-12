@@ -1,3 +1,7 @@
+---
+description: Discrete Mathematics Explained in Detail-master counting
+---
+
 <font size=6> Chaptcer 06 Counting 计数</font>
 
 Part 02 The Pigeonhole Principle 抽屉原理

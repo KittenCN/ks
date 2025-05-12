@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 第七部分：大作业
 
 > 原文：[Part VII: Final Projects](https://learncodethehardway.org/more-python-book/part6.html)

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 使用Amazon EC2实例
 :label:`sec_aws`
 

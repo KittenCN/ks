@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 附录：深度学习工具
 :label:`chap_appendix_tools`
 

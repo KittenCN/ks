@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 实战Kaggle比赛：预测房价
 :label:`sec_kaggle_house`
 

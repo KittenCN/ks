@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 常见机器学习算法的数学推导
+---
+
 ## 一、Bagging
 1. Bagging = boostrap(有放回抽样) + aggregation(聚集)\
     把(相同的)若干基础模型简单的“装起来”: 基础模型独立训练

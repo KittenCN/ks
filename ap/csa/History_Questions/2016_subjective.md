@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 CSA 历史真题
+---
+
 # 9\. AP计算机2016年考试：主观题  
 I. This question involves the implementation and extension of a `RandomStringChooser` class.  
   

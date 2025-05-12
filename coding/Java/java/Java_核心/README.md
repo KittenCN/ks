@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 Java核心教程
+---
+
 # Java 核心
 
 - [Java 核心](README.md)

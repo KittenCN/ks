@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # coding
 <img  src='cover.jpg' width="600" alt="logo">
 

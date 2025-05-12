@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 CSA 历史真题
+---
+
 # 8\. AP计算机2017年考试：主观题  
 I. This question involves identifying and processing the digits of a non-negative integer. The declaration of the `Digits` class is shown below. You will write the constructor and one method for the `Digits` class.  
   

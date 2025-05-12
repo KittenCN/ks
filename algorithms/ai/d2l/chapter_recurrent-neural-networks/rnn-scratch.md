@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 循环神经网络的从零开始实现
 :label:`sec_rnn_scratch`
 

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 全局向量的词嵌入（GloVe）
 :label:`sec_glove`
 

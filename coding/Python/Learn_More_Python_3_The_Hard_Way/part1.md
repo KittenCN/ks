@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 第一部分：预备知识
 
 > 原文：[Part I: Initial Knowledge](https://learncodethehardway.org/more-python-book/part0.html)

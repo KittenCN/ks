@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 多输入多输出通道
 :label:`sec_channels`
 

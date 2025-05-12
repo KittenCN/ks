@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 循环神经网络的简洁实现
 :label:`sec_rnn-concise`
 

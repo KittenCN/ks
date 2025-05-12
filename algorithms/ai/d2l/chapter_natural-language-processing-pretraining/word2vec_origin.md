@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Word Embedding (word2vec)
 :label:`sec_word2vec`
 

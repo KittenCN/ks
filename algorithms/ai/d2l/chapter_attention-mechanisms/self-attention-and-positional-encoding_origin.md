@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Self-Attention and Positional Encoding
 :label:`sec_self-attention-and-positional-encoding`
 

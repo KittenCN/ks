@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 多尺度目标检测
 :label:`sec_multiscale-object-detection`
 

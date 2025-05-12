@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 CSA 历史真题
+---
+
 # 7\. AP计算机2018年考试：主观题  
 I. This question involves reasoning about a simulation of a frog hopping in a straight line. The frog attempts to hop to a goal within a specified number of hops. The simulation is encapsulated in the following `FrogSimulation` class. You will write two of the methods in the class.  
   

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Sentiment Analysis: Using Recurrent Neural Networks
 :label:`sec_sentiment_rnn`
 

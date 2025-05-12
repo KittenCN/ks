@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 CSA 杂项
+---
+
 # AP计算机科学考试Java快速参考    
 #### class java.lang.Object    
 `boolean equals(Object other)`    

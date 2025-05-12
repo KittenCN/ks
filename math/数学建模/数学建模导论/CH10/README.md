@@ -1,3 +1,7 @@
+---
+description: 数学建模导论 图像 文本 信号数据
+---
+
 # CoderFAN
 
 <br />

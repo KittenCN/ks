@@ -1,3 +1,7 @@
+---
+description: 工具集合 基础知识 编程语言
+---
+
 # Sinopia (npm 私有镜像搭建)
 
 [Sinopia](https://github.com/rlidwka/sinopia) 是一个零配置的私有的带缓存功能的 npm 包管理工具

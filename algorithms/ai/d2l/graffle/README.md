@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # algorithms
   
 -   [动手学深度学习](/algorithms/ai/d2l/README.md)

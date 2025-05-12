@@ -1,3 +1,7 @@
+---
+description: Java基础知识 资料下载
+---
+
 *本项目借用了[xflihaibo](https://xflihaibo.github.io/docs/)的模板及基础数据，感谢！*  
 
 ## 项目简介  

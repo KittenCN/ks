@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 注意力汇聚：Nadaraya-Watson 核回归
 :label:`sec_nadaraya-watson`
 

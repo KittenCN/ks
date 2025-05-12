@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 多头注意力
 :label:`sec_multihead-attention`
 

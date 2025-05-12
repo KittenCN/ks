@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Deep Convolutional Neural Networks (AlexNet)
 :label:`sec_alexnet`
 

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 使用块的网络（VGG）
 :label:`sec_vgg`
 

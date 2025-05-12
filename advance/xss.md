@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 各种基础工具使用速查 jest, xss, electron, node, ab, nginx, linux, ssh, docker, vim
+---
+
 # web 安全
 
 Web 前端的黑客攻防技术是一门非常新颖且有趣的黑 客技术，主要包含 Web 前端安全的跨站脚本(XSS)、 跨站请求伪造(CSRF)、界面操作劫持、WebShell 这 几大类，涉及的知识点涵盖信任与非信任关系、Cookie 安全、Flash 安全、DOM 渲染、字符集、跨域、原生态 攻击、高级钓鱼、蠕虫思想。

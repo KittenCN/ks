@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 学习率调度器
 :label:`sec_scheduler`
 

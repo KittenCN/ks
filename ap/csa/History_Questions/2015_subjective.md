@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 CSA 历史真题
+---
+
 # 10\. AP计算机2015年考试：主观题  
 I. This question involves reasoning about one-dimensional and two-dimensional arrays of integers. You will write three static methods, all of which are in a single enclosing class, named `DiverseArray` (not shown). The first method returns the sum of the values of a one-dimensional array; the second method returns an array that represents the sums of the rows of a two-dimensional array; and the third method analyzes row sums.  
   

@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Concise Implementation of Multilayer Perceptrons
 :label:`sec_mlp_concise`
 

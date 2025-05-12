@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 第四部分：进阶项目
 
 > 原文：[Part IV: Intermediate Projects](https://learncodethehardway.org/more-python-book/part3.html)

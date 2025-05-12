@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 词的相似性和类比任务
 :label:`sec_synonyms`
 

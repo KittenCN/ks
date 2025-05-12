@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 Hello 算法
+---
+
 # 数组与链表
 
 ![数组与链表](../assets/covers/chapter_array_and_linkedlist.jpg)

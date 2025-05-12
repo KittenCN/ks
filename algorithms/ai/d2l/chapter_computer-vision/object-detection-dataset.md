@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 目标检测数据集
 :label:`sec_object-detection-dataset`
 

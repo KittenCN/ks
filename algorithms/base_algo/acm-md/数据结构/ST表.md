@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 数据结构
+---
+
 # ST表
 
 【ST表】(Sparse Table)是一种用于解决【区间最值查询】(Range Maximum/Minimum Query, RMQ)问题的数据结构。它支持O(1)的区间查询操作，但只适用于静态数组（不支持修改操作），预处理时间复杂度为O(nlogn)。

@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 练习 5：`cat`
 
 > 原文：[Exercise 5: cat](https://learncodethehardway.org/more-python-book/ex5.html)

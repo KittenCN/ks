@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Fine-Tuning BERT for Sequence-Level and Token-Level Applications
 :label:`sec_finetuning-bert`
 

@@ -1,3 +1,7 @@
+---
+description: 数学 基础知识
+---
+
 [](...menustart)
 
 - [偏导数,梯度](#eb898d04aa10223d988f53daa7844b8f)

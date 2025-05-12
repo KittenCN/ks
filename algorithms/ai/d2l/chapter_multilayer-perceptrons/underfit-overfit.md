@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 模型选择、欠拟合和过拟合
 :label:`sec_model_selection`
 

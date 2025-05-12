@@ -1,3 +1,7 @@
+---
+description: 计算与推断思维
+---
+
 # AP
 
 - [计算与推断思维](READ_ME.md)

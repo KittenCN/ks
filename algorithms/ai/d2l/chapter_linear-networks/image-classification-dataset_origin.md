@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # The Image Classification Dataset
 :label:`sec_fashion_mnist`
 

@@ -1,3 +1,7 @@
+---
+description: Python基础知识
+---
+
 # Think Python
 
 >第二版，基于 Python3

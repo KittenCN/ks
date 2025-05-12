@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 Hello 算法
+---
+
 # algorithms
 
 -   [Hello 算法](README.md)

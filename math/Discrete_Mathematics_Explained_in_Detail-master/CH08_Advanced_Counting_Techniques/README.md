@@ -1,3 +1,7 @@
+---
+description: Discrete Mathematics Explained in Detail-master advanced counting techniques
+---
+
 # AP
 
 <br />

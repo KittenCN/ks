@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Natural Language Inference and the Dataset
 :label:`sec_natural-language-inference-and-dataset`
 

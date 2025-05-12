@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 练习 4：处理命令行参数
 
 > 原文：[Exercise 4: Dealing with Command Line Arguments](https://learncodethehardway.org/more-python-book/ex4.html)

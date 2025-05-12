@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 算法资料 Java示例
+---
+
 # Java 示例
 
 - [Java 示例](README.md)

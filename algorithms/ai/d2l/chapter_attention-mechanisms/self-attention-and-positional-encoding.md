@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 自注意力和位置编码
 :label:`sec_self-attention-and-positional-encoding`
 

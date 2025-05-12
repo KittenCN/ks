@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 语言模型和数据集
 :label:`sec_language_model`
 

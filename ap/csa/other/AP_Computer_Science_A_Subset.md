@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 CSA 杂项
+---
+
 # AP计算机科学Java子集
 AP Java子集揭示了那些可能出现在AP Computer Science A考试中的Java特性。AP Java子集并非为限定计算机科学课程的内容而设——子集往往需要经过额外补充后才能涵盖典型的导论课纲的全部主题。例如，输入与输出必须是计算机编程课的一部分，但Java本身有许多处理输入和输出的方式。由于这种多变性，输入与输出的细节（使用`System.out.print`与`System.out.println`的基本文本输出例外）并不在AP考试中考察。  
   

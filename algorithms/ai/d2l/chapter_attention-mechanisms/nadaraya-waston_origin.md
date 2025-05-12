@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Attention Pooling: Nadaraya-Watson Kernel Regression
 :label:`sec_nadaraya-waston`
 

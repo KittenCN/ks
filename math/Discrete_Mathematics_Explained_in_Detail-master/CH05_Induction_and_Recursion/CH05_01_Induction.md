@@ -1,3 +1,7 @@
+---
+description: Discrete Mathematics Explained in Detail-master induction recursion
+---
+
 <font size=6> Chaptcer 05 Induction and Recursion 归纳与递归</font>
 
 Part 01 Induction

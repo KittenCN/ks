@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 通过时间反向传播
 :label:`sec_bptt`
 

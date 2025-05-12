@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 稠密连接网络（DenseNet）
 
 ResNet极大地改变了如何参数化深层网络中函数的观点。

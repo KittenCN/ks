@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 各种基础工具使用速查 jest, xss, electron, node, ab, nginx, linux, ssh, docker, vim
+---
+
 # AB 压力测试
 
 ab 是 apache 自带的压力测试工具。ab 非常实用，它不仅可以对 apache 服务器进行网站访问压力测试，也可以对或其它类型的服务器进行压力测试。比如 nginx、tomcat、IIS 等

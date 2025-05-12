@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Object Detection and Bounding Boxes
 :label:`sec_bbox`
 

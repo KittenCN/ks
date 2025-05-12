@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 多层感知机的从零开始实现
 :label:`sec_mlp_scratch`
 

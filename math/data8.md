@@ -1,3 +1,7 @@
+---
+description: 数学 基础知识
+---
+
 * **计算与推断思维**
     * [计算与推断思维](/math/data8/READ_ME.md)
     * [一、数据科学](/math/data8/1.md)

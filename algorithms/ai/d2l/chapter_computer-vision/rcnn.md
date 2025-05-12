@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 区域卷积神经网络（R-CNN）系列
 :label:`sec_rcnn`
 

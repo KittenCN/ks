@@ -1,3 +1,7 @@
+---
+description: Discrete Mathematics Explained in Detail-master counting
+---
+
 <font size=6>Chaptcer 06 Counting 计数</font>
 
 Part 04 Algorithms About Counting 排列组合算法

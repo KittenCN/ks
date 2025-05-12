@@ -1,3 +1,7 @@
+---
+description: 笨办法学 Python · 续 中文版
+---
+
 # 练习 3：质量
 
 > 原文：[Exercise 3: On Quality](https://learncodethehardway.org/more-python-book/ex3.html)

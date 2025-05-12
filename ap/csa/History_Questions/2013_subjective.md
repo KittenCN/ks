@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 CSA 历史真题
+---
+
 # 12\. AP计算机2013年考试：主观题  
 I. A music Web site keeps track of downloaded music. For each download, the site uses a `DownloadInfo` object to store a song’s title and the number of times it has been downloaded. A partial declaration for the `DownloadInfo` class is shown below.  
   

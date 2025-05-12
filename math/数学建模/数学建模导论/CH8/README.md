@@ -1,3 +1,7 @@
+---
+description: 数学建模导论 时间序列
+---
+
 # CoderFAN
 
 <br />

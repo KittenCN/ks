@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Predicting House Prices on Kaggle
 :label:`sec_kaggle_house`
 

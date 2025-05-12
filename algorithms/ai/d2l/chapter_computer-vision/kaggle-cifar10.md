@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 实战 Kaggle 比赛：图像分类 (CIFAR-10)
 :label:`sec_kaggle_cifar10`
 

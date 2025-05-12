@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # 前向传播、反向传播和计算图
 :label:`sec_backprop`
 

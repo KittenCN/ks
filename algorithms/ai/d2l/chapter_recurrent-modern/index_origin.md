@@ -1,3 +1,7 @@
+---
+description: CoderFAN 资料库 动手学深度学习
+---
+
 # Modern Recurrent Neural Networks
 :label:`chap_modern_rnn`
 
